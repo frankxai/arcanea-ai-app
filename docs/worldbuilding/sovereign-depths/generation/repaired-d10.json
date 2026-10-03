@@ -1,0 +1,10 @@
+{
+  "id": "d10",
+  "path": "/workspace/scratch/375074c86086/generated_images/exec-11d8d112-51ae-4f5c-b46f-c47c35619a06.png",
+  "previousPath": "/workspace/scratch/375074c86086/generated_images/exec-46a77a24-37b0-4648-a228-148e27da1e50.png",
+  "prompt": "Refine this finished adult cinematic fantasy environment with a localized edit only. Preserve the exact architecture, spatial layout, figures, framing, scale, lighting, color, physical materials and narrative function. Remove ALL English lettering, mottos and readable written words carved on walls or statues and written on wooden direction signs. Restore the carved wall areas to richly weathered plain stone with old tool marks. On existing wooden wayfinding boards keep the existing arrows and add only small simple nonalphabetic pictograms of their destinations, no letters, no pseudo-script. No new signage, no interface text. Preserve banners' existing abstract emblems. This is a physical ancient place, not a motivational poster. No other changes.",
+  "interface": "image_gen",
+  "model": "not exposed by tool",
+  "generatedAt": "2026-09-09T01:05:03.143Z",
+  "status": "repair-pending-review"
+}

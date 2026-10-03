@@ -1,0 +1,325 @@
+{
+  "schemaVersion": "1.0",
+  "id": "sovereign-depths",
+  "title": "Arcanea: The Sovereign Depths",
+  "subtitle": "Ancient power. Living worlds. Consequences that remain.",
+  "description": "Twenty-four proposed boss encounters across twelve materially distinct dungeons, authored for adult cinematic fantasy, interconnected novels and readable encounter design. This is a staged creative collection, not an assertion of implemented playable game systems.",
+  "canonStatus": "STAGING",
+  "source": {
+    "repository": "frankxai/arcanea",
+    "commit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+    "createdAt": "2026-09-09",
+    "commitPurpose": "Pinned canon baseline; all collection records are new local proposals."
+  },
+  "sourceOfNewClaims": "local-proposal",
+  "touchesLocked": false,
+  "series": [
+    {
+      "id": "s01",
+      "title": "The Kiln and the Keel",
+      "continuity": "Standalone proposed trilogy; separate from the Chronicles and Living Arc.",
+      "premise": "Engineer Tamsin Reed and shipwright Garrick Moss try to reopen a winter harbour, discover its material supply has been captured by a coordinated blockade campaign, and turn the occupiers’ production timetable against them.",
+      "cast": [
+        {
+          "name": "Tamsin Reed",
+          "want": "Rebuild a harbour that can survive winter without accepting military ownership.",
+          "pressure": "Each fast material solution repeats a destructive practice she promised the workers would end."
+        },
+        {
+          "name": "Garrick Moss",
+          "want": "Bring the pressed shipwrights home alive.",
+          "pressure": "He will trade away long-term independence for a rescue today, putting him at odds with Tamsin."
+        }
+      ],
+      "books": [
+        {
+          "id": "s01b01",
+          "title": "The Heat We Inherit",
+          "dungeonIds": ["d01"],
+          "premise": "A contract for winter anchors sends the pair into a still-burning foundry. They discover that the same alloy is supplying a mountain gun, and their choice of furnace output determines whether they can follow that shipment in time.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s01b02",
+          "title": "Under a Broken Sun",
+          "dungeonIds": ["d05"],
+          "premise": "The mountain road is blocked by obsolete artillery and a captain trying to claim it. Saving a stranded evacuation column costs the pair their best transport window but yields the blockade’s launch schedule.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s01b03",
+          "title": "The Harbour That Refused",
+          "dungeonIds": ["d10"],
+          "premise": "The shipwrights sabotage their own launch work while Tamsin turns recovered components into a controlled premature launch. Liberation succeeds only if the harbour predator is given a quiet exit and the workers keep command of the rebuilt arsenal.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        }
+      ],
+      "canonStatus": "STAGING",
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "s02",
+      "title": "The Passage Compact",
+      "continuity": "Standalone proposed trilogy; no replacement for existing flagship book sequences.",
+      "premise": "Diver Brigid Vale and cargo assessor Isen Pike seek a winter passage for a struggling coast. Their journey moves from a drowned military obstruction to disputed seed custody and finally a public trial over the route’s governance.",
+      "cast": [
+        {
+          "name": "Brigid Vale",
+          "want": "Establish a reliable winter route that ordinary crews can navigate.",
+          "pressure": "She can survive hazards that the people following her cannot, so personal bravery is an insufficient plan."
+        },
+        {
+          "name": "Isen Pike",
+          "want": "Keep promises measurable enough to survive changes of leadership.",
+          "pressure": "His precise contracts cannot substitute for trust when a living cargo begins to die."
+        }
+      ],
+      "books": [
+        {
+          "id": "s02b01",
+          "title": "The Current Below",
+          "dungeonIds": ["d02"],
+          "premise": "The divers reopen a starved reef inlet and recover evidence of a refused evacuation. Their new route reaches a mountain trade station whose seed stock may save the coastal harvest.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s02b02",
+          "title": "A Winter Held in Glass",
+          "dungeonIds": ["d07"],
+          "premise": "Two expeditions must agree on custody while the seed vault thaws around them. Brigid’s rivalry with Kethrane becomes a workable alliance only when both crews accept visible losses and shared transport obligations.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s02b03",
+          "title": "The Measure of Passage",
+          "dungeonIds": ["d09"],
+          "premise": "The mountain court can open the final route, but its old apparatus contradicts the terms of a fair trial. Brigid wins a passage and accepts a public maintenance duty, making the compact more durable than her own reputation.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        }
+      ],
+      "canonStatus": "STAGING",
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "s03",
+      "title": "The Living Meridian",
+      "continuity": "Independent proposed expedition trilogy; observed ecology is distinguished from disputed mythology.",
+      "premise": "Surveyor Corvin Holt and financier Fenwick Darr follow a promised mineral route through forest, crater and desert. Each discovery changes what their contract can honestly claim, until a water observation must become public knowledge rather than the venture’s private asset.",
+      "cast": [
+        {
+          "name": "Corvin Holt",
+          "want": "Publish a map people can use without discovering its omissions through death.",
+          "pressure": "The expedition deadline rewards confident simplification of conditions that keep changing."
+        },
+        {
+          "name": "Fenwick Darr",
+          "want": "Return enough value to keep his crew employed.",
+          "pressure": "A lower-yield truthful contract threatens his solvency, while an inflated claim would finance the next expedition immediately."
+        }
+      ],
+      "books": [
+        {
+          "id": "s03b01",
+          "title": "The Line Through Leaves",
+          "dungeonIds": ["d04"],
+          "premise": "A disputed crossing forces the surveyors to face an equally competent rival. Evidence of altered mineral growth beyond the frontier makes Serevra a necessary independent witness rather than a defeated obstacle.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s03b02",
+          "title": "The Forest in the Stone",
+          "dungeonIds": ["d08"],
+          "premise": "A living mineral seam promises the expedition’s fortune until extraction accelerates a parasite outbreak. Fenwick must sign a lower-yield contract before knowing whether it will save his company.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s03b03",
+          "title": "The Water Under Stars",
+          "dungeonIds": ["d11"],
+          "premise": "The desert observation can validate the new route, but a scholar seeks exclusive control of the result. Corvin and Fenwick establish independent measurements during a colossal migration and publish the water map, earning a different business through trustworthy passage services.",
+          "canonStatus": "EXPERIMENTAL",
+          "sourceOfNewClaims": "local-proposal"
+        }
+      ],
+      "canonStatus": "EXPERIMENTAL",
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "s04",
+      "title": "The Unfinished Road",
+      "continuity": "Standalone proposed investigation trilogy; experimental Lacuna chapters remain explicitly opt-in.",
+      "premise": "Archivist Sabine Rook and surveyor Jolant Grey follow evidence of a campaign intended to isolate the frontier. They must preserve testimony, publish bounded uncertainty and use incomplete records fast enough to save a convoy.",
+      "cast": [
+        {
+          "name": "Sabine Rook",
+          "want": "Keep ordinary witnesses in the record of a war written by its commanders.",
+          "pressure": "She cannot physically rescue every object, and choosing what to carry has irreversible consequences."
+        },
+        {
+          "name": "Jolant Grey",
+          "want": "Recover missing surveyors and prove a safe road exists.",
+          "pressure": "He must put his name to a useful account that leaves the chamber’s deepest cause unresolved."
+        }
+      ],
+      "books": [
+        {
+          "id": "s04b01",
+          "title": "Names in the Quiet Bell",
+          "dungeonIds": ["d03"],
+          "premise": "An occupied burial avenue hides a siege calibration method. Saving the quieter annex yields supply references to a vanished road survey, while destroying it leaves a faster but less provable trail.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s04b02",
+          "title": "A Stair Without an Answer",
+          "dungeonIds": ["d06"],
+          "premise": "The missing surveyors are trapped in a bounded impossible chamber. Their recovery provides an alternate exterior road plan; Jolant refuses to invent an origin story to make the report seem complete.",
+          "canonStatus": "EXPERIMENTAL",
+          "sourceOfNewClaims": "local-proposal"
+        },
+        {
+          "id": "s04b03",
+          "title": "The Road at the Edge",
+          "dungeonIds": ["d12"],
+          "premise": "Records from the bells, survey and harbour campaign reveal a local bridge interdiction. Sabine and Jolant use that knowledge to protect a frontier convoy, ending at the exterior road with Malachar’s prison untouched.",
+          "canonStatus": "STAGING",
+          "sourceOfNewClaims": "local-proposal"
+        }
+      ],
+      "canonStatus": "EXPERIMENTAL",
+      "sourceOfNewClaims": "local-proposal"
+    }
+  ],
+  "canonPolicy": {
+    "approvedBaseline": "Existing identities and events are compatibility constraints; local proposals are never inherited as APPROVED.",
+    "gates": "No additional Gate, bonded Godbeast or divine identity is introduced.",
+    "origins": "No new Origin class is introduced. Fauna labels describe ecology; they do not assign a metaphysical Origin.",
+    "nero": "Nero remains the fertile unknown and potential, not evil. Local uncertainty and spatial danger do not imply moral darkness.",
+    "shadowfen": "Malachar remains sealed. The exterior finale never enters, depicts, opens or weakens his canonical prison.",
+    "continuities": "The four proposed trilogies are separate from the established Chronicles and the staged Living Arc. Cross-series links are optional shared-world events, not an imposed reading order.",
+    "experimentalRetrieval": "EXPERIMENTAL records and any story using them require explicit opt-in; links do not promote their authority.",
+    "power": "Scale, combat threat, political authority and magical attainment are separate; no body size implies Gate rank.",
+    "names": "All names remain working proposals pending repository-wide naming and rights review."
+  },
+  "crossSeriesLinks": [
+    {
+      "id": "link01",
+      "fromId": "s01b03",
+      "toId": "s04b03",
+      "claimKind": "proposed-shared-event",
+      "canonStatus": "STAGING",
+      "event": "Seized Blackwake launch orders establish that the harbour blockade and outer-road interdiction are parts of one operation.",
+      "ordering": "The orders may reach Sabine by courier; neither book requires the other as prerequisite reading."
+    },
+    {
+      "id": "link02",
+      "fromId": "s02b03",
+      "toId": "s03b03",
+      "claimKind": "proposed-trade-connection",
+      "canonStatus": "STAGING",
+      "event": "The Passage Compact can carry water-route survey records between coast and desert after both independent stories resolve.",
+      "ordering": "An optional epilogue connection; no fixed inter-series chronology is asserted."
+    },
+    {
+      "id": "link03",
+      "fromId": "s03b01",
+      "toId": "s03b02",
+      "claimKind": "proposed-recurring-rival",
+      "canonStatus": "STAGING",
+      "event": "Serevra returns as an independent witness to the mineral claim, retaining her expedition and leverage.",
+      "ordering": "Causal within The Living Meridian; her survival and relationship state must be selected for a novel continuity."
+    },
+    {
+      "id": "link04",
+      "fromId": "s02b02",
+      "toId": "s02b03",
+      "claimKind": "proposed-recurring-ally",
+      "canonStatus": "STAGING",
+      "event": "Kethrane testifies to the seed-custody agreement at the passage court.",
+      "ordering": "Novel continuity assumes a negotiated or honourably resolved bridge encounter; game alternatives remain separate branches."
+    }
+  ],
+  "adaptationPolicy": {
+    "novels": "Each novel selects one authored sequence and preserves its consequences. Do not print player HUD language, objective counters or every optional branch into the prose.",
+    "games": "Encounter phases are design specifications with observable tells, counters and persistent failure states. Implement and playtest separately before claiming balance or playability.",
+    "agents": "Retrieve baseline and proposals by explicit status and scope. A reference, title, link, image or merged proposal is not canon approval.",
+    "visuals": "Individual images illustrate a selected dramatic moment, not an exact mechanics diagram. Stable anatomy and materials carry across art, prose and future game assets."
+  },
+  "factions": [
+    {
+      "id": "f01",
+      "name": "Cinder Mutual",
+      "canonStatus": "STAGING",
+      "claimKind": "proposed-local-organisation",
+      "purpose": "A workshop coalition contracting for winter anchors and keeping production decisions with the people doing the work.",
+      "resource": "Foundry skill, salvage agreements and labour consent.",
+      "internalConflict": "Some members favour a fast military contract to keep households fed; others regard that dependence as the beginning of occupation.",
+      "associatedDungeons": ["d01", "d05", "d10"],
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "f02",
+      "name": "Tide Witness crews",
+      "canonStatus": "STAGING",
+      "claimKind": "proposed-local-organisation",
+      "purpose": "Independent divers documenting safe seasonal passage and recoverable evidence from drowned sites.",
+      "resource": "Air bells, current charts and repeated field observations.",
+      "internalConflict": "A fast elite route can earn money immediately while remaining unusable by ordinary crews.",
+      "associatedDungeons": ["d02", "d07", "d09"],
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "f03",
+      "name": "Meridian Survey",
+      "canonStatus": "STAGING",
+      "claimKind": "proposed-local-organisation",
+      "purpose": "A commercial expedition partnership mapping mineral and transport claims.",
+      "resource": "Contracts, transport capacity and independent witnesses.",
+      "internalConflict": "Reliable lower-yield findings threaten short-term solvency; spectacular unverified claims attract financing.",
+      "associatedDungeons": ["d04", "d08", "d11"],
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "f04",
+      "name": "Pale Line expedition",
+      "canonStatus": "STAGING",
+      "claimKind": "proposed-local-organisation",
+      "purpose": "Serevra’s autonomous canopy crew, defending the rescue infrastructure its members rebuilt.",
+      "resource": "Local route knowledge, rope work and a defensible access claim.",
+      "internalConflict": "Protecting the crew’s claim can become exclusion of people who also need rescue.",
+      "associatedDungeons": ["d04", "d08"],
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "f05",
+      "name": "White Vigil expedition",
+      "canonStatus": "STAGING",
+      "claimKind": "proposed-local-organisation",
+      "purpose": "Kethrane’s seed-recovery crew, accountable to its workers and a sponsor with competing custody demands.",
+      "resource": "Controlled warming expertise and the first viable transport route.",
+      "internalConflict": "Sponsor ownership terms conflict with the crew’s wish to distribute viable stock.",
+      "associatedDungeons": ["d07", "d09"],
+      "sourceOfNewClaims": "local-proposal"
+    },
+    {
+      "id": "f06",
+      "name": "Void Ascendant blockade campaign",
+      "canonStatus": "STAGING",
+      "claimKind": "proposed-operation-of-existing-faction",
+      "purpose": "A new local operation of an existing antagonistic faction, seeking to isolate the frontier by sea and road.",
+      "resource": "Captured furnace output, artillery sites, pressed shipwrights and an exterior siege working.",
+      "internalConflict": "Operators compete over scarce shipments and priority; their local tactics frequently obstruct each other.",
+      "associatedDungeons": ["d01", "d03", "d05", "d10", "d12"],
+      "sourceOfNewClaims": "local-proposal"
+    }
+  ]
+}

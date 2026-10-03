@@ -1,0 +1,59 @@
+{
+  "scope": "New Sovereign Depths routes and retrieval tool in an isolated matching-dependency fixture; not a full monorepo build",
+  "baselineCommit": "c1510841af245e9d4958b31580856ec331c93904",
+  "checks": [
+    {
+      "name": "Web/API contract tests",
+      "result": "PASS",
+      "tests": 9,
+      "command": "node --import tsx --test surface/lib/visual-encyclopedia/sovereign-depths.test.ts"
+    },
+    {
+      "name": "MCP trust-boundary tests",
+      "result": "PASS",
+      "tests": 4,
+      "command": "node --test tests/sovereign-depths.test.mjs"
+    },
+    {
+      "name": "TypeScript new web scope",
+      "result": "PASS"
+    },
+    {
+      "name": "MCP tool TypeScript",
+      "result": "PASS"
+    },
+    {
+      "name": "ESLint new web scope",
+      "result": "PASS",
+      "note": "No source diagnostics; Next plugin warns missing fixture pages directory."
+    },
+    {
+      "name": "Next webpack production fixture",
+      "result": "PASS",
+      "staticPages": 40,
+      "note": "Minimal fixture layout; existing app dependencies and real asset delivery are outside this result."
+    },
+    {
+      "name": "Final image bytes, dimensions, source/rendition hashes and immutable Git blob match",
+      "result": "PASS",
+      "images": 36,
+      "bosses": 24,
+      "dungeons": 12,
+      "bytes": 7370506
+    }
+  ],
+  "review": {
+    "reviewer": "world_encounters independent review",
+    "findingsAddressed": [
+      "P2: metadata must preserve proposal/experimental status",
+      "P2: recursively quarantine nested experimental mythology and future claim objects"
+    ],
+    "pending": null,
+    "result": "No remaining blocker found in re-review of status metadata and recursive experimental quarantine."
+  },
+  "pending": [
+    "Full remote repository CI at exact proposed SHA",
+    "Preview browser interaction and image delivery",
+    "Production merge and actual live deployment verification"
+  ]
+}

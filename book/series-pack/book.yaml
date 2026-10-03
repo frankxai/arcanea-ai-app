@@ -23,3 +23,6 @@ tags: [arcanea, series-pack, planning, lore, story-world]
 
 acknowledgments: |
   Series Pack documentation for Arcanea story world.
+
+# Internal packaging document, not a reader-facing work.
+visibility: private

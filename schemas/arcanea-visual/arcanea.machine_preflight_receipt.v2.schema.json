@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arcanea.ai/schemas/arcanea.machine_preflight_receipt.v2.schema.json",
+  "title": "Arcanea machine preflight receipt v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "workload",
+    "sourceWorkload",
+    "performancePosture",
+    "posture",
+    "maxParallelCalls",
+    "checkedAt",
+    "expiresAt",
+    "checkedBy",
+    "evidence",
+    "blockingConditions",
+    "ppPlan",
+    "ppPlanHash",
+    "storageEvidence",
+    "receiptHash"
+  ],
+  "properties": {
+    "schema": {
+      "const": "arcanea.machine_preflight_receipt.v2"
+    },
+    "workload": {
+      "const": "image-generation"
+    },
+    "sourceWorkload": {
+      "const": "overnight"
+    },
+    "performancePosture": {
+      "enum": ["allow", "bounded", "hold"]
+    },
+    "posture": {
+      "enum": ["allow", "bounded", "hold"]
+    },
+    "maxParallelCalls": {
+      "type": "integer",
+      "const": 1
+    },
+    "checkedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "checkedBy": {
+      "type": "string",
+      "minLength": 2
+    },
+    "evidence": {
+      "type": "string",
+      "minLength": 3
+    },
+    "blockingConditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "ppPlan": {
+      "type": "object"
+    },
+    "ppPlanHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "storageEvidence": {
+      "$ref": "#/$defs/storageEvidence"
+    },
+    "receiptHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "storageEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "policy",
+        "planId",
+        "generatedAt",
+        "mode",
+        "volume",
+        "freeGiB",
+        "freePercent",
+        "storageState",
+        "hardFloorPercent",
+        "mediaAdmissionPercent",
+        "mediaGenerationAllowed",
+        "rawPlanHash",
+        "evidenceHash"
+      ],
+      "properties": {
+        "schema": {
+          "const": "arcanea.storage_preflight_evidence.v1"
+        },
+        "policy": {
+          "const": "starlight-machine-performance-contract-v1.1"
+        },
+        "planId": {
+          "type": "string",
+          "minLength": 3
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "mode": {
+          "type": "string",
+          "minLength": 2
+        },
+        "volume": {
+          "type": "string",
+          "minLength": 2
+        },
+        "freeGiB": {
+          "type": "number",
+          "minimum": 0
+        },
+        "freePercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "storageState": {
+          "type": "string",
+          "minLength": 2
+        },
+        "hardFloorPercent": {
+          "type": "number",
+          "const": 8
+        },
+        "mediaAdmissionPercent": {
+          "type": "number",
+          "const": 15
+        },
+        "mediaGenerationAllowed": {
+          "type": "boolean"
+        },
+        "rawPlanHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "evidenceHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

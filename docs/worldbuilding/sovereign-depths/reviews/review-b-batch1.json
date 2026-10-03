@@ -1,0 +1,163 @@
+{
+  "reviewer": "visual_judge",
+  "batch": 1,
+  "method": "Each of six full source images directly inspected separately against its production prompt. No contact-sheet-only review.",
+  "rubric": {
+    "identity": 20,
+    "story": 20,
+    "layout": 20,
+    "anatomy_material": 20,
+    "light_finish": 15,
+    "provenance": 5
+  },
+  "publication_threshold": 85,
+  "scope": "Finished individual gallery key art; not rigs or gameplay verification.",
+  "images": [
+    {
+      "id": "b02",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-bc415b90-0083-4b00-878b-fc922effcad5.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 17,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 88,
+      "decision": "accept",
+      "evidence": [
+        "The shield forearm visibly operates the furnace door while the opposite sword controls the approach lane.",
+        "Adult face, worn materials and planted feet hold the physical-realism bar.",
+        "The circular excavation, elevator and cold/ember light match the furnace region."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Shield forearm reads as a compact forged gauntlet rather than a broad shield; enough functional identity survives for the still."
+      ]
+    },
+    {
+      "id": "b03",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-8aac0d96-47f3-49cf-9055-5e353ea00348.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 17,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 88,
+      "decision": "accept",
+      "evidence": [
+        "Ventral feeding mouth, translucent fin ribbons and displaced fish make the organism distinct from a generic dragon.",
+        "Broad curved body across the portrait frame communicates scale and movement.",
+        "Underwater architecture, divers and veiling water match the Pelagic Cathedral."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Fin roots overlap and extend beyond frame, so exact four-pair construction is not proven by this view; visible anatomy remains plausible."
+      ]
+    },
+    {
+      "id": "b04",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-60734f0c-9eb0-4a3c-8c34-942fff030eff.png",
+      "hard_gate": "hold: ambiguous weapon structure",
+      "scores": {
+        "identity": 16,
+        "story": 15,
+        "layout": 17,
+        "anatomy_material": 14,
+        "light_finish": 13,
+        "provenance": 4
+      },
+      "total": 79,
+      "decision": "repair",
+      "evidence": [
+        "Pitted bronze, soaked cloth, planted stone pavise and a precarious bridge produce an adult military threat.",
+        "Underwater region and relative scale are coherent."
+      ],
+      "publication_blockers": [
+        "The held weapon forks into two long crossing shafts at the grip: the hand holds a near-horizontal staff while a separate diagonal standard rises through it. The connection is not visually established as an intentional mechanism. Replace with one continuous shaft from grip to hooked head, with a short visible butt behind the hand."
+      ],
+      "nonblocking_limits": [
+        "A planted stance reads better than a sweeping action; a clear single hooked shaft will suffice for key-art publication."
+      ]
+    },
+    {
+      "id": "b05",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-73a947d4-6ca4-410b-b66f-e613cbb00b7c.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 19,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 90,
+      "decision": "accept",
+      "evidence": [
+        "External resonator struts, featherless bird anatomy and the bill inside a huge ceramic bell give strong owned identity.",
+        "Concentric dust establishes the acoustic action without arbitrary light effects.",
+        "Wine textiles, ceramic bell chambers and tiny human scale are consistent with the burial-bell region."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Some rib roots are occluded; this is a persuasive creature still rather than a complete anatomical diagram."
+      ]
+    },
+    {
+      "id": "b06",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-432c543a-1c82-4a27-8f15-e386fec34106.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 17,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 13,
+        "provenance": 4
+      },
+      "total": 87,
+      "decision": "accept",
+      "evidence": [
+        "Distinct older human antagonist with readable ceramic ear guards, cracked resonator and hammer contact.",
+        "Challenger foreground and rising dust connect the visual to an imminent encounter.",
+        "Burial-bell materials and spatial repetition pair coherently with b05."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Vaust looks toward the challenger beside rather than through the resonator; this minor staging deviation is not a publication blocker."
+      ]
+    },
+    {
+      "id": "b07",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-42d726f3-86e9-43ad-8900-d22a86288d6e.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 17,
+        "story": 18,
+        "layout": 17,
+        "anatomy_material": 17,
+        "light_finish": 13,
+        "provenance": 4
+      },
+      "total": 86,
+      "decision": "accept",
+      "evidence": [
+        "Climbing posture, loaded wall contact and joint membranes make the arthropod physically persuasive.",
+        "Raised blade limbs and armoured segmented mass provide a distinctive canopy-predator silhouette.",
+        "Aqueduct, rust foliage, deep ravine and distant watch platform establish regional continuity."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Rear legs overlap in the lower body silhouette; exact limb-root topology cannot be established from this oblique still. Avoid labelling it an anatomy turnaround."
+      ]
+    }
+  ],
+  "conclusion": "Five accepted. b04 requires one focused weapon-grip continuity repair before publication. No childish styling observed in this batch."
+}

@@ -1,0 +1,451 @@
+{
+  "meta": {
+    "schema": "arcanea.guardian_identity_atlas.v1",
+    "version": "1.10.0",
+    "generatedAt": "2026-08-25T00:00:00.000Z",
+    "sourceOfTruth": "Locked Guardian names, Gates, domains, and bonds from CANON_LOCKED.md; behavioral studies from the creator-supplied Tenfold Constitution proposal",
+    "truthBoundary": "No reviewed source currently locks Guardian faces, bodies, apparent ages, garments, scale, or cultural embodiment. Every Guardian render is therefore an internal discovery study until a human-approved, versioned physical identity contract supersedes this atlas."
+  },
+  "guardians": [
+    {
+      "id": "lyssandria",
+      "name": "Lyssandria",
+      "gate": "Foundation",
+      "gateIndex": 1,
+      "domain": "Earth and survival",
+      "bondedGodbeast": {
+        "id": "kaelith",
+        "name": "Kaelith",
+        "chordCount": 1
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "A grounded divine presence whose posture redistributes weight rather than dominating it.",
+      "storyBeat": "At a city wall beginning to split, Lyssandria names the load and permits one sacred section to crack so the living center survives.",
+      "discoveryFocus": "Redistribution must read through stance, leverage, and a moved load marker—not bulk, throne language, or immovable-stone cliché.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-011",
+        "identityRound": 2,
+        "dyadJobId": "ACV-031",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "leyla",
+      "name": "Leyla",
+      "gate": "Flow",
+      "gateIndex": 2,
+      "domain": "Creativity and emotion",
+      "bondedGodbeast": {
+        "id": "veloura",
+        "name": "Veloura",
+        "chordCount": 2
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "A listening presence shaped by cycles, reception, and release rather than watery costume shorthand.",
+      "storyBeat": "Leyla opens a perfect reservoir of unshed grief; condensed memory crosses a phase boundary and returns as rain while she remains present for the anger her choice causes.",
+      "discoveryFocus": "Reception and release must read as an enacted cycle—not a water dress, mermaid silhouette, elemental hair, or generic serenity pose.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-012",
+        "identityRound": 2,
+        "dyadJobId": "ACV-032",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "draconia",
+      "name": "Draconia",
+      "gate": "Fire",
+      "gateIndex": 3,
+      "domain": "Power and will",
+      "bondedGodbeast": {
+        "id": "draconis",
+        "name": "Draconis",
+        "chordCount": 3
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Disciplined force held just before excess; a maker and sovereign, never a generic warrior queen.",
+      "storyBeat": "Draconia examines a flawless blade that shattered before use, laughs when its hidden brittleness becomes visible, and begins reforging it with one honest seam.",
+      "discoveryFocus": "Power must read through disciplined making and the decision to stop—not armor, a crown, fire hair, domination, or invincible-warrior shorthand.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-013",
+        "identityRound": 2,
+        "dyadJobId": "ACV-033",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "maylinn",
+      "name": "Maylinn",
+      "gate": "Heart",
+      "gateIndex": 4,
+      "domain": "Love and healing",
+      "bondedGodbeast": {
+        "id": "laeylinn",
+        "name": "Laeylinn",
+        "chordCount": 4
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Care expressed as consent and circulation, with a visible habit of asking before acting.",
+      "storyBeat": "Maylinn pauses before severing a healing network that preserved life by taking away choice; the broken bough remains beside her as consent made visible.",
+      "discoveryFocus": "Care must read as invitation, listening distance, and a reversible gesture—not maternal stereotype, saintly glow, forced embrace, or floral-healer costume.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-014",
+        "identityRound": 2,
+        "dyadJobId": "ACV-034",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "alera",
+      "name": "Alera",
+      "gate": "Voice",
+      "gateIndex": 5,
+      "domain": "Truth and expression",
+      "bondedGodbeast": {
+        "id": "otome",
+        "name": "Otome",
+        "chordCount": 5
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Consequential speech embodied through composure, breath, and the willingness to remain after speaking.",
+      "storyBeat": "In the Hall of Accord, Alera speaks one unpolished sentence and stays as the resonance stone exposes the half-truths nearest to her.",
+      "discoveryFocus": "Truth must read through breath, consequence, and staying in relation—not an open-mouth performance, sound-wave halo, singer costume, or punitive authority.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-015",
+        "identityRound": 2,
+        "dyadJobId": "ACV-035",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "lyria",
+      "name": "Lyria",
+      "gate": "Sight",
+      "gateIndex": 6,
+      "domain": "Intuition and vision",
+      "bondedGodbeast": {
+        "id": "yumiko",
+        "name": "Yumiko",
+        "chordCount": 6
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Perception with an acknowledged edge; observant rather than omniscient, reflective rather than clairvoyant cliché.",
+      "storyBeat": "Lyria maps the visible flood path, marks the hard edge of her aperture, and leaves the unseen consequence visibly unresolved rather than claiming certainty.",
+      "discoveryFocus": "Sight must read through a bounded field, confidence mark, and admitted blind edge—not a third eye, prophecy smoke, galaxy irises, or omniscient gaze.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-016",
+        "identityRound": 2,
+        "dyadJobId": "ACV-036",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "aiyami",
+      "name": "Aiyami",
+      "gate": "Crown",
+      "gateIndex": 7,
+      "domain": "Enlightenment",
+      "bondedGodbeast": {
+        "id": "sol",
+        "name": "Sol",
+        "chordCount": 7
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Illumination that lowers itself to meet another at eye level; no crown-as-status shorthand.",
+      "storyBeat": "Aiyami bows until her eyes meet a novice's and redirects one narrow dawn beam into the novice's working hands—enough light for one difficult task.",
+      "discoveryFocus": "Illumination must read as shared capacity and lowered posture—not a literal crown, enlightenment halo, white-robed guru, or elevated savior.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-017",
+        "identityRound": 2,
+        "dyadJobId": "ACV-037",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "elara",
+      "name": "Elara",
+      "gate": "Starweave",
+      "gateIndex": 8,
+      "domain": "Perspective and transformation",
+      "bondedGodbeast": {
+        "id": "vaelith",
+        "name": "Vaelith",
+        "chordCount": 8
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "A chooser who lets unrealized paths become absent; transformation expressed by consequence, not costume changes.",
+      "storyBeat": "After choosing one road, Elara buries seven small path tokens and makes room to mourn the lives they will no longer become.",
+      "discoveryFocus": "Choice must read through one committed path and seven material absences—not multiverse clones, costume transformations, cosmic portals, or reversible spectacle.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-018",
+        "identityRound": 2,
+        "dyadJobId": "ACV-038",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "ino",
+      "name": "Ino",
+      "gate": "Unity",
+      "gateIndex": 9,
+      "domain": "Partnership",
+      "bondedGodbeast": {
+        "id": "kyuro",
+        "name": "Kyuro",
+        "chordCount": 9
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Communion that preserves two distinct wills; paired geometry must never collapse into sameness.",
+      "storyBeat": "Ino dismantles a single synchronized choir and sets two incompatible scores side by side so their makers can commit to one action without sharing one voice.",
+      "discoveryFocus": "Unity must preserve visible difference and two centers of agency—not mirrored twins, fusion, romantic shorthand, a hive mind, or enforced harmony.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-019",
+        "identityRound": 2,
+        "dyadJobId": "ACV-039",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "shinkami",
+      "name": "Shinkami",
+      "gate": "Source",
+      "gateIndex": 10,
+      "domain": "Meta-consciousness",
+      "bondedGodbeast": {
+        "id": "source-convergence",
+        "name": "Source / Ten-Chorded",
+        "chordCount": 10
+      },
+      "readiness": "discovery-only",
+      "evidenceState": "locked-name-gate-domain-creator-proposed-behavior-physical-identity-open",
+      "behaviorThesis": "Source as participation without possession; quiet awareness, never an all-solving supreme hero.",
+      "storyBeat": "At the final threshold, Shinkami refuses Malachar's clenched claim, grieves, and does not compel surrender—preserving freedom at real cost.",
+      "discoveryFocus": "Source must read through restraint, an unoccupied threshold, and non-possession—not supreme scale, omnipotent glow, deity throne, or instant resolution.",
+      "openIdentityVariables": [
+        "embodiment type and apparent age",
+        "facial structure, skin tone, hair, body proportions, and gender expression",
+        "garment architecture, maintained objects, and material culture",
+        "scale relative to people, architecture, and the bonded Godbeast",
+        "cultural or geographic visual language, if any"
+      ],
+      "reviewRequirements": [
+        "Creator selects or rejects the physical identity only after comparative silhouette, portrait, and action studies",
+        "Canon review records every accepted physical trait before an identity-master contract is issued",
+        "Rights and qualified cultural-origin review are required before using a human reference or culturally specific visual language"
+      ],
+      "sensitivityReviewRequired": false,
+      "sourceRefs": [
+        ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+        "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+      ],
+      "campaign": {
+        "identityJobId": "ACV-020",
+        "identityRound": 2,
+        "dyadJobId": "ACV-040",
+        "dyadRound": 4,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "types": ["node"]
+  },
+  "include": [
+    "next-env.d.ts",
+    "types/**/*.d.ts",
+    "app/sitemap.ts",
+    "app/api/worlds/generate-image/route.ts",
+    "app/constellation/**/*.tsx",
+    "components/command-palette.tsx",
+    "components/navigation/navbar.tsx",
+    "components/visual-encyclopedia/visual-encyclopedia.tsx",
+    "lib/arcanea-constellation/schema.ts",
+    "lib/worlds/image-gen.ts"
+  ],
+  "exclude": ["node_modules"]
+}

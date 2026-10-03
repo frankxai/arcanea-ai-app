@@ -1,0 +1,193 @@
+{
+  "reviewer": "/root/cinematic_research",
+  "reviewedAt": "2026-09-09",
+  "batch": "b14,b15,b16,b18,b19,b20",
+  "method": "Each of six actual files individually inspected using view_image after reading exact production prompt. Five equal-weight editorial dimensions 0–100; overall >=85 and every critical dimension >=75. Cinematic still review, not orthographic anatomy, motion, optical simulation, game balance or canon-promotion certification.",
+  "thresholds": {
+    "overallMinimum": 85,
+    "criticalMinimum": 75,
+    "criticalDimensions": [
+      "identity",
+      "anatomy",
+      "composition",
+      "materials",
+      "story"
+    ]
+  },
+  "summary": {
+    "accepted": ["b14", "b15", "b16", "b18", "b19", "b20"],
+    "repair": []
+  },
+  "images": [
+    {
+      "id": "b14",
+      "name": "Kethrane",
+      "manifest": "generated-b14.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-cb5dd5e0-202e-4fa6-a98f-e4d0cbc4668f.png",
+      "sha256": "03dd6474db085a386aa7967d275437b569fabbab42b07361654d270065f3e719",
+      "scores": {
+        "identity": 90,
+        "anatomy": 91,
+        "composition": 92,
+        "materials": 93,
+        "story": 91
+      },
+      "total": 91.4,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Mature weathered face, shaved hair and practical lamellar silhouette distinguish a grounded warrior rather than a glamour pose.",
+        "Both hands visibly hold the long grip, blade remains continuous, and wide foot placement is credible on the icy narrow bridge.",
+        "Opponent, thaw channel, timber structure and cold/warm lighting establish a specific duel geography."
+      ],
+      "defectsOrLimits": [
+        "The hands are close together rather than widely separated, but their grip topology is coherent.",
+        "Her defensible claim and non-evil rivalry remain narrative assertions, not conclusions drawn from the image."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b15",
+      "name": "The Verdigris Monarch",
+      "manifest": "generated-b15.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-83772454-4d79-4025-b91c-1ad9f9bef583.png",
+      "sha256": "f0f45905e4be32d992580711852f6921f9993d328dec7bf6f7807964aeb4a7f7",
+      "scores": {
+        "identity": 92,
+        "anatomy": 89,
+        "composition": 94,
+        "materials": 94,
+        "story": 92
+      },
+      "total": 92.2,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Hollow trunk, mineral-root body and broad stone-leaf canopy establish a nonfacial plant organism distinct from humanoid tree guardians.",
+        "An elevated root and falling soil reveal a sinkhole and show the creature changing the traversable environment.",
+        "Terraces, laboratory domes, two explorers and warm green light provide scale, civilization history and luminous wonder."
+      ],
+      "defectsOrLimits": [
+        "The canopy is slightly cropped at the top.",
+        "Roots merge into living terrain; exact four-leg topology is not fully countable in this cinematic image and should not be labeled rig-verified."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b16",
+      "name": "Khaross",
+      "manifest": "generated-b16.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-d51cdaef-0f6f-4e36-9395-2abebc982b36.png",
+      "sha256": "a58f504a112979aefba7a2c184bc379dd49542647a2a406cd795ef2763a7e6e8",
+      "scores": {
+        "identity": 90,
+        "anatomy": 90,
+        "composition": 91,
+        "materials": 93,
+        "story": 90
+      },
+      "total": 90.8,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Repeated short articulated legs, elongated body and blunt rasping mouth create credible arthropod threat.",
+        "Gold coloration belongs to the biological plate sequence rather than decorative jewelry; surface wear and dark belly prevent a toy finish.",
+        "The emerging mineral seam and surveyor connect feeding behavior to the botanical crater."
+      ],
+      "defectsOrLimits": [
+        "Tail continues outside frame, appropriate to the long-body close composition.",
+        "Antenna forks and the exact stolen-vein mechanism are not clearly resolved. The visible mineral exposure supports feeding association but not the entire written causal explanation."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b18",
+      "name": "The Prism Warden",
+      "manifest": "generated-b18.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-40758f1e-4a58-4d25-8c9b-bb7fbb54ead8.png",
+      "sha256": "60683c7fee5ba697fc9f75564990b95bbc38a7027e785d1c6c9c569dffb499bb",
+      "scores": {
+        "identity": 85,
+        "anatomy": 85,
+        "composition": 88,
+        "materials": 91,
+        "story": 84
+      },
+      "total": 86.6,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Single tall prism, two horizontal vanes and faceless mineral supports are clearly recognizable.",
+        "The clear crystal and dark joint materials remain distinct; the severe storm court maintains a coherent visual relation to Avarra.",
+        "One incoming white beam and outgoing spectral paths communicate an optical encounter concept."
+      ],
+      "defectsOrLimits": [
+        "Three support feet are clearly visible; a fourth may be occluded. The present silhouette reads close to a tripod, so a later reference sheet must settle the four-leg architecture.",
+        "Outgoing rainbow bands are more conspicuous and diagrammatic than the more restrained effects elsewhere. They remain legible but this should be the upper bound on rainbow intensity for the series.",
+        "Literal optical ray consistency and exact refraction are not validated by a generated still; present this as fictional optical key art rather than a physics demonstration."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b19",
+      "name": "Draeven",
+      "manifest": "generated-b19.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-a04fa0bf-4638-4b84-adb5-ec78ceccfe9d.png",
+      "sha256": "3834d8374560c423665986ed72be7bdcae76be58ecd25c4386242cc7f3017821",
+      "scores": {
+        "identity": 90,
+        "anatomy": 92,
+        "composition": 92,
+        "materials": 94,
+        "story": 92
+      },
+      "total": 92.0,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Adult dark-bearded face, salt sash, coat and chain handling make an individual naval antagonist.",
+        "The tensioned chain connects visibly to the capstan, while the second grapnel hangs in a clear separate silhouette. Grip and grounded stance are coherent.",
+        "Ship keel, gangways, boats and boarding party make the arsenal feel inhabited and contested."
+      ],
+      "defectsOrLimits": [
+        "Only one exposed grapnel head is clearly visible; the other chain endpoint is occluded around the capstan. This is plausible staging, not proof of the complete chain inventory.",
+        "The low grapnel is poised rather than visibly sweeping in motion; the still depicts preparation."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b20",
+      "name": "The Keelbreaker",
+      "manifest": "generated-b20.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-e900e884-7863-49ce-ab59-17af43041dac.png",
+      "sha256": "31dcb36d09adcb79d9dd1fdbcaf2694c2767321c602c8a390c2851c9d01f74d0",
+      "scores": {
+        "identity": 91,
+        "anatomy": 89,
+        "composition": 94,
+        "materials": 94,
+        "story": 95
+      },
+      "total": 92.6,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Unequal claws have different jobs: the large claw impacts the lifted hull while the smaller blocks the ladder beside the foreground escape viewpoint.",
+        "Cracked timber, streaming water, waves and wet shell deliver physical force and consequences.",
+        "Tiny protected eyes and broad heavy body retain natural crustacean identity without mascot expression."
+      ],
+      "defectsOrLimits": [
+        "Some walking legs disappear in water or behind the body. Exact six-leg completeness is not independently countable.",
+        "The image shows the hull being punctured or crushed as well as lifted; the encounter description should permit that visible physical consequence."
+      ],
+      "targetedRepair": []
+    }
+  ],
+  "ensembleNote": "The faceless botanical organism and golden biological parasite successfully extend luminous adult fantasy. The Prism Warden is the lowest-scoring acceptance in this batch because its spectrum effects are comparatively diagrammatic and its support-leg count is visually ambiguous; neither is an observed extra-limb or broken-geometry hard failure."
+}

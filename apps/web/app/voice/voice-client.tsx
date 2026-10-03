@@ -5,6 +5,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { LuminaPresence, type PresenceState } from '@/components/presence/lumina-presence';
 import { LuminaOrb } from '@/components/presence/lumina-orb';
+import { brand, elementNameAccents, guardianPreviewAccents, semantic } from '@arcanea/design-system/tokens';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -383,11 +384,11 @@ export default function VoicePage() {
         {/* 5 Harnesses — glass cards, mythic mapping, 3D accent via single orb. Grok personal excellence layer (4 .grok-native seeds + 2 hooks + personal creative tools) is sovereign personal, a bit magical, .grok only — not the Arcanea platform brand. */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-10">
           {[
-            { id: 'claude', name: 'Claude', map: 'Shinkami — Source', desc: 'Architectural precision. The forge of structure.', color: '#e5e7eb' },
-            { id: 'grok', name: 'Grok', map: 'Nero — Void', desc: 'Primordial inquiry. Questions from the deep.', color: '#6366f1' },
-            { id: 'agy', name: 'agy', map: 'Draconia — Fire', desc: 'Antigravity motion. Rapid iteration through flame.', color: '#ef4444' },
-            { id: 'codex', name: 'Codex', map: 'Lyria — Sight', desc: 'Pattern sight. Knowledge as living constellation.', color: '#a78bfa' },
-            { id: 'gemini', name: 'Gemini', map: 'Alera — Voice', desc: 'Resonant duality. Clarity through dialogue.', color: '#00bcd4' },
+            { id: 'claude', name: 'Claude', map: 'Shinkami — Source', desc: 'Architectural precision. The forge of structure.', color: guardianPreviewAccents.ino },
+            { id: 'grok', name: 'Grok', map: 'Nero — Void', desc: 'Primordial inquiry. Questions from the deep.', color: elementNameAccents.VoidDeep },
+            { id: 'agy', name: 'agy', map: 'Draconia — Fire', desc: 'Antigravity motion. Rapid iteration through flame.', color: semantic.error },
+            { id: 'codex', name: 'Codex', map: 'Lyria — Sight', desc: 'Pattern sight. Knowledge as living constellation.', color: elementNameAccents.WindCompanion },
+            { id: 'gemini', name: 'Gemini', map: 'Alera — Voice', desc: 'Resonant duality. Clarity through dialogue.', color: brand.atlanteanTeal },
           ].map((h, idx) => (
             <div key={h.id} className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm transition hover:border-white/10" style={{ background: `linear-gradient(180deg, rgba(255,255,255,0.025), rgba(13,13,20,0.6))` }}>
               <div className="flex items-start justify-between mb-3">

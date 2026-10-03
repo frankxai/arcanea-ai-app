@@ -1,0 +1,112 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an internal identity-discovery study of Draconis; do not present provisional traits as canonical.",
+  "subject": {
+    "stableId": "draconis",
+    "displayName": "Draconis",
+    "kind": "godbeast",
+    "identityLock": "Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes. The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; its exact body remains canon-pending.",
+    "evidenceState": "locked-relation-local-function-grounded-physical-form-pending-proposed-morphology",
+    "openIdentityVariables": [
+      "ceramic plate geometry, joinery, wear, and thermal response",
+      "recessed mask-face, sensory organs, and posture-based expression",
+      "six-limb proportions, stance, and locomotion without membrane wings",
+      "temper-vane placement and three distinct material functions",
+      "absolute scale, forge ecology, and relationship to later draconids"
+    ],
+    "allowedVariation": "This internal study tests one named creator-proposed morphology candidate. Hold its topology and exactly 3 Chord terminals constant inside this plate so the candidate can be evaluated; vary only the explicitly open detail variables. The held candidate is not canon and implies no acceptance. Locked Gate relation and locally grounded functional phenomena may not drift."
+  },
+  "storyBeat": "Beside a flawless blade that shattered before use, Draconis breathes once through its furnace ribs until the old fracture line glows white; the three temper vanes register the brittleness that existed before the break, exposing material truth rather than attacking.",
+  "composition": "4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "4:5",
+    "intendedSurface": "godbeast-dossier-and-morphology-atlas",
+    "deliveryRole": "controlled style benchmark and Godbeast morphology proposal discovery plate",
+    "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "ritual-brutalism",
+    "direction": "monolithic sculptural composition, stone ceramic and metal, severe negative space, architectural light cuts, small human-scale evidence, countable silhouette",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      ".arcanea/lore/CANON_LOCKED.md#tier-2-the-ten-gates--arcanean-gods-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+      ".arcanea/lore/godbeasts/draconis.md [sha256:2d4c1d8d54fc709cb94be20801a35d9cfa1720f2fbbccf044bbd5f2e7f68dc56]",
+      "creator-supplied/ARCANEA_TENFOLD_CONSTITUTION_V1_0_LEVEL99.md#sha256=51ead4677134b87e35fd6ded6556dc67f9daa609313bcd9eccc74f6d94de998b (proposal-evidence-not-repo-ssot)"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "limbs, Chords, face architecture, locomotion anatomy, and scale evidence remain coherent",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+    "exactly 3 countable Chord terminals in silhouette",
+    "sovereign ecology, never pet, mount, or visual effect",
+    "the named morphology is a controlled proposal under evaluation, never a canonical portrait or identity master",
+    "The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; its exact body remains canon-pending.",
+    "Draconis remains wingless with exactly six limbs and exactly three temper vanes",
+    "the flawless broken blade and its visible old fracture line remain the single evidence object"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal",
+    "generic dark fantasy",
+    "oppressive monochrome",
+    "war monument propaganda",
+    "unmotivated runes",
+    "unreadable scale",
+    "generic dragon",
+    "generic spirit animal"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "internal-only-until-identity-lock",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": [
+      "Creator explicitly accepts, amends, or rejects the tested morphology candidate against locked canon and the local Godbeast record",
+      "Identity review records the accepted clade, Chord anatomy, limb count, face and sensory architecture, locomotion, scale, ecology, and material system before issuing a reference master",
+      "Grayscale silhouette, orthographic anatomy, action, habitat, and bonded-dyad studies must agree before any public identity approval"
+    ]
+  },
+  "contractHash": "d91ac9cebcbe339a2c3d6c72bd6750c4ecb4d71be7fb2c60b7a878ae42eb2570"
+}

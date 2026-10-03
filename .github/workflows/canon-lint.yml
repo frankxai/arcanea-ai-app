@@ -1,12 +1,16 @@
 name: Canon Lint
 
 on:
+  # No paths filter. A path-filtered workflow produces no check run at all, which
+  # leaves a required context permanently Pending and blocks the merge; keeping the
+  # trigger unconditional is what makes this guard safe to promote to required.
+  # File scoping lives in the changed-files step below, where it is an input to the
+  # check rather than a condition on whether the check reports.
   pull_request:
     branches: [main]
-    paths:
-      - 'book/**'
-      - '.arcanea/lore/**'
-      - 'apps/web/content/**'
+    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
+    # job skips on the draft and never reports once the PR is marked ready.
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: canon-${{ github.ref }}
@@ -14,6 +18,8 @@ concurrency:
 
 jobs:
   canon-lint:
+    # Cost gate: skip on draft PRs — agents iterate free; the canon check runs when marked ready.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Canon Consistency Check
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -24,7 +30,10 @@ jobs:
 
       - name: Get changed files
         id: changed
-        uses: tj-actions/changed-files@v47
+        # Pinned to a commit SHA, not a tag: this action supplies the file list the
+        # canon verdict is computed over, and a mutable tag lets that code change
+        # under the guard. Dependabot's github-actions ecosystem keeps the pin fresh.
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
           files: |
             book/**
@@ -32,7 +41,10 @@ jobs:
             apps/web/content/**
 
       - name: Validate Guardian names
-        if: steps.changed.outputs.any_changed == 'true'
+        # Unconditional. A step-level condition here skips the only assertion in the
+        # job while the job still reports success -- a green nothing earned. With the
+        # paths filter gone, an empty changed-file set is the honest 'this PR touched
+        # no canon' case and reporting zero violations for it is true.
         run: |
           echo "## Canon Lint Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

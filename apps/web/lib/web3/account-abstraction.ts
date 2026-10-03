@@ -23,8 +23,10 @@ export class AccountAbstractionService {
   private supabaseAnonKey: string;
 
   constructor() {
-    this.supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://example.supabase.co";
-    this.supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy-anon-key";
+    this.supabaseUrl =
+      process.env.NEXT_PUBLIC_SUPABASE_URL || "https://example.supabase.co";
+    this.supabaseAnonKey =
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy-anon-key";
   }
 
   /**
@@ -34,7 +36,10 @@ export class AccountAbstractionService {
    * @param userId The Supabase authenticated user ID
    * @param provider OAuth provider (e.g. 'github' or 'google')
    */
-  async getOrCreateSmartAccount(userId: string, provider: string = "github"): Promise<AAWalletSession> {
+  async getOrCreateSmartAccount(
+    userId: string,
+    provider: string = "github",
+  ): Promise<AAWalletSession> {
     const supabase = createClient(this.supabaseUrl, this.supabaseAnonKey);
 
     // 1. Check if we already have the wallet persisted in our user profiles
@@ -49,7 +54,9 @@ export class AccountAbstractionService {
         walletAddress: profile.wallet_address,
         smartAccountType: "ZeroDev",
         chainId: 84532, // Base Sepolia
-        ownerAddress: profile.wallet_owner_address || "0x0000000000000000000000000000000000000000",
+        ownerAddress:
+          profile.wallet_owner_address ||
+          "0x0000000000000000000000000000000000000000",
         paymasterEnabled: true,
       };
     }
@@ -58,24 +65,25 @@ export class AccountAbstractionService {
     // In production, this imports `@zerodev/sdk` and derives a counterfactual address:
     // const signer = await getPasskeySigner(userId);
     // const account = await createKernelAccount(publicClient, { plugins: [signer] });
-    
+
     // Deterministic address generation from userId seed
     const derivedWallet = this.deriveAddressFromSeed(userId);
     const derivedOwner = this.deriveAddressFromSeed(userId + "-owner");
 
     // 3. Save the derived wallet address to Supabase database
     try {
-      await supabase
-        .from("user_profiles")
-        .upsert({
-          user_id: userId,
-          wallet_address: derivedWallet,
-          wallet_owner_address: derivedOwner,
-          provider_type: provider,
-          created_at: new Date().toISOString(),
-        });
+      await supabase.from("user_profiles").upsert({
+        user_id: userId,
+        wallet_address: derivedWallet,
+        wallet_owner_address: derivedOwner,
+        provider_type: provider,
+        created_at: new Date().toISOString(),
+      });
     } catch (err) {
-      console.warn("Failed to persist derived smart account (continuing in mock mode):", err);
+      console.warn(
+        "Failed to persist derived smart account (continuing in mock mode):",
+        err,
+      );
     }
 
     return {
@@ -97,21 +105,25 @@ export class AccountAbstractionService {
   async executeSponsoredTransaction(
     userWallet: AAWalletSession,
     targetContract: string,
-    calldata: string
+    calldata: string,
   ): Promise<{ txHash: string; success: boolean; gasSponsoredWei: string }> {
     console.log(
-      `[AccountAbstraction] Executing sponsored tx on behalf of ${userWallet.walletAddress} targeting ${targetContract}`
+      `[AccountAbstraction] Executing sponsored tx on behalf of ${userWallet.walletAddress} targeting ${targetContract} with ${calldata.length} calldata bytes`,
     );
 
     // Mock ZeroDev paymaster operation
     // In production:
     // const userOp = await kernelClient.sendUserOperation({ to: targetContract, data: calldata });
     // const receipt = await kernelClient.waitForUserOperationReceipt(userOp);
-    
+
     // Simulate network delay
     await new Promise((resolve) => setTimeout(resolve, 800));
 
-    const mockHash = "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
+    const mockHash =
+      "0x" +
+      Array.from({ length: 64 }, () =>
+        Math.floor(Math.random() * 16).toString(16),
+      ).join("");
 
     return {
       txHash: mockHash,

@@ -3,9 +3,9 @@ import { PlatformStudioShell, STUDIO_BY_ID } from "@/components/studio";
 import { McpCommandCenter } from "./mcp-command-center";
 
 export const metadata: Metadata = {
-  title: "MCP & CLI - Arcanea",
+  title: "MCP reader",
   description:
-    "Connect Arcanea to Claude, Codex, Cursor, local MCP clients, and studio workflows.",
+    "Connect Claude, Codex, or Cursor to the free Arcanea reader. Rubrics, canon lint, and a score that cannot grant ship. No install and no API key.",
   alternates: { canonical: "/mcp" },
 };
 
@@ -14,9 +14,9 @@ export default function McpPage() {
     <>
       <PlatformStudioShell
         studio={STUDIO_BY_ID["agent-os"]}
-        label="Arcanea for any AI"
-        title="Arcanea MCP for Claude, Codex, Cursor, and local agents"
-        subtitle="Install the open-core MCP server, load world and studio context, run creative production recipes, and export handoffs that other agents can build from."
+        label="Free reader, live now"
+        title="A reader your agent can call before it invents the world"
+        subtitle="No install and no API key. The public door returns the rubrics, a deterministic lint, and a score that will not call a draft ship."
       />
       <McpCommandCenter />
     </>

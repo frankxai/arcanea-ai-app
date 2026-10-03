@@ -1,0 +1,205 @@
+{
+  "reviewer": "/root/cinematic_research",
+  "reviewedAt": "2026-09-09",
+  "batch": "b02-b07",
+  "method": "Direct view_image inspection of all six generated images with production prompts. Five dimensions scored independently from 0 to 100, equal-weight mean. Acceptance requires total >=85, every critical dimension >=75, and no unresolved visible structural failure. Not motion/audio/gameplay/model-sheet certification.",
+  "scoring": {
+    "dimensions": ["identity", "anatomy", "composition", "materials", "story"],
+    "weights": {
+      "identity": 0.2,
+      "anatomy": 0.2,
+      "composition": 0.2,
+      "materials": 0.2,
+      "story": 0.2
+    },
+    "acceptance": 85,
+    "criticalMinimum": 75,
+    "criticalDimensions": [
+      "identity",
+      "anatomy",
+      "composition",
+      "materials",
+      "story"
+    ]
+  },
+  "summary": {
+    "accepted": ["b02", "b03", "b05", "b06"],
+    "repair": ["b04", "b07"]
+  },
+  "images": [
+    {
+      "id": "b02",
+      "name": "Ithraden",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-bc415b90-0083-4b00-878b-fc922effcad5.png",
+      "sha256": "ba7df37c4f621e08c4fc42c65381520191379d93f093461b75cbd2554a1d527b",
+      "scores": {
+        "identity": 88,
+        "anatomy": 92,
+        "composition": 91,
+        "materials": 94,
+        "story": 91
+      },
+      "total": 91.2,
+      "decision": "ACCEPT",
+      "observations": [
+        "Mature individual face, practical asymmetrical costume and forged arm are clearly resolved.",
+        "Furnace-door contact, braced feet and diagonal blade turn the environment into tactical action.",
+        "Orange source light against cold shaft daylight separates materials and body without excessive effects."
+      ],
+      "defectsOrLimits": [
+        "The arm terminus is a compact heavy fitting rather than the broad shield plate described. It remains visually plausible as a heatproof shutter-working prosthesis; carry the actual silhouette into subsequent reference images.",
+        "The blade points across the platform toward the opponent rather than literally into the escaping hot lane. Do not claim the exact paper mechanic was demonstrated."
+      ],
+      "targetedRepair": [],
+      "adultRegister": "PASS",
+      "originality": "No obvious directly reproduced franchise identity observed; this is an editorial visual assessment, not a legal clearance.",
+      "gatePassed": true
+    },
+    {
+      "id": "b03",
+      "name": "Serath",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-8aac0d96-47f3-49cf-9055-5e353ea00348.png",
+      "sha256": "fbf48d4a72f8a709a6b72f2cde0afae38398f50c71fcd9b25497b32d3651ee08",
+      "scores": {
+        "identity": 92,
+        "anatomy": 88,
+        "composition": 94,
+        "materials": 94,
+        "story": 88
+      },
+      "total": 91.2,
+      "decision": "ACCEPT",
+      "observations": [
+        "Narrow sculpted head, underside mouth and long fluid fin silhouette give the organism an owned identity without a humanoid expression.",
+        "Displaced schooling fish, tiny divers and cathedral gulf establish a convincing scale relationship and ecological action.",
+        "Nacre structure, living skin and membrane edges have distinct credible light response."
+      ],
+      "defectsOrLimits": [
+        "Several fin roots and trailing portions are occluded or cropped. Eight fins arranged in four pairs cannot be independently counted from this cinematic view; no orthographic anatomy verification is claimed.",
+        "The numerical thirty-metre length is not measurable from the image; the enormous pelagic scale is clear."
+      ],
+      "targetedRepair": [],
+      "adultRegister": "PASS",
+      "originality": "No obvious directly reproduced franchise identity observed; this is an editorial visual assessment, not a legal clearance.",
+      "gatePassed": true
+    },
+    {
+      "id": "b04",
+      "name": "Morvane",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-60734f0c-9eb0-4a3c-8c34-942fff030eff.png",
+      "sha256": "d9cdc613263e6f025860b6fc74e7606ddc1037d313393c73673cf766f25d930d",
+      "scores": {
+        "identity": 82,
+        "anatomy": 72,
+        "composition": 88,
+        "materials": 94,
+        "story": 76
+      },
+      "total": 82.4,
+      "decision": "REPAIR",
+      "observations": [
+        "Salt-pitted faceplate, stone pavise and waterlogged military clothing have strong mature material identity.",
+        "Submerged bridge, gulf and challenger establish a dangerous narrow crossing."
+      ],
+      "defectsOrLimits": [
+        "The visible hand grips a near-horizontal rod that crosses or joins an independently angled hooked standard at a collar. This reads as two shafts or a compound cross-tool, not a single wielded hooked military standard.",
+        "The upright hook does not show the promised sweep across the bridge. The ambiguity concerns weapon attachment and threat direction, not an objection to intentional occlusion."
+      ],
+      "targetedRepair": [
+        "Edit only weapon and gripping hand: retain one uninterrupted staff from the existing hand to the hooked head, set in a sweeping diagonal across the bridge. Remove the extra intersecting horizontal extension and crossing collar.",
+        "Preserve head, pavise, body pose, underwater environment and lighting. Make hand wrap around the single shaft with a readable continuous grip; let torn standard cloth stream behind the hook."
+      ],
+      "adultRegister": "PASS",
+      "originality": "No obvious directly reproduced franchise identity observed; this is an editorial visual assessment, not a legal clearance.",
+      "gatePassed": false
+    },
+    {
+      "id": "b05",
+      "name": "The Marrow Regent",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-73a947d4-6ca4-410b-b66f-e613cbb00b7c.png",
+      "sha256": "9f01cb1007222229960adba021b8131f7252979db4b021b441977c26d0c9152d",
+      "scores": {
+        "identity": 93,
+        "anatomy": 89,
+        "composition": 90,
+        "materials": 93,
+        "story": 94
+      },
+      "total": 91.8,
+      "decision": "ACCEPT",
+      "observations": [
+        "High narrow bird body, long ivory bill and opened resonator mantle make a distinctive original silhouette.",
+        "Bill entering the burial bell and dust rising in bands express a specific dangerous action; the environment is integral to its mechanics.",
+        "Ivory keratin, dark skin, muted throat membrane, ceramic and ceremonial fabric remain separate under restrained lighting."
+      ],
+      "defectsOrLimits": [
+        "Some mantle struts overlap; the exact six-strut arrangement is not independently verified.",
+        "A few strut joints resemble bindings or hard mechanical couplings. Document whether these are natural joints or sect modifications when creating a model reference; no new explanation is inferred as canon."
+      ],
+      "targetedRepair": [],
+      "adultRegister": "PASS",
+      "originality": "No obvious directly reproduced franchise identity observed; this is an editorial visual assessment, not a legal clearance.",
+      "gatePassed": true
+    },
+    {
+      "id": "b06",
+      "name": "Vaust",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-432c543a-1c82-4a27-8f15-e386fec34106.png",
+      "sha256": "ad06f07ed506d6e410858e20f439497cd0fbef4d2edbc8c85716030495d068cb",
+      "scores": {
+        "identity": 90,
+        "anatomy": 92,
+        "composition": 91,
+        "materials": 93,
+        "story": 93
+      },
+      "total": 91.8,
+      "decision": "ACCEPT",
+      "observations": [
+        "Older scarred face, ceramic ear guards, cracked resonator and tuning hammer create a memorable human-scale antagonist.",
+        "Hammer-to-bell contact, aimed attention and rising chalk disturbance convey a specific encounter state.",
+        "Foreground challenger gives spatial pressure while leaving the antagonist and tools readable; deep bell repetition supports the location."
+      ],
+      "defectsOrLimits": [
+        "His eye line is toward the challenger beside the resonator, not visibly through the frame as requested. This does not undermine scene readability.",
+        "The image establishes method and presence; chosen cruelty and affiliation remain narrative facts, not visually verified facts."
+      ],
+      "targetedRepair": [],
+      "adultRegister": "PASS",
+      "originality": "No obvious directly reproduced franchise identity observed; this is an editorial visual assessment, not a legal clearance.",
+      "gatePassed": true
+    },
+    {
+      "id": "b07",
+      "name": "Orryx",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-42d726f3-86e9-43ad-8900-d22a86288d6e.png",
+      "sha256": "801991dfe9d4e949ba9617dda995f4912caa4498f5cdad3ce0f6c5fa96558f08",
+      "scores": {
+        "identity": 89,
+        "anatomy": 72,
+        "composition": 92,
+        "materials": 94,
+        "story": 92
+      },
+      "total": 87.8,
+      "decision": "REPAIR",
+      "observations": [
+        "Olive plates, reddish joints and moss make the organism feel embedded in a living forest.",
+        "Upper blade contact, body hoist and broken stone strongly communicate locomotion and load.",
+        "Sunlit red canopy, aqueduct and misty ravine provide welcome tonal range without weakening adult menace."
+      ],
+      "defectsOrLimits": [
+        "Two raised blade forelimbs are clear, but below them the overlapping body presents what appear to be five descending locomotor appendages. In particular the partially occluded lower-left/rear chain competes with the far-side descending leg.",
+        "This is an ambiguous visible limb topology, not a confident claim about unseen anatomy. The current key art does not cleanly support the explicit four locomotor legs plus two blades identity."
+      ],
+      "targetedRepair": [
+        "Preserve composition, head, two raised blades, body mass and all environmental detail. Edit the lower body only so exactly four locomotor legs can be traced from root to foot or to an intentional occlusion.",
+        "Retain the two dominant near-side planted legs and two separated far-side support legs. Remove the redundant partially occluded lower-left/rear appendage rather than adding more limb detail.",
+        "Keep joint membrane continuity and convincing contact after removal; do not turn this into a static anatomy-sheet pose."
+      ],
+      "adultRegister": "PASS",
+      "originality": "No obvious directly reproduced franchise identity observed; this is an editorial visual assessment, not a legal clearance.",
+      "gatePassed": false
+    }
+  ]
+}

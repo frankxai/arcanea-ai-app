@@ -27,6 +27,18 @@ async function exists(p: string) {
   }
 }
 
+/**
+ * Next.js normalises encoded separators out of a dynamic segment today, so `bookSlug`
+ * has not been observed to escape BOOK_ROOT. This resolves the slug against the actual
+ * directory listing anyway: the guarantee belongs to this route, not to the router's
+ * current normalisation behaviour.
+ */
+async function resolveBookDir(bookSlug: string): Promise<string | null> {
+  const entries = await readdir(BOOK_ROOT, { withFileTypes: true });
+  const match = entries.find((e) => e.isDirectory() && e.name === bookSlug);
+  return match ? join(BOOK_ROOT, match.name) : null;
+}
+
 interface BookManifest {
   title?: string;
   slug?: string;
@@ -52,9 +64,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function AuthorWorkspacePage({ params }: PageProps) {
   const { bookSlug, chapterSlug } = await params;
-  const bookDir = join(BOOK_ROOT, bookSlug);
-  const chaptersDir = join(bookDir, 'chapters');
+  const bookDir = await resolveBookDir(bookSlug);
+  if (!bookDir) notFound();
 
+  const chaptersDir = join(bookDir, 'chapters');
   if (!(await exists(chaptersDir))) notFound();
 
   // Load book manifest

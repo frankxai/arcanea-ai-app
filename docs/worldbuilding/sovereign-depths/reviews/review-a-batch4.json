@@ -1,0 +1,289 @@
+{
+  "reviewer": "/root/cinematic_research",
+  "reviewedAt": "2026-09-09",
+  "batch": "b21,b22,b23,b24,d06,d07,d08,d09,d10",
+  "method": "Each actual image individually inspected after its exact prompt. Five equal-weight editorial dimensions; overall >=85 and every critical dimension >=75, with independent finishing hard gates. Anatomy for environments denotes structural and spatial credibility. This is cinematic concept-art review, not orthographic, optical, playable-level or canon certification.",
+  "thresholds": {
+    "overallMinimum": 85,
+    "criticalMinimum": 75,
+    "criticalDimensions": [
+      "identity",
+      "anatomy",
+      "composition",
+      "materials",
+      "story"
+    ]
+  },
+  "summary": {
+    "accepted": ["b21", "b22", "b23", "b24", "d06", "d08", "d09"],
+    "repair": ["d07", "d10"]
+  },
+  "images": [
+    {
+      "id": "b21",
+      "name": "The Ashen Astronomer",
+      "manifest": "generated-b21.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-9e05dba1-e01d-4d8a-aba1-117c4d2bcbd6.png",
+      "sha256": "8fda216d59abbe06a1c2774030760fee6bd6bc10818006f2fc66e3e93f125382",
+      "scores": {
+        "identity": 92,
+        "anatomy": 89,
+        "composition": 92,
+        "materials": 93,
+        "story": 91
+      },
+      "total": 91.4,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "A mature blindfolded scholar and portable crescent instrument create a markedly different human antagonist from the armored warriors.",
+        "The continuous rods, held controls and grounded stance make the apparatus feel engineered; the reflected light line gives it visible agency.",
+        "The causeway, excavated rings, tiny distant architecture and eclipse produce depth without burying the face in effects."
+      ],
+      "defectsOrLimits": [
+        "The specified shoulder/hip support is less explicit than the visible hand support and tripod-like bracing.",
+        "Ritual motive, exact height and movement remain lore or implementation claims."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b22",
+      "name": "Veyrath",
+      "manifest": "generated-b22.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-4a9e7683-c600-42c6-9022-9f6c6e995fd2.png",
+      "sha256": "e5b38bc8e52080b4fb407773460da3226bf47112dadfd31aff340282c8334bd0",
+      "scores": {
+        "identity": 95,
+        "anatomy": 91,
+        "composition": 94,
+        "materials": 94,
+        "story": 93
+      },
+      "total": 93.4,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Three asymmetrical shell volumes and a long low muscular foot establish a striking nonhumanoid desert organism.",
+        "Sand falling from the shell connects its enormous mass to the lens-well excavation below.",
+        "Fleeing figures, concentric ruins and sharp-to-hazy depth make the environmental encounter immediately intelligible."
+      ],
+      "defectsOrLimits": [
+        "The feeding slit is subordinate to the much stronger shell silhouette; a later anatomy sheet should clarify its mechanism."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b23",
+      "name": "The Sable Testament",
+      "manifest": "generated-b23.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-638c3574-7c63-4b8f-aaf1-99483b455e82.png",
+      "sha256": "07e3ffbf714089249726d380b223aace6b7083b3ab9d7100fbe0ae2e5c5cd0aa",
+      "scores": {
+        "identity": 93,
+        "anatomy": 90,
+        "composition": 93,
+        "materials": 93,
+        "story": 93
+      },
+      "total": 92.4,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "The vertical root braid and six individually readable hanging stone seals create a distinctive nonfacial adversary.",
+        "The raised seal, debris and broken causeway establish a physical consequence rather than a static monster portrait.",
+        "Small warding figures, dark water and restricted red accents preserve adult restraint and scale."
+      ],
+      "defectsOrLimits": [
+        "The upper root mass extends beyond frame, appropriate to its environmental anchoring.",
+        "The image cannot verify that the actual Malachar prison remains untouched; that boundary must stay explicit in structured lore."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "b24",
+      "name": "Mordren",
+      "manifest": "generated-b24.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-74435857-5787-426c-b519-5b863a0014c6.png",
+      "sha256": "a749927aa1d648815ae2324dc1fdf977cf7946196c8054a7219add1e4592a886",
+      "scores": {
+        "identity": 91,
+        "anatomy": 89,
+        "composition": 91,
+        "materials": 93,
+        "story": 90
+      },
+      "total": 90.8,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "A weathered androgynous swordsman, close-cropped white hair and matte cloth support human gravity without generic armor ornament.",
+        "The partially drawn real blade and extended reflected blade make the authored temporal anomaly visible.",
+        "Scabbard, wrist, cloth and pool edges retain material separation in subdued lighting."
+      ],
+      "defectsOrLimits": [
+        "The anomalous reflection intentionally breaks literal optics and must retain its experimental explanation.",
+        "Exact handedness and the complete shadow-vein pattern are not conclusively established by this angle."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d06",
+      "name": "The Lacuna Stair",
+      "manifest": "generated-d06.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-bc92607a-74cc-45d5-b1b3-64e9f9f5f225.png",
+      "sha256": "cd5ae7e2e3d15b10dcea010c154d809959163a8a9cf68ce35b56d3d4441034c5",
+      "scores": {
+        "identity": 93,
+        "anatomy": 85,
+        "composition": 93,
+        "materials": 92,
+        "story": 90
+      },
+      "total": 90.6,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "A massive ribbon stair inside a black chamber gives the dungeon a spatial identity distinct from the other environments.",
+        "The mountain doorway and small explorers supply ordinary scale against a bounded impossible interior.",
+        "Large dark resting areas and restrained violet illumination sustain focal hierarchy."
+      ],
+      "defectsOrLimits": [
+        "A single continuous floor-to-ceiling loop is not visibly traceable; the image is an experimental spatial concept, not a solved traversal map.",
+        "Ceiling intersections and apparent discontinuities require a later authored geometry pass before level implementation."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d07",
+      "name": "The Winter Reliquary",
+      "manifest": "generated-d07.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-a5512b8f-264e-4fef-8bc6-dbae6f365463.png",
+      "sha256": "6805a606c358976df444083c412b6047c7a7779fb9628567429fbb797e6c81fd",
+      "scores": {
+        "identity": 90,
+        "anatomy": 91,
+        "composition": 93,
+        "materials": 93,
+        "story": 82
+      },
+      "total": 89.8,
+      "decision": "REPAIR",
+      "gatePassed": false,
+      "hardFails": [
+        "Malformed unauthored readable inscription remains in finished art; local typography cleanup required."
+      ],
+      "observations": [
+        "Timber ribs embedded in glacier bands establish both construction history and environmental pressure.",
+        "A thaw channel, waterworks, bridges, ramps and distant landmark support multiple readable route layers.",
+        "Blue ice and warm lantern accents create luminous cold rather than indiscriminate darkness."
+      ],
+      "defectsOrLimits": [
+        "The foreground-left stone inscription includes malformed, unauthored pseudo-English, visible at normal review size.",
+        "Wooden direction signs contain readable generated location wording not independently established in the manifest."
+      ],
+      "targetedRepair": [
+        "Locally replace the left stone inscription with uninterrupted weathered stone while preserving lighting, chips and framing.",
+        "Remove incidental wooden sign lettering in the same edit, retaining the sign forms as plain weathered boards; do not add substitute pseudo-runes."
+      ]
+    },
+    {
+      "id": "d08",
+      "name": "The Verdant Crucible",
+      "manifest": "generated-d08.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-24583a57-9bb0-4870-9987-73f38e918c34.png",
+      "sha256": "e25f40b47dae7c45ef1f807395c0929e56ac05d41a7b900d4ff5f22bcacfe3cc",
+      "scores": {
+        "identity": 93,
+        "anatomy": 91,
+        "composition": 94,
+        "materials": 94,
+        "story": 91
+      },
+      "total": 92.6,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Giant living roots, terraced research ruins and glazed laboratory volumes make ecology and prior occupation coexist.",
+        "Bridges and stepped terraces offer readable branches at several elevations, with a distant root-framed destination.",
+        "Warm greenery, mineral surfaces and atmospheric falloff deliver adult luminous wonder."
+      ],
+      "defectsOrLimits": [
+        "Root growth obscures some connections; a playable layout still needs explicit doors, route widths and return loops.",
+        "Several pairs of foreground explorers recur across the dungeon series, reducing camera diversity even where geography differs."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d09",
+      "name": "Court of the Unbroken Light",
+      "manifest": "generated-d09.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-0121925c-8b59-4321-a5fd-69cc535ff02a.png",
+      "sha256": "4709ea64a6badcf65dedf92746991eeb517243376a6be9d8260e80fb9443de3e",
+      "scores": {
+        "identity": 92,
+        "anatomy": 91,
+        "composition": 93,
+        "materials": 93,
+        "story": 90
+      },
+      "total": 91.8,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "An open circular court, quartz fins and pale mountain architecture give this dungeon a legible ceremonial combat geography.",
+        "Chipped stone, thin gold inlays and weathered cloth avoid toy-like polished spectacle.",
+        "The open arena, stairs, lower route and far portal establish strong landmarks and vertical hierarchy."
+      ],
+      "defectsOrLimits": [
+        "The visible arena is encounter space rather than a complete dungeon plan; supporting chambers and progression remain to be designed.",
+        "Flanking monumental statues are familiar fantasy language; the court's ring geometry and mineral treatment carry more of its Arcanean identity."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d10",
+      "name": "The Blackwake Arsenal",
+      "manifest": "generated-d10.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-46a77a24-37b0-4648-a228-148e27da1e50.png",
+      "sha256": "470dc373ec8785c8cf17604b20d14fd3251c176c4f7f3c5fbe58211bda5b09f8",
+      "scores": {
+        "identity": 92,
+        "anatomy": 91,
+        "composition": 93,
+        "materials": 94,
+        "story": 82
+      },
+      "total": 90.4,
+      "decision": "REPAIR",
+      "gatePassed": false,
+      "hardFails": [
+        "Malformed unauthored readable inscription remains in finished art; local typography cleanup required."
+      ],
+      "observations": [
+        "A suspended ship hull, rain-dark drydock and flood-access platforms establish a working industrial maritime history.",
+        "Gangways, stairs, lower water route and storm-facing sea gate create several plausible traversal levels.",
+        "People, ropes, barrels and scaffold scale cues keep the enormous space physically grounded."
+      ],
+      "defectsOrLimits": [
+        "A prominent wall inscription reads as malformed unauthored English, including BUILDS / FEED. / REALMS.",
+        "Functional wooden direction signs are legible but their exact generated wording is not established source lore."
+      ],
+      "targetedRepair": [
+        "Locally erase the right-wall inscription into matching worn wet stone, preserving its geometry and all lighting.",
+        "Remove incidental direction-sign lettering while retaining the weathered boards and route cues; preserve the drydock composition and ship silhouette."
+      ]
+    }
+  ],
+  "ensembleReview": [
+    "The boss range now spans an instrument-bearing human, a desert mollusc, a suspended root-and-seal organism and an uncanny swordsman; the common material and lighting discipline does not require one silhouette or palette.",
+    "Dungeon camera direction repeats a pair of foreground explorers looking toward a route and distant landmark. Geography remains varied, but future expansion should deliberately vary viewpoint, occupation and scale witness rather than repeat this formula.",
+    "The five dungeon images suggest serpentine spatial anomaly, frozen hub, branching living terraces, exposed arena and industrial harbor. Traversability is visually plausible in local sections, not verified as complete connected levels."
+  ]
+}

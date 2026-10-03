@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { getClientIdentifier, checkRateLimit } from "@/lib/rate-limit/rate-limiter";
+import {
+  getClientIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit/rate-limiter";
 
 const FEEDBACK_RATE_LIMIT = { maxRequests: 5, windowMs: 60_000 };
 
@@ -20,10 +23,14 @@ export async function POST(req: NextRequest) {
       email?: string;
     };
 
-    if (!message || typeof message !== "string" || message.trim().length === 0) {
+    if (
+      !message ||
+      typeof message !== "string" ||
+      message.trim().length === 0
+    ) {
       return NextResponse.json(
         { error: "Message is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -46,7 +53,9 @@ export async function POST(req: NextRequest) {
       if (authHeader) {
         try {
           const token = authHeader.replace("Bearer ", "");
-          const { data: { user } } = await supabase.auth.getUser(token);
+          const {
+            data: { user },
+          } = await supabase.auth.getUser(token);
           userId = user?.id ?? null;
         } catch {
           // Auth lookup failed — proceed without user ID
@@ -62,22 +71,31 @@ export async function POST(req: NextRequest) {
         });
 
         if (error) {
-          // Table might not exist yet — log and return success anyway
-          console.warn("[Feedback] Supabase insert failed:", error.message);
+          console.warn("[Feedback] Supabase insert failed");
+          return NextResponse.json(
+            { error: "Feedback is temporarily unavailable. Please try again." },
+            { status: 503, headers: { "retry-after": "60" } },
+          );
         }
       } catch {
-        // createAdminClient throws if service role key is missing — log and continue
         console.warn("[Feedback] Supabase admin client unavailable");
+        return NextResponse.json(
+          { error: "Feedback is temporarily unavailable. Please try again." },
+          { status: 503, headers: { "retry-after": "60" } },
+        );
       }
     } else {
-      // Supabase unavailable — feedback acknowledged but not persisted
+      return NextResponse.json(
+        { error: "Feedback is temporarily unavailable. Please try again." },
+        { status: 503, headers: { "retry-after": "60" } },
+      );
     }
 
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json(
       { error: "Invalid request body" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }

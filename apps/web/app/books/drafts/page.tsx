@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import Image from 'next/image';
-import { readdir, readFile, access } from 'fs/promises';
-import { join } from 'path';
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import matter from 'gray-matter';
-import { getBookRoot } from '@/lib/content/book-path';
+import Image from "next/image";
+import { readdir, readFile, access } from "fs/promises";
+import { join } from "path";
+import Link from "next/link";
+import type { Metadata } from "next";
+import matter from "gray-matter";
+import { getBookRoot } from "@/lib/content/book-path";
+import { isBookPublic } from "@/lib/content/book-visibility";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: 'Drafts — Books in Progress',
-  description: 'Read books as they are forged. Live drafts from the Arcanea Open Library.',
+  title: "Drafts — Books in Progress",
+  description:
+    "Read books as they are forged. Live drafts from the Arcanea Open Library.",
   openGraph: {
-    title: 'Drafts — Arcanea Open Library',
-    description: 'Books being written in the open. Read the first chapters as they land.',
+    title: "Drafts — Arcanea Open Library",
+    description:
+      "Books being written in the open. Read the first chapters as they land.",
   },
 };
 
@@ -39,29 +42,36 @@ interface DraftBook {
 }
 
 const ACCENT_MAP: Record<string, string> = {
-  'forge-of-ruin': 'red',
-  'tides-of-silence': 'cyan',
-  'heart-of-pyrathis': 'amber',
-  'song-of-van-linh': 'teal',
-  'las-tierras-de-luz': 'amber',
-  'das-maedchen-drei-sprachen': 'amber',
-  'lumara-valle-de-los-destellos': 'amber',
-  'russian-from-tashkent': 'amber',
+  "forge-of-ruin": "red",
+  "tides-of-silence": "cyan",
+  "heart-of-pyrathis": "amber",
+  "song-of-van-linh": "teal",
+  "las-tierras-de-luz": "amber",
+  "das-maedchen-drei-sprachen": "amber",
+  "lumara-valle-de-los-destellos": "amber",
+  "russian-from-tashkent": "amber",
 };
 
 const COVER_MAP: Record<string, string> = {
-  'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',
-  'tides-of-silence': '/images/books/tides-of-silence-cover-v2.png',
-  'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
-  'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
-  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
-  'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
-  'lumara-valle-de-los-destellos': '/images/books/lumara-valle-de-los-destellos-cover-v2.png',
-  'russian-from-tashkent': '/images/books/russian-from-tashkent-cover-nb2.png',
+  "forge-of-ruin": "/images/books/forge-of-ruin-cover-nb2.png",
+  "tides-of-silence": "/images/books/tides-of-silence-cover-v2.png",
+  "heart-of-pyrathis": "/images/books/heart-of-pyrathis-cover-v2.png",
+  "song-of-van-linh": "/images/books/song-of-van-linh-cover.png",
+  "las-tierras-de-luz": "/images/books/las-tierras-de-luz-cover-v2.png",
+  "das-maedchen-drei-sprachen":
+    "/images/books/das-maedchen-drei-sprachen-cover-v2.png",
+  "lumara-valle-de-los-destellos":
+    "/images/books/lumara-valle-de-los-destellos-cover-v2.png",
+  "russian-from-tashkent": "/images/books/russian-from-tashkent-cover-nb2.png",
 };
 
 async function exists(path: string): Promise<boolean> {
-  try { await access(path); return true; } catch { return false; }
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function loadDraftBooks(): Promise<DraftBook[]> {
@@ -69,48 +79,64 @@ async function loadDraftBooks(): Promise<DraftBook[]> {
 
   try {
     const entries = await readdir(BOOK_ROOT, { withFileTypes: true });
-    const bookDirs = entries.filter((e) => e.isDirectory()).map((e) => e.name).sort();
+    const bookDirs = entries
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+      .sort();
 
     for (const dir of bookDirs) {
-      const yamlPath = join(BOOK_ROOT, dir, 'book.yaml');
+      if (!(await isBookPublic(join(BOOK_ROOT, dir)))) continue;
+
+      const yamlPath = join(BOOK_ROOT, dir, "book.yaml");
       if (!(await exists(yamlPath))) continue;
 
-      const raw = await readFile(yamlPath, 'utf-8');
+      const raw = await readFile(yamlPath, "utf-8");
       const { data: manifest } = matter(`---\n${raw}\n---`);
 
+      // Same draft-manifest gate as [slug]/page (#480): visibility-only stubs
+      // must not appear as hub cards that dump to "Draft Not Found".
+      if (
+        typeof manifest?.title !== "string" ||
+        !Array.isArray(manifest.authors)
+      )
+        continue;
+
       // Count chapters
-      const chaptersDir = join(BOOK_ROOT, dir, 'chapters');
+      const chaptersDir = join(BOOK_ROOT, dir, "chapters");
       let chapterCount = 0;
       let totalWords = 0;
 
       if (await exists(chaptersDir)) {
         const files = await readdir(chaptersDir);
-        const mdFiles = files.filter((f) => f.endsWith('.md'));
+        const mdFiles = files.filter((f) => f.endsWith(".md"));
         chapterCount = mdFiles.length;
 
         for (const f of mdFiles) {
-          const content = await readFile(join(chaptersDir, f), 'utf-8');
+          const content = await readFile(join(chaptersDir, f), "utf-8");
           totalWords += content.split(/\s+/).filter(Boolean).length;
         }
       }
 
-      const authors = (manifest.authors as { name: string; role: string }[]) || [];
+      const authors =
+        (manifest.authors as { name: string; role: string }[]) || [];
 
       books.push({
         slug: (manifest.slug as string) || dir,
         title: (manifest.title as string) || dir,
-        description: (manifest.acknowledgments as string)?.split('\n')[0] || '',
+        description: (manifest.acknowledgments as string)?.split("\n")[0] || "",
         authors,
         tags: (manifest.tags as string[]) || [],
-        status: (manifest.status as string) || 'draft',
+        status: (manifest.status as string) || "draft",
         chapterCount,
         wordCount: totalWords,
         readTime: Math.max(1, Math.ceil(totalWords / 250)),
         coverImage: COVER_MAP[dir] || null,
-        accentColor: ACCENT_MAP[dir] || 'white',
+        accentColor: ACCENT_MAP[dir] || "white",
       });
     }
-  } catch { /* silent */ }
+  } catch {
+    /* silent */
+  }
 
   return books;
 }
@@ -148,12 +174,14 @@ export default async function DraftsHubPage() {
           </h1>
 
           <p className="text-lg text-white/40 max-w-xl mx-auto mb-8 leading-relaxed">
-            Books being written in the open. Read the first chapters as they land.
-            Every draft includes full AI transparency.
+            Books being written in the open. Read the first chapters as they
+            land. Every draft includes full AI transparency.
           </p>
 
           <div className="flex items-center justify-center gap-6 text-xs text-white/25">
-            <span>{books.length} {books.length === 1 ? 'book' : 'books'}</span>
+            <span>
+              {books.length} {books.length === 1 ? "book" : "books"}
+            </span>
             <span className="w-px h-3 bg-white/10" />
             <span>{totalChapters} chapters</span>
             <span className="w-px h-3 bg-white/10" />
@@ -184,7 +212,7 @@ export default async function DraftsHubPage() {
                       priority={index === 0}
                       sizes="(min-width: 640px) 12rem, 100vw"
                       className="w-full h-48 sm:h-full object-cover"
-                     />
+                    />
                   </div>
                 )}
 
@@ -192,8 +220,12 @@ export default async function DraftsHubPage() {
                 <div className="flex-1 p-6 sm:p-8">
                   <div className="flex items-start justify-between gap-4 mb-3">
                     <div>
-                      <p className={`text-[10px] uppercase tracking-widest text-${book.accentColor}-400/60 mb-1`}>
-                        {book.status === 'in-progress' ? 'Writing in Progress' : book.status}
+                      <p
+                        className={`text-[10px] uppercase tracking-widest text-${book.accentColor}-400/60 mb-1`}
+                      >
+                        {book.status === "in-progress"
+                          ? "Writing in Progress"
+                          : book.status}
                       </p>
                       <h2 className="text-xl sm:text-2xl font-display font-bold text-white/90 group-hover:text-white transition-colors">
                         {book.title}
@@ -246,7 +278,10 @@ export default async function DraftsHubPage() {
 
           {books.length === 0 && (
             <div className="text-center py-16 text-white/20 text-sm">
-              No drafts yet. Start writing with <code className="text-[var(--arc-brand-atlantean-teal)]/40">/arcanea-author</code>
+              No drafts yet. Start writing with{" "}
+              <code className="text-[var(--arc-brand-atlantean-teal)]/40">
+                /arcanea-author
+              </code>
             </div>
           )}
         </div>

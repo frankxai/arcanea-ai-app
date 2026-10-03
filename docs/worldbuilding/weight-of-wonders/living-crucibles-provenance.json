@@ -1,0 +1,117 @@
+{
+  "collection": "weight-of-wonders",
+  "expansion": "living-crucibles",
+  "canonStatus": "EXPERIMENTAL",
+  "generatedWith": "Built-in image_gen; model version not supplied by tool",
+  "images": [
+    {
+      "slug": "tharvoss",
+      "prompt": "Create one finished individual cinematic creature key-art image for Arcanea, an original adult high-fantasy world. Landscape 3:2. Subject: THARVOSS, THE UNDERTOW MAW, a terrifying eighteen-metre river ambush predator emerging sideways through a broken migration sluice. Deliver the anatomical credibility, material craft, staging and emotional presence of premium contemporary action-RPG cinematics, using natural-history observation rather than borrowing a recognizable franchise creature. Its unmistakable silhouette is LOW, WIDE and massively muscular: a huge flattened wedge skull, broad hinged jaw, small lateral eyes, an expandable pleated throat pouch, four short powerful weight-bearing limbs, one long laterally flattened swimming tail clearly curving behind it. Four limbs total, no wings, no ornamental horns. Dense charcoal olive skin has folds, abrasion scars and irregular pale mineral-encrusted dermal plates only along its back; wet flesh and stone deposits must read as different materials. Its throat pouch is drawing water inward before a suction attack; converging ripples, leaning reeds and a tipped empty boat show the force. A mature human sluice keeper with a long hooked pole stands on the foreground maintenance stair, tiny but clearly legible, facing the danger. No attack blood, no gore. Show the creature's complete connected body and credible limb attachments in a three-quarter side view, not just a floating head. Environment: monumental terraced travertine fish ladders and inhabited timber inspection walkways in an autumn river gorge; fish collect at the closed upstream gate, evidence of why the predator is trapped here. Broken sluice geometry creates readable raised refuges and a lower flooded lane, an authored combat arena. Creature owns the middle ground; keeper gives scale; architecture recedes into mist. Sophisticated cold river-green water, warm ochre reeds, overcast silver daylight and one low amber work lantern. Weight, water displacement, physical wetness, subtle skin translucency, atmospheric depth, precise focal hierarchy, restrained high dynamic range, filmic grain, purposeful edges. Terrifying, ancient, biological. No cute proportions, no mascot, no shiny plastic, no generic dragon, no excessive particle effects, no game HUD, no text, no logos, no border, no collage, no contact sheet.",
+      "sourcePath": "generated_images/exec-7db7b07e-fd36-4e6e-9e14-4e8a9f0bf7e3.png",
+      "tool": "image_gen",
+      "canonStatus": "EXPERIMENTAL",
+      "sourceSha256": "4796dc6a400776ffdaf5c214c6ba0272bf1969f760b18775a46b75005b4f07dd",
+      "sourceBytes": 3505008,
+      "delivery": {
+        "src": "/images/weight-of-wonders/tharvoss.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 547198,
+        "sha256": "4c9acd3d4dfcf5f5822e73dcb7aedb8f882cbb96dbdafaeb8f729e3a82fd4f07"
+      },
+      "transform": "Same-dimension WebP quality90 encoding; no crop or creative edit"
+    },
+    {
+      "slug": "glassroot-hunger",
+      "prompt": "One finished individual cinematic boss key-art image for Arcanea, original mature high fantasy, landscape 3:2. THE GLASSROOT HUNGER: a magnificent, deeply uncanny colonial animal occupying a flooded seed-vault below an ancient living forest. It must NOT be humanoid, dragonlike, a face on a flower, a skull, a cute jellyfish or generic tentacle monster. The body plan is a coherent rooted colony inspired by specialized colonial marine organisms but evolved into original fantasy: a huge inclined translucent buoyancy chamber supports a curved ivory carbonate keel; repeated muscular swimming bells line ONE side of that keel; long paired amber feeding ribbons hang from the other side, their connections visibly attached to the central stem. Small protective cup-shaped zooids cluster around a single deep copper-colored digestive chamber near the lower stem. Overall silhouette is a monumental broken question mark, with a large central negative space, rather than a symmetrical Christmas-tree pile. Twenty metres of connected living architecture, glistening nacre, soft translucent tissue with fine capillaries, porous old carbonate, thin amber nutrient streams; treat each material with precise physical optics and wear. One feeding ribbon has just lifted a stone sluice cover, showing dangerous agency and mechanical weight. This organism is consuming the nursery's stored nutrient supply, not maliciously posing. A mature seed keeper in a weathered dark red waterproof cloak stands on a dry limestone ledge in the foreground holding a hooked cutting tool and a small sealed seed case; tiny human scale makes the colony immense. Environment: enormous arching forest roots pierce a vaulted limestone seed archive; rows of closed ceramic seed jars sit on dry shelves well above black-green water; three low stone water channels lead into the creature's pool, giving a readable future encounter geometry. Reserve clean negative space around the colony outline. Single sun shaft from a distant broken oculus gives golden translucency to the buoyancy chamber; blue-green reflected pool light below, surrounding vault falls into deep natural shadow. This is dark fantasy with exquisite luminous wonder, plausible biological structure and a strong silent threat. Cinematic low camera, 35mm lens feel, three atmospheric depth planes, physically convincing scale and refraction, photographic material detail with authored concept-art composition, premium action-RPG reveal frame. No decorative armor, no glowing eyes, no neon particles, no gore, no text, no logos, no frames, no panels, no contact sheet.",
+      "sourcePath": "generated_images/exec-f2c4de98-2cbb-496d-b00a-cf64ff48d8fe.png",
+      "tool": "image_gen",
+      "canonStatus": "EXPERIMENTAL",
+      "sourceSha256": "76fd6b1abe801c6ea3946870f235fed76de1ffca01278d7ea813a6717e6414d1",
+      "sourceBytes": 2990951,
+      "delivery": {
+        "src": "/images/weight-of-wonders/glassroot-hunger.webp",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 425766,
+        "sha256": "560dcefda1cbf30ff2c9441aa57e3c636535021f495c12b9799f5ef1a3e407bd"
+      },
+      "transform": "Same-dimension WebP quality90 encoding; no crop or creative edit"
+    },
+    {
+      "slug": "othrek",
+      "prompt": "Create one finished portrait 2:3 cinematic antagonist key-art for Arcanea, an original sophisticated adult high-fantasy setting. MARSHAL OTHREK, THE SALT REGENT. A formidable fully human man about forty-eight, lean and heavily trained, short iron-grey hair, sun-darkened weathered face, incisive unromantic eyes, a healed diagonal scar at the lower cheek. He should feel like a dangerous intelligent adversary with the screen presence of a major prestige fantasy actor, NOT a superhero, not a giant, not any recognizable existing character. Full body, two arms and two legs, believable human proportions, grounded in the same plane as nearby guards and doorway for an unambiguous approximately two-metre scale. His immediately readable asymmetrical silhouette: a long heavy CHALK-WHITE military mantle hangs only from his left shoulder, wind pulls its straight worn edge away from fitted matte black iron and salt-abraded ivory ceramic lamellar armor. Armor construction uses broad simple overlapping load-bearing plates, leather joints and practical buckles; NO filigree, no spikes, no ornamental crowns, no skulls. His left forearm wears a functional riveted pressure gauntlet connected to a single waist accumulator by a short protected hose. He holds one tall blackened-steel sluice-hook polearm with a broad squared blade and a single inner cutting notch, an iconic industrial tool turned execution weapon. Its edge rests on wet pale stone; his stance is an economical duelist's guard, weight just beginning to transfer to the leading heel, not generic symmetrical posing. A brief white plume escapes a pressure valve at the gauntlet, a readable attack cue. Behind him is the BRINE TRIBUNAL: a monumental tidal fortress of pale salt-stained stone with precisely cut gates, a descending central causeway, enormous dark vertical water slots, inhabited salt pans and a distant copper horizon. Two ordinary guards stand farther back on the narrow dry route; caged freshwater cisterns reveal what this regime controls. Strong low golden late-afternoon side-light, cold storm shadow, one desaturated oxblood sash, bright mantle against deep architecture. Low camera at waist height, portrait composition with monumental architectural negative space above, crisp focal hierarchy on face/weapon silhouette then entire stance, atmospheric depth, photographic skin pores and oxidized metal, extraordinary costume craft and material honesty. Dangerous authority, authored stillness before a boss duel; victory should feel desired and possible. No gore, no glowing magic eyes, no cartoon, no toy materials, no text, no logos, no decorative UI, no contact sheet.",
+      "sourcePath": "generated_images/exec-61edc505-ac59-448c-ae1b-1357bd7972b5.png",
+      "tool": "image_gen",
+      "canonStatus": "EXPERIMENTAL",
+      "sourceSha256": "0acc35f0fe94c03f43f27ff8c94e944db4d51c8816a04eac9d1f3bc326869778",
+      "sourceBytes": 3083002,
+      "delivery": {
+        "src": "/images/weight-of-wonders/othrek.webp",
+        "width": 1024,
+        "height": 1536,
+        "bytes": 438248,
+        "sha256": "cb5bc8a8877a638d596b8eb84715fde58118a4dfa51b8b673004bf0ed9f37480"
+      },
+      "transform": "Same-dimension WebP quality90 encoding; no crop or creative edit"
+    },
+    {
+      "slug": "spawning-stair",
+      "prompt": "One finished individual epic high-fantasy dungeon environment cinematic for Arcanea. Wide landscape 16:9. THE SPAWNING STAIR: a kilometre-long inhabited travertine river staircase built around the seasonal migration of silver fish, beneath towering autumn mountains. Design an extraordinary but legible place that a player longs to explore. An immense river descends in seven broad stepped basins, each connected by a fish passage and a separately operated timber sluice. Across the middle of the composition, one CLOSED dark gate piles the fish into a crowded glittering eddy; downstream the water is strikingly empty. This ecological interruption is the story. Three physically understandable routes: a continuous dry stone maintenance stair hugging the left cliff, a precarious inhabited timber gantry crossing the middle basin, and the lowest partially submerged service channel emerging on the right. Each should visibly connect a foreground landing to a mid-ground destination; no impossible floating stairs or random disconnected bridges. A tiny pair of adult keepers on the foreground stair are hauling a broad missing gate board by rope; another person signals from a distant gantry. Simple houses, smoke from a cookstove, drying fishing nets and empty supply boats indicate a living community rather than an abandoned theme park. A broad low dark wake moves in the deep lower basin, suggesting Tharvoss, an enormous river predator, without displaying the whole boss; the PLACE is the main subject. Pale mineral shelves, water-polished bronze hinges, flood stains recording past levels, ochre reed islands, deep green plunge pools, cold silver falls and warm gold autumn forest. Monumental scale, clean authored spatial hierarchy, big calm masses of rock against a few sharply defined fine walkways, foreground tactile stone, inhabited middle distance, distant atmospheric mountain layers. Low broken morning sunlight through spray creates one subtle rainbow near a fall; luminous wonder with real danger, not all-dark horror. Premium cinematic environment art with physically coherent water flow, believable construction, fine detail subordinated to huge simple shapes, natural color grading and photographic surface response. No exaggerated neon, no generic fantasy castle spires, no huge words, no logos, no HUD, no border, no collage, no map labels, no contact sheet.",
+      "sourcePath": "generated_images/exec-cb6ddf3c-4c26-40f5-852a-0c1366adce68.png",
+      "tool": "image_gen",
+      "canonStatus": "EXPERIMENTAL",
+      "sourceSha256": "ebd0daba5a72948930f7ad90c4c1a587b4febf57ad1819cab603c6396a073b23",
+      "sourceBytes": 3256594,
+      "delivery": {
+        "src": "/images/weight-of-wonders/spawning-stair.webp",
+        "width": 1672,
+        "height": 941,
+        "bytes": 576552,
+        "sha256": "4b8f70b9b8d14aa333386242eb86aa613c2caacdfa05d52d3541e5695ebb0763"
+      },
+      "transform": "Same-dimension WebP quality90 encoding; no crop or creative edit"
+    },
+    {
+      "slug": "glassroot-sepulchre",
+      "prompt": "One finished individual extraordinary dungeon environment cinematic for Arcanea, original adult high fantasy. Wide landscape 16:9. THE GLASSROOT SEPULCHRE, a living underground seed archive beneath a colossal ancient tree whose buttress roots form the ribs of a cathedral-sized cavern. The image is a place to explore, not a boss portrait. Monumental roots support old limestone terraces and carefully built ceramic seed-vault doors; a high broken forest oculus admits warm daylight through hanging leaves. Down the centre runs a dark emerald freshwater channel. On the left, healthy living roots have fine pale root hairs and rich moss; on the right a recent ivory salt crust has killed a strip of roots, giving clear ecological evidence of contaminated water. Small amber colonial feeding bells and delicate glassy strands spread from the dead-root channel into the vault: the Glassroot Hunger is beginning to consume the nursery's stored nutrients. Show these as localized biological growth, not random decorative crystals everywhere. Three readable exploration routes: a dry upper archive balcony with sealed seed jars, a narrow lower caretaker path beside the water with open sluice handles, and one continuous suspended rope footbridge connecting two root buttresses. Every support and stair must connect plausibly; no Escher architecture. An adult seed keeper in a worn dark red waterproof cloak crouches in the near foreground testing water with a pale strip of cloth; farther away another caretaker carries a small ceramic seed case toward a clean-water alcove. One kingfisher-like bird sits on a dry root near the clean channel, while there are no fish in the salty side pool. The inhabitants are tiny visual anchors, the enormous root and vault volumes dominate. Sophisticated golden shaft-light, deep jade reflected light, natural umber root bark, chalk limestone and sparse warm amber animal translucency. Beautiful, sacred-feeling and troubling without generic occult symbols. Build powerful foreground/midground/background separation, atmospheric depth with fine humidity haze, readable navigation beneath the awe, real stone joints, wet roots versus dry archive textures. Premium modern cinematic fantasy environment craft, rich physically based materials, restrained filmic contrast and fine grain, unforgettable spatial identity. No cute creatures, no plastic surfaces, no copied franchise architecture, no neon, no huge magic runes, no text, no logos, no UI, no contact sheet.",
+      "sourcePath": "generated_images/exec-a7847a61-c8b1-4041-af49-2664a2ee5b0a.png",
+      "tool": "image_gen",
+      "canonStatus": "EXPERIMENTAL",
+      "sourceSha256": "95a58077c47696bc4f47f6f73fc1de41db543b2936700ba776c7e33bb1bc85b3",
+      "sourceBytes": 3272712,
+      "delivery": {
+        "src": "/images/weight-of-wonders/glassroot-sepulchre.webp",
+        "width": 1672,
+        "height": 941,
+        "bytes": 591192,
+        "sha256": "d18d5a09a40321bd3f1bc4982e47bd3231101860037350c7f697f9318cfaa7ce"
+      },
+      "transform": "Same-dimension WebP quality90 encoding; no crop or creative edit"
+    },
+    {
+      "slug": "brine-tribunal",
+      "prompt": "One finished individual monumental dungeon cinematic for Arcanea, an original mature high-fantasy world. Wide 16:9 landscape. THE BRINE TRIBUNAL: a vast tidal fortress at a river's estuary, built to regulate freshwater and now ruled by a military monopolist. Make it awe-inspiring, dangerous, architecturally intelligent and irresistible to explore, with the cinematic grandeur of the strongest modern fantasy game environments but no recognizable copied location. The main spatial identity is a long narrow pale-stone causeway running diagonally from the foreground into a sunlit dueling court BETWEEN TWO EIGHTY-METRE RECTANGULAR SLUICE TOWERS. The towers are massive simple weathered limestone forms, deeply cut by black vertical gate slots, with a few precisely placed bronze mechanisms; no generic forest of pointed castle spires. Beneath the causeway, visibly separate walled channels carry dark clean river water on one side and pale saline tide on the other. Great caged cisterns contain fresh water while inhabited salt pans stretch toward the sea. Show three physically connected paths: the exposed main causeway to the court, a low water-level maintenance ledge beneath its left side, and a counterweight stair climbing inside an open tower slot. In the foreground an adult worker opens a simple locked drinking-water tap with an improvised tool while another keeps watch; they are small, believable people with ordinary clothes and no mascot styling. Far across the court stand Marshal Othrek's two guards and one small white-mantled silhouette, giving the goal a human focus. A closed freshwater gate and a newly opened saline bypass hint at deliberate sabotage. Coherent water levels, clear supports, honest construction, paths designed for an actual playable encounter rather than arbitrary spectacle. Late copper sunset beyond the ocean; cold storm blue shadows in the gate slots; white salt crust, blackened iron, worn bronze, dark turquoise water, muted burgundy military cloth. Strong foreground scale cues, spectacular negative spaces, three atmospheric distances, sophisticated high-contrast cinematic lighting that preserves detail, tactile chipped stone and glistening wet surfaces, restrained film grain, a memorable spatial composition. No text, no emblems presented as official lore, no glowing runes, no HUD, no cartoon, no plastic, no crowded contact sheet, no collage.",
+      "sourcePath": "generated_images/exec-d88252b2-9e0a-49ce-b255-2edc787f7a64.png",
+      "tool": "image_gen",
+      "canonStatus": "EXPERIMENTAL",
+      "sourceSha256": "1ec8171a788c6a9452b5356ed5c576b438b44e1e89390abb6edc3619a18d84ee",
+      "sourceBytes": 2908955,
+      "delivery": {
+        "src": "/images/weight-of-wonders/brine-tribunal.webp",
+        "width": 1672,
+        "height": 941,
+        "bytes": 464064,
+        "sha256": "e24a8c03f940b68e33162c504dcdf82b0c4c2bbb8dccdd6ceb9ebf6c787f07a1"
+      },
+      "transform": "Same-dimension WebP quality90 encoding; no crop or creative edit"
+    }
+  ],
+  "review": "All six individual source images inspected. No contact sheets. Art-specific limits retained in entries.",
+  "researchSources": [
+    "https://www.monsterhunter.com/wilds/en-uk/living-world",
+    "https://blog.playstation.com/2022/10/04/game-developers-explain-what-makes-god-of-war-2018s-combat-tick/",
+    "https://www.mbari.org/animal/red-siphonophore/",
+    "https://www.fisheries.noaa.gov/insight/barriers-fish-migration"
+  ]
+}

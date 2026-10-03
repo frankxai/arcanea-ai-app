@@ -21,8 +21,10 @@ import {
 /* ------------------------------------------------------------------ */
 
 export const metadata: Metadata = {
-  title:
-    "Image Generation Arena | Arcanea \u2014 Compare AI Art Models",
+  alternates: {
+    canonical: "https://www.arcanea.ai/models/image",
+  },
+  title: "Image Generation Arena | Arcanea \u2014 Compare AI Art Models",
   description:
     "Compare AI image generation models side by side. FLUX vs DALL-E vs Midjourney vs Gemini. Transparent pricing, text rendering quality, speed benchmarks, and style control ratings for every major image AI.",
   keywords: [
@@ -36,6 +38,7 @@ export const metadata: Metadata = {
     "Stable Diffusion vs FLUX",
   ],
   openGraph: {
+    url: "https://www.arcanea.ai/models/image",
     title: "Image Generation Arena",
     description:
       "Transparent comparison of 8 image generation models. Pricing, speed, text rendering, and style control rated side by side.",
@@ -51,6 +54,8 @@ function ImageArenaJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": "https://www.arcanea.ai/models/image#webpage",
+    url: "https://www.arcanea.ai/models/image",
     name: "Image Generation Arena",
     description:
       "AI image generation model comparison with pricing, benchmarks, and quality ratings.",
@@ -97,9 +102,7 @@ function ProviderGrid() {
                     {model.name}
                   </h3>
                 </div>
-                <p className="text-xs text-white/40 mt-0.5">
-                  {model.provider}
-                </p>
+                <p className="text-xs text-white/40 mt-0.5">{model.provider}</p>
               </div>
               <span className="text-xs font-mono text-[var(--arc-brand-atlantean-teal)]">
                 {formatPrice(model.pricing.perImage)}
@@ -157,11 +160,19 @@ function ProviderGrid() {
 function ComparisonTable() {
   const models = [...IMAGE_MODELS].sort((a, b) => {
     const scoreA =
-      (a.textRendering === "excellent" ? 3 : a.textRendering === "good" ? 2 : 1) +
+      (a.textRendering === "excellent"
+        ? 3
+        : a.textRendering === "good"
+          ? 2
+          : 1) +
       (a.styleControl === "excellent" ? 3 : a.styleControl === "good" ? 2 : 1) +
       (10 - a.speed) * 0.3;
     const scoreB =
-      (b.textRendering === "excellent" ? 3 : b.textRendering === "good" ? 2 : 1) +
+      (b.textRendering === "excellent"
+        ? 3
+        : b.textRendering === "good"
+          ? 2
+          : 1) +
       (b.styleControl === "excellent" ? 3 : b.styleControl === "good" ? 2 : 1) +
       (10 - b.speed) * 0.3;
     return scoreB - scoreA;
@@ -178,16 +189,25 @@ function ComparisonTable() {
         <table className="w-full text-sm text-left min-w-[800px]">
           <thead>
             <tr className="border-b border-white/[0.06] bg-white/[0.02]">
-              {["#", "Model", "Provider", "Resolution", "Price", "Speed", "Text", "Style", "API", "Category"].map(
-                (h) => (
-                  <th
-                    key={h}
-                    className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider"
-                  >
-                    {h}
-                  </th>
-                ),
-              )}
+              {[
+                "#",
+                "Model",
+                "Provider",
+                "Resolution",
+                "Price",
+                "Speed",
+                "Text",
+                "Style",
+                "API",
+                "Category",
+              ].map((h) => (
+                <th
+                  key={h}
+                  className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider"
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -196,7 +216,9 @@ function ComparisonTable() {
                 key={model.id}
                 className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
               >
-                <td className="px-4 py-3 text-white/30 font-mono text-xs">{i + 1}</td>
+                <td className="px-4 py-3 text-white/30 font-mono text-xs">
+                  {i + 1}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <span>{model.providerLogo}</span>
@@ -204,16 +226,30 @@ function ComparisonTable() {
                   </div>
                 </td>
                 <td className="px-4 py-3 text-white/50">{model.provider}</td>
-                <td className="px-4 py-3 text-white/50 font-mono text-xs">{model.maxResolution}</td>
-                <td className="px-4 py-3 font-mono text-xs text-[var(--arc-brand-atlantean-teal)]">{formatPrice(model.pricing.perImage)}</td>
-                <td className="px-4 py-3 text-white/50 font-mono text-xs">{model.speed}s</td>
-                <td className="px-4 py-3"><QualityBadge level={model.textRendering} /></td>
-                <td className="px-4 py-3"><QualityBadge level={model.styleControl} /></td>
-                <td className="px-4 py-3 text-xs text-white/40">{model.apiAvailable ? "Yes" : "No"}</td>
+                <td className="px-4 py-3 text-white/50 font-mono text-xs">
+                  {model.maxResolution}
+                </td>
+                <td className="px-4 py-3 font-mono text-xs text-[var(--arc-brand-atlantean-teal)]">
+                  {formatPrice(model.pricing.perImage)}
+                </td>
+                <td className="px-4 py-3 text-white/50 font-mono text-xs">
+                  {model.speed}s
+                </td>
+                <td className="px-4 py-3">
+                  <QualityBadge level={model.textRendering} />
+                </td>
+                <td className="px-4 py-3">
+                  <QualityBadge level={model.styleControl} />
+                </td>
+                <td className="px-4 py-3 text-xs text-white/40">
+                  {model.apiAvailable ? "Yes" : "No"}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center">
                     <CategoryDot category={model.category} />
-                    <span className="text-xs text-white/40 capitalize">{model.category.replace("-", " ")}</span>
+                    <span className="text-xs text-white/40 capitalize">
+                      {model.category.replace("-", " ")}
+                    </span>
                   </div>
                 </td>
               </tr>

@@ -1,0 +1,87 @@
+name: Conflict Markers
+
+# No `paths:` filter and no draft gate, both deliberate. A PR that matches no
+# path never gets a check run, so a required context with a `paths:` filter makes
+# such a PR permanently unmergeable; and GitHub counts a skipped required check
+# as passing, so an `if: draft == false` gate would let some PRs through
+# unverified. This job must run and conclude on every pull request.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+concurrency:
+  group: conflict-markers-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  conflict-markers:
+    name: No committed conflict markers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Restore the scanner from the base branch
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          # The checkout above is the PR merge result, so the scanner on disk is
+          # PR-authored and could be edited to exit 0. Run the base branch's copy
+          # instead and treat PR content purely as data.
+          if git cat-file -e "$BASE_SHA:scripts/check-conflict-markers.mjs" 2>/dev/null; then
+            git checkout "$BASE_SHA" -- scripts/check-conflict-markers.mjs
+            echo "Scanner restored from base."
+          else
+            # Only true of the PR that introduces the scanner.
+            echo "::warning::No scanner on the base branch; running this PR's copy."
+          fi
+
+      - name: Scan files this PR touches
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # fetch-depth: 0 above must have brought both endpoints in. If it did
+          # not, stop: an uncomputable diff has to fail the job, never pass it empty.
+          git cat-file -e "$BASE_SHA^{commit}"
+          git cat-file -e "$HEAD_SHA^{commit}"
+          # Written outside the workspace so a file committed at this path cannot
+          # influence it. `--diff-filter=d` excludes only deletions, so type
+          # changes (T) are scanned too.
+          CHANGED_FILE="$RUNNER_TEMP/changed.z"
+          git diff --name-only --diff-filter=d -z "$BASE_SHA" "$HEAD_SHA" > "$CHANGED_FILE"
+          mapfile -d '' -t CHANGED < "$CHANGED_FILE"
+          if [ ${#CHANGED[@]} -eq 0 ]; then
+            echo "No added or modified files in this PR."
+            exit 0
+          fi
+          printf 'Scanning %d changed file(s).\n' "${#CHANGED[@]}"
+          node scripts/check-conflict-markers.mjs -- "${CHANGED[@]}"
+
+      - name: Report markers elsewhere in the merged tree
+        if: always()
+        run: |
+          set -uo pipefail
+          # Advisory only. docs/canon/ARCANEA_UNIVERSE_CANON.md still carries a
+          # committed conflict that needs Frank's canon decision, so a tree-wide
+          # failing scan would block every unrelated PR. Keeping the count
+          # visible avoids the debt going quiet again. This scans the PR merge
+          # result, not the base branch alone.
+          if node scripts/check-conflict-markers.mjs --all > /dev/null 2>"$RUNNER_TEMP/tree.log"; then
+            echo "Whole merged tree is clean. Promote this scan to a hard failure." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Conflict markers elsewhere in the merged tree (advisory)" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            grep -oP '(?<=::error file=)[^,]+' "$RUNNER_TEMP/tree.log" | sort -u >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi

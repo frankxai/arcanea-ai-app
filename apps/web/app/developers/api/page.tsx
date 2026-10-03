@@ -27,7 +27,7 @@ const ENDPOINTS = [
   {
     method: 'POST',
     path: '/v1/chat/completions',
-    description: 'Generate chat completions with any of 26 models. OpenAI-compatible format.',
+    description: 'Generate chat completions through the configured model catalog. OpenAI-compatible format.',
     icon: PhChatCircleDots,
     color: 'var(--arc-brand-atlantean-teal)',
   },
@@ -41,14 +41,14 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/v1/luminors',
-    description: 'Retrieve the 13 configured Luminor specialists for domain-specific AI chat.',
+    description: 'Retrieve the configured Luminor specialists for domain-specific AI chat.',
     icon: PhSparkle,
     color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     method: 'GET',
     path: '/v1/library',
-    description: 'Access 200K+ words of creative wisdom across 17 Library collections.',
+    description: 'Read any text from the twenty collections of the Library of Arcanea.',
     icon: PhBookOpen,
     color: 'var(--arc-brand-cosmic-blue)',
   },
@@ -107,10 +107,18 @@ response = client.chat.completions.create(
 
 print(response.choices[0].message.content)`;
 
-const RATE_LIMITS = [
-  { plan: 'Free', requests: '100/day', models: '8 models', color: 'var(--arc-earth)', features: ['Basic chat', 'Community models'] },
-  { plan: 'Creator', requests: '1,000/day', models: '26 models', color: 'var(--arc-brand-atlantean-teal)', features: ['All models', 'Priority routing', 'Image generation'] },
-  { plan: 'Studio', requests: '10,000/day', models: '26 models', color: 'var(--arc-brand-arcanean-gold)', features: ['Everything', 'Custom endpoints', 'SLA guarantee', 'Dedicated support'] },
+const ACCESS_NOTES = [
+  {
+    plan: 'Current access',
+    requests: 'Deployment-defined',
+    models: 'Configured catalog',
+    color: 'var(--arc-brand-atlantean-teal)',
+    features: [
+      'No public quota or SLA is guaranteed',
+      'Response headers and current documentation are authoritative',
+      'Confirm production requirements with the maintainers',
+    ],
+  },
 ];
 
 const SDK_LIST = [
@@ -200,8 +208,8 @@ export default function ApiReferencePage() {
                 </h1>
 
                 <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl mb-8">
-                  Integrate creative intelligence into your applications. One OpenAI-compatible
-                  API, 26 models from 13 providers.
+                  Integrate creative intelligence into your applications through an
+                  OpenAI-compatible API backed by the configured model catalog.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
@@ -328,7 +336,7 @@ export default function ApiReferencePage() {
             <CodeBlock code={CODE_TABS[activeTab].code} language={CODE_TABS[activeTab].lang} />
           </section>
 
-          {/* Rate Limits */}
+          {/* Access limits */}
           <section className="py-12 border-t border-white/5">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--arc-fire)]/20 bg-[var(--arc-fire)]/8 mb-6">
               <PhClock className="w-3 h-3 text-[var(--arc-fire)]" />
@@ -336,9 +344,9 @@ export default function ApiReferencePage() {
                 Rate Limits
               </span>
             </div>
-            <h2 className="text-2xl font-display font-bold mb-8">Plans & Limits</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {RATE_LIMITS.map((plan) => (
+            <h2 className="text-2xl font-display font-bold mb-8">Access & Limits</h2>
+            <div className="grid max-w-xl gap-6">
+              {ACCESS_NOTES.map((plan) => (
                 <div
                   key={plan.plan}
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 relative overflow-hidden"

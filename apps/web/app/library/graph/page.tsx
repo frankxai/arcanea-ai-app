@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Web of Wisdom | Library",
     description:
-      "An interactive force-directed graph of the Library of Arcanea — 17 collections, hundreds of connections.",
+      "An interactive force-directed graph of the Library of Arcanea — 20 collections, hundreds of connections.",
   },
 };
 

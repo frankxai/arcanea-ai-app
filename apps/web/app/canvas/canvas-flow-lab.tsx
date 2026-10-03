@@ -100,13 +100,17 @@ export function CanvasFlowLab() {
                       <span className="text-[10px] font-mono text-white/24">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <p className="mt-8 text-lg font-display font-semibold text-white/86">{label}</p>
-                      <p className="mt-2 text-xs leading-relaxed text-white/42">{detail}</p>
+                      <p className="mt-8 text-lg font-display font-semibold text-white/86">
+                        {label}
+                      </p>
+                      <p className="mt-2 text-xs leading-relaxed text-white/42">
+                        {detail}
+                      </p>
                     </m.div>
                   ))}
                 </div>
                 <div className="relative mt-4 grid gap-3 md:grid-cols-4">
-                  {RECIPES.map((recipe, index) => (
+                  {RECIPES.map((recipe) => (
                     <Link
                       key={recipe.id}
                       href={recipe.route}
@@ -118,15 +122,22 @@ export function CanvasFlowLab() {
                       <h3 className="mt-3 min-h-12 text-base font-display font-semibold text-white/84">
                         {recipe.title}
                       </h3>
-                      <p className="mt-3 text-xs text-white/35">Input: {recipe.input}</p>
+                      <p className="mt-3 text-xs text-white/35">
+                        Input: {recipe.input}
+                      </p>
                       <div className="mt-3 space-y-1.5">
                         {recipe.nodes.map((node) => (
-                          <p key={`${recipe.id}-${node}`} className="rounded-lg bg-black/22 px-2 py-1 text-[11px] text-white/48">
+                          <p
+                            key={`${recipe.id}-${node}`}
+                            className="rounded-lg bg-black/22 px-2 py-1 text-[11px] text-white/48"
+                          >
                             {node}
                           </p>
                         ))}
                       </div>
-                      <p className="mt-3 text-xs font-semibold text-white/64">{recipe.output}</p>
+                      <p className="mt-3 text-xs font-semibold text-white/64">
+                        {recipe.output}
+                      </p>
                     </Link>
                   ))}
                 </div>
@@ -140,12 +151,21 @@ export function CanvasFlowLab() {
                 </p>
                 <div className="mt-4 space-y-3">
                   {MODEL_ROUTES.map(([type, tools, output]) => (
-                    <div key={type} className="rounded-2xl border border-white/[0.06] bg-black/24 p-3">
+                    <div
+                      key={type}
+                      className="rounded-2xl border border-white/[0.06] bg-black/24 p-3"
+                    >
                       <div className="flex items-center justify-between gap-3">
-                        <p className="text-sm font-display font-semibold text-white/82">{type}</p>
-                        <span className="text-[10px] font-mono text-white/28">{output}</span>
+                        <p className="text-sm font-display font-semibold text-white/82">
+                          {type}
+                        </p>
+                        <span className="text-[10px] font-mono text-white/28">
+                          {output}
+                        </span>
                       </div>
-                      <p className="mt-2 text-xs leading-relaxed text-white/45">{tools}</p>
+                      <p className="mt-2 text-xs leading-relaxed text-white/45">
+                        {tools}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -159,8 +179,10 @@ export function CanvasFlowLab() {
                   Canvas turns prompting into a repeatable studio pipeline.
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-white/45">
-                  Higgsfield-style generation is one output. Arcanea Canvas is the operating layer around it:
-                  world context, media references, model routing, agent handoff, and exportable production graphs.
+                  Higgsfield-style generation is one output. Arcanea Canvas is
+                  the operating layer around it: world context, media
+                  references, model routing, agent handoff, and exportable
+                  production graphs.
                 </p>
               </div>
             </div>

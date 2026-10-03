@@ -1,12 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-import { Button } from '@/lib/arcanea-ui';
-import { PhShare, PhUserPlus, PhUserCheck, PhChatCircle, PhMapPin } from '@/lib/phosphor-icons';
-import { LazyMotion, domAnimation, m } from 'framer-motion';
-import { Profile } from '@/lib/types/profile';
-import { useState } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Button } from "@/lib/arcanea-ui";
+import {
+  PhShare,
+  PhUserPlus,
+  PhUserCheck,
+  PhChatCircle,
+  PhMapPin,
+} from "@/lib/phosphor-icons";
+import { LazyMotion, domAnimation, m } from "framer-motion";
+import { Profile } from "@/lib/types/profile";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProfileHeaderProps {
   profile: Profile;
@@ -27,6 +34,7 @@ export function ProfileHeader({
   onMessage,
   onShare,
 }: ProfileHeaderProps) {
+  const router = useRouter();
   const [isFollowLoading, setIsFollowLoading] = useState(false);
 
   const handleFollowClick = async () => {
@@ -63,9 +71,9 @@ export function ProfileHeader({
 
   const getInitials = () => {
     return profile.display_name
-      .split(' ')
+      .split(" ")
       .map((n) => n[0])
-      .join('')
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
@@ -86,7 +94,7 @@ export function ProfileHeader({
             {/* Avatar Section */}
             <m.div
               whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+              transition={{ type: "spring", stiffness: 300 }}
               className="relative"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-500 rounded-full blur-xl opacity-50 animate-pulse" />
@@ -134,7 +142,9 @@ export function ProfileHeader({
                     >
                       <div className="flex items-center gap-2">
                         <PhMapPin className="w-4 h-4 text-purple-400" />
-                        <span className="text-purple-300 font-medium">{academy}</span>
+                        <span className="text-purple-300 font-medium">
+                          {academy}
+                        </span>
                       </div>
                     </m.div>
                   ))}
@@ -181,8 +191,8 @@ export function ProfileHeader({
                       disabled={isFollowLoading}
                       className={`${
                         isFollowing
-                          ? 'bg-slate-700 hover:bg-slate-600 text-white'
-                          : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white'
+                          ? "bg-slate-700 hover:bg-slate-600 text-white"
+                          : "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white"
                       } px-6 py-2 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-purple-500/50`}
                     >
                       {isFollowing ? (
@@ -220,7 +230,7 @@ export function ProfileHeader({
 
                 {isOwnProfile && (
                   <Button
-                    onClick={() => (window.location.href = '/profile/edit')}
+                    onClick={() => router.push("/profile/edit")}
                     className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-purple-500/50"
                   >
                     Edit Profile
@@ -247,9 +257,11 @@ function StatItem({ label, value, gradient }: StatItemProps) {
       <div
         className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}
       >
-        {typeof value === 'number' ? value.toLocaleString() : value}
+        {typeof value === "number" ? value.toLocaleString() : value}
       </div>
-      <div className="text-slate-400 text-sm uppercase tracking-wider">{label}</div>
+      <div className="text-slate-400 text-sm uppercase tracking-wider">
+        {label}
+      </div>
     </m.div>
   );
 }

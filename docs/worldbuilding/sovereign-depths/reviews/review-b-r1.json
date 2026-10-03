@@ -1,0 +1,93 @@
+{
+  "reviewer": "visual_judge",
+  "revision": "r1",
+  "method": "Direct visual inspection of three repaired source images against original and repair briefs. Independent scores use the unchanged 100-point still-image rubric.",
+  "scope": "Finished illustrative key art for gallery publication; no orthographic scale, animation or gameplay claims.",
+  "rubric": {
+    "identity": 20,
+    "story": 20,
+    "layout": 20,
+    "anatomy_material": 20,
+    "light_finish": 15,
+    "provenance": 5
+  },
+  "images": [
+    {
+      "id": "b01",
+      "file": "generated_images/exec-584cfc9e-2fff-4a6d-8d78-1b08b7378457.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 17,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 13,
+        "provenance": 4
+      },
+      "total": 87,
+      "decision": "Accept as finished boss key art.",
+      "observed_improvements": [
+        "Blunt crushing ridges and shortened shovel skull materially distinguish the mouth from the previous ordinary crocodile design.",
+        "The slab-breaking action is more central and readable.",
+        "Three near-side load-bearing limbs remain separately readable with convincing ground contact."
+      ],
+      "remaining_blockers": [],
+      "limits": [
+        "The masonry slab occludes portions of the lower grinder, so this is not a complete anatomical reference for its paired articulation.",
+        "All six limb attachments remain partly occluded by the intended three-quarter view."
+      ]
+    },
+    {
+      "id": "b17",
+      "file": "generated_images/exec-8440d787-5510-432c-b123-4723cd267514.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 17,
+        "anatomy_material": 17,
+        "light_finish": 13,
+        "provenance": 4
+      },
+      "total": 87,
+      "decision": "Accept as finished boss key art; retain 3.2 metres as an authored specification rather than a measured claim about this perspective rendering.",
+      "observed_improvements": [
+        "Both feet sets share a visible landing, removing the building-sized giant impression.",
+        "The horizontal third blade and extended hand provide a clear directional attack cue.",
+        "All three blades fit within the frame, while adult facial and material treatment remains intact."
+      ],
+      "remaining_blockers": [],
+      "limits": [
+        "Projected head-to-foot heights are roughly 1.3:1, not the nominal 1.8:1 body-height ratio. Camera depth can affect this, but precise 3.2-metre fidelity cannot be verified from the still.",
+        "The layered garment remains more patterned than the severe plain-silk brief; this does not undermine adult cinematic quality."
+      ]
+    },
+    {
+      "id": "d02",
+      "file": "generated_images/exec-238f5c1e-e2b1-46b2-a3c4-233d3ea7e350.png",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 19,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 90,
+      "decision": "Accept as finished dungeon cinematic and luminous-wonder benchmark.",
+      "observed_improvements": [
+        "Blue-green veiling and reduced distant contrast establish a substantially more convincing flooded volume.",
+        "Fish distributed through depth and subdued upper architecture strengthen aquatic scale.",
+        "The guide ropes, broken central crossing and distant destinations remain legible after atmospheric correction."
+      ],
+      "remaining_blockers": [],
+      "limits": [
+        "Lighting remains a cinematic interpretation, not a physically validated underwater simulation.",
+        "A full-frame or carefully selected mobile presentation is needed to retain route narrative."
+      ]
+    }
+  ],
+  "conclusion": "No remaining blocker for the requested finished individual-image gallery. Corrections improve defining anatomy, encounter intention and underwater atmosphere without losing adult treatment. Do not describe b17 as a dimensionally exact reference, or any of these images as validated gameplay or rig assets.",
+  "provenance_note": "Source filenames and repair briefs inspected. Provenance score remains 4/5 until integrated manifest verification."
+}

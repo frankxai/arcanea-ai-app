@@ -1,8 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { FloatingOrbs, StatCard, FeatureCard, FeatureIcon } from "@/components/premium";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
+import {
+  FloatingOrbs,
+  StatCard,
+  FeatureCard,
+  FeatureIcon,
+} from "@/components/premium";
+import { MagicWand, PencilSimple, TreeStructure } from "@/lib/phosphor-icons";
 import { useRef } from "react";
 
 // ---------------------------------------------------------------------------
@@ -15,30 +28,38 @@ const HOW_IT_WORKS = [
     step: "01",
     title: "Describe",
     body: "Type one sentence about your world. A name, an atmosphere, a founding myth — anything. The engine takes it from there.",
-    icon: "✍",
+    icon: PencilSimple,
     color: "var(--arc-brand-atlantean-teal)",
   },
   {
     step: "02",
     title: "Generate",
     body: "AI creates characters, locations, magic systems, and lore — all consistent with each other and rooted in your seed idea.",
-    icon: "✦",
+    icon: MagicWand,
     color: "var(--arc-brand-atlantean-teal)",
   },
   {
     step: "03",
     title: "Connect",
     body: "Everything links together into a living universe. Fork it, share it, build on it with other creators across the multiverse.",
-    icon: "⬡",
+    icon: TreeStructure,
     color: "var(--arc-brand-arcanean-gold)",
   },
 ];
 
 const HERO_STATS = [
-  { value: "12", label: "Supabase tables", color: "var(--arc-brand-atlantean-teal)" },
+  {
+    value: "12",
+    label: "Supabase tables",
+    color: "var(--arc-brand-atlantean-teal)",
+  },
   { value: "5", label: "Elements", color: "var(--arc-brand-atlantean-teal)" },
   { value: "∞", label: "Connected lore", color: "var(--arc-void)" },
-  { value: "Fork anything", label: "Always open", color: "var(--arc-brand-arcanean-gold)" },
+  {
+    value: "Fork anything",
+    label: "Always open",
+    color: "var(--arc-brand-arcanean-gold)",
+  },
 ];
 
 export function WorldsHero() {
@@ -52,16 +73,39 @@ export function WorldsHero() {
   });
 
   // Parallax depths: title moves faster, stats slower, background slowest
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -60]);
-  const subtitleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -40]);
-  const statsY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -20]);
-  const orbY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : 40]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, reducedMotion ? 1 : 0.6]);
+  const titleY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, reducedMotion ? 0 : -60],
+  );
+  const subtitleY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, reducedMotion ? 0 : -40],
+  );
+  const statsY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, reducedMotion ? 0 : -20],
+  );
+  const orbY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, reducedMotion ? 0 : 40],
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.6],
+    [1, reducedMotion ? 1 : 0.6],
+  );
 
   return (
     <LazyMotion features={domAnimation}>
       {/* ── Premium Hero with Scroll-Linked Parallax ───────────────────── */}
-      <section ref={containerRef} className="relative overflow-hidden pt-28 pb-20">
+      <section
+        ref={containerRef}
+        className="relative overflow-hidden pt-28 pb-20"
+      >
         {/* Parallax background layer */}
         <m.div style={{ y: orbY, opacity }} className="absolute inset-0">
           <FloatingOrbs preset="cosmic" />
@@ -71,7 +115,8 @@ export function WorldsHero() {
         <div
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
-            background: "radial-gradient(ellipse 100% 60% at 50% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 3%, transparent) 0%, transparent 70%)",
+            background:
+              "radial-gradient(ellipse 100% 60% at 50% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 3%, transparent) 0%, transparent 70%)",
           }}
           aria-hidden
         />
@@ -93,7 +138,9 @@ export function WorldsHero() {
           style={{
             background:
               "linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 30%, transparent) 35%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 45%, transparent) 50%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 30%, transparent) 65%, transparent 100%)",
-            boxShadow: reducedMotion ? "none" : "0 0 16px color-mix(in srgb, var(--arc-brand-atlantean-teal) 20%, transparent)",
+            boxShadow: reducedMotion
+              ? "none"
+              : "0 0 16px color-mix(in srgb, var(--arc-brand-atlantean-teal) 20%, transparent)",
           }}
           aria-hidden
         />
@@ -101,7 +148,11 @@ export function WorldsHero() {
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           {/* Eyebrow label */}
           <m.div
-            initial={{ opacity: 0, y: -8, filter: reducedMotion ? "none" : "blur(12px)" }}
+            initial={{
+              opacity: 0,
+              y: -8,
+              filter: reducedMotion ? "none" : "blur(12px)",
+            }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               type: "spring",
@@ -120,8 +171,13 @@ export function WorldsHero() {
 
           {/* Headline — parallax + spring */}
           <m.h1
+            id="worlds-heading"
+            tabIndex={-1}
             style={{ y: titleY }}
-            initial={{ opacity: 0, filter: reducedMotion ? "none" : "blur(20px)" }}
+            initial={{
+              opacity: 0,
+              filter: reducedMotion ? "none" : "blur(20px)",
+            }}
             animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{
               type: "spring",
@@ -145,7 +201,11 @@ export function WorldsHero() {
           {/* Subtitle — parallax */}
           <m.p
             style={{ y: subtitleY }}
-            initial={{ opacity: 0, y: 16, filter: reducedMotion ? "none" : "blur(10px)" }}
+            initial={{
+              opacity: 0,
+              y: 16,
+              filter: reducedMotion ? "none" : "blur(10px)",
+            }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               type: "spring",
@@ -156,7 +216,8 @@ export function WorldsHero() {
             className="text-base md:text-xl text-white/45 max-w-2xl mx-auto leading-relaxed mb-12 font-body"
           >
             A world-building engine where every character, location, and legend
-            connects into a coherent, living universe — ready to fork, explore, and evolve.
+            connects into a coherent, living universe — ready to fork, explore,
+            and evolve.
           </m.p>
 
           {/* Stats row — parallax + stagger with spring */}
@@ -179,7 +240,11 @@ export function WorldsHero() {
               <m.div
                 key={label}
                 variants={{
-                  hidden: { opacity: 0, y: 20, filter: reducedMotion ? "none" : "blur(8px)" },
+                  hidden: {
+                    opacity: 0,
+                    y: 20,
+                    filter: reducedMotion ? "none" : "blur(8px)",
+                  },
                   visible: {
                     opacity: 1,
                     y: 0,
@@ -230,7 +295,7 @@ export function WorldsHero() {
 
           {/* 3-step cards */}
           <div className="grid md:grid-cols-3 gap-5">
-            {HOW_IT_WORKS.map(({ step, title, body, icon, color }, i) => (
+            {HOW_IT_WORKS.map(({ step, title, body, icon: Icon, color }, i) => (
               <FeatureCard key={step} glowColor={color} delay={0.08 + i * 0.1}>
                 {/* Step badge */}
                 <div className="flex items-center gap-3 mb-5">
@@ -245,9 +310,7 @@ export function WorldsHero() {
                     {step}
                   </span>
                   <FeatureIcon color={color} size="sm">
-                    <span className="text-base leading-none" aria-hidden>
-                      {icon}
-                    </span>
+                    <Icon className="h-4 w-4" aria-hidden="true" />
                   </FeatureIcon>
                 </div>
 
@@ -267,10 +330,7 @@ export function WorldsHero() {
       </section>
 
       {/* ── Divider into WorldsClient ─────────────────────────────────── */}
-      <div
-        className="mx-auto max-w-5xl px-6 mb-4"
-        aria-hidden
-      >
+      <div className="mx-auto max-w-5xl px-6 mb-4" aria-hidden>
         <div
           className="h-px w-full"
           style={{

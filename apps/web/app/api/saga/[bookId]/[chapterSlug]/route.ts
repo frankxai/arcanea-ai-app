@@ -1,13 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
- * Saga API — Single chapter
+ * Public Saga API — single released chapter.
  *
- * GET /api/saga/[bookId]/[chapterSlug] — Returns a chapter with full markdown content.
- * Public endpoint, no auth required.
+ * This is the route that previously returned full chapter markdown to any
+ * unauthenticated caller. The allowlist check runs before the loader, so the
+ * manuscript of an unreleased book is never read from disk here.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { getSagaChapter } from '@/lib/saga/loader';
+import {
+  isPublicBook,
+  notPublicPayload,
+  internalErrorPayload,
+} from '@/lib/saga/public-release-registry';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,20 +23,14 @@ export async function GET(
 ) {
   try {
     const { bookId, chapterSlug } = await params;
-    const chapter = await getSagaChapter(bookId, chapterSlug);
 
+    if (!isPublicBook(bookId)) {
+      return NextResponse.json(notPublicPayload('chapter'), { status: 404 });
+    }
+
+    const chapter = await getSagaChapter(bookId, chapterSlug);
     if (!chapter) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'NOT_FOUND',
-            message: `Chapter "${chapterSlug}" not found in book "${bookId}"`,
-          },
-          meta: { timestamp: new Date().toISOString() },
-        },
-        { status: 404 },
-      );
+      return NextResponse.json(notPublicPayload('chapter'), { status: 404 });
     }
 
     return NextResponse.json({
@@ -40,13 +40,6 @@ export async function GET(
     });
   } catch (error) {
     console.error('[saga/bookId/chapterSlug GET] Error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: { code: 'INTERNAL_ERROR', message: 'Failed to load chapter' },
-        meta: { timestamp: new Date().toISOString() },
-      },
-      { status: 500 },
-    );
+    return NextResponse.json(internalErrorPayload(), { status: 500 });
   }
 }

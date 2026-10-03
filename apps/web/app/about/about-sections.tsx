@@ -12,6 +12,7 @@ import {
   GraduationCap,
 } from "@/lib/phosphor-icons";
 import { getFeaturedLuminors } from "@/lib/luminor-images";
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 import { ELEMENTS, GUARDIANS, ACADEMY_HOUSES, MAGIC_RANKS } from "./about-data";
 
 // ---------------------------------------------------------------------------
@@ -571,10 +572,10 @@ export function FounderSection() {
                 Frank Riemer
               </h3>
               <p className="text-text-secondary leading-relaxed mb-4">
-                500+ AI implementations. Former enterprise architect. Creator of Arcanea
-                because the tools for building intelligent creative worlds didn&apos;t exist --
-                so he built the framework, the reference world, the Library, and the
-                open-source ecosystem from scratch.
+                Enterprise architect turned full-time creator. He built Arcanea because
+                the tools for building intelligent creative worlds didn&apos;t exist, so the
+                framework, the reference world, the Library, and the open-source ecosystem
+                all had to be written from scratch.
               </p>
               <p className="text-text-secondary leading-relaxed mb-6">
                 Arcanea isn&apos;t a product built by committee. It&apos;s one person&apos;s
@@ -582,9 +583,9 @@ export function FounderSection() {
                 their own.
               </p>
               <div className="flex flex-wrap gap-3 text-xs font-mono text-text-muted">
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">500+ AI implementations</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Former enterprise architect</span>
                 <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Original philosophy</span>
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">27 open-source repos</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">{PUBLIC_REPO_SUMMARY.public} open-source repos</span>
                 <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Source available</span>
               </div>
             </div>

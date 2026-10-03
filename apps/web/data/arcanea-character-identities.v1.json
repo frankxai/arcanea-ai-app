@@ -1,0 +1,578 @@
+{
+  "meta": {
+    "schema": "arcanea.character_identity_atlas.v1",
+    "version": "1.10.0",
+    "generatedAt": "2026-08-25T00:00:00.000Z",
+    "sourceOfTruth": "scripts/build-arcanea-living-constellation.mjs plus the cited manuscript BIBLE and character files",
+    "truthBoundary": "A source-complete record is still a candidate until human identity approval. A discovery-only record may generate internal explorations but may not be approved or staged publicly. A blocked record may not be generated."
+  },
+  "characters": [
+    {
+      "id": "kael-thornfield",
+      "name": "Kael Thornfield",
+      "series": "Chronicles of Arcanea",
+      "readiness": "source-complete",
+      "evidenceState": "source-complete",
+      "description": "Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.",
+      "storyBeat": "Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.",
+      "openIdentityVariables": [],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/chronicles-of-arcanea/series-bible/CHARACTER_BIBLE.md#1-kael-thornfield [sha256:fabf13211046b30594f5ed927c5fea1e445219426d82dd2accabb0772e29b557]"
+      ],
+      "campaign": {
+        "jobId": "ACV-061",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "candidate-after-human-gates",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "mira-tidecrest",
+      "name": "Mira Tidecrest",
+      "series": "Chronicles of Arcanea",
+      "readiness": "source-complete",
+      "evidenceState": "source-complete",
+      "description": "Mira is twenty and five-foot-four, with warm medium-brown skin that turns golden in strong light, very dark eyes, and dark salt-waved hair usually pinned back and half-escaped. Line-hauling calluses mark both palms and fingers. Her clothing must remain water-safe and practical; her mother’s fishing cord stays on her left wrist.",
+      "storyBeat": "Wrapped in a thermal blanket after the Memory Pool kept her under, Mira presses her mother’s fishing cord between her fingers and names the frightening possibility that the water has known her name for years.",
+      "openIdentityVariables": [],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/chronicles-of-arcanea/series-bible/CHARACTER_BIBLE.md#2-mira-tidecrest [sha256:fabf13211046b30594f5ed927c5fea1e445219426d82dd2accabb0772e29b557]"
+      ],
+      "campaign": {
+        "jobId": "ACV-062",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "candidate-after-human-gates",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "ash",
+      "name": "Ash",
+      "series": "Chronicles of Arcanea",
+      "readiness": "source-complete",
+      "evidenceState": "source-complete",
+      "description": "Ash is eighteen, lean and wiry from years of missed meals and street survival, with medium olive skin that tans dark, short dark hair, and amber-brown eyes. Burn scars cross his right forearm and the back of his right hand. He wears no jewelry and keeps one folded private paper in an inner pocket. Every movement carries economical readiness.",
+      "storyBeat": "At the edge of a Cinderwall room, Ash locates every exit before sitting, one scarred hand guarding the folded paper he never shows while a controlled coal gives warmth rather than destruction.",
+      "openIdentityVariables": [],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/chronicles-of-arcanea/series-bible/CHARACTER_BIBLE.md#3-ash [sha256:fabf13211046b30594f5ed927c5fea1e445219426d82dd2accabb0772e29b557]"
+      ],
+      "campaign": {
+        "jobId": "ACV-063",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "candidate-after-human-gates",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "sable-luminaire",
+      "name": "Sable Luminaire",
+      "series": "Chronicles of Arcanea",
+      "readiness": "source-complete",
+      "evidenceState": "source-complete",
+      "description": "Sable is pale from life in aurora-crystal spires, five-foot-seven and slim, with extremely straight black hair arranged precisely over one shoulder and held back elsewhere. Her almost-colorless light-grey eyes are unnervingly still. Clothes, posture, and movement are deliberate. A small deep-indigo almost-closed circle marks the inside of her right wrist.",
+      "storyBeat": "Sable holds one precise Void working at the edge of a quiet study while another person speaks; her still attention and the nearly closed indigo wrist mark carry more weight than the phenomenon.",
+      "openIdentityVariables": [],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/chronicles-of-arcanea/series-bible/CHARACTER_BIBLE.md#4-sable-luminaire [sha256:fabf13211046b30594f5ed927c5fea1e445219426d82dd2accabb0772e29b557]"
+      ],
+      "campaign": {
+        "jobId": "ACV-064",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "candidate-after-human-gates",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "elio-songwright",
+      "name": "Elio Songwright",
+      "series": "Chronicles of Arcanea",
+      "readiness": "source-complete",
+      "evidenceState": "source-complete",
+      "description": "Elio is twenty-one, medium height and slender, with structural dark circles, a soft approachable face, wide-set warm-brown eyes, an expressive mouth, and untidy dark hair. His seated posture is musician-straight and he leans forward when listening. String calluses mark his left fingertips. Four comfortable outfits matter less to him than his seven instruments.",
+      "storyBeat": "Elio crosses a room and simply sits beside someone whose loneliness others have organized themselves not to see; one string instrument rests nearby, unused, because complete attention is the action.",
+      "openIdentityVariables": [],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/chronicles-of-arcanea/series-bible/CHARACTER_BIBLE.md#5-elio-songwright [sha256:fabf13211046b30594f5ed927c5fea1e445219426d82dd2accabb0772e29b557]"
+      ],
+      "campaign": {
+        "jobId": "ACV-065",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "candidate-after-human-gates",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "selene-velara",
+      "name": "Selene Velara",
+      "series": "Las Tierras de Luz",
+      "readiness": "source-complete-review-required",
+      "evidenceState": "source-complete-review-required",
+      "description": "Selene is a nineteen-year-old Caracas-born Venezuelan linguistics student of Venezuelan and Avilaran lineage. She is medium height, with brown skin that turns faintly gold at summer’s end and dark hair to her shoulder blades. Her grandmother’s small gold cross remains at her neck. Niebla, a silver cat, is her companion; prismatic destellos are perceived phenomena, not decorative aura.",
+      "storyBeat": "At her grandmother’s exact kitchen table inside the Foundation Trial, Selene names the light around long-loved objects until the denied room begins to breathe and the amber-rose chamber key rises.",
+      "openIdentityVariables": [],
+      "reviewRequirements": [
+        "A paid Venezuelan-Spanish woman reader with diaspora experience reviews cultural, clothing, place, family, and religious-symbol framing before approval.",
+        "The visual must not borrow Indigenous Venezuelan clothing, symbols, gestures, or sacred architecture as Avilaran decoration."
+      ],
+      "sensitivityReviewRequired": true,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/las-tierras-de-luz/BIBLE.md#protagonist--selene-velara-locked [sha256:473f6b0c27438dea9652369d8b4c36c0305f77d3ec0b844f70d159ffbe3221dc]",
+        "book/las-tierras-de-luz/BIBLE.md#sensitivity--inclusion-protocol [sha256:473f6b0c27438dea9652369d8b4c36c0305f77d3ec0b844f70d159ffbe3221dc]"
+      ],
+      "campaign": {
+        "jobId": "ACV-066",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "candidate-after-human-gates",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "lysara-sablecourt",
+      "name": "Lysara Sablecourt",
+      "series": "The Hall of White",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Lysara is fifty-two, an Arcan and Spirit-aligned hexachrome whose halo fills about seven-tenths of each iris in layered concentric colors; the underlying hazel has not appeared uncolored since age twenty-four. Her presence is spare, precise, dry, and kind. The manuscript does not yet lock skin, hair, body build, or clothing silhouette.",
+      "storyBeat": "After an eleven-minute Source-state, Lysara sits beside Sifre in the Wellspring and watches the old deer breathe without trying to interpret the stone-hum in her bones.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "body build and height",
+        "Order clothing silhouette and wear pattern"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/the-hall-of-white/BIBLE.md#lysara-sablecourt [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]"
+      ],
+      "campaign": {
+        "jobId": "ACV-067",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "reni-voss",
+      "name": "Reni Voss",
+      "series": "The Hall of White",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Reni is twenty-two, Gate-Touched, and three years into Lysara’s mentorship. A faint, untrained sub-red halo forms an inner iris ring. She studies the Order while the Order studies her; the image must hold grief, vigilance, and future capacity without converting her history into fire spectacle. The manuscript does not yet lock face, skin, hair, body, or clothing.",
+      "storyBeat": "Reni completes her first deliberate sub-red draft in the Hall with a properly fitted Yumiko-Prism lens while Lysara witnesses without taking the action away from her.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "body build and height",
+        "Aspirant clothing silhouette and personal wear"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/the-hall-of-white/BIBLE.md#aspirant-reni-voss [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]"
+      ],
+      "campaign": {
+        "jobId": "ACV-068",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "aranya",
+      "name": "Aranya",
+      "series": "The Hall of White",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Aranya is seventy-three, senior Wellkeeper and institutional voice of Freeing. She is Bonded to Sifre, a forty-one-year-old Laeylinn-touched deer; the bond extends both lives. Her cadence is slow, plain, and shaped by the Wellspring’s stone-hum. The manuscript does not yet lock her face, skin, hair, build, clothing, or Sifre’s exact morphology beyond deer and age.",
+      "storyBeat": "Aranya reads Lysara’s advancing halo in the Wellspring with Sifre breathing nearby, speaking the risk plainly and without adversarial posture or ritual melodrama.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, arrangement, and age expression",
+        "body build and height",
+        "Wellkeeper clothing and instrument system",
+        "Sifre’s species-specific markings and proportions"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/the-hall-of-white/BIBLE.md#wellkeeper-aranya [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]"
+      ],
+      "campaign": {
+        "jobId": "ACV-069",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "veyl-stoneshade",
+      "name": "Veyl Stoneshade",
+      "series": "The Hall of White",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Veyl is thirty-eight, the Hall’s Yumiko-Prism lens-shaper and the only documented Cinderfang-Arcan hybrid in current Order records. Her rare wolf form is small and white. She knows bodies through lens wear and offers Lysara a seven-band lens without coercion. Her human face, skin, hair, build, clothing, and hybrid markers are not yet locked.",
+      "storyBeat": "Alone in the lens workshop, Veyl turns a seven-band Yumiko-Prism lens so its twice-refined silver junction thread becomes materially legible before placing the choice in Lysara’s reach.",
+      "openIdentityVariables": [
+        "human-form skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "body build and height",
+        "visible Cinderfang-Arcan hybrid markers",
+        "lens-shaper clothing and workshop protection"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/the-hall-of-white/BIBLE.md#veyl-stoneshade [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]"
+      ],
+      "campaign": {
+        "jobId": "ACV-070",
+        "round": 7,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "tezerin-halevant",
+      "name": "Tezerin Halevant",
+      "series": "The Hall of White",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Tezerin is sixty-one, Arcan, House Synthesis trained, and a five-color polychrome who approached Prism State three times without reaching it. As Aspirant-Master, he embodies institutional caution and a thirty-year friendship with Lysara. The manuscript does not yet lock his face, skin, hair, body, or clothing silhouette.",
+      "storyBeat": "At Dusk in the Hall of White, Tezerin asks Lysara to accept Freeing, then weeps when she releases the Order from imagined debt; the scene is friendship under institutional pressure, not confrontation.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, arrangement, and age expression",
+        "body build and height",
+        "Aspirant-Master clothing silhouette and personal wear"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/the-hall-of-white/BIBLE.md#master-tezerin-halevant [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]"
+      ],
+      "campaign": {
+        "jobId": "ACV-071",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "erivar",
+      "name": "Erivar",
+      "series": "Forge of Ruin",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Erivar is in his late thirties, very large in the northern way, with extensive black-veined hands and forearms that reveal a long-bonded Mawfather inheritance. He knows an eight-foot chained circuit by touch and counts everything. The manuscript does not yet lock skin, face, hair, precise height, clothing construction, or protective gear.",
+      "storyBeat": "In the cellar, Erivar runs one black-veined hand along the exact eight-foot chain circuit and counts the names he can still hold, resisting the inheritance through method rather than heroic rage.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "precise height and body proportions",
+        "work clothing, restraints, and protective wear"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/forge-of-ruin/BIBLE.md#erivar-skaldson [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]"
+      ],
+      "campaign": {
+        "jobId": "ACV-072",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "bryda",
+      "name": "Bryda",
+      "series": "Forge of Ruin",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Bryda is in her late thirties, broad-shouldered, and built by twenty years of hammer work; her hands and forearms are a smith’s evidence, not ornamental strength. She carries her own weight without apology and makes chains, plows, hinges, latches, and cook-pots—not magical weapons. Face, skin, hair, height, and clothing remain open.",
+      "storyBeat": "At her ordinary forge, Bryda sets down the unfinished chain and opens both work-shaped hands before choosing what her craft will no longer maintain.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, and forge-safe arrangement",
+        "precise height and body proportions",
+        "smith clothing, apron, and protective wear"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/forge-of-ruin/BIBLE.md#bryda-halfmourning [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]"
+      ],
+      "campaign": {
+        "jobId": "ACV-073",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "sigveld",
+      "name": "Sigveld",
+      "series": "Forge of Ruin",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Sigveld is in his late fifties: tall, close-cropped iron-grey hair, pale steady eyes, a soft voice, Compact black clothing, and one steel collar pin. His competence and error must coexist; he is not a villain, and visual severity cannot become fascist glamour. Skin tone, facial structure, exact height, and garment construction remain open.",
+      "storyBeat": "Sigveld stands over an inhuman deployment calculation and quietly refuses to execute it, removing the single steel collar pin as an institutional act rather than a redemption pose.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "precise height and body proportions",
+        "Compact garment construction and regional material language"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/forge-of-ruin/BIBLE.md#sigveld-the-architect [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]"
+      ],
+      "campaign": {
+        "jobId": "ACV-074",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "raskvorn",
+      "name": "Raskvorn",
+      "series": "Forge of Ruin",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Raskvorn is in his mid-fifties and large like Erivar but emptied: pit-like eyes, an unnaturally still stance, intact reflexes, and no speech. One hand always holds a small wooden fox whose shape survives in muscle memory. He must not read as tragic nobility, undead spectacle, or monstrous villain. Face, skin, hair, and clothing remain open.",
+      "storyBeat": "At the Mawfather’s Throat, Raskvorn turns toward Alna’s distant voice rather than attacking; the wooden fox stays legible in his hand and the moment remains a fragment of listening, not a cure.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, arrangement, and age expression",
+        "precise height and body proportions",
+        "clothing, wear, and parasite-line markers"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/forge-of-ruin/BIBLE.md#raskvorn-the-hollow [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]"
+      ],
+      "campaign": {
+        "jobId": "ACV-075",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "odre",
+      "name": "Odre",
+      "series": "Forge of Ruin",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Odre is twenty-four when assigned to the chronicle, small and quick, with ink-stained fingers, two satchels of blank-paged ledgers, and Chronicle Hall greys. They witness rather than decorate violence, and their record is ordinary ink rather than a magical artifact. Face, skin, hair, exact build, and garment construction remain open.",
+      "storyBeat": "After Fellgate, Odre reads Erivar’s own chronicle back to him and restores memory from ordinary ink, visibly ending the fiction of neutral observation without turning the ledger into magic.",
+      "openIdentityVariables": [
+        "skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "precise height and body proportions",
+        "Chronicle Hall garment construction and satchel design"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/forge-of-ruin/BIBLE.md#odre-flachmark [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]"
+      ],
+      "campaign": {
+        "jobId": "ACV-076",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "korvash",
+      "name": "Korvash",
+      "series": "Heart of Pyrathis",
+      "readiness": "blocked",
+      "evidenceState": "source-conflict-review-gated",
+      "description": "Korvash is twenty, a cold-born Cinderfang adult from Kaldros who has never shifted. In base form they wear wrapped training leathers; ember-veins under the skin are usually dark and later pulse faint amber in answer to the dying Dragon’s Spine. The BIBLE uses they/them while drafted chapters use he/him, and face, skin, hair, build, and final Heartbound form remain unresolved.",
+      "storyBeat": "On the caldera rim, Korvash keeps both hands on warm obsidian as a faint amber rhythm persists in their forearm veins after the dying mountains call specifically to them.",
+      "openIdentityVariables": [
+        "pronoun and gender identity continuity across BIBLE and chapters",
+        "skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "base-form height and body proportions",
+        "Heartbound and unprecedented shifted morphology"
+      ],
+      "reviewRequirements": [
+        "Creator resolves the BIBLE/chapter pronoun conflict before an identity image is generated.",
+        "A qualified reader with relevant disability or neurodivergence lived experience reviews the prompt framing before generation and any public use."
+      ],
+      "sensitivityReviewRequired": true,
+      "blockedReason": "The BIBLE uses they/them while drafted chapters use he/him, and the never-shifted condition is an explicit disability/neurodivergence analogue. Resolve the identity record and complete qualified lived-experience prompt review before generation.",
+      "sourceRefs": [
+        "book/heart-of-pyrathis/BIBLE.md#character-dossiers [sha256:1dcd3cc5d87a3d2284f5973f44dc488956ee25ca679a7502b545608caab9cd95]",
+        "book/heart-of-pyrathis/chapters/01-the-cold-season.md [sha256:9640d924b3c178d18822803ac621eb704663ae44607a3315dde3caf4c51ae526]",
+        "book/heart-of-pyrathis/BIBLE.md#sensitivity-protocol [sha256:1dcd3cc5d87a3d2284f5973f44dc488956ee25ca679a7502b545608caab9cd95]"
+      ],
+      "campaign": {
+        "jobId": "ACV-077",
+        "round": 8,
+        "generationState": "blocked",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "solenne",
+      "name": "Solenne",
+      "series": "Heart of Pyrathis",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Solenne is a Celestine exile carrying her dead partner’s maps and a pale-blue crystallized-starlight Shard-Blade. Her competence masks stellar grief; she confronts her people’s destruction of a living world and ultimately chooses mortal responsibility on Pyrathis. Species morphology, age, face, skin, hair, build, clothing, and Celestine material language remain open.",
+      "storyBeat": "At the Mirror Lava Fields, Solenne uses her dead partner’s corrected map to save the group, then faces a reflected memory without converting grief into ethereal beauty.",
+      "openIdentityVariables": [
+        "Celestine species morphology and age expression",
+        "skin tone and facial structure",
+        "hair color, texture, and arrangement",
+        "body build and height",
+        "Celestine clothing, maps, and tool material language"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/heart-of-pyrathis/BIBLE.md#character-dossiers [sha256:1dcd3cc5d87a3d2284f5973f44dc488956ee25ca679a7502b545608caab9cd95]",
+        "book/heart-of-pyrathis/outline/story-architecture.md [sha256:749373640ea617825eeec5f43bfe81a39b0aa35a1c34f2dd87557f7c04bbed66]"
+      ],
+      "campaign": {
+        "jobId": "ACV-078",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "pyrrik",
+      "name": "Pyrrik",
+      "series": "Heart of Pyrathis",
+      "readiness": "discovery-only",
+      "evidenceState": "source-partial",
+      "description": "Pyrrik is a young lava dragon, frightened and funny through behavior rather than mascot styling. He is also a fragment of the First Fire’s dream, yet his lived bonds remain real. The source locks emotional function and lava-dragon taxonomy—flowing, molten, liquid thought—but not age-equivalent, size, limbs, wings, horns, face, scale structure, or precise material anatomy.",
+      "storyBeat": "In the Cold Chamber, Pyrrik’s fire has gone out and Korvash carries him across absolute volcanic death; fear, weight, and mutual trust must read before comedy or flame effects.",
+      "openIdentityVariables": [
+        "age-equivalent and body scale",
+        "limb, wing, horn, and tail counts",
+        "facial anatomy and expression range",
+        "scale, magma, and cooling-crust material anatomy"
+      ],
+      "reviewRequirements": [],
+      "sensitivityReviewRequired": false,
+      "blockedReason": null,
+      "sourceRefs": [
+        "book/heart-of-pyrathis/BIBLE.md#character-dossiers [sha256:1dcd3cc5d87a3d2284f5973f44dc488956ee25ca679a7502b545608caab9cd95]",
+        "book/heart-of-pyrathis/outline/story-architecture.md#dragon-taxonomy [sha256:749373640ea617825eeec5f43bfe81a39b0aa35a1c34f2dd87557f7c04bbed66]"
+      ],
+      "campaign": {
+        "jobId": "ACV-079",
+        "round": 8,
+        "generationState": "planned",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    },
+    {
+      "id": "an-van-linh",
+      "name": "An",
+      "series": "Song of Van Linh",
+      "readiness": "blocked",
+      "evidenceState": "source-underreview-review-gated",
+      "description": "An is the Unity-rooted protagonist called the Girl Who Heard the River. Before awakening she senses animal emotion and place resonance; the four-book arc moves from Sensitivity toward Listening, Speaking, and Bridging. The BIBLE explicitly marks detailed character files unreviewed and does not provide a trustworthy physical identity lock for visual generation.",
+      "storyBeat": "The eventual visual should show An listening to a river as a specific living ecology rather than posing with Vietnamese myth as scenery; no scene is authorized until the human review protocol is fulfilled.",
+      "openIdentityVariables": [
+        "all physical identity traits",
+        "age, clothing, place, and family-specific material evidence",
+        "the culturally responsible boundary between Earth-Vietnam and Van Linh"
+      ],
+      "reviewRequirements": [
+        "Two paid Vietnamese women readers with diaspora and/or in-country experience review the character and visual prompt as the primary cultural gate.",
+        "Indigenous Vietnamese traditions require relevant Indigenous-Vietnamese review if Highland material appears."
+      ],
+      "sensitivityReviewRequired": true,
+      "blockedReason": "Detailed character files are explicitly unreviewed and the BIBLE makes two paid Vietnamese women readers a non-negotiable gate. Complete that review and lock An’s physical identity before visual generation.",
+      "sourceRefs": [
+        "book/song-of-van-linh/BIBLE.md#sensitivity-protocol--non-negotiable [sha256:78723ea5dadae55224ce2c57b24506fb294863da1b2a6055a9bb2674800dde07]",
+        "book/song-of-van-linh/BIBLE.md#cast--canonical-headlines-from-outline-characters-files-unreviewed [sha256:78723ea5dadae55224ce2c57b24506fb294863da1b2a6055a9bb2674800dde07]"
+      ],
+      "campaign": {
+        "jobId": "ACV-080",
+        "round": 8,
+        "generationState": "blocked",
+        "releaseState": "not-generated",
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "publicImageUrl": null
+      }
+    }
+  ]
+}

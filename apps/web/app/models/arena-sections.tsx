@@ -167,7 +167,17 @@ export function BenchmarkTable() {
 /*  Workflow Map                                                       */
 /* ------------------------------------------------------------------ */
 
-const WORKFLOW_CATEGORY_COLORS: Record<ArcaneanWorkflow["category"], string> = {
+const WORKFLOW_CATEGORY_COLORS: Record<string, string> = {
+  worldbuilding: "var(--arc-brand-atlantean-teal)",
+  prose: "var(--arc-brand-arcanean-gold)",
+  "lore-vault": "var(--arc-brand-cosmic-blue)",
+  "magic-systems": "var(--arc-brand-atlantean-teal)",
+  character: "var(--arc-void)",
+  battles: "var(--arc-fire)",
+  sensory: "var(--arc-wind)",
+  folklore: "var(--arc-brand-arcanean-gold)",
+  councils: "var(--arc-brand-cosmic-blue)",
+  cosmology: "var(--arc-void)",
   orchestration: "var(--arc-brand-arcanean-gold)",
   coding: "var(--arc-fire)",
   review: "var(--arc-void)",

@@ -1,0 +1,248 @@
+{
+  "reviewer": "visual_judge",
+  "batch": 4,
+  "method": "Nine complete source images inspected individually against saved briefs; source hashes captured.",
+  "rubric": {
+    "identity": 20,
+    "story": 20,
+    "layout": 20,
+    "anatomy_material": 20,
+    "light_finish": 15,
+    "provenance": 5
+  },
+  "publication_threshold": 85,
+  "scope": "Independent model critique of finished still key art. No human approval or game-implementation claim.",
+  "images": [
+    {
+      "id": "b21",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-9e05dba1-e01d-4d8a-aba1-117c4d2bcbd6.png",
+      "sha256": "8fda216d59abbe06a1c2774030760fee6bd6bc10818006f2fc66e3e93f125382",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 89,
+      "decision": "accept",
+      "evidence": [
+        "Crescent instrument has visible hand/support structure and directs a clear reflected hazard line along the causeway.",
+        "Blindfold, emaciated adult body and rust cloth distinguish a ritual scholar from the military bosses.",
+        "Eclipse, salt causeway and buried observation rings form coherent regional identity."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Reflection is authored fantasy behaviour, not physically validated eclipse optics."
+      ]
+    },
+    {
+      "id": "b22",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-4a9e7683-c600-42c6-9022-9f6c6e995fd2.png",
+      "sha256": "e5b38bc8e52080b4fb407773460da3226bf47112dadfd31aff340282c8334bd0",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 19,
+        "story": 19,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 91,
+      "decision": "accept",
+      "evidence": [
+        "Three joined sail-shell volumes and a low eyeless muscular foot give a striking nonhumanoid silhouette.",
+        "Falling sand and exposed lens well tie migration directly to dungeon transformation.",
+        "Fleeing expedition figures provide a more dynamic scale narrative than a stationary comparison figure."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": []
+    },
+    {
+      "id": "b23",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-638c3574-7c63-4b8f-aaf1-99483b455e82.png",
+      "sha256": "07e3ffbf714089249726d380b223aace6b7083b3ab9d7100fbe0ae2e5c5cd0aa",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 19,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 90,
+      "decision": "accept",
+      "evidence": [
+        "Six visible stone weights and a tightly woven root knot produce an original siege-working form.",
+        "The lifted weight and breaking causeway clearly link action and consequence.",
+        "Tiny ward team, still black water and restrained red fissure make threat legible without a demon face."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "The upper suspension extends outside the frame; this does not establish a complete construction diagram."
+      ]
+    },
+    {
+      "id": "b24",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-74435857-5787-426c-b519-5b863a0014c6.png",
+      "sha256": "a749927aa1d648815ae2324dc1fdf977cf7946196c8054a7219add1e4592a886",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 16,
+        "light_finish": 13,
+        "provenance": 4
+      },
+      "total": 87,
+      "decision": "accept",
+      "evidence": [
+        "Half-drawn actual blade and longer reflected blade convey the single uncanny cue.",
+        "Mature androgynous face and severe plain warcloth support controlled duelist menace.",
+        "Offset subject and large reflection area create useful composition variety within the boss collection."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Shadow-vein laterality cannot be treated as a verified model-sheet detail from this view."
+      ]
+    },
+    {
+      "id": "d06",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-bc92607a-74cc-45d5-b1b3-64e9f9f5f225.png",
+      "sha256": "cd5ae7e2e3d15b10dcea010c154d809959163a8a9cf68ce35b56d3d4441034c5",
+      "hard_gate": "hold",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 17,
+        "anatomy_material": 17,
+        "light_finish": 13,
+        "provenance": 2
+      },
+      "total": 85,
+      "decision": "repair",
+      "evidence": [
+        "Sweeping stair below and ceiling return above establish a bounded local spatial anomaly.",
+        "Mountain entrance, fallen gear and wet stone provide arrival context and physical material cues."
+      ],
+      "publication_blockers": [
+        "Remove the small pale outlined interlocking rectangular mark at the lower-right corner: it reads as an accidental watermark/signature, not convincing diegetic architecture."
+      ],
+      "nonblocking_limits": [
+        "Environment composition repeats the two-explorer lower-left arrival staging used in adjacent plates."
+      ]
+    },
+    {
+      "id": "d07",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-a5512b8f-264e-4fef-8bc6-dbae6f365463.png",
+      "sha256": "6805a606c358976df444083c412b6047c7a7779fb9628567429fbb797e6c81fd",
+      "hard_gate": "hold",
+      "scores": {
+        "identity": 17,
+        "story": 16,
+        "layout": 17,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 3
+      },
+      "total": 84,
+      "decision": "repair",
+      "evidence": [
+        "Glacial wall layering, timber ribs and visible thaw channel make the monastery region clear.",
+        "Broken crossing, lateral route and machinery provide exploration choices."
+      ],
+      "publication_blockers": [
+        "Remove the prominent left wall inscription reading approximately QUI / ENDURE / PRESERVE / FURTHER; its arbitrary pseudo-sentence weakens finished-world credibility. Retain plain weathered stone or a deliberately authored nontext relief."
+      ],
+      "nonblocking_limits": [
+        "Directional signs are readable and coherent, but should not be treated as independently established canon labels."
+      ]
+    },
+    {
+      "id": "d08",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-24583a57-9bb0-4870-9987-73f38e918c34.png",
+      "sha256": "e25f40b47dae7c45ef1f807395c0929e56ac05d41a7b900d4ff5f22bcacfe3cc",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 89,
+      "decision": "accept",
+      "evidence": [
+        "Mineral roots overtaking botanical terraces convey the original research purpose and later ecological change.",
+        "Causeway branches, sinkholes and distant crater walls provide useful depth and choices.",
+        "Warm emerald daylight sustains mature wonder."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Two figures at lower-left with middle crossing repeat the shared environment arrival formula."
+      ]
+    },
+    {
+      "id": "d09",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-0121925c-8b59-4321-a5fd-69cc535ff02a.png",
+      "sha256": "4709ea64a6badcf65dedf92746991eeb517243376a6be9d8260e80fb9443de3e",
+      "hard_gate": "pass",
+      "scores": {
+        "identity": 18,
+        "story": 17,
+        "layout": 18,
+        "anatomy_material": 17,
+        "light_finish": 14,
+        "provenance": 4
+      },
+      "total": 88,
+      "decision": "accept",
+      "evidence": [
+        "Open circular court and severe quartz fins establish the trial arena while preserving room to move.",
+        "Distant mountain landmark and local damaged access create two destination scales.",
+        "Ivory, graphite and controlled warm seams match the Glass Sovereign setting."
+      ],
+      "publication_blockers": [],
+      "nonblocking_limits": [
+        "Detail-rich stairs and statues are less severe than the original minimal-court brief, but the central arena retains visual rest."
+      ]
+    },
+    {
+      "id": "d10",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-46a77a24-37b0-4648-a228-148e27da1e50.png",
+      "sha256": "470dc373ec8785c8cf17604b20d14fd3251c176c4f7f3c5fbe58211bda5b09f8",
+      "hard_gate": "hold",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 17,
+        "anatomy_material": 17,
+        "light_finish": 13,
+        "provenance": 3
+      },
+      "total": 86,
+      "decision": "repair",
+      "evidence": [
+        "Suspended keel, capstans, load cranes and waves express the arsenal purpose and current storm pressure.",
+        "Clear foreground catwalk and opposing route choices make the setting explorable."
+      ],
+      "publication_blockers": [
+        "Remove the prominent right wall inscription BUILDS / FEED. / REALMS; it reads as accidentally generated copy. Preserve weathered stone and statue."
+      ],
+      "nonblocking_limits": [
+        "Directional signs are coherent; the image remains illustrative geography rather than an exact navigable level."
+      ]
+    }
+  ],
+  "collection_notes": [
+    "Bosses in this batch widen silhouette and composition: crescent scholar, migrating shell, suspended siege knot, reflected duelist.",
+    "Five environments use a repeated arrival grammar: two lower-left explorers, a middle crossing and a distant destination. It is coherent but not radical composition variety. Curate gallery sequencing to vary light, location and boss/environment scale.",
+    "Three focused removal edits are needed; do not redraw otherwise successful environments unnecessarily."
+  ]
+}

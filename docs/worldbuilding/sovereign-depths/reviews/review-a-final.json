@@ -1,0 +1,250 @@
+{
+  "reviewer": "/root/cinematic_research",
+  "reviewedAt": "2026-09-09",
+  "batch": "d01,d03,d04,d11,d12,repaired-d05,repaired-d07,repaired-d10",
+  "method": "All eight exact files individually viewed after reading source prompts. Five equal-weight editorial dimensions; >=85 overall and >=75 each critical dimension, with independent no-watermark/no-malformed-text finishing hard gates. Anatomy for environments means structural/spatial credibility. Concept-key-art acceptance does not certify playable layout, exact simulation, 3D topology or canon promotion.",
+  "thresholds": {
+    "overallMinimum": 85,
+    "criticalMinimum": 75,
+    "criticalDimensions": [
+      "identity",
+      "anatomy",
+      "composition",
+      "materials",
+      "story"
+    ]
+  },
+  "summary": {
+    "accepted": ["d01", "d03", "d11", "d12", "d05", "d07", "d10"],
+    "repair": ["d04"]
+  },
+  "images": [
+    {
+      "id": "d01",
+      "name": "Furnace of the First Breach",
+      "manifest": "generated-d01.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-686466f7-4ecb-4dce-bd31-c613b7bf7003.png",
+      "sha256": "5d3b6af171c7a12e871b82e7395a3b20d2ab273d15fdfa80a0d71e946cbaaeba",
+      "scores": {
+        "identity": 92,
+        "anatomy": 91,
+        "composition": 93,
+        "materials": 94,
+        "story": 93
+      },
+      "total": 92.6,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "The giant sealed furnace wheel, broken suspended lift and tiers of cooling water establish industrial purpose and subsequent failure.",
+        "Upper ore rails, damaged middle crossing and lower flooded route give several legible exploration layers.",
+        "Cold roof light and contained furnace heat separate water, basalt, timber and metal."
+      ],
+      "defectsOrLimits": [
+        "Some distant bridges merge into atmospheric haze; this is route-intent artwork rather than a verified connected level map.",
+        "The common foreground explorer-pair framing recurs."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d03",
+      "name": "Sepulchre of the Hollow Choir",
+      "manifest": "generated-d03.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-d53634ca-1524-4432-b26e-cef74f22df1c.png",
+      "sha256": "14bf87bed77df37ad76cdfc3528e730281b2ee1eb295a4d55c3a60ce39bd9712",
+      "scores": {
+        "identity": 95,
+        "anatomy": 90,
+        "composition": 93,
+        "materials": 94,
+        "story": 93
+      },
+      "total": 93.0,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Huge sideways ceramic burial chambers create a memorable spatial identity beyond conventional cathedral interiors.",
+        "Weathered pale glaze, dark timber bracing, wine-red textiles and warm candles distinguish material and ceremony.",
+        "The near chamber entrance, branching escarpment bridges and distant ceremonial tower create layered discovery."
+      ],
+      "defectsOrLimits": [
+        "The complete shell profiles are partly occluded; some volumes read as cylindrical funerary vessels rather than flared bells.",
+        "Extremely long thin distant supports need structural interpretation in later level design."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d04",
+      "name": "The Thorn Meridian",
+      "manifest": "generated-d04.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-e1aed4f0-b71b-4856-afa7-5b556320228b.png",
+      "sha256": "39f24624358882900842c2db94402a9288b66329aa840cdd27d16646b73e95f0",
+      "scores": {
+        "identity": 92,
+        "anatomy": 90,
+        "composition": 92,
+        "materials": 94,
+        "story": 90
+      },
+      "total": 91.6,
+      "decision": "REPAIR",
+      "gatePassed": false,
+      "hardFails": ["Visible watermark-like floating mark in upper-right sky."],
+      "observations": [
+        "An aqueduct invaded by enormous thorn growth makes environmental conflict and abandoned surveying infrastructure immediately visible.",
+        "Rust leaves, green ravine, pale watch platform and morning light sustain luminous adult wonder.",
+        "The blocked middle aqueduct and distant secondary bridges suggest meaningful route choices."
+      ],
+      "defectsOrLimits": [
+        "A pale floating geometric mark is clearly visible in the upper-right sky above/right of the watchtower.",
+        "The image suggests a route network but does not establish every connection around the thorn obstruction."
+      ],
+      "targetedRepair": [
+        "Remove only the pale watermark-like geometric mark in the upper-right sky; restore matching natural sky and cloud texture, preserving the tower, foliage and all other composition."
+      ]
+    },
+    {
+      "id": "d11",
+      "name": "The Meridian of Ash",
+      "manifest": "generated-d11.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-6ef002bc-48f1-4cb6-b7c7-04cbe970473a.png",
+      "sha256": "76590e1300cc75e022286c6c6711b7177825fc39f15a0e795591799317e86a66",
+      "scores": {
+        "identity": 93,
+        "anatomy": 91,
+        "composition": 94,
+        "materials": 94,
+        "story": 92
+      },
+      "total": 92.8,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "A crescent instrument, deep lens well and distant crescent-crowned observatory communicate one specific astronomical culture.",
+        "Salt-colored stone, rust sand and eclipse light maintain a strong regional palette.",
+        "The near broken causeway, lower well and far bridge separate exploration scales clearly."
+      ],
+      "defectsOrLimits": [
+        "The eclipse is an authored monumental sky element, not a verified astronomical scale simulation.",
+        "Water in the lower lens well needs an explicit environmental or functional explanation in the dungeon record."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d12",
+      "name": "The Wound Beneath the Stars",
+      "manifest": "generated-d12.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-d93de131-22b5-41bc-a4b9-44c5b6462465.png",
+      "sha256": "2a462062788a776d4b7303261f58c5d139fbc5dd86bd0b16f8b616fe2d531f18",
+      "scores": {
+        "identity": 92,
+        "anatomy": 90,
+        "composition": 93,
+        "materials": 94,
+        "story": 93
+      },
+      "total": 92.4,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "A severed stone causeway over reflective dark water gives the environment a consequential exploration problem.",
+        "The distant red fissure is an exterior cliff landmark, with no depicted open cosmic prison or Source interior.",
+        "Root systems, weathered statues, star reflections and small lantern-lit figures combine dread with quiet wonder."
+      ],
+      "defectsOrLimits": [
+        "The stars and water reflection are cinematic rather than an exact optical simulation.",
+        "The alternate crossing solution is not shown; it needs authored traversal logic before playable production."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d05",
+      "name": "Bastion of Fallen Suns",
+      "manifest": "repaired-d05.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-0eed468e-afc9-4fa4-ae68-526551ca4cce.png",
+      "sha256": "1943cacb1aa692e62d3987ad4490532c3366f4da9ce401985ee097db5d16b3bb",
+      "scores": {
+        "identity": 93,
+        "anatomy": 91,
+        "composition": 94,
+        "materials": 94,
+        "story": 91
+      },
+      "total": 92.6,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "Three immense broken concave mirrors create a strong artillery-citadel silhouette.",
+        "Exposed ammunition lifts, ramps, snow accumulation and worn military structures show the original operation and present decay.",
+        "The repaired wall is plain weathered stone; wayfinding uses simple pictograms and arrows with no malformed lettering visible."
+      ],
+      "defectsOrLimits": [
+        "Mirror optical behavior and structural wind loading are not verified by the still.",
+        "The highest mirror is cropped, but its full engineering shape is not required for this arrival composition."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d07",
+      "name": "The Winter Reliquary",
+      "manifest": "repaired-d07.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-5c691d13-b374-4b54-938d-24bfae3f00a3.png",
+      "sha256": "7d176e8c40fad350433fa9d7f6f10a9f84789f673fc1ab78dbd7cddf6ae5001c",
+      "scores": {
+        "identity": 90,
+        "anatomy": 91,
+        "composition": 93,
+        "materials": 93,
+        "story": 92
+      },
+      "total": 91.8,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "The malformed left-wall inscription is removed cleanly into consistent worn stone.",
+        "The wooden wayfinding retains clear book, doorway and mountain pictograms without English or pseudo-script.",
+        "Ice bands, timber ribs, thaw water, scaffolds and layered bridges remain intact and visually legible."
+      ],
+      "defectsOrLimits": [
+        "The three sign arrows point toward one initial direction and do not establish the later route split.",
+        "The image is a frozen-hub concept; complete progression and ice physics remain implementation work."
+      ],
+      "targetedRepair": []
+    },
+    {
+      "id": "d10",
+      "name": "The Blackwake Arsenal",
+      "manifest": "repaired-d10.json",
+      "path": "/workspace/scratch/375074c86086/generated_images/exec-11d8d112-51ae-4f5c-b46f-c47c35619a06.png",
+      "sha256": "39d03a1940aee71a797d8b5468e7d1729f2d5a30f74c40dbdd19ec448659cc8a",
+      "scores": {
+        "identity": 92,
+        "anatomy": 91,
+        "composition": 93,
+        "materials": 94,
+        "story": 92
+      },
+      "total": 92.4,
+      "decision": "ACCEPT",
+      "gatePassed": true,
+      "hardFails": [],
+      "observations": [
+        "The malformed wall motto is removed, preserving the wet stone and nearby carved figure.",
+        "Ship, gear and water pictograms provide local wayfinding without incidental written language.",
+        "Suspended hull, staged scaffolds, enormous sea gates and flooded lower passages preserve strong industrial narrative and depth."
+      ],
+      "defectsOrLimits": [
+        "Wave simulation, drydock flood control and structural loading are not validated by the cinematic still.",
+        "The repeated foreground explorer-pair framing remains an ensemble limitation."
+      ],
+      "targetedRepair": []
+    }
+  ],
+  "scopeNote": "D06 replacement pending separate review. This file does not approve a replacement image not inspected here."
+}

@@ -2,32 +2,47 @@
 "use client";
 
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import Link from "next/link";
+import { AI_MODELS } from "@/lib/models-data";
+import {
+  byRatingDesc,
+  mergeExplorerModels,
+  type ExplorerModel,
+  type LiveModelSummary,
+} from "@/lib/models/live-models";
+import { useModelFavorites } from "@/hooks/use-model-favorites";
+
+export type { LiveModelSummary };
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
 interface ModelExplorerProps {
-  models: Array<{
-    id: string;
-    name: string;
-    provider: string;
-    context_length: number;
-    pricing_prompt_per_mtok: number;
-    pricing_completion_per_mtok: number;
-    is_free: boolean;
-    max_completion: number;
-    modality: string;
-    description: string;
-  }>;
+  models?: LiveModelSummary[];
 }
 
-type Category = "all" | "free" | "frontier" | "open-source";
-type Modality = "all" | "text" | "text+image" | "text+image+video";
-type ContextFilter = "all" | "100k" | "500k" | "1m";
-type SortKey = "name" | "context" | "input-price" | "output-price" | "provider";
+type QuickFilter =
+  | "all"
+  | "favorites"
+  | "curated"
+  | "1m-lore"
+  | "prose"
+  | "magic"
+  | "free"
+  | "open-source";
 
-const DISPLAY_LIMIT = 50;
+type SortKey =
+  | "worldcraft"
+  | "prose"
+  | "lore"
+  | "magic"
+  | "context"
+  | "input-price"
+  | "speed"
+  | "name";
+
+const DISPLAY_LIMIT = 48;
 
 /* ------------------------------------------------------------------ */
 /*  Helpers                                                            */
@@ -46,206 +61,217 @@ function formatPrice(perMtok: number): string {
   return `$${perMtok.toFixed(2)}`;
 }
 
-const FRONTIER_PROVIDERS = new Set([
-  "anthropic",
-  "openai",
-  "google",
-  "meta-llama",
-  "deepseek",
-  "mistralai",
-  "x-ai",
-]);
-
-function isFrontier(provider: string): boolean {
-  return FRONTIER_PROVIDERS.has(provider.toLowerCase());
+function awardBadge(award?: string) {
+  if (!award) return null;
+  switch (award) {
+    case "editors-choice":
+      return {
+        label: "🏆 Editor’s Choice",
+        color:
+          "bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/30",
+      };
+    case "best-lore":
+      return {
+        label: "📜 Best Lore Vault",
+        color:
+          "bg-[var(--arc-brand-cosmic-blue)]/15 text-[var(--arc-brand-cosmic-blue)] border-[var(--arc-brand-cosmic-blue)]/30",
+      };
+    case "best-prose":
+      return {
+        label: "👑 Supreme Prose",
+        color:
+          "bg-[var(--arc-void)]/15 text-[var(--arc-void)] border-[var(--arc-void)]/30",
+      };
+    case "best-free":
+      return {
+        label: "⚡ Best Free Model",
+        color:
+          "bg-[var(--arc-wind)]/15 text-[var(--arc-wind)] border-[var(--arc-wind)]/30",
+      };
+    case "best-magic":
+      return {
+        label: "🔮 Grand Enchanter",
+        color:
+          "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border-[var(--arc-brand-atlantean-teal)]/30",
+      };
+    case "best-dialogue":
+      return {
+        label: "🎭 Bard of Truth",
+        color:
+          "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
+      };
+    case "best-tactics":
+      return {
+        label: "⚔️ War Master",
+        color:
+          "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
+      };
+    default:
+      return null;
+  }
 }
 
-function matchesModality(raw: string, filter: Modality): boolean {
-  if (filter === "all") return true;
-  const l = raw.toLowerCase();
-  if (filter === "text+image+video") return l.includes("video");
-  if (filter === "text+image") return l.includes("image");
-  return l === "text->text" || l === "text";
-}
-
 /* ------------------------------------------------------------------ */
-/*  Chip                                                               */
+/*  Model Card Component                                               */
 /* ------------------------------------------------------------------ */
 
-function Chip({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-        active
-          ? "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/30"
-          : "bg-white/[0.04] text-white/40 border border-white/[0.06] hover:text-white/60 hover:border-white/10"
-      }`}
-    >
-      {label}
-    </button>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Model Card                                                         */
-/* ------------------------------------------------------------------ */
-
-function ModelCard({
+function WorldCraftModelCard({
   model,
+  isFavorite,
+  onToggleFavorite,
 }: {
-  model: ModelExplorerProps["models"][number];
+  model: ExplorerModel;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
 }) {
-  return (
-    <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 hover:border-[var(--arc-brand-atlantean-teal)]/25 transition-colors group">
-      <div className="flex items-start justify-between mb-3">
-        <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold text-white truncate">
-            {model.name}
-          </h3>
-          <p className="text-xs text-white/40 mt-0.5">{model.provider}</p>
-        </div>
-        {model.is_free && (
-          <span className="ml-2 flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20">
-            Free
-          </span>
-        )}
-      </div>
+  const badge = awardBadge(model.curatedAward);
 
-      <div className="space-y-2 text-xs text-white/50">
-        <div className="flex justify-between">
-          <span>Context</span>
-          <span className="text-white/70 font-mono">
-            {formatCtx(model.context_length)}
-          </span>
-        </div>
-        <div className="flex justify-between">
-          <span>Input /M tok</span>
-          <span className={`font-mono ${model.is_free ? "text-[var(--arc-brand-atlantean-teal)]" : "text-white/70"}`}>
-            {formatPrice(model.pricing_prompt_per_mtok)}
-          </span>
-        </div>
-        <div className="flex justify-between">
-          <span>Output /M tok</span>
-          <span className={`font-mono ${model.is_free ? "text-[var(--arc-brand-atlantean-teal)]" : "text-white/70"}`}>
-            {formatPrice(model.pricing_completion_per_mtok)}
-          </span>
-        </div>
-        {model.max_completion > 0 && (
-          <div className="flex justify-between">
-            <span>Max output</span>
-            <span className="text-white/70 font-mono">
-              {formatCtx(model.max_completion)}
-            </span>
+  return (
+    <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 hover:border-[var(--arc-brand-atlantean-teal)]/25 transition-all flex flex-col justify-between group relative backdrop-blur-sm">
+      {/* Top Bar: Identity & Favorite */}
+      <div>
+        <div className="flex items-start justify-between gap-2 mb-2.5">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{model.providerLogo}</span>
+              <h3 className="text-sm font-semibold text-white truncate font-[family-name:var(--font-display)]">
+                {model.name}
+              </h3>
+            </div>
+            <p className="text-[11px] text-white/40 mt-0.5">{model.provider}</p>
           </div>
-        )}
-      </div>
 
-      {model.description && (
-        <p className="mt-3 text-[11px] text-white/30 line-clamp-2 leading-relaxed">
-          {model.description}
-        </p>
-      )}
-
-      <div className="mt-3">
-        <span className="inline-block px-2 py-0.5 rounded text-[10px] text-white/40 bg-white/[0.04]">
-          {model.modality}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Cost Calculator                                                    */
-/* ------------------------------------------------------------------ */
-
-function CostCalculator({
-  models,
-}: {
-  models: ModelExplorerProps["models"];
-}) {
-  const [tokensPerReq, setTokensPerReq] = useState(1000);
-  const [reqsPerDay, setReqsPerDay] = useState(100);
-
-  const cheapest = useMemo(() => {
-    const paid = models.filter((m) => !m.is_free);
-    const withCost = paid.map((m) => ({
-      name: m.name,
-      monthlyCost:
-        ((tokensPerReq / 1_000_000) *
-          (m.pricing_prompt_per_mtok + m.pricing_completion_per_mtok) *
-          reqsPerDay *
-          30),
-    }));
-    withCost.sort((a, b) => a.monthlyCost - b.monthlyCost);
-    return withCost.slice(0, 5);
-  }, [models, tokensPerReq, reqsPerDay]);
-
-  const freeCount = models.filter((m) => m.is_free).length;
-
-  return (
-    <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
-      <h3 className="text-sm font-semibold text-white mb-4 font-[family-name:var(--font-display)]">
-        Cost Calculator
-      </h3>
-      <div className="grid sm:grid-cols-2 gap-4 mb-5">
-        <div>
-          <label className="block text-xs text-white/40 mb-1.5">
-            Tokens per request
-          </label>
-          <input
-            type="number"
-            min={1}
-            value={tokensPerReq}
-            onChange={(e) => setTokensPerReq(Math.max(1, Number(e.target.value)))}
-            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
-          />
-        </div>
-        <div>
-          <label className="block text-xs text-white/40 mb-1.5">
-            Requests per day
-          </label>
-          <input
-            type="number"
-            min={1}
-            value={reqsPerDay}
-            onChange={(e) => setReqsPerDay(Math.max(1, Number(e.target.value)))}
-            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
-          />
-        </div>
-      </div>
-
-      {freeCount > 0 && (
-        <p className="text-xs text-[var(--arc-brand-atlantean-teal)]/70 mb-3">
-          {freeCount} free model{freeCount !== 1 ? "s" : ""} available in current view
-        </p>
-      )}
-
-      <div className="space-y-2">
-        {cheapest.map((m) => (
-          <div
-            key={m.name}
-            className="flex justify-between text-xs text-white/50"
+          <button
+            onClick={() => onToggleFavorite(model.id)}
+            className={`p-1.5 rounded-lg border transition-all ${
+              isFavorite
+                ? "bg-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/40 shadow-[0_0_10px_rgba(255,215,0,0.15)]"
+                : "bg-white/[0.03] text-white/30 hover:text-white hover:border-white/20 border-white/[0.06]"
+            }`}
+            title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            aria-label={`Favorite ${model.name}`}
           >
-            <span className="truncate mr-3">{m.name}</span>
-            <span className="flex-shrink-0 font-mono text-[var(--arc-brand-arcanean-gold)]">
-              ${m.monthlyCost < 0.01 ? m.monthlyCost.toFixed(4) : m.monthlyCost.toFixed(2)}
-              /mo
+            <span className="text-sm leading-none">
+              {isFavorite ? "★" : "☆"}
             </span>
+          </button>
+        </div>
+
+        {/* Curated Award or Free Badge */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-3">
+          {badge && (
+            <span
+              className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border tracking-wide uppercase ${badge.color}`}
+            >
+              {badge.label}
+            </span>
+          )}
+          {model.isFree && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20">
+              Free Zen
+            </span>
+          )}
+          {model.gateResonance && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] text-white/40 bg-white/[0.04] border border-white/[0.04]">
+              {model.gateResonance} Gate • {model.gateFrequency}
+            </span>
+          )}
+          {model.slopResistance && (
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] bg-white/[0.02]">
+              Slop: {model.slopResistance}
+            </span>
+          )}
+        </div>
+
+        {model.worldCraftScore === null ? (
+          <div className="mb-4 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3 flex justify-between items-center text-xs">
+            <span className="text-white/60 font-medium">WorldCraft rating</span>
+            <span className="text-white/40 font-mono">Not rated</span>
           </div>
-        ))}
-        {cheapest.length === 0 && (
-          <p className="text-xs text-white/30">No paid models in current view</p>
+        ) : (
+          <div className="mb-4 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+            <div className="flex justify-between items-center text-xs mb-1.5">
+              <span className="text-white/60 font-medium">
+                WorldCraft Index
+              </span>
+              <span className="text-[var(--arc-brand-atlantean-teal)] font-mono font-bold">
+                {model.worldCraftScore}/100
+              </span>
+            </div>
+            <div className="w-full h-1.5 bg-white/[0.06] rounded-full overflow-hidden mb-3">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)]"
+                style={{ width: `${model.worldCraftScore}%` }}
+              />
+            </div>
+
+            <div className="grid grid-cols-4 gap-1 text-center text-[10px]">
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Prose</span>
+                <span className="text-white font-mono font-medium">
+                  {model.proseQuality}%
+                </span>
+              </div>
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Lore</span>
+                <span className="text-white font-mono font-medium">
+                  {model.loreMemory}%
+                </span>
+              </div>
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Magic</span>
+                <span className="text-white font-mono font-medium">
+                  {model.magicLogic}%
+                </span>
+              </div>
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Voice</span>
+                <span className="text-white font-mono font-medium">
+                  {model.characterVoice}%
+                </span>
+              </div>
+            </div>
+          </div>
         )}
+
+        {/* Role & Sweet Spot */}
+        <p className="text-xs text-[var(--arc-brand-arcanean-gold)] font-medium mb-1">
+          {model.curatedRole}
+        </p>
+        <p className="text-[11px] text-white/50 line-clamp-2 leading-relaxed mb-3">
+          {model.worldbuildingSweetSpot}
+        </p>
+      </div>
+
+      {/* Bottom Specs & Action */}
+      <div className="pt-3 border-t border-white/[0.04] text-[11px] text-white/50 space-y-1.5">
+        <div className="flex justify-between">
+          <span>Context Window</span>
+          <span className="text-white/80 font-mono">
+            {formatCtx(model.contextWindow)}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span>Pricing (In / Out)</span>
+          <span
+            className={`font-mono ${model.isFree ? "text-[var(--arc-brand-atlantean-teal)] font-medium" : "text-white/70"}`}
+          >
+            {model.isFree
+              ? "Free / Free"
+              : `${formatPrice(model.inputPrice)} / ${formatPrice(model.outputPrice)}`}
+          </span>
+        </div>
+        <div className="flex justify-between items-center pt-2 mt-2">
+          <span className="text-[10px] text-white/30">
+            {model.speed === null ? "" : `${model.speed} tok/s`}
+          </span>
+          <Link
+            href="/chat"
+            className="inline-flex items-center gap-1 text-[11px] text-[var(--arc-brand-atlantean-teal)] hover:underline font-medium"
+          >
+            Draft in Studio →
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -255,20 +281,22 @@ function CostCalculator({
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 
-export default function ModelExplorer({ models }: ModelExplorerProps) {
+export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
   const [searchRaw, setSearchRaw] = useState("");
   const [searchDebounced, setSearchDebounced] = useState("");
-  const [category, setCategory] = useState<Category>("all");
-  const [modality, setModality] = useState<Modality>("all");
-  const [contextFilter, setContextFilter] = useState<ContextFilter>("all");
-  const [sortKey, setSortKey] = useState<SortKey>("name");
+  const [quickFilter, setQuickFilter] = useState<QuickFilter>("all");
+  const [gateFilter, setGateFilter] = useState<string>("all");
+  const [sortKey, setSortKey] = useState<SortKey>("worldcraft");
   const [showAll, setShowAll] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { favorites, isFavorite, toggleFavorite, favoriteCount } =
+    useModelFavorites();
 
   const handleSearch = useCallback((value: string) => {
     setSearchRaw(value);
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setSearchDebounced(value), 200);
+    timerRef.current = setTimeout(() => setSearchDebounced(value), 180);
   }, []);
 
   useEffect(() => {
@@ -277,164 +305,268 @@ export default function ModelExplorer({ models }: ModelExplorerProps) {
     };
   }, []);
 
+  const unifiedModels = useMemo(
+    () => mergeExplorerModels(AI_MODELS, models),
+    [models],
+  );
+
+  // Filtering
   const filtered = useMemo(() => {
     const q = searchDebounced.toLowerCase().trim();
 
-    return models.filter((m) => {
-      if (q && !m.name.toLowerCase().includes(q) && !m.provider.toLowerCase().includes(q)) {
-        return false;
+    return unifiedModels.filter((m) => {
+      // Text search
+      if (q) {
+        const matchesQuery =
+          m.name.toLowerCase().includes(q) ||
+          m.provider.toLowerCase().includes(q) ||
+          m.curatedRole.toLowerCase().includes(q) ||
+          m.gateResonance?.toLowerCase().includes(q) ||
+          m.tags.some((t) => t.toLowerCase().includes(q));
+        if (!matchesQuery) return false;
       }
-      if (category === "free" && !m.is_free) return false;
-      if (category === "frontier" && !isFrontier(m.provider)) return false;
-      if (category === "open-source" && (isFrontier(m.provider) || m.is_free)) return false;
-      if (!matchesModality(m.modality, modality)) return false;
-      if (contextFilter === "100k" && m.context_length < 100_000) return false;
-      if (contextFilter === "500k" && m.context_length < 500_000) return false;
-      if (contextFilter === "1m" && m.context_length < 1_000_000) return false;
+
+      // Quick filter
+      if (quickFilter === "favorites" && !isFavorite(m.id)) return false;
+      if (quickFilter === "curated" && !m.curatedAward) return false;
+      if (quickFilter === "1m-lore" && m.contextWindow < 1_000_000)
+        return false;
+      if (quickFilter === "prose" && (m.proseQuality ?? 0) < 90) return false;
+      if (quickFilter === "magic" && (m.magicLogic ?? 0) < 90) return false;
+      if (quickFilter === "free" && !m.isFree) return false;
+      if (quickFilter === "open-source" && m.category !== "open-source")
+        return false;
+
+      // Gate filter
+      if (gateFilter !== "all" && m.gateResonance !== gateFilter) return false;
+
       return true;
     });
-  }, [models, searchDebounced, category, modality, contextFilter]);
+  }, [unifiedModels, searchDebounced, quickFilter, gateFilter, isFavorite]);
 
+  // Sorting
   const sorted = useMemo(() => {
     const arr = [...filtered];
     switch (sortKey) {
-      case "name":
-        arr.sort((a, b) => a.name.localeCompare(b.name));
+      case "worldcraft":
+        arr.sort((a, b) => byRatingDesc(a.worldCraftScore, b.worldCraftScore));
+        break;
+      case "prose":
+        arr.sort((a, b) => byRatingDesc(a.proseQuality, b.proseQuality));
+        break;
+      case "lore":
+        arr.sort((a, b) => byRatingDesc(a.loreMemory, b.loreMemory));
+        break;
+      case "magic":
+        arr.sort((a, b) => byRatingDesc(a.magicLogic, b.magicLogic));
         break;
       case "context":
-        arr.sort((a, b) => b.context_length - a.context_length);
+        arr.sort((a, b) => b.contextWindow - a.contextWindow);
         break;
       case "input-price":
-        arr.sort((a, b) => a.pricing_prompt_per_mtok - b.pricing_prompt_per_mtok);
+        arr.sort((a, b) => a.inputPrice - b.inputPrice);
         break;
-      case "output-price":
-        arr.sort((a, b) => a.pricing_completion_per_mtok - b.pricing_completion_per_mtok);
+      case "speed":
+        arr.sort((a, b) => byRatingDesc(a.speed, b.speed));
         break;
-      case "provider":
-        arr.sort((a, b) => a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name));
+      case "name":
+        arr.sort((a, b) => a.name.localeCompare(b.name));
         break;
     }
     return arr;
   }, [filtered, sortKey]);
 
   const displayed = showAll ? sorted : sorted.slice(0, DISPLAY_LIMIT);
-  const freeCount = filtered.filter((m) => m.is_free).length;
 
   return (
-    <section className="mb-24">
-      {/* Search */}
-      <div className="mb-5">
+    <section className="mb-24" id="explorer">
+      {/* Search Input */}
+      <div className="relative mb-5">
         <input
           type="text"
           value={searchRaw}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search models by name or provider..."
-          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors backdrop-blur-sm"
+          placeholder="Search models by name, role, Gate (Voice, Starweave), or provider..."
+          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-2xl px-5 py-3.5 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors backdrop-blur-md"
         />
+        {searchRaw && (
+          <button
+            onClick={() => handleSearch("")}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/40 hover:text-white"
+          >
+            Clear
+          </button>
+        )}
       </div>
 
-      {/* Filter Chips */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        <span className="text-[10px] uppercase tracking-wider text-white/20 self-center mr-1">
-          Category
-        </span>
-        {(["all", "free", "frontier", "open-source"] as Category[]).map((c) => (
-          <Chip
-            key={c}
-            label={c === "all" ? "All" : c === "free" ? "Free" : c === "frontier" ? "Frontier" : "Open Source"}
-            active={category === c}
-            onClick={() => { setCategory(c); setShowAll(false); }}
-          />
-        ))}
-
-        <span className="w-px h-5 bg-white/10 self-center mx-1" />
-        <span className="text-[10px] uppercase tracking-wider text-white/20 self-center mr-1">
-          Modality
-        </span>
-        {(["all", "text", "text+image", "text+image+video"] as Modality[]).map((m) => (
-          <Chip
-            key={m}
-            label={m === "all" ? "All" : m === "text" ? "Text" : m === "text+image" ? "Text+Image" : "Text+Image+Video"}
-            active={modality === m}
-            onClick={() => { setModality(m); setShowAll(false); }}
-          />
-        ))}
-
-        <span className="w-px h-5 bg-white/10 self-center mx-1" />
-        <span className="text-[10px] uppercase tracking-wider text-white/20 self-center mr-1">
-          Context
-        </span>
-        {(["all", "100k", "500k", "1m"] as ContextFilter[]).map((cf) => (
-          <Chip
-            key={cf}
-            label={cf === "all" ? "All" : cf === "100k" ? "100K+" : cf === "500k" ? "500K+" : "1M+"}
-            active={contextFilter === cf}
-            onClick={() => { setContextFilter(cf); setShowAll(false); }}
-          />
+      {/* Quick Filter Chips */}
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        {[
+          { id: "all", label: "All Models" },
+          {
+            id: "favorites",
+            label: `★ My Favorites (${favoriteCount})`,
+            highlight: favoriteCount > 0,
+          },
+          { id: "curated", label: "🏆 Curated Best" },
+          { id: "1m-lore", label: "📜 1M+ Lore Vaults" },
+          { id: "prose", label: "✍️ Lyrical Prose (90+)" },
+          { id: "magic", label: "🔮 Hard Magic Logic" },
+          { id: "free", label: "🆓 Free Tier (Zen)" },
+          { id: "open-source", label: "Open Source" },
+        ].map((f) => (
+          <button
+            key={f.id}
+            onClick={() => {
+              setQuickFilter(f.id as QuickFilter);
+              setShowAll(false);
+            }}
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+              quickFilter === f.id
+                ? "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/30"
+                : f.id === "favorites" && f.highlight
+                  ? "bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)] border border-[var(--arc-brand-arcanean-gold)]/20 hover:border-[var(--arc-brand-arcanean-gold)]/40"
+                  : "bg-white/[0.03] text-white/40 border border-white/[0.06] hover:text-white/70 hover:border-white/12"
+            }`}
+          >
+            {f.label}
+          </button>
         ))}
       </div>
 
-      {/* Sort + Stats */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <p className="text-xs text-white/40">
-          Showing{" "}
-          <span className="text-white/70">{displayed.length}</span>
-          {!showAll && sorted.length > DISPLAY_LIMIT && (
-            <span> of {sorted.length}</span>
-          )}{" "}
-          of{" "}
-          <span className="text-white/70">{models.length}</span> models
-          {freeCount > 0 && (
-            <>
-              {" | "}
-              <span className="text-[var(--arc-brand-atlantean-teal)]">{freeCount} free</span>
-            </>
-          )}
-        </p>
-
-        <div className="flex items-center gap-2">
-          <label className="text-xs text-white/30">Sort by</label>
+      {/* Gate Filter Chips + Sorting Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wider text-white/40">
+            Arcanean Gate:
+          </span>
           <select
-            value={sortKey}
-            onChange={(e) => setSortKey(e.target.value as SortKey)}
+            value={gateFilter}
+            onChange={(e) => setGateFilter(e.target.value)}
             className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-white/70 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
           >
-            <option value="name">Name</option>
-            <option value="context">Context (desc)</option>
-            <option value="input-price">Input Price (asc)</option>
-            <option value="output-price">Output Price (asc)</option>
-            <option value="provider">Provider</option>
+            <option value="all" className="bg-gray-900 text-white">
+              All Gates
+            </option>
+            <option value="Voice" className="bg-gray-900 text-white">
+              Voice (528 Hz • Prose & Dialogue)
+            </option>
+            <option value="Starweave" className="bg-gray-900 text-white">
+              Starweave (852 Hz • 1M Lore Vaults)
+            </option>
+            <option value="Foundation" className="bg-gray-900 text-white">
+              Foundation (174 Hz • Magic Logic & Geo)
+            </option>
+            <option value="Crown" className="bg-gray-900 text-white">
+              Crown (741 Hz • Cosmology & Sagas)
+            </option>
+            <option value="Fire" className="bg-gray-900 text-white">
+              Fire (396 Hz • Battle Choreography)
+            </option>
+            <option value="Heart" className="bg-gray-900 text-white">
+              Heart (417 Hz • Emotional Arcs)
+            </option>
+            <option value="Sight" className="bg-gray-900 text-white">
+              Sight (639 Hz • Sensory Scenes & Maps)
+            </option>
+            <option value="Flow" className="bg-gray-900 text-white">
+              Flow (285 Hz • Folklore & Ballads)
+            </option>
+            <option value="Unity" className="bg-gray-900 text-white">
+              Unity (963 Hz • Council Summits)
+            </option>
           </select>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-white/40 font-mono">
+            Showing <strong className="text-white">{displayed.length}</strong>{" "}
+            of <strong className="text-white">{sorted.length}</strong> models
+          </span>
+
+          <div className="flex items-center gap-1.5">
+            <label className="text-xs text-white/40">Sort:</label>
+            <select
+              value={sortKey}
+              onChange={(e) => setSortKey(e.target.value as SortKey)}
+              className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-white/70 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
+            >
+              <option value="worldcraft" className="bg-gray-900 text-white">
+                WorldCraft Index (Highest)
+              </option>
+              <option value="prose" className="bg-gray-900 text-white">
+                Prose Lyricism (Highest)
+              </option>
+              <option value="lore" className="bg-gray-900 text-white">
+                Lore Memory (1M Context)
+              </option>
+              <option value="magic" className="bg-gray-900 text-white">
+                Hard Magic Logic
+              </option>
+              <option value="context" className="bg-gray-900 text-white">
+                Context Window (Largest)
+              </option>
+              <option value="input-price" className="bg-gray-900 text-white">
+                Price (Lowest first)
+              </option>
+              <option value="speed" className="bg-gray-900 text-white">
+                Speed (Fastest first)
+              </option>
+              <option value="name" className="bg-gray-900 text-white">
+                Name (A-Z)
+              </option>
+            </select>
+          </div>
         </div>
       </div>
 
       {/* Grid */}
       {displayed.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
           {displayed.map((m) => (
-            <ModelCard key={m.id} model={m} />
+            <WorldCraftModelCard
+              key={m.id}
+              model={m}
+              isFavorite={isFavorite(m.id)}
+              onToggleFavorite={toggleFavorite}
+            />
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 text-white/30 text-sm">
-          No models match your filters.
-        </div>
-      )}
-
-      {/* Show All */}
-      {!showAll && sorted.length > DISPLAY_LIMIT && (
-        <div className="text-center mb-10">
+        <div className="text-center py-20 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+          <span className="text-3xl mb-3 block">📜</span>
+          <p className="text-base text-white/70 font-semibold mb-1">
+            No models match your current filters
+          </p>
+          <p className="text-xs text-white/40 mb-4 max-w-sm mx-auto">
+            Try loosening your search terms or toggling from &ldquo;
+            {quickFilter}&rdquo; back to &ldquo;All Models&rdquo;.
+          </p>
           <button
-            onClick={() => setShowAll(true)}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium bg-white/[0.04] border border-white/[0.08] text-white/60 hover:text-white hover:border-white/15 transition-colors"
+            onClick={() => {
+              setQuickFilter("all");
+              setGateFilter("all");
+              setSearchRaw("");
+              setSearchDebounced("");
+            }}
+            className="px-4 py-2 rounded-xl text-xs bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/30 hover:bg-[var(--arc-brand-atlantean-teal)]/25 transition-all"
           >
-            Show all {sorted.length} models
+            Reset All Filters
           </button>
         </div>
       )}
 
-      {/* Cost Calculator */}
-      <CostCalculator models={sorted} />
+      {/* Show All Toggle */}
+      {!showAll && sorted.length > DISPLAY_LIMIT && (
+        <div className="text-center mb-8">
+          <button
+            onClick={() => setShowAll(true)}
+            className="px-6 py-3 rounded-xl text-sm font-medium bg-white/[0.04] border border-white/[0.08] text-white/70 hover:text-white hover:border-white/20 transition-all"
+          >
+            Show All {sorted.length} Models
+          </button>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,14 +1,13 @@
 {
   "name": "arcanea",
   "version": "3.0.0",
-  "description": "Arcanea — living mythology framework for AI-human co-creation. Prompt framework, design system, world-building overlay with 87 commands, 78 skills, and 13 hooks.",
+  "description": "Arcanea: a living-mythology framework for AI-human co-creation. World-building, lore and canon, design-system and creative-studio commands and skills for Claude Code.",
   "author": {
     "name": "FrankX",
     "url": "https://arcanea.ai"
   },
   "homepage": "https://arcanea.ai",
-  "repository": "https://github.com/frankxai/arcanea",
-  "license": "SEE LICENSE IN LICENSE",
+  "repository": "https://github.com/frankxai/arcanea-ai-app",
   "keywords": [
     "arcanea",
     "claude-code",
@@ -21,46 +20,6 @@
     "guardians",
     "starlight-vault"
   ],
-  "commands": [
-    ".claude/commands/"
-  ],
-  "skills": [
-    ".claude/skills/"
-  ],
-  "agents": [
-    "agents/agent-implementer",
-    "agents/arcanea-architect"
-  ],
-  "rules": [
-    "rules/"
-  ],
-  "features": {
-    "agents": 2,
-    "commands": 87,
-    "skills": 78,
-    "rules": 5,
-    "configAssets": true,
-    "hookEvents": [
-      "SessionStart",
-      "PreToolUse",
-      "PostToolUse",
-      "UserPromptSubmit",
-      "Stop",
-      "Notification"
-    ],
-    "customTools": [
-      "arcanea-mcp",
-      "arcanea-memory",
-      "arcanea-infogenius"
-    ]
-  },
-  "dependencies": {
-    "claude-flow": ">=3.0.0"
-  },
-  "config": {
-    "designSystem": "arcanean-cosmic-v5",
-    "loreSource": ".arcanea/lore/CANON_LOCKED.md",
-    "memoryBackend": "hybrid",
-    "topology": "hierarchical-mesh"
-  }
+  "commands": "./.claude/commands/",
+  "skills": "./.claude/skills/"
 }

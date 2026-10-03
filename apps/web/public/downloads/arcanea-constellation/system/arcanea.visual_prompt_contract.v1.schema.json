@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arcanea.ai/schemas/arcanea.visual_prompt_contract.v1.schema.json",
+  "title": "Arcanea visual prompt contract v1",
+  "description": "Engine-neutral, evidence-aware visual intent. Operational authority remains outside the image-facing prompt.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "intent",
+    "subject",
+    "storyBeat",
+    "composition",
+    "output",
+    "designSystem",
+    "light",
+    "references",
+    "constraints",
+    "avoid",
+    "provider",
+    "verification",
+    "governance",
+    "contractHash"
+  ],
+  "properties": {
+    "schema": { "const": "arcanea.visual_prompt_contract.v1" },
+    "intent": { "type": "string", "minLength": 24 },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stableId",
+        "displayName",
+        "kind",
+        "identityLock",
+        "evidenceState",
+        "openIdentityVariables",
+        "allowedVariation"
+      ],
+      "properties": {
+        "stableId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 2 },
+        "identityLock": { "type": "string", "minLength": 32 },
+        "evidenceState": { "type": "string", "minLength": 3 },
+        "openIdentityVariables": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 },
+          "uniqueItems": true
+        },
+        "allowedVariation": { "type": "string", "minLength": 24 }
+      }
+    },
+    "storyBeat": { "type": "string", "minLength": 32 },
+    "composition": { "type": "string", "minLength": 24 },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assetCount",
+        "aspectRatio",
+        "intendedSurface",
+        "deliveryRole",
+        "cropSafety",
+        "generatedTextPolicy"
+      ],
+      "properties": {
+        "assetCount": { "const": 1 },
+        "aspectRatio": {
+          "enum": [
+            "1:1",
+            "4:5",
+            "3:2",
+            "2:3",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "21:9"
+          ]
+        },
+        "intendedSurface": {
+          "enum": [
+            "agent-dossier-and-identity-atlas",
+            "guardian-dossier-and-identity-atlas",
+            "godbeast-dossier-and-morphology-atlas",
+            "bond-dossier-and-relationship-atlas",
+            "book-character-dossier-and-identity-atlas",
+            "world-dossier-and-environment-atlas",
+            "visual-governance-teaching-plate",
+            "identity-continuity-evidence-sheet"
+          ]
+        },
+        "deliveryRole": { "type": "string", "minLength": 3 },
+        "cropSafety": { "type": "string", "minLength": 48 },
+        "generatedTextPolicy": { "const": "no-generated-text" }
+      }
+    },
+    "designSystem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "styleMode",
+        "direction",
+        "colorLaw",
+        "escalation",
+        "materialLaw",
+        "typography"
+      ],
+      "properties": {
+        "styleMode": { "type": "string", "minLength": 2 },
+        "direction": { "type": "string", "minLength": 24 },
+        "colorLaw": { "type": "string", "minLength": 24 },
+        "escalation": { "type": "string", "minLength": 12 },
+        "materialLaw": { "type": "string", "minLength": 24 },
+        "typography": { "type": "string", "minLength": 12 }
+      }
+    },
+    "light": { "type": "string", "minLength": 16 },
+    "references": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRefs", "imageRefs", "imageReferencePolicy"],
+      "properties": {
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 3 },
+          "uniqueItems": true
+        },
+        "imageRefs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string", "minLength": 3 },
+              {
+                "type": "object",
+                "required": ["hash", "role"],
+                "properties": {
+                  "hash": { "$ref": "#/$defs/sha256" },
+                  "role": {
+                    "enum": ["identity", "composition", "material", "lighting"]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "imageReferencePolicy": { "type": "string", "minLength": 24 }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "avoid": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "preferredCapabilities",
+        "model",
+        "seed",
+        "providerParameters"
+      ],
+      "properties": {
+        "adapter": { "type": "string", "minLength": 3 },
+        "preferredCapabilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "model": { "type": ["string", "null"] },
+        "seed": { "type": ["integer", "null"] },
+        "providerParameters": { "type": "object" }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deterministicChecks",
+        "rubric",
+        "passThreshold",
+        "identityFloor",
+        "canonFloor",
+        "humanApprovalRequired"
+      ],
+      "properties": {
+        "deterministicChecks": {
+          "type": "array",
+          "minItems": 4,
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "rubric": { "type": "string", "minLength": 3 },
+        "passThreshold": { "type": "integer", "minimum": 1, "maximum": 50 },
+        "identityFloor": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "canonFloor": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "humanApprovalRequired": { "const": true }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "releaseEligibility",
+        "sensitivityReviewRequired",
+        "reviewRequirements"
+      ],
+      "properties": {
+        "releaseEligibility": { "type": "string", "minLength": 3 },
+        "sensitivityReviewRequired": { "type": "boolean" },
+        "reviewRequirements": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "contractHash": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

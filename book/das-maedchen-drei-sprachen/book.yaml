@@ -58,3 +58,6 @@ acknowledgments: |
   Studio-Ghibli-Lehrtechniken (Ma / Stille als Lehre, Tier ohne Sprache,
   Natur als Person). Cover: Nano Banana 2 (Gemini 3.1 Flash Image).
   Published on Arcanea — geschrieben in der Öffentlichkeit.
+
+# Publication gate for /books. Set to private to withdraw this work.
+visibility: public

@@ -1,153 +1,63 @@
 name: Excellence loop
 
-# Judges what a green pipeline cannot see: copy and design quality on the live
-# preview. Never a required check — the verdict is non-deterministic, and a
-# flaky blocker teaches everyone to bypass the gates that are deterministic.
-# Runs on deployment_status so a real preview URL always exists.
-
 on:
-  deployment_status:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      ci_run_id:
+        description: Successful same-repository pull-request CI run to review
+        required: true
+        type: string
 
 concurrency:
-  group: excellence-${{ github.event.deployment.ref }}
-  cancel-in-progress: true
+  group: excellence-${{ github.event.workflow_run.id || inputs.ci_run_id }}
+  cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
+  actions: read
   pull-requests: write
-  issues: write
 
 jobs:
   critique:
     if: >-
-      github.event.deployment_status.state == 'success' &&
-      github.event.deployment.environment != 'Production' &&
-      github.event.deployment.environment != 'production'
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'pull_request' &&
+       github.event.workflow_run.head_repository.id == github.event.repository.id)
     runs-on: ubuntu-latest
-    timeout-minutes: 12
-    outputs:
-      verdict: ${{ steps.read.outputs.verdict }}
-      pr: ${{ steps.pr.outputs.number }}
-      rounds: ${{ steps.pr.outputs.rounds }}
+    timeout-minutes: 8
     steps:
+      # Execute only trusted workflow code, never the reviewed PR checkout.
+      # The script also requires the default branch for manual dispatches.
       - uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.deployment.ref }}
-          fetch-depth: 0
-
-      - name: Resolve PR and round count
-        id: pr
-        uses: actions/github-script@v7
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            scripts/excellence-review.mjs
+            scripts/excellence-artifact.py
+            standards/EXCELLENCE.md
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v7
         with:
-          script: |
-            const {owner, repo} = context.repo;
-            const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              owner, repo, commit_sha: context.payload.deployment.sha,
-            });
-            const pr = prs.data.find(p => p.state === 'open');
-            if (!pr) { core.setOutput('number', ''); core.setOutput('rounds', '0'); return; }
-            const comments = await github.paginate(github.rest.issues.listComments, {
-              owner, repo, issue_number: pr.number, per_page: 100,
-            });
-            const rounds = comments.filter(c => c.body.includes('<!-- excellence-verdict -->')).length;
-            core.setOutput('number', String(pr.number));
-            core.setOutput('rounds', String(rounds));
-
-      # Two rounds is where the returns die. Past that the critic and the fixer
-      # negotiate with each other instead of improving the work.
-      - name: Escalate instead of looping
-        if: steps.pr.outputs.number != '' && fromJSON(steps.pr.outputs.rounds) >= 2
-        uses: actions/github-script@v7
+          node-version: "22"
+      - name: Review bounded CI screenshots
+        run: node scripts/excellence-review.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CI_RUN_ID: ${{ github.event.workflow_run.id || inputs.ci_run_id }}
+      - name: Preserve review receipt
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
-          script: |
-            const n = Number('${{ steps.pr.outputs.number }}');
-            await github.rest.issues.addLabels({...context.repo, issue_number: n, labels: ['quality:frank']});
-            await github.rest.issues.createComment({...context.repo, issue_number: n,
-              body: 'Two uplevel rounds did not clear the bar. Handing to Frank with the history above.'});
-
-      - name: Critique the preview
-        if: steps.pr.outputs.number != '' && fromJSON(steps.pr.outputs.rounds) < 2
-        uses: anthropics/claude-code-action@beta
-        with:
-          model: claude-sonnet-5
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          max_turns: 8
-          allowed_tools: "Bash,Read,Glob,Grep,WebFetch,Write"
-          direct_prompt: |
-            Read standards/EXCELLENCE.md. It is the only bar that counts — judge
-            against its clauses, not against your own taste.
-
-            Preview: ${{ github.event.deployment_status.target_url }}
-            Changed in this PR: run `git diff --name-only origin/main...HEAD`.
-
-            Review the copy and design of what changed. Fetch the preview to see
-            the rendered result; reading the diff alone misses the failures that
-            matter here.
-
-            Every finding must name its clause (C1..C5, D1..D5, A1..A3), quote
-            the offending text or element, and give the replacement you would
-            ship. A finding you cannot propose a fix for is noise — drop it.
-
-            Write your verdict to verdict.json and nothing else to disk:
-            {"verdict":"ship|uplevel|frank","summary":"one sentence",
-             "findings":[{"clause":"C2","quote":"...","fix":"..."}]}
-
-      - name: Read verdict
-        id: read
-        if: always() && steps.pr.outputs.number != ''
-        run: |
-          v=$(jq -r '.verdict // "frank"' verdict.json 2>/dev/null || echo frank)
-          echo "verdict=$v" >> "$GITHUB_OUTPUT"
-
-      - name: Post verdict and label
-        if: always() && steps.pr.outputs.number != '' && fromJSON(steps.pr.outputs.rounds) < 2
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const n = Number('${{ steps.pr.outputs.number }}');
-            let v = {verdict: 'frank', summary: 'Critic did not produce a verdict.', findings: []};
-            try { v = JSON.parse(fs.readFileSync('verdict.json', 'utf8')); } catch {}
-            const lines = (v.findings || []).map(f => `- **${f.clause}** — ${f.quote}\n  → ${f.fix}`);
-            await github.rest.issues.createComment({...context.repo, issue_number: n,
-              body: `<!-- excellence-verdict -->\n**Excellence: ${v.verdict}** — ${v.summary}\n\n${lines.join('\n') || '_No findings._'}`});
-            const label = {ship: 'quality:ship', uplevel: 'quality:uplevel'}[v.verdict] || 'quality:frank';
-            await github.rest.issues.addLabels({...context.repo, issue_number: n, labels: [label]});
-            core.notice(`excellence verdict=${v.verdict} pr=${n} findings=${(v.findings || []).length}`);
-
-  uplevel:
-    needs: critique
-    if: needs.critique.outputs.verdict == 'uplevel' && needs.critique.outputs.pr != ''
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.deployment.ref }}
-          fetch-depth: 0
-
-      # Calling the fixer directly rather than posting "@claude fix": comments
-      # made with GITHUB_TOKEN do not trigger workflows, so the comment route
-      # would silently never fire.
-      - name: Raise the work to the bar
-        uses: anthropics/claude-code-action@beta
-        with:
-          model: claude-sonnet-5
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          max_turns: 12
-          allowed_tools: "Bash,Read,Edit,Write,Glob,Grep"
-          direct_prompt: |
-            A critic reviewed this PR against standards/EXCELLENCE.md and asked
-            for an uplevel. Its findings are the most recent comment marked
-            excellence-verdict on PR #${{ needs.critique.outputs.pr }} — read it
-            with `gh pr view ${{ needs.critique.outputs.pr }} --comments`.
-
-            Apply the proposed fixes. Change only what the findings name. Do not
-            refactor, restructure, or improve things nobody asked about — an
-            uplevel that touches unrelated code cannot be reviewed.
-
-            If a finding needs a decision that is Frank's to make (brand, canon,
-            a claim about what the product does), leave it and say so in your
-            summary rather than guessing.
-
-            Commit to this branch. The critic re-runs on the new preview.
+          name: excellence-review-${{ github.run_id }}
+          path: |
+            excellence-review.json
+            excellence-response.json
+            excellence-failure.json
+          if-no-files-found: warn
+          retention-days: 14

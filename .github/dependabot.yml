@@ -1,0 +1,68 @@
+version: 2
+updates:
+  # --- npm packages ---
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    # Reduced from 5 → 3 to cap weekly review load
+    open-pull-requests-limit: 3
+    # Group caps prevent the 43-package mega-PRs that cost Vercel build minutes
+    # and violate the "never batch" rule when a group accidentally swallows a major.
+    groups:
+      production-patches:
+        applies-to: version-updates
+        dependency-type: "production"
+        update-types: ["patch"]
+      production-minors:
+        applies-to: version-updates
+        dependency-type: "production"
+        update-types: ["minor"]
+      dev-patches:
+        applies-to: version-updates
+        dependency-type: "development"
+        update-types: ["patch", "minor"]
+    # NEVER batch major version bumps — they need individual migration PRs
+    ignore:
+      - dependency-name: "next"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "zod"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "stripe"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "framer-motion"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "openai"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-markdown"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # React 19 already pinned by Next 16; let Next bring upgrades
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "dependencies"
+      - "automated"
+
+  # --- GitHub Actions ---
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Don't batch — each action should be its own PR for isolation
+    open-pull-requests-limit: 3
+    ignore:
+      # pnpm/action-setup v6 breaks lockfile parsing — block until migrated
+      - dependency-name: "pnpm/action-setup"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "github-actions"
+      - "automated"

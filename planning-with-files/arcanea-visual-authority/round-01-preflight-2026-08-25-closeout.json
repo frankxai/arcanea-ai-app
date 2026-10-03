@@ -1,0 +1,68 @@
+{
+  "schema": "arcanea.machine_preflight_receipt.v1",
+  "workload": "image-generation",
+  "sourceWorkload": "overnight",
+  "posture": "hold",
+  "maxParallelCalls": 1,
+  "checkedAt": "2026-08-25T00:50:04.664Z",
+  "expiresAt": "2026-08-25T01:05:04.664Z",
+  "checkedBy": "peak-performance/pp",
+  "evidence": "pp overnight plan adc854bc3ef2b191d6b9178d596d4728475c7f751f3f10abf88f83d5b63c4f64; overnight workload is held until the blocking conditions are resolved.",
+  "ppPlan": {
+    "timestamp": "2026-08-25T00:50:04.664Z",
+    "hostname": "Starlight",
+    "workload": "overnight",
+    "decision": "hold",
+    "summary": "overnight workload is held until the blocking conditions are resolved.",
+    "posture": "constrain",
+    "swarmPosture": "pause-new-swarms",
+    "current": {
+      "ramFreeMB": 5388,
+      "ramUsedPct": 83,
+      "cpuLoadPct": 82,
+      "cpuSystemLoadPct": 36,
+      "codexTaskRuntimes": 28,
+      "mcpMemoryMB": 2953.3,
+      "localModels": 0,
+      "devServers": 1,
+      "crashLoopApp": "",
+      "crashLoopCount": 0
+    },
+    "budget": {
+      "workloadReserveMB": 6144,
+      "safetyFloorMB": 4096,
+      "requiredFreeMB": 10240,
+      "projectedFreeMB": -756,
+      "cpuCeilingPct": 60,
+      "maxTaskRuntimes": 6,
+      "maxParallelism": 1,
+      "timeoutMinutes": 480
+    },
+    "requirements": {
+      "sdsRequired": false,
+      "cloudPreferred": true,
+      "receiptRequired": true,
+      "stopAfterWork": true,
+      "explicitModelReserveRecommended": false,
+      "strictMcpRecommended": false
+    },
+    "hardBlocks": [
+      "RAM reserve is short: 5388MB free, 10240MB required.",
+      "CPU is 82%, above the 60% overnight ceiling.",
+      "28 Codex task runtimes exceed the overnight budget of 6."
+    ],
+    "constraints": [
+      "PP posture is constrain; run one bounded workload with no new parallel agents.",
+      "1 dev-server processes are active; stop completed servers before this workload."
+    ],
+    "actions": [
+      "Archive inactive agent tasks and stop completed SDS-owned servers, then rerun preflight.",
+      "Wait for active CPU work to finish and identify sustained kernel/I/O pressure before retrying.",
+      "Archive inactive Codex tasks through the UI so their complete MCP trees exit coherently.",
+      "Prefer a Vercel preview or cloud runner when the verification must outlive this local loop.",
+      "Apply a 480-minute workload timeout and stop child processes at completion."
+    ]
+  },
+  "ppPlanHash": "adc854bc3ef2b191d6b9178d596d4728475c7f751f3f10abf88f83d5b63c4f64",
+  "receiptHash": "f167af28fa5775c4591fb904ad01d7ee0a074ac039324470a18209e2fa0f5d4c"
+}

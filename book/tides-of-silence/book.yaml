@@ -28,3 +28,6 @@ acknowledgments: |
   character design, and thematic direction by human authors. Prose generation
   by Claude Opus 4.6, curated and edited by humans. Cover art by Nano Banana 2
   (Gemini 3.1). Published on Arcanea — written in the open.
+
+# Publication gate for /books. Set to private to withdraw this work.
+visibility: public
