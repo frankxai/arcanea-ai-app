@@ -45,7 +45,10 @@ export default function CommunityPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        id="community-content"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <CommunityOverview />
 
         {/* ── 5. Community Spaces ─────────────────────────────────────────── */}
@@ -480,7 +483,7 @@ export default function CommunityPage() {
             <div className="h-0.5 w-full bg-gradient-to-r from-earth via-crystal via-water via-brand-primary to-fire" />
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }
