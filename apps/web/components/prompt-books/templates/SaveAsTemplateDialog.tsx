@@ -6,7 +6,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { PhX, PhFloppyDisk, PhGlobe, PhLock } from "@/lib/phosphor-icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { extractVariables } from "@/lib/prompt-books/context-engine";
+import { templateVariablesForContent } from "@/lib/prompt-books/template-variables";
 import type { Prompt, TemplateVariable } from "@/lib/prompt-books/types";
 
 interface SaveAsTemplateDialogProps {
@@ -44,19 +44,12 @@ export function SaveAsTemplateDialog({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Auto-detect variables from content
-  const detectedVars = useMemo(() => {
-    return extractVariables(prompt.content);
-  }, [prompt.content]);
-
   const [variables, setVariables] = useState<TemplateVariable[]>(() =>
-    detectedVars.map((name) => ({
-      name,
-      label: name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-      type: "text" as const,
-      default: "",
-      required: false,
-    })),
+    templateVariablesForContent(prompt.content, []),
+  );
+  const currentVariables = useMemo(
+    () => templateVariablesForContent(prompt.content, variables),
+    [prompt.content, variables],
   );
 
   const updateVariable = (
@@ -65,7 +58,9 @@ export function SaveAsTemplateDialog({
     value: unknown,
   ) => {
     setVariables((prev) =>
-      prev.map((v, i) => (i === index ? { ...v, [field]: value } : v)),
+      templateVariablesForContent(prompt.content, prev).map((v, i) =>
+        i === index ? { ...v, [field]: value } : v,
+      ),
     );
   };
 
@@ -73,7 +68,13 @@ export function SaveAsTemplateDialog({
     setLoading(true);
     setError(null);
     try {
-      await onSave({ name, description, category, variables, isPublic });
+      await onSave({
+        name,
+        description,
+        category,
+        variables: currentVariables,
+        isPublic,
+      });
       onClose();
     } catch {
       setError(
@@ -131,7 +132,7 @@ export function SaveAsTemplateDialog({
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20 focus:border-brand-accent/40"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/20 focus-visible:border-brand-accent/40"
               />
             </div>
 
@@ -149,7 +150,7 @@ export function SaveAsTemplateDialog({
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
                 placeholder="What is this template for?"
-                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20 focus:border-brand-accent/40 resize-none"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/20 focus-visible:border-brand-accent/40 resize-none"
               />
             </div>
 
@@ -166,7 +167,7 @@ export function SaveAsTemplateDialog({
                   id={`${formId}-category`}
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/20"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c} value={c}>
@@ -184,7 +185,7 @@ export function SaveAsTemplateDialog({
                   type="button"
                   onClick={() => setIsPublic(!isPublic)}
                   className={cn(
-                    "min-h-11 flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-sans border transition-all",
+                    "min-h-11 flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-sans border transition-colors",
                     isPublic
                       ? "border-brand-accent/30 text-brand-accent liquid-glass"
                       : "border-white/[0.06] text-text-muted bg-white/[0.03]",
@@ -201,13 +202,13 @@ export function SaveAsTemplateDialog({
             </div>
 
             {/* Variables */}
-            {variables.length > 0 && (
+            {currentVariables.length > 0 && (
               <div>
                 <label className="text-[10px] font-sans font-medium text-text-secondary  mb-2 block">
-                  Template variables ({variables.length} detected)
+                  Template variables ({currentVariables.length} detected)
                 </label>
                 <div className="space-y-2">
-                  {variables.map((v, i) => (
+                  {currentVariables.map((v, i) => (
                     <div
                       key={v.name}
                       className="liquid-glass rounded-lg p-3 space-y-2"
@@ -218,21 +219,23 @@ export function SaveAsTemplateDialog({
                         </span>
                         <input
                           type="text"
+                          aria-label={`${v.name} label`}
                           value={v.label}
                           onChange={(e) =>
                             updateVariable(i, "label", e.target.value)
                           }
-                          className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20 border-b border-transparent focus:border-white/[0.06]"
+                          className="flex-1 bg-transparent text-xs font-sans text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/20 border-b border-transparent focus-visible:border-white/[0.06]"
                           placeholder="Label"
                         />
                       </div>
                       <div className="flex gap-2">
                         <select
+                          aria-label={`${v.name} type`}
                           value={v.type}
                           onChange={(e) =>
                             updateVariable(i, "type", e.target.value)
                           }
-                          className="bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-sans text-text-secondary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
+                          className="bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-sans text-text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/20"
                         >
                           <option value="text">Text</option>
                           <option value="number">Number</option>
@@ -241,11 +244,12 @@ export function SaveAsTemplateDialog({
                         </select>
                         <input
                           type="text"
+                          aria-label={`${v.name} default`}
                           value={v.default || ""}
                           onChange={(e) =>
                             updateVariable(i, "default", e.target.value)
                           }
-                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
+                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-mono text-text-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/20"
                           placeholder="Default value"
                         />
                         <label className="flex items-center gap-1 text-[10px] font-sans text-text-muted cursor-pointer">

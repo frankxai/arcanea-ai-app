@@ -94,3 +94,12 @@ The hook retries refresh when dirty/saving flags clear. SDK and built-app regres
 cover template field fidelity, A/B/A rejection, failure retry, and a newer cached
 revision arriving during a save. Retry actions meet the 44px touch target. Fresh
 checks and complete exact-revision review are required after this correction.
+
+The sixth independent review at `9c788d9` arrived after the typed-fixture correction.
+It found refreshed content paired with stale dialog variables, and the newly
+formatted dialog exposing existing UI ratchet violations. One reconciliation
+function keeps custom metadata for surviving placeholders, initializes new names
+and omits removed names in both the rendered dialog and the final confirmed
+template write. New SDK and built regressions cover refresh during the save barrier.
+The dialog uses focus-visible replacements and transition-colors. Earlier failed
+type, UI checks and superseded native packets remain retained by revision.
