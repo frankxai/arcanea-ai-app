@@ -71,3 +71,13 @@ and save drain for all eight fields, guards template results and navigation by
 actor/session, and uses the semantic retry border. Preference hydration and load
 tracking are separate modules. Fresh exact-revision checks and review remain
 required; the unchanged dependency audit still blocks promotion.
+
+The fourth independent review at `35b4bfd` confirms the collection-status,
+tag-cache and store-size corrections. Its further findings require retaining
+PostgreSQL timestamp precision for load/write/realtime/editor freshness and
+preserving normal loading feedback while the owner's direct-link read is pending.
+One shared comparator now retains all fractional digits and normalizes timezones;
+actual SDK/cache/editor regressions and a built delayed-load case cover these.
+The repeated registered-realtime-test finding is reconciled with the existing
+actual callback registration/invocation test, which passes. Fresh source review,
+build and owner acceptance remain required after this correction.

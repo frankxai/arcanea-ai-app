@@ -186,6 +186,9 @@ export async function fixture(userId = owner) {
     client,
     requests,
     saved: () => saved,
+    replaceStored: (patch: Partial<typeof saved>) => {
+      saved = { ...saved, ...patch };
+    },
     fail: () => {
       fail = true;
     },

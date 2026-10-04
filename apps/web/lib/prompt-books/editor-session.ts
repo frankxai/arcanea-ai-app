@@ -6,6 +6,7 @@ import type {
   FewShotExample,
   ChainStep,
 } from "./types";
+import { comparePromptRevisions } from "./revisions";
 
 export interface EditorState {
   title: string;
@@ -117,12 +118,13 @@ export class PromptEditorSession {
 
   refresh = (prompt: Prompt | null) => {
     if (!prompt || this.snapshot.isDirty || this.snapshot.isSaving) return;
-    if (
-      this.snapshot.lastSavedAt &&
-      (!Number.isFinite(Date.parse(prompt.updatedAt)) ||
-        Date.parse(prompt.updatedAt) <= Date.parse(this.snapshot.lastSavedAt))
-    )
-      return;
+    if (this.snapshot.lastSavedAt) {
+      const revision = comparePromptRevisions(
+        prompt.updatedAt,
+        this.snapshot.lastSavedAt,
+      );
+      if (revision === null || revision <= 0) return;
+    }
     const state = fields(prompt);
     if (
       equal(state, this.saved) &&

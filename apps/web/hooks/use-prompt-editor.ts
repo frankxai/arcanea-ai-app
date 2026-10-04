@@ -91,7 +91,9 @@ export function usePromptEditor(promptId: string | null) {
         state: hiddenDraft,
         lastSavedAt: null,
         saveError:
-          "Your sign-in changed. Return to the owner account to recover this draft.",
+          session.userId !== null && session.userId !== userId
+            ? "Your sign-in changed. Return to the owner account to recover this draft."
+            : snapshot.saveError,
       };
 
   useEffect(() => {
