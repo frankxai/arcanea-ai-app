@@ -101,7 +101,7 @@ export async function fixture(userId = owner) {
             ];
           }
           if (url.pathname.endsWith("/pb_prompts")) {
-            if (method === "PATCH") {
+            if (method === "PATCH" || method === "POST") {
               if (fail) {
                 fail = false;
                 result = {
@@ -124,6 +124,20 @@ export async function fixture(userId = owner) {
                 ?.includes("object")
                 ? { ...saved }
                 : [{ ...saved }];
+          }
+          if (url.pathname.endsWith("/pb_templates")) {
+            result =
+              method === "GET"
+                ? {
+                    id: "template-1",
+                    user_id: userId,
+                    name: "Recovered template",
+                    content: "Write {{subject}}",
+                    variables: [{ name: "subject", type: "text" }],
+                    prompt_type: "general",
+                    use_count: 0,
+                  }
+                : [];
           }
           if (url.pathname.endsWith("/pb_tags") && Array.isArray(result))
             result = [...result, { ...result[0], id: "tag-2" }];

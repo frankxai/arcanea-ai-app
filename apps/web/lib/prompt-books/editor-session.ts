@@ -1,4 +1,11 @@
-import type { Prompt, PromptType, UpdatePromptInput } from "./types";
+import type {
+  Prompt,
+  PromptType,
+  UpdatePromptInput,
+  ContextConfig,
+  FewShotExample,
+  ChainStep,
+} from "./types";
 
 export interface EditorState {
   title: string;
@@ -6,6 +13,9 @@ export interface EditorState {
   negativeContent: string;
   systemPrompt: string;
   promptType: PromptType;
+  contextConfig: ContextConfig;
+  fewShotExamples: FewShotExample[];
+  chainSteps: ChainStep[];
 }
 
 function fields(prompt: Prompt | null): EditorState {
@@ -15,6 +25,9 @@ function fields(prompt: Prompt | null): EditorState {
     negativeContent: prompt?.negativeContent ?? "",
     systemPrompt: prompt?.systemPrompt ?? "",
     promptType: prompt?.promptType ?? "general",
+    contextConfig: structuredClone(prompt?.contextConfig ?? {}),
+    fewShotExamples: structuredClone(prompt?.fewShotExamples ?? []),
+    chainSteps: structuredClone(prompt?.chainSteps ?? []),
   };
 }
 
@@ -24,7 +37,12 @@ function equal(left: EditorState, right: EditorState) {
     left.content === right.content &&
     left.negativeContent === right.negativeContent &&
     left.systemPrompt === right.systemPrompt &&
-    left.promptType === right.promptType
+    left.promptType === right.promptType &&
+    JSON.stringify(left.contextConfig) ===
+      JSON.stringify(right.contextConfig) &&
+    JSON.stringify(left.fewShotExamples) ===
+      JSON.stringify(right.fewShotExamples) &&
+    JSON.stringify(left.chainSteps) === JSON.stringify(right.chainSteps)
   );
 }
 
@@ -92,7 +110,7 @@ export class PromptEditorSession {
     field: K,
     value: EditorState[K],
   ) => {
-    const state = { ...this.snapshot.state, [field]: value };
+    const state = { ...this.snapshot.state, [field]: structuredClone(value) };
     this.emit({ state, isDirty: !equal(state, this.saved), saveError: null });
     this.schedule();
   };

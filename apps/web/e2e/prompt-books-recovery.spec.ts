@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import type { ContextConfig } from "../lib/prompt-books/types";
 
 // The built app, real browser SDK and actual route/components use a disposable
 // transport. This suite is distinct from authenticated owner preview acceptance.
@@ -36,6 +37,7 @@ async function setup(page: Page) {
     title: "Recovery prompt",
     content: "Original prompt",
     prompt_type: "general",
+    context_config: {} as ContextConfig,
     created_at: "2026-10-04T12:00:00.000Z",
     updated_at: "2026-10-04T12:00:00.000Z",
   };
@@ -194,4 +196,36 @@ test("built failure UI keeps draft and refuses Back until retry confirms it", as
     .getByRole("button", { name: "Back to collection", exact: true })
     .click();
   await expect(page).toHaveURL(/\/prompt-books$/);
+});
+
+test("built context-only edits share Back's pending save and failure recovery", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  const tokens = page.locator('input[type="number"]');
+  await tokens.fill("1536");
+  f.hold();
+  await page
+    .getByRole("button", { name: "Back to collection", exact: true })
+    .click();
+  await expect.poll(f.held).toBe(true);
+  await tokens.fill("2048");
+  f.fail();
+  f.release();
+  const saveError = page
+    .getByRole("alert")
+    .filter({
+      has: page.getByRole("button", { name: "Retry save", exact: true }),
+    });
+  await expect(saveError).toContainText("Your draft is still here");
+  await expect(page).toHaveURL(new RegExp(`${promptId}$`));
+  await expect(tokens).toHaveValue("2048");
+  await page.getByRole("button", { name: "Retry save", exact: true }).click();
+  await expect.poll(() => f.row().context_config.maxTokens).toBe(2048);
+  await page
+    .getByRole("button", { name: "Back to collection", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/prompt-books$/);
+  await page.goto(editorUrl);
+  await expect(tokens).toHaveValue("2048");
 });

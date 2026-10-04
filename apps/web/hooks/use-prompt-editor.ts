@@ -12,6 +12,9 @@ const hiddenDraft: EditorState = {
   negativeContent: "",
   systemPrompt: "",
   promptType: "general",
+  contextConfig: {},
+  fewShotExamples: [],
+  chainSteps: [],
 };
 
 export function usePromptEditor(promptId: string | null) {

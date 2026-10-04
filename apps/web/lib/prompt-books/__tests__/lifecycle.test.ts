@@ -1,6 +1,7 @@
 import { test, before, beforeEach } from "node:test";
 import assert from "node:assert/strict";
-import { fixture, owner, other } from "./fixtures";
+import { fixture, owner, other, row } from "./fixtures";
+import { PromptEditorSession } from "../editor-session";
 
 let store: typeof import("../store").usePromptBooksStore;
 before(async () => {
@@ -129,4 +130,210 @@ test("a failed tag refresh preserves the confirmed cache and can be retried", as
       .sort(),
     ["tag-1", "tag-2"],
   );
+});
+
+test("a current collection failure survives successful route prompt/tag reads", async () => {
+  const f = await fixture();
+  f.failRead("pb_collections");
+  const gate = f.hold("GET", "pb_collections");
+  const initializing = store.getState().initialize(f.client, owner);
+  await gate.entered.promise;
+  store.getState().setActiveCollection("direct-route");
+  await settle();
+  assert.equal(store.getState().syncStatus, "syncing");
+  gate.release.resolve();
+  await initializing;
+  assert.equal(store.getState().syncStatus, "error");
+  // A realtime channel subscription cannot conceal the failed resource either.
+  store.getState().setSyncStatus("synced");
+  assert.equal(store.getState().syncStatus, "error");
+  await store.getState().loadCollections();
+  assert.equal(store.getState().syncStatus, "synced");
+  assert.equal(store.getState().collections.length, 1);
+});
+
+test("autosave and the actual registered realtime update retain omitted tag associations", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  await store.getState().changePromptTag("prompt-1", "tag-1", true);
+  await store
+    .getState()
+    .updatePrompt("prompt-1", { content: "Saved with tags" });
+  assert.deepEqual(
+    store.getState().prompts[0].tags?.map((tag) => tag.id),
+    ["tag-1"],
+  );
+  const callbacks: Record<
+    string,
+    (payload: {
+      eventType: string;
+      new: Record<string, unknown>;
+      old: Record<string, unknown>;
+    }) => void
+  > = {};
+  Object.defineProperty(f.client, "channel", {
+    value: () => {
+      const channel = {
+        on: (
+          _event: string,
+          filter: { table: string },
+          callback: (typeof callbacks)[string],
+        ) => {
+          callbacks[filter.table] = callback;
+          return channel;
+        },
+        subscribe: () => channel,
+      };
+      return channel;
+    },
+  });
+  Object.defineProperty(f.client, "removeChannel", { value: async () => "ok" });
+  const { PromptBooksSync } = await import("../sync");
+  const sync = new PromptBooksSync(f.client, owner);
+  sync.subscribe();
+  try {
+    callbacks.pb_prompts({
+      eventType: "UPDATE",
+      old: {},
+      new: {
+        ...row(),
+        content: "Realtime with tags",
+        updated_at: "2026-10-04T15:00:00.000Z",
+      },
+    });
+    assert.equal(store.getState().prompts[0].content, "Realtime with tags");
+    assert.deepEqual(
+      store.getState().prompts[0].tags?.map((tag) => tag.id),
+      ["tag-1"],
+    );
+    store
+      .getState()
+      .updatePromptInStore({ ...store.getState().prompts[0], tags: [] });
+    assert.deepEqual(store.getState().prompts[0].tags, []);
+  } finally {
+    sync.unsubscribe();
+  }
+});
+
+for (const [name, change] of [
+  [
+    "context",
+    (session: PromptEditorSession) =>
+      session.updateField("contextConfig", {
+        model: "creator-model",
+        temperature: 0.4,
+      }),
+  ],
+  [
+    "few-shot examples",
+    (session: PromptEditorSession) =>
+      session.updateField("fewShotExamples", [
+        { role: "user", content: "Keep this example" },
+      ]),
+  ],
+  [
+    "chain steps",
+    (session: PromptEditorSession) =>
+      session.updateField("chainSteps", [
+        { order: 1, inlinePrompt: "Keep this step" },
+      ]),
+  ],
+] as const) {
+  test(`Back/save awaits a pending ${name}-only draft`, async () => {
+    const f = await fixture();
+    await store.getState().initialize(f.client, owner);
+    const session = new PromptEditorSession(
+      store.getState().prompts[0],
+      () => true,
+      (input) => store.getState().updatePrompt("prompt-1", input),
+    );
+    change(session);
+    const expected = structuredClone(session.getSnapshot().state);
+    const gate = f.hold("PATCH");
+    const saving = session.save();
+    await gate.entered.promise;
+    let returned = false;
+    const back = session.save().then((ok) => {
+      returned = true;
+      return ok;
+    });
+    await settle();
+    assert.equal(returned, false);
+    gate.release.resolve();
+    assert.deepEqual(await Promise.all([saving, back]), [true, true]);
+    const stored = store.getState().prompts[0];
+    assert.deepEqual(stored.contextConfig, expected.contextConfig);
+    assert.deepEqual(stored.fewShotExamples, expected.fewShotExamples);
+    assert.deepEqual(stored.chainSteps, expected.chainSteps);
+  });
+}
+
+test("failed context/example/chain save refuses Back and retries the latest immutable draft", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const session = new PromptEditorSession(
+    store.getState().prompts[0],
+    () => true,
+    (input) => store.getState().updatePrompt("prompt-1", input),
+  );
+  const config = { model: "creator-model", stopSequences: ["original"] };
+  session.updateField("contextConfig", config);
+  config.stopSequences[0] = "external mutation";
+  session.updateField("fewShotExamples", [
+    { role: "assistant", content: "Recover my example" },
+  ]);
+  session.updateField("chainSteps", [
+    { order: 1, inlinePrompt: "Recover my step" },
+  ]);
+  f.fail();
+  assert.equal(await session.save(), false);
+  const expected = structuredClone(session.getSnapshot().state);
+  assert.equal(expected.contextConfig.stopSequences?.[0], "original");
+  assert.equal(session.getSnapshot().isDirty, true);
+  assert.match(session.getSnapshot().saveError ?? "", /Retry save/);
+  assert.equal(await session.save(), true);
+  const stored = store.getState().prompts[0];
+  assert.deepEqual(stored.contextConfig, expected.contextConfig);
+  assert.deepEqual(stored.fewShotExamples, expected.fewShotExamples);
+  assert.deepEqual(stored.chainSteps, expected.chainSteps);
+});
+
+test("a same-owner stale template creation cannot update cache or trigger navigation after A/B/A", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const gate = f.hold("POST");
+  let navigated = false;
+  const creating = store
+    .getState()
+    .instantiateTemplate("template-1", { subject: "a recovered world" })
+    .then(() => {
+      navigated = true;
+    });
+  await gate.entered.promise;
+  const foreign = await fixture(other);
+  await store.getState().initialize(foreign.client, other);
+  await store.getState().initialize(f.client, owner);
+  store
+    .getState()
+    .updatePromptInStore({
+      ...store.getState().prompts[0],
+      content: "Current session content",
+      updatedAt: "2099-01-01T00:00:00Z",
+    });
+  const rejected = assert.rejects(creating, /identity changed/);
+  gate.release.resolve();
+  await rejected;
+  assert.equal(navigated, false);
+  assert.equal(store.getState().prompts[0].content, "Current session content");
+});
+
+test("current verified template creation resolves variables and enters its owner cache", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const prompt = await store
+    .getState()
+    .instantiateTemplate("template-1", { subject: "a recovered world" });
+  assert.equal(prompt.content, "Write a recovered world");
+  assert.equal(prompt.userId, owner);
+  assert.equal(store.getState().prompts[0].content, "Write a recovered world");
 });

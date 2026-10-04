@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";
 import { useQuickCapture } from "@/hooks/use-quick-capture";
-import { createClient } from "@/lib/supabase/client";
 import { PromptBooksSidebar } from "@/components/prompt-books/sidebar/PromptBooksSidebar";
 import { CollectionHeader } from "@/components/prompt-books/collections/CollectionHeader";
 import { CollectionGrid } from "@/components/prompt-books/collections/CollectionGrid";
@@ -36,7 +35,6 @@ import {
   PhStar,
 } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
-import * as service from "@/lib/prompt-books/service";
 import type {
   CreateCollectionInput,
   Prompt,
@@ -286,7 +284,7 @@ export default function PromptBooksPage() {
     updatePrompt,
     updateTag,
     deleteTag,
-    addPrompt,
+    instantiateTemplate,
     _userId: userId,
   } = usePromptBooksStore();
 
@@ -358,21 +356,24 @@ export default function PromptBooksPage() {
       variables: Record<string, string>,
       collectionId?: string,
     ) => {
-      if (!userId) return;
-      const client = createClient();
-      const prompt = await service.instantiateTemplate(
-        client,
-        userId,
+      const before = usePromptBooksStore.getState();
+      const prompt = await instantiateTemplate(
         templateId,
         variables,
         collectionId || activeCollectionId || undefined,
       );
-      addPrompt(prompt);
+      const current = usePromptBooksStore.getState();
+      if (
+        current._client !== before._client ||
+        current._userId !== before._userId ||
+        current._sessionVersion !== before._sessionVersion
+      )
+        throw new Error("Prompt Books identity changed");
       router.push(
         `/prompt-books/${prompt.collectionId || "_all"}/${prompt.id}`,
       );
     },
-    [userId, activeCollectionId, addPrompt, router],
+    [activeCollectionId, instantiateTemplate, router],
   );
 
   const handleUpdateTag = useCallback(
