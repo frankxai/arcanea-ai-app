@@ -73,28 +73,8 @@ export default function PromptEditorPage() {
   const [saveTemplateOpen, setSaveTemplateOpen] = useState(false);
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
-  // Context engineering state
-  const [contextConfig, setContextConfig] = useState<ContextConfig>(
-    prompt?.contextConfig ?? {},
-  );
-  const [fewShotExamples, setFewShotExamples] = useState<FewShotExample[]>(
-    prompt?.fewShotExamples ?? [],
-  );
-  const [chainSteps, setChainSteps] = useState<ChainStep[]>(
-    prompt?.chainSteps ?? [],
-  );
-
   // Tag IDs assigned to this prompt
   const assignedTagIds = (prompt?.tags ?? []).map((t) => t.id);
-
-  // Sync context state when prompt loads
-  useEffect(() => {
-    if (prompt) {
-      setContextConfig(prompt.contextConfig ?? {});
-      setFewShotExamples(prompt.fewShotExamples ?? []);
-      setChainSteps(prompt.chainSteps ?? []);
-    }
-  }, [prompt?.id]);
 
   // Set active collection and prompt on mount
   useEffect(() => {
@@ -121,15 +101,15 @@ export default function PromptEditorPage() {
 
   const handleExport = useCallback(() => {
     if (!prompt) return;
-    const md = promptToMd(prompt);
+    const md = promptToMd({ ...prompt, ...state });
     const blob = new Blob([md], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${prompt.title.replace(/\s+/g, "-").toLowerCase()}.md`;
+    a.download = `${state.title.replace(/\s+/g, "-").toLowerCase()}.md`;
     a.click();
     URL.revokeObjectURL(url);
-  }, [prompt]);
+  }, [prompt, state]);
 
   const handleToggleFavorite = useCallback(async () => {
     if (!prompt) return;
@@ -204,35 +184,18 @@ export default function PromptEditorPage() {
     [updateField],
   );
 
-  // Save context config changes to prompt
+  // Context, examples and chain steps share the same draft/save barrier as text.
   const handleContextConfigChange = useCallback(
-    async (config: ContextConfig) => {
-      setContextConfig(config);
-      if (promptId) {
-        await updatePrompt(promptId, { contextConfig: config });
-      }
-    },
-    [promptId, updatePrompt],
+    (config: ContextConfig) => updateField("contextConfig", config),
+    [updateField],
   );
-
   const handleFewShotChange = useCallback(
-    async (examples: FewShotExample[]) => {
-      setFewShotExamples(examples);
-      if (promptId) {
-        await updatePrompt(promptId, { fewShotExamples: examples });
-      }
-    },
-    [promptId, updatePrompt],
+    (examples: FewShotExample[]) => updateField("fewShotExamples", examples),
+    [updateField],
   );
-
   const handleChainStepsChange = useCallback(
-    async (steps: ChainStep[]) => {
-      setChainSteps(steps);
-      if (promptId) {
-        await updatePrompt(promptId, { chainSteps: steps });
-      }
-    },
-    [promptId, updatePrompt],
+    (steps: ChainStep[]) => updateField("chainSteps", steps),
+    [updateField],
   );
 
   const handleSaveAsTemplate = useCallback(
@@ -319,7 +282,7 @@ export default function PromptEditorPage() {
             type="button"
             onClick={() => void save()}
             disabled={isSaving}
-            className="mt-2 rounded-lg border border-white/[0.12] px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-atlantean-teal"
+            className="mt-2 rounded-lg border border-[var(--arc-cosmic-border)] px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-atlantean-teal"
           >
             Retry save
           </button>
@@ -432,9 +395,9 @@ export default function PromptEditorPage() {
         <ContextPanel
           prompt={prompt}
           typeConfig={typeConfig}
-          contextConfig={contextConfig}
-          fewShotExamples={fewShotExamples}
-          chainSteps={chainSteps}
+          contextConfig={state.contextConfig}
+          fewShotExamples={state.fewShotExamples}
+          chainSteps={state.chainSteps}
           availablePrompts={prompts}
           onContextConfigChange={handleContextConfigChange}
           onFewShotChange={handleFewShotChange}

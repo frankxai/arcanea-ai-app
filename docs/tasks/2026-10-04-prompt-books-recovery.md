@@ -61,3 +61,13 @@ regressions plus a built direct-link collection-tag request assertion. Tag addit
 uses the existing composite key without deleting other assignments. No schema or
 dependency change. Current independent review and engineering acceptance must be
 rebound to the resulting revision; earlier passes approve only their own source.
+
+The third independent review at `482bff1` found a current collection failure
+hidden by route selection, omitted tag associations cleared by autosave/realtime,
+context/example/chain writes outside awaited Back, a same-owner stale template
+response, and one retry border constant. The correction tracks each resource
+independently, preserves omitted cached tags, shares one immutable editor draft
+and save drain for all eight fields, guards template results and navigation by
+actor/session, and uses the semantic retry border. Preference hydration and load
+tracking are separate modules. Fresh exact-revision checks and review remain
+required; the unchanged dependency audit still blocks promotion.

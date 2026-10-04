@@ -69,6 +69,11 @@ export interface PromptBooksState {
   updatePrompt: (id: string, input: UpdatePromptInput) => Promise<Prompt>;
   deletePrompt: (id: string) => Promise<void>;
   duplicatePrompt: (id: string) => Promise<Prompt>;
+  instantiateTemplate: (
+    templateId: string,
+    variables: Record<string, string>,
+    collectionId?: string,
+  ) => Promise<Prompt>;
   setActivePrompt: (id: string | null) => void;
   setActivePromptType: (type: PromptType | null) => void;
 
