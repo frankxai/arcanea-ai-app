@@ -2,6 +2,7 @@ import { test, before, beforeEach } from "node:test";
 import assert from "node:assert/strict";
 import { fixture, owner, other } from "./fixtures";
 import { PromptEditorSession } from "../editor-session";
+import type { SavePromptTemplateInput } from "../store-state";
 
 let store: typeof import("../store").usePromptBooksStore;
 before(async () => {
@@ -22,9 +23,9 @@ const details = {
   name: "Current creator template",
   description: "Recoverable creation",
   category: "creative",
-  variables: [{ name: "subject", type: "text" as const }],
+  variables: [{ name: "subject", label: "Subject", type: "text" }],
   isPublic: false,
-};
+} satisfies SavePromptTemplateInput;
 
 test("template creation uses all confirmed editor fields and the actual is_public mapping", async () => {
   const f = await fixture();
