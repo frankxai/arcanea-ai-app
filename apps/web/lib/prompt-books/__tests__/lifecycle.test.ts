@@ -413,3 +413,72 @@ test("revision comparison normalizes timezones, fractional padding and rejects i
     null,
   );
 });
+
+test("overlapping tag edits retain the newest associations after a delayed tag catalog read", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const gate = f.hold("GET", "pb_tags");
+  const first = store.getState().changePromptTag("prompt-1", "tag-1", true);
+  await gate.entered.promise;
+  const second = store.getState().changePromptTag("prompt-1", "tag-2", true);
+  await settle();
+  assert.equal(
+    f.requests.filter(
+      (r) => r.method === "POST" && r.url.pathname.endsWith("/pb_prompt_tags"),
+    ).length,
+    1,
+  );
+  gate.release.resolve();
+  await Promise.all([first, second]);
+  assert.deepEqual(
+    store
+      .getState()
+      .prompts[0].tags?.map((tag) => tag.id)
+      .sort(),
+    ["tag-1", "tag-2"],
+  );
+});
+
+test("queued old-session tag edits are rejected before writing after A/B/A", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const gate = f.hold("GET", "pb_tags");
+  const first = store.getState().changePromptTag("prompt-1", "tag-1", true);
+  await gate.entered.promise;
+  const second = store.getState().changePromptTag("prompt-1", "tag-2", true);
+  const firstRejected = assert.rejects(first, /identity changed/);
+  const secondRejected = assert.rejects(second, /identity changed/);
+  const foreign = await fixture(other);
+  await store.getState().initialize(foreign.client, other);
+  await store.getState().initialize(f.client, owner);
+  gate.release.resolve();
+  await Promise.all([firstRejected, secondRejected]);
+  assert.equal(
+    f.requests.filter(
+      (r) => r.method === "POST" && r.url.pathname.endsWith("/pb_prompt_tags"),
+    ).length,
+    1,
+  );
+  assert.equal(store.getState()._userId, owner);
+});
+
+test("a failed queued tag refresh does not prevent the next edit reconciling confirmed assignments", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  f.failRead("pb_tags");
+  const gate = f.hold("GET", "pb_tags");
+  const first = store.getState().changePromptTag("prompt-1", "tag-1", true);
+  await gate.entered.promise;
+  const rejected = assert.rejects(first);
+  const second = store.getState().changePromptTag("prompt-1", "tag-2", true);
+  gate.release.resolve();
+  await rejected;
+  await second;
+  assert.deepEqual(
+    store
+      .getState()
+      .prompts[0].tags?.map((tag) => tag.id)
+      .sort(),
+    ["tag-1", "tag-2"],
+  );
+});

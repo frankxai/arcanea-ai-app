@@ -138,3 +138,13 @@ roundtrips cover reordered JSONB confirmation and template recovery. The built
 editor case covers multi-parameter roundtrip and reload. Corrupted copy/comments
 are repaired. Earlier42 SDK/11 browser passes remain bound to `cd2a59e`; fresh
 current-source verification and independent review are required.
+
+The eighth Copilot review at `499ac38` confirms the prior five corrections but
+finds an older tag-assignment snapshot can overwrite a newer confirmed cache
+when edits overlap. Mutations are now serialized per owner/session/prompt; the
+verified actor is checked again after waiting, and the association query is the
+last awaited read before cache application. Actual pinned SDK tests cover overlap,
+queued A/B/A rejection before writing and queue recovery after failed refresh.
+Prior `c53ce4d` passes47 SDK regressions, TypeScript and strict lint/format;
+its browser/build result remains source-bound. Fresh50 SDK/current source review
+are required. Security audit and owner preview acceptance still hold production.
