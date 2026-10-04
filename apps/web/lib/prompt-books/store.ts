@@ -6,9 +6,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { promptBooksPreferences } from "./preferences";
-import { PromptBooksLoads } from "./resource-loads";
+import { PromptBooksLoads, mergeResourceRead } from "./resource-loads";
 import { comparePromptRevisions } from "./revisions";
 import { templateVariablesForContent } from "./template-variables";
+import { writePromptTemplate } from "./template-write";
+import { writePromptDraft, PromptDraftConflict } from "./draft-write";
+import { promptEditorFields, sameEditorFields } from "./editor-session";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
 import {
@@ -44,6 +47,7 @@ const privateState = {
   searchResults: [],
   isSearching: false,
   lastSyncAt: null,
+  promptLoadFailed: false,
 };
 
 export const usePromptBooksStore = create<PromptBooksState>()(
@@ -66,6 +70,7 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       isSearching: false,
 
       syncStatus: "offline",
+      promptLoadFailed: false,
       lastSyncAt: null,
 
       _client: null,
@@ -99,12 +104,17 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       loadCollections: async () => {
         const { _client: client, _userId: userId } = get();
         if (!client || !userId) return;
+        const before = get().collections;
         await loads.run(
           "collections",
           () => service.listCollections(client, userId),
           (collections) =>
             set({
-              collections: collections.filter((row) => row.userId === userId),
+              collections: mergeResourceRead(
+                before,
+                get().collections,
+                collections.filter((row) => row.userId === userId),
+              ),
             }),
         );
       },
@@ -186,6 +196,7 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       loadPrompts: async (filters) => {
         const { _client: client, _userId: userId, activeCollectionId } = get();
         if (!client || !userId) return;
+        const before = get().prompts;
         await loads.run(
           "prompts",
           () =>
@@ -198,21 +209,15 @@ export const usePromptBooksStore = create<PromptBooksState>()(
             }),
           (prompts) =>
             set((state) => ({
-              prompts: prompts
-                .filter((row) => row.userId === userId)
-                .map((incoming) => {
-                  const current = state.prompts.find(
-                    (row) => row.id === incoming.id && row.userId === userId,
-                  );
-                  if (!current) return incoming;
-                  const revision = comparePromptRevisions(
-                    incoming.updatedAt,
-                    current.updatedAt,
-                  );
-                  return revision === null || revision <= 0
-                    ? current
-                    : { ...incoming, tags: incoming.tags ?? current.tags };
+              prompts: mergeResourceRead(
+                before,
+                state.prompts,
+                prompts.filter((row) => row.userId === userId),
+                (incoming, current) => ({
+                  ...incoming,
+                  tags: incoming.tags ?? current.tags,
                 }),
+              ),
             })),
         );
       },
@@ -254,13 +259,34 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         return prompt;
       },
 
-      updatePrompt: async (id, input) => {
+      updatePrompt: async (id, input, expectedUpdatedAt) => {
         const { client, userId, version } = await actor();
 
-        const prompt = await service.updatePrompt(client, id, input);
+        let prompt;
+        try {
+          prompt = expectedUpdatedAt
+            ? await writePromptDraft(
+                client,
+                userId,
+                id,
+                input,
+                expectedUpdatedAt,
+              )
+            : await service.updatePrompt(client, id, input);
+        } catch (error) {
+          assertActor(client, userId, version);
+          throw error;
+        }
         assertActor(client, userId, version);
         if (prompt.userId !== userId)
           throw new Error("Unexpected Prompt Books owner");
+        const cached = get().prompts.find((row) => row.id === id);
+        if (
+          expectedUpdatedAt &&
+          cached &&
+          (comparePromptRevisions(prompt.updatedAt, cached.updatedAt) ?? -1) < 0
+        )
+          throw new PromptDraftConflict(cached);
         get().updatePromptInStore(prompt);
         return prompt;
       },
@@ -300,34 +326,50 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       },
 
       setActivePrompt: (id) => set({ activePromptId: id }),
-      savePromptAsTemplate: async (id, data) => {
+      savePromptAsTemplate: async (id, data, confirmedDraft) => {
         const { client, userId, version } = await actor();
         const prompt = get().prompts.find(
           (row) => row.id === id && row.userId === userId,
         );
         if (!prompt) throw new Error("Prompt not available");
-        // Reuse the accepted createTemplate mapping, including live is_public.
-        const template = await service.createTemplate(client, userId, {
-          ...data,
-          variables: templateVariablesForContent(
-            prompt.content,
-            data.variables,
-          ),
+        if (
+          confirmedDraft &&
+          !sameEditorFields(promptEditorFields(prompt), confirmedDraft)
+        )
+          throw new Error(
+            "Prompt changed after saving. Retry template creation.",
+          );
+        // Preserve the accepted template mapping; retries reuse the primary key.
+        const { requestId, ...details } = data;
+        const { template, acknowledge } = await writePromptTemplate(
+          client,
           userId,
-          content: prompt.content,
-          negativeContent: prompt.negativeContent,
-          systemPrompt: prompt.systemPrompt,
-          promptType: prompt.promptType,
-          contextConfig: prompt.contextConfig,
-          fewShotExamples: prompt.fewShotExamples,
-          chainSteps: prompt.chainSteps,
-          guardianId: null,
-          element: null,
-          tags: (prompt.tags ?? []).map((tag) => tag.name),
-        });
+          id,
+          {
+            ...details,
+            variables: templateVariablesForContent(
+              prompt.content,
+              data.variables,
+            ),
+            userId,
+            content: prompt.content,
+            negativeContent: prompt.negativeContent,
+            systemPrompt: prompt.systemPrompt,
+            promptType: prompt.promptType,
+            contextConfig: prompt.contextConfig,
+            fewShotExamples: prompt.fewShotExamples,
+            chainSteps: prompt.chainSteps,
+            guardianId: null,
+            element: null,
+            tags: (prompt.tags ?? []).map((tag) => tag.name),
+          },
+          requestId,
+          () => assertActor(client, userId, version),
+        );
         assertActor(client, userId, version);
         if (template.userId !== userId)
           throw new Error("Unexpected Prompt Books owner");
+        acknowledge();
         return template;
       },
       setActivePromptType: (type) => set({ activePromptType: type }),
@@ -340,10 +382,18 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       loadTags: async (collectionId) => {
         const { _client: client, _userId: userId } = get();
         if (!client || !userId) return;
+        const before = get().tags;
         await loads.run(
           "tags",
           () => service.listTags(client, userId, collectionId),
-          (tags) => set({ tags: tags.filter((row) => row.userId === userId) }),
+          (tags) =>
+            set({
+              tags: mergeResourceRead(
+                before,
+                get().tags,
+                tags.filter((row) => row.userId === userId),
+              ),
+            }),
         );
       },
 

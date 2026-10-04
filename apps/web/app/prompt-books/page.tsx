@@ -42,7 +42,7 @@ import type {
 } from "@/lib/prompt-books/types";
 import { EXAMPLES as APL_EXAMPLES } from "@/lib/apl/examples";
 
-// ─── Demo collections for unauthenticated preview ─────────────────────────────
+// â”€â”€â”€ Demo collections for unauthenticated preview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const DEMO_COLLECTIONS = [
   {
     id: "d1",
@@ -192,7 +192,7 @@ function PromptBooksLanding() {
                 SPARK.SHAPE.SHARPEN Prompts
               </h3>
               <span className="text-xs text-text-muted">
-                — Before & after with Arcanean Prompt Language
+                â€” Before & after with Arcanean Prompt Language
               </span>
             </div>
             {APL_EXAMPLES.map((ex) => (
@@ -229,7 +229,7 @@ function PromptBooksLanding() {
                 {/* After */}
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--arc-fire)]/70 mb-1">
-                    After — SPARK.SHAPE.SHARPEN
+                    After â€” SPARK.SHAPE.SHARPEN
                   </p>
                   <pre className="text-xs text-text-secondary leading-relaxed whitespace-pre-wrap font-body bg-white/[0.02] rounded-lg p-3 border border-white/[0.04] max-h-48 overflow-y-auto">
                     {ex.after}
@@ -285,6 +285,8 @@ export default function PromptBooksPage() {
     updateTag,
     deleteTag,
     instantiateTemplate,
+    promptLoadFailed,
+    loadPrompts,
     _userId: userId,
   } = usePromptBooksStore();
 
@@ -391,7 +393,7 @@ export default function PromptBooksPage() {
   );
 
   // First HTML and signed-out users get the landing. Do not return null
-  // while auth is pending — that hid "Your AI Prompt Library" from crawlers
+  // while auth is pending â€” that hid "Your AI Prompt Library" from crawlers
   // and no-JS. Signed-in users swap to the library after initialize().
   if (!userId) {
     return (
@@ -408,6 +410,23 @@ export default function PromptBooksPage() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        {promptLoadFailed && (
+          <div
+            role="alert"
+            className="border-b border-[var(--arc-cosmic-border)] px-4 py-3 text-sm text-text-primary"
+          >
+            Could not load prompts.{" "}
+            <button
+              type="button"
+              className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 py-2 focus-visible:ring-2 focus-visible:ring-atlantean-teal"
+              onClick={() => {
+                void loadPrompts().catch(() => {});
+              }}
+            >
+              Retry loading
+            </button>
+          </div>
+        )}
         {/* Collection Header */}
         <CollectionHeader
           collection={activeCollection}

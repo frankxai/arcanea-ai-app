@@ -7,6 +7,7 @@ import type {
   ChainStep,
 } from "./types";
 import { comparePromptRevisions } from "./revisions";
+import { PromptDraftConflict } from "./draft-write";
 
 export interface EditorState {
   title: string;
@@ -19,7 +20,7 @@ export interface EditorState {
   chainSteps: ChainStep[];
 }
 
-function fields(prompt: Prompt | null): EditorState {
+export function promptEditorFields(prompt: Prompt | null): EditorState {
   return {
     title: prompt?.title ?? "",
     content: prompt?.content ?? "",
@@ -32,7 +33,7 @@ function fields(prompt: Prompt | null): EditorState {
   };
 }
 
-function equal(left: EditorState, right: EditorState) {
+export function sameEditorFields(left: EditorState, right: EditorState) {
   return (
     left.title === right.title &&
     left.content === right.content &&
@@ -51,6 +52,8 @@ function equal(left: EditorState, right: EditorState) {
 // response can confirm its snapshot, never a later edit or another session.
 export class PromptEditorSession {
   private saved: EditorState;
+  private baseUpdatedAt: string | null;
+  private conflictPending = false;
   private listeners = new Set<() => void>();
   private timer: ReturnType<typeof setTimeout> | null = null;
   private flight: Promise<boolean> | null = null;
@@ -65,9 +68,13 @@ export class PromptEditorSession {
   constructor(
     prompt: Prompt | null,
     private canSave: () => boolean,
-    private commit: (input: UpdatePromptInput) => Promise<Prompt>,
+    private commit: (
+      input: UpdatePromptInput,
+      expectedUpdatedAt: string,
+    ) => Promise<Prompt>,
   ) {
-    this.saved = fields(prompt);
+    this.saved = promptEditorFields(prompt);
+    this.baseUpdatedAt = prompt?.updatedAt ?? null;
     this.snapshot = {
       state: this.saved,
       isDirty: false,
@@ -78,6 +85,7 @@ export class PromptEditorSession {
   }
 
   getSnapshot = () => this.snapshot;
+  getConfirmedState = () => structuredClone(this.saved);
 
   subscribe = (listener: () => void) => {
     this.listeners.add(listener);
@@ -100,7 +108,8 @@ export class PromptEditorSession {
 
   private schedule() {
     this.clearTimer();
-    if (!this.snapshot.isDirty || !this.listeners.size) return;
+    if (!this.snapshot.isDirty || !this.listeners.size || this.conflictPending)
+      return;
     this.timer = setTimeout(() => {
       this.timer = null;
       void this.save();
@@ -112,7 +121,11 @@ export class PromptEditorSession {
     value: EditorState[K],
   ) => {
     const state = { ...this.snapshot.state, [field]: structuredClone(value) };
-    this.emit({ state, isDirty: !equal(state, this.saved), saveError: null });
+    this.emit({
+      state,
+      isDirty: !sameEditorFields(state, this.saved),
+      saveError: this.conflictPending ? this.snapshot.saveError : null,
+    });
     this.schedule();
   };
 
@@ -125,13 +138,14 @@ export class PromptEditorSession {
       );
       if (revision === null || revision <= 0) return;
     }
-    const state = fields(prompt);
+    const state = promptEditorFields(prompt);
     if (
-      equal(state, this.saved) &&
+      sameEditorFields(state, this.saved) &&
       this.snapshot.lastSavedAt === prompt.updatedAt
     )
       return;
     this.saved = state;
+    this.baseUpdatedAt = prompt.updatedAt;
     this.emit({ state, lastSavedAt: prompt.updatedAt, saveError: null });
   };
 
@@ -142,13 +156,15 @@ export class PromptEditorSession {
       return success ? this.save() : false;
     }
     if (!this.snapshot.isDirty) return true;
-    if (!this.canSave()) {
+    if (!this.canSave() || !this.baseUpdatedAt) {
       this.emit({
         saveError: "Your sign-in changed. Reopen this prompt before saving.",
       });
       return false;
     }
     const state = { ...this.snapshot.state };
+    const expectedUpdatedAt = this.baseUpdatedAt;
+    this.conflictPending = false;
     const input: UpdatePromptInput = {
       ...state,
       negativeContent: state.negativeContent || null,
@@ -157,14 +173,52 @@ export class PromptEditorSession {
     this.emit({ isSaving: true, saveError: null });
     this.flight = (async () => {
       try {
-        const stored = await this.commit(input);
+        const stored = await this.commit(input, expectedUpdatedAt);
+        if (!sameEditorFields(promptEditorFields(stored), state))
+          throw new PromptDraftConflict(stored);
         this.saved = state;
+        this.baseUpdatedAt = stored.updatedAt;
         this.emit({
-          isDirty: !equal(this.snapshot.state, state),
+          isDirty: !sameEditorFields(this.snapshot.state, state),
           lastSavedAt: stored.updatedAt,
         });
         return true;
-      } catch {
+      } catch (error) {
+        if (error instanceof PromptDraftConflict) {
+          const remote = promptEditorFields(error.current);
+          if (sameEditorFields(remote, state)) {
+            this.saved = remote;
+            this.baseUpdatedAt = error.current.updatedAt;
+            this.emit({
+              isDirty: !sameEditorFields(this.snapshot.state, remote),
+              lastSavedAt: error.current.updatedAt,
+            });
+            return true;
+          }
+          const merged = { ...remote };
+          // Keep fields the creator edited; take remote changes to untouched
+          // fields. A subsequent explicit retry confirms the creator's choice.
+          for (const key of Object.keys(merged) as (keyof EditorState)[]) {
+            if (
+              JSON.stringify(this.snapshot.state[key]) !==
+              JSON.stringify(this.saved[key])
+            )
+              Object.assign(merged, {
+                [key]: structuredClone(this.snapshot.state[key]),
+              });
+          }
+          this.saved = remote;
+          this.baseUpdatedAt = error.current.updatedAt;
+          this.conflictPending = true;
+          this.clearTimer();
+          this.emit({
+            state: merged,
+            isDirty: !sameEditorFields(merged, remote),
+            saveError:
+              "Newer changes arrived. Your draft is still here. Retry save to keep your edits.",
+          });
+          return false;
+        }
         this.emit({
           saveError: "Could not save. Your draft is still here. Retry save.",
         });

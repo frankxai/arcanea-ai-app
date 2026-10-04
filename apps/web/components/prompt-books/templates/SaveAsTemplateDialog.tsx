@@ -14,6 +14,7 @@ interface SaveAsTemplateDialogProps {
   open: boolean;
   onClose: () => void;
   onSave: (data: {
+    requestId: string;
     name: string;
     description: string;
     category: string;
@@ -37,6 +38,7 @@ export function SaveAsTemplateDialog({
   onSave,
 }: SaveAsTemplateDialogProps) {
   const formId = useId();
+  const [requestId] = useState(() => crypto.randomUUID());
   const [name, setName] = useState(prompt.title + " Template");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("starter");
@@ -69,6 +71,7 @@ export function SaveAsTemplateDialog({
     setError(null);
     try {
       await onSave({
+        requestId,
         name,
         description,
         category,

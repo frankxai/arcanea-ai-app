@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { PromptBooksState } from "./store-state";
 import type { SyncStatus } from "./types";
 import { currentActor } from "./actor-session";
+import { comparePromptRevisions } from "./revisions";
 
 type Resource = "collections" | "prompts" | "tags";
 interface Load {
@@ -15,7 +16,7 @@ export class PromptBooksLoads {
   constructor(
     private read: () => PromptBooksState,
     private publish: (
-      state: Pick<PromptBooksState, "syncStatus"> &
+      state: Pick<PromptBooksState, "syncStatus" | "promptLoadFailed"> &
         Partial<Pick<PromptBooksState, "lastSyncAt">>,
     ) => void,
   ) {}
@@ -35,6 +36,7 @@ export class PromptBooksLoads {
     const syncStatus = this.status("synced");
     this.publish({
       syncStatus,
+      promptLoadFailed: this.loads.get("prompts")?.status === "error",
       ...(syncStatus === "synced"
         ? { lastSyncAt: new Date().toISOString() }
         : {}),
@@ -71,4 +73,34 @@ export class PromptBooksLoads {
       throw error;
     }
   }
+}
+
+// A read can race local/realtime additions, deletions and updates without a new
+// load generation. Compare its starting snapshot as well as server revisions.
+export function mergeResourceRead<T extends { id: string; updatedAt: string }>(
+  before: T[],
+  current: T[],
+  incoming: T[],
+  newer: (value: T, cached: T) => T = (value) => value,
+): T[] {
+  const started = new Map(before.map((row) => [row.id, row]));
+  const present = new Map(current.map((row) => [row.id, row]));
+  const result: T[] = [];
+  for (const value of incoming) {
+    const cached = present.get(value.id);
+    if (started.has(value.id) && !cached) continue;
+    result.push(
+      cached &&
+        (comparePromptRevisions(value.updatedAt, cached.updatedAt) ?? -1) <= 0
+        ? cached
+        : cached
+          ? newer(value, cached)
+          : value,
+    );
+  }
+  const returned = new Set(result.map((row) => row.id));
+  for (const row of current) {
+    if (!returned.has(row.id) && started.get(row.id) !== row) result.push(row);
+  }
+  return result;
 }

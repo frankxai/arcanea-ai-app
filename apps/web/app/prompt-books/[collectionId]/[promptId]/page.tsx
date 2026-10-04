@@ -43,6 +43,8 @@ export default function PromptEditorPage() {
     updatePrompt,
     changePromptTag,
     savePromptAsTemplate,
+    promptLoadFailed,
+    loadPrompts,
     tags,
     createTag,
     prompts,
@@ -62,6 +64,7 @@ export default function PromptEditorPage() {
     typeConfig,
     updateField,
     save,
+    getConfirmedState,
     handleDelete,
     handleDuplicate,
     handleCopy,
@@ -118,7 +121,7 @@ export default function PromptEditorPage() {
 
   const handleWeightApply = useCallback(
     (weight: number, syntax: WeightSyntaxType) => {
-      // Get selection from textarea — find the focused textarea
+      // Get selection from textarea â€” find the focused textarea
       const activeEl = document.activeElement as HTMLTextAreaElement;
       if (!activeEl || activeEl.tagName !== "TEXTAREA") return;
 
@@ -209,9 +212,9 @@ export default function PromptEditorPage() {
         current._sessionVersion !== before._sessionVersion
       )
         throw new Error("Prompt Books identity changed");
-      await savePromptAsTemplate(promptId, data);
+      await savePromptAsTemplate(promptId, data, getConfirmedState());
     },
-    [save, savePromptAsTemplate, promptId],
+    [save, savePromptAsTemplate, promptId, getConfirmedState],
   );
 
   // Cmd+S to save
@@ -229,9 +232,24 @@ export default function PromptEditorPage() {
   if (!prompt) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <span className="text-text-muted text-sm font-sans">
-          {saveError || "Loading prompt..."}
-        </span>
+        {promptLoadFailed && !saveError ? (
+          <div role="alert" className="text-sm text-text-primary">
+            <p>Could not load this prompt. Retry loading.</p>
+            <button
+              type="button"
+              className="mt-2 min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 py-2 focus-visible:ring-2 focus-visible:ring-atlantean-teal"
+              onClick={() => {
+                void loadPrompts({ collectionId }).catch(() => {});
+              }}
+            >
+              Retry loading
+            </button>
+          </div>
+        ) : (
+          <span className="text-text-muted text-sm font-sans">
+            {saveError || "Loading prompt..."}
+          </span>
+        )}
       </div>
     );
   }

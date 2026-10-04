@@ -20,6 +20,7 @@ before(async () => {
 });
 beforeEach(() => store.getState().reset());
 const details = {
+  requestId: "00000000-0000-4000-8000-000000000010",
   name: "Current creator template",
   description: "Recoverable creation",
   category: "creative",
@@ -33,7 +34,8 @@ test("template creation uses all confirmed editor fields and the actual is_publi
   const session = new PromptEditorSession(
     store.getState().prompts[0],
     () => true,
-    (input) => store.getState().updatePrompt("prompt-1", input),
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
   );
   session.updateField("title", "Latest title");
   session.updateField("content", "Write {{subject}} from the latest draft");
@@ -76,6 +78,13 @@ test("saving a template rejects an old same-owner response after A/B/A", async (
   gate.release.resolve();
   await rejected;
   assert.equal(store.getState().prompts[0].content, "Original");
+  assert.equal(f.templateRows().length, 1);
+  const retry = await store.getState().savePromptAsTemplate("prompt-1", {
+    ...details,
+    requestId: "00000000-0000-4000-8000-000000000012",
+  });
+  assert.equal(retry.id, details.requestId);
+  assert.equal(f.templateRows().length, 1);
 });
 
 test("a failed template write preserves the confirmed prompt and succeeds on explicit retry", async () => {
@@ -132,4 +141,48 @@ test("confirmed refreshed content reconciles variables while retaining surviving
       required: false,
     },
   ]);
+});
+
+test("a lost template acknowledgement resumes its primary key without creating a duplicate", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  await store
+    .getState()
+    .updatePrompt("prompt-1", { content: "Unique recoverable template" });
+  f.failTemplateAfterCommit();
+  await assert.rejects(
+    store.getState().savePromptAsTemplate("prompt-1", details),
+  );
+  assert.equal(f.templateRows().length, 1);
+  const retry = await store.getState().savePromptAsTemplate("prompt-1", {
+    ...details,
+    requestId: "00000000-0000-4000-8000-000000000011",
+  });
+  assert.equal(retry.id, details.requestId);
+  assert.equal(f.templateRows().length, 1);
+  const writes = f.requests.filter(
+    (r) => r.method === "POST" && r.url.pathname.endsWith("/pb_templates"),
+  );
+  assert.equal(writes.length, 2);
+  assert.ok(
+    writes.every((r) => r.url.searchParams.get("on_conflict") === "id"),
+  );
+});
+
+test("editing template metadata after a lost acknowledgement creates the revised payload with a new key", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  await store
+    .getState()
+    .updatePrompt("prompt-1", { content: "Metadata recovery creation" });
+  f.failTemplateAfterCommit();
+  await assert.rejects(
+    store.getState().savePromptAsTemplate("prompt-1", details),
+  );
+  const retry = await store
+    .getState()
+    .savePromptAsTemplate("prompt-1", { ...details, name: "Revised name" });
+  assert.equal(retry.name, "Revised name");
+  assert.notEqual(retry.id, details.requestId);
+  assert.equal(f.templateRows().length, 2);
 });

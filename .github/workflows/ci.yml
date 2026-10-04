@@ -152,7 +152,7 @@ jobs:
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
       - name: Verify Prompt Books save recovery and actor isolation
-        run: pnpm --dir apps/web exec tsx --test lib/prompt-books/__tests__/recovery.test.ts lib/prompt-books/__tests__/lifecycle.test.ts lib/prompt-books/__tests__/templates.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/prompt-books/__tests__/recovery.test.ts lib/prompt-books/__tests__/lifecycle.test.ts lib/prompt-books/__tests__/templates.test.ts lib/prompt-books/__tests__/conflicts.test.ts
 
       - name: Verify exact world drafts and account return paths
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts

@@ -48,7 +48,7 @@ export function usePromptEditor(promptId: string | null) {
           ),
         );
       },
-      async (input) => {
+      async (input, expectedUpdatedAt) => {
         const before = usePromptBooksStore.getState();
         const client = before._client;
         if (!client || !userId || !promptId) throw new Error("Not initialized");
@@ -62,7 +62,7 @@ export function usePromptEditor(promptId: string | null) {
             before._sessionVersion
         )
           throw new Error("Editor identity changed");
-        return updatePrompt(promptId, input);
+        return updatePrompt(promptId, input, expectedUpdatedAt);
       },
     ),
   });
@@ -142,6 +142,7 @@ export function usePromptEditor(promptId: string | null) {
     typeConfig: PROMPT_TYPES[visible.state.promptType],
     updateField,
     save: session.editor.save,
+    getConfirmedState: session.editor.getConfirmedState,
     handleDelete,
     handleDuplicate,
     handleCopy,
