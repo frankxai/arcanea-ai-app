@@ -194,19 +194,24 @@ test("a JSONB-reordered cache still resumes the same unacknowledged template", a
     context_config: { temperature: 0.7, maxTokens: 1536 },
   });
   await store.getState().initialize(f.client, owner);
+  const attempted = {
+    ...details,
+    requestId: "00000000-0000-4000-8000-000000000028",
+  };
   f.failTemplateAfterCommit();
   await assert.rejects(
-    store.getState().savePromptAsTemplate("prompt-1", details),
+    store.getState().savePromptAsTemplate("prompt-1", attempted),
   );
+  const committedId = f.template()!.id;
   f.replaceStored({
     context_config: { maxTokens: 1536, temperature: 0.7 },
     updated_at: "2026-10-04T13:00:00Z",
   });
   await store.getState().loadPrompts();
   const retry = await store.getState().savePromptAsTemplate("prompt-1", {
-    ...details,
+    ...attempted,
     requestId: "00000000-0000-4000-8000-000000000019",
   });
-  assert.equal(retry.id, details.requestId);
+  assert.equal(retry.id, committedId);
   assert.equal(f.templateRows().length, 1);
 });
