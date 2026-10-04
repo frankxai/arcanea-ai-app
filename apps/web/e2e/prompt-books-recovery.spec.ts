@@ -287,3 +287,21 @@ test("built lost template acknowledgement retries without duplicating creation",
   expect(f.templates()).toHaveLength(1);
   expect(f.templates()[0].id).toBe(id);
 });
+
+test("built editor confirms multi-parameter JSONB saves after server key reordering", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  await page.locator('input[type="number"]').fill("1536");
+  await page
+    .locator('input[type="range"][min="0"][max="2"]')
+    .press("ArrowRight");
+  await expect(page.getByText(/^Saved /)).toBeVisible();
+  expect(f.row().context_config.maxTokens).toBe(1536);
+  expect(f.row().context_config.temperature).toBeDefined();
+  await expect(
+    page.getByRole("button", { name: "Retry save", exact: true }),
+  ).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator('input[type="number"]')).toHaveValue("1536");
+});

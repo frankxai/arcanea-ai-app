@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Template } from "./types";
 import { getTemplate } from "./service";
+import { canonicalJson } from "./json-values";
 
 // Unacknowledged operations stay private in memory across actor resets. Only
 // the verified owner with the same payload can resume one. Never persist them.
@@ -14,7 +15,7 @@ export async function writePromptTemplate(
   requestId: string,
   assertCurrent: () => void,
 ): Promise<{ template: Template; acknowledge: () => void }> {
-  const key = JSON.stringify([userId, promptId, input]);
+  const key = canonicalJson([userId, promptId, input]);
   const id =
     pending.get(key) ??
     ([...pending.values()].includes(requestId)

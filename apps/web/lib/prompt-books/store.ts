@@ -6,7 +6,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { promptBooksPreferences } from "./preferences";
-import { PromptBooksLoads, mergeResourceRead } from "./resource-loads";
+import {
+  PromptBooksLoads,
+  mergeResourceRead,
+  replaceResourceRevision,
+} from "./resource-loads";
 import { comparePromptRevisions } from "./revisions";
 import { templateVariablesForContent } from "./template-variables";
 import { writePromptTemplate } from "./template-write";
@@ -132,9 +136,7 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       updateCollectionInStore: (collection) => {
         if (collection.userId !== get()._userId) return;
         set((s) => ({
-          collections: s.collections.map((c) =>
-            c.id === collection.id ? collection : c,
-          ),
+          collections: replaceResourceRevision(s.collections, collection),
         }));
       },
 
@@ -407,7 +409,7 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       updateTagInStore: (tag) => {
         if (tag.userId !== get()._userId) return;
         set((s) => ({
-          tags: s.tags.map((t) => (t.id === tag.id ? tag : t)),
+          tags: replaceResourceRevision(s.tags, tag),
         }));
       },
 

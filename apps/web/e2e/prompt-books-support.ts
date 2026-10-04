@@ -122,6 +122,12 @@ export async function setup(
             Date.parse(prompt.updated_at) + 1000,
           ).toISOString(),
         };
+        prompt = {
+          ...prompt,
+          context_config: Object.fromEntries(
+            Object.entries(prompt.context_config).reverse(),
+          ),
+        };
         // Hold this request's response, not a later global row. Otherwise the
         // newer-revision regression can pass without the hook refreshing.
         data = structuredClone(prompt);
