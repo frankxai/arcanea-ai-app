@@ -362,3 +362,47 @@ test("built template failure retains the dialog draft and allows an explicit ret
   await expect(dialog).toHaveCount(0);
   expect(f.templates()[0].content).toBe("Recover this template draft");
 });
+
+test("built template reconciles refreshed placeholders received during the save barrier", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  f.hold();
+  await page
+    .getByPlaceholder("Write your prompt here...")
+    .fill("Draft {{subject}} and {{removed}}");
+  await expect.poll(f.held).toBe(true);
+  f.remote("Newer {{subject}} in {{new_world}}");
+  await page
+    .getByRole("button", { name: "Add to favorites", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Remove from favorites", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Save as template", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Save as template",
+    exact: true,
+  });
+  await dialog
+    .getByRole("textbox", { name: "subject label", exact: true })
+    .fill("Your protagonist");
+  await dialog
+    .getByRole("textbox", { name: "subject default", exact: true })
+    .fill("Keep my edit");
+  await dialog
+    .getByRole("button", { name: "Save template", exact: true })
+    .click();
+  expect(f.templates()).toHaveLength(0);
+  f.release();
+  await expect(dialog).toHaveCount(0);
+  expect(f.templates()[0]).toMatchObject({
+    content: "Newer {{subject}} in {{new_world}}",
+    variables: [
+      { name: "subject", label: "Your protagonist", default: "Keep my edit" },
+      { name: "new_world", label: "New World" },
+    ],
+  });
+});

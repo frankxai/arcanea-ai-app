@@ -8,6 +8,7 @@ import { persist } from "zustand/middleware";
 import { promptBooksPreferences } from "./preferences";
 import { PromptBooksLoads } from "./resource-loads";
 import { comparePromptRevisions } from "./revisions";
+import { templateVariablesForContent } from "./template-variables";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
 import {
@@ -308,6 +309,10 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         // Reuse the accepted createTemplate mapping, including live is_public.
         const template = await service.createTemplate(client, userId, {
           ...data,
+          variables: templateVariablesForContent(
+            prompt.content,
+            data.variables,
+          ),
           userId,
           content: prompt.content,
           negativeContent: prompt.negativeContent,

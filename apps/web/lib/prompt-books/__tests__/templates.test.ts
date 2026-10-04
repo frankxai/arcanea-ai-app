@@ -96,3 +96,40 @@ test("a failed template write preserves the confirmed prompt and succeeds on exp
     .savePromptAsTemplate("prompt-1", details);
   assert.equal(template.content, confirmed.content);
 });
+
+test("confirmed refreshed content reconciles variables while retaining surviving custom metadata", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  await store
+    .getState()
+    .updatePrompt("prompt-1", { content: "{{subject}} in {{new_world}}" });
+  const template = await store.getState().savePromptAsTemplate("prompt-1", {
+    ...details,
+    variables: [
+      {
+        name: "subject",
+        label: "Your protagonist",
+        type: "text",
+        default: "Keep my edit",
+        required: true,
+      },
+      { name: "removed", label: "Removed", type: "text" },
+    ],
+  });
+  assert.deepEqual(template.variables, [
+    {
+      name: "subject",
+      label: "Your protagonist",
+      type: "text",
+      default: "Keep my edit",
+      required: true,
+    },
+    {
+      name: "new_world",
+      label: "New World",
+      type: "text",
+      default: "",
+      required: false,
+    },
+  ]);
+});
