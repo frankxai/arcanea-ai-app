@@ -246,7 +246,8 @@ for (const [name, change] of [
     const session = new PromptEditorSession(
       store.getState().prompts[0],
       () => true,
-      (input) => store.getState().updatePrompt("prompt-1", input),
+      (input, revision) =>
+        store.getState().updatePrompt("prompt-1", input, revision),
     );
     change(session);
     const expected = structuredClone(session.getSnapshot().state);
@@ -275,7 +276,8 @@ test("failed context/example/chain save refuses Back and retries the latest immu
   const session = new PromptEditorSession(
     store.getState().prompts[0],
     () => true,
-    (input) => store.getState().updatePrompt("prompt-1", input),
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
   );
   const config = { model: "creator-model", stopSequences: ["original"] };
   session.updateField("contextConfig", config);
@@ -344,7 +346,8 @@ test("same-millisecond newer SDK loads and clean editor refresh preserve all tim
   const session = new PromptEditorSession(
     store.getState().prompts[0],
     () => true,
-    (input) => store.getState().updatePrompt("prompt-1", input),
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
   );
   f.replaceStored({
     content: "Newer microsecond draft",

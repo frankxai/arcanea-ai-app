@@ -103,3 +103,26 @@ and omits removed names in both the rendered dialog and the final confirmed
 template write. New SDK and built regressions cover refresh during the save barrier.
 The dialog uses focus-visible replacements and transition-colors. Earlier failed
 type, UI checks and superseded native packets remain retained by revision.
+
+The complete native xAI source review at `8fb1cca` returned WARN with four findings.
+Draft writes now condition on the verified owner and exact loaded updated_at,
+read the actual SDK result, and require its eight fields to match the attempted
+snapshot before confirmation. Conflicts retain locally edited fields, merge
+remote untouched fields and require an explicit retry. Full timestamp precision
+is retained. A returned row from another actor cannot acknowledge a draft.
+
+Resource reads capture their starting cache and reconcile arrivals, removals and
+newer revisions without replacing intervening changes. Failed direct-link reads
+show a Retry loading action. Template creation checks the confirmed editor fields
+against the owner cache, reconciles placeholders, and uses an idempotent primary
+key with ignoreDuplicates plus an owner-guarded read. Unacknowledged operations
+can resume after A/B/A within this runtime without duplicate templates. This
+private recovery map does not survive browser reload; mounted drafts likewise
+are not a durable offline journal. No dependency, schema or live SQL change.
+
+Actual pinned SDK transport regressions and built browser cases cover conditional
+write conflict/retry, false confirmation, delayed resource reads, loading recovery,
+lost template acknowledgement and same-owner epoch retry. The e2e transport is
+separate from a real signed-in preview creator acceptance. Current exact source
+checks and independent review remain required. Existing security advisories,
+missing authenticated acceptance and unfinished platform/release work stay open.

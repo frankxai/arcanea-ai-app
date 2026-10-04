@@ -15,7 +15,9 @@ import type {
   TemplateVariable,
 } from "./types";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { EditorState } from "./editor-session";
 export interface SavePromptTemplateInput {
+  requestId: string;
   name: string;
   description: string;
   category: string;
@@ -45,6 +47,7 @@ export interface PromptBooksState {
 
   // Sync
   syncStatus: SyncStatus;
+  promptLoadFailed: boolean;
   lastSyncAt: string | null;
 
   // Supabase client reference (set on init)
@@ -75,7 +78,11 @@ export interface PromptBooksState {
   updatePromptInStore: (prompt: Prompt) => void;
   removePrompt: (id: string) => void;
   createPrompt: (input: CreatePromptInput) => Promise<Prompt>;
-  updatePrompt: (id: string, input: UpdatePromptInput) => Promise<Prompt>;
+  updatePrompt: (
+    id: string,
+    input: UpdatePromptInput,
+    expectedUpdatedAt?: string,
+  ) => Promise<Prompt>;
   deletePrompt: (id: string) => Promise<void>;
   duplicatePrompt: (id: string) => Promise<Prompt>;
   instantiateTemplate: (
@@ -86,6 +93,7 @@ export interface PromptBooksState {
   savePromptAsTemplate: (
     id: string,
     data: SavePromptTemplateInput,
+    confirmedDraft?: EditorState,
   ) => Promise<Template>;
   setActivePrompt: (id: string | null) => void;
   setActivePromptType: (type: PromptType | null) => void;

@@ -29,6 +29,8 @@ export async function fixture(userId = owner) {
   let fail = false;
   let failTemplate = false;
   let storedTemplate: Record<string, unknown> | null = null;
+  const templateRows = new Map<string, Record<string, unknown>>();
+  let failTemplateAfterCommit = false;
   let readFailure: string | null = null;
   let held: {
     method: string;
@@ -104,7 +106,12 @@ export async function fixture(userId = owner) {
           }
           if (url.pathname.endsWith("/pb_prompts")) {
             if (method === "PATCH" || method === "POST") {
-              if (fail) {
+              if (
+                url.searchParams.has("updated_at") &&
+                url.searchParams.get("updated_at") !== `eq.${saved.updated_at}`
+              ) {
+                result = null;
+              } else if (fail) {
                 fail = false;
                 result = {
                   message: "Disposable write failure",
@@ -120,7 +127,7 @@ export async function fixture(userId = owner) {
                   ).toISOString(),
                 };
             }
-            if (status === 200)
+            if (status === 200 && result !== null)
               result = new Headers(init?.headers)
                 .get("accept")
                 ?.includes("object")
@@ -149,15 +156,31 @@ export async function fixture(userId = owner) {
                   code: "fixture",
                 };
               } else {
-                storedTemplate = {
-                  ...JSON.parse(String(init?.body)),
-                  id: "template-created",
+                const input = JSON.parse(String(init?.body));
+                storedTemplate = templateRows.get(input.id) ?? {
+                  ...input,
                   created_at: saved.created_at,
                   updated_at: saved.updated_at,
                 };
+                templateRows.set(input.id, storedTemplate!);
                 result = storedTemplate;
+                if (failTemplateAfterCommit) {
+                  failTemplateAfterCommit = false;
+                  status = 500;
+                  result = {
+                    message: "Lost template acknowledgement",
+                    code: "fixture",
+                  };
+                }
               }
             }
+            if (
+              method === "GET" &&
+              templateRows.has((url.searchParams.get("id") ?? "").slice(3))
+            )
+              result = templateRows.get(
+                (url.searchParams.get("id") ?? "").slice(3),
+              );
           }
           if (url.pathname.endsWith("/pb_tags") && Array.isArray(result))
             result = [...result, { ...result[0], id: "tag-2" }];
@@ -207,10 +230,14 @@ export async function fixture(userId = owner) {
     requests,
     saved: () => saved,
     template: () => storedTemplate,
+    templateRows: () => [...templateRows.values()],
+    failTemplateAfterCommit: () => {
+      failTemplateAfterCommit = true;
+    },
     failTemplate: () => {
       failTemplate = true;
     },
-    replaceStored: (patch: Partial<typeof saved>) => {
+    replaceStored: (patch: Record<string, unknown>) => {
       saved = { ...saved, ...patch };
     },
     fail: () => {

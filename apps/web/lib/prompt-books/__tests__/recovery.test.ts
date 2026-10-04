@@ -52,7 +52,8 @@ async function editor(client: SupabaseClient) {
   return new PromptEditorSession(
     prompt,
     () => store.getState()._userId === owner,
-    (input) => store.getState().updatePrompt(prompt.id, input),
+    (input, revision) =>
+      store.getState().updatePrompt(prompt.id, input, revision),
   );
 }
 
