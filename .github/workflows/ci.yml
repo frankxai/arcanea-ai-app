@@ -260,7 +260,7 @@ jobs:
 
       - name: Verify creator starter source, interactions and generated downloads
         run: |
-          node --test packages/arcanea-creator-starters/scripts/build.test.mjs packages/arcanea-creator-starters/scripts/interactions.test.mjs
+          node --test packages/arcanea-creator-starters/scripts/build.test.mjs packages/arcanea-creator-starters/scripts/interactions.test.mjs packages/arcanea-creator-starters/scripts/myth-packets.test.mjs
           node packages/arcanea-creator-starters/scripts/build.mjs --compat --check
           node scripts/build-creator-starters.mjs --check
 

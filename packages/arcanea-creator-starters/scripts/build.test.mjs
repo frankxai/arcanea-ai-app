@@ -80,7 +80,7 @@ test("HTML escapes content and brief uses the matching source file", () => {
 });
 test("every local destination and anchor resolves in generated output", async () => {
   const files = await artifacts();
-  assert.equal(files.size, 3 + catalog.templates.length * 4);
+  assert.equal(files.size, 7 + catalog.templates.length * 4);
   for (const [name, html] of files)
     if (name.endsWith(".html")) {
       for (const [, href] of html.matchAll(/href="([^"]+)"/g)) {

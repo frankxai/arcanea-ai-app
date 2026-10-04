@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./build": "./scripts/build.mjs"
+    "./build": "./scripts/build.mjs",
+    "./myth-packets": "./src/myth-packets.mjs"
   }
 }
