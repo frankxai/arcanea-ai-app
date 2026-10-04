@@ -7,6 +7,22 @@ import type { Prompt } from "../types";
 let store: typeof import("../store").usePromptBooksStore;
 before(async () => {
   const values = new Map<string, string>();
+  values.set(
+    "arcanea-prompt-books",
+    JSON.stringify({
+      version: 0,
+      state: {
+        prompts: [{ content: "Legacy private draft" }],
+        collections: ["Legacy private collection"],
+        tags: ["Legacy private tag"],
+        _userId: "legacy-owner",
+        activeCollectionId: "legacy-id",
+        sidebarCollapsed: false,
+        editorSplitView: false,
+        viewMode: "grid",
+      },
+    }),
+  );
   Object.defineProperty(globalThis, "localStorage", {
     configurable: true,
     value: {
@@ -15,7 +31,15 @@ before(async () => {
       removeItem: (key: string) => values.delete(key),
     },
   });
+  Object.defineProperty(globalThis, "window", {
+    configurable: true,
+    value: { localStorage: globalThis.localStorage },
+  });
   store = (await import("../store")).usePromptBooksStore;
+  assert.deepEqual(store.getState().prompts, []);
+  assert.deepEqual(store.getState().collections, []);
+  assert.deepEqual(store.getState().tags, []);
+  assert.equal(store.getState()._userId, null);
 });
 
 // Real pinned SDK and app service, with a disposable in-memory HTTP transport.
