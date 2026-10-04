@@ -4,6 +4,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";
+import type { SavePromptTemplateInput } from "@/lib/prompt-books/store-state";
 import { usePromptEditor } from "@/hooks/use-prompt-editor";
 import { EditorToolbar } from "@/components/prompt-books/editor/EditorToolbar";
 import { PromptTypeTabs } from "@/components/prompt-books/editor/PromptTypeTabs";
@@ -19,7 +20,6 @@ import { ContextPanel } from "@/components/prompt-books/context/ContextPanel";
 import { SaveAsTemplateDialog } from "@/components/prompt-books/templates/SaveAsTemplateDialog";
 import { promptToMd } from "@/lib/prompt-books/markdown";
 import { applyWeight } from "@/lib/prompt-books/weight-syntax";
-import * as service from "@/lib/prompt-books/service";
 import type { WeightSyntaxType } from "@/lib/prompt-books/constants";
 import type {
   TagCategory,
@@ -42,10 +42,10 @@ export default function PromptEditorPage() {
     toggleSplitView,
     updatePrompt,
     changePromptTag,
+    savePromptAsTemplate,
     tags,
     createTag,
     prompts,
-    _client: client,
     _userId: userId,
     _sessionVersion: sessionVersion,
   } = usePromptBooksStore();
@@ -199,23 +199,19 @@ export default function PromptEditorPage() {
   );
 
   const handleSaveAsTemplate = useCallback(
-    async (data: {
-      name: string;
-      description: string;
-      category: string;
-      variables: {
-        name: string;
-        label: string;
-        type: string;
-        default?: string;
-        required?: boolean;
-      }[];
-      isPublic: boolean;
-    }) => {
-      if (!client || !userId || !prompt) return;
-      await service.saveAsTemplate(client, userId, prompt, data);
+    async (data: SavePromptTemplateInput) => {
+      const before = usePromptBooksStore.getState();
+      if (!(await save())) throw new Error("Could not save the latest prompt");
+      const current = usePromptBooksStore.getState();
+      if (
+        current._client !== before._client ||
+        current._userId !== before._userId ||
+        current._sessionVersion !== before._sessionVersion
+      )
+        throw new Error("Prompt Books identity changed");
+      await savePromptAsTemplate(promptId, data);
     },
-    [client, userId, prompt],
+    [save, savePromptAsTemplate, promptId],
   );
 
   // Cmd+S to save
@@ -282,7 +278,7 @@ export default function PromptEditorPage() {
             type="button"
             onClick={() => void save()}
             disabled={isSaving}
-            className="mt-2 rounded-lg border border-[var(--arc-cosmic-border)] px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-atlantean-teal"
+            className="mt-2 min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-atlantean-teal"
           >
             Retry save
           </button>
@@ -415,12 +411,14 @@ export default function PromptEditorPage() {
       />
 
       {/* Save as Template Dialog */}
-      <SaveAsTemplateDialog
-        prompt={prompt}
-        open={saveTemplateOpen}
-        onClose={() => setSaveTemplateOpen(false)}
-        onSave={handleSaveAsTemplate}
-      />
+      {saveTemplateOpen && (
+        <SaveAsTemplateDialog
+          prompt={{ ...prompt, ...state }}
+          open={saveTemplateOpen}
+          onClose={() => setSaveTemplateOpen(false)}
+          onSave={handleSaveAsTemplate}
+        />
+      )}
     </div>
   );
 }

@@ -98,7 +98,7 @@ export function usePromptEditor(promptId: string | null) {
 
   useEffect(() => {
     if (active) session.editor.refresh(prompt);
-  }, [active, session, prompt]);
+  }, [active, session, prompt, snapshot.isDirty, snapshot.isSaving]);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       const current = session.editor.getSnapshot();

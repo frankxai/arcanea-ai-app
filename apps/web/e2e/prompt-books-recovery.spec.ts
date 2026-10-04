@@ -46,6 +46,8 @@ async function setup(
   };
   let scopedTagRead = false;
   let failing = false;
+  let failingTemplate = false;
+  const templates: Record<string, unknown>[] = [];
   let hold = false;
   let held = false;
   let release: (() => void) | null = null;
@@ -105,6 +107,9 @@ async function setup(
             Date.parse(prompt.updated_at) + 1000,
           ).toISOString(),
         };
+        // Hold this request's response, not a later global row. Otherwise the
+        // newer-revision regression can pass without the hook refreshing.
+        data = structuredClone(prompt);
         if (hold) {
           hold = false;
           held = true;
@@ -112,7 +117,25 @@ async function setup(
           held = false;
         }
       }
-      data = request.headers().accept?.includes("object") ? prompt : [prompt];
+      if (request.method() !== "PATCH") data = structuredClone(prompt);
+      if (!request.headers().accept?.includes("object")) data = [data];
+    }
+    if (url.pathname.endsWith("/pb_templates") && request.method() === "POST") {
+      if (failingTemplate) {
+        failingTemplate = false;
+        await route.fulfill({
+          status: 400,
+          json: { message: "Disposable template failure", code: "fixture" },
+        });
+        return;
+      }
+      data = {
+        ...request.postDataJSON(),
+        id: "00000000-0000-4000-8000-000000000005",
+        created_at: prompt.created_at,
+        updated_at: prompt.updated_at,
+      };
+      templates.push(data as Record<string, unknown>);
     }
     await route.fulfill({ status: 200, json: data });
   });
@@ -130,6 +153,13 @@ async function setup(
   await expect.poll(() => scopedTagRead).toBe(true);
   return {
     row: () => prompt,
+    templates: () => templates,
+    failTemplate: () => {
+      failingTemplate = true;
+    },
+    remote: (content: string) => {
+      prompt = { ...prompt, content, updated_at: "2026-10-04T13:00:00.000Z" };
+    },
     fail: () => {
       failing = true;
     },
@@ -245,4 +275,90 @@ test("built direct-link loading preserves loading feedback without a false ident
     ).toBeVisible();
     await expect(loadingPage.getByText(/Your sign-in changed/)).toHaveCount(0);
   });
+});
+
+test("built editor refreshes a newer cached revision when its pending save becomes clean", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  const field = page.getByPlaceholder("Write your prompt here...");
+  await field.fill("Pending local revision");
+  f.hold();
+  await expect.poll(f.held).toBe(true);
+  f.remote("Newer confirmed remote creation");
+  await page
+    .getByRole("button", { name: "Add to favorites", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Remove from favorites", exact: true }),
+  ).toBeVisible();
+  f.release();
+  await expect(field).toHaveValue("Newer confirmed remote creation");
+  await expect(page.getByText(/^Saved /)).toBeVisible();
+});
+
+test("built template creation waits for the latest draft and detects its variables", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  f.hold();
+  await page
+    .getByPlaceholder("Write your prompt here...")
+    .fill("Recovered {{subject}} draft");
+  await page.locator('input[type="number"]').fill("1536");
+  await page
+    .getByRole("button", { name: "Save as template", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Save as template",
+    exact: true,
+  });
+  await expect(dialog.getByText("{{subject}}", { exact: true })).toBeVisible();
+  await dialog
+    .getByRole("button", { name: "Save template", exact: true })
+    .click();
+  await expect.poll(f.held).toBe(true);
+  expect(f.templates()).toHaveLength(0);
+  f.release();
+  await expect(dialog).toHaveCount(0);
+  expect(f.templates()).toHaveLength(1);
+  expect(f.templates()[0]).toMatchObject({
+    content: "Recovered {{subject}} draft",
+    context_config: { maxTokens: 1536 },
+    is_public: false,
+    user_id: owner,
+    variables: [{ name: "subject" }],
+  });
+});
+
+test("built template failure retains the dialog draft and allows an explicit retry", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  await page
+    .getByPlaceholder("Write your prompt here...")
+    .fill("Recover this template draft");
+  await page
+    .getByRole("button", { name: "Save as template", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Save as template",
+    exact: true,
+  });
+  f.failTemplate();
+  await dialog
+    .getByRole("button", { name: "Save template", exact: true })
+    .click();
+  await expect(dialog.getByRole("alert")).toContainText(
+    "Your draft is still here",
+  );
+  expect(f.templates()).toHaveLength(0);
+  await expect(page.getByPlaceholder("Write your prompt here...")).toHaveValue(
+    "Recover this template draft",
+  );
+  await dialog
+    .getByRole("button", { name: "Save template", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+  expect(f.templates()[0].content).toBe("Recover this template draft");
 });

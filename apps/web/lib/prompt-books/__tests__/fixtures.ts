@@ -27,6 +27,8 @@ export async function fixture(userId = owner) {
   let saved = row(userId);
   const assignedTags = new Set<string>();
   let fail = false;
+  let failTemplate = false;
+  let storedTemplate: Record<string, unknown> | null = null;
   let readFailure: string | null = null;
   let held: {
     method: string;
@@ -138,6 +140,24 @@ export async function fixture(userId = owner) {
                     use_count: 0,
                   }
                 : [];
+            if (method === "POST") {
+              if (failTemplate) {
+                failTemplate = false;
+                status = 400;
+                result = {
+                  message: "Disposable template failure",
+                  code: "fixture",
+                };
+              } else {
+                storedTemplate = {
+                  ...JSON.parse(String(init?.body)),
+                  id: "template-created",
+                  created_at: saved.created_at,
+                  updated_at: saved.updated_at,
+                };
+                result = storedTemplate;
+              }
+            }
           }
           if (url.pathname.endsWith("/pb_tags") && Array.isArray(result))
             result = [...result, { ...result[0], id: "tag-2" }];
@@ -186,6 +206,10 @@ export async function fixture(userId = owner) {
     client,
     requests,
     saved: () => saved,
+    template: () => storedTemplate,
+    failTemplate: () => {
+      failTemplate = true;
+    },
     replaceStored: (patch: Partial<typeof saved>) => {
       saved = { ...saved, ...patch };
     },
