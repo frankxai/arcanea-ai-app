@@ -299,6 +299,32 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       },
 
       setActivePrompt: (id) => set({ activePromptId: id }),
+      savePromptAsTemplate: async (id, data) => {
+        const { client, userId, version } = await actor();
+        const prompt = get().prompts.find(
+          (row) => row.id === id && row.userId === userId,
+        );
+        if (!prompt) throw new Error("Prompt not available");
+        // Reuse the accepted createTemplate mapping, including live is_public.
+        const template = await service.createTemplate(client, userId, {
+          ...data,
+          userId,
+          content: prompt.content,
+          negativeContent: prompt.negativeContent,
+          systemPrompt: prompt.systemPrompt,
+          promptType: prompt.promptType,
+          contextConfig: prompt.contextConfig,
+          fewShotExamples: prompt.fewShotExamples,
+          chainSteps: prompt.chainSteps,
+          guardianId: null,
+          element: null,
+          tags: (prompt.tags ?? []).map((tag) => tag.name),
+        });
+        assertActor(client, userId, version);
+        if (template.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        return template;
+      },
       setActivePromptType: (type) => set({ activePromptType: type }),
 
       changePromptTag: (id, tagId, assigned) =>

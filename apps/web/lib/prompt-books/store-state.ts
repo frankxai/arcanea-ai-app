@@ -11,8 +11,17 @@ import type {
   CreateTagInput,
   UpdateTagInput,
   PromptFilters,
+  Template,
+  TemplateVariable,
 } from "./types";
 import type { SupabaseClient } from "@supabase/supabase-js";
+export interface SavePromptTemplateInput {
+  name: string;
+  description: string;
+  category: string;
+  variables: TemplateVariable[];
+  isPublic: boolean;
+}
 export interface PromptBooksState {
   // Data
   collections: Collection[];
@@ -74,6 +83,10 @@ export interface PromptBooksState {
     variables: Record<string, string>,
     collectionId?: string,
   ) => Promise<Prompt>;
+  savePromptAsTemplate: (
+    id: string,
+    data: SavePromptTemplateInput,
+  ) => Promise<Template>;
   setActivePrompt: (id: string | null) => void;
   setActivePromptType: (type: PromptType | null) => void;
 

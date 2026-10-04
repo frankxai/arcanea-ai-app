@@ -29,8 +29,8 @@ must complete the creator journey on the exact preview before production promoti
 Bind the stable domain to the verified source revision afterward.
 
 Verification: cloud CI on Node 22 with the app's pinned dependencies; source-bound
-review; authenticated owner preview using the existing Chrome profile. Local builds,
-dependency installations and browser workers are held by machine admission.
+review; authenticated owner preview using the existing Chrome profile. Machine admission
+is checked before local intensive work; no local dependency installs or builds.
 Fixture transport assertions do not establish live RLS or actual owner acceptance.
 
 Recovery limit: an unsaved draft is retained in its mounted editor session. It is
@@ -81,3 +81,16 @@ actual SDK/cache/editor regressions and a built delayed-load case cover these.
 The repeated registered-realtime-test finding is reconciled with the existing
 actual callback registration/invocation test, which passes. Fresh source review,
 build and owner acceptance remain required after this correction.
+
+The fifth Copilot review at `a5ff4de` found template creation reading the previous
+stored prompt and a hook refresh skipped while a save was pending. Template creation
+now drains the editor first, rechecks the actor generation, then reads the current
+owner prompt through a guarded store action. It reuses the existing createTemplate
+service, whose is_public mapping matches the read-only live column catalog. No
+customer rows were read and no SQL writes were made. The dialog initializes from
+the current draft, retains failure feedback and uses the installed Radix primitive
+for keyboard focus, Escape and modal behavior, with sentence case and mobile sizing.
+The hook retries refresh when dirty/saving flags clear. SDK and built-app regressions
+cover template field fidelity, A/B/A rejection, failure retry, and a newer cached
+revision arriving during a save. Retry actions meet the 44px touch target. Fresh
+checks and complete exact-revision review are required after this correction.
