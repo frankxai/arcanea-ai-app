@@ -3,7 +3,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_PATH = path.join(ROOT, "schemas/release-manifest/arcanea.release_manifest.v1.schema.json");
+const SCHEMA_PATH = path.join(
+  ROOT,
+  "schemas/release-manifest/arcanea.release_manifest.v1.schema.json",
+);
 
 function readJson(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -31,14 +34,19 @@ function inspect(value, schemaNode, path) {
     errors.push(`${path}: must be one of ${schemaNode.enum.join(", ")}`);
   }
   if (schemaNode.type) {
-    const types = Array.isArray(schemaNode.type) ? schemaNode.type : [schemaNode.type];
+    const types = Array.isArray(schemaNode.type)
+      ? schemaNode.type
+      : [schemaNode.type];
     if (!types.some((type) => typeMatches(value, type))) {
       errors.push(`${path}: expected ${types.join(" or ")}`);
       return errors;
     }
   }
   if (typeof value === "string") {
-    if (schemaNode.minLength !== undefined && value.length < schemaNode.minLength) {
+    if (
+      schemaNode.minLength !== undefined &&
+      value.length < schemaNode.minLength
+    ) {
       errors.push(`${path}: shorter than ${schemaNode.minLength}`);
     }
   }
@@ -53,7 +61,9 @@ function inspect(value, schemaNode, path) {
         }
       }
     }
-    for (const [key, childSchema] of Object.entries(schemaNode.properties ?? {})) {
+    for (const [key, childSchema] of Object.entries(
+      schemaNode.properties ?? {},
+    )) {
       if (Object.hasOwn(value, key)) {
         errors.push(...inspect(value[key], childSchema, `${path}.${key}`));
       }
@@ -65,7 +75,9 @@ function inspect(value, schemaNode, path) {
 export function validateReleaseManifest(value, label = "manifest") {
   const errors = inspect(value, schema, label);
   if (errors.length > 0) {
-    throw new Error(`Validation failed for ${label}:\n- ${errors.join("\n- ")}`);
+    throw new Error(
+      `Validation failed for ${label}:\n- ${errors.join("\n- ")}`,
+    );
   }
   return true;
 }
