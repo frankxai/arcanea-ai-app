@@ -186,3 +186,27 @@ test("editing template metadata after a lost acknowledgement creates the revised
   assert.notEqual(retry.id, details.requestId);
   assert.equal(f.templateRows().length, 2);
 });
+
+test("a JSONB-reordered cache still resumes the same unacknowledged template", async () => {
+  const f = await fixture();
+  f.replaceStored({
+    content: "Canonical template recovery",
+    context_config: { temperature: 0.7, maxTokens: 1536 },
+  });
+  await store.getState().initialize(f.client, owner);
+  f.failTemplateAfterCommit();
+  await assert.rejects(
+    store.getState().savePromptAsTemplate("prompt-1", details),
+  );
+  f.replaceStored({
+    context_config: { maxTokens: 1536, temperature: 0.7 },
+    updated_at: "2026-10-04T13:00:00Z",
+  });
+  await store.getState().loadPrompts();
+  const retry = await store.getState().savePromptAsTemplate("prompt-1", {
+    ...details,
+    requestId: "00000000-0000-4000-8000-000000000019",
+  });
+  assert.equal(retry.id, details.requestId);
+  assert.equal(f.templateRows().length, 1);
+});

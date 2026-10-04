@@ -104,3 +104,14 @@ export function mergeResourceRead<T extends { id: string; updatedAt: string }>(
   }
   return result;
 }
+
+export function replaceResourceRevision<
+  T extends { id: string; updatedAt: string },
+>(rows: T[], incoming: T): T[] {
+  return rows.map((row) =>
+    row.id === incoming.id &&
+    (comparePromptRevisions(incoming.updatedAt, row.updatedAt) ?? -1) >= 0
+      ? incoming
+      : row,
+  );
+}

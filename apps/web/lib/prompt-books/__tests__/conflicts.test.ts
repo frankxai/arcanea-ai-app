@@ -161,3 +161,122 @@ for (const resource of ["collections", "tags"] as const) {
     assert.equal(store.getState()[resource][0].name, "Newer row");
   });
 }
+
+test("a successful SDK save confirms equivalent JSONB objects after key reordering", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const session = new PromptEditorSession(
+    store.getState().prompts[0],
+    () => true,
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
+  );
+  session.updateField("contextConfig", { temperature: 0.7, maxTokens: 1536 });
+  session.updateField("fewShotExamples", [
+    { role: "user", content: "Example" },
+  ]);
+  session.updateField("chainSteps", [
+    { order: 1, inlinePrompt: "Continue", outputVariable: "scene" },
+  ]);
+  const gate = f.hold("PATCH");
+  const saving = session.save();
+  await gate.entered.promise;
+  f.replaceStored({
+    context_config: { maxTokens: 1536, temperature: 0.7 },
+    few_shot_examples: [{ content: "Example", role: "user" }],
+    chain_steps: [
+      { outputVariable: "scene", inlinePrompt: "Continue", order: 1 },
+    ],
+  });
+  gate.release.resolve();
+  assert.equal(await saving, true);
+  assert.equal(session.getSnapshot().isDirty, false);
+  assert.equal(session.getSnapshot().saveError, null);
+  assert.equal(
+    f.requests.filter((request) => request.method === "PATCH").length,
+    1,
+  );
+});
+
+test("object key ordering does not dirty a draft but example array reordering does", async () => {
+  const f = await fixture();
+  f.replaceStored({
+    context_config: { temperature: 0.7, maxTokens: 1536 },
+    few_shot_examples: [
+      { role: "user", content: "First" },
+      { role: "assistant", content: "Second" },
+    ],
+  });
+  await store.getState().initialize(f.client, owner);
+  const session = new PromptEditorSession(
+    store.getState().prompts[0],
+    () => true,
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
+  );
+  session.updateField("contextConfig", { maxTokens: 1536, temperature: 0.7 });
+  assert.equal(session.getSnapshot().isDirty, false);
+  session.updateField("fewShotExamples", [
+    { role: "assistant", content: "Second" },
+    { role: "user", content: "First" },
+  ]);
+  assert.equal(session.getSnapshot().isDirty, true);
+});
+
+for (const resource of ["collections", "tags"] as const) {
+  test(`registered current ${resource} callback rejects an older server revision`, async () => {
+    const f = await fixture();
+    await store.getState().initialize(f.client, owner);
+    type Callback = (payload: {
+      eventType: "UPDATE";
+      new: Record<string, unknown>;
+      old: Record<string, unknown>;
+    }) => void;
+    const callbacks: Record<string, Callback> = {};
+    Object.defineProperty(f.client, "channel", {
+      value: () => {
+        const channel = {
+          on: (
+            _event: string,
+            filter: { table: string },
+            callback: Callback,
+          ) => {
+            callbacks[filter.table] = callback;
+            return channel;
+          },
+          subscribe: () => channel,
+        };
+        return channel;
+      },
+    });
+    Object.defineProperty(f.client, "removeChannel", {
+      value: async () => "ok",
+    });
+    const { PromptBooksSync } = await import("../sync");
+    const sync = new PromptBooksSync(f.client, owner);
+    sync.subscribe();
+    const initial = store.getState()[resource][0];
+    const current = {
+      ...initial,
+      name: "Keep newer revision",
+      updatedAt: "2026-10-04T13:00:00.123456Z",
+    };
+    if (resource === "collections")
+      store
+        .getState()
+        .updateCollectionInStore(current as import("../types").Collection);
+    else store.getState().updateTagInStore(current as import("../types").Tag);
+    callbacks[`pb_${resource}`]({
+      eventType: "UPDATE",
+      old: {},
+      new: {
+        id: initial.id,
+        user_id: owner,
+        name: "Older callback",
+        updated_at: "2026-10-04T13:00:00.123455Z",
+      },
+    });
+    assert.equal(store.getState()[resource][0].name, "Keep newer revision");
+    sync.unsubscribe();
+  });
+}

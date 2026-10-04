@@ -8,6 +8,7 @@ import type {
 } from "./types";
 import { comparePromptRevisions } from "./revisions";
 import { PromptDraftConflict } from "./draft-write";
+import { sameJsonValue } from "./json-values";
 
 export interface EditorState {
   title: string;
@@ -34,18 +35,7 @@ export function promptEditorFields(prompt: Prompt | null): EditorState {
 }
 
 export function sameEditorFields(left: EditorState, right: EditorState) {
-  return (
-    left.title === right.title &&
-    left.content === right.content &&
-    left.negativeContent === right.negativeContent &&
-    left.systemPrompt === right.systemPrompt &&
-    left.promptType === right.promptType &&
-    JSON.stringify(left.contextConfig) ===
-      JSON.stringify(right.contextConfig) &&
-    JSON.stringify(left.fewShotExamples) ===
-      JSON.stringify(right.fewShotExamples) &&
-    JSON.stringify(left.chainSteps) === JSON.stringify(right.chainSteps)
-  );
+  return sameJsonValue(left, right);
 }
 
 // A session owns one prompt/actor's draft and outstanding writes. A delayed
@@ -199,10 +189,7 @@ export class PromptEditorSession {
           // Keep fields the creator edited; take remote changes to untouched
           // fields. A subsequent explicit retry confirms the creator's choice.
           for (const key of Object.keys(merged) as (keyof EditorState)[]) {
-            if (
-              JSON.stringify(this.snapshot.state[key]) !==
-              JSON.stringify(this.saved[key])
-            )
+            if (!sameJsonValue(this.snapshot.state[key], this.saved[key]))
               Object.assign(merged, {
                 [key]: structuredClone(this.snapshot.state[key]),
               });

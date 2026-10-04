@@ -126,3 +126,15 @@ lost template acknowledgement and same-owner epoch retry. The e2e transport is
 separate from a real signed-in preview creator acceptance. Current exact source
 checks and independent review remain required. Existing security advisories,
 missing authenticated acceptance and unfinished platform/release work stay open.
+
+The seventh Copilot review at `cd2a59e` recommends changes: collection/tag
+mutation and realtime updates lacked the load path's revision guard, and JSONB
+object-key ordering could falsely dirty or conflict a successfully saved draft.
+A shared structural JSON comparator now canonicalizes object keys while retaining
+array order in editor comparisons, conflict field merging and pending-template
+identity. Collection/tag updates use the existing precision comparator. Actual
+registered callback regressions cover stale current-session updates; actual SDK
+roundtrips cover reordered JSONB confirmation and template recovery. The built
+editor case covers multi-parameter roundtrip and reload. Corrupted copy/comments
+are repaired. Earlier42 SDK/11 browser passes remain bound to `cd2a59e`; fresh
+current-source verification and independent review are required.

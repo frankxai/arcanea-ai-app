@@ -121,7 +121,7 @@ export default function PromptEditorPage() {
 
   const handleWeightApply = useCallback(
     (weight: number, syntax: WeightSyntaxType) => {
-      // Get selection from textarea â€” find the focused textarea
+      // Get the selection from the focused textarea
       const activeEl = document.activeElement as HTMLTextAreaElement;
       if (!activeEl || activeEl.tagName !== "TEXTAREA") return;
 
