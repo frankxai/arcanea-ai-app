@@ -1,23 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client'
+"use client";
 
-// Arcanea Prompt Books — Prompt Editor Hook
-// Auto-save, dirty tracking, undo history
+import { useState, useCallback, useEffect, useSyncExternalStore } from "react";
+import { usePromptBooksStore } from "@/lib/prompt-books/store";
+import { PromptEditorSession } from "@/lib/prompt-books/editor-session";
+import type { EditorState } from "@/lib/prompt-books/editor-session";
+import { PROMPT_TYPES } from "@/lib/prompt-books/constants";
 
-import { useState, useCallback, useRef, useEffect } from 'react'
-import { usePromptBooksStore } from '@/lib/prompt-books/store'
-import type { Prompt, UpdatePromptInput, PromptType } from '@/lib/prompt-books/types'
-import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
-
-const AUTO_SAVE_DELAY = 2000
-
-interface EditorState {
-  title: string
-  content: string
-  negativeContent: string
-  systemPrompt: string
-  promptType: PromptType
-}
+const hiddenDraft: EditorState = {
+  title: "",
+  content: "",
+  negativeContent: "",
+  systemPrompt: "",
+  promptType: "general",
+};
 
 export function usePromptEditor(promptId: string | null) {
   const {
@@ -25,135 +20,125 @@ export function usePromptEditor(promptId: string | null) {
     updatePrompt,
     deletePrompt,
     duplicatePrompt,
-  } = usePromptBooksStore()
-
-  const prompt = promptId ? prompts.find((p) => p.id === promptId) ?? null : null
-
-  const [state, setState] = useState<EditorState>({
-    title: '',
-    content: '',
-    negativeContent: '',
-    systemPrompt: '',
-    promptType: 'general',
-  })
-
-  const [isDirty, setIsDirty] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
-  const [lastSavedAt, setLastSavedAt] = useState<string | null>(null)
-  const [wordCount, setWordCount] = useState(0)
-  const [charCount, setCharCount] = useState(0)
-
-  const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const lastPromptId = useRef<string | null>(null)
-
-  // Load prompt data when promptId changes
-  useEffect(() => {
-    if (prompt && prompt.id !== lastPromptId.current) {
-      lastPromptId.current = prompt.id
-      setState({
-        title: prompt.title,
-        content: prompt.content,
-        negativeContent: prompt.negativeContent ?? '',
-        systemPrompt: prompt.systemPrompt ?? '',
-        promptType: prompt.promptType,
-      })
-      setIsDirty(false)
-      setLastSavedAt(prompt.updatedAt)
-      updateCounts(prompt.content)
-    }
-  }, [prompt])
-
-  const updateCounts = useCallback((text: string) => {
-    const words = text.trim() ? text.trim().split(/\s+/).length : 0
-    setWordCount(words)
-    setCharCount(text.length)
-  }, [])
-
-  // Auto-save
-  const scheduleSave = useCallback(() => {
-    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
-    autoSaveTimer.current = setTimeout(async () => {
-      if (!promptId || !isDirty) return
-      await save()
-    }, AUTO_SAVE_DELAY)
-  }, [promptId, isDirty])
-
-  // Clean up timer
-  useEffect(() => {
-    return () => {
-      if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
-    }
-  }, [])
-
-  const updateField = useCallback(
-    <K extends keyof EditorState>(field: K, value: EditorState[K]) => {
-      setState((prev) => ({ ...prev, [field]: value }))
-      setIsDirty(true)
-
-      if (field === 'content') {
-        updateCounts(value as string)
-      }
-
-      scheduleSave()
-    },
-    [scheduleSave, updateCounts],
+    _userId: userId,
+  } = usePromptBooksStore();
+  const prompt = promptId
+    ? (prompts.find((row) => row.id === promptId && row.userId === userId) ??
+      null)
+    : null;
+  const loadedId = prompt?.id ?? null;
+  const createSession = () => ({
+    promptId,
+    loadedId,
+    userId,
+    editor: new PromptEditorSession(
+      prompt,
+      () => {
+        const current = usePromptBooksStore.getState();
+        return Boolean(
+          promptId &&
+          userId &&
+          current._client &&
+          current._userId === userId &&
+          current.prompts.some(
+            (row) => row.id === promptId && row.userId === userId,
+          ),
+        );
+      },
+      async (input) => {
+        const before = usePromptBooksStore.getState();
+        const client = before._client;
+        if (!client || !userId || !promptId) throw new Error("Not initialized");
+        const verified = await client.auth.getUser();
+        if (
+          verified.error ||
+          verified.data.user?.id !== userId ||
+          usePromptBooksStore.getState()._client !== client ||
+          usePromptBooksStore.getState()._userId !== userId ||
+          usePromptBooksStore.getState()._sessionVersion !==
+            before._sessionVersion
+        )
+          throw new Error("Editor identity changed");
+        return updatePrompt(promptId, input);
+      },
+    ),
+  });
+  const [session, setSession] = useState(createSession);
+  const previous = session.editor.getSnapshot();
+  if (
+    session.promptId !== promptId ||
+    ((session.loadedId !== loadedId || session.userId !== userId) &&
+      !previous.isDirty &&
+      !previous.isSaving)
   )
+    setSession(createSession());
+  const snapshot = useSyncExternalStore(
+    session.editor.subscribe,
+    session.editor.getSnapshot,
+    session.editor.getSnapshot,
+  );
+  const active =
+    session.userId !== null &&
+    session.userId === userId &&
+    loadedId === session.promptId;
+  const visible = active
+    ? snapshot
+    : {
+        ...snapshot,
+        state: hiddenDraft,
+        lastSavedAt: null,
+        saveError:
+          "Your sign-in changed. Return to the owner account to recover this draft.",
+      };
 
-  const save = useCallback(async () => {
-    if (!promptId || isSaving) return
-
-    setIsSaving(true)
-    try {
-      const input: UpdatePromptInput = {
-        title: state.title,
-        content: state.content,
-        negativeContent: state.negativeContent || null,
-        systemPrompt: state.systemPrompt || null,
-        promptType: state.promptType,
+  useEffect(() => {
+    if (active) session.editor.refresh(prompt);
+  }, [active, session, prompt]);
+  useEffect(() => {
+    const warn = (event: BeforeUnloadEvent) => {
+      const current = session.editor.getSnapshot();
+      if (current.isDirty || current.isSaving) {
+        event.preventDefault();
+        event.returnValue = "";
       }
-      await updatePrompt(promptId, input)
-      setIsDirty(false)
-      setLastSavedAt(new Date().toISOString())
-    } finally {
-      setIsSaving(false)
-    }
-  }, [promptId, state, updatePrompt, isSaving])
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [session]);
 
   const handleDelete = useCallback(async () => {
-    if (!promptId) return
-    await deletePrompt(promptId)
-  }, [promptId, deletePrompt])
-
+    if (!active || !promptId) return false;
+    await deletePrompt(promptId);
+    return true;
+  }, [active, promptId, deletePrompt]);
   const handleDuplicate = useCallback(async () => {
-    if (!promptId) return
-    return await duplicatePrompt(promptId)
-  }, [promptId, duplicatePrompt])
-
+    if (active && promptId) return duplicatePrompt(promptId);
+  }, [active, promptId, duplicatePrompt]);
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(state.content)
-      return true
+      await navigator.clipboard.writeText(visible.state.content);
+      return true;
     } catch {
-      return false
+      return false;
     }
-  }, [state.content])
-
-  const typeConfig = PROMPT_TYPES[state.promptType]
-
+  }, [visible.state.content]);
+  const updateField = useCallback(
+    <K extends keyof EditorState>(field: K, value: EditorState[K]) => {
+      if (active) session.editor.updateField(field, value);
+    },
+    [active, session],
+  );
+  const text = visible.state.content;
   return {
     prompt,
-    state,
-    isDirty,
-    isSaving,
-    lastSavedAt,
-    wordCount,
-    charCount,
-    typeConfig,
-
+    ...visible,
+    wordCount: text.trim() ? text.trim().split(/\s+/).length : 0,
+    charCount: text.length,
+    typeConfig: PROMPT_TYPES[visible.state.promptType],
     updateField,
-    save,
+    save: session.editor.save,
     handleDelete,
     handleDuplicate,
     handleCopy,
-  }
+  };
 }

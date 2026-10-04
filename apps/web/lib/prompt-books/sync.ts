@@ -1,10 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 // Arcanea Prompt Books — Realtime Sync
 // Cross-device synchronization via Supabase Realtime channels
 
-import type { SupabaseClient, RealtimeChannel } from '@supabase/supabase-js'
-import { usePromptBooksStore } from './store'
-import type { Collection, Prompt, Tag, GuardianId, ElementType, Visibility, PromptType, InjectPosition, TagCategory, ContextConfig, FewShotExample, TemplateVariable, ChainStep } from './types'
+import type { SupabaseClient, RealtimeChannel } from "@supabase/supabase-js";
+import { usePromptBooksStore } from "./store";
+import type {
+  Collection,
+  Prompt,
+  Tag,
+  GuardianId,
+  ElementType,
+  Visibility,
+  PromptType,
+  InjectPosition,
+  TagCategory,
+  ContextConfig,
+  FewShotExample,
+  TemplateVariable,
+  ChainStep,
+} from "./types";
 
 // =====================================================================
 // Data Mappers (duplicated from service for client-side use)
@@ -30,7 +43,7 @@ function mapCollection(row: Record<string, unknown>): Collection {
     metadata: (row.metadata as Record<string, unknown>) || {},
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
-  }
+  };
 }
 
 function mapPrompt(row: Record<string, unknown>): Prompt {
@@ -58,7 +71,7 @@ function mapPrompt(row: Record<string, unknown>): Prompt {
     metadata: (row.metadata as Record<string, unknown>) || {},
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
-  }
+  };
 }
 
 function mapTag(row: Record<string, unknown>): Tag {
@@ -70,14 +83,14 @@ function mapTag(row: Record<string, unknown>): Tag {
     color: row.color as string | null,
     icon: row.icon as string | null,
     injectText: row.inject_text as string | null,
-    injectPosition: (row.inject_position as InjectPosition) || 'append',
+    injectPosition: (row.inject_position as InjectPosition) || "append",
     weightModifier: row.weight_modifier as number | null,
     isGlobal: row.is_global as boolean,
     collectionId: row.collection_id as string | null,
     sortOrder: row.sort_order as number,
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
-  }
+  };
 }
 
 // =====================================================================
@@ -85,123 +98,144 @@ function mapTag(row: Record<string, unknown>): Tag {
 // =====================================================================
 
 export class PromptBooksSync {
-  private channels: RealtimeChannel[] = []
-  private client: SupabaseClient
-  private userId: string
+  private channels: RealtimeChannel[] = [];
+  private active = false;
+  private version = 0;
+
+  private isCurrent(): boolean {
+    const current = usePromptBooksStore.getState();
+    return (
+      this.active &&
+      current._client === this.client &&
+      current._userId === this.userId &&
+      current._sessionVersion === this.version
+    );
+  }
+  private client: SupabaseClient;
+  private userId: string;
 
   constructor(client: SupabaseClient, userId: string) {
-    this.client = client
-    this.userId = userId
+    this.client = client;
+    this.userId = userId;
   }
 
   subscribe(): void {
-    const store = usePromptBooksStore.getState()
-    store.setSyncStatus('syncing')
+    const store = usePromptBooksStore.getState();
+    this.active = true;
+    this.version = store._sessionVersion;
+    if (!this.isCurrent()) return;
+    store.setSyncStatus("syncing");
 
     // Channel 1: Collections
     const collectionsChannel = this.client
-      .channel('pb_collections_sync')
+      .channel("pb_collections_sync")
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: '*',
-          schema: 'public',
-          table: 'pb_collections',
+          event: "*",
+          schema: "public",
+          table: "pb_collections",
           filter: `user_id=eq.${this.userId}`,
         },
         (payload) => {
-          const store = usePromptBooksStore.getState()
+          if (!this.isCurrent()) return;
+          const store = usePromptBooksStore.getState();
           switch (payload.eventType) {
-            case 'INSERT':
-              store.addCollection(mapCollection(payload.new))
-              break
-            case 'UPDATE':
-              store.updateCollectionInStore(mapCollection(payload.new))
-              break
-            case 'DELETE':
-              if (payload.old.id) store.removeCollection(payload.old.id as string)
-              break
+            case "INSERT":
+              store.addCollection(mapCollection(payload.new));
+              break;
+            case "UPDATE":
+              store.updateCollectionInStore(mapCollection(payload.new));
+              break;
+            case "DELETE":
+              if (payload.old.id)
+                store.removeCollection(payload.old.id as string);
+              break;
           }
-          store.setLastSyncAt(new Date().toISOString())
+          store.setLastSyncAt(new Date().toISOString());
         },
       )
-      .subscribe()
+      .subscribe();
 
-    this.channels.push(collectionsChannel)
+    this.channels.push(collectionsChannel);
 
     // Channel 2: Prompts
     const promptsChannel = this.client
-      .channel('pb_prompts_sync')
+      .channel("pb_prompts_sync")
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: '*',
-          schema: 'public',
-          table: 'pb_prompts',
+          event: "*",
+          schema: "public",
+          table: "pb_prompts",
           filter: `user_id=eq.${this.userId}`,
         },
         (payload) => {
-          const store = usePromptBooksStore.getState()
+          if (!this.isCurrent()) return;
+          const store = usePromptBooksStore.getState();
           switch (payload.eventType) {
-            case 'INSERT':
-              store.addPrompt(mapPrompt(payload.new))
-              break
-            case 'UPDATE':
-              store.updatePromptInStore(mapPrompt(payload.new))
-              break
-            case 'DELETE':
-              if (payload.old.id) store.removePrompt(payload.old.id as string)
-              break
+            case "INSERT":
+              store.addPrompt(mapPrompt(payload.new));
+              break;
+            case "UPDATE":
+              store.updatePromptInStore(mapPrompt(payload.new));
+              break;
+            case "DELETE":
+              if (payload.old.id) store.removePrompt(payload.old.id as string);
+              break;
           }
-          store.setLastSyncAt(new Date().toISOString())
+          store.setLastSyncAt(new Date().toISOString());
         },
       )
-      .subscribe()
+      .subscribe();
 
-    this.channels.push(promptsChannel)
+    this.channels.push(promptsChannel);
 
     // Channel 3: Tags
     const tagsChannel = this.client
-      .channel('pb_tags_sync')
+      .channel("pb_tags_sync")
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: '*',
-          schema: 'public',
-          table: 'pb_tags',
+          event: "*",
+          schema: "public",
+          table: "pb_tags",
           filter: `user_id=eq.${this.userId}`,
         },
         (payload) => {
-          const store = usePromptBooksStore.getState()
+          if (!this.isCurrent()) return;
+          const store = usePromptBooksStore.getState();
           switch (payload.eventType) {
-            case 'INSERT':
-              store.addTag(mapTag(payload.new))
-              break
-            case 'UPDATE':
-              store.updateTagInStore(mapTag(payload.new))
-              break
-            case 'DELETE':
-              if (payload.old.id) store.removeTag(payload.old.id as string)
-              break
+            case "INSERT":
+              store.addTag(mapTag(payload.new));
+              break;
+            case "UPDATE":
+              store.updateTagInStore(mapTag(payload.new));
+              break;
+            case "DELETE":
+              if (payload.old.id) store.removeTag(payload.old.id as string);
+              break;
           }
-          store.setLastSyncAt(new Date().toISOString())
+          store.setLastSyncAt(new Date().toISOString());
         },
       )
-      .subscribe()
+      .subscribe();
 
-    this.channels.push(tagsChannel)
+    this.channels.push(tagsChannel);
 
-    store.setSyncStatus('synced')
-    store.setLastSyncAt(new Date().toISOString())
+    store.setSyncStatus("synced");
+    store.setLastSyncAt(new Date().toISOString());
   }
 
   unsubscribe(): void {
+    const current = this.isCurrent();
+    this.active = false;
     for (const channel of this.channels) {
-      this.client.removeChannel(channel)
+      this.client.removeChannel(channel);
     }
-    this.channels = []
+    this.channels = [];
 
-    const store = usePromptBooksStore.getState()
-    store.setSyncStatus('offline')
+    const store = usePromptBooksStore.getState();
+    if (current) store.setSyncStatus("offline");
   }
 }
