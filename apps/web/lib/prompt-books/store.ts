@@ -7,6 +7,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
+import {
+  actor as verifiedActor,
+  currentActor as matchesActor,
+  assertActor as verifyActor,
+  changePromptTag as mutatePromptTag,
+} from "./actor-session";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 // Store Implementation
@@ -17,36 +23,15 @@ let collectionLoadGeneration = 0;
 let tagLoadGeneration = 0;
 let selectionGeneration = 0;
 
-function currentActor(client: SupabaseClient, userId: string, version: number) {
-  const state = usePromptBooksStore.getState();
-  return (
-    state._client === client &&
-    state._userId === userId &&
-    state._sessionVersion === version
-  );
-}
-
-async function actor() {
-  const {
-    _client: client,
-    _userId: userId,
-    _sessionVersion: version,
-  } = usePromptBooksStore.getState();
-  if (!client || !userId) throw new Error("Not initialized");
-  const verified = await client.auth.getUser();
-  if (
-    verified.error ||
-    verified.data.user?.id !== userId ||
-    !currentActor(client, userId, version)
-  )
-    throw new Error("Prompt Books identity changed");
-  return { client, userId, version };
-}
-
-function assertActor(client: SupabaseClient, userId: string, version: number) {
-  if (!currentActor(client, userId, version))
-    throw new Error("Prompt Books identity changed");
-}
+const readActor = () => usePromptBooksStore.getState();
+const currentActor = (
+  client: SupabaseClient,
+  userId: string,
+  version: number,
+) => matchesActor(readActor, client, userId, version);
+const actor = () => verifiedActor(readActor);
+const assertActor = (client: SupabaseClient, userId: string, version: number) =>
+  verifyActor(readActor, client, userId, version);
 
 const privateState = {
   collections: [],
@@ -105,17 +90,35 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         get().reset();
         const version = get()._sessionVersion;
         set({ _client: client, _userId: userId, syncStatus: "syncing" });
+        const loads = Promise.all([
+          get().loadCollections(),
+          get().loadTags(),
+          get().loadPrompts(),
+        ]);
+        const generations = [
+          collectionLoadGeneration,
+          tagLoadGeneration,
+          promptLoadGeneration,
+          selectionGeneration,
+        ];
+        const isCurrent = () =>
+          currentActor(client, userId, version) &&
+          generations.every(
+            (value, index) =>
+              value ===
+              [
+                collectionLoadGeneration,
+                tagLoadGeneration,
+                promptLoadGeneration,
+                selectionGeneration,
+              ][index],
+          );
         try {
-          await Promise.all([
-            get().loadCollections(),
-            get().loadTags(),
-            get().loadPrompts(),
-          ]);
-          if (currentActor(client, userId, version))
+          await loads;
+          if (isCurrent())
             set({ syncStatus: "synced", lastSyncAt: new Date().toISOString() });
         } catch {
-          if (currentActor(client, userId, version))
-            set({ syncStatus: "error" });
+          if (isCurrent()) set({ syncStatus: "error" });
         }
       },
 
@@ -209,24 +212,35 @@ export const usePromptBooksStore = create<PromptBooksState>()(
           _userId: userId,
           _sessionVersion: version,
         } = get();
-        const onFailure = () => {
-          if (
+        const isCurrent = () =>
+          Boolean(
             client &&
             userId &&
             currentActor(client, userId, version) &&
             generation === selectionGeneration &&
-            get().activeCollectionId === selection
-          ) {
-            get().setSyncStatus("error");
-          }
-        };
-        set({ activeCollectionId: selection, activePromptId: null });
-        void get()
-          .loadPrompts(id && id !== "_all" ? { collectionId: id } : undefined)
-          .catch(onFailure);
-        void get()
-          .loadTags(id && id !== "_all" ? id : undefined)
-          .catch(onFailure);
+            get().activeCollectionId === selection,
+          );
+        set({
+          activeCollectionId: selection,
+          activePromptId: null,
+          syncStatus: client && userId ? "syncing" : "offline",
+        });
+        void Promise.all([
+          get().loadPrompts(
+            selection ? { collectionId: selection } : undefined,
+          ),
+          get().loadTags(selection ?? undefined),
+        ])
+          .then(() => {
+            if (isCurrent())
+              set({
+                syncStatus: "synced",
+                lastSyncAt: new Date().toISOString(),
+              });
+          })
+          .catch(() => {
+            if (isCurrent()) set({ syncStatus: "error" });
+          });
       },
 
       // Prompts
@@ -337,6 +351,9 @@ export const usePromptBooksStore = create<PromptBooksState>()(
 
       setActivePrompt: (id) => set({ activePromptId: id }),
       setActivePromptType: (type) => set({ activePromptType: type }),
+
+      changePromptTag: (id, tagId, assigned) =>
+        mutatePromptTag(readActor, id, tagId, assigned),
 
       // Tags
 

@@ -41,11 +41,13 @@ export default function PromptEditorPage() {
     editorSplitView,
     toggleSplitView,
     updatePrompt,
+    changePromptTag,
     tags,
     createTag,
     prompts,
     _client: client,
     _userId: userId,
+    _sessionVersion: sessionVersion,
   } = usePromptBooksStore();
 
   const {
@@ -67,6 +69,7 @@ export default function PromptEditorPage() {
 
   const [historyOpen, setHistoryOpen] = useState(false);
   const [tagSelectorOpen, setTagSelectorOpen] = useState(false);
+  const [tagError, setTagError] = useState<string | null>(null);
   const [saveTemplateOpen, setSaveTemplateOpen] = useState(false);
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
@@ -95,10 +98,18 @@ export default function PromptEditorPage() {
 
   // Set active collection and prompt on mount
   useEffect(() => {
+    if (!userId) return;
     if (collectionId) setActiveCollection(collectionId);
     if (promptId) setActivePrompt(promptId);
     return () => setActivePrompt(null);
-  }, [collectionId, promptId, setActiveCollection, setActivePrompt]);
+  }, [
+    collectionId,
+    promptId,
+    userId,
+    sessionVersion,
+    setActiveCollection,
+    setActivePrompt,
+  ]);
 
   const handleBack = useCallback(async () => {
     if (await save()) router.push(`/prompt-books/${collectionId}`);
@@ -141,25 +152,33 @@ export default function PromptEditorPage() {
     [state.content, updateField],
   );
 
-  const handleTagAssign = useCallback(
-    async (tagId: string) => {
-      if (!client || !promptId) return;
-      await service.assignTagsToPrompt(client, promptId, [tagId]);
-      // Reload prompt to get updated tags
-      const updated = await service.getPrompt(client, promptId);
-      if (updated) usePromptBooksStore.getState().updatePromptInStore(updated);
+  const handleTagChange = useCallback(
+    async (tagId: string, assigned: boolean) => {
+      const before = usePromptBooksStore.getState();
+      try {
+        await changePromptTag(promptId, tagId, assigned);
+        if (
+          usePromptBooksStore.getState()._sessionVersion ===
+          before._sessionVersion
+        )
+          setTagError(null);
+      } catch {
+        if (
+          usePromptBooksStore.getState()._sessionVersion ===
+          before._sessionVersion
+        )
+          setTagError("Could not update tags. Reopen tags to retry.");
+      }
     },
-    [client, promptId],
+    [promptId, changePromptTag],
   );
-
+  const handleTagAssign = useCallback(
+    (tagId: string) => handleTagChange(tagId, true),
+    [handleTagChange],
+  );
   const handleTagUnassign = useCallback(
-    async (tagId: string) => {
-      if (!client || !promptId) return;
-      await service.removeTagFromPrompt(client, promptId, tagId);
-      const updated = await service.getPrompt(client, promptId);
-      if (updated) usePromptBooksStore.getState().updatePromptInStore(updated);
-    },
-    [client, promptId],
+    (tagId: string) => handleTagChange(tagId, false),
+    [handleTagChange],
   );
 
   const handleCreateTag = useCallback(
@@ -282,10 +301,18 @@ export default function PromptEditorPage() {
         onSaveAsTemplate={() => setSaveTemplateOpen(true)}
       />
 
+      {tagError && (
+        <div
+          role="alert"
+          className="border-b border-[var(--arc-cosmic-border)] px-4 py-3 text-sm text-text-primary"
+        >
+          {tagError}
+        </div>
+      )}
       {saveError && (
         <div
           role="alert"
-          className="border-b border-white/[0.08] px-4 py-3 text-sm text-text-primary"
+          className="border-b border-[var(--arc-cosmic-border)] px-4 py-3 text-sm text-text-primary"
         >
           <p>{saveError}</p>
           <button

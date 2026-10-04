@@ -50,3 +50,14 @@ formatting and app typecheck. Those results do not approve the correction yet.
 The existing Quality Gate workflow is disabled externally; this candidate adds
 the high/critical dependency audit to active CI rather than inferring a security
 pass from that absent run. Existing workflow settings remain untouched.
+
+The second Copilot review at `928f92e` identified direct-link initialization order,
+tag responses outside the actor generation guard, initialization status from
+superseded loads, stale error status after successful selection recovery, and an
+alert border outside the semantic tokens. The follow-up reuses one verified actor
+boundary for CRUD and tag mutations, waits for the route owner/session, binds
+aggregate load status to its generations, and adds real SDK/service lifecycle
+regressions plus a built direct-link collection-tag request assertion. Tag addition
+uses the existing composite key without deleting other assignments. No schema or
+dependency change. Current independent review and engineering acceptance must be
+rebound to the resulting revision; earlier passes approve only their own source.

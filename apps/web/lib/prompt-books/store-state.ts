@@ -72,6 +72,12 @@ export interface PromptBooksState {
   setActivePrompt: (id: string | null) => void;
   setActivePromptType: (type: PromptType | null) => void;
 
+  changePromptTag: (
+    id: string,
+    tagId: string,
+    assigned: boolean,
+  ) => Promise<void>;
+
   // Actions — Tags
   loadTags: (collectionId?: string) => Promise<void>;
   addTag: (tag: Tag) => void;
