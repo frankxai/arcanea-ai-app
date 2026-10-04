@@ -67,6 +67,7 @@ function deferred<T>() {
 async function fixture(userId = owner) {
   let saved = row(userId);
   let fail = false;
+  let readFailure = false;
   let held: {
     method: string;
     entered: ReturnType<typeof deferred<void>>;
@@ -121,6 +122,23 @@ async function fixture(userId = owner) {
             throw new Error("Unexpected fixture endpoint");
           let result: unknown = [];
           let status = 200;
+          if (
+            url.pathname.endsWith("/pb_collections") ||
+            url.pathname.endsWith("/pb_tags")
+          ) {
+            result = [
+              {
+                id: url.pathname.endsWith("/pb_tags")
+                  ? "tag-1"
+                  : "collection-1",
+                user_id: userId,
+                name: "Owned fixture row",
+                is_global: true,
+                created_at: saved.created_at,
+                updated_at: saved.updated_at,
+              },
+            ];
+          }
           if (url.pathname.endsWith("/pb_prompts")) {
             if (method === "PATCH") {
               if (fail) {
@@ -147,6 +165,15 @@ async function fixture(userId = owner) {
                 : [{ ...saved }];
           }
           const gate = held;
+          if (
+            readFailure &&
+            method === "GET" &&
+            url.pathname.endsWith("/pb_prompts")
+          ) {
+            readFailure = false;
+            status = 400;
+            result = { message: "Disposable read failure", code: "fixture" };
+          }
           if (gate?.method === method && url.pathname.endsWith("/pb_prompts")) {
             held = null;
             gate.entered.resolve();
@@ -172,6 +199,9 @@ async function fixture(userId = owner) {
     saved: () => saved,
     fail: () => {
       fail = true;
+    },
+    failRead: () => {
+      readFailure = true;
     },
     hold: (method: string) => {
       const gate = {
@@ -346,4 +376,98 @@ test("hydrate accepts validated preferences only, never private or runtime field
     Object.keys(store.persist.getOptions().partialize!(hydrated)).sort(),
     ["editorSplitView", "sidebarCollapsed", "viewMode"],
   );
+});
+
+test("an old collection failure cannot mark a newer successful selection as errored", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const gate = f.hold("GET");
+  f.failRead();
+  store.getState().setActiveCollection("old");
+  await gate.entered.promise;
+  store.getState().setActiveCollection("new");
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  gate.release.resolve();
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  assert.equal(store.getState().activeCollectionId, "new");
+  assert.equal(store.getState().syncStatus, "synced");
+});
+
+test("old failed account load cannot change the new account's status", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const gate = f.hold("GET");
+  f.failRead();
+  store.getState().setActiveCollection("old");
+  await gate.entered.promise;
+  const foreign = await fixture(other);
+  await store.getState().initialize(foreign.client, other);
+  gate.release.resolve();
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  assert.equal(store.getState()._userId, other);
+  assert.equal(store.getState().syncStatus, "synced");
+});
+
+test("current failed collection load reports an error honestly", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  f.failRead();
+  store.getState().setActiveCollection("current");
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  assert.equal(store.getState().syncStatus, "error");
+});
+
+test("registered A realtime callbacks are ignored after A/B/A, including old unsubscribe", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  type Callback = (payload: {
+    eventType: "UPDATE";
+    new: Record<string, unknown>;
+    old: Record<string, unknown>;
+  }) => void;
+  const callbacks: Record<string, Callback> = {};
+  Object.defineProperty(f.client, "channel", {
+    value: () => {
+      const channel = {
+        on: (_event: string, filter: { table: string }, callback: Callback) => {
+          callbacks[filter.table] = callback;
+          return channel;
+        },
+        subscribe: () => channel,
+      };
+      return channel;
+    },
+  });
+  Object.defineProperty(f.client, "removeChannel", { value: async () => "ok" });
+  const { PromptBooksSync } = await import("../sync");
+  const old = new PromptBooksSync(f.client, owner);
+  old.subscribe();
+  const foreign = await fixture(other);
+  await store.getState().initialize(foreign.client, other);
+  await store.getState().initialize(f.client, owner);
+  store.getState().setLastSyncAt("current-session-marker");
+  for (const table of ["pb_prompts", "pb_collections", "pb_tags"]) {
+    callbacks[table]({
+      eventType: "UPDATE",
+      old: {},
+      new: {
+        ...row(owner),
+        id:
+          table === "pb_prompts"
+            ? "prompt-1"
+            : table === "pb_tags"
+              ? "tag-1"
+              : "collection-1",
+        name: "Stale owner A callback",
+        content: "Stale owner A callback",
+        updated_at: "2099-01-01T00:00:00Z",
+      },
+    });
+  }
+  assert.equal(store.getState().prompts[0].content, "Original");
+  assert.equal(store.getState().collections[0].name, "Owned fixture row");
+  assert.equal(store.getState().tags[0].name, "Owned fixture row");
+  assert.equal(store.getState().lastSyncAt, "current-session-marker");
+  old.unsubscribe();
+  assert.equal(store.getState().syncStatus, "synced");
 });
