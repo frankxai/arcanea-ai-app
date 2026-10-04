@@ -15,6 +15,7 @@ let searchGeneration = 0;
 let promptLoadGeneration = 0;
 let collectionLoadGeneration = 0;
 let tagLoadGeneration = 0;
+let selectionGeneration = 0;
 
 function currentActor(client: SupabaseClient, userId: string, version: number) {
   const state = usePromptBooksStore.getState();
@@ -63,38 +64,31 @@ const privateState = {
 export const usePromptBooksStore = create<PromptBooksState>()(
   persist(
     (set, get) => ({
-      // Initial data
       collections: [],
       prompts: [],
       tags: [],
 
-      // Active state
       activeCollectionId: null,
       activePromptId: null,
       activePromptType: null,
 
-      // UI state
       sidebarCollapsed: false,
       editorSplitView: false,
       viewMode: "grid",
 
-      // Search
       searchQuery: "",
       searchResults: [],
       isSearching: false,
 
-      // Sync
       syncStatus: "offline",
       lastSyncAt: null,
 
-      // Internal
       _client: null,
       _userId: null,
       _sessionVersion: 0,
 
-      // Initialization
-
       reset: () => {
+        selectionGeneration += 1;
         searchGeneration += 1;
         promptLoadGeneration += 1;
         collectionLoadGeneration += 1;
@@ -209,13 +203,30 @@ export const usePromptBooksStore = create<PromptBooksState>()(
 
       setActiveCollection: (id) => {
         const selection = id === "_all" ? null : id;
+        const generation = ++selectionGeneration;
+        const {
+          _client: client,
+          _userId: userId,
+          _sessionVersion: version,
+        } = get();
+        const onFailure = () => {
+          if (
+            client &&
+            userId &&
+            currentActor(client, userId, version) &&
+            generation === selectionGeneration &&
+            get().activeCollectionId === selection
+          ) {
+            get().setSyncStatus("error");
+          }
+        };
         set({ activeCollectionId: selection, activePromptId: null });
         void get()
           .loadPrompts(id && id !== "_all" ? { collectionId: id } : undefined)
-          .catch(() => get().setSyncStatus("error"));
+          .catch(onFailure);
         void get()
           .loadTags(id && id !== "_all" ? id : undefined)
-          .catch(() => get().setSyncStatus("error"));
+          .catch(onFailure);
       },
 
       // Prompts
@@ -394,8 +405,6 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         get().removeTag(id);
       },
 
-      // Search
-
       search: async (query) => {
         const {
           _client: client,
@@ -434,8 +443,6 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       toggleSplitView: () =>
         set((s) => ({ editorSplitView: !s.editorSplitView })),
       setViewMode: (mode) => set({ viewMode: mode }),
-
-      // Sync
 
       setSyncStatus: (status) => set({ syncStatus: status }),
       setLastSyncAt: (time) => set({ lastSyncAt: time }),

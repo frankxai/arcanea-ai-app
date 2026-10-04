@@ -40,3 +40,13 @@ all media/platform/release branches and the existing issue/hub history.
 
 Status: implementation and verification in progress. No preview or production
 acceptance is claimed by this checkpoint.
+
+Independent GitHub Copilot balanced review of revision `339d96a` found a stale
+load-error status write and missing direct realtime A/B/A coverage. The correction
+binds collection error handling to selection and session generations and adds
+actual registered-callback tests plus honest current-error checks. Revision
+`b6fa83e` passed eight pinned SDK/service regressions, strict lint, changed-file
+formatting and app typecheck. Those results do not approve the correction yet.
+The existing Quality Gate workflow is disabled externally; this candidate adds
+the high/critical dependency audit to active CI rather than inferring a security
+pass from that absent run. Existing workflow settings remain untouched.

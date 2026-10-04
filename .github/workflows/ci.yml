@@ -169,6 +169,9 @@ jobs:
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
+      - name: Gate dependencies on high and critical advisories
+        run: pnpm audit --audit-level=high
+
       # The repository has historical formatting debt. Enforce Prettier as a
       # ratchet on every file changed by this push/PR without masking failures
       # or forcing an unsafe whole-repository rewrite.
