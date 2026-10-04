@@ -48,7 +48,7 @@ const privateState = {
 
 export const usePromptBooksStore = create<PromptBooksState>()(
   persist(
-    (set, get) => ({
+    (set, get): PromptBooksState => ({
       collections: [],
       prompts: [],
       tags: [],
