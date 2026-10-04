@@ -101,7 +101,10 @@ async function setup(page: Page) {
   await page.goto(`/auth/login?next=${encodeURIComponent(editorUrl)}`);
   await page.getByPlaceholder("you@example.com").fill(user.email);
   await page.getByPlaceholder("Enter your password").fill("disposable-fixture");
-  await page.getByRole("button", { name: "Sign In", exact: true }).click();
+  await page
+    .locator("form")
+    .getByRole("button", { name: "Sign In", exact: true })
+    .click();
   await expect(page).toHaveURL(new RegExp(`${promptId}$`));
   await expect(page.getByPlaceholder("Write your prompt here...")).toHaveValue(
     "Original prompt",
