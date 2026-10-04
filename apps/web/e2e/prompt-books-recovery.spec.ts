@@ -17,7 +17,10 @@ const user = {
   created_at: "2026-10-04T12:00:00Z",
 };
 
-async function setup(page: Page) {
+async function setup(
+  page: Page,
+  inspectLoading?: (page: Page) => Promise<void>,
+) {
   const token = [
     Buffer.from('{"alg":"HS256","typ":"JWT"}').toString("base64url"),
     Buffer.from(
@@ -47,6 +50,7 @@ async function setup(page: Page) {
   let held = false;
   let release: (() => void) | null = null;
   let gate = Promise.resolve();
+  let loadingInspection: Promise<void> | null = null;
   await page.route("**/auth/v1/**", async (route) => {
     const body = route.request().url().includes("/token")
       ? {
@@ -81,6 +85,10 @@ async function setup(page: Page) {
         },
       ];
     if (url.pathname.endsWith("/pb_prompts")) {
+      if (request.method() === "GET" && inspectLoading) {
+        loadingInspection ??= inspectLoading(page);
+        await loadingInspection;
+      }
       if (request.method() === "PATCH") {
         if (failing) {
           failing = false;
@@ -212,11 +220,9 @@ test("built context-only edits share Back's pending save and failure recovery", 
   await tokens.fill("2048");
   f.fail();
   f.release();
-  const saveError = page
-    .getByRole("alert")
-    .filter({
-      has: page.getByRole("button", { name: "Retry save", exact: true }),
-    });
+  const saveError = page.getByRole("alert").filter({
+    has: page.getByRole("button", { name: "Retry save", exact: true }),
+  });
   await expect(saveError).toContainText("Your draft is still here");
   await expect(page).toHaveURL(new RegExp(`${promptId}$`));
   await expect(tokens).toHaveValue("2048");
@@ -228,4 +234,15 @@ test("built context-only edits share Back's pending save and failure recovery", 
   await expect(page).toHaveURL(/\/prompt-books$/);
   await page.goto(editorUrl);
   await expect(tokens).toHaveValue("2048");
+});
+
+test("built direct-link loading preserves loading feedback without a false identity warning", async ({
+  page,
+}) => {
+  await setup(page, async (loadingPage) => {
+    await expect(
+      loadingPage.getByText("Loading prompt...", { exact: true }),
+    ).toBeVisible();
+    await expect(loadingPage.getByText(/Your sign-in changed/)).toHaveCount(0);
+  });
 });

@@ -2,6 +2,7 @@ import { test, before, beforeEach } from "node:test";
 import assert from "node:assert/strict";
 import { fixture, owner, other, row } from "./fixtures";
 import { PromptEditorSession } from "../editor-session";
+import { comparePromptRevisions } from "../revisions";
 
 let store: typeof import("../store").usePromptBooksStore;
 before(async () => {
@@ -313,13 +314,11 @@ test("a same-owner stale template creation cannot update cache or trigger naviga
   const foreign = await fixture(other);
   await store.getState().initialize(foreign.client, other);
   await store.getState().initialize(f.client, owner);
-  store
-    .getState()
-    .updatePromptInStore({
-      ...store.getState().prompts[0],
-      content: "Current session content",
-      updatedAt: "2099-01-01T00:00:00Z",
-    });
+  store.getState().updatePromptInStore({
+    ...store.getState().prompts[0],
+    content: "Current session content",
+    updatedAt: "2099-01-01T00:00:00Z",
+  });
   const rejected = assert.rejects(creating, /identity changed/);
   gate.release.resolve();
   await rejected;
@@ -336,4 +335,78 @@ test("current verified template creation resolves variables and enters its owner
   assert.equal(prompt.content, "Write a recovered world");
   assert.equal(prompt.userId, owner);
   assert.equal(store.getState().prompts[0].content, "Write a recovered world");
+});
+
+test("same-millisecond newer SDK loads and clean editor refresh preserve all timestamp precision", async () => {
+  const f = await fixture();
+  f.replaceStored({ updated_at: "2026-10-04T12:00:00.123456Z" });
+  await store.getState().initialize(f.client, owner);
+  const session = new PromptEditorSession(
+    store.getState().prompts[0],
+    () => true,
+    (input) => store.getState().updatePrompt("prompt-1", input),
+  );
+  f.replaceStored({
+    content: "Newer microsecond draft",
+    updated_at: "2026-10-04T12:00:00.123457Z",
+  });
+  await store.getState().loadPrompts();
+  session.refresh(store.getState().prompts[0]);
+  assert.equal(store.getState().prompts[0].content, "Newer microsecond draft");
+  assert.equal(session.getSnapshot().state.content, "Newer microsecond draft");
+  assert.equal(
+    session.getSnapshot().lastSavedAt,
+    "2026-10-04T12:00:00.123457Z",
+  );
+  const current = store.getState().prompts[0];
+  store.getState().updatePromptInStore({
+    ...current,
+    content: "Stale realtime/write",
+    updatedAt: "2026-10-04T12:00:00.123456Z",
+  });
+  assert.equal(store.getState().prompts[0].content, "Newer microsecond draft");
+  f.replaceStored({
+    content: "Stale SDK load",
+    updated_at: "2026-10-04T12:00:00.123456Z",
+  });
+  await store.getState().loadPrompts();
+  assert.equal(store.getState().prompts[0].content, "Newer microsecond draft");
+  session.refresh({
+    ...current,
+    content: "Stale editor refresh",
+    updatedAt: "2026-10-04T12:00:00.123455Z",
+  });
+  assert.equal(session.getSnapshot().state.content, "Newer microsecond draft");
+});
+
+test("revision comparison normalizes timezones, fractional padding and rejects invalid server timestamps", () => {
+  assert.equal(
+    comparePromptRevisions(
+      "2026-10-04T14:00:00.123456+02:00",
+      "2026-10-04T12:00:00.123456Z",
+    ),
+    0,
+  );
+  assert.equal(
+    comparePromptRevisions(
+      "2026-10-04T12:00:00.123456Z",
+      "2026-10-04T12:00:00.123Z",
+    ),
+    1,
+  );
+  assert.equal(
+    comparePromptRevisions(
+      "2026-10-04T12:00:00.123456Z",
+      "2026-10-04T12:00:00.123457Z",
+    ),
+    -1,
+  );
+  assert.equal(
+    comparePromptRevisions("2026-10-04T12:00:00.123456Z", "invalid timestamp"),
+    null,
+  );
+  assert.equal(
+    comparePromptRevisions("invalid timestamp", "2026-10-04T12:00:00.123456Z"),
+    null,
+  );
 });

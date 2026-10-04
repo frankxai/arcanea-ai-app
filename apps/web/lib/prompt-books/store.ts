@@ -7,6 +7,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { promptBooksPreferences } from "./preferences";
 import { PromptBooksLoads } from "./resource-loads";
+import { comparePromptRevisions } from "./revisions";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
 import {
@@ -202,11 +203,14 @@ export const usePromptBooksStore = create<PromptBooksState>()(
                   const current = state.prompts.find(
                     (row) => row.id === incoming.id && row.userId === userId,
                   );
-                  return current &&
-                    Date.parse(current.updatedAt) >=
-                      Date.parse(incoming.updatedAt)
+                  if (!current) return incoming;
+                  const revision = comparePromptRevisions(
+                    incoming.updatedAt,
+                    current.updatedAt,
+                  );
+                  return revision === null || revision <= 0
                     ? current
-                    : incoming;
+                    : { ...incoming, tags: incoming.tags ?? current.tags };
                 }),
             })),
         );
@@ -224,7 +228,7 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         set((s) => ({
           prompts: s.prompts.map((p) =>
             p.id === prompt.id &&
-            Date.parse(prompt.updatedAt) >= Date.parse(p.updatedAt)
+            (comparePromptRevisions(prompt.updatedAt, p.updatedAt) ?? -1) >= 0
               ? { ...prompt, tags: prompt.tags ?? p.tags }
               : p,
           ),
