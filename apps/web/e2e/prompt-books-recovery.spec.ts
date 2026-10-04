@@ -172,14 +172,15 @@ test("built failure UI keeps draft and refuses Back until retry confirms it", as
   await page
     .getByRole("button", { name: "Back to collection", exact: true })
     .click();
-  await expect(page.getByRole("alert")).toContainText(
-    "Your draft is still here",
-  );
+  const saveError = page.getByRole("alert").filter({
+    has: page.getByRole("button", { name: "Retry save", exact: true }),
+  });
+  await expect(saveError).toContainText("Your draft is still here");
   await expect(page).toHaveURL(new RegExp(`${promptId}$`));
   await expect(field).toHaveValue("Recover this private draft");
   await page.getByRole("button", { name: "Retry save", exact: true }).click();
   await expect.poll(() => f.row().content).toBe("Recover this private draft");
-  await expect(page.getByRole("alert")).toHaveCount(0);
+  await expect(saveError).toHaveCount(0);
   await page
     .getByRole("button", { name: "Back to collection", exact: true })
     .click();
