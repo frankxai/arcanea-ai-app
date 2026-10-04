@@ -39,6 +39,7 @@ async function setup(page: Page) {
     created_at: "2026-10-04T12:00:00.000Z",
     updated_at: "2026-10-04T12:00:00.000Z",
   };
+  let scopedTagRead = false;
   let failing = false;
   let hold = false;
   let held = false;
@@ -60,6 +61,13 @@ async function setup(page: Page) {
     const request = route.request();
     const url = new URL(request.url());
     let data: unknown = [];
+    if (
+      url.pathname.endsWith("/pb_tags") &&
+      (url.searchParams.get("or") ?? "").includes(
+        `collection_id.eq.${collectionId}`,
+      )
+    )
+      scopedTagRead = true;
     if (url.pathname.endsWith("/pb_collections"))
       data = [
         {
@@ -109,6 +117,7 @@ async function setup(page: Page) {
   await expect(page.getByPlaceholder("Write your prompt here...")).toHaveValue(
     "Original prompt",
   );
+  await expect.poll(() => scopedTagRead).toBe(true);
   return {
     row: () => prompt,
     fail: () => {
