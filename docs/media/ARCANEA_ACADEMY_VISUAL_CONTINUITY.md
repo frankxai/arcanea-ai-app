@@ -66,14 +66,14 @@ coded provider URLs.
 
 Keep these records separate:
 
-| Record | Stable key example |
-|---|---|
-| Entity | `ent_arcanea_guardian_lyssandria` |
-| Visual specification | `vspec_guardian_lyssandria_v1` |
-| Asset | `ast_*` |
-| Version | `ver_*` |
-| Rendition | `rnd_*` |
-| Placement | `arcanea.academy.home.hero.desktop` |
+| Record               | Stable key example                  |
+| -------------------- | ----------------------------------- |
+| Entity               | `ent_arcanea_guardian_lyssandria`   |
+| Visual specification | `vspec_guardian_lyssandria_v1`      |
+| Asset                | `ast_*`                             |
+| Version              | `ver_*`                             |
+| Rendition            | `rnd_*`                             |
+| Placement            | `arcanea.academy.home.hero.desktop` |
 
 Lifecycle:
 
@@ -120,9 +120,7 @@ Every approved asset records:
   "version_id": "ver_*",
   "context": "lore|product|campaign|learner",
   "placement_key": "arcanea.academy.home.hero.desktop",
-  "entities": [
-    { "entity_id": "ent_*", "visual_spec_id": "vspec_*" }
-  ],
+  "entities": [{ "entity_id": "ent_*", "visual_spec_id": "vspec_*" }],
   "source": {
     "tool": "",
     "model": "",

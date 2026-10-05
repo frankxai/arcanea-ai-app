@@ -44,18 +44,18 @@ A lower layer never overrides a higher one.
 
 ## Locked roster
 
-| Gate | Hz | Guardian | Godbeast | Domain |
-|---|---:|---|---|---|
-| Foundation | 174 | Lyssandria | Kaelith | Earth, survival |
-| Flow | 285 | Leyla | Veloura | Creativity, emotion |
-| Fire | 396 | Draconia | Draconis | Power, will |
-| Heart | 417 | Maylinn | Laeylinn | Love, healing |
-| Voice | 528 | Alera | Otome | Truth, expression |
-| Sight | 639 | Lyria | Yumiko | Intuition, vision |
-| Crown | 741 | Aiyami | Sol | Enlightenment |
-| Starweave | 852 | Elara | Vaelith | Perspective, transformation |
-| Unity | 963 | Ino | Kyuro | Partnership |
-| Source | 1111 | Shinkami | Source | Meta-consciousness |
+| Gate       |   Hz | Guardian   | Godbeast | Domain                      |
+| ---------- | ---: | ---------- | -------- | --------------------------- |
+| Foundation |  174 | Lyssandria | Kaelith  | Earth, survival             |
+| Flow       |  285 | Leyla      | Veloura  | Creativity, emotion         |
+| Fire       |  396 | Draconia   | Draconis | Power, will                 |
+| Heart      |  417 | Maylinn    | Laeylinn | Love, healing               |
+| Voice      |  528 | Alera      | Otome    | Truth, expression           |
+| Sight      |  639 | Lyria      | Yumiko   | Intuition, vision           |
+| Crown      |  741 | Aiyami     | Sol      | Enlightenment               |
+| Starweave  |  852 | Elara      | Vaelith  | Perspective, transformation |
+| Unity      |  963 | Ino        | Kyuro    | Partnership                 |
+| Source     | 1111 | Shinkami   | Source   | Meta-consciousness          |
 
 `God/Goddess` is identity; `Guardian` is the Gate-keeper role. Luminor faculty,
 Awakened beings, Godbeasts, and Academy agents are separate types and must not be

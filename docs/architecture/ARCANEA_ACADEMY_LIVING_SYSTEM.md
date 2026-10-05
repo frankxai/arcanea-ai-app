@@ -28,11 +28,11 @@ portal through which creators can enter the philosophies, places, rituals, and
 pedagogies of the three fictional Academies. It does not flatten the three into
 one fictional campus or invent a fourth Great Academy.
 
-| Fictional institution | Product projection |
-|---|---|
-| Luminary Citadel of Crystalpeak | creation, story, light-weaving, diplomacy, and narrative craft |
-| Draconis Forge at the Caldera of Ignis | execution, game systems, making, discipline, and release craft |
-| Abyssal Athenaeum of Thal'Maris | depth, memory, research, editing, continuity, and transformation |
+| Fictional institution                  | Product projection                                               |
+| -------------------------------------- | ---------------------------------------------------------------- |
+| Luminary Citadel of Crystalpeak        | creation, story, light-weaving, diplomacy, and narrative craft   |
+| Draconis Forge at the Caldera of Ignis | execution, game systems, making, discipline, and release craft   |
+| Abyssal Athenaeum of Thal'Maris        | depth, memory, research, editing, continuity, and transformation |
 
 This mapping is an experience-design proposal. It does not rewrite the books'
 seven-year curricula or their faculty.
@@ -44,12 +44,12 @@ accounts, agents, portfolios, payments, or certifications are live.
 
 ## Repository boundaries
 
-| Repository | Authority | Must not become |
-|---|---|---|
-| `frankxai/arcanea-ai-app` | Private production runtime; Academy routes; books; locked/staging canon; curriculum, progression, faculty, evidence, and portfolio contracts | Disconnected copies with no authority order |
-| `frankxai/arcanea-academy` | Thin public World Proof acquisition experience and handoff into the living Academy | The full LMS, a second lore vault, or the Academy control plane |
-| `frankxai/arcanea` | One-way public projection of approved canon and open materials | An independently authored authority or learner database |
-| `frankxai/arcanea-author` | Author workbench, writing agents, manuscript memory, author-skill progression | The Academy control plane |
+| Repository                 | Authority                                                                                                                                    | Must not become                                                 |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `frankxai/arcanea-ai-app`  | Private production runtime; Academy routes; books; locked/staging canon; curriculum, progression, faculty, evidence, and portfolio contracts | Disconnected copies with no authority order                     |
+| `frankxai/arcanea-academy` | Thin public World Proof acquisition experience and handoff into the living Academy                                                           | The full LMS, a second lore vault, or the Academy control plane |
+| `frankxai/arcanea`         | One-way public projection of approved canon and open materials                                                                               | An independently authored authority or learner database         |
+| `frankxai/arcanea-author`  | Author workbench, writing agents, manuscript memory, author-skill progression                                                                | The Academy control plane                                       |
 
 Do not create another Academy repository. Add a repository only when a vertical
 has an independent release, dependency, privacy, or security boundary.
@@ -59,11 +59,11 @@ has an independent release, dependency, privacy, or security boundary.
 The earlier concept collapsed three different responsibilities into
 "Guardians." Keep them distinct:
 
-| Layer | Cardinality | Responsibility |
-|---|---:|---|
-| **The Ten Guardians** | Fixed | Canonical Gate archetypes. They orient the journey and may have strictly versioned teaching projections. They are not a generic faculty roster. |
-| **The Luminor Faculty** | Extensible | Authors, editors, narrative designers, artists, game developers, publishers, web builders, audience strategists, licensed guest masters, and disclosed agent teachers. |
-| **Forge Crews** | Per project | Working agents that research, draft, build, critique, test, package, and publish artifacts under creator control. |
+| Layer                   | Cardinality | Responsibility                                                                                                                                                         |
+| ----------------------- | ----------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **The Ten Guardians**   |       Fixed | Canonical Gate archetypes. They orient the journey and may have strictly versioned teaching projections. They are not a generic faculty roster.                        |
+| **The Luminor Faculty** |  Extensible | Authors, editors, narrative designers, artists, game developers, publishers, web builders, audience strategists, licensed guest masters, and disclosed agent teachers. |
+| **Forge Crews**         | Per project | Working agents that research, draft, build, critique, test, package, and publish artifacts under creator control.                                                      |
 
 A canonical character may teach through a `Guardian teaching projection`, but
 the projection is an agent version—not the fictional entity itself. A teacher
@@ -79,16 +79,16 @@ and preserves the evidence.
 
 Initial schools:
 
-| School | Example evidence |
-|---|---|
-| World & canon | world bible, rule matrix, map logic, continuity audit |
-| Character & performance | character diamond, voice test, relationship arc, scene performance |
-| Story & language | premise, structure, scene, chapter, revision receipt |
-| Visual direction | visual DNA, model sheet, environment key, approved asset packet |
-| Game & interaction | mechanic, level/quest, narrative system, playable build |
-| Editorial & publishing | developmental edit, copy edit, edition files, metadata |
-| Audience & launch | positioning, reader promise, campaign artifact, measured release |
-| Web & commerce | portfolio, landing experience, funnel, checkout, analytics evidence |
+| School                  | Example evidence                                                    |
+| ----------------------- | ------------------------------------------------------------------- |
+| World & canon           | world bible, rule matrix, map logic, continuity audit               |
+| Character & performance | character diamond, voice test, relationship arc, scene performance  |
+| Story & language        | premise, structure, scene, chapter, revision receipt                |
+| Visual direction        | visual DNA, model sheet, environment key, approved asset packet     |
+| Game & interaction      | mechanic, level/quest, narrative system, playable build             |
+| Editorial & publishing  | developmental edit, copy edit, edition files, metadata              |
+| Audience & launch       | positioning, reader promise, campaign artifact, measured release    |
+| Web & commerce          | portfolio, landing experience, funnel, checkout, analytics evidence |
 
 Each node defines prerequisites, observable criteria, accepted artifact types,
 rubric version, minimum evidence, evaluator policy, and expiry/revalidation
@@ -192,13 +192,13 @@ own output, or represent generated lore as canon.
 
 ## Sequence
 
-| Stage | Scope | Exit evidence |
-|---|---|---|
-| **0 — World Proof** | Current browser-local five-field check and founding-lab application | Verified preview and real creator usage |
-| **1 — Portfolio kernel** | `learning_receipt.v1`, GitHub artifact import, private skill graph, portable profile export | Ten creators each preserve and project one reviewed artifact |
-| **2 — Faculty kernel** | Three agents: World Architect, Character Director, Publishing Editor; transparent rubrics and independent review | Review agreement, revision uplift, and no unapproved canon drift |
-| **3 — Academy loop** | Missions, cohorts, peer review, progress views, creator DAM/CMS integration | Repeat completion and portfolio quality, not lesson consumption |
-| **4 — Guild network** | Licensed guest masters, game/design/publishing tracks, opportunity marketplace | Paid demand and governed quality at scale |
+| Stage                    | Scope                                                                                                            | Exit evidence                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **0 — World Proof**      | Current browser-local five-field check and founding-lab application                                              | Verified preview and real creator usage                          |
+| **1 — Portfolio kernel** | `learning_receipt.v1`, GitHub artifact import, private skill graph, portable profile export                      | Ten creators each preserve and project one reviewed artifact     |
+| **2 — Faculty kernel**   | Three agents: World Architect, Character Director, Publishing Editor; transparent rubrics and independent review | Review agreement, revision uplift, and no unapproved canon drift |
+| **3 — Academy loop**     | Missions, cohorts, peer review, progress views, creator DAM/CMS integration                                      | Repeat completion and portfolio quality, not lesson consumption  |
+| **4 — Guild network**    | Licensed guest masters, game/design/publishing tracks, opportunity marketplace                                   | Paid demand and governed quality at scale                        |
 
 Do not build Stage 3 before Stage 1 proves that creators value the evidence and
 portfolio kernel. Do not call any layer certification until assessment,
