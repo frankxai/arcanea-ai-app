@@ -1,152 +1,191 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest, NextResponse } from 'next/server';
-import { generateImages } from '@/lib/imagine/generate';
-import { applyStyle } from '@/lib/imagine/styles';
-import type { ImagineGenerationResponse } from '@/lib/imagine/contracts';
+/**
+ * POST /api/imagine/generate
+ *
+ * Admission is server-side and atomic: the signed-in user's credits are
+ * reserved before any provider call, settled for the images actually returned,
+ * and released in full if the provider fails. Anonymous requests get 401; the
+ * /imagine page stays browsable but generation on Arcanea-managed keys needs an
+ * account. Prices come from the billing catalog, never from this file.
+ */
+
+import { NextRequest, NextResponse } from "next/server";
+import { generateImages } from "@/lib/imagine/generate";
+import { applyStyle } from "@/lib/imagine/styles";
+import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
+import { createClient } from "@/lib/supabase/server";
+import { costFor, type ActionId } from "@/lib/billing/catalog";
+import { BillingError, InsufficientCreditsError, withReservation } from "@/lib/billing/ledger";
 
 export const maxDuration = 60;
+
+const PREMIUM_MODEL_HINTS = ["pro-image", "flux.2-max", "gpt-image", "imagen-4"];
+
+function imageAction(model: string | undefined): ActionId {
+  if (model && PREMIUM_MODEL_HINTS.some((hint) => model.toLowerCase().includes(hint))) {
+    return "image.premium";
+  }
+  return "image.standard";
+}
 
 export async function POST(req: NextRequest) {
   const startedAt = new Date();
   try {
-    const { prompt, count = 4, aspectRatio = '1:1', provider, model, style, enhance: shouldEnhance } = await req.json();
+    const {
+      prompt,
+      count = 4,
+      aspectRatio = "1:1",
+      provider,
+      model,
+      style,
+      enhance: shouldEnhance,
+    } = await req.json();
 
-    if (!prompt || typeof prompt !== 'string') {
-      return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
-    }
-
-    // ── Pipeline: raw prompt → APL enhance (optional) → Style wrap ──────
-    let processedPrompt = prompt;
-
-    if (shouldEnhance) {
-      try {
-        const enhanceRes = await fetch(new URL('/api/apl/enhance', req.url), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: processedPrompt, mode: 'image' }),
-        });
-        if (enhanceRes.ok) {
-          const enhanceData = await enhanceRes.json();
-          if (enhanceData.enhanced) {
-            processedPrompt = enhanceData.enhanced;
-          }
-        }
-      } catch {
-        // Enhancement is optional — continue with original prompt
-      }
-    }
-
-    const { prompt: styledPrompt } = applyStyle(processedPrompt, style || 'none');
-
-    // ── Credit check: spend 1 credit per generation request ──────────────
-    // Forward cookies so the spend endpoint can authenticate the user.
-    // For public (unauthenticated) users, skip the credit check to keep
-    // /imagine accessible without login.
-    const cookieHeader = req.headers.get('cookie') ?? '';
-    const spendRes = await fetch(new URL('/api/credits/spend', req.url), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        cookie: cookieHeader,
-      },
-      body: JSON.stringify({ creationType: 'image' }),
-    });
-
-    if (!spendRes.ok && spendRes.status !== 401) {
-      // Allow unauthenticated users through (401) — block only real failures
-      const spendErr = await spendRes.json().catch(() => ({}));
-      const status = spendRes.status === 402 ? 402 : spendRes.status;
+    if (
+      typeof prompt !== "string" ||
+      !prompt.trim() ||
+      prompt.length > 2000 ||
+      !Number.isInteger(count) ||
+      count < 1 ||
+      count > 4
+    ) {
       return NextResponse.json(
-        {
-          error: (spendErr as { error?: string }).error ?? 'Credit check failed',
-          reason: (spendErr as { reason?: string }).reason ?? 'unknown',
-        },
-        { status },
+        { error: "Provide a prompt (up to 2000 characters) and 1 to 4 images" },
+        { status: 400 },
       );
     }
 
-    // Generate images via shared lib (Grok → OpenRouter → Gemini fallback)
-    try {
-      const result = await generateImages({
-        prompt: styledPrompt,
-        count,
-        aspectRatio,
-        forceProvider: provider || undefined,
-        openrouterModel: model || undefined,
-      });
-      const completedAt = new Date();
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json(
+        { error: "Sign in to generate images", reason: "unauthenticated" },
+        { status: 401 },
+      );
+    }
 
-      // Map to the existing response shape for backwards compatibility.
-      // Grok returns external URLs; Gemini/OpenRouter return base64 data URLs.
-      const images = result.images.map((img) => {
-        if (img.url.startsWith('data:')) {
-          const match = img.url.match(/^data:([^;]+);base64,(.+)$/);
-          if (match) {
-            return {
-              data: match[2],
-              mimeType: match[1],
-              prompt: img.revisedPrompt || prompt,
-            };
-          }
+    const action = imageAction(typeof model === "string" ? model : undefined);
+    const perImage = costFor(action, 1);
+    const requested = costFor(action, count);
+
+    let processedPrompt = prompt;
+    if (shouldEnhance) {
+      try {
+        const enhanceRes = await fetch(new URL("/api/apl/enhance", req.url), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: processedPrompt, mode: "image" }),
+        });
+        if (enhanceRes.ok) {
+          const enhanceData = await enhanceRes.json();
+          if (enhanceData.enhanced) processedPrompt = enhanceData.enhanced;
         }
-        return {
-          url: img.url,
-          prompt: img.revisedPrompt || prompt,
-        };
-      });
+      } catch {
+        // Enhancement is optional. Continue with the original prompt.
+      }
+    }
 
-      const response: ImagineGenerationResponse = {
-        generationId: `gen_${startedAt.getTime()}`,
-        status: 'completed',
-        provider: result.provider,
-        model: result.model,
-        prompt,
-        revisedPrompt: result.images[0]?.revisedPrompt,
-        aspectRatio,
-        assetUrls: result.images.map((img) => img.url),
-        assets: result.images.map((img, index) => {
-          const legacyImage = images[index];
-          return {
-            url: img.url,
-            prompt: img.revisedPrompt || prompt,
-            revisedPrompt: img.revisedPrompt,
-            mimeType: 'mimeType' in legacyImage ? legacyImage.mimeType : undefined,
-            data: 'data' in legacyImage ? legacyImage.data : undefined,
-          };
-        }),
-        timing: {
-          startedAt: startedAt.toISOString(),
-          completedAt: completedAt.toISOString(),
-          durationMs: completedAt.getTime() - startedAt.getTime(),
-        },
-        safety: {
-          providerConfigured: true,
-          fallbackUsed: result.provider !== 'openrouter',
-        },
-        saveState: {
-          canSave: images.length > 0,
-        },
-        error: null,
-        images: images.map((image) => ({
-          ...image,
-          revisedPrompt: image.prompt,
-        })),
-      };
+    const { prompt: styledPrompt } = applyStyle(processedPrompt, style || "none");
 
-      return NextResponse.json(response);
-    } catch (genErr) {
-      const msg = genErr instanceof Error ? genErr.message : 'Image generation failed';
-      // Detect the "no provider configured" error for a 503 status
-      if (msg.includes('No image generation API configured')) {
+    let outcome: Awaited<ReturnType<typeof withReservation<Awaited<ReturnType<typeof generateImages>>>>>;
+    try {
+      outcome = await withReservation(
+        {
+          userId: user.id,
+          action,
+          amount: requested,
+          metadata: { count, aspectRatio, model: model ?? null, provider: provider ?? null },
+        },
+        async () => {
+          const result = await generateImages({
+            prompt: styledPrompt,
+            count,
+            aspectRatio,
+            forceProvider: provider || undefined,
+            openrouterModel: model || undefined,
+          });
+          return { result, actualCredits: result.images.length * perImage };
+        },
+      );
+    } catch (error) {
+      if (error instanceof InsufficientCreditsError) {
+        return NextResponse.json(
+          {
+            error: "Not enough credits",
+            reason: "insufficient_credits",
+            required: error.required,
+            balance: error.balance,
+          },
+          { status: 402 },
+        );
+      }
+      if (error instanceof BillingError) {
+        return NextResponse.json(
+          { error: "Credit admission is unavailable", reason: "ledger_unavailable" },
+          { status: 503 },
+        );
+      }
+      const msg = error instanceof Error ? error.message : "Image generation failed";
+      if (msg.includes("No image generation API configured")) {
         return NextResponse.json({ error: msg }, { status: 503 });
       }
       return NextResponse.json({ error: msg }, { status: 500 });
     }
+
+    const { result, charged, account } = outcome;
+    const completedAt = new Date();
+
+    // Grok returns external URLs; Gemini and OpenRouter return base64 data URLs.
+    const images = result.images.map((img) => {
+      if (img.url.startsWith("data:")) {
+        const match = img.url.match(/^data:([^;]+);base64,(.+)$/);
+        if (match) {
+          return { data: match[2], mimeType: match[1], prompt: img.revisedPrompt || prompt };
+        }
+      }
+      return { url: img.url, prompt: img.revisedPrompt || prompt };
+    });
+
+    const response: ImagineGenerationResponse & {
+      credits: { action: ActionId; charged: number; balance: number };
+    } = {
+      generationId: `gen_${startedAt.getTime()}`,
+      status: "completed",
+      provider: result.provider,
+      model: result.model,
+      prompt,
+      revisedPrompt: result.images[0]?.revisedPrompt,
+      aspectRatio,
+      assetUrls: result.images.map((img) => img.url),
+      assets: result.images.map((img, index) => {
+        const legacyImage = images[index];
+        return {
+          url: img.url,
+          prompt: img.revisedPrompt || prompt,
+          revisedPrompt: img.revisedPrompt,
+          mimeType: "mimeType" in legacyImage ? legacyImage.mimeType : undefined,
+          data: "data" in legacyImage ? legacyImage.data : undefined,
+        };
+      }),
+      timing: {
+        startedAt: startedAt.toISOString(),
+        completedAt: completedAt.toISOString(),
+        durationMs: completedAt.getTime() - startedAt.getTime(),
+      },
+      safety: {
+        providerConfigured: true,
+        fallbackUsed: result.provider !== "openrouter",
+      },
+      saveState: { canSave: images.length > 0 },
+      error: null,
+      images: images.map((image) => ({ ...image, revisedPrompt: image.prompt })),
+      credits: { action, charged, balance: account.balance },
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
-    console.error('Imagine API error:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate images' },
-      { status: 500 },
-    );
+    console.error("Imagine API error:", error);
+    return NextResponse.json({ error: "Failed to generate images" }, { status: 500 });
   }
 }

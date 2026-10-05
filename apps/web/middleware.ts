@@ -24,10 +24,12 @@ export async function middleware(request: NextRequest) {
 
   // Newsletter, founding-circle, and the public feedback form are exact POSTs.
   // Other methods, nested paths, and world generation/save APIs still require auth.
+  // The Polar webhook authenticates itself with a signature, not a session.
   if (
     (request.nextUrl.pathname === "/api/waitlist" ||
       request.nextUrl.pathname === "/api/subscribe" ||
-      request.nextUrl.pathname === "/api/feedback") &&
+      request.nextUrl.pathname === "/api/feedback" ||
+      request.nextUrl.pathname === "/api/webhook/polar") &&
     request.method === "POST"
   ) {
     return NextResponse.next({ request: { headers: request.headers } });
