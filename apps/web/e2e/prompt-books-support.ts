@@ -4,8 +4,9 @@ import type { ContextConfig } from "../lib/prompt-books/types";
 // The built app, real browser SDK and actual route/components use a disposable
 // transport. This suite is distinct from authenticated owner preview acceptance.
 export const owner = "00000000-0000-4000-8000-000000000001";
-const collectionId = "00000000-0000-4000-8000-000000000003";
+export const collectionId = "00000000-0000-4000-8000-000000000003";
 export const promptId = "00000000-0000-4000-8000-000000000004";
+export const collectionUrl = `/prompt-books/${collectionId}`;
 export const editorUrl = `/prompt-books/${collectionId}/${promptId}`;
 const user = {
   id: owner,
@@ -21,6 +22,7 @@ export async function setup(
   page: Page,
   inspectLoading?: (page: Page) => Promise<void>,
   inspectFailure?: (page: Page, recover: () => void) => Promise<void>,
+  entryUrl = editorUrl,
 ) {
   const token = [
     Buffer.from('{"alg":"HS256","typ":"JWT"}').toString("base64url"),
@@ -182,21 +184,28 @@ export async function setup(
     }
     await route.fulfill({ status: 200, json: data });
   });
-  await page.goto(`/auth/login?next=${encodeURIComponent(editorUrl)}`);
+  await page.goto(`/auth/login?next=${encodeURIComponent(entryUrl)}`);
   await page.getByPlaceholder("you@example.com").fill(user.email);
   await page.getByPlaceholder("Enter your password").fill("disposable-fixture");
   await page
     .locator("form")
     .getByRole("button", { name: "Sign In", exact: true })
     .click();
-  await expect(page).toHaveURL(new RegExp(`${promptId}$`));
-  if (inspectFailure)
-    await inspectFailure(page, () => {
-      failingRead = false;
-    });
-  await expect(page.getByPlaceholder("Write your prompt here...")).toHaveValue(
-    "Original prompt",
-  );
+  if (entryUrl === editorUrl) {
+    await expect(page).toHaveURL(new RegExp(`${promptId}$`));
+    if (inspectFailure)
+      await inspectFailure(page, () => {
+        failingRead = false;
+      });
+    await expect(
+      page.getByPlaceholder("Write your prompt here..."),
+    ).toHaveValue("Original prompt");
+  } else {
+    await expect(page).toHaveURL(/\/prompt-books$/);
+    await expect(
+      page.getByRole("heading", { name: "Recovery collection", exact: true }),
+    ).toBeVisible();
+  }
   await expect.poll(() => scopedTagRead).toBe(true);
   return {
     row: () => prompt,

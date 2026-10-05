@@ -1,5 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { setup, owner, promptId, editorUrl } from "./prompt-books-support";
+import {
+  setup,
+  owner,
+  promptId,
+  editorUrl,
+  collectionUrl,
+} from "./prompt-books-support";
 
 test("built editor autosaves the first edit and reloads the confirmed draft", async ({
   page,
@@ -337,4 +343,15 @@ test("built template retry recovers an actually committed draft after its acknow
   expect(f.templates()[0].content).toBe(
     "Recovered after lost response {{subject}}",
   );
+});
+
+test("cold collection links retain their requested collection through owner initialization", async ({
+  page,
+}) => {
+  await setup(page, undefined, undefined, collectionUrl);
+  await page.goto(collectionUrl);
+  await expect(page).toHaveURL(/\/prompt-books$/);
+  await expect(
+    page.getByRole("heading", { name: "Recovery collection", exact: true }),
+  ).toBeVisible();
 });
