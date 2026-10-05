@@ -433,10 +433,17 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         set({ searchQuery: query, searchResults: [], isSearching: true });
 
         try {
+          const verified = await client.auth.getUser();
+          if (verified.error || verified.data.user?.id !== userId)
+            throw new Error("Prompt Books identity changed");
+          assertActor(client, userId, version);
           const results = await service.searchPrompts(client, userId, query);
           if (isCurrent())
             set({
-              searchResults: results.filter((row) => row.userId === userId),
+              // The owner-filtered legacy RPC omits user_id from its projection.
+              searchResults: results
+                .filter((row) => row.userId == null || row.userId === userId)
+                .map((row) => ({ ...row, userId })),
               isSearching: false,
             });
         } catch {
