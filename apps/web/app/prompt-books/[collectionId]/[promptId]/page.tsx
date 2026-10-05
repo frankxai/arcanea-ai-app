@@ -239,7 +239,9 @@ export default function PromptEditorPage() {
               type="button"
               className="mt-2 min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 py-2 focus-visible:ring-2 focus-visible:ring-atlantean-teal"
               onClick={() => {
-                void loadPrompts({ collectionId }).catch(() => {});
+                void loadPrompts(
+                  collectionId === "_all" ? undefined : { collectionId },
+                ).catch(() => {});
               }}
             >
               Retry loading

@@ -5,6 +5,7 @@ import {
   promptId,
   editorUrl,
   collectionUrl,
+  allEditorUrl,
 } from "./prompt-books-support";
 
 test("built editor autosaves the first edit and reloads the confirmed draft", async ({
@@ -249,19 +250,28 @@ test("built open template dialog reconciles clean remote refresh and keeps custo
   });
 });
 
-test("built failed direct-link read offers loading recovery", async ({
-  page,
-}) => {
-  await setup(page, undefined, async (failedPage, recover) => {
-    const retry = failedPage
-      .getByRole("button", { name: "Retry loading", exact: true })
-      .first();
-    await expect(retry).toBeVisible();
-    await expect(failedPage.getByText(/Your sign-in changed/)).toHaveCount(0);
-    recover();
-    await retry.click();
+for (const entryUrl of [editorUrl, allEditorUrl]) {
+  test(`built failed direct-link read offers loading recovery on ${entryUrl}`, async ({
+    page,
+  }) => {
+    await setup(
+      page,
+      undefined,
+      async (failedPage, recover) => {
+        const retry = failedPage
+          .getByRole("button", { name: "Retry loading", exact: true })
+          .first();
+        await expect(retry).toBeVisible();
+        await expect(failedPage.getByText(/Your sign-in changed/)).toHaveCount(
+          0,
+        );
+        recover();
+        await retry.click();
+      },
+      entryUrl,
+    );
   });
-});
+}
 
 test("built lost template acknowledgement retries without duplicating creation", async ({
   page,
