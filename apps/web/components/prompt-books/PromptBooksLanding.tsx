@@ -103,19 +103,37 @@ export function PromptBooksLanding() {
                 glass="none"
                 className={cn(
                   "group rounded-2xl p-5 sm:p-6 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-[color,background-color,border-color,box-shadow,transform] duration-300",
-                  isApl && "cursor-pointer sm:col-span-2",
+                  isApl &&
+                    "cursor-pointer sm:col-span-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-fire)]",
                   isApl &&
                     aplExpanded &&
                     "border-[var(--arc-fire)]/30 bg-[var(--arc-fire)]/[0.03]",
                 )}
                 onClick={isApl ? () => setAplExpanded((v) => !v) : undefined}
+                role={isApl ? "button" : undefined}
+                tabIndex={isApl ? 0 : undefined}
+                aria-label={
+                  isApl ? "Arcanea Prompt Language examples" : undefined
+                }
+                aria-expanded={isApl ? aplExpanded : undefined}
+                aria-controls={isApl ? "apl-examples" : undefined}
+                onKeyDown={
+                  isApl
+                    ? (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setAplExpanded((value) => !value);
+                        }
+                      }
+                    : undefined
+                }
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                     style={{
-                      background: `${c.color}12`,
-                      border: `1px solid ${c.color}25`,
+                      background: `color-mix(in srgb, ${c.color} 7%, transparent)`,
+                      border: `1px solid color-mix(in srgb, ${c.color} 15%, transparent)`,
                     }}
                   >
                     <Icon
@@ -156,7 +174,10 @@ export function PromptBooksLanding() {
 
         {/* APL Expanded Examples */}
         {aplExpanded && (
-          <div className="mb-14 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div
+            id="apl-examples"
+            className="mb-14 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300 motion-reduce:animate-none"
+          >
             <div className="flex items-center gap-2 mb-4 px-1">
               <PhFlame className="w-4 h-4 text-[var(--arc-fire)]" />
               <h3 className="font-display font-semibold text-sm text-text-primary">
