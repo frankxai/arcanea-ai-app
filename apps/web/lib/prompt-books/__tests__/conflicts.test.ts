@@ -319,3 +319,37 @@ test("a lost draft acknowledgement confirms on retry and immediately supplies th
   assert.equal(template.content, session.getSnapshot().state.content);
   assert.equal(f.templateRows().length, 1);
 });
+
+test("matching the remote conflict value clears retry state and restores subsequent autosave", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const session = new PromptEditorSession(
+    store.getState().prompts[0],
+    () => true,
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
+  );
+  const unsubscribe = session.subscribe(() => {});
+  try {
+    session.updateField("content", "My conflict draft");
+    f.replaceStored({
+      content: "Remote accepted",
+      updated_at: "2026-10-04T12:02:00.123456Z",
+    });
+    assert.equal(await session.save(), false);
+    session.updateField("content", "Remote accepted");
+    assert.equal(session.getSnapshot().isDirty, false);
+    assert.equal(await session.save(), true);
+    assert.equal(session.getSnapshot().saveError, null);
+    session.updateField("content", "Subsequent automatic draft");
+    const until = Date.now() + 3500;
+    while (
+      f.saved().content !== "Subsequent automatic draft" &&
+      Date.now() < until
+    )
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    assert.equal(f.saved().content, "Subsequent automatic draft");
+  } finally {
+    unsubscribe();
+  }
+});

@@ -145,7 +145,13 @@ export class PromptEditorSession {
       const success = await this.flight;
       return success ? this.save() : false;
     }
-    if (!this.snapshot.isDirty) return true;
+    if (!this.snapshot.isDirty) {
+      if (this.conflictPending || this.snapshot.saveError) {
+        this.conflictPending = false;
+        this.emit({ saveError: null });
+      }
+      return true;
+    }
     if (!this.canSave() || !this.baseUpdatedAt) {
       this.emit({
         saveError: "Your sign-in changed. Reopen this prompt before saving.",
