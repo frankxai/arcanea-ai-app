@@ -5,6 +5,7 @@ import { SplitText } from "@/components/motion/split-text";
 import { Reveal } from "@/components/motion/reveal";
 import { LiquidGlass } from "@/components/motion/liquid-glass";
 import { Magnetic } from "@/components/motion/magnetic";
+import { FACTS } from "@/lib/facts";
 
 // Static page — all data is hardcoded constants, no async fetch needed
 
@@ -321,9 +322,6 @@ export default function ShowcasePage() {
               {
                 title: "Platform",
                 items: [
-                  "195 pages",
-                  "144 API routes",
-                  "286 React components",
                   "Real-time chat",
                   "Gallery & social feed",
                   "Credits & payments",
@@ -335,9 +333,9 @@ export default function ShowcasePage() {
               {
                 title: "Open Source",
                 items: [
-                  "14 public repos",
-                  "54 MCP tools",
-                  "20 creator skills",
+                  "Public repos on GitHub",
+                  `${FACTS.mcpTools} MCP tools`,
+                  `${FACTS.skills} creator skills`,
                   "MCP server + bridge",
                   "Agent orchestration",
                   "World engine SDK",
@@ -569,7 +567,7 @@ export default function ShowcasePage() {
             Build Your World
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-zinc-400">
-            54 tools. 10 Gates. Infinite worlds. Start creating now.
+            {FACTS.mcpTools} tools. {FACTS.gates} Gates. Start creating now.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link

@@ -292,7 +292,6 @@ export default function PromptBooksPage() {
   } = usePromptBooksStore();
 
   const router = useRouter();
-  const [authChecked, setAuthChecked] = useState(false);
 
   // Initialize store with authenticated user's Supabase client
   useEffect(() => {
@@ -307,8 +306,6 @@ export default function PromptBooksPage() {
         }
       } catch {
         // Supabase not configured or offline — show landing
-      } finally {
-        setAuthChecked(true);
       }
     };
     initAuth();
@@ -412,10 +409,9 @@ export default function PromptBooksPage() {
     [deleteTag],
   );
 
-  // Show nothing while auth is being determined
-  if (!authChecked) return null;
-
-  // Show landing page for unauthenticated users
+  // First HTML and signed-out users get the landing. Do not return null
+  // while auth is pending — that hid "Your AI Prompt Library" from crawlers
+  // and no-JS. Signed-in users swap to the library after initialize().
   if (!userId) {
     return (
       <div className="flex min-h-[calc(100dvh-4rem)]">

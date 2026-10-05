@@ -287,6 +287,11 @@ export function Navbar() {
   return (
     <LazyMotion features={domAnimation}>
       <nav
+        style={
+          pathname === "/stories/the-light-she-could-not-see"
+            ? { backgroundColor: "var(--arc-story-night)" }
+            : undefined
+        }
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "liquid-glass bg-[var(--arc-cosmic-void)]/85 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_36px_rgba(0,0,0,0.32)]"

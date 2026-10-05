@@ -28,9 +28,7 @@ module.exports.verifySovereignPreview = async ({
   );
   await page.getByRole("button", { name: "Dungeons", exact: true }).click();
   await page.getByText("12 works", { exact: true }).waitFor();
-  await page
-    .getByLabel("Search names, regions, factions and books", { exact: true })
-    .fill("Pelagic Cathedral");
+  await page.locator("#sovereign-depths-search").first().fill("Pelagic Cathedral");
   await page.getByText("1 work", { exact: true }).waitFor();
   await page
     .locator("#collection a")
@@ -59,9 +57,7 @@ module.exports.verifySovereignPreview = async ({
   });
   await page.getByRole("button", { name: "Bosses", exact: true }).click();
   await page.getByText("24 works", { exact: true }).waitFor();
-  await page
-    .getByLabel("Search names, regions, factions and books", { exact: true })
-    .fill("no-such-sovereign-entry-12345");
+  await page.locator("#sovereign-depths-search").first().fill("no-such-sovereign-entry-12345");
   await page
     .getByText("No works match this search.", { exact: true })
     .waitFor();
