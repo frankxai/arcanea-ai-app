@@ -7,6 +7,7 @@ export const owner = "00000000-0000-4000-8000-000000000001";
 export const collectionId = "00000000-0000-4000-8000-000000000003";
 export const promptId = "00000000-0000-4000-8000-000000000004";
 export const collectionUrl = `/prompt-books/${collectionId}`;
+export const allEditorUrl = `/prompt-books/_all/${promptId}`;
 export const editorUrl = `/prompt-books/${collectionId}/${promptId}`;
 const user = {
   id: owner,
@@ -93,6 +94,16 @@ export async function setup(
         },
       ];
     if (url.pathname.endsWith("/pb_prompts")) {
+      if (
+        request.method() === "GET" &&
+        url.searchParams.get("collection_id") === "eq._all"
+      ) {
+        await route.fulfill({
+          status: 400,
+          json: { message: "Invalid UUID collection filter", code: "22P02" },
+        });
+        return;
+      }
       if (request.method() === "GET" && failingRead) {
         await route.fulfill({
           status: 400,
@@ -191,7 +202,7 @@ export async function setup(
     .locator("form")
     .getByRole("button", { name: "Sign In", exact: true })
     .click();
-  if (entryUrl === editorUrl) {
+  if (entryUrl.endsWith(`/${promptId}`)) {
     await expect(page).toHaveURL(new RegExp(`${promptId}$`));
     if (inspectFailure)
       await inspectFailure(page, () => {
@@ -206,7 +217,8 @@ export async function setup(
       page.getByRole("heading", { name: "Recovery collection", exact: true }),
     ).toBeVisible();
   }
-  await expect.poll(() => scopedTagRead).toBe(true);
+  if (entryUrl !== allEditorUrl)
+    await expect.poll(() => scopedTagRead).toBe(true);
   return {
     row: () => prompt,
     templates: () => templates,
