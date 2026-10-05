@@ -1,6 +1,48 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { admissionFromSpend, isHttpsImageUrl } from "../video-admission";
+import {
+  admissionFromSpend,
+  isHttpsImageUrl,
+  trustedSpendOrigin,
+} from "../video-admission";
+
+test("the spend call only goes to an origin this deployment serves", () => {
+  const prod = {
+    NODE_ENV: "production",
+    VERCEL_URL: "arcanea-ai-app-abc123.vercel.app",
+    VERCEL_BRANCH_URL: "arcanea-ai-app-git-fix-team.vercel.app",
+    VERCEL_PROJECT_PRODUCTION_URL: "www.arcanea.ai",
+  };
+  assert.equal(
+    trustedSpendOrigin("https://www.arcanea.ai", prod),
+    "https://www.arcanea.ai",
+  );
+  assert.equal(
+    trustedSpendOrigin("https://arcanea.ai", prod),
+    "https://arcanea.ai",
+  );
+  assert.equal(
+    trustedSpendOrigin("https://arcanea-ai-app-abc123.vercel.app", prod),
+    "https://arcanea-ai-app-abc123.vercel.app",
+  );
+  assert.equal(
+    trustedSpendOrigin("https://arcanea-ai-app-git-fix-team.vercel.app", prod),
+    "https://arcanea-ai-app-git-fix-team.vercel.app",
+  );
+  for (const forged of [
+    "https://evil.example",
+    "https://www.arcanea.ai.evil.example",
+    "http://www.arcanea.ai",
+    "http://localhost:3000",
+    "not a url",
+  ]) {
+    assert.equal(trustedSpendOrigin(forged, prod), null, forged);
+  }
+  assert.equal(
+    trustedSpendOrigin("http://localhost:3000", { NODE_ENV: "development" }),
+    "http://localhost:3000",
+  );
+});
 
 test("only an explicit successful spend admits paid video work", () => {
   assert.deepEqual(admissionFromSpend(200, { success: true }), {

@@ -5,6 +5,7 @@ import {
   admissionFromSpend,
   isHttpsImageUrl,
   MAX_ANIMATION_PROMPT_LENGTH,
+  trustedSpendOrigin,
   type VideoAdmission,
 } from "@/lib/imagine/video-admission";
 
@@ -131,9 +132,19 @@ async function admitVideo(req: NextRequest): Promise<VideoAdmission> {
     return { allowed: false, status: 401, error: "Sign in to animate images" };
   }
 
+  // Never send the caller's cookies to a host taken from request headers alone.
+  const spendOrigin = trustedSpendOrigin(req.nextUrl.origin, process.env);
+  if (!spendOrigin) {
+    return {
+      allowed: false,
+      status: 503,
+      error: "Credit admission is unavailable",
+    };
+  }
+
   let spendRes: Response;
   try {
-    spendRes = await fetch(new URL("/api/credits/spend", req.nextUrl.origin), {
+    spendRes = await fetch(new URL("/api/credits/spend", spendOrigin), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
