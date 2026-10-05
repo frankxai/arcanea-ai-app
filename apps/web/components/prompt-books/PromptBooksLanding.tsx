@@ -241,7 +241,7 @@ export function PromptBooksLanding() {
         >
           <Link
             href="/auth/login?next=/prompt-books"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.02] transition-[color,background-color,border-color,box-shadow,transform] duration-300"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:[box-shadow:var(--arc-shadow-glow)] hover:scale-[1.02] transition-[color,background-color,border-color,box-shadow,transform] duration-300"
           >
             Sign In to Access
             <PhArrowRight className="w-4 h-4" />
