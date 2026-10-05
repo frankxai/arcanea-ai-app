@@ -163,11 +163,13 @@ function decideDisposition(record) {
   if (row.hold) return 'held';
   if (row.foreignBranch) return 'rejected';
   if (row.draft) return 'left-draft';
-  const flags = Array.isArray(row.craftFlags) ? row.craftFlags : [];
-  if (flags.length) return row.salvageable ? 'cherry-pick-follow-up' : 'rejected';
+  // Hard gates come first: a failing, gated or self-reviewed change is never
+  // labelled salvageable, because automation may trust that label.
   if (row.dependabotMajor) return 'rejected';
   if (row.ci !== 'pass' || row.mergeGate !== 'pass') return 'rejected';
   if (!row.reviewProvider || row.reviewProvider === row.author) return 'rejected';
+  const flags = Array.isArray(row.craftFlags) ? row.craftFlags : [];
+  if (flags.length) return row.salvageable ? 'cherry-pick-follow-up' : 'rejected';
   return 'merged';
 }
 

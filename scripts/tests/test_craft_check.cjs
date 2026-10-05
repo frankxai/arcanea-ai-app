@@ -19,3 +19,17 @@ test('the committed craft check scores both fixtures', () => {
     assert.equal(run.status, require('../craft-check.cjs').EXIT_STATUS[want]);
   }
 });
+
+test('disposition applies CI, merge gate and review before any salvage label', () => {
+  const { decideDisposition } = require(checker);
+  const ok = { ci: 'pass', mergeGate: 'pass', reviewProvider: 'grok', author: 'claude' };
+  assert.equal(decideDisposition({ ...ok }), 'merged');
+  assert.equal(decideDisposition({ ...ok, craftFlags: ['slop'], salvageable: true }), 'cherry-pick-follow-up');
+  assert.equal(decideDisposition({ ...ok, craftFlags: ['slop'], salvageable: false }), 'rejected');
+  assert.equal(decideDisposition({ ...ok, ci: 'fail', craftFlags: ['slop'], salvageable: true }), 'rejected');
+  assert.equal(decideDisposition({ ...ok, mergeGate: 'fail', craftFlags: ['slop'], salvageable: true }), 'rejected');
+  assert.equal(decideDisposition({ ...ok, reviewProvider: 'claude', craftFlags: ['slop'], salvageable: true }), 'rejected');
+  assert.equal(decideDisposition({ ...ok, dependabotMajor: true, craftFlags: ['slop'], salvageable: true }), 'rejected');
+  assert.equal(decideDisposition({ ...ok, hold: true }), 'held');
+  assert.equal(decideDisposition({ ...ok, draft: true }), 'left-draft');
+});
