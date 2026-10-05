@@ -136,7 +136,7 @@ identity. Collection/tag updates use the existing precision comparator. Actual
 registered callback regressions cover stale current-session updates; actual SDK
 roundtrips cover reordered JSONB confirmation and template recovery. The built
 editor case covers multi-parameter roundtrip and reload. Corrupted copy/comments
-are repaired. Earlier42 SDK/11 browser passes remain bound to `cd2a59e`; fresh
+are repaired. Earlier 42 SDK/11 browser passes remain bound to `cd2a59e`; fresh
 current-source verification and independent review are required.
 
 The eighth Copilot review at `499ac38` confirms the prior five corrections but
@@ -145,8 +145,8 @@ when edits overlap. Mutations are now serialized per owner/session/prompt; the
 verified actor is checked again after waiting, and the association query is the
 last awaited read before cache application. Actual pinned SDK tests cover overlap,
 queued A/B/A rejection before writing and queue recovery after failed refresh.
-Prior `c53ce4d` passes47 SDK regressions, TypeScript and strict lint/format;
-its browser/build result remains source-bound. Fresh50 SDK/current source review
+Prior `c53ce4d` passes 47 SDK regressions, TypeScript and strict lint/format;
+its browser/build result remains source-bound. Fresh 50 SDK/current source review
 are required. Security audit and owner preview acceptance still hold production.
 
 Author recovery inspection additionally found a lost draft acknowledgement can
@@ -157,9 +157,11 @@ current actor, keeps a newer cached revision if one exists, then returns that
 conflict for editor resolution. The conditional/generic prompt mutation action
 shares this actor module; the store remains below its size contract. Actual SDK
 and built dialog regressions simulate a committed prompt with a lost response,
-then confirm on retry and create the recovered template. Fresh51 SDK/13 browser
+then confirm on retry and create the recovered template. Fresh 51 SDK/13 browser
 checks and exact-current review remain required. No dependency/schema change.
 
 Review 9 (Copilot 5408835524, source 417950d) found generation-scoped queues could reorder already-started tag writes after A/B/A. Queue ownership is now owner/prompt across generations; each job retains its captured version checks. A real SDK transport delays the old write before mutation and verifies newer unassignment wins in both cache and stored reads. Current expected automated coverage is 52 SDK cases and 13 built-browser cases; actual current CI and review remain required.
 
 Current b020bfc ran 52 SDK cases successfully, but TypeScript rejected the delayed-request fixture: typeof on the initialized nullable variable captured its narrowed null type. Both request gates now use an explicit shared RequestGate type. Vercel and CI failures are retained; the runtime recovery implementation is unchanged. Fresh type/build/browser verification is required on the new commit.
+
+Review 10 (Copilot 5408916575, b020bfc) confirms the cross-generation tag fix but finds direct collection redirects can select before owner initialization resets the store. The collection route now waits for authenticated store ownership, rechecks session generation, and returns unauthenticated users to the public landing. A built-browser case covers first authenticated collection entry and a cold direct collection reload. Current expected coverage is 52 SDK and 14 built-browser cases. Historical fixture failures, cancelled runs and missing acceptance remain retained. Current full-source independent review is still required.
