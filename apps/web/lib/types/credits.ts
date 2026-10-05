@@ -65,7 +65,7 @@ export const CREDIT_PACKS: CreditPack[] = [
 
 // ─── Creation Types & Costs ──────────────────────────────────────────────────
 
-export type CreationType = "image" | "music" | "story" | "character" | "world" | "lore";
+export type CreationType = "image" | "video" | "music" | "story" | "character" | "world" | "lore";
 
 export interface CreationCost {
   type: CreationType;
@@ -82,6 +82,7 @@ export interface CreationCost {
  */
 export const CREATION_COSTS: CreationCost[] = [
   { type: "image", credits: 1, label: "Image", description: "Generate one original image from a prompt" },
+  { type: "video", credits: 1, label: "Video", description: "Animate one image into a short video clip" },
   { type: "music", credits: 1, label: "Music", description: "Compose one original music track" },
   { type: "story", credits: 1, label: "Story", description: "Generate one story chapter or lore entry" },
   { type: "character", credits: 1, label: "Character", description: "Create a character with art and backstory" },

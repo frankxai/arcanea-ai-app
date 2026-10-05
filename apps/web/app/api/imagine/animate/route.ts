@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import {
+  admissionFromSpend,
+  isHttpsImageUrl,
+  MAX_ANIMATION_PROMPT_LENGTH,
+  type VideoAdmission,
+} from '@/lib/imagine/video-admission';
 
 export const maxDuration = 120;
 
@@ -98,12 +105,52 @@ async function animateWithFal(imageUrl: string, prompt: string): Promise<{ video
   return { videoUrl, provider: 'fal-ai' };
 }
 
+/**
+ * Paid video work needs a signed-in user and an explicit successful credit
+ * spend. Anything else is refused before any provider is called.
+ */
+async function admitVideo(req: NextRequest): Promise<VideoAdmission> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { allowed: false, status: 401, error: 'Sign in to animate images' };
+  }
+
+  let spendRes: Response;
+  try {
+    spendRes = await fetch(new URL('/api/credits/spend', req.nextUrl.origin), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        cookie: req.headers.get('cookie') ?? '',
+      },
+      body: JSON.stringify({ creationType: 'video' }),
+    });
+  } catch {
+    return { allowed: false, status: 503, error: 'Credit admission is unavailable' };
+  }
+  return admissionFromSpend(spendRes.status, await spendRes.json().catch(() => null));
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { imageUrl, prompt } = await req.json();
+    const body = await req.json().catch(() => null);
+    const imageUrl: unknown = body?.imageUrl;
+    const prompt = typeof body?.prompt === 'string' ? body.prompt : '';
 
-    if (!imageUrl) {
-      return NextResponse.json({ error: 'Image URL is required' }, { status: 400 });
+    if (!isHttpsImageUrl(imageUrl) || prompt.length > MAX_ANIMATION_PROMPT_LENGTH) {
+      return NextResponse.json(
+        { error: `Provide an https image URL and a prompt of up to ${MAX_ANIMATION_PROMPT_LENGTH} characters` },
+        { status: 400 },
+      );
+    }
+
+    // Admission precedes every paid provider call below (Grok, fal.ai, Gemini).
+    const admission = await admitVideo(req);
+    if (!admission.allowed) {
+      return NextResponse.json({ error: admission.error }, { status: admission.status });
     }
 
     // Priority 1: Grok Imagine Video (same API key as image gen)
