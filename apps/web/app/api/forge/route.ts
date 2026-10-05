@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { createClient as createSessionClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+import { createClient as createSessionClient } from "@/lib/supabase/server";
 
 function getForgeSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
@@ -20,7 +20,9 @@ function getForgeSupabaseClient() {
 async function getSessionUserId(): Promise<string | null> {
   try {
     const session = await createSessionClient();
-    const { data: { user } } = await session.auth.getUser();
+    const {
+      data: { user },
+    } = await session.auth.getUser();
     return user?.id ?? null;
   } catch {
     return null;
@@ -28,7 +30,11 @@ async function getSessionUserId(): Promise<string | null> {
 }
 
 function slugify(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 60);
 }
 
 // GET /api/forge — list user's agents + public agents
@@ -36,39 +42,46 @@ export async function GET(req: NextRequest) {
   try {
     const supabase = getForgeSupabaseClient();
     if (!supabase) {
-      return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+      return NextResponse.json(
+        { error: "Forge backend not configured" },
+        { status: 503 },
+      );
     }
     const { searchParams } = new URL(req.url);
-    const category = searchParams.get('category');
-    const tab = searchParams.get('tab') ?? 'community'; // 'mine' | 'community'
-    const limit = Math.min(Number(searchParams.get('limit') ?? 30), 100);
+    const category = searchParams.get("category");
+    const tab = searchParams.get("tab") ?? "community"; // 'mine' | 'community'
+    const limit = Math.min(Number(searchParams.get("limit") ?? 30), 100);
 
     let query = supabase
-      .from('custom_agents')
-      .select('id, name, slug, description, avatar_emoji, avatar_url, category, visibility, use_count, fork_count, base_luminor_id, preferred_tools, creator_id, created_at')
-      .order('use_count', { ascending: false })
+      .from("custom_agents")
+      .select(
+        "id, name, slug, description, avatar_emoji, avatar_url, category, visibility, use_count, fork_count, base_luminor_id, preferred_tools, creator_id, created_at",
+      )
+      .order("use_count", { ascending: false })
       .limit(limit);
 
-    if (tab === 'mine') {
+    if (tab === "mine") {
       const userId = await getSessionUserId();
-      if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-      query = query.eq('creator_id', userId);
+      if (!userId)
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      query = query.eq("creator_id", userId);
     } else {
-      query = query.eq('visibility', 'public');
+      query = query.eq("visibility", "public");
     }
 
-    if (category && category !== 'all') {
-      query = query.eq('category', category);
+    if (category && category !== "all") {
+      query = query.eq("category", category);
     }
 
     const { data, error } = await query;
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error)
+      return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ agents: data ?? [] });
   } catch (error) {
-    console.error('[forge GET] Error:', error);
+    console.error("[forge GET] Error:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
@@ -78,59 +91,85 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = getForgeSupabaseClient();
     if (!supabase) {
-      return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+      return NextResponse.json(
+        { error: "Forge backend not configured" },
+        { status: 503 },
+      );
     }
     let body;
     try {
       body = await req.json();
     } catch {
-      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
     const userId = await getSessionUserId();
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    const { name, description, avatarEmoji, systemPrompt, personalityTags, baseLuminorId, preferredTools, category, visibility } = body;
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const {
+      name,
+      description,
+      avatarEmoji,
+      systemPrompt,
+      personalityTags,
+      baseLuminorId,
+      preferredTools,
+      category,
+      visibility,
+    } = body;
 
     if (!name || !systemPrompt) {
-      return NextResponse.json({ error: 'name and systemPrompt are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "name and systemPrompt are required" },
+        { status: 400 },
+      );
     }
     if (name.length < 2 || name.length > 40) {
-      return NextResponse.json({ error: 'Name must be 2-40 characters' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Name must be 2-40 characters" },
+        { status: 400 },
+      );
     }
     if (systemPrompt.length < 10 || systemPrompt.length > 8000) {
-      return NextResponse.json({ error: 'System prompt must be 10-8000 characters' }, { status: 400 });
+      return NextResponse.json(
+        { error: "System prompt must be 10-8000 characters" },
+        { status: 400 },
+      );
     }
 
     const { data, error } = await supabase
-      .from('custom_agents')
+      .from("custom_agents")
       .insert({
         creator_id: userId,
         name,
         slug: slugify(name),
         description: description?.slice(0, 200),
-        avatar_emoji: avatarEmoji ?? '🤖',
+        avatar_emoji: avatarEmoji ?? "🤖",
         system_prompt: systemPrompt,
         personality_tags: personalityTags ?? [],
         base_luminor_id: baseLuminorId,
         preferred_tools: preferredTools ?? [],
-        category: category ?? 'general',
-        visibility: visibility ?? 'private',
+        category: category ?? "general",
+        visibility: visibility ?? "private",
       })
       .select()
       .single();
 
     if (error) {
-      if (error.code === '23505') {
-        return NextResponse.json({ error: `You already have an agent named "${name}"` }, { status: 409 });
+      if (error.code === "23505") {
+        return NextResponse.json(
+          { error: `You already have an agent named "${name}"` },
+          { status: 409 },
+        );
       }
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ agent: data }, { status: 201 });
   } catch (error) {
-    console.error('[forge POST] Error:', error);
+    console.error("[forge POST] Error:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
