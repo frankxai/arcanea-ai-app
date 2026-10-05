@@ -33,13 +33,14 @@ export async function fixture(userId = owner) {
   const templateRows = new Map<string, Record<string, unknown>>();
   let failTemplateAfterCommit = false;
   let readFailure: string | null = null;
-  let held: {
+  type RequestGate = {
     method: string;
     table: string;
     entered: ReturnType<typeof deferred<void>>;
     release: ReturnType<typeof deferred<void>>;
-  } | null = null;
-  let heldBefore: typeof held = null;
+  };
+  let held: RequestGate | null = null;
+  let heldBefore: RequestGate | null = null;
   const requests: { url: URL; method: string }[] = [];
   const user = {
     id: userId,

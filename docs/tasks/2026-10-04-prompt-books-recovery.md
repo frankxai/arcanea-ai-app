@@ -161,3 +161,5 @@ then confirm on retry and create the recovered template. Fresh51 SDK/13 browser
 checks and exact-current review remain required. No dependency/schema change.
 
 Review 9 (Copilot 5408835524, source 417950d) found generation-scoped queues could reorder already-started tag writes after A/B/A. Queue ownership is now owner/prompt across generations; each job retains its captured version checks. A real SDK transport delays the old write before mutation and verifies newer unassignment wins in both cache and stored reads. Current expected automated coverage is 52 SDK cases and 13 built-browser cases; actual current CI and review remain required.
+
+Current b020bfc ran 52 SDK cases successfully, but TypeScript rejected the delayed-request fixture: typeof on the initialized nullable variable captured its narrowed null type. Both request gates now use an explicit shared RequestGate type. Vercel and CI failures are retained; the runtime recovery implementation is unchanged. Fresh type/build/browser verification is required on the new commit.
