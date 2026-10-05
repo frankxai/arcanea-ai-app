@@ -466,6 +466,9 @@ export function StudioHub() {
                   Start creating
                   <ArrowRight size={18} weight="bold" />
                 </Link>
+                <Link href="/myth-studio" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl border border-[var(--arc-cosmic-border)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)]">
+                  Plan a myth-based story
+                </Link>
                 <Link
                   href="/storage"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/60 hover:bg-white/[0.07] hover:text-white/90 hover:border-white/[0.14] transition-all"

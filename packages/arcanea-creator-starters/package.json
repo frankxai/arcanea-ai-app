@@ -4,6 +4,15 @@
   "type": "module",
   "exports": {
     "./build": "./scripts/build.mjs",
-    "./myth-packets": "./src/myth-packets.mjs"
+    "./myth-packets": {
+      "types": "./src/myth-packets.d.mts",
+      "default": "./src/myth-packets.mjs"
+    },
+    "./myth-workbench": {
+      "types": "./src/myth-workbench.d.mts",
+      "default": "./src/myth-workbench.mjs"
+    },
+    "./myth-atlas": "./myth-atlas.v1.json",
+    "./myth-example": "./myth-brief.example.json"
   }
 }

@@ -91,3 +91,42 @@ The exact v1 brief fields are shown in the example. An audience is `ages-8-12`, 
 The estimate charges every planned attempt and review of every attempt. Review cost is rounded up to a whole micro per deliverable. Rates are supplied by the creator, not retrieved provider prices; accepted output is a target, not a promise. The example plans 14 attempts and 90 review minutes: EUR 4 in generation plus EUR 45 in review, totaling EUR 49 against a EUR 150 ceiling. Taxes, checkout fees, hosting, writing and distribution are excluded. Exceeding the ceiling produces `withinBudget: false` so a human can revise the brief; compilation never initiates jobs or spending.
 
 Packets contain SHA-256 fingerprints of the atlas, brief, each selected record and complete packet body. Key order does not affect fingerprints; content and array order do. They detect change, not authenticity, legal status or editor approval. There are no timestamps, model calls, provider keys, network requests, database writes or automatic releases. Persist reviewed project packets through the app's existing owner-scoped catalog/publishing flows when that integration is separately implemented. Draft release-manifest validation work is not duplicated here.
+
+### Myth Studio workbench
+
+`/myth-studio` exposes the compiler as an editable research desk. It supports
+brief JSON import/export, source selection, deliverable/review estimates,
+research Markdown, packet JSON and an editorial workflow handoff. Editing the
+brief invalidates previous compiled exports. Compilation calls no models.
+
+`POST /api/myth-studio` accepts exactly `{ "action": "compile" | "save", "brief": ... }`
+as JSON with an actual 16 KiB request-byte limit. Compilation is anonymous;
+saving requires a validated Supabase session. The server chooses the bundled
+atlas, owner and private research stage. Caller-supplied approval, packet,
+owner or project linkage fields are rejected.
+
+`GET /api/myth-studio` lists up to 30 verified private snapshots for the session
+owner. `GET /api/myth-studio?id=<creation-uuid>` reopens one with fingerprint
+verification. Responses are private/no-store. Database errors are failures,
+not successful empty results. A save returns the creation ID, packet ID,
+creation timestamp and created/existing disposition. An identical retry is
+idempotent; changed briefs create separate versions. Altered rows produce a
+conflict and are never overwritten by this route.
+
+Storage uses deployed `creations` columns with owner RLS. The saved content
+retains the brief, atlas witness snapshot and packet for reproducibility.
+This is no-overwrite behavior through Myth Studio, not database-enforced
+immutability: owners retain existing direct Data API permissions. Fingerprints
+detect changes; they do not establish authenticity, rights or release approval.
+The brief project reference is a logical slug, not a deployed project relation.
+
+Handoff JSON is planning data with `executionAuthorized: false`. It records
+packet/source identities, accepted-unit targets, planned attempt limits,
+estimated cost and human acceptance. It does not queue a job, spend credits,
+call a provider, approve a release or grant a license.
+
+Run the failure/recovery contract tests:
+
+```sh
+node --test packages/arcanea-creator-starters/scripts/myth-workbench.test.mjs
+```

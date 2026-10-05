@@ -121,7 +121,8 @@ export default function CreationsPage() {
       const data = user
         ? await getUserCreations(client, user.id, filter === 'all' ? undefined : { type: filter })
         : await getCreations(client, { limit: 50, ...(filter !== 'all' ? { type: filter } : {}) });
-      setCreations(data);
+      // Research snapshots belong in Myth Studio, without media/IP actions.
+      setCreations(data.filter(creation => creation.content?.schema !== 'arcanea.myth-save.v1'));
     } catch (err) {
       console.warn('Failed to load creations:', err);
     } finally {
@@ -156,6 +157,9 @@ export default function CreationsPage() {
               {creations.length} creation{creations.length !== 1 ? 's' : ''} saved
             </p>
             <SyntheticContentNotice medium="content" className="mt-1.5" />
+            <Link href="/myth-studio" className="mt-2 inline-block text-sm text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4">
+              Open Myth Studio research snapshots
+            </Link>
           </div>
           <Link
             href="/chat"
