@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { createClient as createSessionClient } from '@/lib/supabase/server';
 
 function getForgeSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
@@ -11,6 +12,19 @@ function getForgeSupabaseClient() {
   }
 
   return createClient(url, serviceRoleKey);
+}
+
+// Identity comes from the session cookie, never from the request body or query.
+// The forge client is a service-role client (it bypasses RLS), so every write
+// and every "mine" read must be scoped by the server-verified user id.
+async function getSessionUserId(): Promise<string | null> {
+  try {
+    const session = await createSessionClient();
+    const { data: { user } } = await session.auth.getUser();
+    return user?.id ?? null;
+  } catch {
+    return null;
+  }
 }
 
 function slugify(name: string): string {
@@ -25,7 +39,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
     }
     const { searchParams } = new URL(req.url);
-    const userId = searchParams.get('userId');
     const category = searchParams.get('category');
     const tab = searchParams.get('tab') ?? 'community'; // 'mine' | 'community'
     const limit = Math.min(Number(searchParams.get('limit') ?? 30), 100);
@@ -36,7 +49,9 @@ export async function GET(req: NextRequest) {
       .order('use_count', { ascending: false })
       .limit(limit);
 
-    if (tab === 'mine' && userId) {
+    if (tab === 'mine') {
+      const userId = await getSessionUserId();
+      if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       query = query.eq('creator_id', userId);
     } else {
       query = query.eq('visibility', 'public');
@@ -71,10 +86,12 @@ export async function POST(req: NextRequest) {
     } catch {
       return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
-    const { userId, name, description, avatarEmoji, systemPrompt, personalityTags, baseLuminorId, preferredTools, category, visibility } = body;
+    const userId = await getSessionUserId();
+    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { name, description, avatarEmoji, systemPrompt, personalityTags, baseLuminorId, preferredTools, category, visibility } = body;
 
-    if (!userId || !name || !systemPrompt) {
-      return NextResponse.json({ error: 'userId, name, and systemPrompt are required' }, { status: 400 });
+    if (!name || !systemPrompt) {
+      return NextResponse.json({ error: 'name and systemPrompt are required' }, { status: 400 });
     }
     if (name.length < 2 || name.length > 40) {
       return NextResponse.json({ error: 'Name must be 2-40 characters' }, { status: 400 });
