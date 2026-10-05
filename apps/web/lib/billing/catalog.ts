@@ -141,14 +141,49 @@ export const CREDIT_PACKS: readonly CreditPack[] = [
  * is chosen. Re-price here, never in a route.
  */
 export const ACTION_COSTS: readonly ActionCost[] = [
-  { id: "chat.standard", credits: 1, label: "Chat message, standard model", unit: "message" },
-  { id: "chat.frontier", credits: 5, label: "Chat message, frontier model", unit: "message" },
-  { id: "image.standard", credits: 10, label: "Image, standard model", unit: "image" },
-  { id: "image.premium", credits: 25, label: "Image, premium model", unit: "image" },
-  { id: "video.clip", credits: 150, label: "Video clip, up to 5 seconds", unit: "clip" },
-  { id: "music.track", credits: 60, label: "Music track, up to 3 minutes", unit: "track" },
+  {
+    id: "chat.standard",
+    credits: 1,
+    label: "Chat message, standard model",
+    unit: "message",
+  },
+  {
+    id: "chat.frontier",
+    credits: 5,
+    label: "Chat message, frontier model",
+    unit: "message",
+  },
+  {
+    id: "image.standard",
+    credits: 10,
+    label: "Image, standard model",
+    unit: "image",
+  },
+  {
+    id: "image.premium",
+    credits: 25,
+    label: "Image, premium model",
+    unit: "image",
+  },
+  {
+    id: "video.clip",
+    credits: 150,
+    label: "Video clip, up to 5 seconds",
+    unit: "clip",
+  },
+  {
+    id: "music.track",
+    credits: 60,
+    label: "Music track, up to 3 minutes",
+    unit: "track",
+  },
   { id: "voice.minute", credits: 2, label: "Voice synthesis", unit: "minute" },
-  { id: "world.export", credits: 0, label: "World export, any format", unit: "export" },
+  {
+    id: "world.export",
+    credits: 0,
+    label: "World export, any format",
+    unit: "export",
+  },
 ] as const;
 
 export type SkuId = PlanId | CreditPack["id"];
@@ -182,7 +217,10 @@ export function formatEuro(cents: number): string {
 }
 
 export function isPaidSku(sku: string): sku is Exclude<SkuId, "spark"> {
-  return sku !== "spark" && (getPlan(sku) !== undefined || getPack(sku) !== undefined);
+  return (
+    sku !== "spark" &&
+    (getPlan(sku) !== undefined || getPack(sku) !== undefined)
+  );
 }
 
 /** Resolve a Polar product id back to the SKU it represents using the env mapping. */
@@ -192,7 +230,8 @@ export function skuForPolarProduct(
 ): SkuId | null {
   if (!productId) return null;
   for (const plan of PLANS) {
-    if (plan.polarProductEnv && env[plan.polarProductEnv] === productId) return plan.id;
+    if (plan.polarProductEnv && env[plan.polarProductEnv] === productId)
+      return plan.id;
   }
   for (const pack of CREDIT_PACKS) {
     if (env[pack.polarProductEnv] === productId) return pack.id;
@@ -206,7 +245,8 @@ export function polarProductForSku(
   env: Record<string, string | undefined> = process.env,
 ): string | null {
   const plan = getPlan(sku);
-  if (plan) return plan.polarProductEnv ? env[plan.polarProductEnv] ?? null : null;
+  if (plan)
+    return plan.polarProductEnv ? (env[plan.polarProductEnv] ?? null) : null;
   const pack = getPack(sku);
   if (pack) return env[pack.polarProductEnv] ?? null;
   return null;
@@ -217,15 +257,17 @@ export function polarProductForSku(
  * product ids. Packs may lag behind plans; the pricing page hides what is
  * not configured instead of showing a button that cannot work.
  */
-export function billingReadiness(env: Record<string, string | undefined> = process.env) {
+export function billingReadiness(
+  env: Record<string, string | undefined> = process.env,
+) {
   const hasToken = Boolean(env.POLAR_ACCESS_TOKEN?.trim());
   const hasWebhook = Boolean(env.POLAR_WEBHOOK_SECRET?.trim());
   const plansReady = PLANS.filter((p) => p.polarProductEnv).every((p) =>
     Boolean(env[p.polarProductEnv]?.trim()),
   );
-  const packsReady = CREDIT_PACKS.filter((p) => Boolean(env[p.polarProductEnv]?.trim())).map(
-    (p) => p.id,
-  );
+  const packsReady = CREDIT_PACKS.filter((p) =>
+    Boolean(env[p.polarProductEnv]?.trim()),
+  ).map((p) => p.id);
   return {
     live: hasToken && hasWebhook && plansReady,
     hasToken,

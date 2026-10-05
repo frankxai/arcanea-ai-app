@@ -14,14 +14,26 @@ import { applyStyle } from "@/lib/imagine/styles";
 import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 import { createClient } from "@/lib/supabase/server";
 import { costFor, type ActionId } from "@/lib/billing/catalog";
-import { BillingError, InsufficientCreditsError, withReservation } from "@/lib/billing/ledger";
+import {
+  BillingError,
+  InsufficientCreditsError,
+  withReservation,
+} from "@/lib/billing/ledger";
 
 export const maxDuration = 60;
 
-const PREMIUM_MODEL_HINTS = ["pro-image", "flux.2-max", "gpt-image", "imagen-4"];
+const PREMIUM_MODEL_HINTS = [
+  "pro-image",
+  "flux.2-max",
+  "gpt-image",
+  "imagen-4",
+];
 
 function imageAction(model: string | undefined): ActionId {
-  if (model && PREMIUM_MODEL_HINTS.some((hint) => model.toLowerCase().includes(hint))) {
+  if (
+    model &&
+    PREMIUM_MODEL_HINTS.some((hint) => model.toLowerCase().includes(hint))
+  ) {
     return "image.premium";
   }
   return "image.standard";
@@ -86,16 +98,28 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const { prompt: styledPrompt } = applyStyle(processedPrompt, style || "none");
+    const { prompt: styledPrompt } = applyStyle(
+      processedPrompt,
+      style || "none",
+    );
 
-    let outcome: Awaited<ReturnType<typeof withReservation<Awaited<ReturnType<typeof generateImages>>>>>;
+    let outcome: Awaited<
+      ReturnType<
+        typeof withReservation<Awaited<ReturnType<typeof generateImages>>>
+      >
+    >;
     try {
       outcome = await withReservation(
         {
           userId: user.id,
           action,
           amount: requested,
-          metadata: { count, aspectRatio, model: model ?? null, provider: provider ?? null },
+          metadata: {
+            count,
+            aspectRatio,
+            model: model ?? null,
+            provider: provider ?? null,
+          },
         },
         async () => {
           const result = await generateImages({
@@ -122,11 +146,15 @@ export async function POST(req: NextRequest) {
       }
       if (error instanceof BillingError) {
         return NextResponse.json(
-          { error: "Credit admission is unavailable", reason: "ledger_unavailable" },
+          {
+            error: "Credit admission is unavailable",
+            reason: "ledger_unavailable",
+          },
           { status: 503 },
         );
       }
-      const msg = error instanceof Error ? error.message : "Image generation failed";
+      const msg =
+        error instanceof Error ? error.message : "Image generation failed";
       if (msg.includes("No image generation API configured")) {
         return NextResponse.json({ error: msg }, { status: 503 });
       }
@@ -141,7 +169,11 @@ export async function POST(req: NextRequest) {
       if (img.url.startsWith("data:")) {
         const match = img.url.match(/^data:([^;]+);base64,(.+)$/);
         if (match) {
-          return { data: match[2], mimeType: match[1], prompt: img.revisedPrompt || prompt };
+          return {
+            data: match[2],
+            mimeType: match[1],
+            prompt: img.revisedPrompt || prompt,
+          };
         }
       }
       return { url: img.url, prompt: img.revisedPrompt || prompt };
@@ -164,7 +196,8 @@ export async function POST(req: NextRequest) {
           url: img.url,
           prompt: img.revisedPrompt || prompt,
           revisedPrompt: img.revisedPrompt,
-          mimeType: "mimeType" in legacyImage ? legacyImage.mimeType : undefined,
+          mimeType:
+            "mimeType" in legacyImage ? legacyImage.mimeType : undefined,
           data: "data" in legacyImage ? legacyImage.data : undefined,
         };
       }),
@@ -179,13 +212,19 @@ export async function POST(req: NextRequest) {
       },
       saveState: { canSave: images.length > 0 },
       error: null,
-      images: images.map((image) => ({ ...image, revisedPrompt: image.prompt })),
+      images: images.map((image) => ({
+        ...image,
+        revisedPrompt: image.prompt,
+      })),
       credits: { action, charged, balance: account.balance },
     };
 
     return NextResponse.json(response);
   } catch (error) {
     console.error("Imagine API error:", error);
-    return NextResponse.json({ error: "Failed to generate images" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to generate images" },
+      { status: 500 },
+    );
   }
 }

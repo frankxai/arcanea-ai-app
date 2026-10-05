@@ -14,15 +14,16 @@ Code references: `apps/web/lib/billing/*`, `supabase/migrations/20261005000001_b
    API: `organizations_list` must show `capabilities.checkout_payments: true`.
 2. Products (create in **sandbox** first at sandbox.polar.sh, then repeat in production):
 
-   | Catalog SKU | Polar product | Type | Price |
-   | --- | --- | --- | --- |
-   | `creator` | Arcanea Creator | subscription, monthly | €19.00 |
-   | `studio` | Arcanea Studio | subscription, monthly | €79.00 |
-   | `pack-500` | 500 credits | one-time | €5.00 |
-   | `pack-2500` | 2,500 credits | one-time | €19.00 |
-   | `pack-8000` | 8,000 credits | one-time | €49.00 |
+   | Catalog SKU | Polar product   | Type                  | Price  |
+   | ----------- | --------------- | --------------------- | ------ |
+   | `creator`   | Arcanea Creator | subscription, monthly | €19.00 |
+   | `studio`    | Arcanea Studio  | subscription, monthly | €79.00 |
+   | `pack-500`  | 500 credits     | one-time              | €5.00  |
+   | `pack-2500` | 2,500 credits   | one-time              | €19.00 |
+   | `pack-8000` | 8,000 credits   | one-time              | €49.00 |
 
    Tax behaviour: inclusive. Copy each product id.
+
 3. Access token: Settings → Developers → create an organization access token with scopes
    `checkouts:write`, `customer_sessions:write`, `products:read`, `orders:read`,
    `subscriptions:read`.
@@ -85,6 +86,6 @@ Founding Circle list (`waitlists` table) with the 40% discount code created in P
 - Failed webhook deliveries: `select * from billing_events where error is not null`. Polar retries
   on our 500; the ledger is idempotent so a retry never double-grants.
 - Manual credit adjustment (support): `select billing_grant_credits('<user>', 100, 'adjust',
-  'support:<ticket>', '{"by":"frank"}')` with the service role.
+'support:<ticket>', '{"by":"frank"}')` with the service role.
 - Weekly: `select kind, count(*), sum(amount) from credit_ledger where created_at > now() -
-  interval '7 days' group by kind`.
+interval '7 days' group by kind`.

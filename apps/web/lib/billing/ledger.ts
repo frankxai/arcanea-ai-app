@@ -13,7 +13,14 @@ import { WELCOME_CREDITS, type ActionId, type PlanId } from "./catalog";
 export interface BillingAccount {
   userId: string;
   plan: PlanId;
-  planStatus: "none" | "active" | "trialing" | "past_due" | "canceled" | "revoked" | "paused";
+  planStatus:
+    | "none"
+    | "active"
+    | "trialing"
+    | "past_due"
+    | "canceled"
+    | "revoked"
+    | "paused";
   balance: number;
   reserved: number;
   currentPeriodEnd: string | null;
@@ -24,7 +31,11 @@ export interface BillingAccount {
 
 export type ReserveResult =
   | ({ ok: true; idempotent: boolean } & BillingAccount)
-  | ({ ok: false; reason: "insufficient_credits"; required: number } & BillingAccount);
+  | ({
+      ok: false;
+      reason: "insufficient_credits";
+      required: number;
+    } & BillingAccount);
 
 type RpcClient = {
   rpc: (
@@ -138,14 +149,24 @@ export async function setPlan(input: {
     p_polar_customer_id: input.polarCustomerId ?? null,
     p_polar_subscription_id: input.polarSubscriptionId ?? null,
     p_polar_product_id: input.polarProductId ?? null,
-    p_period_end: input.currentPeriodEnd ? input.currentPeriodEnd.toISOString() : null,
+    p_period_end: input.currentPeriodEnd
+      ? input.currentPeriodEnd.toISOString()
+      : null,
     p_cancel_at_period_end: input.cancelAtPeriodEnd ?? false,
   });
 }
 
 /** True the first time a provider delivery id is seen. */
-export async function recordEvent(id: string, type: string, payload: unknown): Promise<boolean> {
-  return call<boolean>("billing_record_event", { p_id: id, p_type: type, p_payload: payload });
+export async function recordEvent(
+  id: string,
+  type: string,
+  payload: unknown,
+): Promise<boolean> {
+  return call<boolean>("billing_record_event", {
+    p_id: id,
+    p_type: type,
+    p_payload: payload,
+  });
 }
 
 export async function markEvent(id: string, error?: string): Promise<void> {
@@ -168,13 +189,26 @@ export class InsufficientCreditsError extends BillingError {
  * charged only for what was delivered.
  */
 export async function withReservation<T>(
-  input: { userId: string; action: ActionId; amount: number; metadata?: Record<string, unknown> },
+  input: {
+    userId: string;
+    action: ActionId;
+    amount: number;
+    metadata?: Record<string, unknown>;
+  },
   work: (reference: string) => Promise<{ result: T; actualCredits: number }>,
-): Promise<{ result: T; charged: number; account: BillingAccount; reference: string }> {
+): Promise<{
+  result: T;
+  charged: number;
+  account: BillingAccount;
+  reference: string;
+}> {
   const reference = `${input.action}:${randomUUID()}`;
   const reservation = await reserveCredits({ ...input, reference });
   if (!reservation.ok) {
-    throw new InsufficientCreditsError(reservation.required, reservation.balance);
+    throw new InsufficientCreditsError(
+      reservation.required,
+      reservation.balance,
+    );
   }
 
   let outcome: { result: T; actualCredits: number };
@@ -184,7 +218,9 @@ export async function withReservation<T>(
     await releaseReservation({
       userId: input.userId,
       reference,
-      metadata: { error: error instanceof Error ? error.message : String(error) },
+      metadata: {
+        error: error instanceof Error ? error.message : String(error),
+      },
     }).catch(() => undefined);
     throw error;
   }

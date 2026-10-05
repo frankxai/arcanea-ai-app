@@ -31,7 +31,10 @@ export function BillingActions({
         headers: { "Content-Type": "application/json" },
         body: body ? JSON.stringify(body) : undefined,
       });
-      const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
+      const data = (await res.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+      };
       if (!res.ok || !data.url) {
         setError(data.error ?? "That did not work. Try again in a moment.");
         setBusy(null);
@@ -48,7 +51,10 @@ export function BillingActions({
     return (
       <section className="rounded-2xl border border-dashed border-white/[0.12] p-5 text-xs text-white/55">
         Checkout is not open yet. Plans and credit packs are described on the{" "}
-        <Link href="/pricing" className="underline underline-offset-2 hover:text-white/80">
+        <Link
+          href="/pricing"
+          className="underline underline-offset-2 hover:text-white/80"
+        >
           pricing page
         </Link>
         , and the Founding Circle list there gets first access.
@@ -66,7 +72,9 @@ export function BillingActions({
             onClick={() => post("/api/billing/portal")}
             className="px-4 py-2.5 rounded-xl border border-white/[0.12] text-xs font-semibold text-white/80 hover:bg-white/[0.04] disabled:opacity-50"
           >
-            {busy === "/api/billing/portal" ? "Opening…" : "Manage subscription and invoices"}
+            {busy === "/api/billing/portal"
+              ? "Opening…"
+              : "Manage subscription and invoices"}
           </button>
         ) : (
           <Link
@@ -80,17 +88,23 @@ export function BillingActions({
 
       {packs.length > 0 && (
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-white/40 mb-3">Top up credits</p>
+          <p className="text-[10px] font-mono uppercase tracking-widest text-white/40 mb-3">
+            Top up credits
+          </p>
           <div className="flex flex-wrap gap-3">
             {packs.map((pack) => (
               <button
                 key={pack.id}
                 type="button"
                 disabled={busy !== null}
-                onClick={() => post("/api/billing/checkout", { sku: pack.id }, pack.id)}
+                onClick={() =>
+                  post("/api/billing/checkout", { sku: pack.id }, pack.id)
+                }
                 className="px-4 py-2.5 rounded-xl border border-white/[0.12] text-xs text-white/80 hover:bg-white/[0.04] disabled:opacity-50"
               >
-                {busy === pack.id ? "Opening…" : `${pack.credits.toLocaleString("en-US")} credits · ${formatEuro(pack.priceCents)}`}
+                {busy === pack.id
+                  ? "Opening…"
+                  : `${pack.credits.toLocaleString("en-US")} credits · ${formatEuro(pack.priceCents)}`}
               </button>
             ))}
           </div>

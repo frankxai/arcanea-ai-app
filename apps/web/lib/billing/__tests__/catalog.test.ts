@@ -26,7 +26,10 @@ test("catalog has exactly one free plan and paid plans carry monthly credits", (
 test("credit packs get cheaper per credit as they grow", () => {
   const unit = CREDIT_PACKS.map((p) => p.priceCents / p.credits);
   for (let i = 1; i < unit.length; i += 1) {
-    assert.ok(unit[i] < unit[i - 1], `pack ${CREDIT_PACKS[i].id} should be cheaper per credit`);
+    assert.ok(
+      unit[i] < unit[i - 1],
+      `pack ${CREDIT_PACKS[i].id} should be cheaper per credit`,
+    );
   }
   // 1 credit ≈ €0.01 at the entry pack.
   assert.equal(CREDIT_PACKS[0].priceCents / CREDIT_PACKS[0].credits, 1);
@@ -34,7 +37,10 @@ test("credit packs get cheaper per credit as they grow", () => {
 
 test("every action cost is a non-negative integer and exports are free", () => {
   for (const action of ACTION_COSTS) {
-    assert.ok(Number.isInteger(action.credits) && action.credits >= 0, action.id);
+    assert.ok(
+      Number.isInteger(action.credits) && action.credits >= 0,
+      action.id,
+    );
   }
   assert.equal(costFor("world.export"), 0);
   assert.equal(costFor("image.standard", 4), 40);

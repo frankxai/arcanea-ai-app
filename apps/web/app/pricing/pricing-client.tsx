@@ -114,12 +114,18 @@ function useCheckout() {
         return;
       }
       if (!res.ok || !data.url) {
-        setState({ sku: null, error: data.error ?? "Checkout could not be started." });
+        setState({
+          sku: null,
+          error: data.error ?? "Checkout could not be started.",
+        });
         return;
       }
       window.location.assign(data.url);
     } catch {
-      setState({ sku: null, error: "Something went wrong. Please check your connection." });
+      setState({
+        sku: null,
+        error: "Something went wrong. Please check your connection.",
+      });
     }
   };
 
@@ -154,7 +160,9 @@ function PlanCard({
         </span>
       )}
       <div>
-        <h3 className="font-display text-lg font-bold text-white/90">{plan.name}</h3>
+        <h3 className="font-display text-lg font-bold text-white/90">
+          {plan.name}
+        </h3>
         <div className="flex items-baseline gap-2 mt-4 mb-2">
           <span className="text-4xl font-display font-bold text-white">
             {formatEuro(plan.priceCents)}
@@ -163,11 +171,16 @@ function PlanCard({
             {isFree ? "forever" : "per month, VAT included"}
           </span>
         </div>
-        <p className="text-xs text-white/50 leading-relaxed font-body mb-6">{plan.tagline}</p>
+        <p className="text-xs text-white/50 leading-relaxed font-body mb-6">
+          {plan.tagline}
+        </p>
 
         <ul className="space-y-3 border-t border-white/[0.04] pt-6 mb-8">
           {plan.features.map((feat) => (
-            <li key={feat} className="flex items-start gap-2.5 text-xs text-white/70">
+            <li
+              key={feat}
+              className="flex items-start gap-2.5 text-xs text-white/70"
+            >
               <Check className="w-4 h-4 text-white/40 shrink-0 mt-0.5" />
               <span>{feat}</span>
             </li>
@@ -193,7 +206,11 @@ function PlanCard({
               : "border border-white/[0.12] text-white/80 hover:bg-white/[0.04]"
           }`}
         >
-          {busy ? <CircleNotch className="w-4 h-4 animate-spin" /> : <span>Choose {plan.name}</span>}
+          {busy ? (
+            <CircleNotch className="w-4 h-4 animate-spin" />
+          ) : (
+            <span>Choose {plan.name}</span>
+          )}
         </button>
       ) : (
         <a
@@ -231,11 +248,17 @@ function PackCard({
         <span className="font-display text-2xl font-bold text-white">
           {pack.credits.toLocaleString("en-US")}
         </span>
-        <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">credits</span>
+        <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">
+          credits
+        </span>
       </div>
       <div className="flex items-baseline gap-2">
-        <span className="text-lg font-display font-semibold text-white/90">{formatEuro(pack.priceCents)}</span>
-        <span className="text-[10px] font-mono text-white/40">{perCredit} ct per credit</span>
+        <span className="text-lg font-display font-semibold text-white/90">
+          {formatEuro(pack.priceCents)}
+        </span>
+        <span className="text-[10px] font-mono text-white/40">
+          {perCredit} ct per credit
+        </span>
       </div>
       {ready ? (
         <button
@@ -244,7 +267,11 @@ function PackCard({
           disabled={busy}
           className="mt-auto py-2.5 rounded-xl border border-white/[0.12] text-xs font-semibold text-white/80 hover:bg-white/[0.04] transition-colors disabled:opacity-50"
         >
-          {busy ? <CircleNotch className="w-4 h-4 animate-spin mx-auto" /> : "Buy credits"}
+          {busy ? (
+            <CircleNotch className="w-4 h-4 animate-spin mx-auto" />
+          ) : (
+            "Buy credits"
+          )}
         </button>
       ) : (
         <span className="mt-auto py-2.5 rounded-xl border border-dashed border-white/[0.1] text-[11px] text-center text-white/40">
@@ -257,7 +284,9 @@ function PackCard({
 
 export function PricingClient({ billing }: { billing: PricingBillingState }) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const checkout = useCheckout();
 
@@ -309,7 +338,10 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
             </div>
 
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/6 mb-6">
-              <GitBranch size={12} className="text-[var(--arc-brand-atlantean-teal)]" />
+              <GitBranch
+                size={12}
+                className="text-[var(--arc-brand-atlantean-teal)]"
+              />
               <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest">
                 {billing.live
                   ? billing.sandbox
@@ -327,9 +359,10 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
             </h1>
 
             <p className="text-base md:text-lg text-white/50 max-w-2xl mx-auto leading-relaxed font-body">
-              Bring your own API keys and build for nothing, forever. A plan keeps the memory of
-              your world alive across sessions and publishes it under your name. Credits buy
-              generation on our keys when you would rather not manage your own.
+              Bring your own API keys and build for nothing, forever. A plan
+              keeps the memory of your world alive across sessions and publishes
+              it under your name. Credits buy generation on our keys when you
+              would rather not manage your own.
             </p>
           </section>
 
@@ -354,10 +387,12 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
 
           <section className="max-w-5xl mx-auto mb-20 grid lg:grid-cols-[1.1fr_1fr] gap-8">
             <div>
-              <h2 className="text-xl font-display font-semibold mb-1">Credits, when you want our keys</h2>
+              <h2 className="text-xl font-display font-semibold mb-1">
+                Credits, when you want our keys
+              </h2>
               <p className="text-xs text-white/45 font-body mb-5">
-                One credit is about one cent of provider cost. Credits never expire. Bring your own
-                key and every action below costs nothing.
+                One credit is about one cent of provider cost. Credits never
+                expire. Bring your own key and every action below costs nothing.
               </p>
               <div className="grid sm:grid-cols-3 gap-3">
                 {CREDIT_PACKS.map((pack) => (
@@ -377,10 +412,14 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
               </h3>
               <ul className="divide-y divide-white/[0.05]">
                 {visibleCosts.map((cost) => (
-                  <li key={cost.id} className="flex items-center justify-between py-2.5 text-xs">
+                  <li
+                    key={cost.id}
+                    className="flex items-center justify-between py-2.5 text-xs"
+                  >
                     <span className="text-white/70">{cost.label}</span>
                     <span className="font-mono text-white/90">
-                      {cost.credits} <span className="text-white/35">/ {cost.unit}</span>
+                      {cost.credits}{" "}
+                      <span className="text-white/35">/ {cost.unit}</span>
                     </span>
                   </li>
                 ))}
@@ -388,7 +427,10 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
             </div>
           </section>
 
-          <section id="founding-circle" className="max-w-3xl mx-auto mb-20 scroll-mt-24">
+          <section
+            id="founding-circle"
+            className="max-w-3xl mx-auto mb-20 scroll-mt-24"
+          >
             <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0c0d12]/90 to-[#050608]/95 p-8 md:p-12 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--arc-brand-arcanean-gold)]/5 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--arc-brand-atlantean-teal)]/5 rounded-full blur-3xl pointer-events-none" />
@@ -396,7 +438,10 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="max-w-md">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-arcanean-gold)]/20 mb-4">
-                    <Crown size={12} className="text-[var(--arc-brand-arcanean-gold)]" />
+                    <Crown
+                      size={12}
+                      className="text-[var(--arc-brand-arcanean-gold)]"
+                    />
                     <span className="text-[9px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider font-bold">
                       Founding Circle
                     </span>
@@ -405,18 +450,23 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                     First hundred creators
                   </h3>
                   <p className="text-xs text-white/50 leading-relaxed font-body mb-4">
-                    The first hundred paying creators keep a permanent 40% discount on Creator and
-                    Studio, a direct line to the developer, and early access to every new
-                    generation surface.
-                    {!billing.live && " Leave your email and we open checkout to you first."}
+                    The first hundred paying creators keep a permanent 40%
+                    discount on Creator and Studio, a direct line to the
+                    developer, and early access to every new generation surface.
+                    {!billing.live &&
+                      " Leave your email and we open checkout to you first."}
                   </p>
                   <ul className="space-y-2 text-[11px] text-white/60 font-mono">
                     <li className="flex items-center gap-2">
-                      <span className="text-[var(--arc-brand-arcanean-gold)]">✦</span>
+                      <span className="text-[var(--arc-brand-arcanean-gold)]">
+                        ✦
+                      </span>
                       Permanent lifetime discount
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[var(--arc-brand-arcanean-gold)]">✦</span>
+                      <span className="text-[var(--arc-brand-arcanean-gold)]">
+                        ✦
+                      </span>
                       Private founder channel
                     </li>
                   </ul>
@@ -434,9 +484,12 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                         <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
                           <Check className="w-6 h-6 text-green-400" />
                         </div>
-                        <h4 className="font-semibold text-sm">You are on the list.</h4>
+                        <h4 className="font-semibold text-sm">
+                          You are on the list.
+                        </h4>
                         <p className="text-[11px] text-green-300/70 font-body">
-                          Watch your inbox. Founding pricing is yours when checkout opens.
+                          Watch your inbox. Founding pricing is yours when
+                          checkout opens.
                         </p>
                       </m.div>
                     ) : (
@@ -491,7 +544,9 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
 
           <section className="pb-20 border-t border-white/[0.04] pt-16">
             <div className="text-center mb-12">
-              <h2 className="text-2xl font-display font-semibold mb-2">Free on your own keys</h2>
+              <h2 className="text-2xl font-display font-semibold mb-2">
+                Free on your own keys
+              </h2>
               <p className="text-sm text-white/40 font-body">
                 Every creation surface works with the API keys you already have.
               </p>
@@ -503,10 +558,18 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                   key={name}
                   className="flex gap-3.5 p-5 rounded-2xl bg-white/[0.015] border border-white/[0.05] hover:border-white/[0.1] transition-all hover:bg-white/[0.03]"
                 >
-                  <Icon size={20} weight="duotone" style={{ color: accent, flexShrink: 0, marginTop: 2 }} />
+                  <Icon
+                    size={20}
+                    weight="duotone"
+                    style={{ color: accent, flexShrink: 0, marginTop: 2 }}
+                  />
                   <div>
-                    <h3 className="font-semibold text-sm mb-1 text-white/90">{name}</h3>
-                    <p className="text-white/40 text-xs leading-relaxed font-body">{desc}</p>
+                    <h3 className="font-semibold text-sm mb-1 text-white/90">
+                      {name}
+                    </h3>
+                    <p className="text-white/40 text-xs leading-relaxed font-body">
+                      {desc}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -515,10 +578,13 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
 
           <section className="py-16 border-t border-white/[0.04]">
             <div className="text-center mb-10">
-              <h2 className="text-2xl font-display font-semibold mb-2">Open where it matters</h2>
+              <h2 className="text-2xl font-display font-semibold mb-2">
+                Open where it matters
+              </h2>
               <p className="text-sm text-white/45 max-w-lg mx-auto font-body">
-                The MCP server, the skills, and the world engine are open source. Your worlds export
-                as Markdown and JSON at any time. Your canon stays yours.
+                The MCP server, the skills, and the world engine are open
+                source. Your worlds export as Markdown and JSON at any time.
+                Your canon stays yours.
               </p>
             </div>
 
@@ -535,7 +601,9 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                   <div className="text-3xl font-display font-bold text-[var(--arc-brand-atlantean-teal)] mb-1">
                     {num}
                   </div>
-                  <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-1">{label}</div>
+                  <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-1">
+                    {label}
+                  </div>
                 </div>
               ))}
             </div>

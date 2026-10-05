@@ -46,7 +46,10 @@ export async function POST(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Sign in to continue", reason: "unauthenticated" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Sign in to continue", reason: "unauthenticated" },
+      { status: 401 },
+    );
   }
 
   try {
@@ -57,15 +60,25 @@ export async function POST(request: NextRequest) {
       email: user.email,
       successUrl: `${origin}/settings/billing?checkout=success&sku=${encodeURIComponent(sku)}`,
     });
-    return NextResponse.json({ url: checkout.url, id: checkout.id, sandbox: readiness.sandbox });
+    return NextResponse.json({
+      url: checkout.url,
+      id: checkout.id,
+      sandbox: readiness.sandbox,
+    });
   } catch (error) {
     if (error instanceof PolarNotConfiguredError) {
       return NextResponse.json(
-        { error: "This plan is not available yet", reason: "sku_not_configured" },
+        {
+          error: "This plan is not available yet",
+          reason: "sku_not_configured",
+        },
         { status: 503 },
       );
     }
     console.error("[billing/checkout]", error);
-    return NextResponse.json({ error: "Checkout could not be started" }, { status: 502 });
+    return NextResponse.json(
+      { error: "Checkout could not be started" },
+      { status: 502 },
+    );
   }
 }

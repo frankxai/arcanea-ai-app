@@ -21,7 +21,9 @@ import {
 
 export type PolarServer = "production" | "sandbox";
 
-export function polarServer(env: Record<string, string | undefined> = process.env): PolarServer {
+export function polarServer(
+  env: Record<string, string | undefined> = process.env,
+): PolarServer {
   return env.POLAR_SERVER === "sandbox" ? "sandbox" : "production";
 }
 
@@ -53,10 +55,14 @@ export interface CheckoutInput {
 }
 
 /** Create a hosted checkout. Throws PolarNotConfiguredError when the SKU has no product id. */
-export async function createCheckout(input: CheckoutInput): Promise<{ url: string; id: string }> {
+export async function createCheckout(
+  input: CheckoutInput,
+): Promise<{ url: string; id: string }> {
   const productId = polarProductForSku(input.sku);
   if (!productId) {
-    throw new PolarNotConfiguredError(`No Polar product configured for sku ${input.sku}`);
+    throw new PolarNotConfiguredError(
+      `No Polar product configured for sku ${input.sku}`,
+    );
   }
   const checkout = await getPolar().checkouts.create({
     products: [productId],
@@ -97,7 +103,14 @@ export type LedgerIntent =
       kind: "setPlan";
       userId: string;
       plan: PlanId;
-      status: "active" | "trialing" | "past_due" | "canceled" | "revoked" | "paused" | "none";
+      status:
+        | "active"
+        | "trialing"
+        | "past_due"
+        | "canceled"
+        | "revoked"
+        | "paused"
+        | "none";
       polarCustomerId: string | null;
       polarSubscriptionId: string | null;
       polarProductId: string | null;
@@ -136,9 +149,10 @@ export interface PolarEventLike {
   data: PolarOrderLike | PolarSubscriptionLike | Record<string, unknown>;
 }
 
-function resolveUserId(
-  data: { customer?: { externalId?: string | null } | null; metadata?: Record<string, unknown> | null },
-): string | null {
+function resolveUserId(data: {
+  customer?: { externalId?: string | null } | null;
+  metadata?: Record<string, unknown> | null;
+}): string | null {
   const external = data.customer?.externalId;
   if (typeof external === "string" && external.length > 0) return external;
   const fromMeta = data.metadata?.userId;
@@ -205,7 +219,11 @@ export function mapPolarEvent(
         amount: pack.credits,
         grantKind: "purchase",
         reference: `polar:order:${order.id}`,
-        metadata: { sku, productId: order.productId, billingReason: order.billingReason },
+        metadata: {
+          sku,
+          productId: order.productId,
+          billingReason: order.billingReason,
+        },
       });
       return intents;
     }
@@ -258,9 +276,13 @@ export function mapPolarEvent(
 }
 
 /** Which catalog entries have a Polar product id. Used by the runbook check. */
-export function configuredSkus(env: Record<string, string | undefined> = process.env) {
+export function configuredSkus(
+  env: Record<string, string | undefined> = process.env,
+) {
   return {
-    plans: PLANS.filter((p) => p.polarProductEnv && env[p.polarProductEnv]).map((p) => p.id),
+    plans: PLANS.filter((p) => p.polarProductEnv && env[p.polarProductEnv]).map(
+      (p) => p.id,
+    ),
     packs: CREDIT_PACKS.filter((p) => env[p.polarProductEnv]).map((p) => p.id),
   };
 }

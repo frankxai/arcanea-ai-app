@@ -5,7 +5,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { billingReadiness } from "@/lib/billing/catalog";
-import { createPortalSession, PolarNotConfiguredError } from "@/lib/billing/polar";
+import {
+  createPortalSession,
+  PolarNotConfiguredError,
+} from "@/lib/billing/polar";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,7 +30,9 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const origin = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "") ?? request.nextUrl.origin;
+    const origin =
+      process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "") ??
+      request.nextUrl.origin;
     const session = await createPortalSession({
       userId: user.id,
       returnUrl: `${origin}/settings/billing`,
@@ -38,6 +43,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 503 });
     }
     console.error("[billing/portal]", error);
-    return NextResponse.json({ error: "Portal could not be opened" }, { status: 502 });
+    return NextResponse.json(
+      { error: "Portal could not be opened" },
+      { status: 502 },
+    );
   }
 }

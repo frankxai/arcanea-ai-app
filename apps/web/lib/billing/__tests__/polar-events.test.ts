@@ -15,7 +15,13 @@ test("a paid pack order grants exactly the pack's credits, keyed on the order id
   const intents = mapPolarEvent(
     {
       type: "order.paid",
-      data: { id: "ord_1", paid: true, billingReason: "purchase", productId: "prod_2500", customer },
+      data: {
+        id: "ord_1",
+        paid: true,
+        billingReason: "purchase",
+        productId: "prod_2500",
+        customer,
+      },
     },
     env,
   );
@@ -57,21 +63,35 @@ test("a subscription order grants the plan's monthly credits on create and on cy
 test("orders for unknown products or unknown customers grant nothing", () => {
   assert.deepEqual(
     mapPolarEvent(
-      { type: "order.paid", data: { id: "o", paid: true, productId: "prod_mystery", customer } },
+      {
+        type: "order.paid",
+        data: { id: "o", paid: true, productId: "prod_mystery", customer },
+      },
       env,
     ),
     [],
   );
   assert.deepEqual(
     mapPolarEvent(
-      { type: "order.paid", data: { id: "o", paid: true, productId: "prod_500", customer: { id: "c" } } },
+      {
+        type: "order.paid",
+        data: {
+          id: "o",
+          paid: true,
+          productId: "prod_500",
+          customer: { id: "c" },
+        },
+      },
       env,
     ),
     [],
   );
   assert.deepEqual(
     mapPolarEvent(
-      { type: "order.paid", data: { id: "o", paid: false, productId: "prod_500", customer } },
+      {
+        type: "order.paid",
+        data: { id: "o", paid: false, productId: "prod_500", customer },
+      },
       env,
     ),
     [],
@@ -97,9 +117,17 @@ test("checkout metadata userId is accepted when the customer has no external id"
 });
 
 test("subscription lifecycle maps to plan and status", () => {
-  const base = { id: "sub_1", productId: "prod_studio", customer, currentPeriodEnd: "2026-11-05T00:00:00Z" };
+  const base = {
+    id: "sub_1",
+    productId: "prod_studio",
+    customer,
+    currentPeriodEnd: "2026-11-05T00:00:00Z",
+  };
 
-  const active = mapPolarEvent({ type: "subscription.active", data: { ...base, status: "active" } }, env);
+  const active = mapPolarEvent(
+    { type: "subscription.active", data: { ...base, status: "active" } },
+    env,
+  );
   assert.equal(active.length, 1);
   const a = active[0];
   if (a.kind !== "setPlan") throw new Error("expected setPlan");
@@ -110,7 +138,10 @@ test("subscription lifecycle maps to plan and status", () => {
   assert.ok(a.currentPeriodEnd instanceof Date);
 
   const canceled = mapPolarEvent(
-    { type: "subscription.canceled", data: { ...base, status: "canceled", cancelAtPeriodEnd: true } },
+    {
+      type: "subscription.canceled",
+      data: { ...base, status: "canceled", cancelAtPeriodEnd: true },
+    },
     env,
   )[0];
   if (canceled.kind !== "setPlan") throw new Error("expected setPlan");
@@ -137,10 +168,22 @@ test("subscription lifecycle maps to plan and status", () => {
 });
 
 test("events we do not act on produce no intents", () => {
-  assert.deepEqual(mapPolarEvent({ type: "checkout.created", data: { id: "c" } }, env), []);
-  assert.deepEqual(mapPolarEvent({ type: "customer.state_changed", data: { id: "c" } }, env), []);
   assert.deepEqual(
-    mapPolarEvent({ type: "subscription.active", data: { id: "s", productId: "prod_mystery", customer } }, env),
+    mapPolarEvent({ type: "checkout.created", data: { id: "c" } }, env),
+    [],
+  );
+  assert.deepEqual(
+    mapPolarEvent({ type: "customer.state_changed", data: { id: "c" } }, env),
+    [],
+  );
+  assert.deepEqual(
+    mapPolarEvent(
+      {
+        type: "subscription.active",
+        data: { id: "s", productId: "prod_mystery", customer },
+      },
+      env,
+    ),
     [],
   );
 });

@@ -7,15 +7,15 @@ Status: proposed for ratification by Frank. Supersedes the seven pricing models 
 
 ## 0. Ground truth on 2026-10-05 (verified this session)
 
-| Fact | Source |
-| --- | --- |
-| 28 profiles, 0 worlds, 0 creations, 0 credit rows, 2 waitlist emails, 1 subscriber | Supabase `hcfhyssdzphudaqatxbk`, `list_tables` |
-| Polar org `arcanea` exists, `checkout_payments: false`, onboarding not submitted, 1 draft product | Polar `organizations_list`, `products_list` |
-| Pricing page shows $0 / $12 / $39 with no checkout button; only a waitlist form | `apps/web/app/pricing/pricing-client.tsx` on `main` |
-| Three disjoint credit systems; the one the image route calls has column names that match no migration | `lib/types/credits.ts`, `api/credits/spend`, `20260324000001_credits_system.sql`, PR #449 |
-| Polar webhook handler was two `TODO` branches and was 401-blocked by middleware | `api/webhook/polar/route.ts`, `middleware.ts` |
-| 45 open PRs, 18 of them drafts, authored by five different agents | GitHub `list_pull_requests` |
-| Production homepage hero: "Build living worlds with AI agents." Footer: 40 links. Video studio returns a stub; audio studio is simulated | Vercel deployment `dpl_EsnqcP39…`, explorer report |
+| Fact                                                                                                                                     | Source                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 28 profiles, 0 worlds, 0 creations, 0 credit rows, 2 waitlist emails, 1 subscriber                                                       | Supabase `hcfhyssdzphudaqatxbk`, `list_tables`                                            |
+| Polar org `arcanea` exists, `checkout_payments: false`, onboarding not submitted, 1 draft product                                        | Polar `organizations_list`, `products_list`                                               |
+| Pricing page shows $0 / $12 / $39 with no checkout button; only a waitlist form                                                          | `apps/web/app/pricing/pricing-client.tsx` on `main`                                       |
+| Three disjoint credit systems; the one the image route calls has column names that match no migration                                    | `lib/types/credits.ts`, `api/credits/spend`, `20260324000001_credits_system.sql`, PR #449 |
+| Polar webhook handler was two `TODO` branches and was 401-blocked by middleware                                                          | `api/webhook/polar/route.ts`, `middleware.ts`                                             |
+| 45 open PRs, 18 of them drafts, authored by five different agents                                                                        | GitHub `list_pull_requests`                                                               |
+| Production homepage hero: "Build living worlds with AI agents." Footer: 40 links. Video studio returns a stub; audio studio is simulated | Vercel deployment `dpl_EsnqcP39…`, explorer report                                        |
 
 The company has shipped a great deal of surface and zero revenue. The constraint is not features.
 It is that no single path from "visitor" to "paid" exists end to end, and seven documents disagree
@@ -41,14 +41,14 @@ Three consequences:
 
 ## 2. The catalog (single source of truth: `apps/web/lib/billing/catalog.ts`)
 
-| SKU | Price (EUR, VAT incl.) | Includes |
-| --- | --- | --- |
-| Spark | €0 | BYOK everywhere, Library, MCP, local exports, 25 welcome credits |
-| Creator | €19 / month | Hosted world graph + memory, 1 published world site, 1,500 credits/month, priority queue |
-| Studio | €79 / month | 5 seats, unlimited published sites, 8,000 credits/month, API key, hosted MCP write tools |
-| Pack 500 | €5 | 500 credits |
-| Pack 2,500 | €19 | 2,500 credits |
-| Pack 8,000 | €49 | 8,000 credits |
+| SKU        | Price (EUR, VAT incl.) | Includes                                                                                 |
+| ---------- | ---------------------- | ---------------------------------------------------------------------------------------- |
+| Spark      | €0                     | BYOK everywhere, Library, MCP, local exports, 25 welcome credits                         |
+| Creator    | €19 / month            | Hosted world graph + memory, 1 published world site, 1,500 credits/month, priority queue |
+| Studio     | €79 / month            | 5 seats, unlimited published sites, 8,000 credits/month, API key, hosted MCP write tools |
+| Pack 500   | €5                     | 500 credits                                                                              |
+| Pack 2,500 | €19                    | 2,500 credits                                                                            |
+| Pack 8,000 | €49                    | 8,000 credits                                                                            |
 
 Action costs: chat standard 1, chat frontier 5, image standard 10, image premium 25, video clip 150,
 music track 60, voice minute 2, export 0. Set with roughly 2x headroom over provider list price, so

@@ -4,7 +4,12 @@
 
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { ACTION_COSTS, ENTITLEMENTS, billingReadiness, getPlan } from "@/lib/billing/catalog";
+import {
+  ACTION_COSTS,
+  ENTITLEMENTS,
+  billingReadiness,
+  getPlan,
+} from "@/lib/billing/catalog";
 import { BillingError, getAccount } from "@/lib/billing/ledger";
 
 export const runtime = "nodejs";
@@ -24,7 +29,9 @@ export async function GET() {
     const plan = getPlan(account.plan);
     return NextResponse.json({
       account,
-      plan: plan ? { id: plan.id, name: plan.name, monthlyCredits: plan.monthlyCredits } : null,
+      plan: plan
+        ? { id: plan.id, name: plan.name, monthlyCredits: plan.monthlyCredits }
+        : null,
       entitlements: ENTITLEMENTS[account.plan],
       actionCosts: ACTION_COSTS,
       billing: billingReadiness(),

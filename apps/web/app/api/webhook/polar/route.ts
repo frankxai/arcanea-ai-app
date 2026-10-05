@@ -11,9 +11,17 @@
  * steps 3 and 4 cannot double-grant credits on redelivery.
  */
 
-import { validateEvent, WebhookVerificationError } from "@polar-sh/sdk/webhooks";
+import {
+  validateEvent,
+  WebhookVerificationError,
+} from "@polar-sh/sdk/webhooks";
 import { mapPolarEvent, type PolarEventLike } from "@/lib/billing/polar";
-import { grantCredits, markEvent, recordEvent, setPlan } from "@/lib/billing/ledger";
+import {
+  grantCredits,
+  markEvent,
+  recordEvent,
+  setPlan,
+} from "@/lib/billing/ledger";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,7 +29,10 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request): Promise<Response> {
   const secret = process.env.POLAR_WEBHOOK_SECRET?.trim();
   if (!secret) {
-    return Response.json({ error: "POLAR_WEBHOOK_SECRET is not set" }, { status: 503 });
+    return Response.json(
+      { error: "POLAR_WEBHOOK_SECRET is not set" },
+      { status: 503 },
+    );
   }
 
   const body = await request.text();
@@ -83,7 +94,11 @@ export async function POST(request: Request): Promise<Response> {
       applied.push(intent.kind);
     } catch (error) {
       failure = error instanceof Error ? error.message : String(error);
-      console.error("[webhook/polar] intent failed", { type: event.type, intent: intent.kind, failure });
+      console.error("[webhook/polar] intent failed", {
+        type: event.type,
+        intent: intent.kind,
+        failure,
+      });
       break;
     }
   }
@@ -92,7 +107,15 @@ export async function POST(request: Request): Promise<Response> {
 
   if (failure) {
     // 500 makes Polar retry. The delivery row keeps the error for the operator.
-    return Response.json({ error: "Ledger write failed", applied }, { status: 500 });
+    return Response.json(
+      { error: "Ledger write failed", applied },
+      { status: 500 },
+    );
   }
-  return Response.json({ received: true, type: event.type, applied, ignored: intents.length === 0 });
+  return Response.json({
+    received: true,
+    type: event.type,
+    applied,
+    ignored: intents.length === 0,
+  });
 }
