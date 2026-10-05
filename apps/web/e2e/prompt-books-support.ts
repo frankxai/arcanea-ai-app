@@ -47,6 +47,7 @@ export async function setup(
   };
   let scopedTagRead = false;
   let failing = false;
+  let lostPromptAcknowledgement = false;
   let failingTemplate = false;
   let lostTemplateAcknowledgement = false;
   let failingRead = Boolean(inspectFailure);
@@ -128,6 +129,14 @@ export async function setup(
             Object.entries(prompt.context_config).reverse(),
           ),
         };
+        if (lostPromptAcknowledgement) {
+          lostPromptAcknowledgement = false;
+          await route.fulfill({
+            status: 500,
+            json: { message: "Lost prompt acknowledgement", code: "fixture" },
+          });
+          return;
+        }
         // Hold this request's response, not a later global row. Otherwise the
         // newer-revision regression can pass without the hook refreshing.
         data = structuredClone(prompt);
@@ -200,6 +209,9 @@ export async function setup(
     },
     remote: (content: string) => {
       prompt = { ...prompt, content, updated_at: "2026-10-04T13:00:00.000Z" };
+    },
+    failPromptAfterCommit: () => {
+      lostPromptAcknowledgement = true;
     },
     fail: () => {
       failing = true;

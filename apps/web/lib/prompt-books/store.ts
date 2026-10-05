@@ -14,7 +14,6 @@ import {
 import { comparePromptRevisions } from "./revisions";
 import { templateVariablesForContent } from "./template-variables";
 import { writePromptTemplate } from "./template-write";
-import { writePromptDraft, PromptDraftConflict } from "./draft-write";
 import { promptEditorFields, sameEditorFields } from "./editor-session";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
@@ -23,6 +22,7 @@ import {
   currentActor as matchesActor,
   assertActor as verifyActor,
   changePromptTag as mutatePromptTag,
+  updateOwnedPrompt as mutatePrompt,
 } from "./actor-session";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -261,37 +261,8 @@ export const usePromptBooksStore = create<PromptBooksState>()(
         return prompt;
       },
 
-      updatePrompt: async (id, input, expectedUpdatedAt) => {
-        const { client, userId, version } = await actor();
-
-        let prompt;
-        try {
-          prompt = expectedUpdatedAt
-            ? await writePromptDraft(
-                client,
-                userId,
-                id,
-                input,
-                expectedUpdatedAt,
-              )
-            : await service.updatePrompt(client, id, input);
-        } catch (error) {
-          assertActor(client, userId, version);
-          throw error;
-        }
-        assertActor(client, userId, version);
-        if (prompt.userId !== userId)
-          throw new Error("Unexpected Prompt Books owner");
-        const cached = get().prompts.find((row) => row.id === id);
-        if (
-          expectedUpdatedAt &&
-          cached &&
-          (comparePromptRevisions(prompt.updatedAt, cached.updatedAt) ?? -1) < 0
-        )
-          throw new PromptDraftConflict(cached);
-        get().updatePromptInStore(prompt);
-        return prompt;
-      },
+      updatePrompt: (id, input, revision) =>
+        mutatePrompt(readActor, id, input, revision),
 
       deletePrompt: async (id) => {
         const { client, userId, version } = await actor();

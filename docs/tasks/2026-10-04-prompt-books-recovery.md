@@ -148,3 +148,16 @@ queued A/B/A rejection before writing and queue recovery after failed refresh.
 Prior `c53ce4d` passes47 SDK regressions, TypeScript and strict lint/format;
 its browser/build result remains source-bound. Fresh50 SDK/current source review
 are required. Security audit and owner preview acceptance still hold production.
+
+Author recovery inspection additionally found a lost draft acknowledgement can
+confirm the matching server snapshot on retry while the cache still contains the
+old prompt, blocking subsequent confirmed-template creation. The actor boundary
+now admits the actual fetched conflict row to the cache only after verifying the
+current actor, keeps a newer cached revision if one exists, then returns that
+conflict for editor resolution. The conditional/generic prompt mutation action
+shares this actor module; the store remains below its size contract. Actual SDK
+and built dialog regressions simulate a committed prompt with a lost response,
+then confirm on retry and create the recovered template. Fresh51 SDK/13 browser
+checks and exact-current review remain required. No dependency/schema change.
+
+Review 9 (Copilot 5408835524, source 417950d) found generation-scoped queues could reorder already-started tag writes after A/B/A. Queue ownership is now owner/prompt across generations; each job retains its captured version checks. A real SDK transport delays the old write before mutation and verifies newer unassignment wins in both cache and stored reads. Current expected automated coverage is 52 SDK cases and 13 built-browser cases; actual current CI and review remain required.
