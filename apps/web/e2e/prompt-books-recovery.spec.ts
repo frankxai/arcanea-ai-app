@@ -5,6 +5,7 @@ import {
   promptId,
   editorUrl,
   collectionUrl,
+  collectionId,
   allEditorUrl,
 } from "./prompt-books-support";
 
@@ -383,3 +384,27 @@ test("cold collection links retain their requested collection through owner init
     page.getByRole("heading", { name: "Recovery collection", exact: true }),
   ).toBeVisible();
 });
+
+for (const [entry, global] of [
+  [allEditorUrl, true],
+  [editorUrl, false],
+] as const) {
+  test(`built ${global ? "all prompts" : "collection"} editor creates and assigns a tag with its real scope`, async ({
+    page,
+  }) => {
+    const f = await setup(page, undefined, undefined, entry);
+    const name = global ? "Recovered global tag" : "Recovered collection tag";
+    await page.getByRole("button", { name: "Tag", exact: true }).click();
+    await page.getByPlaceholder("Search or create...").fill(name);
+    await page
+      .getByRole("button", { name: `Create "${name}"`, exact: true })
+      .click();
+    await expect.poll(() => f.createdTags().length).toBe(1);
+    expect(f.createdTags()[0].user_id).toBe(owner);
+    expect(f.createdTags()[0].is_global).toBe(global);
+    expect(f.createdTags()[0].collection_id).toBe(global ? null : collectionId);
+    await expect.poll(() => f.assignedTags()).toEqual([f.createdTags()[0].id]);
+    await page.getByRole("button", { name: "Tag", exact: true }).click();
+    await expect(page.getByText(name, { exact: true })).toBeVisible();
+  });
+}

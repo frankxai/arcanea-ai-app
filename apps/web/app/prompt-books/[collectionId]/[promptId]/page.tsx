@@ -166,7 +166,14 @@ export default function PromptEditorPage() {
 
   const handleCreateTag = useCallback(
     async (name: string, category: TagCategory) => {
-      return await createTag({ name, category, isGlobal: false, collectionId });
+      const scopedCollectionId =
+        collectionId === "_all" ? undefined : collectionId;
+      return await createTag({
+        name,
+        category,
+        isGlobal: !scopedCollectionId,
+        collectionId: scopedCollectionId,
+      });
     },
     [createTag, collectionId],
   );
