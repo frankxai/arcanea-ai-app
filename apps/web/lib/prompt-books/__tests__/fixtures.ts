@@ -35,6 +35,7 @@ export async function fixture(userId = owner) {
   let readFailure: string | null = null;
   let searchOwner: string | null = null;
   let missingSearchRpc = false;
+  let omitSearchOwner = false;
   type RequestGate = {
     method: string;
     table: string;
@@ -190,6 +191,17 @@ export async function fixture(userId = owner) {
             Array.isArray(result)
           )
             result = result.map((row) => ({ ...row, user_id: searchOwner }));
+          if (
+            omitSearchOwner &&
+            url.searchParams.has("or") &&
+            Array.isArray(result)
+          )
+            result = result.map((row) => {
+              const copy = { ...row };
+              delete copy.user_id;
+              return copy;
+            });
+
           if (url.pathname.endsWith("/pb_templates")) {
             result =
               method === "GET"
@@ -304,6 +316,9 @@ export async function fixture(userId = owner) {
     },
     missingSearchRpc: () => {
       missingSearchRpc = true;
+    },
+    omitSearchOwner: () => {
+      omitSearchOwner = true;
     },
     searchOwner: (value: string) => {
       searchOwner = value;
