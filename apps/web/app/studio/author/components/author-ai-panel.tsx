@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 
 // AI SDK v6 removed input/setInput/handleSubmit/isLoading/api from useChat —
 // we manage input state manually and derive isLoading from status.
-function extractMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
-  if (!Array.isArray(msg.parts)) return '';
+function extractMessageText(msg: {
+  parts?: Array<{ type: string; text?: string }>;
+}): string {
+  if (!Array.isArray(msg.parts)) return "";
   return msg.parts
-    .filter((p) => p.type === 'text')
-    .map((p) => p.text ?? '')
-    .join('');
+    .filter((p) => p.type === "text")
+    .map((p) => p.text ?? "")
+    .join("");
 }
 
-type ModelTier = 'haiku' | 'sonnet' | 'opus';
+type ModelTier = "haiku" | "sonnet" | "opus";
 
 interface AuthorAIPanelProps {
   bookSlug: string;
@@ -23,20 +25,23 @@ interface AuthorAIPanelProps {
 }
 
 const SUGGESTED_PROMPTS = [
-  'Review this scene for pacing',
-  'Is this dialogue consistent with the character?',
-  'Check continuity with previous chapters',
-  'Suggest what happens next',
-  'Improve this prose — make it sharper',
-  'Does this scene advance both plot and character?',
+  "Review this scene for pacing",
+  "Is this dialogue consistent with the character?",
+  "Check continuity with previous chapters",
+  "Suggest what happens next",
+  "Improve this prose — make it sharper",
+  "Does this scene advance both plot and character?",
 ];
 
-const STORAGE_KEY = 'arcanea-author-api-key';
+const STORAGE_KEY = "arcanea-author-api-key";
 
-export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) {
+export function AuthorAIPanel({
+  bookSlug,
+  currentChapter,
+}: AuthorAIPanelProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const [apiKey, setApiKey] = useState('');
-  const [model, setModel] = useState<ModelTier>('haiku');
+  const [apiKey, setApiKey] = useState("");
+  const [model, setModel] = useState<ModelTier>("haiku");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Load API key from localStorage on mount
@@ -44,7 +49,7 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       setApiKey(saved);
-      setModel('sonnet'); // Auto-upgrade when key is present
+      setModel("sonnet"); // Auto-upgrade when key is present
     }
   }, []);
 
@@ -52,21 +57,37 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
     setApiKey(key);
     if (key) {
       localStorage.setItem(STORAGE_KEY, key);
-      setModel('sonnet');
+      setModel("sonnet");
     } else {
       localStorage.removeItem(STORAGE_KEY);
-      setModel('haiku');
+      setModel("haiku");
     }
   }, []);
 
-  const [input, setInput] = useState('');
-  const { messages, sendMessage, status } = useChat({
+  const [input, setInput] = useState("");
+  // useChat keeps the first transport it receives, so the request body reads
+  // the latest key, model and chapter from a ref at send time.
+  const requestBody = useRef({
+    bookSlug,
+    currentChapter,
+    model,
+    userApiKey: apiKey || undefined,
+  });
+  useEffect(() => {
+    requestBody.current = {
+      bookSlug,
+      currentChapter,
+      model,
+      userApiKey: apiKey || undefined,
+    };
+  }, [bookSlug, currentChapter, model, apiKey]);
+  const { messages, sendMessage, status, error } = useChat({
     transport: new DefaultChatTransport({
-      api: '/api/ai/author-chat',
-      body: { bookSlug, currentChapter, model, userApiKey: apiKey || undefined },
+      api: "/api/ai/author-chat",
+      body: () => requestBody.current,
     }),
   });
-  const isLoading = status === 'streaming' || status === 'submitted';
+  const isLoading = status === "streaming" || status === "submitted";
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -74,7 +95,7 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
       const text = input.trim();
       if (!text) return;
       sendMessage({ text });
-      setInput('');
+      setInput("");
     },
     [input, sendMessage],
   );
@@ -103,8 +124,12 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
       <div className="p-4 border-b border-white/[0.06]">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-display text-sm font-semibold text-white/70">Author Companion</h2>
-            <p className="text-[10px] text-[var(--arc-brand-atlantean-teal)]/60 mt-0.5">Canon-aware &middot; Character-aware</p>
+            <h2 className="font-display text-sm font-semibold text-white/70">
+              Author Companion
+            </h2>
+            <p className="text-[10px] text-[var(--arc-brand-atlantean-teal)]/60 mt-0.5">
+              Canon-aware &middot; Character-aware
+            </p>
           </div>
           <button
             onClick={() => setCollapsed(true)}
@@ -118,7 +143,12 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
         {/* BYOK Settings */}
         <details className="mt-2">
           <summary className="text-[10px] text-white/20 cursor-pointer hover:text-white/40">
-            Model: {model === 'haiku' ? 'Haiku (free)' : model === 'sonnet' ? 'Sonnet (your key)' : 'Opus (your key)'}
+            Model:{" "}
+            {model === "haiku"
+              ? "Haiku (free)"
+              : model === "sonnet"
+                ? "Sonnet (your key)"
+                : "Opus (your key)"}
           </summary>
           <div className="mt-2 space-y-2">
             <input
@@ -129,19 +159,19 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
               className="w-full px-2 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-white/60 placeholder:text-white/15 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30"
             />
             <p className="text-[9px] text-white/15">
-              Your key stays in your browser. Only sent to our API route to proxy the request.
-              Get one at console.anthropic.com
+              Your key stays in your browser. Only sent to our API route to
+              proxy the request. Get one at console.anthropic.com
             </p>
             {apiKey && (
               <div className="flex gap-1">
-                {(['haiku', 'sonnet', 'opus'] as const).map((m) => (
+                {(["haiku", "sonnet", "opus"] as const).map((m) => (
                   <button
                     key={m}
                     onClick={() => setModel(m)}
                     className={`px-2 py-1 rounded text-[10px] ${
                       model === m
-                        ? 'bg-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/30'
-                        : 'bg-white/[0.03] text-white/30 border border-white/[0.06]'
+                        ? "bg-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/30"
+                        : "bg-white/[0.03] text-white/30 border border-white/[0.06]"
                     }`}
                   >
                     {m.charAt(0).toUpperCase() + m.slice(1)}
@@ -158,13 +188,16 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
         {messages.length === 0 && (
           <div className="space-y-3">
             <p className="text-xs text-white/30 text-center mb-4">
-              I&apos;ve read your characters, world bible, and story blueprint. Ask me anything about your book.
+              I&apos;ve read your characters, world bible, and story blueprint.
+              Ask me anything about your book.
             </p>
             <div className="grid gap-2">
               {SUGGESTED_PROMPTS.map((prompt) => (
                 <button
                   key={prompt}
-                  onClick={() => { setInput(prompt); }}
+                  onClick={() => {
+                    setInput(prompt);
+                  }}
                   className="text-left px-3 py-2 rounded-lg bg-white/[0.02] border border-white/[0.06] text-xs text-white/40 hover:text-white/60 hover:bg-white/[0.04] transition-all"
                 >
                   {prompt}
@@ -175,13 +208,20 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
         )}
 
         {messages.map((msg) => (
-          <div key={msg.id} className={`${msg.role === 'user' ? 'ml-8' : 'mr-4'}`}>
-            <div className={`px-3 py-2 rounded-lg text-xs leading-relaxed ${
-              msg.role === 'user'
-                ? 'bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-white/80'
-                : 'bg-white/[0.02] border border-white/[0.06] text-white/60'
-            }`}>
-              <div className="whitespace-pre-wrap">{extractMessageText(msg)}</div>
+          <div
+            key={msg.id}
+            className={`${msg.role === "user" ? "ml-8" : "mr-4"}`}
+          >
+            <div
+              className={`px-3 py-2 rounded-lg text-xs leading-relaxed ${
+                msg.role === "user"
+                  ? "bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-white/80"
+                  : "bg-white/[0.02] border border-white/[0.06] text-white/60"
+              }`}
+            >
+              <div className="whitespace-pre-wrap">
+                {extractMessageText(msg)}
+              </div>
             </div>
           </div>
         ))}
@@ -199,8 +239,17 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
         )}
       </div>
 
+      {error && (
+        <p role="alert" className="px-4 pb-2 text-[10px] text-red-300/80">
+          {error.message}
+        </p>
+      )}
+
       {/* Input */}
-      <form onSubmit={handleSubmit} className="p-4 border-t border-white/[0.06]">
+      <form
+        onSubmit={handleSubmit}
+        className="p-4 border-t border-white/[0.06]"
+      >
         <div className="flex gap-2">
           <input
             value={input}
