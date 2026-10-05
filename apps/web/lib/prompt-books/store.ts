@@ -17,6 +17,7 @@ import { writePromptTemplate } from "./template-write";
 import { promptEditorFields, sameEditorFields } from "./editor-session";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
+import { searchOwnedPrompts } from "./search";
 import {
   actor as verifiedActor,
   currentActor as matchesActor,
@@ -437,13 +438,10 @@ export const usePromptBooksStore = create<PromptBooksState>()(
           if (verified.error || verified.data.user?.id !== userId)
             throw new Error("Prompt Books identity changed");
           assertActor(client, userId, version);
-          const results = await service.searchPrompts(client, userId, query);
+          const results = await searchOwnedPrompts(client, userId, query);
           if (isCurrent())
             set({
-              // The owner-filtered legacy RPC omits user_id from its projection.
-              searchResults: results
-                .filter((row) => row.userId == null || row.userId === userId)
-                .map((row) => ({ ...row, userId })),
+              searchResults: results.filter((row) => row.userId === userId),
               isSearching: false,
             });
         } catch {

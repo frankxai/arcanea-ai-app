@@ -59,3 +59,44 @@ test("search refuses a changed actual SDK actor before invoking the RPC", async 
   );
   assert.deepEqual(store.getState().searchResults, []);
 });
+
+test("missing hosted RPC recovers through a bounded owner-filtered table search", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  f.missingSearchRpc();
+  await store.getState().search('Quoted, (value) "and"');
+  assert.equal(store.getState().searchResults[0].userId, owner);
+  const request = f.requests.find((r) => r.url.searchParams.has("or"))!;
+  assert.equal(request.url.searchParams.get("user_id"), `eq.${owner}`);
+  assert.equal(request.url.searchParams.get("is_archived"), "eq.false");
+  assert.equal(request.url.searchParams.get("limit"), "50");
+  assert.equal(request.url.searchParams.get("order"), "updated_at.desc");
+  const filters = request.url.searchParams.get("or")!;
+  assert.ok(filters.includes('title.ilike."%Quoted, (value)'));
+  assert.ok(filters.includes('content.ilike."%Quoted, (value)'));
+});
+test("a missing RPC is probed once per client while later table searches still query current owner", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  f.missingSearchRpc();
+  await store.getState().search("First");
+  await store.getState().search("Second");
+  assert.equal(
+    f.requests.filter((r) => r.url.pathname.endsWith("/rpc/pb_search_prompts"))
+      .length,
+    1,
+  );
+  assert.equal(
+    f.requests.filter((r) => r.url.searchParams.has("or")).length,
+    2,
+  );
+  assert.equal(store.getState().searchQuery, "Second");
+});
+test("the missing-RPC fallback rejects explicitly foreign table rows", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  f.missingSearchRpc();
+  f.searchOwner(other);
+  await store.getState().search("Private");
+  assert.deepEqual(store.getState().searchResults, []);
+});

@@ -34,6 +34,7 @@ export async function fixture(userId = owner) {
   let failTemplateAfterCommit = false;
   let readFailure: string | null = null;
   let searchOwner: string | null = null;
+  let missingSearchRpc = false;
   type RequestGate = {
     method: string;
     table: string;
@@ -103,20 +104,24 @@ export async function fixture(userId = owner) {
           if (url.pathname.endsWith("/rpc/pb_search_prompts")) {
             const body = JSON.parse(String(init?.body));
             assert.equal(body.p_user_id, userId);
-            result = [
-              {
-                id: saved.id,
-                title: saved.title,
-                content: saved.content,
-                prompt_type: saved.prompt_type,
-                collection_id: null,
-                is_favorite: false,
-                use_count: 0,
-                updated_at: saved.updated_at,
-                rank: 1,
-                ...(searchOwner ? { user_id: searchOwner } : {}),
-              },
-            ];
+            if (missingSearchRpc) {
+              status = 404;
+              result = { code: "PGRST202", message: "Search function absent" };
+            } else
+              result = [
+                {
+                  id: saved.id,
+                  title: saved.title,
+                  content: saved.content,
+                  prompt_type: saved.prompt_type,
+                  collection_id: null,
+                  is_favorite: false,
+                  use_count: 0,
+                  updated_at: saved.updated_at,
+                  rank: 1,
+                  ...(searchOwner ? { user_id: searchOwner } : {}),
+                },
+              ];
           }
           if (
             url.pathname.endsWith("/pb_collections") ||
@@ -178,6 +183,13 @@ export async function fixture(userId = owner) {
                 ? { ...saved }
                 : [{ ...saved }];
           }
+          if (
+            url.pathname.endsWith("/pb_prompts") &&
+            url.searchParams.has("or") &&
+            searchOwner &&
+            Array.isArray(result)
+          )
+            result = result.map((row) => ({ ...row, user_id: searchOwner }));
           if (url.pathname.endsWith("/pb_templates")) {
             result =
               method === "GET"
@@ -289,6 +301,9 @@ export async function fixture(userId = owner) {
     },
     fail: () => {
       fail = true;
+    },
+    missingSearchRpc: () => {
+      missingSearchRpc = true;
     },
     searchOwner: (value: string) => {
       searchOwner = value;
