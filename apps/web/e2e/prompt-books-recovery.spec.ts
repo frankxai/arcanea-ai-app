@@ -8,6 +8,24 @@ import {
   allEditorUrl,
 } from "./prompt-books-support";
 
+test("public landing examples expand and collapse with the keyboard", async ({
+  page,
+}) => {
+  await page.goto("/prompt-books");
+  const toggle = page.getByRole("button", {
+    name: "Arcanea Prompt Language examples",
+    exact: true,
+  });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await toggle.focus();
+  await toggle.press("Enter");
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("#apl-examples")).toBeVisible();
+  await toggle.press("Space");
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator("#apl-examples")).toHaveCount(0);
+});
+
 test("built editor autosaves the first edit and reloads the confirmed draft", async ({
   page,
 }) => {
