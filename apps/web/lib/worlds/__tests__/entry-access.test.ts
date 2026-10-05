@@ -39,23 +39,26 @@ test("login, signup and callbacks reject external and encoded redirect targets",
 });
 
 // No cookies, no real project and no network. Missing Supabase sessions must
-// be rejected locally; public waitlist submissions must reach their handler.
+// be rejected locally; public waitlist, subscribe, and feedback submissions
+// must reach their handler.
 process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
 process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "test-anon-key";
 
-test("only the exact public waitlist POST bypasses session auth", async (t) => {
-  let requests = 0;
-  t.mock.method(globalThis, "fetch", async () => {
-    requests++;
-    throw new Error("Network access is forbidden in this test");
+for (const path of ["/api/waitlist", "/api/subscribe", "/api/feedback"]) {
+  test(`only the exact public POST ${path} bypasses session auth`, async (t) => {
+    let requests = 0;
+    t.mock.method(globalThis, "fetch", async () => {
+      requests++;
+      throw new Error("Network access is forbidden in this test");
+    });
+    const response = await middleware(
+      new NextRequest(`https://www.arcanea.ai${path}`, { method: "POST" }),
+    );
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("x-middleware-next"), "1");
+    assert.equal(requests, 0);
   });
-  const response = await middleware(
-    new NextRequest("https://www.arcanea.ai/api/waitlist", { method: "POST" }),
-  );
-  assert.equal(response.status, 200);
-  assert.equal(response.headers.get("x-middleware-next"), "1");
-  assert.equal(requests, 0);
-});
+}
 
 for (const [path, method] of [
   ["/api/worlds/generate", "POST"],
@@ -63,6 +66,10 @@ for (const [path, method] of [
   ["/api/worlds/generate-image", "POST"],
   ["/api/waitlist", "GET"],
   ["/api/waitlist/export", "POST"],
+  ["/api/subscribe", "GET"],
+  ["/api/subscribe/export", "POST"],
+  ["/api/feedback", "GET"],
+  ["/api/feedback/reactions", "POST"],
 ] as const) {
   test(`anonymous ${method} ${path} stays authenticated`, async (t) => {
     let requests = 0;
