@@ -22,11 +22,12 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // Newsletter and founding-circle forms are public. Keep this exception exact:
-  // other methods, nested paths and all world generation/save APIs still require auth.
+  // Newsletter, founding-circle, and the public feedback form are exact POSTs.
+  // Other methods, nested paths, and world generation/save APIs still require auth.
   if (
     (request.nextUrl.pathname === "/api/waitlist" ||
-      request.nextUrl.pathname === "/api/subscribe") &&
+      request.nextUrl.pathname === "/api/subscribe" ||
+      request.nextUrl.pathname === "/api/feedback") &&
     request.method === "POST"
   ) {
     return NextResponse.next({ request: { headers: request.headers } });
