@@ -1,31 +1,12 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import * as service from "./service";
-const missingRpc = new WeakSet<SupabaseClient>();
-
-// Retain ranked search where installed. The accepted production schema has the
-// owner-protected table but no search RPC; its fallback uses RLS table reads.
+// Use the owner-RLS table until the legacy privileged RPC is repaired and reviewed.
 export async function searchOwnedPrompts(
   client: SupabaseClient,
   owner: string,
   query: string,
 ) {
   if (!query.trim()) return [];
-  if (!missingRpc.has(client)) {
-    try {
-      return (await service.searchPrompts(client, owner, query))
-        .filter((row) => row.userId == null || row.userId === owner)
-        .map((row) => ({ ...row, userId: owner }));
-    } catch (error) {
-      if (
-        !error ||
-        typeof error !== "object" ||
-        !("code" in error) ||
-        error.code !== "PGRST202"
-      )
-        throw error;
-      missingRpc.add(client);
-    }
-  }
   // SDK URL encoding plus quoted PostgREST values keep commas/quotes/parentheses
   // inside the search value. SQL LIKE wildcard characters are escaped as text.
   const literal = query.replace(/[\\%_]/g, (value) => "\\" + value);

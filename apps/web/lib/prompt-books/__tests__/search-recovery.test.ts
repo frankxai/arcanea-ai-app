@@ -16,7 +16,7 @@ before(async () => {
   store = (await import("../store")).usePromptBooksStore;
 });
 beforeEach(() => store.getState().reset());
-test("owner-filtered search RPC rows without user_id stay visible", async () => {
+test("owner-filtered table search retains complete owned rows", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
   await store.getState().search("Recovery");
@@ -26,7 +26,7 @@ test("owner-filtered search RPC rows without user_id stay visible", async () => 
 test("delayed search responses cannot replace the current query after A/B/A", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
-  const gate = f.hold("POST", "rpc/pb_search_prompts");
+  const gate = f.hold("GET", "pb_prompts");
   const older = store.getState().search("Older");
   await gate.entered.promise;
   const b = await fixture(other);
@@ -39,28 +39,27 @@ test("delayed search responses cannot replace the current query after A/B/A", as
   assert.equal(store.getState().searchQuery, "Current");
   assert.equal(store.getState().searchResults[0].title, "Current query result");
 });
-test("explicit foreign owners in search responses remain rejected", async () => {
+test("explicit foreign owners in table search responses remain rejected", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
   f.searchOwner(other);
   await store.getState().search("Recovery");
   assert.deepEqual(store.getState().searchResults, []);
 });
-test("search refuses a changed actual SDK actor before invoking the RPC", async () => {
+test("search refuses a changed actual SDK actor before querying the table", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
   const b = await fixture(other);
   store.setState({ _client: b.client });
   await store.getState().search("Private");
   assert.equal(
-    b.requests.filter((r) => r.url.pathname.endsWith("/rpc/pb_search_prompts"))
-      .length,
+    b.requests.filter((r) => r.url.searchParams.has("or")).length,
     0,
   );
   assert.deepEqual(store.getState().searchResults, []);
 });
 
-test("missing hosted RPC recovers through a bounded owner-filtered table search", async () => {
+test("table search quotes values and caps an owner-filtered non-archived query", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
   f.missingSearchRpc();
@@ -75,16 +74,15 @@ test("missing hosted RPC recovers through a bounded owner-filtered table search"
   assert.ok(filters.includes('title.ilike."%Quoted, (value)'));
   assert.ok(filters.includes('content.ilike."%Quoted, (value)'));
 });
-test("a missing RPC is probed once per client while later table searches still query current owner", async () => {
+test("search never invokes the unsafe legacy RPC, even when it is available", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
-  f.missingSearchRpc();
   await store.getState().search("First");
   await store.getState().search("Second");
   assert.equal(
     f.requests.filter((r) => r.url.pathname.endsWith("/rpc/pb_search_prompts"))
       .length,
-    1,
+    0,
   );
   assert.equal(
     f.requests.filter((r) => r.url.searchParams.has("or")).length,
@@ -92,11 +90,11 @@ test("a missing RPC is probed once per client while later table searches still q
   );
   assert.equal(store.getState().searchQuery, "Second");
 });
-test("the missing-RPC fallback rejects explicitly foreign table rows", async () => {
+test("table rows without an explicit owner are rejected", async () => {
   const f = await fixture();
   await store.getState().initialize(f.client, owner);
   f.missingSearchRpc();
-  f.searchOwner(other);
+  f.omitSearchOwner();
   await store.getState().search("Private");
   assert.deepEqual(store.getState().searchResults, []);
 });
