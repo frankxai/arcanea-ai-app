@@ -1,16 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/lib/auth/context';
-import { createClient } from '@/lib/supabase/client';
-import { SyntheticContentNotice } from '@/components/compliance/synthetic-content-notice';
-import { getCreations, getUserCreations, deleteCreation, updateCreation } from '@/lib/database/services/creation-service';
-import type { Creation, CreationType } from '@/lib/database/types/api-responses';
-import { AccountAbstractionService } from '@/lib/web3/account-abstraction';
-import { StoryProtocolService } from '@/lib/web3/story-protocol';
+import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth/context";
+import { createClient } from "@/lib/supabase/client";
+import { SyntheticContentNotice } from "@/components/compliance/synthetic-content-notice";
+import {
+  getCreations,
+  getUserCreations,
+  deleteCreation,
+  updateCreation,
+} from "@/lib/database/services/creation-service";
+import type {
+  Creation,
+  CreationType,
+} from "@/lib/database/types/api-responses";
+import { AccountAbstractionService } from "@/lib/web3/account-abstraction";
+import { StoryProtocolService } from "@/lib/web3/story-protocol";
 import {
   PhPlus,
   PhFunnel,
@@ -25,17 +33,21 @@ import {
   PhArrowRight,
   PhShieldStar,
   PhSpinner,
-  PhArrowSquareOut
-} from '@/lib/phosphor-icons';
+  PhArrowSquareOut,
+} from "@/lib/phosphor-icons";
 // @ts-ignore
-import { Wallet as PhWallet } from '@phosphor-icons/react';
+import { Wallet as PhWallet } from "@phosphor-icons/react";
 
-const TYPE_FILTERS: { key: CreationType | 'all'; label: string; icon: typeof PhGridFour }[] = [
-  { key: 'all', label: 'All', icon: PhGridFour },
-  { key: 'text', label: 'Text', icon: PhFileText },
-  { key: 'image', label: 'Image', icon: PhImage },
-  { key: 'audio', label: 'Music', icon: PhMusicNote },
-  { key: 'code', label: 'Code', icon: PhCode },
+const TYPE_FILTERS: {
+  key: CreationType | "all";
+  label: string;
+  icon: typeof PhGridFour;
+}[] = [
+  { key: "all", label: "All", icon: PhGridFour },
+  { key: "text", label: "Text", icon: PhFileText },
+  { key: "image", label: "Image", icon: PhImage },
+  { key: "audio", label: "Music", icon: PhMusicNote },
+  { key: "code", label: "Code", icon: PhCode },
 ];
 
 function formatDate(iso: string): string {
@@ -43,21 +55,21 @@ function formatDate(iso: string): string {
   const now = new Date();
   const diff = now.getTime() - d.getTime();
   const mins = Math.floor(diff / 60_000);
-  if (mins < 1) return 'just now';
+  if (mins < 1) return "just now";
   if (mins < 60) return `${mins}m ago`;
   const hrs = Math.floor(mins / 60);
   if (hrs < 24) return `${hrs}h ago`;
   const days = Math.floor(hrs / 24);
-  if (days === 1) return 'yesterday';
+  if (days === 1) return "yesterday";
   if (days < 7) return `${days}d ago`;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 export default function CreationsPage() {
   const { user } = useAuth();
   const [creations, setCreations] = useState<Creation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<CreationType | 'all'>('all');
+  const [filter, setFilter] = useState<CreationType | "all">("all");
   const [registeringId, setRegisteringId] = useState<string | null>(null);
 
   const aaService = new AccountAbstractionService();
@@ -65,23 +77,23 @@ export default function CreationsPage() {
 
   const handleRegisterIP = async (creation: Creation) => {
     if (!user) {
-      alert('Please log in to register creations.');
+      alert("Please log in to register creations.");
       return;
     }
     setRegisteringId(creation.id);
     try {
       // 1. Get/derive Smart account TBA address
       const wallet = await aaService.getOrCreateSmartAccount(user.id);
-      
+
       // 2. Derive mock IPFS metadata hash
       const ipfsHash = `ipfs://bafybeih${Math.random().toString(36).substring(2, 15)}hash`;
-      
+
       // 3. Register IP Asset on Base Sepolia Story Protocol
       const ipAsset = await storyService.registerIPAsset(
         wallet,
-        '0x89793139C247B2E3f3F8C56c32168393Fcf92168', // Mock NFT Contract Address
+        "0x89793139C247B2E3f3F8C56c32168393Fcf92168", // Mock NFT Contract Address
         Math.floor(Math.random() * 100000), // Mock Token ID
-        ipfsHash
+        ipfsHash,
       );
 
       // 4. Persist registration info inside Creation metadata
@@ -90,25 +102,27 @@ export default function CreationsPage() {
         ipfsHash,
         ipaAddress: ipAsset.ipaAddress,
         licenseTermsId: ipAsset.licenseTermsId,
-        registeredAt: new Date().toISOString()
+        registeredAt: new Date().toISOString(),
       };
 
       const supabase = createClient();
       await updateCreation(supabase, creation.id, user.id, {
-        metadata: updatedMeta
+        metadata: updatedMeta,
       });
 
       // Update state
       setCreations((prev) =>
         prev.map((c) =>
-          c.id === creation.id ? { ...c, metadata: updatedMeta } : c
-        )
+          c.id === creation.id ? { ...c, metadata: updatedMeta } : c,
+        ),
       );
 
-      alert(`Successfully registered ${creation.title} on Story Protocol!\nIP Address: ${ipAsset.ipaAddress}`);
+      alert(
+        `Successfully registered ${creation.title} on Story Protocol!\nIP Address: ${ipAsset.ipaAddress}`,
+      );
     } catch (err) {
       console.error(err);
-      alert('Story Protocol IP Asset registration failed.');
+      alert("Story Protocol IP Asset registration failed.");
     } finally {
       setRegisteringId(null);
     }
@@ -119,30 +133,44 @@ export default function CreationsPage() {
     try {
       const client = createClient();
       const data = user
-        ? await getUserCreations(client, user.id, filter === 'all' ? undefined : { type: filter })
-        : await getCreations(client, { limit: 50, ...(filter !== 'all' ? { type: filter } : {}) });
+        ? await getUserCreations(
+            client,
+            user.id,
+            filter === "all" ? undefined : { type: filter },
+          )
+        : await getCreations(client, {
+            limit: 50,
+            ...(filter !== "all" ? { type: filter } : {}),
+          });
       // Research snapshots belong in Myth Studio, without media/IP actions.
-      setCreations(data.filter(creation => creation.content?.schema !== 'arcanea.myth-save.v1'));
+      setCreations(
+        data.filter(
+          (creation) => creation.content?.schema !== "arcanea.myth-save.v1",
+        ),
+      );
     } catch (err) {
-      console.warn('Failed to load creations:', err);
+      console.warn("Failed to load creations:", err);
     } finally {
       setLoading(false);
     }
   }, [user, filter]);
 
-  useEffect(() => { loadCreations(); }, [loadCreations]);
+  useEffect(() => {
+    loadCreations();
+  }, [loadCreations]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this creation?')) return;
+    if (!confirm("Delete this creation?")) return;
     try {
-      await deleteCreation(createClient(), id, user?.id ?? '');
+      await deleteCreation(createClient(), id, user?.id ?? "");
       setCreations((prev) => prev.filter((c) => c.id !== id));
     } catch {
-      console.warn('Delete failed');
+      console.warn("Delete failed");
     }
   };
 
-  const filtered = filter === 'all' ? creations : creations.filter((c) => c.type === filter);
+  const filtered =
+    filter === "all" ? creations : creations.filter((c) => c.type === filter);
 
   return (
     <div className="min-h-screen bg-[var(--arc-cosmic-void)]">
@@ -154,10 +182,14 @@ export default function CreationsPage() {
               Your Creations
             </h1>
             <p className="text-sm text-white/60 mt-1">
-              {creations.length} creation{creations.length !== 1 ? 's' : ''} saved
+              {creations.length} creation{creations.length !== 1 ? "s" : ""}{" "}
+              saved
             </p>
             <SyntheticContentNotice medium="content" className="mt-1.5" />
-            <Link href="/myth-studio" className="mt-2 inline-block text-sm text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4">
+            <Link
+              href="/myth-studio"
+              className="mt-2 inline-block text-sm text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4"
+            >
               Open Myth Studio research snapshots
             </Link>
           </div>
@@ -186,8 +218,8 @@ export default function CreationsPage() {
                 aria-pressed={isActive}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.2)]'
-                    : 'text-white/65 hover:text-white/85'
+                    ? "bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.2)]"
+                    : "text-white/65 hover:text-white/85"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" aria-hidden="true" />
@@ -201,18 +233,29 @@ export default function CreationsPage() {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-48 rounded-xl bg-white/[0.03] animate-pulse" />
+              <div
+                key={i}
+                className="h-48 rounded-xl bg-white/[0.03] animate-pulse"
+              />
             ))}
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center" aria-hidden="true">
+            <div
+              className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center"
+              aria-hidden="true"
+            >
               <PhFunnel className="w-6 h-6 text-white/40" />
             </div>
             <p className="text-white/70 text-sm mb-2">
-              {filter === 'all' ? 'No creations yet' : `No ${filter} creations yet`}
+              {filter === "all"
+                ? "No creations yet"
+                : `No ${filter} creations yet`}
             </p>
-            <Link href="/chat" className="text-[var(--arc-brand-atlantean-teal)] text-sm hover:underline">
+            <Link
+              href="/chat"
+              className="text-[var(--arc-brand-atlantean-teal)] text-sm hover:underline"
+            >
               Start creating
             </Link>
           </div>
@@ -235,17 +278,29 @@ export default function CreationsPage() {
                   </div>
                 ) : (
                   <div className="aspect-video bg-gradient-to-br from-white/[0.03] to-white/[0.01] flex items-center justify-center">
-                    {creation.type === 'image' && <PhImage className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'text' && <PhFileText className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'audio' && <PhMusicNote className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'code' && <PhCode className="w-8 h-8 text-white/10" />}
+                    {creation.type === "image" && (
+                      <PhImage className="w-8 h-8 text-white/10" />
+                    )}
+                    {creation.type === "text" && (
+                      <PhFileText className="w-8 h-8 text-white/10" />
+                    )}
+                    {creation.type === "audio" && (
+                      <PhMusicNote className="w-8 h-8 text-white/10" />
+                    )}
+                    {creation.type === "code" && (
+                      <PhCode className="w-8 h-8 text-white/10" />
+                    )}
                   </div>
                 )}
 
                 {/* Info */}
                 <div className="p-4">
-                  <h3 className="text-sm font-medium text-white/90 truncate">{creation.title}</h3>
-                  <p className="text-[11px] text-white/60 mt-1">{formatDate(creation.createdAt)}</p>
+                  <h3 className="text-sm font-medium text-white/90 truncate">
+                    {creation.title}
+                  </h3>
+                  <p className="text-[11px] text-white/60 mt-1">
+                    {formatDate(creation.createdAt)}
+                  </p>
 
                   {/* Stats */}
                   <div className="flex items-center gap-3 mt-3">
@@ -277,7 +332,9 @@ export default function CreationsPage() {
                         </span>
                       </div>
                     ) : (
-                      <div className="text-[10px] text-white/40 font-medium">Unregistered IP</div>
+                      <div className="text-[10px] text-white/40 font-medium">
+                        Unregistered IP
+                      </div>
                     )}
 
                     {creation.metadata?.ipaAddress ? (
