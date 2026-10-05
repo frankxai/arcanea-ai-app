@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 import {
   admissionFromSpend,
   isHttpsImageUrl,
   MAX_ANIMATION_PROMPT_LENGTH,
   type VideoAdmission,
-} from '@/lib/imagine/video-admission';
+} from "@/lib/imagine/video-admission";
 
 export const maxDuration = 120;
 
@@ -14,14 +14,14 @@ export const maxDuration = 120;
 // Model: grok-imagine-video, same XAI_API_KEY as image gen
 
 const POLL_INTERVAL = 3000; // 3s between polls
-const MAX_POLLS = 35;       // ~105s max wait
+const MAX_POLLS = 35; // ~105s max wait
 
 async function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 interface VideoStatus {
-  status: 'pending' | 'done' | 'expired' | 'error';
+  status: "pending" | "done" | "expired" | "error";
   video?: { url: string; duration?: number };
   error?: string;
 }
@@ -31,34 +31,39 @@ async function animateWithGrok(
   prompt: string,
 ): Promise<{ videoUrl: string; provider: string }> {
   const apiKey = process.env.XAI_API_KEY;
-  if (!apiKey) throw new Error('NO_XAI_KEY');
+  if (!apiKey) throw new Error("NO_XAI_KEY");
 
   // Step 1: Start video generation
-  const startRes = await fetch('https://api.x.ai/v1/videos/generations', {
-    method: 'POST',
+  const startRes = await fetch("https://api.x.ai/v1/videos/generations", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'grok-imagine-video',
-      prompt: prompt || 'Cinematic camera movement, slow dolly in, atmospheric lighting, subtle motion',
+      model: "grok-imagine-video",
+      prompt:
+        prompt ||
+        "Cinematic camera movement, slow dolly in, atmospheric lighting, subtle motion",
       image_url: imageUrl,
       duration: 5,
-      aspect_ratio: '1:1',
-      resolution: '720p',
+      aspect_ratio: "1:1",
+      resolution: "720p",
     }),
   });
 
   if (!startRes.ok) {
     const err = await startRes.json().catch(() => ({}));
-    throw new Error((err as { error?: { message?: string } })?.error?.message || `Grok Video API error ${startRes.status}`);
+    throw new Error(
+      (err as { error?: { message?: string } })?.error?.message ||
+        `Grok Video API error ${startRes.status}`,
+    );
   }
 
-  const { request_id } = await startRes.json() as { request_id: string };
+  const { request_id } = (await startRes.json()) as { request_id: string };
 
   if (!request_id) {
-    throw new Error('No request_id returned from Grok Video API');
+    throw new Error("No request_id returned from Grok Video API");
   }
 
   // Step 2: Poll for completion
@@ -71,38 +76,46 @@ async function animateWithGrok(
 
     if (!pollRes.ok) continue;
 
-    const status = await pollRes.json() as VideoStatus;
+    const status = (await pollRes.json()) as VideoStatus;
 
-    if (status.status === 'done' && status.video?.url) {
-      return { videoUrl: status.video.url, provider: 'grok-video' };
+    if (status.status === "done" && status.video?.url) {
+      return { videoUrl: status.video.url, provider: "grok-video" };
     }
 
-    if (status.status === 'expired' || status.status === 'error') {
-      throw new Error(status.error || 'Video generation failed or expired');
+    if (status.status === "expired" || status.status === "error") {
+      throw new Error(status.error || "Video generation failed or expired");
     }
   }
 
-  throw new Error('Video generation timed out — try again');
+  throw new Error("Video generation timed out — try again");
 }
 
-async function animateWithFal(imageUrl: string, prompt: string): Promise<{ videoUrl: string; provider: string }> {
-  const { fal } = await import('@fal-ai/client');
+async function animateWithFal(
+  imageUrl: string,
+  prompt: string,
+): Promise<{ videoUrl: string; provider: string }> {
+  const { fal } = await import("@fal-ai/client");
   fal.config({ credentials: process.env.FAL_KEY! });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result = await (fal as any).subscribe('fal-ai/kling-video/v1/standard/image-to-video', {
-    input: {
-      prompt: prompt || 'Cinematic camera movement, slow dolly in, atmospheric lighting',
-      image_url: imageUrl,
-      duration: '5',
-      aspect_ratio: '1:1',
+  const result = await (fal as any).subscribe(
+    "fal-ai/kling-video/v1/standard/image-to-video",
+    {
+      input: {
+        prompt:
+          prompt ||
+          "Cinematic camera movement, slow dolly in, atmospheric lighting",
+        image_url: imageUrl,
+        duration: "5",
+        aspect_ratio: "1:1",
+      },
+      logs: true,
     },
-    logs: true,
-  });
+  );
 
   const videoUrl = (result.data as { video?: { url?: string } })?.video?.url;
-  if (!videoUrl) throw new Error('fal.ai returned no video');
-  return { videoUrl, provider: 'fal-ai' };
+  if (!videoUrl) throw new Error("fal.ai returned no video");
+  return { videoUrl, provider: "fal-ai" };
 }
 
 /**
@@ -115,34 +128,46 @@ async function admitVideo(req: NextRequest): Promise<VideoAdmission> {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return { allowed: false, status: 401, error: 'Sign in to animate images' };
+    return { allowed: false, status: 401, error: "Sign in to animate images" };
   }
 
   let spendRes: Response;
   try {
-    spendRes = await fetch(new URL('/api/credits/spend', req.nextUrl.origin), {
-      method: 'POST',
+    spendRes = await fetch(new URL("/api/credits/spend", req.nextUrl.origin), {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        cookie: req.headers.get('cookie') ?? '',
+        "Content-Type": "application/json",
+        cookie: req.headers.get("cookie") ?? "",
       },
-      body: JSON.stringify({ creationType: 'video' }),
+      body: JSON.stringify({ creationType: "video" }),
     });
   } catch {
-    return { allowed: false, status: 503, error: 'Credit admission is unavailable' };
+    return {
+      allowed: false,
+      status: 503,
+      error: "Credit admission is unavailable",
+    };
   }
-  return admissionFromSpend(spendRes.status, await spendRes.json().catch(() => null));
+  return admissionFromSpend(
+    spendRes.status,
+    await spendRes.json().catch(() => null),
+  );
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => null);
     const imageUrl: unknown = body?.imageUrl;
-    const prompt = typeof body?.prompt === 'string' ? body.prompt : '';
+    const prompt = typeof body?.prompt === "string" ? body.prompt : "";
 
-    if (!isHttpsImageUrl(imageUrl) || prompt.length > MAX_ANIMATION_PROMPT_LENGTH) {
+    if (
+      !isHttpsImageUrl(imageUrl) ||
+      prompt.length > MAX_ANIMATION_PROMPT_LENGTH
+    ) {
       return NextResponse.json(
-        { error: `Provide an https image URL and a prompt of up to ${MAX_ANIMATION_PROMPT_LENGTH} characters` },
+        {
+          error: `Provide an https image URL and a prompt of up to ${MAX_ANIMATION_PROMPT_LENGTH} characters`,
+        },
         { status: 400 },
       );
     }
@@ -150,7 +175,10 @@ export async function POST(req: NextRequest) {
     // Admission precedes every paid provider call below (Grok, fal.ai, Gemini).
     const admission = await admitVideo(req);
     if (!admission.allowed) {
-      return NextResponse.json({ error: admission.error }, { status: admission.status });
+      return NextResponse.json(
+        { error: admission.error },
+        { status: admission.status },
+      );
     }
 
     // Priority 1: Grok Imagine Video (same API key as image gen)
@@ -158,10 +186,10 @@ export async function POST(req: NextRequest) {
       const result = await animateWithGrok(imageUrl, prompt);
       return NextResponse.json(result);
     } catch (grokErr) {
-      const msg = grokErr instanceof Error ? grokErr.message : '';
-      if (msg !== 'NO_XAI_KEY') {
+      const msg = grokErr instanceof Error ? grokErr.message : "";
+      if (msg !== "NO_XAI_KEY") {
         // Real Grok error — still try fallbacks
-        console.error('Grok Video error:', msg);
+        console.error("Grok Video error:", msg);
       }
     }
 
@@ -171,25 +199,28 @@ export async function POST(req: NextRequest) {
         const result = await animateWithFal(imageUrl, prompt);
         return NextResponse.json(result);
       } catch (falErr) {
-        console.error('fal.ai error:', falErr instanceof Error ? falErr.message : falErr);
+        console.error(
+          "fal.ai error:",
+          falErr instanceof Error ? falErr.message : falErr,
+        );
       }
     }
 
     // Priority 3: Gemini re-imagine (not true video)
     const geminiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
     if (geminiKey) {
-      const { GoogleGenerativeAI } = await import('@google/generative-ai');
+      const { GoogleGenerativeAI } = await import("@google/generative-ai");
       const genAI = new GoogleGenerativeAI(geminiKey);
 
       const model = genAI.getGenerativeModel({
-        model: 'gemini-2.0-flash-exp',
+        model: "gemini-2.0-flash-exp",
         generationConfig: {
           // @ts-expect-error -- Gemini image gen uses responseModalities
-          responseModalities: ['TEXT', 'IMAGE'],
+          responseModalities: ["TEXT", "IMAGE"],
         },
       });
 
-      const motionPrompt = `Based on this image, create a dramatically different angle or moment of the same scene: ${prompt || 'cinematic dramatic lighting, dynamic composition, motion blur'}. Make it feel like the next frame in an epic sequence.`;
+      const motionPrompt = `Based on this image, create a dramatically different angle or moment of the same scene: ${prompt || "cinematic dramatic lighting, dynamic composition, motion blur"}. Make it feel like the next frame in an epic sequence.`;
       const result = await model.generateContent(motionPrompt);
       const parts = result.response.candidates?.[0]?.content?.parts || [];
 
@@ -198,22 +229,25 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({
             reimaginedImage: {
               data: part.inlineData.data,
-              mimeType: part.inlineData.mimeType || 'image/png',
+              mimeType: part.inlineData.mimeType || "image/png",
             },
-            provider: 'gemini-reimagine',
+            provider: "gemini-reimagine",
           });
         }
       }
     }
 
     return NextResponse.json(
-      { error: 'No video/animation API configured. Set XAI_API_KEY (recommended), FAL_KEY, or GEMINI_API_KEY.' },
+      {
+        error:
+          "No video/animation API configured. Set XAI_API_KEY (recommended), FAL_KEY, or GEMINI_API_KEY.",
+      },
       { status: 503 },
     );
   } catch (error) {
-    console.error('Animate API error:', error);
+    console.error("Animate API error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Animation failed' },
+      { error: error instanceof Error ? error.message : "Animation failed" },
       { status: 500 },
     );
   }

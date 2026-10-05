@@ -3,8 +3,16 @@ import { test } from "node:test";
 import { admissionFromSpend, isHttpsImageUrl } from "../video-admission";
 
 test("only an explicit successful spend admits paid video work", () => {
-  assert.deepEqual(admissionFromSpend(200, { success: true }), { allowed: true });
-  for (const body of [null, {}, { success: false }, { success: "true" }, "<html>"]) {
+  assert.deepEqual(admissionFromSpend(200, { success: true }), {
+    allowed: true,
+  });
+  for (const body of [
+    null,
+    {},
+    { success: false },
+    { success: "true" },
+    "<html>",
+  ]) {
     assert.deepEqual(admissionFromSpend(200, body), {
       allowed: false,
       status: 503,
@@ -23,13 +31,17 @@ test("anonymous, depleted, throttled and failing spends stay distinct and closed
   ];
   for (const [spendStatus, expected] of cases) {
     const result = admissionFromSpend(spendStatus, { success: true });
-    if (result.allowed) throw new Error(`Unexpected admission for ${spendStatus}`);
+    if (result.allowed)
+      throw new Error(`Unexpected admission for ${spendStatus}`);
     assert.equal(result.status, expected);
   }
 });
 
 test("only bounded https image URLs are accepted", () => {
-  assert.equal(isHttpsImageUrl("https://abc.public.blob.vercel-storage.com/u/1.png"), true);
+  assert.equal(
+    isHttpsImageUrl("https://abc.public.blob.vercel-storage.com/u/1.png"),
+    true,
+  );
   assert.equal(isHttpsImageUrl("https://imgen.x.ai/xai-imgen/abc.jpg"), true);
   const rejected: unknown[] = [
     undefined,

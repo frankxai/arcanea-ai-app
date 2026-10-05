@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   try {
     const { prompt } = await req.json();
 
-    if (!prompt || typeof prompt !== 'string' || prompt.length > 2000) {
-      return NextResponse.json({ error: 'Provide a prompt of up to 2000 characters' }, { status: 400 });
+    if (!prompt || typeof prompt !== "string" || prompt.length > 2000) {
+      return NextResponse.json(
+        { error: "Provide a prompt of up to 2000 characters" },
+        { status: 400 },
+      );
     }
 
     // Enhancement is a paid model call: signed-in users only.
@@ -16,31 +19,34 @@ export async function POST(req: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Sign in to enhance prompts' }, { status: 401 });
+      return NextResponse.json(
+        { error: "Sign in to enhance prompts" },
+        { status: 401 },
+      );
     }
 
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'Enhancement service not configured.' },
-        { status: 503 }
+        { error: "Enhancement service not configured." },
+        { status: 503 },
       );
     }
 
     // Use Grok via OpenRouter for fast prompt enhancement
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
-        'HTTP-Referer': 'https://arcanea.ai',
-        'X-Title': 'Arcanea Imagine',
+        "HTTP-Referer": "https://arcanea.ai",
+        "X-Title": "Arcanea Imagine",
       },
       body: JSON.stringify({
-        model: 'x-ai/grok-2-1212',
+        model: "x-ai/grok-2-1212",
         messages: [
           {
-            role: 'system',
+            role: "system",
             content: `You are Arcanea's prompt architect. Use the SPARK.SHAPE.SHARPEN method:
 
 SPARK — Find the one specific detail that makes this image unique. Not a description — a truth.
@@ -50,7 +56,7 @@ SHARPEN — Cut the defaults. No generic fantasy lighting. No symmetrical compos
 Add composition (camera angle, depth, framing), lighting (specific source and quality), atmosphere (weather, particles, time of day), and one unexpected texture detail. Keep the user's core vision but elevate it with specificity. Return ONLY the enhanced prompt, no explanations. Maximum 200 words.`,
           },
           {
-            role: 'user',
+            role: "user",
             content: `Enhance this image prompt for maximum visual impact:\n\n"${prompt}"`,
           },
         ],
@@ -61,19 +67,24 @@ Add composition (camera angle, depth, framing), lighting (specific source and qu
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error((err as { error?: { message?: string } })?.error?.message || 'Enhancement failed');
+      throw new Error(
+        (err as { error?: { message?: string } })?.error?.message ||
+          "Enhancement failed",
+      );
     }
 
     const data = await res.json();
     const enhanced =
-      (data as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message?.content?.trim() || prompt;
+      (
+        data as { choices?: { message?: { content?: string } }[] }
+      )?.choices?.[0]?.message?.content?.trim() || prompt;
 
     return NextResponse.json({ enhanced, original: prompt });
   } catch (error) {
-    console.error('Enhance API error:', error);
+    console.error("Enhance API error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Enhancement failed' },
-      { status: 500 }
+      { error: error instanceof Error ? error.message : "Enhancement failed" },
+      { status: 500 },
     );
   }
 }

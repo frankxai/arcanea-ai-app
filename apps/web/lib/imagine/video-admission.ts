@@ -8,15 +8,18 @@
  */
 
 export type VideoAdmission =
-  | { allowed: true }
-  | { allowed: false; status: number; error: string };
+  { allowed: true } | { allowed: false; status: number; error: string };
 
 export const MAX_ANIMATION_PROMPT_LENGTH = 1000;
 const MAX_IMAGE_URL_LENGTH = 2048;
 
 /** Only https image URLs (Vercel Blob or a provider-hosted image) may reach a video provider. */
 export function isHttpsImageUrl(value: unknown): value is string {
-  if (typeof value !== "string" || value.length === 0 || value.length > MAX_IMAGE_URL_LENGTH) {
+  if (
+    typeof value !== "string" ||
+    value.length === 0 ||
+    value.length > MAX_IMAGE_URL_LENGTH
+  ) {
     return false;
   }
   try {
@@ -27,7 +30,10 @@ export function isHttpsImageUrl(value: unknown): value is string {
 }
 
 /** Map a `/api/credits/spend` response to an admission decision. Fails closed. */
-export function admissionFromSpend(status: number, body: unknown): VideoAdmission {
+export function admissionFromSpend(
+  status: number,
+  body: unknown,
+): VideoAdmission {
   if (
     status === 200 &&
     typeof body === "object" &&
@@ -37,8 +43,15 @@ export function admissionFromSpend(status: number, body: unknown): VideoAdmissio
   ) {
     return { allowed: true };
   }
-  if (status === 401) return { allowed: false, status: 401, error: "Sign in to animate images" };
-  if (status === 402) return { allowed: false, status: 402, error: "Insufficient credits" };
-  if (status === 429) return { allowed: false, status: 429, error: "Too many requests" };
-  return { allowed: false, status: 503, error: "Credit admission is unavailable" };
+  if (status === 401)
+    return { allowed: false, status: 401, error: "Sign in to animate images" };
+  if (status === 402)
+    return { allowed: false, status: 402, error: "Insufficient credits" };
+  if (status === 429)
+    return { allowed: false, status: 429, error: "Too many requests" };
+  return {
+    allowed: false,
+    status: 503,
+    error: "Credit admission is unavailable",
+  };
 }
