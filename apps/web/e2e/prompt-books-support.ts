@@ -55,6 +55,8 @@ export async function setup(
   let lostTemplateAcknowledgement = false;
   let failingRead = Boolean(inspectFailure);
   const templates: Record<string, unknown>[] = [];
+  const createdTags: Record<string, unknown>[] = [];
+  const assignedTags = new Set<string>();
   let hold = false;
   let held = false;
   let release: (() => void) | null = null;
@@ -76,6 +78,39 @@ export async function setup(
     const request = route.request();
     const url = new URL(request.url());
     let data: unknown = [];
+    if (url.pathname.endsWith("/pb_tags")) {
+      if (request.method() === "POST") {
+        const body = request.postDataJSON();
+        if (body.collection_id === "_all") {
+          await route.fulfill({
+            status: 400,
+            json: { message: "Invalid UUID collection", code: "22P02" },
+          });
+          return;
+        }
+        data = {
+          ...body,
+          id: "00000000-0000-4000-8000-000000000008",
+          created_at: prompt.created_at,
+          updated_at: prompt.updated_at,
+        };
+        createdTags.push(data as Record<string, unknown>);
+      } else if (request.method() === "GET")
+        data = structuredClone(createdTags);
+    }
+    if (url.pathname.endsWith("/pb_prompt_tags")) {
+      if (request.method() === "POST") {
+        const payload = request.postDataJSON();
+        for (const row of Array.isArray(payload) ? payload : [payload])
+          assignedTags.add(row.tag_id as string);
+      }
+      if (request.method() === "DELETE")
+        assignedTags.delete(
+          (url.searchParams.get("tag_id") ?? "").replace(/^eq\./, ""),
+        );
+      if (request.method() === "GET")
+        data = [...assignedTags].map((tag_id) => ({ tag_id }));
+    }
     if (
       url.pathname.endsWith("/pb_tags") &&
       (url.searchParams.get("or") ?? "").includes(
@@ -222,6 +257,8 @@ export async function setup(
   return {
     row: () => prompt,
     templates: () => templates,
+    createdTags: () => createdTags,
+    assignedTags: () => [...assignedTags],
     failTemplateAfterCommit: () => {
       lostTemplateAcknowledgement = true;
     },
