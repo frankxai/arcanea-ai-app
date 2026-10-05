@@ -280,3 +280,42 @@ for (const resource of ["collections", "tags"] as const) {
     sync.unsubscribe();
   });
 }
+
+test("a lost draft acknowledgement confirms on retry and immediately supplies the template cache", async () => {
+  const f = await fixture();
+  await store.getState().initialize(f.client, owner);
+  const session = new PromptEditorSession(
+    store.getState().prompts[0],
+    () => true,
+    (input, revision) =>
+      store.getState().updatePrompt("prompt-1", input, revision),
+  );
+  session.updateField(
+    "content",
+    "Recovered {{subject}} after lost acknowledgement",
+  );
+  f.failPromptAfterCommit();
+  assert.equal(await session.save(), false);
+  assert.equal(f.saved().content, session.getSnapshot().state.content);
+  assert.equal(store.getState().prompts[0].content, "Original");
+  assert.equal(await session.save(), true);
+  assert.equal(session.getSnapshot().isDirty, false);
+  assert.equal(
+    store.getState().prompts[0].content,
+    session.getSnapshot().state.content,
+  );
+  const template = await store.getState().savePromptAsTemplate(
+    "prompt-1",
+    {
+      requestId: "00000000-0000-4000-8000-000000000030",
+      name: "Recovered template",
+      description: "",
+      category: "creative",
+      variables: [],
+      isPublic: false,
+    },
+    session.getConfirmedState(),
+  );
+  assert.equal(template.content, session.getSnapshot().state.content);
+  assert.equal(f.templateRows().length, 1);
+});

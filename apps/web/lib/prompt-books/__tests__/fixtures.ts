@@ -27,6 +27,7 @@ export async function fixture(userId = owner) {
   let saved = row(userId);
   const assignedTags = new Set<string>();
   let fail = false;
+  let failPromptAfterCommit = false;
   let failTemplate = false;
   let storedTemplate: Record<string, unknown> | null = null;
   const templateRows = new Map<string, Record<string, unknown>>();
@@ -38,6 +39,7 @@ export async function fixture(userId = owner) {
     entered: ReturnType<typeof deferred<void>>;
     release: ReturnType<typeof deferred<void>>;
   } | null = null;
+  let heldBefore: typeof held = null;
   const requests: { url: URL; method: string }[] = [];
   const user = {
     id: userId,
@@ -85,6 +87,15 @@ export async function fixture(userId = owner) {
           if (url.pathname.endsWith("/user")) return Response.json(user);
           if (!url.pathname.includes("/rest/v1/"))
             throw new Error("Unexpected fixture endpoint");
+          const before = heldBefore;
+          if (
+            before?.method === method &&
+            url.pathname.endsWith(`/${before.table}`)
+          ) {
+            heldBefore = null;
+            before.entered.resolve();
+            await before.release.promise;
+          }
           let result: unknown = [];
           let status = 200;
           if (
@@ -126,6 +137,19 @@ export async function fixture(userId = owner) {
                     Date.parse(saved.updated_at) + 1000,
                   ).toISOString(),
                 };
+            }
+            if (
+              failPromptAfterCommit &&
+              method === "PATCH" &&
+              status === 200 &&
+              result !== null
+            ) {
+              failPromptAfterCommit = false;
+              status = 500;
+              result = {
+                message: "Lost prompt acknowledgement",
+                code: "fixture",
+              };
             }
             if (status === 200 && result !== null)
               result = new Headers(init?.headers)
@@ -240,11 +264,24 @@ export async function fixture(userId = owner) {
     replaceStored: (patch: Record<string, unknown>) => {
       saved = { ...saved, ...patch };
     },
+    failPromptAfterCommit: () => {
+      failPromptAfterCommit = true;
+    },
     fail: () => {
       fail = true;
     },
     failRead: (table = "pb_prompts") => {
       readFailure = table;
+    },
+    holdBefore: (method: string, table: string) => {
+      const gate = {
+        method,
+        table,
+        entered: deferred<void>(),
+        release: deferred<void>(),
+      };
+      heldBefore = gate;
+      return gate;
     },
     hold: (method: string, table = "pb_prompts") => {
       const gate = {

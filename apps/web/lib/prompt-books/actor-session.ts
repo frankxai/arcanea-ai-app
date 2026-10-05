@@ -1,6 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { PromptBooksState } from "./store-state";
 import * as service from "./service";
+import { writePromptDraft, PromptDraftConflict } from "./draft-write";
+import { comparePromptRevisions } from "./revisions";
+import type { UpdatePromptInput } from "./types";
 
 type ReadActor = () => Pick<
   PromptBooksState,
@@ -41,7 +44,7 @@ export async function actor(read: ReadActor) {
   return { client, userId, version };
 }
 
-// Queue by owner, session generation and prompt. Confirm each actor after waiting;
+// Queue by owner and prompt across session generations. Confirm each actor after waiting;
 // a failed/stale operation cannot strand later edits or change another session.
 const tagWrites = new Map<string, Promise<void>>();
 
@@ -53,7 +56,7 @@ export function changePromptTag(
 ): Promise<void> {
   const { _client: client, _userId: userId, _sessionVersion: version } = read();
   if (!client || !userId) return Promise.reject(new Error("Not initialized"));
-  const key = JSON.stringify([userId, version, id]);
+  const key = JSON.stringify([userId, id]);
   const previous = tagWrites.get(key) ?? Promise.resolve();
   const writing = previous
     .catch(() => undefined)
@@ -95,4 +98,46 @@ export function changePromptTag(
   return writing.finally(() => {
     if (tagWrites.get(key) === writing) tagWrites.delete(key);
   });
+}
+
+// Both successful responses and a fetched conflicting row are authoritative
+// cache evidence after the actor guard. A lost write acknowledgement can then
+// confirm its matching draft and immediately create a template from that cache.
+export async function updateOwnedPrompt(
+  read: () => PromptBooksState,
+  id: string,
+  input: UpdatePromptInput,
+  expectedUpdatedAt?: string,
+) {
+  const { client, userId, version } = await actor(read);
+
+  let prompt;
+  try {
+    prompt = expectedUpdatedAt
+      ? await writePromptDraft(client, userId, id, input, expectedUpdatedAt)
+      : await service.updatePrompt(client, id, input);
+  } catch (error) {
+    assertActor(read, client, userId, version);
+    if (
+      error instanceof PromptDraftConflict &&
+      error.current.userId === userId
+    ) {
+      read().updatePromptInStore(error.current);
+      const latest = read().prompts.find((row) => row.id === id);
+      throw new PromptDraftConflict(latest ?? error.current);
+    }
+    throw error;
+  }
+  assertActor(read, client, userId, version);
+  if (prompt.userId !== userId)
+    throw new Error("Unexpected Prompt Books owner");
+  const cached = read().prompts.find((row) => row.id === id);
+  if (
+    expectedUpdatedAt &&
+    cached &&
+    (comparePromptRevisions(prompt.updatedAt, cached.updatedAt) ?? -1) < 0
+  )
+    throw new PromptDraftConflict(cached);
+  read().updatePromptInStore(prompt);
+  return prompt;
 }

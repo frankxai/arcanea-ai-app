@@ -305,3 +305,36 @@ test("built editor confirms multi-parameter JSONB saves after server key reorder
   await page.reload();
   await expect(page.locator('input[type="number"]')).toHaveValue("1536");
 });
+
+test("built template retry recovers an actually committed draft after its acknowledgement is lost", async ({
+  page,
+}) => {
+  const f = await setup(page);
+  f.failPromptAfterCommit();
+  await page
+    .getByPlaceholder("Write your prompt here...")
+    .fill("Recovered after lost response {{subject}}");
+  await page
+    .getByRole("button", { name: "Save as template", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Save as template",
+    exact: true,
+  });
+  await dialog
+    .getByRole("button", { name: "Save template", exact: true })
+    .click();
+  await expect(dialog.getByRole("alert")).toContainText(
+    "Your draft is still here",
+  );
+  expect(f.templates()).toHaveLength(0);
+  expect(f.row().content).toBe("Recovered after lost response {{subject}}");
+  await dialog
+    .getByRole("button", { name: "Save template", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+  expect(f.templates()).toHaveLength(1);
+  expect(f.templates()[0].content).toBe(
+    "Recovered after lost response {{subject}}",
+  );
+});
