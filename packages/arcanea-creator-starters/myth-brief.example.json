@@ -1,0 +1,29 @@
+{
+  "schema": "arcanea.myth-brief.v1",
+  "projectId": "harbor-research-example",
+  "title": "Harbor story research example",
+  "audience": "ages-8-12",
+  "setting": "A contemporary coastal town; all new characters and institutions remain editorial proposals.",
+  "selectedMyths": ["lernaean-hydra", "sirens", "scylla-charybdis"],
+  "currency": "EUR",
+  "reviewRateMicrosPerHour": 30000000,
+  "maxProductionCostMicros": 150000000,
+  "deliverables": [
+    {
+      "id": "story-outline",
+      "format": "text",
+      "acceptedUnits": 1,
+      "attemptsPerUnit": 2,
+      "unitCostMicros": 500000,
+      "reviewMinutesPerAttempt": 15
+    },
+    {
+      "id": "original-illustration-concepts",
+      "format": "image",
+      "acceptedUnits": 4,
+      "attemptsPerUnit": 3,
+      "unitCostMicros": 250000,
+      "reviewMinutesPerAttempt": 5
+    }
+  ]
+}

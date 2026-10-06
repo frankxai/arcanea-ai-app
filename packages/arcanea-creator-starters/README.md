@@ -26,13 +26,13 @@ Download the chosen HTML file and its matching `.md` brief from the gallery. Att
 
 ## Build from the source package
 
-From `packages/arcanea-creator-starters`, using the repository's Node 20 runtime:
+From `packages/arcanea-creator-starters`, using the repository's Node 22 runtime:
 
 ```text
 node scripts/build.mjs --out <absolute-new-directory>
 node scripts/build.mjs --out <absolute-built-directory> --check
 node scripts/build.mjs --compat --check
-node --test scripts/build.test.mjs scripts/interactions.test.mjs
+node --test scripts/build.test.mjs scripts/interactions.test.mjs scripts/myth-packets.test.mjs
 ```
 
 Use a dedicated empty output directory. Subsequent builds require a valid generator marker and refuse unrelated or locally edited files. The check command detects drift without writing. Edit the source package or download a starter to a new project; do not edit generated delivery files in place.
@@ -71,3 +71,62 @@ Version 0.2.0 adds Session, Margin and Patch, replaces decorative lab diagrams w
 ## Inside the Arcanea app
 
 The app generates all pages and downloads before `pnpm --dir apps/web dev` or `pnpm --dir apps/web build`. Only this source package is tracked in Git; generated files under `apps/web/public/creator-starters/` are ignored. Run `node scripts/build-creator-starters.mjs` from the repository root to generate them without starting a server, or add `--check` to verify exact output. Turbo caches the generated directory and invalidates it when the source package changes.
+
+## Myth research and production packets
+
+The same export includes `myth-atlas.v1.json`, `myth-brief.example.json`, `myth-packet.example.json` and `myth-packet.example.md`. These are twelve research leads and a planning example, with no source passages, manuscript, approved Arcanea canon or commercial clearance. `anchor-located` means source metadata has been located; it does not mean the passage or edition rights have been reviewed. The Greek entries reference ancient textual witnesses, rather than making claims about current religious practices. The Mapuche entry is a distinct living tradition and requires community consultation. Proposed transformations are editorial questions, separate from source evidence. Geography preserves traditional associations and unresolved modern identifications.
+
+Copy the example brief outside the generated delivery directory and edit it. From this package:
+
+```text
+node scripts/compile-myth-packet.mjs --brief /absolute/path/to/brief.json
+node scripts/compile-myth-packet.mjs --brief /absolute/path/to/brief.json --format md
+node scripts/compile-myth-packet.mjs --brief /absolute/path/to/brief.json --atlas /absolute/path/to/atlas.json
+```
+
+The CLI writes the complete packet to stdout only after validation. It reports errors on stderr with a nonzero exit status. Each input must be a regular JSON file no larger than 256KiB. Unknown fields and identifiers, duplicates, invalid rates, excessive counts and unsafe computed amounts fail validation. Import `compilePacket`, `validateBrief`, `validateAtlas` and `packetMarkdown` through `@arcanea/creator-starters/myth-packets` for programmatic use. Only pass compiler-produced packets to the Markdown formatter.
+
+The exact v1 brief fields are shown in the example. An audience is `ages-8-12`, `teens`, `adults` or `family`; this records intent and does not approve age suitability. A deliverable format is `text`, `image`, `audio` or `video`. Select one to eight distinct catalog IDs and one to sixteen distinct deliverable IDs. Each deliverable specifies a target of one to 1,000 accepted units, one to twenty attempts per unit, a nonnegative integer unit cost and zero to 1,440 review minutes per attempt. Currency is `USD`, `EUR` or `GBP`; no currency conversion occurs. A micro is one millionth of that currency unit. Money inputs are safe integers capped at one million currency units.
+
+The estimate charges every planned attempt and review of every attempt. Review cost is rounded up to a whole micro per deliverable. Rates are supplied by the creator, not retrieved provider prices; accepted output is a target, not a promise. The example plans 14 attempts and 90 review minutes: EUR 4 in generation plus EUR 45 in review, totaling EUR 49 against a EUR 150 ceiling. Taxes, checkout fees, hosting, writing and distribution are excluded. Exceeding the ceiling produces `withinBudget: false` so a human can revise the brief; compilation never initiates jobs or spending.
+
+Packets contain SHA-256 fingerprints of the atlas, brief, each selected record and complete packet body. Key order does not affect fingerprints; content and array order do. They detect change, not authenticity, legal status or editor approval. There are no timestamps, model calls, provider keys, network requests, database writes or automatic releases. Persist reviewed project packets through the app's existing owner-scoped catalog/publishing flows when that integration is separately implemented. Draft release-manifest validation work is not duplicated here.
+
+### Myth Studio workbench
+
+`/myth-studio` exposes the compiler as an editable research desk. It supports
+brief JSON import/export, source selection, deliverable/review estimates,
+research Markdown, packet JSON and an editorial workflow handoff. Editing the
+brief invalidates previous compiled exports. Compilation calls no models.
+
+`POST /api/myth-studio` accepts exactly `{ "action": "compile" | "save", "brief": ... }`
+as JSON with an actual 16 KiB request-byte limit. Compilation is anonymous;
+saving requires a validated Supabase session. The server chooses the bundled
+atlas, owner and private research stage. Caller-supplied approval, packet,
+owner or project linkage fields are rejected.
+
+`GET /api/myth-studio` lists up to 30 verified private snapshots for the session
+owner. `GET /api/myth-studio?id=<creation-uuid>` reopens one with fingerprint
+verification. Responses are private/no-store. Database errors are failures,
+not successful empty results. A save returns the creation ID, packet ID,
+creation timestamp and created/existing disposition. An identical retry is
+idempotent; changed briefs create separate versions. Altered rows produce a
+conflict and are never overwritten by this route.
+
+Storage uses deployed `creations` columns with owner RLS. The saved content
+retains the brief, atlas witness snapshot and packet for reproducibility.
+This is no-overwrite behavior through Myth Studio, not database-enforced
+immutability: owners retain existing direct Data API permissions. Fingerprints
+detect changes; they do not establish authenticity, rights or release approval.
+The brief project reference is a logical slug, not a deployed project relation.
+
+Handoff JSON is planning data with `executionAuthorized: false`. It records
+packet/source identities, accepted-unit targets, planned attempt limits,
+estimated cost and human acceptance. It does not queue a job, spend credits,
+call a provider, approve a release or grant a license.
+
+Run the failure/recovery contract tests:
+
+```sh
+node --test packages/arcanea-creator-starters/scripts/myth-workbench.test.mjs
+```

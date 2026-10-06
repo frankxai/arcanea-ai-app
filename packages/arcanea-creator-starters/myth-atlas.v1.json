@@ -1,0 +1,283 @@
+{
+  "schema": "arcanea.myth-atlas.v1",
+  "revision": "2026-10-04-seeds",
+  "records": [
+    {
+      "id": "lernaean-hydra",
+      "label": "Lernaean Hydra",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "traditional-association",
+        "place": "Lerna: traditional association"
+      },
+      "source": {
+        "work": "Library",
+        "attribution": "Pseudo-Apollodorus",
+        "anchor": "2.5.2",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0022%3Atext%3DLibrary%3Abook%3D2%3Achapter%3D5%3Asection%3D2",
+        "evidenceStatus": "anchor-located",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What modern problem multiplies when the protagonist attacks it, and what cooperation changes the outcome?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "nemean-lion",
+      "label": "Nemean lion",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "traditional-association",
+        "place": "Nemea: traditional association"
+      },
+      "source": {
+        "work": "Library",
+        "attribution": "Pseudo-Apollodorus",
+        "anchor": "2.5.1",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0022%3Atext%3DLibrary%3Abook%3D2%3Achapter%3D5%3Asection%3D1",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What familiar tool fails against a new obstacle, forcing the protagonist to rethink their skill?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "polyphemus",
+      "label": "Polyphemus and the Cyclopes",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Cyclopes setting: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 9",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D9",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "How can a clever escape create a later cost when the protagonist demands recognition?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "lotus-eaters",
+      "label": "Lotus eaters",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Lotus-eater setting: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 9",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D9",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What comfortable human-world system makes people forget the commitment they chose?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "aeolus",
+      "label": "Aeolus and the winds",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Aeolian island: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 10",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D10",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What shared resource fails when a team cannot agree who is allowed to open it?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "laestrygonians",
+      "label": "Laestrygonians",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Laestrygonian harbor: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 10",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D10",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "How does a seemingly safe destination become a trap, and who notices first?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "circe",
+      "label": "Circe and Aeaea",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Aeaea: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 10",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D10",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What transformation changes a person’s agency, and what bargain might restore it?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "sirens",
+      "label": "Sirens",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Sirens setting: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 12",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D12",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What desirable knowledge requires the protagonist to set a boundary before encountering it?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "scylla-charybdis",
+      "label": "Scylla and Charybdis",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Passage between hazards: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 12; passage around line 234",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D12%3Acard%3D234",
+        "evidenceStatus": "anchor-located",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "How does a leader make an imperfect choice when every available route has a cost?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "calypso",
+      "label": "Calypso and Ogygia",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "identification-unresolved",
+        "place": "Ogygia: modern identification unresolved"
+      },
+      "source": {
+        "work": "Odyssey",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 5",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0136%3Abook%3D5",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What attractive offer conflicts with a protagonist’s freedom to return home?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "chimera",
+      "label": "Chimera",
+      "tradition": "Ancient Greek textual witness",
+      "livingTradition": false,
+      "geography": {
+        "status": "traditional-association",
+        "place": "Lycia: traditional association"
+      },
+      "source": {
+        "work": "Iliad",
+        "attribution": "Homer (traditional attribution)",
+        "anchor": "Book 6; exact lines and later variants pending",
+        "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0134%3Abook%3D6",
+        "evidenceStatus": "reading-pending",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "What original composite obstacle combines three challenges that must be understood together?",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only."
+      ]
+    },
+    {
+      "id": "trentren-caicai",
+      "label": "Trentren and Caicai",
+      "tradition": "Mapuche",
+      "livingTradition": true,
+      "geography": {
+        "status": "dataset-association",
+        "place": "Named landscape associations in Chile and Argentina; versions require consultation"
+      },
+      "source": {
+        "work": "Landscape dataset and linked research",
+        "attribution": "University of Chile dataset; community versions require attribution",
+        "anchor": "doi:10.34691/UCHILE/QSFITR",
+        "url": "https://datos.uchile.cl/dataset.xhtml?persistentId=doi:10.34691/UCHILE/QSFITR",
+        "evidenceStatus": "anchor-located",
+        "editionRights": "unresolved"
+      },
+      "adaptationPrompt": "Before proposing an adaptation, ask relevant knowledge holders which versions and uses are appropriate to discuss.",
+      "reviewQuestions": [
+        "Read the cited witness and record variant differences before treating any summary as evidence.",
+        "Confirm reuse terms for the exact edition or dataset; this record contains metadata only.",
+        "Consult and credit relevant Mapuche knowledge holders; do not equate these accounts with a Greek Hydra."
+      ]
+    }
+  ]
+}

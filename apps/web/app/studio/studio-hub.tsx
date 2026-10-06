@@ -39,7 +39,11 @@ import {
 const HERO_STATS = [
   { value: "12+", label: "Formats", color: "var(--arc-brand-atlantean-teal)" },
   { value: "6", label: "Sources", color: "var(--arc-brand-atlantean-teal)" },
-  { value: "MD + JSONML", label: "Storage", color: "var(--arc-brand-arcanean-gold)" },
+  {
+    value: "MD + JSONML",
+    label: "Storage",
+    color: "var(--arc-brand-arcanean-gold)",
+  },
   { value: "pgvector", label: "Search", color: "var(--arc-void)" },
 ];
 
@@ -167,17 +171,20 @@ export function StudioHub() {
   return (
     <LazyMotion features={domAnimation}>
       <div className="relative bg-[var(--arc-cosmic-void)] min-h-screen">
-
         {/* ── Hero ─────────────────────────────────────────────── */}
         <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-          <FloatingOrbs preset="aurora" className="pointer-events-none absolute inset-0" />
+          <FloatingOrbs
+            preset="aurora"
+            className="pointer-events-none absolute inset-0"
+          />
 
           {/* Dot grid */}
           <div
             className="pointer-events-none absolute inset-0 -z-10 opacity-[0.02]"
             aria-hidden
             style={{
-              backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+              backgroundImage:
+                "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
               backgroundSize: "32px 32px",
             }}
           />
@@ -226,9 +233,10 @@ export function StudioHub() {
 
             <Reveal delay={0.35} y={16}>
               <p className="text-lg md:text-xl text-white/45 leading-relaxed max-w-2xl font-body mb-12">
-                Drop anything in. Everything becomes connected. Files, URLs, embeds, API pulls — the
-                Studio classifies, stores in Markdown and JSONML, and routes to your world graph.
-                Open formats. Semantic search. Yours forever.
+                Drop anything in. Everything becomes connected. Files, URLs,
+                embeds, API pulls — the Studio classifies, stores in Markdown
+                and JSONML, and routes to your world graph. Open formats.
+                Semantic search. Yours forever.
               </p>
             </Reveal>
 
@@ -286,9 +294,18 @@ export function StudioHub() {
               {TRANSFORMS.map((t) => {
                 const Icon = t.icon;
                 return (
-                  <FeatureCard key={t.title} glowColor={t.color} delay={t.delay} compact>
+                  <FeatureCard
+                    key={t.title}
+                    glowColor={t.color}
+                    delay={t.delay}
+                    compact
+                  >
                     <FeatureIcon color={t.color} size="md">
-                      <Icon size={20} weight="duotone" style={{ color: t.color }} />
+                      <Icon
+                        size={20}
+                        weight="duotone"
+                        style={{ color: t.color }}
+                      />
                     </FeatureIcon>
                     <h3
                       className="text-base font-display font-semibold mb-1.5"
@@ -296,7 +313,9 @@ export function StudioHub() {
                     >
                       {t.title}
                     </h3>
-                    <p className="text-sm text-white/50 leading-relaxed">{t.body}</p>
+                    <p className="text-sm text-white/50 leading-relaxed">
+                      {t.body}
+                    </p>
                   </FeatureCard>
                 );
               })}
@@ -315,7 +334,12 @@ export function StudioHub() {
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {STORAGE_GUARANTEES.map((g) => (
-                <FeatureCard key={g.title} glowColor={g.color} delay={g.delay} compact>
+                <FeatureCard
+                  key={g.title}
+                  glowColor={g.color}
+                  delay={g.delay}
+                  compact
+                >
                   <div
                     className="inline-flex items-center justify-center w-8 h-8 rounded-lg mb-4 text-xs font-mono font-bold"
                     style={{
@@ -324,7 +348,11 @@ export function StudioHub() {
                       color: g.color,
                     }}
                   >
-                    <Database size={16} weight="duotone" style={{ color: g.color }} />
+                    <Database
+                      size={16}
+                      weight="duotone"
+                      style={{ color: g.color }}
+                    />
                   </div>
                   <h3
                     className="text-sm font-display font-semibold mb-2"
@@ -332,7 +360,9 @@ export function StudioHub() {
                   >
                     {g.title}
                   </h3>
-                  <p className="text-xs text-white/45 leading-relaxed">{g.body}</p>
+                  <p className="text-xs text-white/45 leading-relaxed">
+                    {g.body}
+                  </p>
                 </FeatureCard>
               ))}
             </div>
@@ -367,23 +397,31 @@ export function StudioHub() {
                 </h2>
                 <p className="text-base text-white/40 leading-relaxed mb-8 font-body">
                   Every ingested asset gets embedded. Ask{" "}
-                  <span className="text-white/70 italic">&ldquo;what characters feel like Kael?&rdquo;</span>{" "}
-                  and the Studio finds them across every world, every note, every chat.
-                  pgvector with HNSW indexing runs approximately 150x faster than keyword search.
+                  <span className="text-white/70 italic">
+                    &ldquo;what characters feel like Kael?&rdquo;
+                  </span>{" "}
+                  and the Studio finds them across every world, every note,
+                  every chat. pgvector with HNSW indexing runs approximately
+                  150x faster than keyword search.
                 </p>
 
                 {/* Pipeline diagram */}
                 <div className="flex items-center gap-2 flex-wrap">
-                  {["Ingest", "Embed", "Index", "Retrieve", "Reference"].map((step, i, arr) => (
-                    <div key={step} className="flex items-center gap-2">
-                      <span className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.07] text-[11px] font-mono text-white/60">
-                        {step}
-                      </span>
-                      {i < arr.length - 1 && (
-                        <ArrowRight size={12} className="text-white/20 shrink-0" />
-                      )}
-                    </div>
-                  ))}
+                  {["Ingest", "Embed", "Index", "Retrieve", "Reference"].map(
+                    (step, i, arr) => (
+                      <div key={step} className="flex items-center gap-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.07] text-[11px] font-mono text-white/60">
+                          {step}
+                        </span>
+                        {i < arr.length - 1 && (
+                          <ArrowRight
+                            size={12}
+                            className="text-white/20 shrink-0"
+                          />
+                        )}
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
 
@@ -391,8 +429,13 @@ export function StudioHub() {
               <div className="space-y-3">
                 <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] backdrop-blur-sm p-5">
                   <div className="flex items-center gap-3 mb-4">
-                    <MagnifyingGlass size={16} className="text-[var(--arc-void)]/70 shrink-0" />
-                    <span className="text-sm text-white/30 font-mono">Semantic search</span>
+                    <MagnifyingGlass
+                      size={16}
+                      className="text-[var(--arc-void)]/70 shrink-0"
+                    />
+                    <span className="text-sm text-white/30 font-mono">
+                      Semantic search
+                    </span>
                   </div>
                   <div className="space-y-2">
                     {SEMANTIC_QUERIES.map((q, i) => (
@@ -406,7 +449,10 @@ export function StudioHub() {
                       >
                         <span
                           className="w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ background: "var(--arc-void)", opacity: 0.6 }}
+                          style={{
+                            background: "var(--arc-void)",
+                            opacity: 0.6,
+                          }}
                         />
                         <span className="text-sm text-white/55 group-hover:text-white/85 transition-colors font-body">
                           {q}
@@ -443,14 +489,16 @@ export function StudioHub() {
                 </span>
               </h2>
               <p className="text-base text-white/35 leading-relaxed mb-10 font-body">
-                Your content, your formats, your world. Start with a single drop.
+                Your content, your formats, your world. Start with a single
+                drop.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/chat"
                   className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl text-base font-semibold transition-all"
                   style={{
-                    background: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-atlantean-teal))",
+                    background:
+                      "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-atlantean-teal))",
                     color: "var(--arc-cosmic-void)",
                     boxShadow: "0 0 0 rgba(127,255,212,0)",
                   }}
@@ -467,6 +515,12 @@ export function StudioHub() {
                   <ArrowRight size={18} weight="bold" />
                 </Link>
                 <Link
+                  href="/myth-studio"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl border border-[var(--arc-cosmic-border)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)]"
+                >
+                  Plan a myth-based story
+                </Link>
+                <Link
                   href="/storage"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/60 hover:bg-white/[0.07] hover:text-white/90 hover:border-white/[0.14] transition-all"
                 >
@@ -476,7 +530,6 @@ export function StudioHub() {
             </Reveal>
           </div>
         </SectionShell>
-
       </div>
     </LazyMotion>
   );

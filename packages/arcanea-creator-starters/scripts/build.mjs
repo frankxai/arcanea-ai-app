@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { createBrief, renderTemplate, renderGallery } from "../src/render.mjs";
 import { registryItem } from "../src/registry.mjs";
+import { compilePacket, packetMarkdown } from "../src/myth-packets.mjs";
 
 export const pluginRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -95,17 +96,31 @@ export function compatibilityManifest(manifest) {
 }
 
 export async function artifacts() {
-  const [catalog, styles, script, guide] = await Promise.all([
+  const [catalog, styles, script, guide, atlas, mythBrief] = await Promise.all([
     readFile(path.join(pluginRoot, "catalog.json"), "utf8").then(JSON.parse),
     readFile(path.join(pluginRoot, "src/styles.css"), "utf8"),
     readFile(path.join(pluginRoot, "src/interactions.js"), "utf8"),
     readFile(path.join(pluginRoot, "README.md"), "utf8"),
+    readFile(path.join(pluginRoot, "myth-atlas.v1.json"), "utf8").then(
+      JSON.parse,
+    ),
+    readFile(path.join(pluginRoot, "myth-brief.example.json"), "utf8").then(
+      JSON.parse,
+    ),
   ]);
   const templates = validateCatalog(catalog);
   const files = new Map([
     ["index.html", renderGallery(templates, styles, script)],
     ["README.md", guide],
   ]);
+  const packet = compilePacket(mythBrief, atlas);
+  files.set("myth-atlas.v1.json", JSON.stringify(atlas, null, 2) + "\n");
+  files.set(
+    "myth-brief.example.json",
+    JSON.stringify(mythBrief, null, 2) + "\n",
+  );
+  files.set("myth-packet.example.json", JSON.stringify(packet, null, 2) + "\n");
+  files.set("myth-packet.example.md", packetMarkdown(packet));
   for (const template of templates) {
     files.set(
       `${template.id}.html`,

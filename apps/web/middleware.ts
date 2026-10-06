@@ -65,6 +65,8 @@ export async function middleware(request: NextRequest) {
       "/api/imagine",
     ],
     publicApiPrefixes: [
+      // Anonymous research compilation; save/list/load authenticate in the handler.
+      "/api/myth-studio",
       "/api/lore/sovereign-depths",
       "/api/lore/weight-of-wonders",
       "/api/health",
