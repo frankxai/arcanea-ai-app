@@ -1,0 +1,183 @@
+# Prompt Books save recovery and owner isolation
+
+Owner: Codex. Tracking: [issue 427](https://github.com/frankxai/arcanea-ai-app/issues/427).
+Base: `79f3fb25ca8d34c22eae1210c7c92ae2ebe8ea0b`.
+Branch: `agent/codex/app-prompt-books-recovery-20261004`.
+
+The creator must be able to edit a saved prompt, keep typing while a save is pending,
+see a failure honestly, retry the same draft, and return to the collection only
+after the latest text is confirmed. An account change must hide private drafts and
+discard earlier account responses. Direct editor links must initialize from the
+authenticated account. Browser storage retains validated display preferences only.
+
+Reuse: the prepared four-file editor patch from platform revision
+`336c98e43a36c2827103151debacefed063265b2`, applied once against the exact app base.
+Compare with the accepted app's old timer and response handling. Importing the
+whole platform proposal would also introduce unrelated APIs, schema and release
+work; that proposal remains open and preserved.
+
+Scope: editor hook/session/store, Prompt Books provider/layout and initial landing
+initialization, stale realtime handling, retry feedback, meaningful regression tests
+and their CI invocation. No dependency, lockfile, database, lore or media changes.
+The existing media branch remains at `533bd77c6eb43b26898be1c2c4985e8912d13c9e`.
+
+Acceptance: first-edit autosave, latest-draft save drain, failed-write retry, awaited
+Back, stale loads and account A/B/A isolation pass on actual app source. Strict
+lint, typecheck, frozen build and required security gates must pass. An independent
+provider must review the complete current delta and relevant callers. A real owner
+must complete the creator journey on the exact preview before production promotion.
+Bind the stable domain to the verified source revision afterward.
+
+Verification: cloud CI on Node 22 with the app's pinned dependencies; source-bound
+review; authenticated owner preview using the existing Chrome profile. Machine admission
+is checked before local intensive work; no local dependency installs or builds.
+Fixture transport assertions do not establish live RLS or actual owner acceptance.
+
+Recovery limit: an unsaved draft is retained in its mounted editor session. It is
+not persisted across reload or arbitrary route unmount. Reload warns while dirty.
+Rollback: revert only this repair on a fresh branch; preserve stored creator data,
+all media/platform/release branches and the existing issue/hub history.
+
+Status: implementation and verification in progress. No preview or production
+acceptance is claimed by this checkpoint.
+
+Independent GitHub Copilot balanced review of revision `339d96a` found a stale
+load-error status write and missing direct realtime A/B/A coverage. The correction
+binds collection error handling to selection and session generations and adds
+actual registered-callback tests plus honest current-error checks. Revision
+`b6fa83e` passed eight pinned SDK/service regressions, strict lint, changed-file
+formatting and app typecheck. Those results do not approve the correction yet.
+The existing Quality Gate workflow is disabled externally; this candidate adds
+the high/critical dependency audit to active CI rather than inferring a security
+pass from that absent run. Existing workflow settings remain untouched.
+
+The second Copilot review at `928f92e` identified direct-link initialization order,
+tag responses outside the actor generation guard, initialization status from
+superseded loads, stale error status after successful selection recovery, and an
+alert border outside the semantic tokens. The follow-up reuses one verified actor
+boundary for CRUD and tag mutations, waits for the route owner/session, binds
+aggregate load status to its generations, and adds real SDK/service lifecycle
+regressions plus a built direct-link collection-tag request assertion. Tag addition
+uses the existing composite key without deleting other assignments. No schema or
+dependency change. Current independent review and engineering acceptance must be
+rebound to the resulting revision; earlier passes approve only their own source.
+
+The third independent review at `482bff1` found a current collection failure
+hidden by route selection, omitted tag associations cleared by autosave/realtime,
+context/example/chain writes outside awaited Back, a same-owner stale template
+response, and one retry border constant. The correction tracks each resource
+independently, preserves omitted cached tags, shares one immutable editor draft
+and save drain for all eight fields, guards template results and navigation by
+actor/session, and uses the semantic retry border. Preference hydration and load
+tracking are separate modules. Fresh exact-revision checks and review remain
+required; the unchanged dependency audit still blocks promotion.
+
+The fourth independent review at `35b4bfd` confirms the collection-status,
+tag-cache and store-size corrections. Its further findings require retaining
+PostgreSQL timestamp precision for load/write/realtime/editor freshness and
+preserving normal loading feedback while the owner's direct-link read is pending.
+One shared comparator now retains all fractional digits and normalizes timezones;
+actual SDK/cache/editor regressions and a built delayed-load case cover these.
+The repeated registered-realtime-test finding is reconciled with the existing
+actual callback registration/invocation test, which passes. Fresh source review,
+build and owner acceptance remain required after this correction.
+
+The fifth Copilot review at `a5ff4de` found template creation reading the previous
+stored prompt and a hook refresh skipped while a save was pending. Template creation
+now drains the editor first, rechecks the actor generation, then reads the current
+owner prompt through a guarded store action. It reuses the existing createTemplate
+service, whose is_public mapping matches the read-only live column catalog. No
+customer rows were read and no SQL writes were made. The dialog initializes from
+the current draft, retains failure feedback and uses the installed Radix primitive
+for keyboard focus, Escape and modal behavior, with sentence case and mobile sizing.
+The hook retries refresh when dirty/saving flags clear. SDK and built-app regressions
+cover template field fidelity, A/B/A rejection, failure retry, and a newer cached
+revision arriving during a save. Retry actions meet the 44px touch target. Fresh
+checks and complete exact-revision review are required after this correction.
+
+The sixth independent review at `9c788d9` arrived after the typed-fixture correction.
+It found refreshed content paired with stale dialog variables, and the newly
+formatted dialog exposing existing UI ratchet violations. One reconciliation
+function keeps custom metadata for surviving placeholders, initializes new names
+and omits removed names in both the rendered dialog and the final confirmed
+template write. New SDK and built regressions cover refresh during the save barrier.
+The dialog uses focus-visible replacements and transition-colors. Earlier failed
+type, UI checks and superseded native packets remain retained by revision.
+
+The complete native xAI source review at `8fb1cca` returned WARN with four findings.
+Draft writes now condition on the verified owner and exact loaded updated_at,
+read the actual SDK result, and require its eight fields to match the attempted
+snapshot before confirmation. Conflicts retain locally edited fields, merge
+remote untouched fields and require an explicit retry. Full timestamp precision
+is retained. A returned row from another actor cannot acknowledge a draft.
+
+Resource reads capture their starting cache and reconcile arrivals, removals and
+newer revisions without replacing intervening changes. Failed direct-link reads
+show a Retry loading action. Template creation checks the confirmed editor fields
+against the owner cache, reconciles placeholders, and uses an idempotent primary
+key with ignoreDuplicates plus an owner-guarded read. Unacknowledged operations
+can resume after A/B/A within this runtime without duplicate templates. This
+private recovery map does not survive browser reload; mounted drafts likewise
+are not a durable offline journal. No dependency, schema or live SQL change.
+
+Actual pinned SDK transport regressions and built browser cases cover conditional
+write conflict/retry, false confirmation, delayed resource reads, loading recovery,
+lost template acknowledgement and same-owner epoch retry. The e2e transport is
+separate from a real signed-in preview creator acceptance. Current exact source
+checks and independent review remain required. Existing security advisories,
+missing authenticated acceptance and unfinished platform/release work stay open.
+
+The seventh Copilot review at `cd2a59e` recommends changes: collection/tag
+mutation and realtime updates lacked the load path's revision guard, and JSONB
+object-key ordering could falsely dirty or conflict a successfully saved draft.
+A shared structural JSON comparator now canonicalizes object keys while retaining
+array order in editor comparisons, conflict field merging and pending-template
+identity. Collection/tag updates use the existing precision comparator. Actual
+registered callback regressions cover stale current-session updates; actual SDK
+roundtrips cover reordered JSONB confirmation and template recovery. The built
+editor case covers multi-parameter roundtrip and reload. Corrupted copy/comments
+are repaired. Earlier 42 SDK/11 browser passes remain bound to `cd2a59e`; fresh
+current-source verification and independent review are required.
+
+The eighth Copilot review at `499ac38` confirms the prior five corrections but
+finds an older tag-assignment snapshot can overwrite a newer confirmed cache
+when edits overlap. Mutations are now serialized per owner/session/prompt; the
+verified actor is checked again after waiting, and the association query is the
+last awaited read before cache application. Actual pinned SDK tests cover overlap,
+queued A/B/A rejection before writing and queue recovery after failed refresh.
+Prior `c53ce4d` passes 47 SDK regressions, TypeScript and strict lint/format;
+its browser/build result remains source-bound. Fresh 50 SDK/current source review
+are required. Security audit and owner preview acceptance still hold production.
+
+Author recovery inspection additionally found a lost draft acknowledgement can
+confirm the matching server snapshot on retry while the cache still contains the
+old prompt, blocking subsequent confirmed-template creation. The actor boundary
+now admits the actual fetched conflict row to the cache only after verifying the
+current actor, keeps a newer cached revision if one exists, then returns that
+conflict for editor resolution. The conditional/generic prompt mutation action
+shares this actor module; the store remains below its size contract. Actual SDK
+and built dialog regressions simulate a committed prompt with a lost response,
+then confirm on retry and create the recovered template. Fresh 51 SDK/13 browser
+checks and exact-current review remain required. No dependency/schema change.
+
+Review 9 (Copilot 5408835524, source 417950d) found generation-scoped queues could reorder already-started tag writes after A/B/A. Queue ownership is now owner/prompt across generations; each job retains its captured version checks. A real SDK transport delays the old write before mutation and verifies newer unassignment wins in both cache and stored reads. Current expected automated coverage is 52 SDK cases and 13 built-browser cases; actual current CI and review remain required.
+
+Current b020bfc ran 52 SDK cases successfully, but TypeScript rejected the delayed-request fixture: typeof on the initialized nullable variable captured its narrowed null type. Both request gates now use an explicit shared RequestGate type. Vercel and CI failures are retained; the runtime recovery implementation is unchanged. Fresh type/build/browser verification is required on the new commit.
+
+Review 10 (Copilot 5408916575, b020bfc) confirms the cross-generation tag fix but finds direct collection redirects can select before owner initialization resets the store. The collection route now waits for authenticated store ownership, rechecks session generation, and returns unauthenticated users to the public landing. A built-browser case covers first authenticated collection entry and a cold direct collection reload. Current expected coverage is 52 SDK and 14 built-browser cases. Historical fixture failures, cancelled runs and missing acceptance remain retained. Current full-source independent review is still required.
+
+Review 11 (Copilot 5408948612, c3015bd) repeats the collection initialization finding already corrected in 22a8070, and finds Retry loading bypassed normalization of the _all collection sentinel. Retry now reloads all prompts without a UUID collection filter for that route. Built recovery runs both normal collection and _all editor paths; the disposable backend explicitly rejects eq._all as PostgreSQL would. Current expected automated coverage is 52 SDK and 15 built-browser cases. Current source review and owner acceptance remain required.
+
+Review 12 (Copilot 5408989316, current b1d2e0c) finds the legacy search RPC omits user_id, causing the owner filter to discard every row, and a clean conflict retry leaves autosave blocked. Search now verifies the actual SDK actor before invoking the owner-filtered RPC, admits its omitted owner projection only for that verified call, and continues rejecting explicit foreign owners and stale responses. Four SDK regressions cover real RPC projection, actual changed identity, explicit foreign rows and delayed A/B/A. A conflict retry that matches the fetched remote value clears resolved error/flags; a real SDK regression verifies the next edit autosaves. The existing landing is extracted below the 500-line page limit, with the first-HTML contract preserved. Expected current coverage is 57 SDK and 15 built-browser cases.
+
+The repeated collection finding is reconciled against the actual owner/isLoading/session guard in the changed collection route and b1d2e0c cold collection browser case, which passed. This is author reconciliation, not independent approval. The checked-in search RPC is SECURITY DEFINER and filters by its caller-supplied p_user_id; this frontend actor verification does not prove server-side denial of forged owner parameters. Actual deployed RPC execute grants/function definition and authenticated foreign-owner denial remain a release gate. No SQL has been applied.
+
+Production public-source binding confirms backend hcfhyssdzphudaqatxbk. Read-only catalog inspection finds the Prompt Books owner RLS policy/table present, but pb_search_prompts absent. Search therefore keeps ranked RPC behavior where installed and recovers only PGRST202 through an owner-filtered, non-archived, capped table search ordered by revision. Quoted PostgREST values and escaped LIKE wildcards protect query syntax. The missing-RPC capability flag is client-scoped and stores no user data. Three SDK regressions cover fallback request ownership/cap/encoding, one probe per client and foreign table row rejection. This fallback is substring search ordered by recency, rather than ranked full-text search. Expected current coverage is 60 SDK and 15 built-browser cases. Catalog checks read no customer rows and do not establish authenticated denial acceptance. No SQL is applied. Official guidance: https://supabase.com/docs/reference/javascript/or and https://docs.postgrest.org/en/stable/references/api/url_grammar.html.
+
+CI 37249235773 at 86de370 failed TypeScript and one SDK fallback case because the shared service mapper was private. The existing mapper is now exported for reuse; its mapping is unchanged. Copilot review 13 also identifies invalid color strings and keyboard-inaccessible APL expansion in the extracted landing. The card now has button semantics, focus treatment, expanded state and Enter/Space activation; token color mixes replace invalid suffixes. A built public landing case covers keyboard expansion/collapse. Expected current coverage is 60 SDK and 16 built-browser cases; exact-current runs and independent review are required. The legacy RPC finding remains relevant to unfinished SQL installation; catalog proof shows it absent from the production-bound project, so no deployed function authorization is claimed or changed.
+
+Current d66054f passes all 60 SDK and 16 built-browser cases, typecheck, strict lint and frozen build; audit remains four high. Review 15 (Copilot 5409131562 at d66054f) finds tag creation from the _all editor sends that sentinel into a UUID collection column. Creation now normalizes _all to no collection and sets global ownership semantics; collection tags retain their real collection UUID. Two built-browser cases create and assign tags from both routes against a transport that rejects the old invalid UUID request and verifies stored owner/scope and assignment. Expected coverage is now 60 SDK and 18 browser cases. Carry-forward mapper/projection/collection findings are reconciled against actual current source checks; the legacy RPC installation boundary and hosted owner acceptance remain pending.
+
+Current ba9fcff passes all 60 SDK and 18 browser cases, typecheck, strict lint and frozen build; audit remains four high. Review 16 (Copilot 5409216468 at ba9fcff) confirms the global tag correction and identifies a literal CTA glow in the extracted landing. The CTA now uses the existing --arc-shadow-glow token, defined in packages/design-system/src/tokens.css and already imported by apps/web/app/globals.css. No new behavior or tests are added for this one-class token correction. Fresh source-bound CI and independent review remain required. The old mapper/projection/collection threads are retained with author source/test reconciliation, and the legacy SQL installation and authenticated acceptance gates stay open.
+
+Review 17 (Copilot 5409306734 at bd0a66c) flags the retained privileged RPC branch where the legacy migration is installed, and explicitly recommends disabling it until server authorization is repaired. Current search now always uses the owner-filtered, non-archived RLS table query with quoted values, recency ordering and limit 50. It never calls the unsafe RPC and rejects rows without an explicit matching owner. Seven real SDK search cases cover owned rows, delayed A/B/A, foreign and missing owner rejection, changed SDK actor, bounded query syntax and zero RPC calls even when the fixture exposes that function. Coverage remains 60 SDK and 18 browser cases. The serious alternative is ranked RPC search: it stays disabled until its auth.uid() boundary, search path and execute grants are independently reviewed and verified. Fresh production-bound metadata still finds the function absent and owner RLS policy present; no customer rows or SQL writes occurred. All legacy SQL and unfinished platform/release work are preserved. Hosted authorization denial, actual owner journey, dependency audit and complete current review remain release gates.
