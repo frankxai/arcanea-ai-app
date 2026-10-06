@@ -51,7 +51,7 @@
   },
   "homepage": "https://arcanea.ai/docs/mcp",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@modelcontextprotocol/sdk": "^1.32.0",
     "canonicalize": "^1.0.8",
     "zod": "^4.3.6"
   },
