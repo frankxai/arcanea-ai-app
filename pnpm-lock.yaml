@@ -40,15 +40,15 @@ overrides:
   devalue@<5.6.4: '>=5.6.4'
   devalue@<=5.6.3: '>=5.6.4'
   flatted@<3.4.0: '>=3.4.0'
-  undici@>=5.0.0 <6.0.0: 6.28.0
-  undici@>=6.0.0 <6.28.0: 6.28.0
+  undici@>=5.0.0 <6.0.0: 6.28.1
+  undici@>=6.0.0 <6.28.1: 6.28.1
   undici@>=7.0.0 <7.29.0: 7.29.0
   undici@>=8.0.0 <8.9.0: 8.9.0
   next@>=16.0.0-beta.0 <16.1.7: '>=16.1.7'
   next@>=16.0.1 <16.1.7: '>=16.1.7'
   flatted@<=3.4.1: '>=3.4.2'
   handlebars@>=4.0.0 <=4.7.8: '>=4.7.9'
-  brace-expansion@<5.0.9: 5.0.9
+  brace-expansion@<5.0.12: 5.0.12
   handlebars@>=4.0.0 <4.7.9: '>=4.7.9'
   picomatch@<2.3.2: '>=2.3.2'
   picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
@@ -5346,8 +5346,8 @@ packages:
   boundary@2.0.0:
     resolution: {integrity: sha512-rJKn5ooC9u8q13IMCrW0RSp31pxBCHE3y9V/tp3TdWSLf8Em3p6Di4NBpfzbJge9YjjFEsD0RtFEjtvHL5VyEA==}
 
-  brace-expansion@5.0.9:
-    resolution: {integrity: sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==}
+  brace-expansion@5.0.12:
+    resolution: {integrity: sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==}
     engines: {node: 20 || >=22}
 
   braces@3.0.3:
@@ -8874,12 +8874,8 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  undici@6.28.0:
-    resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
-    engines: {node: '>=18.17'}
-
-  undici@6.29.0:
-    resolution: {integrity: sha512-R+RODBqp6i2pPflGdq+xIOUkl+RNfGgHwoinecKu/JCuf2uO06cOKoDbI2P7Dn6KcswdKwrczbU6IYJ6K8X+wg==}
+  undici@6.28.1:
+    resolution: {integrity: sha512-zWpdTVD54H48CIybL0rWQ3ukpb9d23wM7eH5RtfdmeP70cWHNjtfo7P4vZX+5CoDcO53J4Pu5uXp7lNfjc6DRA==}
     engines: {node: '>=18.17'}
 
   unicorn-magic@0.3.0:
@@ -9312,12 +9308,12 @@ snapshots:
   '@actions/http-client@2.2.3':
     dependencies:
       tunnel: 0.0.6
-      undici: 6.28.0
+      undici: 6.28.1
 
   '@actions/http-client@4.0.1':
     dependencies:
       tunnel: 0.0.6
-      undici: 6.28.0
+      undici: 6.28.1
 
   '@actions/io@1.1.3': {}
 
@@ -9382,7 +9378,7 @@ snapshots:
       '@ai-sdk/provider': 3.0.18
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.1.1
-      undici: 6.29.0
+      undici: 6.28.1
       zod: 3.25.76
 
   '@ai-sdk/provider-utils@4.0.57(zod@4.6.5)':
@@ -9390,7 +9386,7 @@ snapshots:
       '@ai-sdk/provider': 3.0.18
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.1.1
-      undici: 6.29.0
+      undici: 6.28.1
       zod: 4.6.5
 
   '@ai-sdk/provider@0.0.3':
@@ -12929,7 +12925,7 @@ snapshots:
       is-buffer: 2.0.5
       is-node-process: 1.2.0
       throttleit: 2.1.0
-      undici: 6.28.0
+      undici: 6.28.1
 
   '@vercel/cli-config@0.3.1':
     dependencies:
@@ -13339,7 +13335,7 @@ snapshots:
 
   boundary@2.0.0: {}
 
-  brace-expansion@5.0.9:
+  brace-expansion@5.0.12:
     dependencies:
       balanced-match: 4.0.4
 
@@ -15668,11 +15664,11 @@ snapshots:
 
   minimatch@10.2.6:
     dependencies:
-      brace-expansion: 5.0.9
+      brace-expansion: 5.0.12
 
   minimatch@3.1.5(patch_hash=5919ebd23ebe4ae69b5b2827069f23b2816c0ae39d85e2359a232a039f4dc8f5):
     dependencies:
-      brace-expansion: 5.0.9
+      brace-expansion: 5.0.12
 
   minimist@1.2.8: {}
 
@@ -17497,9 +17493,7 @@ snapshots:
 
   undici-types@6.21.0: {}
 
-  undici@6.28.0: {}
-
-  undici@6.29.0: {}
+  undici@6.28.1: {}
 
   unicorn-magic@0.3.0: {}
 
