@@ -10,7 +10,7 @@ import { NotificationBell } from "@/components/notifications/notification-bell";
 import { SearchBar } from "@/components/search/search-bar";
 import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
-// ─── Mega Menu Data ──────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface NavItem {
   href: string;
@@ -161,7 +161,7 @@ const navLinks: NavLink[] = [
   { href: "/pricing", label: "Pricing", also: [] },
 ];
 
-// ─── Mega Dropdown Component ─────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 
 function MegaDropdown({
   sections,
@@ -224,7 +224,7 @@ function MegaDropdown({
   );
 }
 
-// ─── Navbar ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -386,7 +386,7 @@ export function Navbar() {
             <div className="hidden lg:flex items-center gap-2">
               <SearchBar compact />
               <NotificationBell />
-              <UserNav />
+              <UserNav onAuthOpen={() => setMobileMenuOpen(false)} />
             </div>
 
             <button
@@ -578,7 +578,7 @@ export function Navbar() {
                     <NotificationBell />
                   </div>
                   <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2">
-                    <UserNav />
+                    <UserNav onAuthOpen={() => setMobileMenuOpen(false)} />
                   </div>
                 </m.div>
               </div>
