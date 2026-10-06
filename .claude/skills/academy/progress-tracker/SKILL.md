@@ -60,7 +60,7 @@ When the user invokes `/academy`, display:
   [🔒] Gate 5: Voice (528 Hz) - Alera & Otome
   [🔒] Gate 6: Sight (639 Hz) - Lyria & Yumiko
   [🔒] Gate 7: Crown (741 Hz) - Aiyami & Sol
-  [🔒] Gate 8: Shift (1111 Hz) - Elara & Vaelith
+  [🔒] Gate 8: Starweave (852 Hz) - Elara & Vaelith
   [🔒] Gate 9: Unity (963 Hz) - Ino & Kyuro
   [🔒] Gate 10: Source (1111 Hz) - Shinkami & Source
 
