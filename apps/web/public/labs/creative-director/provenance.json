@@ -1,10 +1,10 @@
 {
   "schema": "starlight.creative-lab-projection.v1",
   "product": "arcanea",
-  "kernelDigest": "01c2968d21c0c81dc0a5580c538481c3e3b2f5fcb3aac714c13bae7e94f51d2c",
+  "kernelDigest": "a305e3dff932c291d63a655533b0e623b4b894039845b8330e74421ab9238910",
   "kernelRepository": "frankxai/Starlight-Intelligence-System",
-  "kernelRef": "8ac1294f2f03b4819d85e88b524cdc38af8ee3ed",
-  "projectionDigest": "246537a5b1395aacb69f84e98ec5f1924baccb5079c000fc43d86dd91c6459e4",
+  "kernelRef": "ba5971e79eaff6d0991729d8d1081e156475a12c",
+  "projectionDigest": "f86db8b3562edaa1cafbe21389db45ce767c7cd19058be22fff3f4ab4b73eeea",
   "mode": "local-draft",
   "identityVerified": false
 }
