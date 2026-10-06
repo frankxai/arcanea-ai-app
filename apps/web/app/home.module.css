@@ -1,0 +1,229 @@
+.home {
+  color: var(--arc-text-primary);
+  background: var(--arc-cosmic-void);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--arc-text-secondary);
+  font-size: 13px;
+  margin: 0 0 24px;
+}
+.eyebrow > span {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--arc-radius-full);
+  background: var(--arc-brand-atlantean-teal);
+}
+.workflow {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px 0;
+  border-top: 1px solid var(--arc-cosmic-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+}
+.workflow h2,
+.storage h2 {
+  font-size: clamp(28px, 3.5vw, 42px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  margin: 0 0 20px;
+}
+.workflow > div > p:last-child {
+  color: var(--arc-text-secondary);
+  max-width: 320px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.workflow li {
+  display: flex;
+  gap: 24px;
+  padding: 0 0 28px;
+}
+.workflow li > span {
+  color: var(--arc-brand-atlantean-teal);
+  font: 12px var(--arc-font-mono);
+  padding-top: 3px;
+}
+.workflow h3 {
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 7px;
+}
+.workflow li p {
+  color: var(--arc-text-secondary);
+  font-size: 14px;
+  line-height: 1.7;
+  max-width: 430px;
+}
+.explore {
+  max-width: 1240px;
+  margin: 0 auto 80px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  border: 1px solid var(--arc-cosmic-border);
+  border-radius: var(--arc-radius-xl);
+  overflow: hidden;
+}
+.exploreImage {
+  position: relative;
+  min-height: 510px;
+  overflow: hidden;
+}
+.exploreImage > img {
+  object-fit: cover;
+}
+.exploreImage > div {
+  position: relative;
+  min-height: 510px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  background: linear-gradient(0deg, var(--arc-cosmic-void), transparent);
+}
+.exploreImage h2 {
+  font-size: clamp(32px, 3.6vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin: 0 0 24px;
+}
+.exploreImage a {
+  display: inline-flex;
+  gap: 22px;
+  min-height: 44px;
+  align-items: center;
+  font-size: 14px;
+  align-self: flex-start;
+}
+.destinations {
+  padding: 8px 34px;
+}
+.destinations a {
+  display: block;
+  padding: 28px 0;
+}
+.destinations a + a {
+  border-top: 1px solid var(--arc-cosmic-border);
+}
+.destinations a > span {
+  font-size: 11px;
+  color: var(--arc-text-secondary);
+}
+.destinations h3 {
+  font-size: 21px;
+  letter-spacing: -0.025em;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.destinations h3 > svg {
+  color: var(--arc-brand-atlantean-teal);
+}
+.destinations p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--arc-text-secondary);
+  max-width: 340px;
+}
+.storage {
+  max-width: 1240px;
+  margin: auto;
+  padding: 0 0 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+}
+.storage p:not(.eyebrow) {
+  font-size: 15px;
+  color: var(--arc-text-secondary);
+  line-height: 1.85;
+}
+.storage a {
+  display: inline-flex;
+  gap: 18px;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 14px;
+  font-size: 13px;
+}
+.home a:hover {
+  color: var(--arc-brand-atlantean-teal);
+}
+.home :is(button, a, textarea):focus-visible {
+  outline: 2px solid var(--arc-brand-atlantean-teal);
+  outline-offset: 5px;
+  border-radius: var(--arc-radius-sm);
+}
+@media (max-width: 1320px) {
+  .workflow,
+  .explore,
+  .storage {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+}
+@media (max-width: 1000px) {
+  .workflow,
+  .storage {
+    gap: 40px;
+  }
+}
+@media (max-width: 760px) {
+  .eyebrow {
+    margin-bottom: 20px;
+  }
+  .workflow,
+  .storage {
+    margin-left: 22px;
+    margin-right: 22px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 44px 0;
+  }
+  .workflow br {
+    display: none;
+  }
+  .workflow li:last-child {
+    padding-bottom: 0;
+  }
+  .explore {
+    margin: 0 22px;
+    grid-template-columns: 1fr;
+  }
+  .exploreImage,
+  .exploreImage > div {
+    min-height: 370px;
+  }
+  .exploreImage > div {
+    padding: 28px;
+  }
+  .destinations {
+    padding: 0 26px;
+  }
+  .storage {
+    gap: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home *,
+  .home *::before,
+  .home *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (forced-colors: active) {
+  .explore {
+    border: 1px solid CanvasText;
+  }
+}
