@@ -16,23 +16,32 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev":   "tsc --watch",
+    "dev": "tsc --watch",
     "start": "node dist/cli.js",
     "clean": "rm -rf dist"
   },
-  "keywords": ["arcanea", "media", "images", "video", "guardian", "catalog"],
+  "keywords": [
+    "arcanea",
+    "media",
+    "images",
+    "video",
+    "guardian",
+    "catalog"
+  ],
   "author": "FrankX",
   "license": "MIT",
   "dependencies": {
-    "sharp":          "^0.35.5",
-    "chokidar":       "^3.6.0",
-    "fluent-ffmpeg":  "^2.1.3",
-    "glob":           "^11.0.0"
+    "sharp": "^0.35.5",
+    "chokidar": "^3.6.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "glob": "^11.0.0"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.27",
-    "@types/node":          "^20.19.43",
-    "typescript":           "^5.9.3"
+    "@types/node": "^20.19.43",
+    "typescript": "^5.9.3"
   },
-  "engines": { "node": ">=20.10.0 <21 || >=22.0.0" }
+  "engines": {
+    "node": ">=20.10.0 <21 || >=22.0.0"
+  }
 }
