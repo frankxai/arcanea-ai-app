@@ -1,1 +1,1 @@
-@file:///workspace/aaa/apps/web/components/auth/auth-modal.tsx
+file:///workspace/heal-standup-1006/auth-modal.lf.tsx
