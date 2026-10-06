@@ -40,9 +40,9 @@ const PHASES: Phase[] = [
       "The bedrock of Arcanea. Authentication, the project graph, and the platform architecture that everything else builds upon.",
     features: [
       "Supabase auth with OAuth providers",
-      "Project graph — 190+ interconnected pages",
-      "MCP server with 54 tools",
-      "Intelligence OS with 9 core packages",
+      "Project graph linking every page",
+      "MCP server for coding agents",
+      "Intelligence OS core packages",
     ],
     accent: "hsl(165 60% 50%)",
     accentGlow: "rgba(80, 200, 160, 0.18)",
