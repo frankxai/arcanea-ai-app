@@ -3,15 +3,15 @@
 // In-memory session store (for MVP)
 // TODO: Add SQLite persistence for production
 const sessions = new Map();
-const MEMORY_FILE_PATH = `${process.env.HOME || process.env.USERPROFILE || '.'}/.arcanea/memories.json`;
+const MEMORY_FILE_PATH = `${process.env.HOME || process.env.USERPROFILE || "."}/.arcanea/memories.json`;
 function normalizeCreation(sessionId, creation) {
     return {
         ...creation,
-        summary: creation.summary ?? '',
+        summary: creation.summary ?? "",
         name: creation.name ?? creation.id ?? `creation-${sessionId}`,
         createdAt: creation.createdAt instanceof Date
             ? creation.createdAt.toISOString()
-            : typeof creation.createdAt === 'string'
+            : typeof creation.createdAt === "string"
                 ? creation.createdAt
                 : new Date().toISOString(),
     };
@@ -72,9 +72,10 @@ export function getSessionSummary(sessionId) {
         luminorsConsulted: session.luminorsConsulted.length,
         creaturesDefeated: session.creaturesEncountered.length,
         creationsGenerated: session.creations.length,
-        duration: Math.max(0, Date.now() - (session.startedAt instanceof Date
-            ? session.startedAt.getTime()
-            : Date.parse(session.startedAt))),
+        duration: Math.max(0, Date.now() -
+            (session.startedAt instanceof Date
+                ? session.startedAt.getTime()
+                : Date.parse(session.startedAt))),
     };
 }
 // Milestone tracking
@@ -101,7 +102,7 @@ const milestoneDefinitions = {
     },
     elemental_explorer: {
         check: (s) => {
-            const elements = new Set(s.creations.map(c => c.element).filter(Boolean));
+            const elements = new Set(s.creations.map((c) => c.element).filter(Boolean));
             return elements.size >= 4;
         },
         description: "Created across four different elements",
