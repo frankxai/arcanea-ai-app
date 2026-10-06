@@ -152,7 +152,7 @@ jobs:
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
       - name: Verify exact world drafts and account return paths
-        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/draft-portability.test.ts lib/worlds/__tests__/entry-access.test.ts
 
       - name: Verify feedback persistence receipts
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
@@ -232,6 +232,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           persist-credentials: false
+          fetch-depth: 2
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -306,11 +307,26 @@ jobs:
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
 
-      - name: Verify galleries rendered desktop, 375px mobile and reduced motion
-        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+      - name: Select homepage browser scope
+        id: homepage-scope
+        run: |
+          git rev-parse --verify HEAD^ > /dev/null
+          homepage_changed=0
+          git diff --quiet HEAD^ HEAD -- apps/web/app/page.tsx apps/web/app/home-experience.tsx apps/web/app/home.module.css apps/web/components/worlds/world-workbench.tsx apps/web/components/worlds/world-workbench.module.css apps/web/app/globals.css packages/design-system/src/tokens.css apps/web/app/worlds/create/page.tsx apps/web/lib/worlds/draft-portability.ts apps/web/lib/worlds/__tests__/draft-portability.test.ts scripts/verify-world-draft-browser.cjs scripts/verify-world-workbench-browser.cjs scripts/verify-homepage-built-app.cjs .github/workflows/ci.yml || homepage_changed=$?
+          if [ "$homepage_changed" -gt 1 ]; then exit "$homepage_changed"; fi
+          if [ "$homepage_changed" -eq 1 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify built-app browser journeys
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false || steps.homepage-scope.outputs.run == 'true'
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+          HOMEPAGE_BROWSER: ${{ steps.homepage-scope.outputs.run }}
+          RUN_GALLERY_BROWSER: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         run: |
           pnpm --dir apps/web exec playwright install --with-deps chromium
           pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
@@ -320,15 +336,24 @@ jobs:
           gallery_status=0
           starter_status=0
           draft_status=0
-          node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
-          node scripts/verify-creator-starters-browser.cjs || starter_status=$?
-          node scripts/verify-world-draft-browser.cjs || draft_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ]; then
+          homepage_status=0
+          if [ "$RUN_GALLERY_BROWSER" = "true" ]; then
+            node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
+            node scripts/verify-creator-starters-browser.cjs || starter_status=$?
+            node scripts/verify-world-draft-browser.cjs || draft_status=$?
+          fi
+          if [ "$HOMEPAGE_BROWSER" = "true" ]; then
+            node scripts/verify-homepage-built-app.cjs || homepage_status=$?
+            if [ "$RUN_GALLERY_BROWSER" != "true" ]; then
+              node scripts/verify-world-draft-browser.cjs || draft_status=$?
+            fi
+          fi
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$homepage_status" -ne 0 ]; then
             exit 1
           fi
 
       - name: Upload gallery rendered evidence
-        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false || steps.homepage-scope.outputs.run == 'true')
         uses: actions/upload-artifact@v7
         with:
           name: galleries-built-app-${{ github.sha }}
