@@ -330,3 +330,17 @@ link-checker-report.txt
 
 # Rebuilt from packages/arcanea-creator-starters before web dev/build.
 /apps/web/public/creator-starters/
+
+# estate-guard pack — per-machine files, never tracked
+.claude/settings.local.json
+.claude/ci/estate-guard/last-scan.json
+
+# estate-guard pack — these must be tracked (an ignored hook is a gate that only exists on one machine)
+!.claude/skills/estate-guard/SKILL.md
+!.claude/hooks/estate-guard-gate.py
+!.claude/hooks/estate-guard-session.py
+!.claude/hooks/estate-guard-taint.py
+!.claude/
+!.claude/hooks/
+!.claude/skills/
+!.claude/skills/estate-guard/
