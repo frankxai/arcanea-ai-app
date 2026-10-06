@@ -8,8 +8,46 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PromptInput } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
+import { AuthModal } from '@/components/auth';
 import { getFavorites, removeFavorite, getFavoriteCount, type FavoriteImage } from '@/lib/imagine-favorites';
 import { Heart, X, Trash, Download } from '@/lib/phosphor-icons';
+
+/** Turn API error bodies into a safe string (never "[object Object]"). */
+function formatApiError(data: unknown, fallback: string): string {
+  if (!data || typeof data !== 'object') {
+    return typeof data === 'string' && data.trim() ? data : fallback;
+  }
+  const root = data as { error?: unknown; message?: unknown };
+  const err = root.error;
+  if (typeof err === 'string' && err.trim()) return err;
+  if (err && typeof err === 'object') {
+    const nested = err as { message?: unknown; error?: unknown; code?: unknown };
+    if (typeof nested.message === 'string' && nested.message.trim()) return nested.message;
+    if (typeof nested.error === 'string' && nested.error.trim()) return nested.error;
+  }
+  if (typeof root.message === 'string' && root.message.trim()) return root.message;
+  return fallback;
+}
+
+function isAuthFailure(status: number, data: unknown): boolean {
+  if (status === 401) return true;
+  if (!data || typeof data !== 'object') return false;
+  const root = data as { error?: unknown };
+  const err = root.error;
+  if (typeof err === 'string') {
+    const lower = err.toLowerCase();
+    return lower.includes('sign in') || lower.includes('unauthorized') || lower.includes('authentication');
+  }
+  if (err && typeof err === 'object') {
+    const nested = err as { code?: unknown; message?: unknown };
+    if (nested.code === 'UNAUTHORIZED') return true;
+    if (typeof nested.message === 'string') {
+      const lower = nested.message.toLowerCase();
+      return lower.includes('authentication') || lower.includes('unauthorized') || lower.includes('sign in');
+    }
+  }
+  return false;
+}
 
 // ---------------------------------------------------------------------------
 // Featured Templates — Arcanean style presets as clickable cards (like Grok)
@@ -60,6 +98,8 @@ export default function ImaginePage() {
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [authNeeded, setAuthNeeded] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [currentAspectRatio, setCurrentAspectRatio] = useState('1:1');
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false);
@@ -112,8 +152,13 @@ export default function ImaginePage() {
       body: JSON.stringify({ prompt, count: 4, aspectRatio, style, model, enhance }),
     });
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || 'Generation failed');
+      const data = await res.json().catch(() => ({}));
+      if (isAuthFailure(res.status, data)) {
+        const authErr = new Error('Sign in to generate.');
+        (authErr as Error & { authRequired?: boolean }).authRequired = true;
+        throw authErr;
+      }
+      throw new Error(formatApiError(data, 'Generation failed'));
     }
     const data = await res.json();
     const images: GeneratedImage[] = (data.images || []).map((img: { url?: string; data?: string; mimeType?: string; prompt?: string }, i: number) => ({
@@ -137,6 +182,7 @@ export default function ImaginePage() {
     setIsGenerating(true);
     isGeneratingRef.current = true;
     setError(null);
+    setAuthNeeded(false);
     setCurrentPrompt(prompt);
     setCurrentAspectRatio(aspectRatio);
 
@@ -171,7 +217,10 @@ export default function ImaginePage() {
         });
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      const message = err instanceof Error ? err.message : formatApiError(err, 'Something went wrong');
+      const needsAuth = Boolean(err && typeof err === 'object' && (err as { authRequired?: boolean }).authRequired);
+      setAuthNeeded(needsAuth || message.toLowerCase().includes('sign in'));
+      setError(message === '[object Object]' ? 'Something went wrong' : message);
       setRows((prev) => prev.filter((r) => r.id !== loadingId));
     } finally {
       clearInterval(progressInterval);
@@ -228,6 +277,7 @@ export default function ImaginePage() {
   const handleAnimate = useCallback(async (imageId: string, imageUrl: string) => {
     setAnimatingIds((prev) => new Set(prev).add(imageId));
     setError(null);
+    setAuthNeeded(false);
     try {
       let urlForAnimation = imageUrl;
       if (imageUrl.startsWith('data:')) {
@@ -237,13 +287,24 @@ export default function ImaginePage() {
         if (saveRes.ok) { const saveData = await saveRes.json(); if (saveData.url) urlForAnimation = saveData.url; }
       }
       const res = await fetch('/api/imagine/animate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageUrl: urlForAnimation }) });
-      if (!res.ok) { const data = await res.json(); throw new Error(data.error || 'Animation failed'); }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        if (isAuthFailure(res.status, data)) {
+          const authErr = new Error('Sign in to generate.');
+          (authErr as Error & { authRequired?: boolean }).authRequired = true;
+          throw authErr;
+        }
+        throw new Error(formatApiError(data, 'Animation failed'));
+      }
       const data = await res.json();
       if (data.videoUrl) {
         setRows((prev) => prev.map((row) => ({ ...row, images: row.images.map((img) => img.id === imageId ? { ...img, videoUrl: data.videoUrl } : img) })));
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Animation failed');
+      const message = err instanceof Error ? err.message : formatApiError(err, 'Animation failed');
+      const needsAuth = Boolean(err && typeof err === 'object' && (err as { authRequired?: boolean }).authRequired);
+      setAuthNeeded(needsAuth || message.toLowerCase().includes('sign in'));
+      setError(message === '[object Object]' ? 'Animation failed' : message);
     } finally {
       setAnimatingIds((prev) => { const next = new Set(prev); next.delete(imageId); return next; });
     }
@@ -251,7 +312,7 @@ export default function ImaginePage() {
 
   // Vary: pre-fill prompt
   const handleVary = useCallback((originalPrompt: string) => {
-    setExternalPrompt(originalPrompt + ' \u2014 variation');
+    setExternalPrompt(originalPrompt + ' — variation');
   }, []);
 
   const totalImages = rows.reduce((sum, r) => sum + r.images.length, 0);
@@ -378,34 +439,7 @@ export default function ImaginePage() {
         </div>
       )}
 
-      {/* ═══ Error display ═══ */}
-      <AnimatePresence>
-        {error && (
-          <m.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="max-w-2xl mx-auto px-4 py-3 mt-2"
-          >
-            <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
-              <span className="truncate">{error}</span>
-              <div className="flex items-center gap-2 ml-3 flex-shrink-0">
-                {currentPrompt && (
-                  <button
-                    onClick={() => { setError(null); handleGenerate(currentPrompt, 4, currentAspectRatio); }}
-                    className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
-                  >
-                    Retry
-                  </button>
-                )}
-                <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300 p-1">
-                  <X size={14} />
-                </button>
-              </div>
-            </div>
-          </m.div>
-        )}
-      </AnimatePresence>
+      {/* Error banner moved next to the submit bar (see below) */}
 
       {/* ═══ Discover Section Header ═══ */}
       {!hasResults && (
@@ -495,13 +529,56 @@ export default function ImaginePage() {
         </div>
       )}
 
-      {/* ═══ Floating Prompt Input (Grok-style bottom bar) ═══ */}
+      {/* ═══ Error near submit + Floating Prompt Input ═══ */}
+      <div className="fixed bottom-36 left-0 right-0 z-[45] pointer-events-none sm:bottom-40">
+        <AnimatePresence>
+          {error && (
+            <m.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              className="max-w-2xl mx-auto px-4 pb-2 pointer-events-auto"
+            >
+              <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
+                <span className="truncate">{error}</span>
+                <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+                  {authNeeded ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowAuthModal(true)}
+                      className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
+                    >
+                      Sign in
+                    </button>
+                  ) : currentPrompt ? (
+                    <button
+                      type="button"
+                      onClick={() => { setError(null); setAuthNeeded(false); handleGenerate(currentPrompt, 4, currentAspectRatio); }}
+                      className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
+                    >
+                      Retry
+                    </button>
+                  ) : null}
+                  <button type="button" onClick={() => { setError(null); setAuthNeeded(false); }} className="text-red-400 hover:text-red-300 p-1">
+                    <X size={14} />
+                  </button>
+                </div>
+              </div>
+            </m.div>
+          )}
+        </AnimatePresence>
+      </div>
       <PromptInput
         onGenerate={handleGenerate}
         isGenerating={isGenerating}
         hasResults={hasResults}
         externalPrompt={externalPrompt}
         generationProgress={generationProgress}
+      />
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        defaultTab="login"
       />
 
       {/* ═══ Favorites Drawer ═══ */}
@@ -536,7 +613,7 @@ export default function ImaginePage() {
                 {favorites.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center py-16">
                     <p className="text-white/30 text-sm mb-1">No favorites yet</p>
-                    <p className="text-xs text-white/15 max-w-[240px]">Heart images you love and they&apos;ll be saved here</p>
+                    <p className="text-xs text-white/15 max-w-[240px]">Heart images you love and they'll be saved here</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
