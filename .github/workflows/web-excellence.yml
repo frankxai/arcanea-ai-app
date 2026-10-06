@@ -50,7 +50,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
 
       - name: Smoke-test the hooks
         # The hooks' real tests live with the pack upstream and are deliberately

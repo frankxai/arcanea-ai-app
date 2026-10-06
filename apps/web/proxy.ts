@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { getOAuthRecoveryPath } from "@/lib/auth/redirect";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Redirect non-www to www (permanent 308) so all client-side fetches
   // (including streamed POST requests to /api/ai/chat) go directly to
   // the canonical origin without an extra 307 hop.
