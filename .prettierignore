@@ -1,3 +1,8 @@
 # Generated in pnpm's native format. Lockfile Drift Check and frozen installs
 # remain authoritative; dependency validation is not a Prettier operation.
 pnpm-lock.yaml
+
+# estate-guard pack — vendored from claude-skills-library, formatted and tested upstream
+.claude/ci/estate-guard-scan.mjs
+.claude/ci/estate-guard/
+.claude/skills/estate-guard/
