@@ -161,7 +161,7 @@ test("explicit preview checkpoints still skip", (t) => {
   );
 });
 
-test("a coherent commit after an ignored checkpoint still builds before branch filters", (t) => {
+test("a coherent commit after an ignored checkpoint still builds", (t) => {
   const f = fixture(t);
   f.commit("work [agent-wip]");
   f.commit("ready");
@@ -183,8 +183,10 @@ test("pending code survives several ignored and docs-only checkpoints", (t) => {
   expectDecision(f.run(), 1, /build:/);
 });
 
-test("existing preview branch filters retain their decisions", (t) => {
+test("a branch name never hides deployable code, including a dependency PR", (t) => {
   const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit("change deployable code");
   for (const branch of [
     "dependabot/deps",
     "backup/snapshot",
@@ -193,12 +195,36 @@ test("existing preview branch filters retain their decisions", (t) => {
     "changeset-release/main",
     "docs/guide",
   ]) {
-    expectDecision(
-      f.run({ VERCEL_GIT_COMMIT_REF: branch, VERCEL_GIT_PREVIOUS_SHA: "" }),
-      0,
-      /skip:/,
-    );
+    expectDecision(f.run({ VERCEL_GIT_COMMIT_REF: branch }), 1, /build:/);
   }
+});
+
+test("documentation-only changes skip regardless of branch name", (t) => {
+  const f = fixture(t);
+  f.write("docs/review.md", "Read-only review note\n");
+  f.commit();
+  for (const branch of [
+    "docs/guide",
+    "dependabot/deps",
+    "codex/preview-fixture",
+  ]) {
+    expectDecision(f.run({ VERCEL_GIT_COMMIT_REF: branch }), 0, /docs-only/);
+  }
+});
+
+test("draft PR state does not suppress a code preview", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit();
+  expectDecision(
+    f.run({
+      VERCEL_GIT_PULL_REQUEST_ID: "123",
+      VERCEL_GIT_REPO_OWNER: "frankxai",
+      VERCEL_GIT_REPO_SLUG: "arcanea-ai-app",
+    }),
+    1,
+    /build:/,
+  );
 });
 
 test("renaming source into an ignored documentation path still builds", (t) => {

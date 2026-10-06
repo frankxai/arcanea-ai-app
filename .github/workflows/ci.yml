@@ -140,7 +140,7 @@ jobs:
         run: node --test scripts/tests/changed-format.test.mjs
 
       - name: Verify visual-review trust and evidence boundaries
-        run: node --test scripts/excellence-review.test.mjs
+        run: node --test scripts/excellence-review.test.mjs scripts/tests/visual-preview.test.mjs
 
       - name: Verify preview deployment history handling
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
