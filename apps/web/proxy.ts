@@ -22,12 +22,13 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  // Newsletter, founding-circle, and the public feedback form are exact POSTs.
+  // Public submissions and the stateless shop checkout lookup are exact POSTs.
   // Other methods, nested paths, and world generation/save APIs still require auth.
   if (
     (request.nextUrl.pathname === "/api/waitlist" ||
       request.nextUrl.pathname === "/api/subscribe" ||
-      request.nextUrl.pathname === "/api/feedback") &&
+      request.nextUrl.pathname === "/api/feedback" ||
+      request.nextUrl.pathname === "/api/shop/checkout") &&
     request.method === "POST"
   ) {
     return NextResponse.next({ request: { headers: request.headers } });
