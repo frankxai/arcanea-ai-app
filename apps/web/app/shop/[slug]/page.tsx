@@ -10,7 +10,6 @@ import {
 import { checkoutUrlForEdition } from "@/lib/shop/checkout";
 import { CheckoutAction } from "@/components/shop/checkout-action";
 
-export const dynamic = "force-dynamic";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
