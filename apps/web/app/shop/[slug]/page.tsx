@@ -6,6 +6,7 @@ import {
   SHOP_ORIGIN,
   findEdition,
   editionReleased,
+  editionDescription,
   productStructuredData,
 } from "@/lib/shop/catalog";
 import { checkoutUrlForEdition } from "@/lib/shop/checkout";
@@ -27,7 +28,7 @@ export async function generateMetadata({
   if (!edition) return { title: "Edition not found", robots: { index: false } };
   return {
     title: `${edition.title} — ${edition.subtitle}`,
-    description: edition.description,
+    description: editionDescription(edition),
     alternates: { canonical: `/shop/${edition.slug}` },
     openGraph: {
       title: `${edition.title} — ${edition.subtitle}`,
@@ -74,8 +75,7 @@ export default async function EditionPage({
           </h1>
           <p className="shop-intro">{edition.outcome}</p>
           <p className="shop-product-description">
-            {!released && "Proposed edition: "}
-            {edition.description}
+            {editionDescription(edition)}
           </p>
           <div
             className="shop-cover"

@@ -198,15 +198,19 @@ export function editionReleased(edition: ShopEdition): boolean {
   );
 }
 
+export function editionDescription(edition: ShopEdition): string {
+  return editionReleased(edition)
+    ? edition.description
+    : `Proposed edition: ${edition.description}`;
+}
+
 export function productStructuredData(edition: ShopEdition) {
   // Preview pricing never becomes a search-engine Offer or fabricated availability.
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: `${edition.title} — ${edition.subtitle}`,
-    description: editionReleased(edition)
-      ? edition.description
-      : `Proposed edition: ${edition.description}`,
+    description: editionDescription(edition),
     sku: edition.sku,
     brand: { "@type": "Brand", name: "Arcanea" },
     url: `${SHOP_ORIGIN}/shop/${edition.slug}`,

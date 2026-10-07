@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   SHOP_EDITIONS,
   editionReleased,
+  editionDescription,
   productStructuredData,
 } from "../catalog";
 import {
@@ -19,6 +20,11 @@ test("preview offers cannot be activated by environment configuration", () => {
     assert.equal(checkoutUrlForEdition(edition, env), null);
     assert.equal(prepareCheckout({ slug: edition.slug }, env).status, 503);
     assert.equal("offers" in productStructuredData(edition), false);
+    assert.match(editionDescription(edition), /^Proposed edition: /);
+    assert.equal(
+      productStructuredData(edition).description,
+      editionDescription(edition),
+    );
   }
 });
 
@@ -79,6 +85,7 @@ test("a complete release needs every approval and verified fulfillment", () => {
     },
   };
   assert.equal(editionReleased(approved), true);
+  assert.equal(editionDescription(approved), approved.description);
   assert.equal(
     checkoutUrlForEdition(approved, {
       [approved.checkoutEnv]: "https://buy.polar.sh/c/verified",
