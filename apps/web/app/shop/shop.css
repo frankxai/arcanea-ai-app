@@ -39,10 +39,10 @@
 .arc-shop a,
 .arc-shop button {
   transition:
-    color 180ms,
-    background-color 180ms,
-    border-color 180ms,
-    transform 180ms;
+    color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .arc-shop a:hover {
   color: var(--arc-brand-atlantean-teal);

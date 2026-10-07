@@ -5,6 +5,7 @@ import {
   SHOP_EDITIONS,
   SHOP_ORIGIN,
   findEdition,
+  editionReleased,
   productStructuredData,
 } from "@/lib/shop/catalog";
 import { checkoutUrlForEdition } from "@/lib/shop/checkout";
@@ -45,6 +46,7 @@ export default async function EditionPage({
   const { slug } = await params;
   const edition = findEdition(slug);
   if (!edition) notFound();
+  const released = editionReleased(edition);
   const available = Boolean(checkoutUrlForEdition(edition, process.env));
   const schema = productStructuredData(edition);
   return (
@@ -71,46 +73,55 @@ export default async function EditionPage({
             <em>{edition.subtitle}</em>
           </h1>
           <p className="shop-intro">{edition.outcome}</p>
-          <p className="shop-product-description">{edition.description}</p>
+          <p className="shop-product-description">
+            {!released && "Proposed edition: "}
+            {edition.description}
+          </p>
           <div
             className="shop-cover"
-            aria-label={`${edition.title} edition cover preview`}
+            aria-label={`${edition.title} edition cover${released ? "" : " preview"}`}
           >
             <span>Arcanea / Editions</span>
             <div>
               <p>{edition.title}</p>
               <em>{edition.subtitle}</em>
             </div>
-            <span>{edition.sku} · Preview specification</span>
+            <span>
+              {edition.sku} · {released ? "Edition" : "Preview specification"}
+            </span>
           </div>
         </div>
         <aside className="shop-purchase" aria-label="Edition details">
           <p className="shop-eyebrow">
-            {available ? "One-time edition" : "Offer preview"}
+            {released ? "One-time edition" : "Offer preview"}
           </p>
           <div className="shop-price">
             €{edition.priceEur}
-            <span>{available ? "one payment" : "proposed price"}</span>
+            <span>{released ? "one payment" : "proposed price"}</span>
           </div>
           <p className="shop-small">
-            {available
+            {released
               ? "The checkout shows your final price and applicable tax before payment."
               : "Final price, tax presentation and sale terms will be confirmed before sales open."}
           </p>
           <CheckoutAction
             slug={edition.slug}
             available={available}
+            released={released}
             previewHref={edition.previewHref}
           />
           <dl>
             <div>
               <dt>License</dt>
-              <dd>{edition.license}</dd>
+              <dd>
+                {!released && "Proposed: "}
+                {edition.license}
+              </dd>
             </div>
             <div>
               <dt>Delivery</dt>
               <dd>
-                {available
+                {released
                   ? "Hosted download access after confirmed payment"
                   : "Paid files are not released. The linked sample is free."}
               </dd>
@@ -148,9 +159,9 @@ export default async function EditionPage({
             ))}
           </ul>
           <p className="shop-small">
-            These are the intended contents of the proposed paid edition. A
-            release must match an exact file manifest. The sample does not
-            establish paid-edition readiness.
+            {released
+              ? "The contents of this edition match its versioned file manifest."
+              : "These are the intended contents of the proposed paid edition. A release must match an exact file manifest. The sample does not establish paid-edition readiness."}
           </p>
         </div>
       </section>
@@ -163,9 +174,10 @@ export default async function EditionPage({
         <div>
           <h2>Keep what you create.</h2>
           <p>
-            The proposed license governs the kit and its examples. Your original
-            characters, setting and story remain yours. Software, sample artwork
-            and official Arcanea IP have separate permissions.
+            {released ? "The edition license" : "The proposed license"} governs
+            the kit and its examples. Your original characters, setting and
+            story remain yours. Software, sample artwork and official Arcanea IP
+            have separate permissions.
           </p>
           <Link href="/shop/sample" className="shop-text-link">
             Inspect the original example{" "}

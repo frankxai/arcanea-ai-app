@@ -68,6 +68,24 @@ async function main() {
           await expect(
             shop.locator(".shop-edition-card").filter({ visible: true }),
           ).toHaveCount(4);
+          assert.equal(
+            await shop
+              .getByRole("link", {
+                name: "Explore Sovereign Depths",
+                exact: true,
+              })
+              .getAttribute("href"),
+            "/gallery/sovereign-depths",
+          );
+          if (state.name === "desktop") {
+            assert.equal(
+              (
+                await context.request.get(base + "/gallery/sovereign-depths")
+              ).status(),
+              200,
+              "Art preview destination must exist",
+            );
+          }
         }
         if (route.name === "edition") {
           assert.equal(

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SHOP_EDITIONS } from "@/lib/shop/catalog";
+import { SHOP_EDITIONS, editionReleased } from "@/lib/shop/catalog";
 import { EditionCard } from "@/components/shop/edition-card";
 
 export const metadata: Metadata = {
@@ -18,11 +18,14 @@ export const metadata: Metadata = {
 };
 
 export default function ShopPage() {
+  const hasReleasedEdition = SHOP_EDITIONS.some(editionReleased);
   return (
     <>
       <section className="shop-hero">
         <div className="shop-hero-copy">
-          <p className="shop-eyebrow">The first collection / Preview</p>
+          <p className="shop-eyebrow">
+            The first collection / {hasReleasedEdition ? "Editions" : "Preview"}
+          </p>
           <h1>
             Worlds worth
             <br />
@@ -60,7 +63,9 @@ export default function ShopPage() {
           />
           <figcaption>
             <span>From the Arcanea gallery</span>
-            <Link href="/lore/sovereign-depths">Explore Sovereign Depths </Link>
+            <Link href="/gallery/sovereign-depths">
+              Explore Sovereign Depths{" "}
+            </Link>
           </figcaption>
         </figure>
       </section>
@@ -73,8 +78,9 @@ export default function ShopPage() {
             </h2>
           </div>
           <p>
-            Each edition has a defined audience, contents and license. These are
-            previews with proposed prices; the free sample is available now.
+            Each edition has a defined audience, contents and license. Released
+            editions and previews are marked individually; the free sample is
+            available now.
           </p>
         </div>
         <div className="shop-editions-grid">

@@ -75,6 +75,7 @@ test("a complete release needs every approval and verified fulfillment", () => {
       rightsApproved: true,
       termsApproved: true,
       fulfillmentVerified: true,
+      approvedCheckoutPath: "/c/verified",
     },
   };
   assert.equal(editionReleased(approved), true);
@@ -84,6 +85,31 @@ test("a complete release needs every approval and verified fulfillment", () => {
     }),
     "https://buy.polar.sh/c/verified",
   );
+  assert.equal(
+    checkoutUrlForEdition(approved, {
+      [approved.checkoutEnv]: "https://buy.polar.sh/c/another-edition",
+    }),
+    null,
+  );
+  for (const path of [
+    null,
+    "",
+    "/",
+    "/c/../different",
+    "https://evil.example/c",
+  ]) {
+    const unpinned = {
+      ...approved,
+      release: { ...approved.release, approvedCheckoutPath: path },
+    };
+    assert.equal(editionReleased(unpinned), false);
+    assert.equal(
+      checkoutUrlForEdition(unpinned, {
+        [approved.checkoutEnv]: "https://buy.polar.sh/c/verified",
+      }),
+      null,
+    );
+  }
   for (const key of [
     "merchantApproved",
     "priceApproved",

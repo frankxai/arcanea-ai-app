@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SHOP_EDITIONS, editionReleased } from "@/lib/shop/catalog";
 
 export const metadata: Metadata = {
   title: "Edition delivery and licenses",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function DeliveryPage() {
+  const hasReleasedEdition = SHOP_EDITIONS.some(editionReleased);
   return (
     <article className="shop-reading">
       <p className="shop-eyebrow">Editions / Delivery & licenses</p>
@@ -18,9 +20,10 @@ export default function DeliveryPage() {
         <em>you are keeping.</em>
       </h1>
       <p className="shop-intro">
-        The free World Starter is available without an account. Paid editions
-        are previews with proposed prices and license scopes. They are not
-        currently available for purchase.
+        The free World Starter is available without an account. Each edition
+        shows its release state, contents, price and license scope.
+        {!hasReleasedEdition &&
+          " Paid editions are previews and are not currently available for purchase."}
       </p>
       <h2>Free sample access</h2>
       <p>
@@ -28,13 +31,14 @@ export default function DeliveryPage() {
         copy and open it in your usual editor. The sample text and blank
         templates have an explicit adaptation permission included in the file.
       </p>
-      <h2>Proposed paid delivery</h2>
+      <h2>Paid edition delivery</h2>
       <p>
-        The intended first payment route is a hosted checkout with file-download
-        access after confirmed payment. Before sales open, each edition must
-        have a complete file manifest, approved merchant and price, published
-        sale terms, and a tested purchase, failed payment, delivery recovery and
-        refund path.
+        {hasReleasedEdition
+          ? "Released editions use hosted checkout with file-download access after confirmed payment."
+          : "The intended first payment route is hosted checkout with file-download access after confirmed payment."}{" "}
+        Before sales open, each edition must have a complete file manifest,
+        approved merchant and price, published sale terms, and a tested
+        purchase, failed payment, delivery recovery and refund path.
       </p>
       <p>
         A browser return page does not establish payment or ownership. No
@@ -44,16 +48,16 @@ export default function DeliveryPage() {
       <h2>Each material has its own permission</h2>
       <ul>
         <li>
-          The proposed individual creator license covers one creator using the
-          kit for their own original work.
+          Individual creator editions are scoped to one creator using the kit
+          for their own original work. The edition page marks preview terms.
         </li>
         <li>
-          The proposed studio license covers five named people in one
-          organization. Public teaching, redistribution and sublicensing are
-          outside that proposed scope.
+          Studio editions are scoped to five named people in one organization.
+          Public teaching, redistribution and sublicensing are outside that
+          scope.
         </li>
         <li>
-          The proposed collector license covers personal display and reading.
+          Collector editions are scoped to personal display and reading.
           Commercial reproduction needs a separate permission.
         </li>
         <li>

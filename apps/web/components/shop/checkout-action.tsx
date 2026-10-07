@@ -1,19 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function CheckoutAction({
   slug,
   available,
+  released,
   previewHref,
 }: {
   slug: string;
   available: boolean;
+  released: boolean;
   previewHref: string;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  useEffect(() => {
+    const restore = (event: PageTransitionEvent) => {
+      if (event.persisted) setBusy(false);
+    };
+    window.addEventListener("pageshow", restore);
+    return () => window.removeEventListener("pageshow", restore);
+  }, []);
   async function checkout() {
     if (busy) return;
     setBusy(true);
@@ -70,7 +79,11 @@ export function CheckoutAction({
         </Link>
       )}
       {!available && (
-        <p className="shop-small">Preview edition. Sales are not open.</p>
+        <p className="shop-small">
+          {released
+            ? "Checkout is temporarily unavailable. You can explore the sample."
+            : "Preview edition. Sales are not open."}
+        </p>
       )}
       {error && (
         <p role="alert" className="shop-small">

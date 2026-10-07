@@ -10,13 +10,13 @@ const collections = {
     title: "Create a world of your own.",
     subtitle: "Worldbuilding production kits",
     description:
-      "Inspect proposed individual and studio editions for original-world production, continuity and portable handoff.",
+      "Inspect individual and studio editions for original-world production, continuity and portable handoff. Each edition shows its release state.",
   },
   collectors: {
     title: "Keep a piece of the world.",
     subtitle: "Original art editions",
     description:
-      "Explore the proposed first art collection and the current Arcanea gallery. Paid downloads are not yet released.",
+      "Explore original art editions and the current Arcanea gallery. Each edition shows its release state and download scope.",
   },
 };
 

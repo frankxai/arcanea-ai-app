@@ -5,6 +5,8 @@ export type EditionRelease = {
   rightsApproved: boolean;
   termsApproved: boolean;
   fulfillmentVerified: boolean;
+  // Exact provider path reviewed against this edition, price and file benefit.
+  approvedCheckoutPath: string | null;
 };
 
 export type ShopEdition = {
@@ -33,6 +35,7 @@ const previewRelease: EditionRelease = {
   rightsApproved: false,
   termsApproved: false,
   fulfillmentVerified: false,
+  approvedCheckoutPath: null,
 };
 
 export const SHOP_ORIGIN = "https://www.arcanea.ai";
@@ -49,7 +52,7 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
     format: "Editable production kit",
     priceEur: 99,
     priceState: "proposed",
-    license: "Individual creator license · proposed",
+    license: "Individual creator license",
     outcome:
       "Take an original world from scattered notes to a coherent story packet.",
     description:
@@ -80,11 +83,11 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
     format: "Production kit · five named creators",
     priceEur: 299,
     priceState: "proposed",
-    license: "Five named users in one studio · proposed",
+    license: "Five named users in one studio",
     outcome:
       "Give a small team one shared method for world, story and visual continuity.",
     description:
-      "The Production Edition with a proposed five-person studio license, team review worksheets and a shared handoff format. Keep your team's own fiction and source material under your control.",
+      "The Production Edition with a five-person studio license, team review worksheets and a shared handoff format. Keep your team's own fiction and source material under your control.",
     includes: [
       "Everything in the Production Edition",
       "Use by five named people in one organization",
@@ -110,11 +113,11 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
     format: "Digital art collection",
     priceEur: 29,
     priceState: "proposed",
-    license: "Personal display and reading · proposed",
+    license: "Personal display and reading",
     outcome:
       "Keep a small collection of imaginative worlds on your screen and in your library.",
     description:
-      "A proposed curated collection of six accepted artworks, purpose-made desktop and mobile compositions, and an illustrated companion booklet. Existing gallery imagery is a preview of the art direction, not a promised download.",
+      "A curated collection of six accepted artworks, purpose-made desktop and mobile compositions, and an illustrated companion booklet. Existing gallery imagery previews the art direction; the edition's manifest defines the downloads.",
     includes: [
       "Six artworks selected and reviewed as one collection",
       "Separate desktop and mobile compositions",
@@ -127,7 +130,7 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
       "Source prompts and production masters",
       "A native 4K claim without verified source files",
     ],
-    previewHref: "/lore/sovereign-depths",
+    previewHref: "/gallery/sovereign-depths",
     checkoutEnv: "ARCANEA_SHOP_COSMOS_CHECKOUT_URL",
     release: { ...previewRelease },
   },
@@ -140,7 +143,7 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
     format: "Two editions · one collection",
     priceEur: 119,
     priceState: "proposed",
-    license: "Each included edition keeps its own license · proposed",
+    license: "Each included edition keeps its own license",
     outcome:
       "Explore the finished art and the production method behind original worlds.",
     description:
@@ -188,7 +191,10 @@ export function editionReleased(edition: ShopEdition): boolean {
     r.priceApproved &&
     r.rightsApproved &&
     r.termsApproved &&
-    r.fulfillmentVerified
+    r.fulfillmentVerified &&
+    /^\/[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\/?$/.test(
+      r.approvedCheckoutPath || "",
+    )
   );
 }
 
@@ -198,7 +204,9 @@ export function productStructuredData(edition: ShopEdition) {
     "@context": "https://schema.org",
     "@type": "Product",
     name: `${edition.title} — ${edition.subtitle}`,
-    description: edition.description,
+    description: editionReleased(edition)
+      ? edition.description
+      : `Proposed edition: ${edition.description}`,
     sku: edition.sku,
     brand: { "@type": "Brand", name: "Arcanea" },
     url: `${SHOP_ORIGIN}/shop/${edition.slug}`,

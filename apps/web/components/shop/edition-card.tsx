@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ShopEdition } from "@/lib/shop/catalog";
+import { editionReleased, type ShopEdition } from "@/lib/shop/catalog";
 
 export function EditionCard({
   edition,
@@ -22,7 +22,9 @@ export function EditionCard({
       <p className="shop-card-description">{edition.outcome}</p>
       <div className="shop-card-bottom">
         <span>{edition.format}</span>
-        <span>Proposed €{edition.priceEur}</span>
+        <span>
+          {editionReleased(edition) ? "" : "Proposed "}€{edition.priceEur}
+        </span>
       </div>
     </Link>
   );

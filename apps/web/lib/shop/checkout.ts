@@ -26,7 +26,10 @@ export function checkoutUrlForEdition(
   environment: Record<string, string | undefined>,
 ): string | null {
   if (!editionReleased(edition)) return null;
-  return approvedCheckoutUrl(environment[edition.checkoutEnv]);
+  const url = approvedCheckoutUrl(environment[edition.checkoutEnv]);
+  return url && new URL(url).pathname === edition.release.approvedCheckoutPath
+    ? url
+    : null;
 }
 
 export type CheckoutResult = {
