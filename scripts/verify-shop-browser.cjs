@@ -31,10 +31,12 @@ async function main() {
         { path: "/shop/sample", name: "sample", heading: /One rule/ },
       ]) {
         const response = await page.goto(base + route.path, {
-          waitUntil: "domcontentloaded",
+          waitUntil: "load",
         });
         assert.equal(response.status(), 200, route.path);
-        await page
+        const shop = page.locator(".arc-shop").filter({ visible: true });
+        assert.equal(await shop.count(), 1, "Expected one visible shop");
+        await shop
           .getByRole("heading", { level: 1, name: route.heading })
           .waitFor();
         await page.evaluate(() => document.fonts.ready);
@@ -51,20 +53,33 @@ async function main() {
           "https://www.arcanea.ai" + route.path,
         );
         if (route.name === "home") {
-          await page
-            .locator(".shop-hero-art img")
-            .evaluate((img) => img.decode());
-          assert.equal(await page.locator(".shop-edition-card").count(), 4);
+          const hero = shop.getByRole("img", {
+            name: "A vast luminous sea creature passes through the arches of a submerged city.",
+            exact: true,
+          });
+          assert.equal(
+            await hero.count(),
+            1,
+            "Expected one visible hero image",
+          );
+          await hero.evaluate((img) => img.decode());
+          assert.equal(
+            await shop
+              .locator(".shop-edition-card")
+              .filter({ visible: true })
+              .count(),
+            4,
+          );
         }
         if (route.name === "edition") {
           assert.equal(
-            await page
+            await shop
               .getByRole("link", { name: "Explore the sample", exact: true })
               .count(),
             1,
           );
-          assert.equal(await page.locator(".shop-action button").count(), 0);
-          const product = await page
+          assert.equal(await shop.locator(".shop-action button").count(), 0);
+          const product = await shop
             .locator('script[type="application/ld+json"]')
             .evaluateAll((nodes) =>
               nodes
@@ -73,7 +88,7 @@ async function main() {
             );
           assert.ok(product && !product.offers && !product.aggregateRating);
           if (state.motion === "reduce") {
-            const duration = await page
+            const duration = await shop
               .locator(".shop-action .shop-button")
               .evaluate((el) => getComputedStyle(el).transitionDuration);
             assert.ok(
