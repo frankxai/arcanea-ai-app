@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { SHOP_GUIDES, findGuide } from "@/lib/shop/guides";
 import { SHOP_ORIGIN, SHOP_UPDATED } from "@/lib/shop/catalog";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return SHOP_GUIDES.map((guide) => ({ slug: guide.slug }));
 }

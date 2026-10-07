@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { SHOP_EDITIONS } from "@/lib/shop/catalog";
 import { EditionCard } from "@/components/shop/edition-card";
 
+export const dynamicParams = false;
+
 const collections = {
   creators: {
     title: "Create a world of your own.",
