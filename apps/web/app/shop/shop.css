@@ -456,7 +456,7 @@
 @media (prefers-reduced-motion: reduce) {
   .arc-shop a,
   .arc-shop button {
-    transition: none;
+    transition: none !important;
   }
   .shop-edition-card:hover,
   .arc-shop .shop-button:hover {
