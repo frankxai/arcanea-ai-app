@@ -1,7 +1,10 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
 const path = require("node:path");
-const { chromium } = require("../apps/web/node_modules/@playwright/test");
+const {
+  chromium,
+  expect,
+} = require("../apps/web/node_modules/@playwright/test");
 
 const base = process.env.SHOP_TEST_BASE_URL || "http://localhost:3001";
 const output = path.resolve("screenshots/shop");
@@ -35,7 +38,7 @@ async function main() {
         });
         assert.equal(response.status(), 200, route.path);
         const shop = page.locator(".arc-shop").filter({ visible: true });
-        assert.equal(await shop.count(), 1, "Expected one visible shop");
+        await expect(shop).toHaveCount(1);
         await shop
           .getByRole("heading", { level: 1, name: route.heading })
           .waitFor();
@@ -53,23 +56,18 @@ async function main() {
           "https://www.arcanea.ai" + route.path,
         );
         if (route.name === "home") {
+          await expect(
+            shop.locator(".shop-hero-art img").filter({ visible: true }),
+          ).toHaveCount(1);
           const hero = shop.getByRole("img", {
             name: "A vast luminous sea creature passes through the arches of a submerged city.",
             exact: true,
           });
-          assert.equal(
-            await hero.count(),
-            1,
-            "Expected one visible hero image",
-          );
+          await expect(hero).toHaveCount(1);
           await hero.evaluate((img) => img.decode());
-          assert.equal(
-            await shop
-              .locator(".shop-edition-card")
-              .filter({ visible: true })
-              .count(),
-            4,
-          );
+          await expect(
+            shop.locator(".shop-edition-card").filter({ visible: true }),
+          ).toHaveCount(4);
         }
         if (route.name === "edition") {
           assert.equal(
