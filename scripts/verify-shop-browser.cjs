@@ -31,12 +31,13 @@ async function main() {
         { path: "/shop/sample", name: "sample", heading: /One rule/ },
       ]) {
         const response = await page.goto(base + route.path, {
-          waitUntil: "networkidle",
+          waitUntil: "domcontentloaded",
         });
         assert.equal(response.status(), 200, route.path);
         await page
           .getByRole("heading", { level: 1, name: route.heading })
           .waitFor();
+        await page.evaluate(() => document.fonts.ready);
         const dimensions = await page.evaluate(() => ({
           viewport: window.innerWidth,
           content: document.documentElement.scrollWidth,
@@ -50,10 +51,9 @@ async function main() {
           "https://www.arcanea.ai" + route.path,
         );
         if (route.name === "home") {
-          await page.locator(".shop-hero-art img").evaluate((img) => {
-            if (!img.complete || !img.naturalWidth)
-              throw new Error("Shop hero art did not load");
-          });
+          await page
+            .locator(".shop-hero-art img")
+            .evaluate((img) => img.decode());
           assert.equal(await page.locator(".shop-edition-card").count(), 4);
         }
         if (route.name === "edition") {
