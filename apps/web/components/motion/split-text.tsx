@@ -41,13 +41,9 @@ export function SplitText({
   }, []);
   const prefersReduced = useReducedMotion() && mounted;
 
-  // Reduced motion: render plain text, no animation
-  if (prefersReduced) {
-    return (
-      <LazyMotion features={domAnimation}>
-        <Tag className={className}>{text}</Tag>
-      </LazyMotion>
-    );
+  // Reduced motion or before mount: render plain text
+  if (!mounted || prefersReduced) {
+    return <Tag className={className}>{text}</Tag>;
   }
 
   return (

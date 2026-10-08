@@ -18,17 +18,19 @@ import {
 import { useAuth } from "@/lib/auth/context";
 import { AuthModal } from "./auth-modal";
 
-export function UserNav() {
+export function UserNav({ onModalOpen }: { onModalOpen?: () => void }) {
   const { user, isLoading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
 
   const openLogin = () => {
+    onModalOpen?.();
     setAuthModalTab("login");
     setShowAuthModal(true);
   };
 
   const openSignup = () => {
+    onModalOpen?.();
     setAuthModalTab("signup");
     setShowAuthModal(true);
   };

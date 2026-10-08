@@ -579,7 +579,7 @@ export function Navbar() {
                     <NotificationBell />
                   </div>
                   <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2">
-                    <UserNav />
+                    <UserNav onModalOpen={() => setMobileMenuOpen(false)} />
                   </div>
                 </m.div>
               </div>

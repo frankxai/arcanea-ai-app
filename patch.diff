@@ -1,0 +1,90 @@
+--- a/apps/web/components/auth/user-nav.tsx
++++ b/apps/web/components/auth/user-nav.tsx
+@@ -18,17 +18,19 @@
+ import { useAuth } from "@/lib/auth/context";
+ import { AuthModal } from "./auth-modal";
+
+-export function UserNav() {
++export function UserNav({ onModalOpen }: { onModalOpen?: () => void }) {
+   const { user, isLoading, signOut } = useAuth();
+   const [showAuthModal, setShowAuthModal] = useState(false);
+   const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
+
+   const openLogin = () => {
++    onModalOpen?.();
+     setAuthModalTab("login");
+     setShowAuthModal(true);
+   };
+
+   const openSignup = () => {
++    onModalOpen?.();
+     setAuthModalTab("signup");
+     setShowAuthModal(true);
+   };
+--- a/apps/web/components/navigation/navbar.tsx
++++ b/apps/web/components/navigation/navbar.tsx
+@@ -579,7 +579,7 @@
+                     <NotificationBell />
+                   </div>
+                   <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2">
+-                    <UserNav />
++                    <UserNav onModalOpen={() => setMobileMenuOpen(false)} />
+                   </div>
+                 </m.div>
+               </div>
+--- a/apps/web/components/auth/auth-modal.tsx
++++ b/apps/web/components/auth/auth-modal.tsx
+@@ -101,7 +101,7 @@
+   return (
+     <LazyMotion features={domAnimation}>
+     <Transition appear show={isOpen} as={Fragment}>
+-      <Dialog as="div" className="relative z-50" onClose={handleClose}>
++      <Dialog as="div" className="relative z-[60]" onClose={handleClose}>
+         <Transition.Child
+           as={Fragment}
+           enter="ease-out duration-300"
+--- a/apps/web/components/motion/split-text.tsx
++++ b/apps/web/components/motion/split-text.tsx
+@@ -41,12 +41,10 @@
+   }, []);
+   const prefersReduced = useReducedMotion() && mounted;
+
+-  // Reduced motion: render plain text, no animation
+-  if (prefersReduced) {
++  // Reduced motion or before mount: render plain text
++  if (!mounted || prefersReduced) {
+     return (
+-      <LazyMotion features={domAnimation}>
+-        <Tag className={className}>{text}</Tag>
+-      </LazyMotion>
++      <Tag className={className}>{text}</Tag>
+     );
+   }
+
+--- a/apps/web/app/imagine/page.tsx
++++ b/apps/web/app/imagine/page.tsx
+@@ -112,7 +112,10 @@
+       body: JSON.stringify({ prompt, count: 4, aspectRatio, style, model, enhance }),
+     });
+     if (!res.ok) {
+-      const data = await res.json();
++      if (res.status === 401) {
++        throw new Error("Please sign in to generate images");
++      }
++      const data = await res.json().catch(() => ({}));
+       throw new Error(data.error || 'Generation failed');
+     }
+     const data = await res.json();
+@@ -240,7 +240,11 @@
+         if (saveRes.ok) { const saveData = await saveRes.json(); if (saveData.url) urlForAnimation = saveData.url; }
+       }
+       const res = await fetch('/api/imagine/animate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageUrl: urlForAnimation }) });
+-      if (!res.ok) { const data = await res.json(); throw new Error(data.error || 'Animation failed'); }
++      if (!res.ok) {
++        if (res.status === 401) throw new Error("Please sign in to generate images");
++        const data = await res.json().catch(() => ({}));
++        throw new Error(data.error || 'Animation failed');
++      }
+       const data = await res.json();
+       if (data.videoUrl) {
+         setRows((prev) => prev.map((row) => ({ ...row, images: row.images.map((img) => img.id === imageId ? { ...img, videoUrl: data.videoUrl } : img) })));
