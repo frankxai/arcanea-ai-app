@@ -145,7 +145,7 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
     priceState: "proposed",
     license: "Each included edition keeps its own license",
     outcome:
-      "Explore the finished art and the production method behind original worlds.",
+      "Explore the art and the production method behind original worlds.",
     description:
       "The individual Worldbuilder Production Edition and Living Cosmos First Edition together. Available for sale only after both included editions and this bundle have passed their release checks.",
     includes: [

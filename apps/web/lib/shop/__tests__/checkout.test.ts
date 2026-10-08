@@ -197,6 +197,7 @@ const webRoot = join(dirname(fileURLToPath(import.meta.url)), "../../..");
 // not accepted yet, and the linked gallery is not a sample of the paid files.
 const forbiddenClaims = [
   /\baccepted\b/i,
+  /finished art/i,
   /selected and reviewed/i,
   /explore the sample/i,
   /linked sample is free/i,
@@ -210,6 +211,7 @@ const kitCopy = [
 function renderedText(edition: (typeof SHOP_EDITIONS)[number]): string {
   const copy = editionPageCopy(edition);
   return [
+    edition.outcome,
     edition.description,
     editionDescription(edition),
     JSON.stringify(productStructuredData(edition)),
@@ -237,9 +239,10 @@ test("art editions carry no acceptance, review or sample claims", () => {
   }
 });
 
-test("no edition description, metadata or JSON-LD claims accepted artworks", () => {
+test("no edition description, metadata or JSON-LD claims accepted or finished art", () => {
   for (const edition of SHOP_EDITIONS) {
     for (const value of [
+      edition.outcome,
       edition.description,
       editionDescription(edition),
       JSON.stringify(productStructuredData(edition)),
@@ -247,6 +250,7 @@ test("no edition description, metadata or JSON-LD claims accepted artworks", () 
     ]) {
       assert.doesNotMatch(value, /accepted artworks/i);
       assert.doesNotMatch(value, /selected and reviewed/i);
+      assert.doesNotMatch(value, /finished art/i);
     }
   }
 });
