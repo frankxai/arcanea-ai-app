@@ -8,11 +8,13 @@ export function CheckoutAction({
   available,
   released,
   previewHref,
+  previewNoun = "sample",
 }: {
   slug: string;
   available: boolean;
   released: boolean;
   previewHref: string;
+  previewNoun?: "sample" | "gallery";
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -75,13 +77,13 @@ export function CheckoutAction({
         </button>
       ) : (
         <Link className="shop-button" href={previewHref}>
-          Explore the sample{" "}
+          Explore the {previewNoun}{" "}
         </Link>
       )}
       {!available && (
         <p className="shop-small">
           {released
-            ? "Checkout is temporarily unavailable. You can explore the sample."
+            ? `Checkout is temporarily unavailable. You can explore the ${previewNoun}.`
             : "Preview edition. Sales are not open."}
         </p>
       )}

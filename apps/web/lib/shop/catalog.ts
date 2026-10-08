@@ -117,9 +117,9 @@ export const SHOP_EDITIONS: readonly ShopEdition[] = [
     outcome:
       "Keep a small collection of imaginative worlds on your screen and in your library.",
     description:
-      "A curated collection of six accepted artworks, purpose-made desktop and mobile compositions, and an illustrated companion booklet. Existing gallery imagery previews the art direction; the edition's manifest defines the downloads.",
+      "A curated collection of six artworks, purpose-made desktop and mobile compositions, and an illustrated companion booklet. Existing gallery imagery previews the art direction; the edition's manifest defines the downloads.",
     includes: [
-      "Six artworks selected and reviewed as one collection",
+      "Six artworks as one collection",
       "Separate desktop and mobile compositions",
       "Illustrated companion booklet",
       "An exact file and resolution manifest",
@@ -196,6 +196,34 @@ export function editionReleased(edition: ShopEdition): boolean {
       r.approvedCheckoutPath || "",
     )
   );
+}
+
+// Collector editions are art collections, not production kits.
+export function isArtEdition(edition: ShopEdition): boolean {
+  return edition.audience === "collectors";
+}
+
+// Edition-page copy that depends on the edition type. Art editions link to a
+// public gallery (not a sample of the paid files) and never show kit-only
+// tool or license copy.
+export function editionPageCopy(edition: ShopEdition) {
+  const art = isArtEdition(edition);
+  const released = editionReleased(edition);
+  return {
+    previewNoun: art ? ("gallery" as const) : ("sample" as const),
+    previewDelivery: art
+      ? "Paid files are not released."
+      : "Paid files are not released. The linked sample is free.",
+    previewScope: art
+      ? "These are the intended contents of the proposed paid edition. A release must match an exact file manifest."
+      : "These are the intended contents of the proposed paid edition. A release must match an exact file manifest. The sample does not establish paid-edition readiness.",
+    tools: art
+      ? null
+      : "Use the materials with your existing writing and production tools.",
+    rights: art
+      ? null
+      : `${released ? "The edition license" : "The proposed license"} governs the kit and its examples. Your original characters, setting and story remain yours. Software, sample artwork and official Arcanea IP have separate permissions.`,
+  };
 }
 
 export function editionDescription(edition: ShopEdition): string {
