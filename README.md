@@ -7,7 +7,7 @@ Superintelligent prompts that make every model feel like magic.
 
 [![arcanea.ai](https://img.shields.io/badge/arcanea.ai-live-00bcd4?style=flat-square)](https://arcanea.ai)
 [![npm](https://img.shields.io/badge/npm-@arcanea-00bcd4?style=flat-square&logo=npm)](https://www.npmjs.com/org/arcanea)
-[![License](https://img.shields.io/badge/License-Proprietary-gray?style=flat-square)](./LICENSE)
+![License](https://img.shields.io/badge/License-Proprietary-gray?style=flat-square)
 
 </div>
 
@@ -25,12 +25,12 @@ Live: **[www.arcanea.ai](https://www.arcanea.ai)**. Updated 9 Oct 2026, checked 
 
 ## Use Arcanea now
 
-| How                                  | What you get                                                        |
-| :----------------------------------- | :------------------------------------------------------------------ |
-| **[arcanea.ai](https://arcanea.ai)** | Chat — free open core, bring your own API key                       |
-| **Claude Code**                      | `claude mcp add arcanea -- npx -y @arcanea/mcp-server`              |
-| **Any AI**                           | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
-| **Authors**                          | `npx author-os-cli init` — AI-native book production                |
+| How                                  | What you get                                                                                                                         |
+| :----------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| **[arcanea.ai](https://arcanea.ai)** | Chat — free open core, bring your own API key in [/settings/providers](https://www.arcanea.ai/settings/providers) (sign-in required) |
+| **Claude Code**                      | `claude mcp add arcanea -- npx -y @arcanea/mcp-server`                                                                               |
+| **Any AI**                           | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum)                                                                  |
+| **Authors**                          | `npx author-os-cli init` — AI-native book production                                                                                 |
 
 ## What's inside
 
@@ -56,7 +56,6 @@ Think **Unreal Engine** (not a game — the engine for making games), **D&D** (n
 | :------------------------------------------------------------------------- | :----------------------------------------------------------------- |
 | [`@arcanea/mcp-server`](https://www.npmjs.com/package/@arcanea/mcp-server) | MCP server — add Arcanea to Claude Code, Cursor, or any MCP client |
 | [`author-os-cli`](https://www.npmjs.com/package/author-os-cli)             | AI-native book production pipeline                                 |
-| [`arcanea-claw`](./arcanea-claw/)                                          | 24/7 media processing daemon                                       |
 | [`@arcanea/vscode`](./packages/vscode/)                                    | VS Code extension with Guardian-powered AI modes                   |
 
 ## For developers
@@ -64,9 +63,11 @@ Think **Unreal Engine** (not a game — the engine for making games), **D&D** (n
 ```bash
 git clone https://github.com/frankxai/arcanea-ai-app.git
 cd arcanea-ai-app && pnpm install
-cp .env.example .env.local
+cp apps/web/.env.example apps/web/.env.local
 pnpm dev
 ```
+
+Environment variables are described in [`docs/guides/ENVIRONMENT_SETUP.md`](./docs/guides/ENVIRONMENT_SETUP.md).
 
 **Stack:** Next.js 16 · React 19 · TypeScript (strict) · Supabase · Vercel AI SDK · Gemini + Claude
 
@@ -74,15 +75,15 @@ pnpm dev
 
 > _"These books are not entertainment. They are equipment for living."_
 
-17 collections of creative philosophy in [`book/`](./book/) — Laws, Legends, Meditations, an Academy Handbook, and more. Not content to consume, but frameworks to practice.
+Collections of creative philosophy in [`book/`](./book/) — Laws, Legends, Meditations, an Academy Handbook, and more. Not content to consume, but frameworks to practice.
 
 ## Contributing
 
-We welcome contributions from creators and developers. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+We welcome contributions from creators and developers.
 
 ## License
 
-Proprietary. See [LICENSE](./LICENSE). Source is viewable for transparency; viewing does not grant usage rights.
+Proprietary. See LICENSE. Source is viewable for transparency; viewing does not grant usage rights.
 
 ---
 
