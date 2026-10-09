@@ -33,7 +33,7 @@ export function DataProvenance({
         {[
           { id: "overview", label: "Pipeline Overview", icon: "🌐" },
           { id: "openrouter", label: "OpenRouter Live API", icon: "⚡" },
-          { id: "lmsys", label: "LMSYS Creative Elo", icon: "🏆" },
+          { id: "lmsys", label: "LMSYS Creative", icon: "" },
           { id: "arcanea-lab", label: "Arcanea WorldCraft Lab", icon: "🔮" },
           { id: "byok", label: "Direct BYOK Gateways", icon: "🔑" },
         ].map((tab) => (
@@ -78,9 +78,6 @@ export function DataProvenance({
           </div>
 
           <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 relative overflow-hidden group hover:border-[var(--arc-brand-arcanean-gold)]/25 transition-all">
-            <div className="w-9 h-9 rounded-xl bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)] flex items-center justify-center text-lg mb-4">
-              🏆
-            </div>
             <h3 className="text-sm font-semibold text-white mb-2 font-[family-name:var(--font-display)]">
               2. LMSYS Creative Arena
             </h3>
@@ -301,7 +298,7 @@ export function DataProvenance({
               <p className="text-[11px] text-white/50">
                 Detecting banned generic verbal tics (&ldquo;tapestry&rdquo;,
                 &ldquo;delve&rdquo;, &ldquo;testament to&rdquo;,
-                &ldquo;nestled&rdquo;) using regex scans.
+                &ldquo;nestled&rdquo;).
               </p>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl">
@@ -314,14 +311,6 @@ export function DataProvenance({
                 structures.
               </p>
             </div>
-          </div>
-
-          <div className="p-4 bg-[var(--arc-void)]/10 border border-[var(--arc-void)]/20 rounded-xl text-xs text-white/70 leading-relaxed">
-            <strong>Formula:</strong>{" "}
-            <code className="text-white bg-black/40 px-2 py-0.5 rounded font-mono">
-              WorldCraft Index = (0.35 × Lore Memory) + (0.30 × Prose Quality) +
-              (0.20 × Magic Logic) + (0.15 × Character Voice)
-            </code>
           </div>
         </div>
       )}
