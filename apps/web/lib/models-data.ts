@@ -856,9 +856,7 @@ export const AI_MODELS: AIModel[] = [
       "Logical reasoning for sustained multi-chapter plot outlining",
       "Capable of holding entire manuscript chapters in context while proposing revisions",
     ],
-    weaknesses: [
-      "Newer model with less established documentation in English creative circles",
-    ],
+    weaknesses: ["Less established documentation in English creative circles"],
     category: "free-tier",
     tags: ["free", "1m-tokens", "outlines", "saga-planning"],
     worldCraftScore: 87,
