@@ -188,10 +188,20 @@ test("everything /models renders is free of superlative ranking claims", () => {
     /editor['’]s choice/i,
     /\btitans?\b/i,
   ];
-  // Slugs such as "best-lore" or "#curated-best" are IDs and anchors, not copy.
-  const slug = /^#?[a-z0-9]+(?:-[a-z0-9]+)+$/;
+  // Only known identifiers are exempt: the curated award IDs from the
+  // CuratedAward type and the showcase anchor. Any other string, hyphenated
+  // or not, is treated as copy.
+  const awardType = readRepo("apps/web/lib/models-data.ts").match(
+    /export type CuratedAward =([^;]+);/,
+  );
+  assert.ok(awardType, "expected the CuratedAward type");
+  const identifiers = new Set([
+    ...[...awardType[1].matchAll(/"([^"]+)"/g)].map(([, id]) => id),
+    "curated-best",
+    "#curated-best",
+  ]);
   for (const path of ARENA_RENDER_FILES) {
-    const texts = stringLiterals(path).filter((text) => !slug.test(text));
+    const texts = stringLiterals(path).filter((text) => !identifiers.has(text));
     assert.ok(texts.length > 0, `expected strings in ${path}`);
     for (const text of texts) {
       for (const pattern of superlatives) {
@@ -209,19 +219,60 @@ test("everything /models renders is free of superlative ranking claims", () => {
 
 test("arena scores without a source stay null and are not presented as benchmarks", () => {
   const read = readRepo;
-  const data = read("apps/web/lib/models-data.ts");
-  const models = data
-    .split("export const IMAGE_MODELS")[0]
-    .split(/\n {2}\{\n/)
-    .slice(1);
+  // Parse AI_MODELS so comments or stray text cannot stand in for a source.
+  // A non-null sweBench (top level or under benchmarks) needs a sibling
+  // sweBenchSource object with an https url and an ISO date. AIModel has no
+  // such field today, so every score must be null.
+  const file = ts.createSourceFile(
+    "models-data.ts",
+    read("apps/web/lib/models-data.ts"),
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  );
+  const prop = (obj, name) =>
+    obj.properties.find(
+      (p) => ts.isPropertyAssignment(p) && p.name.getText() === name,
+    )?.initializer;
+  const hasDatedSource = (obj) => {
+    const source = prop(obj, "sweBenchSource");
+    if (!source || !ts.isObjectLiteralExpression(source)) return false;
+    const url = prop(source, "url");
+    const date = prop(source, "date");
+    return (
+      !!url &&
+      ts.isStringLiteral(url) &&
+      url.text.startsWith("https://") &&
+      !!date &&
+      ts.isStringLiteral(date) &&
+      /^\d{4}-\d{2}-\d{2}$/.test(date.text)
+    );
+  };
+  let models = [];
+  ts.forEachChild(file, function find(node) {
+    if (
+      ts.isVariableDeclaration(node) &&
+      node.name.getText() === "AI_MODELS" &&
+      node.initializer &&
+      ts.isArrayLiteralExpression(node.initializer)
+    ) {
+      models = node.initializer.elements.filter(ts.isObjectLiteralExpression);
+    }
+    ts.forEachChild(node, find);
+  });
   assert.ok(models.length > 10, "expected the arena model entries");
   for (const model of models) {
-    if (/sweBench: (?!null)/.test(model)) {
-      assert.match(
-        model,
-        /sweBenchSource: "https:\/\//,
-        `sweBench without a source in: ${model.slice(0, 80)}`,
-      );
+    const name = prop(model, "name")?.getText();
+    const benchmarks = prop(model, "benchmarks");
+    for (const obj of [model, benchmarks]) {
+      if (!obj || !ts.isObjectLiteralExpression(obj)) continue;
+      const score = prop(obj, "sweBench");
+      if (score && score.kind !== ts.SyntaxKind.NullKeyword) {
+        assert.ok(
+          hasDatedSource(obj),
+          `sweBench without a dated https source in ${name}`,
+        );
+      }
     }
   }
   const provenance = read("apps/web/app/models/data-provenance.tsx");
