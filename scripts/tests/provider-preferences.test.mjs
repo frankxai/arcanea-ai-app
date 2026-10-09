@@ -199,6 +199,12 @@ test("everything /models renders is free of superlative ranking claims", () => {
       }
     }
   }
+  // Live OpenRouter descriptions are runtime provider copy the scan above
+  // cannot see, so the explorer must not render them.
+  assert.doesNotMatch(
+    readRepo("apps/web/lib/models/live-models.ts"),
+    /lm\.description/,
+  );
 });
 
 test("arena scores without a source stay null and are not presented as benchmarks", () => {
