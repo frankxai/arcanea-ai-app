@@ -240,3 +240,36 @@ test("arena scores without a source stay null and are not presented as benchmark
   assert.doesNotMatch(route, /SWE_BENCH_RE|parseSweScore/);
   assert.match(route, /sweBench: null,/);
 });
+
+test("cuts from the second /models review stay cut", () => {
+  const files = Object.fromEntries(
+    ARENA_RENDER_FILES.map((path) => [path, readRepo(path)]),
+  );
+  for (const [path, source] of Object.entries(files)) {
+    for (const cut of [
+      "tok/s",
+      "\u{1F3C6}",
+      "WorldCraft Index =",
+      "regex scans",
+      "Creative Elo",
+      "Needle Recall",
+      "Newer model with",
+    ]) {
+      assert.ok(!source.includes(cut), `${path} still contains ${cut}`);
+    }
+  }
+  // Speed figures carry no source, so neither the row nor the sort renders.
+  assert.ok(
+    !files["apps/web/app/models/model-comparator.tsx"].includes(
+      "Generation Speed",
+    ),
+  );
+  assert.ok(
+    !files["apps/web/app/models/model-explorer.tsx"].includes('value="speed"'),
+  );
+  assert.ok(
+    files["apps/web/app/models/models-arena-components.tsx"].includes(
+      "Sorted by editorial WorldCraft rating.",
+    ),
+  );
+});
