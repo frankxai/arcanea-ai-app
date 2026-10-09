@@ -8,6 +8,8 @@ import {
   type WorldContextRepository,
 } from "@arcanea/mcp-server/gateway";
 
+import { mcpWwwAuthenticate } from "./protected-resource-metadata";
+
 const MAX_REQUEST_BYTES = 65_536;
 
 export interface AuthenticatedWorldContextSession {
@@ -160,7 +162,7 @@ export function createWorldContextMcpHttpHandler(
         "authentication-required",
         "Authentication is required.",
         {
-          "www-authenticate": "Bearer",
+          "www-authenticate": mcpWwwAuthenticate(request.url),
         },
       );
     }
