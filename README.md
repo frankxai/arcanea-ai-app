@@ -13,6 +13,16 @@ Superintelligent prompts that make every model feel like magic.
 
 ---
 
+## Status / Limits
+
+Live: **[www.arcanea.ai](https://www.arcanea.ai)**. Updated 9 Oct 2026, checked against `main` at `088eba0` and the live site.
+
+- **The shop is a preview.** [/shop](https://www.arcanea.ai/shop) lists four editions. Each one and its price is marked "Proposed".
+- **Checkout is gated.** No edition is released, so `/api/shop/checkout` returns `edition_unavailable`. See [`apps/web/lib/shop/checkout.ts`](./apps/web/lib/shop/checkout.ts).
+- **Paid edition files aren't released.** The free [World Starter sample](https://www.arcanea.ai/shop/sample) is available now.
+- **The art isn't final.** Living Cosmos and the First Collection bundle wait for accepted art masters ([shop plan](./planning-with-files/ARCANEA_SHOP_EXECUTION_2026-10-07.md)).
+- **Studio needs an account.** [/studio](https://www.arcanea.ai/studio) redirects to sign-in.
+
 ## Use Arcanea now
 
 | How | What you get |
