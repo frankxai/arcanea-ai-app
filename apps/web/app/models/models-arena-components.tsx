@@ -62,6 +62,17 @@ export function formatPrice(price: number | "free"): string {
   return `$${price.toFixed(2)}`;
 }
 
+/** Neutral display names for curated award IDs; the IDs are never shown. */
+const CURATED_AWARD_LABELS: Record<string, string> = {
+  "editors-choice": "High fantasy novels",
+  "best-lore": "Long-context lore",
+  "best-prose": "Prose",
+  "best-free": "Free worldbuilding",
+  "best-magic": "Hard magic logic",
+  "best-dialogue": "Character dialogue",
+  "best-tactics": "Combat scenes",
+};
+
 /* ------------------------------------------------------------------ */
 /*  Curated Best Showcase (The 5 Crown Models for High Fantasy)       */
 /* ------------------------------------------------------------------ */
@@ -75,37 +86,37 @@ export function CuratedBestShowcase() {
     { title: string; badge: string; border: string; glow: string }
   > = {
     "editors-choice": {
-      title: "Editor's Choice",
-      badge: "🏆 #1 For High Fantasy Novels",
+      title: "High fantasy novels",
+      badge: "High fantasy novels",
       border: "border-[var(--arc-brand-arcanean-gold)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(255,215,0,0.15)]",
     },
     "best-lore": {
-      title: "Best 1M Lore Vault",
-      badge: "📜 1M Token Canon Sentinel",
+      title: "Long-context lore",
+      badge: "📜 Long-context lore",
       border: "border-[var(--arc-brand-cosmic-blue)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(77,159,255,0.15)]",
     },
     "best-magic": {
-      title: "Grand Enchanter",
+      title: "Hard magic logic",
       badge: "🔮 Hard Magic & Consequence Logic",
       border: "border-[var(--arc-brand-atlantean-teal)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(127,255,212,0.15)]",
     },
     "best-free": {
-      title: "Best Free Worldbuilder",
+      title: "Free worldbuilding",
       badge: "⚡ 100% Free on Zen Routing",
       border: "border-[var(--arc-wind)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(200,225,255,0.15)]",
     },
     "best-dialogue": {
-      title: "Bard of Truth",
+      title: "Character dialogue",
       badge: "🎭 Polyphonic Character Dialogue",
       border: "border-[var(--arc-void)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(180,120,255,0.15)]",
     },
     "best-tactics": {
-      title: "War Master",
+      title: "Combat scenes",
       badge: "⚔️ Combat & Magic Choreography",
       border: "border-[var(--arc-fire)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(255,100,100,0.15)]",
@@ -115,9 +126,9 @@ export function CuratedBestShowcase() {
   return (
     <section className="mb-24" id="curated-best">
       <SectionHeading
-        tag="Arcanea Hall of Fame"
-        title="Curated Best for Worldbuilders"
-        subtitle="We tested dozens of frontier and open-weight models against 50,000+ words of high fantasy lore, magic system design, and novel chapters. These five represent the absolute peak."
+        tag="Editorial Picks"
+        title="Curated Picks for Worldbuilders"
+        subtitle="Editorial picks for high fantasy lore, magic system design, and novel chapters."
       />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -669,7 +680,8 @@ export function ModelDeepDives() {
                     </span>
                     {model.curatedAward && (
                       <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)] border border-[var(--arc-brand-arcanean-gold)]/20">
-                        {model.curatedAward.replace("-", " ")}
+                        {CURATED_AWARD_LABELS[model.curatedAward] ??
+                          "Editorial pick"}
                       </span>
                     )}
                   </div>
