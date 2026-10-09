@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { resolveProviderRoute } from "../../apps/web/lib/ai/provider-routing.ts";
 
 const providers = {
@@ -82,4 +83,54 @@ test("extended providers select a model from their own catalog", () => {
 test("missing keys fail and automatic server routing remains available", () => {
   assert.throws(() => route({ requestedProvider: "openai" }), /No API key/);
   assert.equal(route({}, { GOOGLE_KEY: "server" }).providerId, "google");
+});
+
+const readRepoFile = (relativePath) =>
+  readFileSync(new URL(`../../${relativePath}`, import.meta.url), "utf8");
+
+const RANKING_CLAIMS = [
+  /#1\b/,
+  /\bfastest\b/i,
+  /\bsmartest\b/i,
+  /most (powerful|capable)/i,
+  /\bflagship\b/i,
+  /\bunmatched\b/i,
+  /\bunrivall?ed\b/i,
+  /\bflawless/i,
+  /gold standard/i,
+  /\bsupreme\b/i,
+  /in the world/i,
+  /on earth/i,
+  /best-in-class/i,
+  /\bking\b/i,
+  /%\s*SWE-?bench/i,
+];
+
+test("model catalog copy carries no rankings or unsourced benchmark figures", () => {
+  for (const file of [
+    "apps/web/lib/gateway/models.ts",
+    "packages/ai-provider/src/arcanea-models.ts",
+    "apps/web/lib/models-data.ts",
+  ]) {
+    const source = readRepoFile(file);
+    for (const pattern of RANKING_CLAIMS) {
+      assert.doesNotMatch(source, pattern, `${file} matches ${pattern}`);
+    }
+  }
+  for (const file of [
+    "apps/web/lib/gateway/models.ts",
+    "packages/ai-provider/src/arcanea-models.ts",
+  ]) {
+    const source = readRepoFile(file);
+    for (const pattern of [
+      /\bbest\b/i,
+      /SWE-?bench/i,
+      /\bElo\b/,
+      /\bAIME\b/,
+      /ARC-AGI/,
+      /tok\/s/,
+    ]) {
+      assert.doesNotMatch(source, pattern, `${file} matches ${pattern}`);
+    }
+  }
 });
