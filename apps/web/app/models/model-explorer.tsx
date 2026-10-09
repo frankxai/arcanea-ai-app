@@ -39,7 +39,6 @@ type SortKey =
   | "magic"
   | "context"
   | "input-price"
-  | "speed"
   | "name";
 
 const DISPLAY_LIMIT = 48;
@@ -261,10 +260,7 @@ function WorldCraftModelCard({
               : `${formatPrice(model.inputPrice)} / ${formatPrice(model.outputPrice)}`}
           </span>
         </div>
-        <div className="flex justify-between items-center pt-2 mt-2">
-          <span className="text-[10px] text-white/30">
-            {model.speed === null ? "" : `${model.speed} tok/s`}
-          </span>
+        <div className="flex justify-end items-center pt-2 mt-2">
           <Link
             href="/chat"
             className="inline-flex items-center gap-1 text-[11px] text-[var(--arc-brand-atlantean-teal)] hover:underline font-medium"
@@ -365,9 +361,6 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
         break;
       case "input-price":
         arr.sort((a, b) => a.inputPrice - b.inputPrice);
-        break;
-      case "speed":
-        arr.sort((a, b) => byRatingDesc(a.speed, b.speed));
         break;
       case "name":
         arr.sort((a, b) => a.name.localeCompare(b.name));
@@ -508,9 +501,6 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
               </option>
               <option value="input-price" className="bg-gray-900 text-white">
                 Price (Lowest first)
-              </option>
-              <option value="speed" className="bg-gray-900 text-white">
-                Speed (high to low)
               </option>
               <option value="name" className="bg-gray-900 text-white">
                 Name (A-Z)
