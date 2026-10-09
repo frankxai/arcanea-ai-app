@@ -10,6 +10,7 @@
 
 import Image from 'next/image';
 import markSrc from '@/assets/brand/arcanea-mark.jpg';
+import markSmallSrc from './arcanea-mark-small';
 
 interface ArcaneanMarkProps {
   size?: number;
@@ -41,7 +42,7 @@ export function ArcaneanMark({ size = 24, className = '', glow = false, animate 
         />
       )}
       <Image
-        src={markSrc}
+        src={size <= 24 ? markSmallSrc : markSrc}
         alt=""
         width={size}
         height={size}

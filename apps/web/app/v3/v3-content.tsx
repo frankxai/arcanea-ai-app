@@ -91,6 +91,7 @@ export function V3Loading() {
 function HeroPortal() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const reducedMotion = useReducedMotion();
   const prefersReduced = !isLoaded || !!reducedMotion;
 
@@ -104,6 +105,28 @@ function HeroPortal() {
 
   useEffect(() => {
     setIsLoaded(true);
+  }, []);
+
+  // The motion loop is a ~1.6 MB video. Mount it only after the page has
+  // loaded, on md+ screens, when motion is allowed and Save-Data is off, so the
+  // optimized still image stays the LCP element and phones skip the download.
+  // No poster: the next/image still underneath shows until the first frame,
+  // instead of the 2.3 MB source PNG.
+  useEffect(() => {
+    const query = window.matchMedia(
+      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    );
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection;
+    if (!query.matches || connection?.saveData) return;
+    const start = () => setShowVideo(true);
+    if (document.readyState === "complete") {
+      start();
+      return;
+    }
+    window.addEventListener("load", start, { once: true });
+    return () => window.removeEventListener("load", start);
   }, []);
 
   return (
@@ -120,21 +143,23 @@ function HeroPortal() {
           alt=""
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover object-[50%_42%] opacity-95"
         />
-        <video
-          aria-hidden="true"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          poster="/brand/arcanea-dashboard-hero-premium.png"
-          className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
-        >
-          <source src="/brand/arcanea-dashboard-hero-premium.mp4" type="video/mp4" />
-        </video>
+        {showVideo && (
+          <video
+            aria-hidden="true"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
+          >
+            <source src="/brand/arcanea-dashboard-hero-premium.mp4" type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_52%_at_50%_42%,transparent_0%,color-mix(in_srgb,var(--arc-cosmic-void)_24%,transparent)_58%,var(--arc-cosmic-void)_100%)]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/28 via-[var(--arc-cosmic-void)]/38 to-[var(--arc-cosmic-void)]/92" />
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)]/82 via-transparent to-[var(--arc-cosmic-void)]/82" />
