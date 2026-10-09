@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
 import {
   V3Content as HomeContent,
-  V3Loading as HomeLoading,
+  V3Hero as HomeHero,
+  V3RestLoading as HomeRestLoading,
 } from "./v3/v3-content";
 
 const jsonLd = {
@@ -46,6 +47,7 @@ async function HomeWithData() {
       collectionsCount={collections.length}
       textsCount={allTexts.length}
       totalWords={totalWords}
+      withHero={false}
     />
   );
 }
@@ -57,7 +59,9 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Suspense fallback={<HomeLoading />}>
+      {/* The hero needs no data: keep it in the initial HTML (LCP). */}
+      <HomeHero />
+      <Suspense fallback={<HomeRestLoading />}>
         <HomeWithData />
       </Suspense>
     </main>
