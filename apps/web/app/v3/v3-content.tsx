@@ -353,38 +353,14 @@ function HeroPortal() {
 // Main V3 Content
 // ---------------------------------------------------------------------------
 
-/**
- * The hero needs no data, so the home route renders it outside the data
- * Suspense boundary. It then ships in the initial HTML instead of a hidden
- * streamed segment, and the hero image can paint without waiting for reveal.
- */
-export function V3Hero() {
-  return (
-    <div className="overflow-x-clip">
-      <HeroPortal />
-    </div>
-  );
-}
-
-/** Below-hero skeleton for routes that render V3Hero outside Suspense. */
-export function V3RestLoading() {
-  return (
-    <div className="w-full space-y-4 px-6 py-28">
-      <div className="h-96 animate-pulse bg-white/[0.02] rounded-2xl" />
-      <div className="h-80 animate-pulse bg-white/[0.02] rounded-2xl" />
-    </div>
-  );
-}
-
 export function V3Content({
   collectionsCount,
   textsCount,
   totalWords,
-  withHero = true,
-}: V3BelowFoldProps & { withHero?: boolean }) {
+}: V3BelowFoldProps) {
   return (
     <div className="overflow-x-clip">
-      {withHero && <HeroPortal />}
+      <HeroPortal />
 
       {/* Gradient line separator — teal center glow */}
       <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
