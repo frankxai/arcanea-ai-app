@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   parseProviderKeys,
   readProviderPreferences,
@@ -71,4 +72,44 @@ test("a stale form cannot restore a key removed in another tab", () => {
     /another tab/,
   );
   assert.deepEqual(readProviderPreferences(s).keys, {});
+});
+
+test("arena model copy carries no rankings or unsourced benchmark figures", () => {
+  const source = readFileSync(
+    new URL("../../apps/web/lib/models-data.ts", import.meta.url),
+    "utf8",
+  );
+  // Descriptive copy only: double-quoted strings containing a space. Award
+  // IDs (best-*) and the numeric score fields are not checked here.
+  const copy = [...source.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
+    .map((match) => match[1])
+    .filter((text) => /\s/.test(text));
+  assert.ok(copy.length > 100, "expected the arena copy strings");
+  const claims = [
+    /#1\b/,
+    /\bbest\b/i,
+    /best-in-class/i,
+    /\bfastest\b/i,
+    /\bsmartest\b/i,
+    /most (powerful|capable)/i,
+    /\bflagship\b/i,
+    /\bunmatched\b/i,
+    /\bunrivall?ed\b/i,
+    /\bflawless/i,
+    /\bperfect\b/i,
+    /gold standard/i,
+    /\bsupreme\b/i,
+    /\bultimate\b/i,
+    /in the world/i,
+    /on earth/i,
+    /SWE-?bench/i,
+    /\bElo\b/,
+    /tok\/s/,
+    /\d+(\.\d+)?%/,
+  ];
+  for (const text of copy) {
+    for (const pattern of claims) {
+      assert.doesNotMatch(text, pattern, `models-data.ts copy: ${text}`);
+    }
+  }
 });
