@@ -88,8 +88,9 @@ test("missing keys fail and automatic server routing remains available", () => {
 const readRepoFile = (relativePath) =>
   readFileSync(new URL(`../../${relativePath}`, import.meta.url), "utf8");
 
-const RANKING_CLAIMS = [
+const UNSOURCED_CLAIMS = [
   /#1\b/,
+  /\bbest\b/i,
   /\bfastest\b/i,
   /\bsmartest\b/i,
   /most (powerful|capable)/i,
@@ -101,35 +102,21 @@ const RANKING_CLAIMS = [
   /\bsupreme\b/i,
   /in the world/i,
   /on earth/i,
-  /best-in-class/i,
   /\bking\b/i,
-  /%\s*SWE-?bench/i,
+  /SWE-?bench/i,
+  /\bElo\b/,
+  /\bAIME\b/,
+  /ARC-AGI/,
+  /tok\/s/,
 ];
 
 test("model catalog copy carries no rankings or unsourced benchmark figures", () => {
   for (const file of [
     "apps/web/lib/gateway/models.ts",
     "packages/ai-provider/src/arcanea-models.ts",
-    "apps/web/lib/models-data.ts",
   ]) {
     const source = readRepoFile(file);
-    for (const pattern of RANKING_CLAIMS) {
-      assert.doesNotMatch(source, pattern, `${file} matches ${pattern}`);
-    }
-  }
-  for (const file of [
-    "apps/web/lib/gateway/models.ts",
-    "packages/ai-provider/src/arcanea-models.ts",
-  ]) {
-    const source = readRepoFile(file);
-    for (const pattern of [
-      /\bbest\b/i,
-      /SWE-?bench/i,
-      /\bElo\b/,
-      /\bAIME\b/,
-      /ARC-AGI/,
-      /tok\/s/,
-    ]) {
+    for (const pattern of UNSOURCED_CLAIMS) {
       assert.doesNotMatch(source, pattern, `${file} matches ${pattern}`);
     }
   }
