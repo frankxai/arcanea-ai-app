@@ -1,12 +1,58 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import ts from "typescript";
 import {
   parseProviderKeys,
   readProviderPreferences,
   saveProviderPreferences,
   getModelKey,
 } from "../../apps/web/lib/ai/provider-preferences.ts";
+
+const readRepo = (path) =>
+  readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
+
+// Every string the parser sees: single, double and template quotes, plus
+// JSX text, so copy cannot slip past the guard by changing quote style.
+function stringLiterals(path) {
+  const kind = path.endsWith("x") ? ts.ScriptKind.TSX : ts.ScriptKind.TS;
+  const file = ts.createSourceFile(
+    path,
+    readRepo(path),
+    ts.ScriptTarget.Latest,
+    true,
+    kind,
+  );
+  const texts = [];
+  const visit = (node) => {
+    if (
+      ts.isStringLiteral(node) ||
+      ts.isNoSubstitutionTemplateLiteral(node) ||
+      ts.isTemplateHead(node) ||
+      ts.isTemplateMiddle(node) ||
+      ts.isTemplateTail(node) ||
+      ts.isJsxText(node)
+    ) {
+      const text = node.text.trim();
+      if (text) texts.push(text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return texts;
+}
+
+// The page plus every local module it renders copy from.
+const ARENA_RENDER_FILES = [
+  "apps/web/app/models/page.tsx",
+  "apps/web/app/models/models-arena-components.tsx",
+  "apps/web/app/models/model-explorer.tsx",
+  "apps/web/app/models/model-comparator.tsx",
+  "apps/web/app/models/data-provenance.tsx",
+  "apps/web/lib/models-data.ts",
+  "apps/web/lib/models/live-models.ts",
+  "apps/web/lib/openrouter-live.ts",
+];
 
 function storage(seed = {}) {
   const values = new Map(Object.entries(seed));
@@ -75,15 +121,11 @@ test("a stale form cannot restore a key removed in another tab", () => {
 });
 
 test("arena model copy carries no rankings or unsourced benchmark figures", () => {
-  const source = readFileSync(
-    new URL("../../apps/web/lib/models-data.ts", import.meta.url),
-    "utf8",
+  // Descriptive copy only: strings containing a space, in any quote style.
+  // Award IDs (best-*) and the numeric score fields are not checked here.
+  const copy = stringLiterals("apps/web/lib/models-data.ts").filter((text) =>
+    /\s/.test(text),
   );
-  // Descriptive copy only: double-quoted strings containing a space. Award
-  // IDs (best-*) and the numeric score fields are not checked here.
-  const copy = [...source.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
-    .map((match) => match[1])
-    .filter((text) => /\s/.test(text));
   assert.ok(copy.length > 100, "expected the arena copy strings");
   const claims = [
     /#1\b/,
@@ -114,9 +156,53 @@ test("arena model copy carries no rankings or unsourced benchmark figures", () =
   }
 });
 
+test("everything /models renders is free of superlative ranking claims", () => {
+  const page = readRepo("apps/web/app/models/page.tsx");
+  for (const [, spec] of page.matchAll(/from "((?:\.\/|@\/lib\/)[^"]+)"/g)) {
+    const path = spec.startsWith("./")
+      ? `apps/web/app/models/${spec.slice(2)}`
+      : `apps/web/${spec.slice(2)}`;
+    assert.ok(
+      ARENA_RENDER_FILES.some((file) => file.replace(/\.tsx?$/, "") === path),
+      `/models imports ${spec}; add it to ARENA_RENDER_FILES`,
+    );
+  }
+  const superlatives = [
+    /#1\b/,
+    /\bbest\b/i,
+    /\bfastest\b/i,
+    /\bpeak\b(?!\s+(?:hours|traffic))/i,
+    /\bsupreme\b/i,
+    /\bunmatched\b/i,
+    /gold standard/i,
+    /\bunrivall?ed\b/i,
+    /\bunparalleled\b/i,
+    /\bunbeatable\b/i,
+    /\bworld-class\b/i,
+    /state[- ]of[- ]the[- ]art/i,
+    /\bsmartest\b/i,
+    /\bstrongest\b/i,
+    /\bnumber one\b/i,
+    /\bno\. ?1\b/i,
+    /hall of fame/i,
+    /editor['’]s choice/i,
+    /\btitans?\b/i,
+  ];
+  // Slugs such as "best-lore" or "#curated-best" are IDs and anchors, not copy.
+  const slug = /^#?[a-z0-9]+(?:-[a-z0-9]+)+$/;
+  for (const path of ARENA_RENDER_FILES) {
+    const texts = stringLiterals(path).filter((text) => !slug.test(text));
+    assert.ok(texts.length > 0, `expected strings in ${path}`);
+    for (const text of texts) {
+      for (const pattern of superlatives) {
+        assert.doesNotMatch(text, pattern, `${path}: ${text}`);
+      }
+    }
+  }
+});
+
 test("arena scores without a source stay null and are not presented as benchmarks", () => {
-  const read = (path) =>
-    readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
+  const read = readRepo;
   const data = read("apps/web/lib/models-data.ts");
   const models = data
     .split("export const IMAGE_MODELS")[0]
@@ -142,4 +228,9 @@ test("arena scores without a source stay null and are not presented as benchmark
       "Creative Writing Elo",
     ),
   );
+  // The public OpenRouter API must not lift SWE-bench figures out of
+  // provider descriptions, which carry no dated primary source.
+  const route = read("apps/web/app/api/models/openrouter/route.ts");
+  assert.doesNotMatch(route, /SWE_BENCH_RE|parseSweScore/);
+  assert.match(route, /sweBench: null,/);
 });
