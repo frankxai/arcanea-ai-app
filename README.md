@@ -64,10 +64,10 @@ Think **Unreal Engine** (not a game — the engine for making games), **D&D** (n
 git clone https://github.com/frankxai/arcanea-ai-app.git
 cd arcanea-ai-app && pnpm install
 cp apps/web/.env.example apps/web/.env.local
-pnpm dev
+pnpm dev:web
 ```
 
-Environment variables are described in [`docs/guides/ENVIRONMENT_SETUP.md`](./docs/guides/ENVIRONMENT_SETUP.md).
+The web app serves on http://localhost:3001. Environment variables are described in [`docs/guides/ENVIRONMENT_SETUP.md`](./docs/guides/ENVIRONMENT_SETUP.md).
 
 **Stack:** Next.js 16 · React 19 · TypeScript (strict) · Supabase · Vercel AI SDK · Gemini + Claude
 
