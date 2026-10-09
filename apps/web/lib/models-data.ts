@@ -2,7 +2,7 @@
 /**
  * AI Models Data Layer — Worldbuilding & High Fantasy Intelligence
  *
- * Data source for arcanea.ai/models — The Premier Creative Model Arena
+ * Data source for arcanea.ai/models — the creative model arena
  * Evaluates models specifically for worldbuilding, fantasy novel writing,
  * canon continuity, magic system logic, and polyphonic character dialogue.
  *
@@ -192,14 +192,14 @@ export const AI_MODELS: AIModel[] = [
     speed: 80,
     releaseDate: "2025-05-22",
     strengths: [
-      "Supreme prose lyricism — unmatched rhythm, sensory immersion, and stylistic flexibility",
-      'Near-zero AI-tell repetition; naturally avoids "tapestry", "delve", and hollow enthusiasm',
-      "Exceptional character voice distinction across ensemble fantasy casts",
+      "Lyrical prose with attention to rhythm, sensory detail, and stylistic range",
+      'Tends to avoid AI-tell phrases such as "tapestry", "delve", and hollow enthusiasm',
+      "Distinct character voices across ensemble fantasy casts",
       "Extended thinking mode unpacks intricate plot knots and magic consequences before drafting",
-      "200K context holds full novella drafts with precise continuity",
+      "200K context holds full novella drafts",
     ],
     weaknesses: [
-      "Premium pricing compared to open weights ($3/$15 per Mtok)",
+      "Higher pricing than open-weight models",
       "Slightly lower raw context capacity than 1M-token models for multi-volume world bibles",
     ],
     category: "frontier",
@@ -218,10 +218,10 @@ export const AI_MODELS: AIModel[] = [
     gateResonance: "Voice",
     gateFrequency: "528 Hz",
     guardian: "Alera",
-    curatedRole: "The High Fantasy Novelist & Supreme Prose Craftsman",
+    curatedRole: "The High Fantasy Novelist & Prose Craftsman",
     curatedAward: "editors-choice",
     worldbuildingSweetSpot:
-      "Run at temperature 0.65 with explicit sensory focus prompts. Best-in-class for chapter manuscripts, lyrical scene descriptions, and razor-sharp dialogue with emotional subtext.",
+      "Run at temperature 0.65 with explicit sensory focus prompts. Use for chapter manuscripts, lyrical scene descriptions, and dialogue with emotional subtext.",
     slopResistance: "S",
     benchmarks: {
       creativeWritingElo: 1378,
@@ -243,15 +243,15 @@ export const AI_MODELS: AIModel[] = [
     speed: 40,
     releaseDate: "2025-05-22",
     strengths: [
-      "Deepest mythic and philosophical weight — feels like an ancient chronicler of legends",
-      "Flawless structural discipline over complex multi-threaded narrative arcs",
-      "Highest benchmark scores for sustained reasoning and nuanced character interiority",
+      "Mythic and philosophical weight — reads like an ancient chronicler of legends",
+      "Structural discipline over complex multi-threaded narrative arcs",
+      "Sustained reasoning and nuanced character interiority",
       "Extended chain-of-thought explores philosophical stakes of magic systems",
     ],
     weaknesses: [
-      "High inference cost ($15/$75 per Mtok)",
-      "Slower generation speed (40 tok/s)",
-      "Overpowered for quick world item generation or simple scene snippets",
+      "High inference cost",
+      "Slower generation speed",
+      "More than needed for quick world item generation or simple scene snippets",
     ],
     category: "frontier",
     tags: [
@@ -294,10 +294,9 @@ export const AI_MODELS: AIModel[] = [
     speed: 70,
     releaseDate: "2025-03-25",
     strengths: [
-      "1 Million token context window — ingests entire 500-page world bibles with zero chunking loss",
-      "Perfect needle-in-a-haystack recall across ancestral genealogies, timelines, and geography",
-      "Superior reasoning over massive multi-document lore archives",
-      "Very competitive pricing ($1.25/$5.00 per Mtok) for a 1M frontier reasoner",
+      "1M token context window — takes a whole world bible in one prompt",
+      "Long-context recall across ancestral genealogies, timelines, and geography",
+      "Reasoning over large multi-document lore archives",
       "Native multimodal comprehension of fantasy realm maps and visual iconography",
     ],
     weaknesses: [
@@ -317,7 +316,7 @@ export const AI_MODELS: AIModel[] = [
     curatedRole: "The 1M-Token Living Lore Vault & Canon Sentinel",
     curatedAward: "best-lore",
     worldbuildingSweetSpot:
-      "The ultimate lore brain. Drop in your full universe codex, timeline, and 50+ character sheets as system context, then query canon intersections and timeline paradoxes with 99% accuracy.",
+      "Drop in your universe codex, timeline, and character sheets as system context, then query canon intersections and timeline paradoxes.",
     slopResistance: "A",
     benchmarks: {
       creativeWritingElo: 1325,
@@ -339,10 +338,10 @@ export const AI_MODELS: AIModel[] = [
     speed: 55,
     releaseDate: "2025-01-20",
     strengths: [
-      "Transparent chain-of-thought reveals the full logical mechanics behind magic rules",
-      "Unmatched at constructing hard magic systems with conservation of energy, costs, and limits",
-      "Calculates military siege logistics, troop supply lines, and tactical battle math flawlessly",
-      "Extremely affordable pricing ($0.55/$2.19 per Mtok)",
+      "Visible chain-of-thought shows the logic behind magic rules",
+      "Constructs hard magic systems with conservation of energy, costs, and limits",
+      "Works through military siege logistics, troop supply lines, and tactical battle math",
+      "Low per-token pricing",
     ],
     weaknesses: [
       "Thinking phase takes longer before output starts",
@@ -361,7 +360,7 @@ export const AI_MODELS: AIModel[] = [
     curatedRole: "The Grand Enchanter of Hard Magic & World Causality",
     curatedAward: "best-magic",
     worldbuildingSweetSpot:
-      "Ask it to audit your magic system for loopholes, exploit balance issues, or simulate geopolitical fallout when an ancient kingdom collapses. Its step-by-step reasoning is extraordinary.",
+      "Ask it to audit your magic system for loopholes, exploit balance issues, or simulate geopolitical fallout when an ancient kingdom collapses.",
     slopResistance: "A",
     benchmarks: {
       creativeWritingElo: 1295,
@@ -383,10 +382,10 @@ export const AI_MODELS: AIModel[] = [
     speed: 85,
     releaseDate: "2025-06-01",
     strengths: [
-      "100% Free via Zen routing — zero API key or credit card needed",
-      "Massive 1M token context window for full world bible retention",
-      "Exceptional multilingual world lore, mythology adaptation, and polyphonic naming conventions",
-      "78.8% SWE-Bench with deep agentic persistence for automated lore generation pipelines",
+      "Free via Zen routing — no API key or credit card needed",
+      "1M token context window for world bible retention",
+      "Multilingual world lore, mythology adaptation, and polyphonic naming conventions",
+      "Agentic persistence for automated lore generation pipelines",
     ],
     weaknesses: [
       "Rate limits on free public gateways during peak hours",
@@ -405,7 +404,7 @@ export const AI_MODELS: AIModel[] = [
     curatedRole: "The Sovereign Free Worldbuilder & Bestiary Scribe",
     curatedAward: "best-free",
     worldbuildingSweetSpot:
-      "The #1 choice for creators building large universes on zero budget. Use for generating hundreds of factions, settlements, creature bestiaries, and flora/fauna encyclopedias.",
+      "For creators building large universes without a budget. Use for generating factions, settlements, creature bestiaries, and flora/fauna encyclopedias.",
     slopResistance: "A",
     benchmarks: {
       creativeWritingElo: 1308,
@@ -428,7 +427,7 @@ export const AI_MODELS: AIModel[] = [
     releaseDate: "2024-11-18",
     strengths: [
       "Eloquent, stylish prose with a sophisticated European fantasy heritage",
-      "Sharp, witty dialogue with exceptional understanding of court politics and deceit",
+      "Sharp, witty dialogue with an understanding of court politics and deceit",
       "Strong multilingual capabilities across French, German, Spanish, and constructed tongues",
       "High resistance to generic corporate platitudes",
     ],
@@ -472,9 +471,9 @@ export const AI_MODELS: AIModel[] = [
     releaseDate: "2025-07-01",
     strengths: [
       "High kinetic momentum — writes combat, magic duels, and chase sequences with fierce velocity",
-      "80.2% SWE-bench logic carries over to precise tactical action choreography",
+      "Logical reasoning applied to tactical action choreography",
       "200K context allows keeping the full surrounding battle terrain and squad statuses in mind",
-      "100% Free via Zen routing",
+      "Free via Zen routing",
     ],
     weaknesses: [
       "Slightly less nuanced at slow, contemplative literary reflection than Claude Opus",
@@ -514,8 +513,8 @@ export const AI_MODELS: AIModel[] = [
     speed: 60,
     releaseDate: "2024-12-26",
     strengths: [
-      "Unbelievable value at $0.27/$1.10 per Mtok for near-frontier output",
-      "Solid prose and worldbuilding comprehension at 1/10th the cost of proprietary frontier models",
+      "Low per-token pricing",
+      "Solid prose and worldbuilding comprehension at a lower cost than proprietary models",
       "Open-weights architecture allows local or self-hosted deployment",
       "Strong structured JSON output for inventory items, stat blocks, and spell tables",
     ],
@@ -557,14 +556,14 @@ export const AI_MODELS: AIModel[] = [
     speed: 160,
     releaseDate: "2025-02-05",
     strengths: [
-      "Fastest 1M context model on earth (160 tok/s)",
-      "Astonishingly cheap ($0.075/$0.30 per Mtok)",
+      "Fast responses with a 1M context window",
+      "Low per-token pricing",
       "Native multimodal: feed realm map images, coats of arms, or character art alongside text",
-      "Ideal for interactive conversational worldbuilding brainstorming at near-instant speed",
+      "Suited to interactive worldbuilding brainstorming",
     ],
     weaknesses: [
       "Prose style can be plain without detailed style instructions",
-      "Smaller output token limit (8,192)",
+      "Smaller output token limit",
     ],
     category: "frontier",
     tags: ["fast", "multimodal", "1m-tokens", "map-analysis", "affordable"],
@@ -578,7 +577,7 @@ export const AI_MODELS: AIModel[] = [
     guardian: "Lyria",
     curatedRole: "Rapid Multimodal World Explorer & Map Inquisitor",
     worldbuildingSweetSpot:
-      "Upload high-resolution hand-drawn fantasy maps and have it analyze geographical realism, suggest mountain pass trade routes, or design climate zones in seconds.",
+      "Upload high-resolution hand-drawn fantasy maps and have it analyze geographical realism, suggest mountain pass trade routes, or design climate zones.",
     slopResistance: "B",
     benchmarks: {
       creativeWritingElo: 1262,
@@ -642,8 +641,8 @@ export const AI_MODELS: AIModel[] = [
     speed: 70,
     releaseDate: "2025-04-05",
     strengths: [
-      "Fully open-source — self-host for 100% offline data privacy for unpublished manuscripts",
-      "Massive 1M token context capacity with open weights",
+      "Open weights — self-host offline to keep unpublished manuscripts private",
+      "1M token context with open weights",
       "Thriving fine-tune community with dedicated fiction writing and roleplay LoRAs",
       "Uncensored creative freedom for dark fantasy, grimdark warfare, and horror elements",
     ],
@@ -669,7 +668,7 @@ export const AI_MODELS: AIModel[] = [
     guardian: "Leyla",
     curatedRole: "Sovereign Self-Hosted World Archive & Dark Fantasy Scribe",
     worldbuildingSweetSpot:
-      "When you cannot send proprietary book IP to cloud APIs. Excellent for dark fantasy, eldritch horror, and morally grey fiction where proprietary cloud filters cause false refusals.",
+      "When you cannot send proprietary book IP to cloud APIs. Suited to dark fantasy, eldritch horror, and morally grey fiction where proprietary cloud filters cause false refusals.",
     slopResistance: "B",
     benchmarks: {
       creativeWritingElo: 1272,
@@ -692,9 +691,9 @@ export const AI_MODELS: AIModel[] = [
     releaseDate: "2025-07-01",
     strengths: [
       "Free via Zen routing with 260K context",
-      "1 Trillion MoE architecture with 100 internal sub-agents",
-      "Superior cross-referencing of historical timeline anomalies and family tree lineages",
-      "76.8% SWE-Bench indicates strong structural logic",
+      "Mixture-of-experts architecture built for agentic work",
+      "Cross-references historical timeline anomalies and family tree lineages",
+      "Structured, logical reasoning",
     ],
     weaknesses: ["Rate-limited on free gateway during peak traffic"],
     category: "free-tier",
@@ -732,7 +731,7 @@ export const AI_MODELS: AIModel[] = [
     releaseDate: "2025-08-01",
     strengths: [
       "Free via Zen routing",
-      "Superb at in-universe folk ballads, tavern songs, tavern rumors, and provincial riddles",
+      "Writes in-universe folk ballads, tavern songs, tavern rumors, and provincial riddles",
       "Multilingual strength for inventing fictional tongues and regional dialect cadences",
       "Rich cultural nuance in ceremonial traditions and fantasy religious rites",
     ],
@@ -771,10 +770,10 @@ export const AI_MODELS: AIModel[] = [
     speed: 150,
     releaseDate: "2024-10-29",
     strengths: [
-      "Blazing fast response times (150 tok/s)",
-      "Very affordable ($0.25/$1.25 per Mtok)",
+      "Fast response times",
+      "Low per-token pricing",
       "Maintains Anthropic prose elegance even in concise outputs",
-      "Perfect for procedural NPC creation, loot tables, and spell components on the fly",
+      "Suited to procedural NPC creation, loot tables, and spell components on the fly",
     ],
     weaknesses: [
       "Less depth for multi-chapter novel plots or complex emotional character arcs",
@@ -791,7 +790,7 @@ export const AI_MODELS: AIModel[] = [
     guardian: "Ino",
     curatedRole: "Rapid World Indexer & Minor NPC Generator",
     worldbuildingSweetSpot:
-      "Roll up 20 tavern patrons, city guards, shopkeeper quirks, minor curses, or flora descriptions in 3 seconds.",
+      "Roll up tavern patrons, city guards, shopkeeper quirks, minor curses, or flora descriptions.",
     slopResistance: "B",
     benchmarks: {
       creativeWritingElo: 1225,
@@ -853,7 +852,7 @@ export const AI_MODELS: AIModel[] = [
     releaseDate: "2025-08-01",
     strengths: [
       "Free via Zen routing with 1M context",
-      "78% SWE-bench logic carries into sustained multi-chapter plot outlining",
+      "Logical reasoning for sustained multi-chapter plot outlining",
       "Capable of holding entire manuscript chapters in context while proposing revisions",
     ],
     weaknesses: [
@@ -898,7 +897,7 @@ export const AI_MODELS: AIModel[] = [
       "Good at theological debates between fantasy religious orders and philosophical treatises",
     ],
     weaknesses: [
-      "Slower output speed (65 tok/s)",
+      "Slower output speed",
       "Not suited for fast real-time drafting",
     ],
     category: "free-tier",
@@ -935,7 +934,7 @@ export const AI_MODELS: AIModel[] = [
     speed: 130,
     releaseDate: "2024-07-18",
     strengths: [
-      "Very affordable entry price ($0.15/$0.60 per Mtok)",
+      "Low per-token pricing",
       "Fast inference for high-volume world terminology tagging",
       "Good for keyword extraction from world building notes",
     ],
@@ -977,9 +976,9 @@ export const AI_MODELS: AIModel[] = [
     speed: 200,
     releaseDate: "2025-09-01",
     strengths: [
-      "Fastest free model in the arena (200 tok/s)",
-      "Instantaneous UI response for in-editor worldbuilding term popups",
-      "Zero-latency name generation for minor locations and background extras",
+      "Fast responses on the free tier",
+      "Quick responses for in-editor worldbuilding term popups",
+      "Low-latency name generation for minor locations and background extras",
     ],
     weaknesses: [
       "Minimal reasoning depth; not for plotting or complex narrative prose",
@@ -996,7 +995,7 @@ export const AI_MODELS: AIModel[] = [
     guardian: "Ino",
     curatedRole: "Instant In-Editor Fantasy Term & Name Generator",
     worldbuildingSweetSpot:
-      "Keep running in the background of your writing app for instant tooltip definitions, synonym generation, and random fantasy name rollups.",
+      "Keep running in the background of your writing app for quick tooltip definitions, synonym generation, and random fantasy name rollups.",
     slopResistance: "C",
     benchmarks: {
       creativeWritingElo: 1190,
@@ -1023,14 +1022,11 @@ export const IMAGE_MODELS: ImageModel[] = [
     pricing: { perImage: 0.04, unit: "per image" },
     speed: 8,
     strengths: [
-      "Best text rendering for fantasy realm maps, city signage, and runic inscriptions",
-      "Ultra-photorealistic cinematic environmental concept art",
-      "Flawless adherence to intricate architectural and costume design prompts",
+      "Text rendering for fantasy realm maps, city signage, and runic inscriptions",
+      "Photorealistic cinematic environmental concept art",
+      "Close adherence to intricate architectural and costume design prompts",
     ],
-    weaknesses: [
-      "Slower generation time (~8s)",
-      "Premium pricing at $0.04/image",
-    ],
+    weaknesses: ["Slower generation time", "Higher per-image pricing"],
     category: "frontier",
     tags: ["maps", "cinematic-art", "text-rendering", "architecture"],
     textRendering: "excellent",
@@ -1048,9 +1044,9 @@ export const IMAGE_MODELS: ImageModel[] = [
     pricing: { perImage: 0.05, unit: "per image (est. from subscription)" },
     speed: 10,
     strengths: [
-      "Unrivaled aesthetic quality — the gold standard for high fantasy book covers",
+      "Painterly aesthetic suited to high fantasy book covers",
       "Rich painterly textures, ethereal atmospheric lighting, and epic creature designs",
-      "Exceptional character costume, armour, and jewellery rendering",
+      "Detailed character costume, armour, and jewellery rendering",
     ],
     weaknesses: [
       "No standalone public API — web interface or Discord",
@@ -1073,7 +1069,7 @@ export const IMAGE_MODELS: ImageModel[] = [
     pricing: { perImage: 0.02, unit: "per image" },
     speed: 4,
     strengths: [
-      "Fast generation at 4 seconds per image",
+      "Fast generation",
       "Good general-purpose fantasy landscape rendering at low cost",
       "Native xAI API with straightforward integration",
     ],
@@ -1095,7 +1091,7 @@ export const IMAGE_MODELS: ImageModel[] = [
     pricing: { perImage: 0.04, unit: "per image (1024x1024)" },
     speed: 6,
     strengths: [
-      "Excellent creative prompt expansion from short world descriptions",
+      "Creative prompt expansion from short world descriptions",
       "Good text rendering on badges, book covers, and scrolls",
       "Broad integration with ChatGPT and OpenAI API tools",
     ],
@@ -1120,12 +1116,12 @@ export const IMAGE_MODELS: ImageModel[] = [
     pricing: { perImage: 0.035, unit: "per image (API) / free self-hosted" },
     speed: 5,
     strengths: [
-      "Fully open-source — zero per-image cost when self-hosted on a local GPU",
-      "Thousands of fantasy LoRAs (elf armor, dragon scales, gothic cathedrals, map styles)",
-      "Total offline data privacy for unpublished concept art",
+      "Open weights — no per-image API cost when self-hosted on a local GPU",
+      "Community fantasy LoRAs (elf armor, dragon scales, gothic cathedrals, map styles)",
+      "Offline use keeps unpublished concept art private",
     ],
     weaknesses: [
-      "Requires 12GB+ GPU VRAM to run locally",
+      "Requires a GPU with substantial VRAM to run locally",
       "Base model requires fine-tuned LoRAs to match Midjourney aesthetics",
     ],
     category: "open-source",
@@ -1145,8 +1141,8 @@ export const IMAGE_MODELS: ImageModel[] = [
     pricing: { perImage: 0.02, unit: "per image via API" },
     speed: 3,
     strengths: [
-      "Fastest generation at ~3 seconds",
-      "Very affordable at $0.02/image",
+      "Fast generation",
+      "Low per-image pricing",
       "Directly paired with multimodal Gemini chat for conversational iteration",
     ],
     weaknesses: [
@@ -1188,7 +1184,7 @@ export const ARCANEAN_WORKFLOWS: ArcaneanWorkflow[] = [
     fallbackModels: ["claude-opus-4", "mistral-large-2"],
     domain: "Manuscript Chapters, Lyrical Narrative Prose, Pacing & Anti-Slop",
     rationale:
-      'Master of the poetic line, rhythmic cadence, and sensory immersion. Crafts full chapters without generic AI-tell verbal tics ("tapestry", "delve"), delivering authentic literary voice.',
+      'Focuses on the poetic line, rhythmic cadence, and sensory immersion. Crafts full chapters while avoiding generic AI-tell verbal tics ("tapestry", "delve").',
     category: "prose",
   },
   {
@@ -1201,7 +1197,7 @@ export const ARCANEAN_WORKFLOWS: ArcaneanWorkflow[] = [
     fallbackModels: ["qwen-3.6-plus-free", "gemini-2.0-flash"],
     domain: "1M-Token Universe Bibles, Lineages, Timelines & Canon Sentinel",
     rationale:
-      "Ingests entire 500-page world compendiums in a single 1M context prompt. Instantly cross-checks multi-generational timelines, family lineages, and prevents canonical contradictions.",
+      "Takes a whole world compendium in a single 1M context prompt. Cross-checks multi-generational timelines and family lineages to catch canonical contradictions.",
     category: "lore-vault",
   },
   {
@@ -1315,7 +1311,7 @@ export const MODEL_WEEKLY_UPDATES: ModelWeeklyUpdate[] = [
       "mimo-v2-pro-free",
     ],
     notes:
-      "Arcanea Model Arena evolved to full Worldbuilding & High Fantasy Intelligence. Claude Sonnet 3.7 / 4 awarded the Editor’s Choice for supreme prose lyricism (99) and anti-slop mastery. Gemini 2.0 Pro awarded Best Lore Vault for 1M-token context retention (99). DeepSeek R1 recognized as Grand Enchanter for hard magic logic (99). 8 models continue running 100% free on Zen routing, led by Qwen 3.6 Plus (1M context) and MiniMax M2.5 (kinetic combat choreography).",
+      "Arcanea Model Arena expanded to worldbuilding and high fantasy writing. Claude Sonnet 3.7 / 4 received the Editor’s Choice for prose lyricism and anti-slop writing. Gemini 2.0 Pro received the Lore Vault award for 1M-token context retention. DeepSeek R1 recognized as Grand Enchanter for hard magic logic. 8 models continue running free on Zen routing, including Qwen 3.6 Plus (1M context) and MiniMax M2.5 (kinetic combat choreography).",
     newAdditions: ["claude-sonnet-4", "deepseek-r1", "mistral-large-2"],
     removals: [],
   },
