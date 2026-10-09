@@ -25,7 +25,7 @@ export function DataProvenance({
       <SectionHeading
         tag="Data Transparency & Provenance"
         title="Where We Get Our Data"
-        subtitle="Pricing and context data come live from provider APIs. Public leaderboards are cited where they exist. WorldCraft scores are editorial ratings, not a published benchmark run."
+        subtitle="Pricing and context data come live from provider APIs. WorldCraft scores are editorial ratings, not a published benchmark run. The same goes for the prose, canon memory, magic logic and character voice scores, and for the creative writing, instruction-following and lore-recall ratings: they are editorial ratings, not LMSYS, IFEval or RULER results."
       />
 
       {/* Quick Source Pill Nav */}
@@ -90,7 +90,7 @@ export function DataProvenance({
               prose charm, cadence, and emotional connection.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-arcanean-gold)] font-mono">
-              Elo scale: 1150 – 1400+
+              External leaderboard, linked not copied
             </div>
           </div>
 
@@ -99,15 +99,15 @@ export function DataProvenance({
               📜
             </div>
             <h3 className="text-sm font-semibold text-white mb-2 font-[family-name:var(--font-display)]">
-              3. IFEval & RULER Recall
+              3. Instruction & Recall Ratings
             </h3>
             <p className="text-xs text-white/50 leading-relaxed mb-4">
-              Instruction Following Evaluation (IFEval) for strict negative
-              constraint execution (e.g. banning clichés) plus RULER benchmark
-              for needle-in-haystack recall across 1M tokens.
+              Editorial ratings for following strict negative constraints (e.g.
+              banning clichés) and for recalling details across long context.
+              Not IFEval or RULER results.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-cosmic-blue)] font-mono">
-              Public leaderboard reference
+              Editorial rating, not a benchmark run
             </div>
           </div>
 

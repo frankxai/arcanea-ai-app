@@ -113,3 +113,33 @@ test("arena model copy carries no rankings or unsourced benchmark figures", () =
     }
   }
 });
+
+test("arena scores without a source stay null and are not presented as benchmarks", () => {
+  const read = (path) =>
+    readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
+  const data = read("apps/web/lib/models-data.ts");
+  const models = data
+    .split("export const IMAGE_MODELS")[0]
+    .split(/\n {2}\{\n/)
+    .slice(1);
+  assert.ok(models.length > 10, "expected the arena model entries");
+  for (const model of models) {
+    if (/sweBench: (?!null)/.test(model)) {
+      assert.match(
+        model,
+        /sweBenchSource: "https:\/\//,
+        `sweBench without a source in: ${model.slice(0, 80)}`,
+      );
+    }
+  }
+  const provenance = read("apps/web/app/models/data-provenance.tsx");
+  assert.ok(
+    !provenance.includes("Public leaderboards are cited where they exist"),
+  );
+  assert.ok(!provenance.includes("IFEval & RULER"));
+  assert.ok(
+    !read("apps/web/app/models/models-arena-components.tsx").includes(
+      "Creative Writing Elo",
+    ),
+  );
+});
