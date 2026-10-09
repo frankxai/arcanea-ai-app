@@ -86,23 +86,33 @@ function HeroPortal() {
   // The motion loop is a ~1.6 MB video. Mount it only after the page has
   // loaded, on md+ screens, when motion is allowed and Save-Data is off, so the
   // optimized still image stays the LCP element and phones skip the download.
-  // No poster: the next/image still underneath shows until the first frame,
-  // instead of the 2.3 MB source PNG.
+  // A matchMedia listener also starts it if the viewport becomes eligible
+  // later (e.g. resized from phone width to desktop). No poster: the
+  // next/image still underneath shows until the first frame, instead of the
+  // 2.3 MB source PNG.
   useEffect(() => {
-    const query = window.matchMedia(
-      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
-    );
     const connection = (
       navigator as Navigator & { connection?: { saveData?: boolean } }
     ).connection;
-    if (!query.matches || connection?.saveData) return;
-    const start = () => setShowVideo(true);
-    if (document.readyState === "complete") {
-      start();
-      return;
-    }
-    window.addEventListener("load", start, { once: true });
-    return () => window.removeEventListener("load", start);
+    if (connection?.saveData) return;
+    const query = window.matchMedia(
+      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    );
+    let loaded = document.readyState === "complete";
+    const maybeStart = () => {
+      if (loaded && query.matches) setShowVideo(true);
+    };
+    const onLoad = () => {
+      loaded = true;
+      maybeStart();
+    };
+    maybeStart();
+    if (!loaded) window.addEventListener("load", onLoad, { once: true });
+    query.addEventListener("change", maybeStart);
+    return () => {
+      window.removeEventListener("load", onLoad);
+      query.removeEventListener("change", maybeStart);
+    };
   }, []);
 
   return (
