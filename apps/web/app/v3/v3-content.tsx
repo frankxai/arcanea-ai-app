@@ -79,6 +79,9 @@ function HeroPortal() {
   // box paint at full opacity from the server HTML. The desktop video loop
   // below is the only hero motion.
   const [showVideo, setShowVideo] = useState(false);
+  // The video stays transparent until it is actually playing, then fades in
+  // over the identical still (opacity only), so its first frame never jumps.
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   // The motion loop is a ~1.6 MB video. Mount it only after the page has
   // loaded, on md+ screens, when motion is allowed and Save-Data is off, so the
@@ -126,7 +129,10 @@ function HeroPortal() {
             muted
             playsInline
             preload="metadata"
-            className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
+            onPlaying={() => setVideoPlaying(true)}
+            className={`absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] transition-opacity duration-[400ms] ease-out motion-safe:block ${
+              videoPlaying ? "opacity-95" : "opacity-0"
+            }`}
           >
             <source
               src="/brand/arcanea-dashboard-hero-premium.mp4"
