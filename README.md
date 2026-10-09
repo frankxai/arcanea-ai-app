@@ -27,7 +27,7 @@ Live: **[www.arcanea.ai](https://www.arcanea.ai)**. Updated 9 Oct 2026, checked 
 
 | How                                  | What you get                                                        |
 | :----------------------------------- | :------------------------------------------------------------------ |
-| **[arcanea.ai](https://arcanea.ai)** | Chat, create images, write stories, compose music — free            |
+| **[arcanea.ai](https://arcanea.ai)** | Chat, write stories — free open core, bring your own API key        |
 | **Claude Code**                      | `claude mcp add arcanea -- npx -y @arcanea/mcp-server`              |
 | **Any AI**                           | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
 | **Authors**                          | `npx author-os-cli init` — AI-native book production                |
@@ -36,8 +36,8 @@ Live: **[www.arcanea.ai](https://www.arcanea.ai)**. Updated 9 Oct 2026, checked 
 
 ```
 apps/web/          The platform — Next.js 16, Supabase, Vercel
-packages/          42 shared libraries, VS Code extension, MCP server
-book/              200K+ words of original creative philosophy
+packages/          shared libraries, VS Code extension, MCP server
+book/              original creative philosophy
 .arcanea/lore/     The canon — mythology that doubles as architecture
 prompts/           Arcanean Prompt Language spec + templates
 ```
@@ -62,8 +62,8 @@ Think **Unreal Engine** (not a game — the engine for making games), **D&D** (n
 ## For developers
 
 ```bash
-git clone https://github.com/frankxai/arcanea.git
-cd arcanea && pnpm install
+git clone https://github.com/frankxai/arcanea-ai-app.git
+cd arcanea-ai-app && pnpm install
 cp .env.example .env.local
 pnpm dev
 ```
