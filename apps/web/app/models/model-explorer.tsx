@@ -66,43 +66,43 @@ function awardBadge(award?: string) {
   switch (award) {
     case "editors-choice":
       return {
-        label: "🏆 Editor’s Choice",
+        label: "High fantasy novels",
         color:
           "bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/30",
       };
     case "best-lore":
       return {
-        label: "📜 Best Lore Vault",
+        label: "📜 Long-context lore",
         color:
           "bg-[var(--arc-brand-cosmic-blue)]/15 text-[var(--arc-brand-cosmic-blue)] border-[var(--arc-brand-cosmic-blue)]/30",
       };
     case "best-prose":
       return {
-        label: "👑 Supreme Prose",
+        label: "Prose",
         color:
           "bg-[var(--arc-void)]/15 text-[var(--arc-void)] border-[var(--arc-void)]/30",
       };
     case "best-free":
       return {
-        label: "⚡ Best Free Model",
+        label: "⚡ Free worldbuilding",
         color:
           "bg-[var(--arc-wind)]/15 text-[var(--arc-wind)] border-[var(--arc-wind)]/30",
       };
     case "best-magic":
       return {
-        label: "🔮 Grand Enchanter",
+        label: "🔮 Hard magic logic",
         color:
           "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border-[var(--arc-brand-atlantean-teal)]/30",
       };
     case "best-dialogue":
       return {
-        label: "🎭 Bard of Truth",
+        label: "🎭 Character dialogue",
         color:
           "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
       };
     case "best-tactics":
       return {
-        label: "⚔️ War Master",
+        label: "⚔️ Combat scenes",
         color:
           "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
       };
@@ -408,7 +408,7 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
             label: `★ My Favorites (${favoriteCount})`,
             highlight: favoriteCount > 0,
           },
-          { id: "curated", label: "🏆 Curated Best" },
+          { id: "curated", label: "Curated Picks" },
           { id: "1m-lore", label: "📜 1M+ Lore Vaults" },
           { id: "prose", label: "✍️ Lyrical Prose (90+)" },
           { id: "magic", label: "🔮 Hard Magic Logic" },
@@ -510,7 +510,7 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
                 Price (Lowest first)
               </option>
               <option value="speed" className="bg-gray-900 text-white">
-                Speed (Fastest first)
+                Speed (high to low)
               </option>
               <option value="name" className="bg-gray-900 text-white">
                 Name (A-Z)
