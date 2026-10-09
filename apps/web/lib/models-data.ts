@@ -8,9 +8,10 @@
  *
  * Data Sources:
  * - Live OpenRouter API (real-time hourly sync)
- * - LMSYS Chatbot Arena Creative Writing Category (Human double-blind Elo)
- * - Hugging Face IFEval (Negative constraint & instruction adherence)
  * - Arcanea WorldCraft ratings (hand-assigned editorial scores; no automated test run backs them)
+ * - benchmarks.creativeWritingElo, ifEval and loreRecallRuler are editorial ratings too.
+ *   They are not LMSYS, IFEval or RULER results.
+ * - sweBench stays null unless the entry carries a dated primary source URL.
  * - Direct BYOK Provider APIs (Anthropic, OpenAI, Google, DeepSeek, Mistral, xAI)
  */
 
@@ -187,7 +188,7 @@ export const AI_MODELS: AIModel[] = [
     version: "3.7/4.0",
     contextWindow: 200_000,
     maxOutput: 64_000,
-    sweBench: 79.6,
+    sweBench: null,
     pricing: { input: 3, output: 15 },
     speed: 80,
     releaseDate: "2025-05-22",
@@ -227,7 +228,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1378,
       ifEval: 88.5,
       loreRecallRuler: 97.4,
-      sweBench: 79.6,
+      sweBench: null,
     },
   },
   {
@@ -238,7 +239,7 @@ export const AI_MODELS: AIModel[] = [
     version: "4.0",
     contextWindow: 200_000,
     maxOutput: 32_000,
-    sweBench: 90.0,
+    sweBench: null,
     pricing: { input: 15, output: 75 },
     speed: 40,
     releaseDate: "2025-05-22",
@@ -278,7 +279,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1392,
       ifEval: 89.4,
       loreRecallRuler: 98.1,
-      sweBench: 90.0,
+      sweBench: null,
     },
   },
   {
@@ -289,7 +290,7 @@ export const AI_MODELS: AIModel[] = [
     version: "2.0-pro",
     contextWindow: 1_000_000,
     maxOutput: 65_536,
-    sweBench: 48.0,
+    sweBench: null,
     pricing: { input: 1.25, output: 5 },
     speed: 70,
     releaseDate: "2025-03-25",
@@ -322,7 +323,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1325,
       ifEval: 84.8,
       loreRecallRuler: 99.5,
-      sweBench: 48.0,
+      sweBench: null,
     },
   },
   {
@@ -333,7 +334,7 @@ export const AI_MODELS: AIModel[] = [
     version: "r1",
     contextWindow: 128_000,
     maxOutput: 32_768,
-    sweBench: 49.2,
+    sweBench: null,
     pricing: { input: 0.55, output: 2.19 },
     speed: 55,
     releaseDate: "2025-01-20",
@@ -366,7 +367,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1295,
       ifEval: 86.8,
       loreRecallRuler: 91.2,
-      sweBench: 49.2,
+      sweBench: null,
     },
   },
   {
@@ -377,7 +378,7 @@ export const AI_MODELS: AIModel[] = [
     version: "3.6-plus",
     contextWindow: 1_000_000,
     maxOutput: 16_384,
-    sweBench: 78.8,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 85,
     releaseDate: "2025-06-01",
@@ -410,7 +411,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1308,
       ifEval: 82.5,
       loreRecallRuler: 98.0,
-      sweBench: 78.8,
+      sweBench: null,
     },
   },
   {
@@ -421,7 +422,7 @@ export const AI_MODELS: AIModel[] = [
     version: "2411",
     contextWindow: 128_000,
     maxOutput: 16_384,
-    sweBench: 44.0,
+    sweBench: null,
     pricing: { input: 2, output: 6 },
     speed: 75,
     releaseDate: "2024-11-18",
@@ -454,7 +455,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1338,
       ifEval: 85.0,
       loreRecallRuler: 90.5,
-      sweBench: 44.0,
+      sweBench: null,
     },
   },
   {
@@ -465,7 +466,7 @@ export const AI_MODELS: AIModel[] = [
     version: "2.5",
     contextWindow: 200_000,
     maxOutput: 16_384,
-    sweBench: 80.2,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 75,
     releaseDate: "2025-07-01",
@@ -497,7 +498,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1288,
       ifEval: 81.2,
       loreRecallRuler: 88.0,
-      sweBench: 80.2,
+      sweBench: null,
     },
   },
   {
@@ -508,7 +509,7 @@ export const AI_MODELS: AIModel[] = [
     version: "v3",
     contextWindow: 64_000,
     maxOutput: 8_192,
-    sweBench: 42.0,
+    sweBench: null,
     pricing: { input: 0.27, output: 1.1 },
     speed: 60,
     releaseDate: "2024-12-26",
@@ -540,7 +541,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1282,
       ifEval: 80.5,
       loreRecallRuler: 85.0,
-      sweBench: 42.0,
+      sweBench: null,
     },
   },
   {
@@ -551,7 +552,7 @@ export const AI_MODELS: AIModel[] = [
     version: "2.0-flash",
     contextWindow: 1_000_000,
     maxOutput: 8_192,
-    sweBench: 33.0,
+    sweBench: null,
     pricing: { input: 0.075, output: 0.3 },
     speed: 160,
     releaseDate: "2025-02-05",
@@ -583,7 +584,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1262,
       ifEval: 79.8,
       loreRecallRuler: 97.2,
-      sweBench: 33.0,
+      sweBench: null,
     },
   },
   {
@@ -594,7 +595,7 @@ export const AI_MODELS: AIModel[] = [
     version: "4o",
     contextWindow: 128_000,
     maxOutput: 16_384,
-    sweBench: 38.4,
+    sweBench: null,
     pricing: { input: 2.5, output: 10 },
     speed: 90,
     releaseDate: "2024-05-13",
@@ -625,7 +626,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1316,
       ifEval: 83.2,
       loreRecallRuler: 88.5,
-      sweBench: 38.4,
+      sweBench: null,
     },
   },
   {
@@ -636,7 +637,7 @@ export const AI_MODELS: AIModel[] = [
     version: "4-maverick",
     contextWindow: 1_000_000,
     maxOutput: 16_384,
-    sweBench: 50.0,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 70,
     releaseDate: "2025-04-05",
@@ -674,7 +675,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1272,
       ifEval: 80.0,
       loreRecallRuler: 94.8,
-      sweBench: 50.0,
+      sweBench: null,
     },
   },
   {
@@ -685,7 +686,7 @@ export const AI_MODELS: AIModel[] = [
     version: "k2.5",
     contextWindow: 260_000,
     maxOutput: 16_384,
-    sweBench: 76.8,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 80,
     releaseDate: "2025-07-01",
@@ -714,7 +715,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1252,
       ifEval: 78.4,
       loreRecallRuler: 92.0,
-      sweBench: 76.8,
+      sweBench: null,
     },
   },
   {
@@ -725,7 +726,7 @@ export const AI_MODELS: AIModel[] = [
     version: "4.7",
     contextWindow: 200_000,
     maxOutput: 8_192,
-    sweBench: 73.8,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 70,
     releaseDate: "2025-08-01",
@@ -754,7 +755,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1248,
       ifEval: 77.0,
       loreRecallRuler: 88.0,
-      sweBench: 73.8,
+      sweBench: null,
     },
   },
   {
@@ -765,7 +766,7 @@ export const AI_MODELS: AIModel[] = [
     version: "3.5",
     contextWindow: 200_000,
     maxOutput: 8_192,
-    sweBench: 40.6,
+    sweBench: null,
     pricing: { input: 0.25, output: 1.25 },
     speed: 150,
     releaseDate: "2024-10-29",
@@ -796,7 +797,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1225,
       ifEval: 75.0,
       loreRecallRuler: 84.0,
-      sweBench: 40.6,
+      sweBench: null,
     },
   },
   {
@@ -846,7 +847,7 @@ export const AI_MODELS: AIModel[] = [
     version: "v2-pro",
     contextWindow: 1_000_000,
     maxOutput: 16_384,
-    sweBench: 78.0,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 80,
     releaseDate: "2025-08-01",
@@ -876,7 +877,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1240,
       ifEval: 77.5,
       loreRecallRuler: 93.5,
-      sweBench: 78.0,
+      sweBench: null,
     },
   },
   {
@@ -887,7 +888,7 @@ export const AI_MODELS: AIModel[] = [
     version: "4.6",
     contextWindow: 200_000,
     maxOutput: 8_192,
-    sweBench: 70.0,
+    sweBench: null,
     pricing: { input: "free", output: "free" },
     speed: 65,
     releaseDate: "2025-05-01",
@@ -918,7 +919,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1230,
       ifEval: 76.2,
       loreRecallRuler: 89.0,
-      sweBench: 70.0,
+      sweBench: null,
     },
   },
   {
@@ -929,7 +930,7 @@ export const AI_MODELS: AIModel[] = [
     version: "4o-mini",
     contextWindow: 128_000,
     maxOutput: 16_384,
-    sweBench: 23.7,
+    sweBench: null,
     pricing: { input: 0.15, output: 0.6 },
     speed: 130,
     releaseDate: "2024-07-18",
@@ -960,7 +961,7 @@ export const AI_MODELS: AIModel[] = [
       creativeWritingElo: 1205,
       ifEval: 74.0,
       loreRecallRuler: 82.5,
-      sweBench: 23.7,
+      sweBench: null,
     },
   },
   {
