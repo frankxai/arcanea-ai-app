@@ -25,12 +25,12 @@ Live: **[www.arcanea.ai](https://www.arcanea.ai)**. Updated 9 Oct 2026, checked 
 
 ## Use Arcanea now
 
-| How | What you get |
-|:----|:-------------|
-| **[arcanea.ai](https://arcanea.ai)** | Chat, create images, write stories, compose music — free |
-| **Claude Code** | `claude mcp add arcanea -- npx -y @arcanea/mcp-server` |
-| **Any AI** | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
-| **Authors** | `npx author-os-cli init` — AI-native book production |
+| How                                  | What you get                                                        |
+| :----------------------------------- | :------------------------------------------------------------------ |
+| **[arcanea.ai](https://arcanea.ai)** | Chat, create images, write stories, compose music — free            |
+| **Claude Code**                      | `claude mcp add arcanea -- npx -y @arcanea/mcp-server`              |
+| **Any AI**                           | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
+| **Authors**                          | `npx author-os-cli init` — AI-native book production                |
 
 ## What's inside
 
@@ -44,20 +44,20 @@ prompts/           Arcanean Prompt Language spec + templates
 
 ## The philosophy
 
-Arcanea is a creative multiverse where mythology *is* methodology. Every character, location, and progression system in the world is also an architectural pattern you can use to build your own.
+Arcanea is a creative multiverse where mythology _is_ methodology. Every character, location, and progression system in the world is also an architectural pattern you can use to build your own.
 
-Think **Unreal Engine** (not a game — the engine for making games), **D&D** (not a story — the system for infinite stories). Arcanea's world is both real content people engage with *and* templates anyone can fork for their own universe.
+Think **Unreal Engine** (not a game — the engine for making games), **D&D** (not a story — the system for infinite stories). Arcanea's world is both real content people engage with _and_ templates anyone can fork for their own universe.
 
 **The creator journey:** Imagine a world → Build AI agents that live in it → Create consistent content → Publish → Earn → Expand as your fans become creators too.
 
 ## Build with Arcanea
 
-| Package | What it does |
-|:--------|:-------------|
+| Package                                                                    | What it does                                                       |
+| :------------------------------------------------------------------------- | :----------------------------------------------------------------- |
 | [`@arcanea/mcp-server`](https://www.npmjs.com/package/@arcanea/mcp-server) | MCP server — add Arcanea to Claude Code, Cursor, or any MCP client |
-| [`author-os-cli`](https://www.npmjs.com/package/author-os-cli) | AI-native book production pipeline |
-| [`arcanea-claw`](./arcanea-claw/) | 24/7 media processing daemon |
-| [`@arcanea/vscode`](./packages/vscode/) | VS Code extension with Guardian-powered AI modes |
+| [`author-os-cli`](https://www.npmjs.com/package/author-os-cli)             | AI-native book production pipeline                                 |
+| [`arcanea-claw`](./arcanea-claw/)                                          | 24/7 media processing daemon                                       |
+| [`@arcanea/vscode`](./packages/vscode/)                                    | VS Code extension with Guardian-powered AI modes                   |
 
 ## For developers
 
@@ -72,7 +72,7 @@ pnpm dev
 
 ## The Library
 
-> *"These books are not entertainment. They are equipment for living."*
+> _"These books are not entertainment. They are equipment for living."_
 
 17 collections of creative philosophy in [`book/`](./book/) — Laws, Legends, Meditations, an Academy Handbook, and more. Not content to consume, but frameworks to practice.
 
@@ -88,7 +88,7 @@ Proprietary. See [LICENSE](./LICENSE). Source is viewable for transparency; view
 
 <div align="center">
 
-*"Enter seeking, leave transformed, return whenever needed."*
+_"Enter seeking, leave transformed, return whenever needed."_
 
 **[arcanea.ai](https://arcanea.ai)** · Built by [FrankX](https://github.com/frankxai)
 
