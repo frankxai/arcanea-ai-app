@@ -27,7 +27,7 @@ Live: **[www.arcanea.ai](https://www.arcanea.ai)**. Updated 9 Oct 2026, checked 
 
 | How                                  | What you get                                                        |
 | :----------------------------------- | :------------------------------------------------------------------ |
-| **[arcanea.ai](https://arcanea.ai)** | Chat, write stories — free open core, bring your own API key        |
+| **[arcanea.ai](https://arcanea.ai)** | Chat — free open core, bring your own API key                       |
 | **Claude Code**                      | `claude mcp add arcanea -- npx -y @arcanea/mcp-server`              |
 | **Any AI**                           | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
 | **Authors**                          | `npx author-os-cli init` — AI-native book production                |
