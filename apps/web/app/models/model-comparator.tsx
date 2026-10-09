@@ -198,9 +198,7 @@ export function ModelComparator({
 
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-white/60">
-                          1M Lore Memory (Needle Recall)
-                        </span>
+                        <span className="text-white/60">1M Lore Memory</span>
                         <span className="text-white/90 font-mono text-[11px]">
                           {model.loreMemory}%
                         </span>
@@ -260,12 +258,6 @@ export function ModelComparator({
                       <span>Context Window</span>
                       <span className="text-white/80 font-mono">
                         {formatContext(model.contextWindow)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between py-1 border-b border-white/[0.03]">
-                      <span>Generation Speed</span>
-                      <span className="text-white/80 font-mono">
-                        {model.speed} tok/s
                       </span>
                     </div>
                     <div className="flex justify-between py-1 border-b border-white/[0.03]">
