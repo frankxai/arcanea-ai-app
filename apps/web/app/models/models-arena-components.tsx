@@ -247,7 +247,7 @@ export function WorldcraftRankingsTable() {
       <SectionHeading
         tag="Creative Leaderboard"
         title="High Fantasy & Worldcraft Rankings"
-        subtitle="Ranked by composite WorldCraft Index, evaluating prose lyricism, 1M canon memory, hard magic logic, anti-slop grade, and token pricing."
+        subtitle="Sorted by editorial WorldCraft rating."
       />
 
       <div className="overflow-x-auto rounded-2xl border border-white/[0.06] bg-white/[0.02]">
@@ -323,11 +323,6 @@ export function WorldcraftRankingsTable() {
                             {model.name}
                           </span>
                           {model.pricing.input === "free" && <FreeBadge />}
-                          {model.curatedAward === "editors-choice" && (
-                            <span className="text-[10px] text-[var(--arc-brand-arcanean-gold)] font-bold">
-                              🏆
-                            </span>
-                          )}
                         </div>
                         <span className="text-[11px] text-white/40 block">
                           {model.curatedRole}
