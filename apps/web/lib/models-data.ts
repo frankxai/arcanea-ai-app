@@ -178,7 +178,7 @@ export interface ModelWeeklyUpdate {
 // ---------------------------------------------------------------------------
 
 export const AI_MODELS: AIModel[] = [
-  // ── Frontier ────────────────────────────────────────────────────────────
+  // ── Frontier ──────────────────────────────────────────────────────────────────────────
 
   {
     id: "claude-sonnet-4",
@@ -1312,7 +1312,7 @@ export const MODEL_WEEKLY_UPDATES: ModelWeeklyUpdate[] = [
       "mimo-v2-pro-free",
     ],
     notes:
-      "Arcanea Model Arena expanded to worldbuilding and high fantasy writing. Claude Sonnet 3.7 / 4 received the Editor’s Choice for prose lyricism and anti-slop writing. Gemini 2.0 Pro received the Lore Vault award for 1M-token context retention. DeepSeek R1 recognized as Grand Enchanter for hard magic logic. 8 models continue running free on Zen routing, including Qwen 3.6 Plus (1M context) and MiniMax M2.5 (kinetic combat choreography).",
+      "Arcanea Model Arena expanded to worldbuilding and high fantasy writing. Editorial picks: Claude Sonnet 3.7 / 4 for prose lyricism and anti-slop writing, Gemini 2.0 Pro for 1M-token context retention, and DeepSeek R1 for hard magic logic. 8 models continue running free on Zen routing, including Qwen 3.6 Plus (1M context) and MiniMax M2.5 (kinetic combat choreography).",
     newAdditions: ["claude-sonnet-4", "deepseek-r1", "mistral-large-2"],
     removals: [],
   },
