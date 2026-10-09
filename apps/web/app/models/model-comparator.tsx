@@ -3,7 +3,11 @@
 
 import { useState, useMemo } from "react";
 import { AI_MODELS, type AIModel } from "@/lib/models-data";
-import { SectionHeading, formatContext, formatPrice } from "./models-arena-components";
+import {
+  SectionHeading,
+  formatContext,
+  formatPrice,
+} from "./models-arena-components";
 import { useModelFavorites } from "@/hooks/use-model-favorites";
 
 interface ModelComparatorProps {
@@ -63,15 +67,19 @@ export function ModelComparator({
           }
           className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/70 hover:text-white hover:border-[var(--arc-brand-atlantean-teal)]/30 transition-all"
         >
-          ✍️ The Supreme Prose Novelists
+          ✍️ Prose novelists
         </button>
         <button
           onClick={() =>
-            setPreset(["gemini-2.0-pro", "qwen-3.6-plus-free", "llama-4-maverick"])
+            setPreset([
+              "gemini-2.0-pro",
+              "qwen-3.6-plus-free",
+              "llama-4-maverick",
+            ])
           }
           className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/70 hover:text-white hover:border-[var(--arc-brand-cosmic-blue)]/30 transition-all"
         >
-          📜 1M Context Lore Titans
+          📜 1M context lore
         </button>
         <button
           onClick={() =>
@@ -104,7 +112,9 @@ export function ModelComparator({
                           ? "bg-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)] border border-[var(--arc-brand-arcanean-gold)]/40"
                           : "bg-white/[0.04] text-white/40 hover:text-white hover:border-white/20 border border-white/[0.06]"
                       }`}
-                      title={favorited ? "Remove from Favorites" : "Add to Favorites"}
+                      title={
+                        favorited ? "Remove from Favorites" : "Add to Favorites"
+                      }
                     >
                       <span>{favorited ? "★" : "☆"}</span>
                       <span>{favorited ? "Favorited" : "Favorite"}</span>
@@ -118,7 +128,11 @@ export function ModelComparator({
                       className="w-full bg-white/[0.06] border border-white/[0.12] rounded-xl px-3 py-2 text-sm text-white font-medium focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors"
                     >
                       {AI_MODELS.map((m) => (
-                        <option key={m.id} value={m.id} className="bg-gray-900 text-white">
+                        <option
+                          key={m.id}
+                          value={m.id}
+                          className="bg-gray-900 text-white"
+                        >
                           {m.name} ({m.provider})
                         </option>
                       ))}
@@ -150,7 +164,9 @@ export function ModelComparator({
                   <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-4 mb-6 space-y-3">
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-white/60 font-medium">WorldCraft Index</span>
+                        <span className="text-white/60 font-medium">
+                          WorldCraft Index
+                        </span>
                         <span className="text-[var(--arc-brand-atlantean-teal)] font-bold font-mono">
                           {model.worldCraftScore}/100
                         </span>
@@ -165,7 +181,9 @@ export function ModelComparator({
 
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-white/60">Prose Lyricism & Cadence</span>
+                        <span className="text-white/60">
+                          Prose Lyricism & Cadence
+                        </span>
                         <span className="text-white/90 font-mono text-[11px]">
                           {model.proseQuality}%
                         </span>
@@ -180,7 +198,9 @@ export function ModelComparator({
 
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-white/60">1M Lore Memory (Needle Recall)</span>
+                        <span className="text-white/60">
+                          1M Lore Memory (Needle Recall)
+                        </span>
                         <span className="text-white/90 font-mono text-[11px]">
                           {model.loreMemory}%
                         </span>
@@ -195,7 +215,9 @@ export function ModelComparator({
 
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-white/60">Hard Magic & World Logic</span>
+                        <span className="text-white/60">
+                          Hard Magic & World Logic
+                        </span>
                         <span className="text-white/90 font-mono text-[11px]">
                           {model.magicLogic}%
                         </span>
@@ -210,7 +232,9 @@ export function ModelComparator({
 
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-white/60">Character Voice Distinction</span>
+                        <span className="text-white/60">
+                          Character Voice Distinction
+                        </span>
                         <span className="text-white/90 font-mono text-[11px]">
                           {model.characterVoice}%
                         </span>
@@ -240,7 +264,9 @@ export function ModelComparator({
                     </div>
                     <div className="flex justify-between py-1 border-b border-white/[0.03]">
                       <span>Generation Speed</span>
-                      <span className="text-white/80 font-mono">{model.speed} tok/s</span>
+                      <span className="text-white/80 font-mono">
+                        {model.speed} tok/s
+                      </span>
                     </div>
                     <div className="flex justify-between py-1 border-b border-white/[0.03]">
                       <span>Input Price /Mtok</span>
