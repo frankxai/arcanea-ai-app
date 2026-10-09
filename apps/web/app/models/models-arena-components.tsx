@@ -133,8 +133,13 @@ export function CuratedBestShowcase() {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {curated.map((model) => {
-          const meta =
-            awardMeta[model.curatedAward || ""] || awardMeta["editors-choice"];
+          // Awards without their own styling keep their neutral label.
+          const meta = awardMeta[model.curatedAward || ""] ?? {
+            ...awardMeta["editors-choice"],
+            badge:
+              CURATED_AWARD_LABELS[model.curatedAward || ""] ??
+              "Editorial pick",
+          };
           const favorited = isFavorite(model.id);
 
           return (

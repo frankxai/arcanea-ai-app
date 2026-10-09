@@ -195,11 +195,21 @@ test("everything /models renders is free of superlative ranking claims", () => {
     /export type CuratedAward =([^;]+);/,
   );
   assert.ok(awardType, "expected the CuratedAward type");
-  const identifiers = new Set([
-    ...[...awardType[1].matchAll(/"([^"]+)"/g)].map(([, id]) => id),
-    "curated-best",
-    "#curated-best",
-  ]);
+  const awardIds = [...awardType[1].matchAll(/"([^"]+)"/g)].map(([, id]) => id);
+  const identifiers = new Set([...awardIds, "curated-best", "#curated-best"]);
+  // Every award has its own neutral label, so no showcase card borrows the
+  // label of another award.
+  const components = readRepo(
+    "apps/web/app/models/models-arena-components.tsx",
+  );
+  for (const id of awardIds) {
+    assert.ok(components.includes(`"${id}": "`), `no neutral label for ${id}`);
+  }
+  assert.doesNotMatch(
+    components,
+    /\|\|\s*awardMeta\["editors-choice"\]/,
+    "showcase must not fall back to the editors-choice label",
+  );
   for (const path of ARENA_RENDER_FILES) {
     const texts = stringLiterals(path).filter((text) => !identifiers.has(text));
     assert.ok(texts.length > 0, `expected strings in ${path}`);
@@ -219,10 +229,11 @@ test("everything /models renders is free of superlative ranking claims", () => {
 
 test("arena scores without a source stay null and are not presented as benchmarks", () => {
   const read = readRepo;
-  // Parse AI_MODELS so comments or stray text cannot stand in for a source.
-  // A non-null sweBench (top level or under benchmarks) needs a sibling
-  // sweBenchSource object with an https url and an ISO date. AIModel has no
-  // such field today, so every score must be null.
+  // Parse AI_MODELS so comments or stray text cannot stand in for a value.
+  // No SWE-bench figure here has a reviewed primary source, and a test cannot
+  // judge whether a URL is one, so every sweBench (top level and under
+  // benchmarks) must be null. Adding a sourced score means changing this test
+  // in a reviewed PR.
   const file = ts.createSourceFile(
     "models-data.ts",
     read("apps/web/lib/models-data.ts"),
@@ -234,20 +245,6 @@ test("arena scores without a source stay null and are not presented as benchmark
     obj.properties.find(
       (p) => ts.isPropertyAssignment(p) && p.name.getText() === name,
     )?.initializer;
-  const hasDatedSource = (obj) => {
-    const source = prop(obj, "sweBenchSource");
-    if (!source || !ts.isObjectLiteralExpression(source)) return false;
-    const url = prop(source, "url");
-    const date = prop(source, "date");
-    return (
-      !!url &&
-      ts.isStringLiteral(url) &&
-      url.text.startsWith("https://") &&
-      !!date &&
-      ts.isStringLiteral(date) &&
-      /^\d{4}-\d{2}-\d{2}$/.test(date.text)
-    );
-  };
   let models = [];
   ts.forEachChild(file, function find(node) {
     if (
@@ -267,12 +264,10 @@ test("arena scores without a source stay null and are not presented as benchmark
     for (const obj of [model, benchmarks]) {
       if (!obj || !ts.isObjectLiteralExpression(obj)) continue;
       const score = prop(obj, "sweBench");
-      if (score && score.kind !== ts.SyntaxKind.NullKeyword) {
-        assert.ok(
-          hasDatedSource(obj),
-          `sweBench without a dated https source in ${name}`,
-        );
-      }
+      assert.ok(
+        !score || score.kind === ts.SyntaxKind.NullKeyword,
+        `sweBench must stay null in ${name}`,
+      );
     }
   }
   const provenance = read("apps/web/app/models/data-provenance.tsx");
