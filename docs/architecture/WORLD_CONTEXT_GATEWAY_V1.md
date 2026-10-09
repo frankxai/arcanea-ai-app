@@ -48,9 +48,10 @@ SDK lock-in, and a large ungoverned MCP tool inventory are not defensible moats.
 
 ```text
 MCP client
-  -> POST /api/mcp
-  -> mode + method + same-origin/no-Origin gate
-  -> Supabase bearer validation
+  -> POST https://www.arcanea.ai/api/mcp
+  -> method + same-origin/no-Origin gate
+  -> Supabase bearer validation + issuer + audience (aud = canonical /api/mcp URL)
+  -> mode gate (503 only for authenticated callers)
   -> bounded single JSON-RPC request
   -> per-actor preview admission window
   -> user-scoped RLS client
@@ -61,6 +62,13 @@ MCP client
   -> preview authority binding/rate window
   -> one structured World Context result
 ```
+
+Clients must call `https://www.arcanea.ai/api/mcp`. The apex `arcanea.ai`
+answers with a 308 to `www`, and clients drop the `Authorization` header on
+that cross-host redirect. A 401 carries `WWW-Authenticate: Bearer
+resource_metadata=".../.well-known/oauth-protected-resource/api/mcp"`
+(RFC 9728). Tokens must be issued for this resource: plain Supabase session
+tokens (`aud: "authenticated"`) are rejected with `error="invalid_token"`.
 
 GET, DELETE, and OPTIONS return 405. The slice has no SSE stream, sessions,
 notifications, Redis requirement, legacy tool discovery, or browser UI.
@@ -106,7 +114,8 @@ an unlisted world into public content.
 
 ## Runtime activation
 
-The route returns `503 adapter-required` unless:
+For an authenticated request, the route returns `503 adapter-required` unless
+the mode is set (unauthenticated requests always get 401):
 
 ```text
 ARCANEA_WORLD_CONTEXT_GATEWAY_MODE=compatibility-preview

@@ -18,6 +18,7 @@ import {
 } from "../world-context-repository";
 import {
   createWorldContextMcpHttpHandler,
+  WorldContextInvalidTokenError,
   type AuthenticatedWorldContextSession,
 } from "../world-context-http";
 
@@ -423,20 +424,44 @@ function toolsListBody() {
   };
 }
 
-test("HTTP compatibility mode is disabled by default before authentication", async () => {
+test("HTTP compatibility mode is disabled by default, after authentication", async () => {
+  // Unauthenticated clients always get 401; only an authenticated client
+  // learns that the gateway is not connected.
   let authenticationCalls = 0;
+  let authenticated = false;
   const handler = createWorldContextMcpHttpHandler({
     getMode: () => undefined,
     admissionLimiter: createInMemoryPreviewAdmissionLimiter(),
     authority: createInMemoryPreviewAuthority(),
     async authenticate() {
       authenticationCalls += 1;
-      return sessionFor();
+      return authenticated ? sessionFor() : null;
     },
   });
+  const anonymous = await handler(jsonRpcRequest("none", toolsListBody()));
+  assert.equal(anonymous.status, 401);
+  assert.match(anonymous.headers.get("www-authenticate") ?? "", /^Bearer /);
+  authenticated = true;
   const response = await handler(jsonRpcRequest("valid", toolsListBody()));
   assert.equal(response.status, 503);
-  assert.equal(authenticationCalls, 0);
+  assert.equal(authenticationCalls, 2);
+});
+
+test("HTTP handler maps a rejected token to 401 invalid_token", async () => {
+  const handler = createWorldContextMcpHttpHandler({
+    getMode: () => "compatibility-preview",
+    admissionLimiter: createInMemoryPreviewAdmissionLimiter(),
+    authority: createInMemoryPreviewAuthority(),
+    async authenticate() {
+      throw new WorldContextInvalidTokenError("audience");
+    },
+  });
+  const response = await handler(jsonRpcRequest("wrong-aud", toolsListBody()));
+  assert.equal(response.status, 401);
+  assert.match(
+    response.headers.get("www-authenticate") ?? "",
+    /^Bearer error="invalid_token", .*resource_metadata="https:\/\/gateway\.arcanea\.ai\/\.well-known\/oauth-protected-resource\/api\/mcp"$/,
+  );
 });
 
 test("HTTP handler authenticates before parsing the body", async () => {
