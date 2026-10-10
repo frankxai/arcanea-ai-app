@@ -35,6 +35,7 @@ const comparisonSchema = z.object({
   usageMetadata: z.object({
     promptTokenCount: z.number().int().nonnegative().max(100000),
     candidatesTokenCount: z.number().int().nonnegative().max(6000),
+    thoughtsTokenCount: z.number().int().nonnegative().max(6000).optional(),
     totalTokenCount: z.number().int().nonnegative().max(106000),
   }),
 });
@@ -253,7 +254,10 @@ async function main() {
         body.providerStatus <= 599
       )
         evidence.providerResponseStatus = body.providerStatus;
-      evidence.providerCallCountKnown = false;
+      evidence.providerCallCountKnown =
+        !!evidence.providerResponseStatus ||
+        ["OUTPUT_LIMIT", "OUTPUT_INVALID"].includes(body.code);
+      if (evidence.providerCallCountKnown) evidence.actualProviderCalls = 1;
     }
     assert.equal(generatedResponse.status(), 200);
     const generatedWorld = (await generatedResponse.json()).world;
@@ -483,7 +487,7 @@ async function main() {
       // One sample supports inspecting working material, not superiority claims.
       evidence.providerRequestsAttempted++;
       const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
         {
           method: "POST",
           headers: {
@@ -504,7 +508,7 @@ async function main() {
             generationConfig: {
               temperature: 0.9,
               maxOutputTokens: 6000,
-              thinkingConfig: { thinkingBudget: 0, includeThoughts: false },
+              thinkingConfig: { thinkingLevel: "low", includeThoughts: false },
             },
           }),
           signal: AbortSignal.timeout(45000),
@@ -535,7 +539,7 @@ async function main() {
             usage: result.usageMetadata,
             maxCalls: 2,
             maxOutputTokensPerCall: 6000,
-            thinkingBudget: 0,
+            thinkingLevel: "low",
             automaticRetries: 0,
             productionWrites: 0,
             qualityVerdict:

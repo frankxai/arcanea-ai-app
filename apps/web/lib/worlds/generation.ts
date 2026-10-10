@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { WORLD_REFINEMENTS, worldDraftSchema } from "./draft";
 
-export const WORLD_MODEL = "gemini-2.5-flash";
+export const WORLD_MODEL = "gemini-3.8-flash";
 export const WORLD_REQUEST_BYTES = 8192;
 export const worldGenerationRequestSchema = z
   .object({

@@ -178,6 +178,11 @@ test("customer credential, structured output and cancellation are bound to one c
   assert.equal(calls.length, 1);
   assert.equal(calls[0].model.options.apiKey, "test-customer-key");
   assert.equal(calls[0].maxRetries, 0);
+  assert.equal(calls[0].model.model, "gemini-3.8-flash");
+  assert.deepEqual(calls[0].providerOptions.google.thinkingConfig, {
+    thinkingLevel: "low",
+    includeThoughts: false,
+  });
   assert.ok(calls[0].abortSignal instanceof AbortSignal);
   assert.ok(calls[0].output.schema);
   assert.equal((await response.json()).saved, false);

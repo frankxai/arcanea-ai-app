@@ -181,3 +181,18 @@ an unsupported local schema conversion was excluded without any provider call.
 Add bounded error categories/status only, never upstream bodies, URLs, creator
 content or keys, and preserve those categories in failed browser receipts. This
 improves customer recovery and makes the next explicitly bounded test diagnostic.
+
+Current official Google model guidance restricts2.5 to projects that actively used
+it before. That cannot support new BYOK creators regardless of the prior sample's
+unclassified failure. Move app and same-concept comparison to stable Gemini3.8Flash,
+which supports structured output and low/medium/high thinking; minimal/zero is
+unsupported. Retain6000 output tokens,45s,one app plus one comparison and no retry;
+use low thinking and never retain thought text. The visible key setting names the
+new model and customer quota. Official current standard pricing is0.75USD/1M input
+and3.75USD/1M output including thinking through31December2026, not a measured bill.
+Sources: https://ai.google.dev/gemini-api/docs/deprecations,
+https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash,
+https://ai.google.dev/gemini-api/docs/pricing. Hosted source/build/runtime gates
+must verify this new head; neither d375 nor a5e approval transfers. Preserve the
+actual failed request and its unknown upstream call count. New bounded status
+receipts distinguish known provider responses from unknown transport failures.

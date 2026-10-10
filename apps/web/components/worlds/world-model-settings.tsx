@@ -33,7 +33,7 @@ export function WorldModelSettings({
         id="world-key-description"
         className="mt-3 text-sm leading-relaxed text-white/70"
       >
-        Gemini 2.5 Flash uses your quota. Your key stays in memory for this page
+        Gemini 3.8 Flash uses your quota. Your key stays in memory for this page
         and is sent to Arcanea only for the request to Google. It is cleared
         when your account changes or this page closes.
       </p>

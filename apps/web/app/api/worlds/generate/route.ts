@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
       abortSignal: AbortSignal.any([req.signal, AbortSignal.timeout(45000)]),
       providerOptions: {
         google: {
-          thinkingConfig: { thinkingBudget: 0, includeThoughts: false },
+          thinkingConfig: { thinkingLevel: "low", includeThoughts: false },
         },
       },
     });
@@ -93,6 +93,7 @@ export async function POST(req: NextRequest) {
         {
           error:
             "The draft was incomplete. Your concept is unchanged; retry when ready.",
+          code: "OUTPUT_INVALID",
         },
         502,
       );
