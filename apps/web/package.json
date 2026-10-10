@@ -39,6 +39,7 @@
     "@arcanea/mcp-server": "workspace:^",
     "@arcanea/orchestrator": "workspace:*",
     "@arcanea/publishing-house": "workspace:^",
+    "@arcanea/schemas": "workspace:*",
     "@arcanea/world-engine": "workspace:^",
     "@fal-ai/client": "^1.10.1",
     "@fontsource-variable/newsreader": "^5.3.0",

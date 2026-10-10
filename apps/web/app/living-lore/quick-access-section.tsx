@@ -1,21 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { LazyMotion, domAnimation, m } from 'framer-motion';
-import { staggerContainer, staggerItem } from '@/lib/design/motion';
+import Link from "next/link";
+import { LazyMotion, domAnimation, m } from "framer-motion";
+import { staggerContainer, staggerItem } from "@/lib/design/motion";
 
 export function QuickAccessSection() {
   return (
     <LazyMotion features={domAnimation}>
       <m.section
         className="mt-16"
-        variants={staggerContainer('fast')}
+        variants={staggerContainer("fast")}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: '-80px' }}
+        viewport={{ once: true, margin: "-80px" }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <m.div variants={staggerItem}>
+            <Link
+              href="/atlas"
+              className="group block rounded-2xl liquid-glass p-6 hover:border-[var(--arc-brand-arcanean-gold,#d4af37)]/30 hover:shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-all duration-300"
+            >
+              <p className="font-display text-sm font-semibold text-text-primary group-hover:text-[var(--arc-brand-arcanean-gold,#d4af37)] transition-colors">
+                Multiverse Atlas
+              </p>
+              <p className="text-xs text-text-muted mt-1">
+                Acoustic leylines &amp; Solfeggio standing waves.
+              </p>
+            </Link>
+          </m.div>
           <m.div variants={staggerItem}>
             <Link
               href="/living-lore/chronicle"

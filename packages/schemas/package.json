@@ -1,0 +1,43 @@
+{
+  "name": "@arcanea/schemas",
+  "version": "0.1.0",
+  "description": "Canonical TypeScript and Zod schema definitions for the Arcanea multiverse and agentic operating system",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "arcanea",
+    "schemas",
+    "zod",
+    "worldbuilding",
+    "multiverse",
+    "solfeggio",
+    "luminors"
+  ],
+  "author": "Arcanea Intelligence OS",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "typescript": "^5.9.3"
+  }
+}

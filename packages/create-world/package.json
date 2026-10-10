@@ -1,0 +1,39 @@
+{
+  "name": "@arcanea/create-world",
+  "version": "0.1.0",
+  "description": "Zero-config CLI to bootstrap a new Arcanea world project conforming to agentskills.io and the Claude plugin spec.",
+  "type": "module",
+  "bin": {
+    "create-world": "./bin/create-world.js"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx bin/create-world.ts",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.1.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "@types/prompts": "^2.4.9",
+    "tsx": "^4.22.3",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Arcanea",
+  "license": "MIT"
+}

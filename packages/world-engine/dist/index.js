@@ -12,4 +12,6 @@ export { pick, pickMultiple, generateCharacter, generateMagicAbility, generateLo
 export { analyzeElementalBalance, detectRoles, detectGaps, generateConflict, weaveNarrative, generateWorldReport, generateQuest, analyzeFactions, } from "./intelligence.js";
 // Visual prompt generators
 export { ELEMENT_AESTHETICS, RANK_VISUAL, ART_DIRECTION, characterToImagePrompt, locationToImagePrompt, creatureToImagePrompt, } from "./visual.js";
+// Temporal Multiverse Engine (Realms, Corridors, Linguistics, Chronology, Sandersonian Toll, Monomyth)
+export { LINGUISTIC_FAMILIES, CANONICAL_REALMS, CANONICAL_EPOCHS, CANONICAL_GUARDIANS, GATE_TOLL_REGISTRY, MONOMYTH_STAGES, getCanonicalRealms, getLinguisticFamilies, getCanonicalEpochs, getCanonicalGuardians, getMonomythStages, getMonomythStage, calculateCorridorResonance, calculateSandersonianMagicToll, generateRealmName, traceEntityProvenance, } from "./temporal-multiverse-engine.js";
 //# sourceMappingURL=index.js.map
