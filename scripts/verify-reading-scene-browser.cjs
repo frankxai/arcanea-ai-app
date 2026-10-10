@@ -1,5 +1,6 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
+const { createHash } = require("node:crypto");
 const {
   chromium,
   expect,
@@ -26,6 +27,12 @@ const modes = [
     viewport: { width: 375, height: 900 },
     reducedMotion: "reduce",
     hasTouch: true,
+  },
+  {
+    name: "forced-colors",
+    viewport: { width: 375, height: 900 },
+    reducedMotion: "reduce",
+    forcedColors: "active",
   },
 ];
 async function selectPassage(page) {
@@ -59,6 +66,19 @@ async function selectPassage(page) {
 }
 async function main() {
   await fs.mkdir("screenshots/reading-scene", { recursive: true });
+  const sourceHashes = {};
+  const sha = (value) => createHash("sha256").update(value).digest("hex");
+  for (const path of [
+    "apps/web/components/saga/chapter-reader.tsx",
+    "apps/web/components/saga/scene-visualizer.tsx",
+    "apps/web/components/saga/scene-workspace-view.tsx",
+    "apps/web/components/saga/scene-visualizer.module.css",
+    "apps/web/lib/reading-scene/brief.ts",
+    "apps/web/lib/reading-scene/session.ts",
+    "apps/web/app/api/reading-scenes/route.ts",
+    "scripts/verify-reading-scene-browser.cjs",
+  ])
+    sourceHashes[path] = sha(await fs.readFile(path));
   const browser = await chromium.launch();
   const receipts = [];
   try {
@@ -277,13 +297,53 @@ async function main() {
           ),
           true,
         );
+        const assistant = page.getByRole("button", {
+          name: "Open Arcanea assistant",
+          exact: true,
+        });
+        for (const control of await page
+          .getByRole("region", { name: "Passage visualization" })
+          .getByRole("button")
+          .all()) {
+          if (!(await control.isVisible())) continue;
+          await control.scrollIntoViewIfNeeded();
+          const controlBox = await control.boundingBox();
+          const assistantBox = await assistant.boundingBox();
+          if (assistantBox)
+            assert.ok(
+              controlBox.x + controlBox.width <= assistantBox.x ||
+                assistantBox.x + assistantBox.width <= controlBox.x ||
+                controlBox.y + controlBox.height <= assistantBox.y ||
+                assistantBox.y + assistantBox.height <= controlBox.y,
+              "The floating companion must not cover a reading-scene control",
+            );
+        }
         assert.deepEqual(errors, []);
         await page
           .getByRole("region", { name: "Passage visualization" })
           .screenshot({ path: `screenshots/reading-scene/${mode.name}.png` });
+        const capturePath = `screenshots/reading-scene/${mode.name}.png`;
+        const imageSha256 = sha(await fs.readFile(capturePath));
+        await fs.writeFile(
+          `${capturePath}.json`,
+          JSON.stringify(
+            {
+              head: process.env.READING_SCENE_HEAD,
+              sourceHashes,
+              imageSha256,
+              mode,
+              renderer: browser.version(),
+              purpose:
+                "Compiled UI verification; synthetic raster/auth/provider/storage fixtures",
+            },
+            null,
+            2,
+          ),
+        );
         receipts.push({
           mode: mode.name,
           passed: true,
+          imageSha256,
           checks: [
             "source selection",
             "focus",
@@ -297,6 +357,7 @@ async function main() {
             "private save/reopen",
             "touch target",
             "no overflow",
+            "companion does not cover scene controls",
           ],
         });
       } finally {
@@ -310,6 +371,7 @@ async function main() {
       JSON.stringify(
         {
           head: process.env.READING_SCENE_HEAD,
+          sourceHashes,
           evidence:
             "compiled UI with auth/provider/storage fixtures; no paid output or real account proof",
           receipts,

@@ -61,6 +61,9 @@ export function SceneWorkspaceView({
     1,
   );
   const image = scene?.result ? imageSource(scene.result.images[0]) : null;
+  const resultModelLabel =
+    OPENROUTER_IMAGE_MODELS.find((model) => model.id === scene?.result?.model)
+      ?.label ?? "Generated image";
   const pending = Boolean(scene?.requestKey && !scene.result);
   const button = styles.button;
 
@@ -223,7 +226,7 @@ export function SceneWorkspaceView({
                     alt={`Personal visual interpretation of a passage from ${chapterTitle}`}
                   />
                   <p className={styles.hint}>
-                    {scene.result?.model} · Personal interpretation; publication
+                    {resultModelLabel} · Personal interpretation; publication
                     rights have not been reviewed.
                   </p>
                   <div className={styles.actions}>
