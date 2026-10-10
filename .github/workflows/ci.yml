@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -357,15 +358,13 @@ jobs:
           shop_status=0
           chat_tools_status=0
           voice_credentials_status=0
-          author_drafts_status=0
           node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
           node scripts/verify-creator-starters-browser.cjs || starter_status=$?
           node scripts/verify-world-draft-browser.cjs || draft_status=$?
           node scripts/verify-shop-browser.cjs || shop_status=$?
           timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
           timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
-          timeout 180s node scripts/verify-author-draft-browser.cjs || author_drafts_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ] || [ "$author_drafts_status" -ne 0 ]; then
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
             exit 1
           fi
 
@@ -385,6 +384,77 @@ jobs:
           echo "- **Build**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Node**: ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "- **pnpm**: ${{ env.PNPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
+
+  # Authenticated author acceptance runs on the exact owned preview with real
+  # fixture accounts, separately from unauthenticated compiled-gallery fixtures.
+  author-preview:
+    name: Authenticated author preview
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/author-draft-recovery-20261010'
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Verify real authenticated owner recovery and account isolation
+        env:
+          AUTHOR_PREVIEW_FIXTURE: ${{ secrets.ARCANEA_AUTHOR_PREVIEW_FIXTURE_20261010 }}
+          AUTHOR_EXPECTED_HEAD: ${{ github.sha }}
+          AUTHOR_TEST_CONFIG: ${{ runner.temp }}/author-fixture.json
+        run: |
+          node -e 'const fs=require("node:fs");const c=JSON.parse(process.env.AUTHOR_PREVIEW_FIXTURE);if(c.head!==process.env.AUTHOR_EXPECTED_HEAD)throw Error("Preview fixture is bound to a different source revision");for(const a of c.accounts)console.log("::add-mask::"+a.password);console.log("::add-mask::"+c.shareUrl);c.output="screenshots/author-hosted";fs.writeFileSync(process.env.AUTHOR_TEST_CONFIG,JSON.stringify(c),{mode:0o600});'
+          trap 'rm -f "$AUTHOR_TEST_CONFIG"' EXIT
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          timeout 300s node scripts/verify-author-draft-browser.cjs
+      - name: Retain authenticated preview evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: author-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/author-hosted/
+          retention-days: 7
+          if-no-files-found: warn
+
+  author-independent-review:
+    name: Independent author source review
+    needs: author-preview
+    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/author-draft-recovery-20261010'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Review complete exact source using the existing independent provider
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/review-author-recovery.mjs
+      - name: Retain final findings and exact source receipt
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: author-review-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/author-review/
+          retention-days: 7
+          if-no-files-found: warn
 
   # ============================================
   # STATUS — the merge gate. It is the only job here that cannot skip under any

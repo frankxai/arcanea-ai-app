@@ -22,8 +22,8 @@ import { getBookRoot } from "@/lib/content/book-path";
 import { createClient } from "@/lib/supabase/server";
 import { isBookPublic } from "@/lib/content/book-visibility";
 import {
-  readAuthorBookFile,
-  listAuthorBookFiles,
+  readBookContextFile,
+  listBookContextFiles,
 } from "@/lib/author/book-files";
 import {
   extractCustomerKeys,
@@ -76,7 +76,7 @@ interface BookManifest {
 async function loadBookManifest(bookSlug: string): Promise<BookManifest> {
   const yamlPath = join(BOOK_ROOT, bookSlug, "book.yaml");
   try {
-    const raw = await readAuthorBookFile(BOOK_ROOT, yamlPath);
+    const raw = await readBookContextFile(BOOK_ROOT, yamlPath);
     return (yaml.load(raw) as BookManifest) ?? {};
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
@@ -86,7 +86,7 @@ async function loadBookManifest(bookSlug: string): Promise<BookManifest> {
 
 async function contextFiles(directory: string) {
   try {
-    return await listAuthorBookFiles(BOOK_ROOT, directory);
+    return await listBookContextFiles(BOOK_ROOT, directory);
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
     throw error;
@@ -132,7 +132,7 @@ async function loadBookContext(
         (f) => f.replace(/\.md$/, "") === currentChapter,
       );
       if (match) {
-        const content = await readAuthorBookFile(
+        const content = await readBookContextFile(
           BOOK_ROOT,
           join(chaptersDir, match),
         );
@@ -149,7 +149,7 @@ async function loadBookContext(
     {
       const files = await contextFiles(outlineDir);
       for (const f of files.filter((f) => f.endsWith(".md")).slice(0, 1)) {
-        const content = await readAuthorBookFile(
+        const content = await readBookContextFile(
           BOOK_ROOT,
           join(outlineDir, f),
         );
@@ -167,7 +167,7 @@ async function loadBookContext(
       const files = await contextFiles(charsDir);
       const mdFiles = files.filter((f) => f.endsWith(".md")).slice(0, 5);
       for (const f of mdFiles) {
-        const content = await readAuthorBookFile(BOOK_ROOT, join(charsDir, f));
+        const content = await readBookContextFile(BOOK_ROOT, join(charsDir, f));
         parts.push(
           `## Character Sheet — CURATED (${f.replace(/\.md$/, "")})\n${content.slice(0, 2000)}`,
         );
@@ -182,7 +182,7 @@ async function loadBookContext(
       const files = await contextFiles(worldDir);
       const mdFiles = files.filter((f) => f.endsWith(".md")).slice(0, 3);
       for (const f of mdFiles) {
-        const content = await readAuthorBookFile(BOOK_ROOT, join(worldDir, f));
+        const content = await readBookContextFile(BOOK_ROOT, join(worldDir, f));
         parts.push(
           `## World Bible — CURATED (${f.replace(/\.md$/, "")})\n${content.slice(0, 3000)}`,
         );
@@ -364,7 +364,11 @@ export async function POST(req: NextRequest) {
     let publicBook = true;
     if (typeof bookSlug === "string") {
       const root = await realpath(BOOK_ROOT);
-      const directory = await realpath(resolve(BOOK_ROOT, bookSlug));
+      const lexicalRoot = resolve(BOOK_ROOT);
+      const lexicalDirectory = resolve(BOOK_ROOT, bookSlug);
+      if (!lexicalDirectory.startsWith(lexicalRoot + sep))
+        return refusal(403, "This book is outside the content workspace.");
+      const directory = await realpath(lexicalDirectory);
       if (!directory.startsWith(root + sep))
         return refusal(403, "This book is outside the content workspace.");
       publicBook = await isBookPublic(directory);

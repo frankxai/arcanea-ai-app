@@ -133,6 +133,7 @@ async function main() {
         });
       });
       try {
+        if (config?.shareUrl) await page.goto(config.shareUrl);
         if (config) await login(page, base, config.accounts[0]);
         else await page.goto(`${base}${chapter}`);
         const editor = page.locator('.ProseMirror[contenteditable="true"]');
@@ -351,7 +352,7 @@ async function main() {
       `${output}/receipt.json`,
       JSON.stringify(
         {
-          sourceCommit: process.env.GITHUB_SHA || null,
+          sourceCommit: config?.head || process.env.GITHUB_SHA || null,
           environment: config
             ? "isolated hosted preview"
             : "compiled UI with intercepted draft transport",

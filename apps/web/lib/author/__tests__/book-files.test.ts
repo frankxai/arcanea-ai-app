@@ -10,7 +10,7 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { readAuthorBookFile, listAuthorBookFiles } from "../book-files";
+import { readBookContextFile, listBookContextFiles } from "../book-files";
 
 test("author context allows in-root files and refuses traversal, sibling prefixes and symlinks", async (t) => {
   const fixture = await mkdtemp(join(tmpdir(), "arcanea-author-path-"));
@@ -20,12 +20,16 @@ test("author context allows in-root files and refuses traversal, sibling prefixe
   let linked = false;
   try {
     await mkdir(root);
+    await mkdir(join(root, "chapters"));
     await mkdir(sibling);
-    await writeFile(join(root, "chapter.md"), "owned chapter");
+    await writeFile(join(root, "chapters", "chapter.md"), "owned chapter");
     await writeFile(join(sibling, "secret.md"), "private outside content");
-    assert.equal(await readAuthorBookFile(root, "chapter.md"), "owned chapter");
+    assert.equal(
+      await readBookContextFile(root, "chapters/chapter.md"),
+      "owned chapter",
+    );
     assert.deepEqual(
-      await listAuthorBookFiles(root, root),
+      await listBookContextFiles(root, join(root, "chapters")),
       ["chapter.md"].sort(),
     );
     for (const outside of [
@@ -33,18 +37,18 @@ test("author context allows in-root files and refuses traversal, sibling prefixe
       join(sibling, "secret.md"),
     ]) {
       await assert.rejects(
-        readAuthorBookFile(root, outside),
+        readBookContextFile(root, outside),
         /outside its root/,
       );
     }
     await assert.rejects(
-      listAuthorBookFiles(root, sibling),
+      listBookContextFiles(root, sibling),
       /outside its root/,
     );
     try {
       await symlink(join(sibling, "secret.md"), link, "file");
       linked = true;
-      await assert.rejects(readAuthorBookFile(root, link), /outside its root/);
+      await assert.rejects(readBookContextFile(root, link), /outside its root/);
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "EPERM") throw error;
       t.diagnostic(
@@ -53,8 +57,9 @@ test("author context allows in-root files and refuses traversal, sibling prefixe
     }
   } finally {
     if (linked) await unlink(link);
-    await unlink(join(root, "chapter.md"));
+    await unlink(join(root, "chapters", "chapter.md"));
     await unlink(join(sibling, "secret.md"));
+    await rmdir(join(root, "chapters"));
     await rmdir(root);
     await rmdir(sibling);
     await rmdir(fixture);
