@@ -9,7 +9,6 @@ import {
 } from "react";
 import { useAuth } from "@/lib/auth/context";
 import { OPENROUTER_IMAGE_MODELS } from "@/lib/imagine/generate";
-import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 import {
   chapterHash,
   imageSource,
@@ -17,7 +16,9 @@ import {
   sceneBrief,
 } from "@/lib/reading-scene/brief";
 import {
+  exportScene,
   persistScene,
+  projectSceneResult,
   restoreScene,
   sceneSlot,
   type SceneSession,
@@ -77,18 +78,30 @@ function SceneWorkspace({
   const actor = useRef(owner);
   const briefRef = useRef<HTMLTextAreaElement | null>(null);
   const workspaceRef = useRef<HTMLElement | null>(null);
+  const replacementActionRef = useRef<HTMLButtonElement | null>(null);
   const revision = useRef(0);
   const focusAfterSelection = useRef(false);
 
   useLayoutEffect(() => {
-    if (!focusAfterSelection.current || !open || !scene) return;
+    if (!focusAfterSelection.current || !open || !scene || replacement) return;
     workspaceRef.current?.scrollIntoView({
       block: "start",
       behavior: "instant",
     });
-    briefRef.current?.focus({ preventScroll: true });
+    if (briefRef.current?.disabled)
+      workspaceRef.current?.focus({ preventScroll: true });
+    else briefRef.current?.focus({ preventScroll: true });
     focusAfterSelection.current = false;
-  }, [open, scene]);
+  }, [open, scene, replacement]);
+
+  useLayoutEffect(() => {
+    if (!open || !replacement) return;
+    workspaceRef.current?.scrollIntoView({
+      block: "start",
+      behavior: "instant",
+    });
+    replacementActionRef.current?.focus({ preventScroll: true });
+  }, [open, replacement]);
 
   useEffect(() => {
     const loadRevision = ++revision.current;
@@ -317,7 +330,7 @@ function SceneWorkspace({
         !imageSource(body.images[0])
       )
         throw new Error("Invalid generation response");
-      const result = body as ImagineGenerationResponse;
+      const result = projectSceneResult(body);
       if (retain({ ...next, result }))
         setMessage("Scene created. Save privately or download a copy.");
     } catch {
@@ -375,7 +388,9 @@ function SceneWorkspace({
   function download() {
     if (!scene) return;
     const url = URL.createObjectURL(
-      new Blob([JSON.stringify(scene, null, 2)], { type: "application/json" }),
+      new Blob([JSON.stringify(exportScene(scene), null, 2)], {
+        type: "application/json",
+      }),
     );
     const anchor = document.createElement("a");
     anchor.href = url;
@@ -398,6 +413,7 @@ function SceneWorkspace({
       chapterTitle={chapterTitle}
       workspaceRef={workspaceRef}
       briefRef={briefRef}
+      replacementActionRef={replacementActionRef}
       selectPassage={selectPassage}
       generate={generate}
       save={save}
@@ -406,7 +422,10 @@ function SceneWorkspace({
       setOpen={setOpen}
       retain={retain}
       replacement={replacement}
-      keepScene={() => setReplacement(null)}
+      keepScene={() => {
+        focusAfterSelection.current = true;
+        setReplacement(null);
+      }}
       replaceScene={() => {
         if (!replacement || busy || (scene?.requestKey && !scene.result))
           return;

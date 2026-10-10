@@ -88,6 +88,20 @@ migration, automatic publication, new orchestrator, historical migration replay,
 or replacement of the accepted creator-entry PR505. This is one implementation
 lane within the full platform/team/community/commercial goal, which remains open.
 
+Review repair at sourcebb482ab2: the exact-head Codex review found that a
+TypeScript Pick left runtime credit balance metadata in retained/exported results,
+and the disappearing selection action lost keyboard focus when replacement opened.
+The result now uses an explicit field allowlist, including image fields. Existing
+browser recovery is projected on restoration; persistence also projects results.
+A separate arcanea.reading-scene-export.v1 export retains source, brief, model and
+generation provenance while omitting owner, creationId, requestKey and billing.
+Replacement focuses its first action with the explanatory text as its description;
+cancellation restores focus to the brief or the workspace for a completed scene.
+Two meaningful source tests and all four browser modes exercise metadata exclusion
+and keyboard replacement. This is the existing owner's six-file repair, with no
+lease overlap. New hosted verification is pending; bb482ab2's green checks certify
+only the previous revision. No paid provider review or production release occurred.
+
 Acceptance: a source-bound passage becomes an editable brief and a real usable
 image; generation shows catalog credits and requires normal authentication;
 uncertain responses retain the request identity; local recovery is scoped to the

@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomUUID } from "node:crypto";
 import {
+  exportScene,
   persistScene,
+  projectSceneResult,
   restoreScene,
   sceneSlot,
   type SceneSession,
@@ -90,4 +92,86 @@ test("generation admission refuses silent storage loss", () => {
     )?.requestKey,
     scene.requestKey,
   );
+});
+
+test("generated and restored results omit runtime billing and image metadata", () => {
+  const result = {
+    generationId: `gen_${scene.requestKey}`,
+    status: "completed" as const,
+    provider: "openrouter" as const,
+    model: scene.model,
+    images: [
+      {
+        data: "aGVsbG8=",
+        mimeType: "image/png",
+        prompt: scene.brief,
+        providerAccount: "private-provider-account",
+      },
+    ],
+    credits: { action: "image.standard", charged: 5, balance: 917 },
+    timing: { durationMs: 101 },
+  };
+  const projected = projectSceneResult(result);
+  assert.deepEqual(Object.keys(projected), [
+    "generationId",
+    "status",
+    "provider",
+    "model",
+    "images",
+  ]);
+  assert.deepEqual(projected.images[0], {
+    data: "aGVsbG8=",
+    mimeType: "image/png",
+    prompt: scene.brief,
+  });
+  const legacy = { ...scene, result, creationId: randomUUID() };
+  const restored = restoreScene(
+    JSON.stringify(legacy),
+    scene.owner,
+    scene.source.path,
+  );
+  assert.deepEqual(restored?.result, projected);
+  assert.equal(restored?.creationId, legacy.creationId);
+  const slots = new Map<string, string>();
+  persistScene(
+    {
+      setItem(k, v) {
+        slots.set(k, v);
+      },
+      getItem(k) {
+        return slots.get(k) ?? null;
+      },
+    },
+    legacy,
+  );
+  assert.deepEqual(
+    JSON.parse(slots.get(sceneSlot(scene.owner, scene.source.path))!).result,
+    projected,
+  );
+});
+
+test("portable exports retain provenance without account or recovery state", () => {
+  const result = {
+    generationId: `gen_${scene.requestKey}`,
+    status: "completed" as const,
+    provider: "openrouter" as const,
+    model: scene.model,
+    images: [{ data: "aGVsbG8=", mimeType: "image/png" }],
+    credits: { balance: 917 },
+  };
+  const internal = {
+    ...scene,
+    source: { ...scene.source, privateNote: "private source note" },
+    result,
+    creationId: randomUUID(),
+    privateNote: "private session note",
+  };
+  assert.deepEqual(exportScene(internal), {
+    schema: "arcanea.reading-scene-export.v1",
+    source: scene.source,
+    brief: scene.brief,
+    model: scene.model,
+    result: projectSceneResult(result),
+  });
+  assert.equal(exportScene(scene).result, null);
 });

@@ -35,7 +35,10 @@ const modes = [
     forcedColors: "active",
   },
 ];
-async function selectPassage(page) {
+async function selectPassage(
+  page,
+  { keyboard = false, replacement = false } = {},
+) {
   await page.locator("article .prose p").first().scrollIntoViewIfNeeded();
   const text = await page.locator("article .prose p").first().textContent();
   assert.ok(
@@ -64,11 +67,20 @@ async function selectPassage(page) {
         );
       document.dispatchEvent(new Event("selectionchange"));
     });
-  await page
-    .getByRole("button", { name: "Visualize selection", exact: true })
-    .click();
+  const action = page.getByRole("button", {
+    name: "Visualize selection",
+    exact: true,
+  });
+  if (keyboard) {
+    await action.focus();
+    await action.press("Enter");
+  } else await action.click();
   await expect(page.getByLabel("Visual brief", { exact: true })).toBeVisible();
-  await expect(page.getByLabel("Visual brief", { exact: true })).toBeFocused();
+  await expect(
+    replacement
+      ? page.getByRole("button", { name: "Keep current scene", exact: true })
+      : page.getByLabel("Visual brief", { exact: true }),
+  ).toBeFocused();
   const firstAction = await page
     .getByRole("button", { name: "Visualize a passage", exact: true })
     .boundingBox();
@@ -155,7 +167,14 @@ async function main() {
             status: "completed",
             provider: "openrouter",
             model: body.model,
-            images: [{ data: png, mimeType: "image/png" }],
+            images: [
+              {
+                data: png,
+                mimeType: "image/png",
+                providerAccount: "private-provider-account",
+              },
+            ],
+            credits: { action: "image.standard", charged: 5, balance: 917 },
           },
         });
       });
@@ -288,6 +307,9 @@ async function main() {
         await expect(
           page.getByRole("group", { name: "Replace current scene" }),
         ).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: "Keep current scene", exact: true }),
+        ).toBeFocused();
         await expect(page.getByLabel("Visual brief")).toHaveValue(brief);
         await page
           .getByRole("button", { name: "Keep current scene", exact: true })
@@ -295,6 +317,16 @@ async function main() {
         await expect(
           page.getByRole("group", { name: "Replace current scene" }),
         ).toHaveCount(0);
+        await expect(page.getByLabel("Visual brief")).toBeFocused();
+        await page
+          .getByRole("button", { name: "Return to reading", exact: true })
+          .click();
+        await selectPassage(page, { keyboard: true, replacement: true });
+        await page
+          .getByRole("button", { name: "Keep current scene", exact: true })
+          .press("Enter");
+        await expect(page.getByLabel("Visual brief")).toBeFocused();
+        await expect(page.getByLabel("Visual brief")).toHaveValue(brief);
         await page
           .getByRole("button", { name: "Generate scene", exact: true })
           .click();
@@ -316,6 +348,17 @@ async function main() {
         ).toBeVisible();
         assert.equal(requests[1].requestKey, key);
         assert.equal(requests[1].prompt, brief);
+        const retainedResult = await page.evaluate(
+          ({ owner, chapter }) =>
+            JSON.parse(
+              sessionStorage.getItem(
+                `arcanea:reading-scene:v1:${encodeURIComponent(owner)}:${encodeURIComponent(chapter)}`,
+              ),
+            ).result,
+          { owner, chapter },
+        );
+        assert.equal(retainedResult.credits, undefined);
+        assert.equal(retainedResult.images[0].providerAccount, undefined);
         const downloaded = page.waitForEvent("download");
         await page
           .getByRole("button", {
@@ -331,6 +374,16 @@ async function main() {
         assert.equal(artifact.source.passage, passage);
         assert.equal(artifact.brief, brief);
         assert.equal(artifact.result.images[0].data, png);
+        assert.equal(artifact.schema, "arcanea.reading-scene-export.v1");
+        assert.deepEqual(Object.keys(artifact), [
+          "schema",
+          "source",
+          "brief",
+          "model",
+          "result",
+        ]);
+        assert.equal(artifact.result.credits, undefined);
+        assert.equal(artifact.result.images[0].providerAccount, undefined);
         await page
           .getByRole("button", { name: "Save private creation", exact: true })
           .click();
@@ -422,10 +475,12 @@ async function main() {
             "edited brief",
             "passage action snapshots selection before the queued change event",
             "replacement cancellation preserves current scene",
+            "keyboard replacement moves focus to confirmation and back",
             "reload",
             "interruption",
             "same-key recovery",
             "source/image export",
+            "retained result and portable export exclude private billing metadata",
             "private save/reopen",
             "touch target",
             "no overflow",

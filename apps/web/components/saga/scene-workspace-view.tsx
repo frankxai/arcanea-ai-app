@@ -18,6 +18,7 @@ interface Props {
   chapterTitle: string;
   workspaceRef: RefObject<HTMLElement | null>;
   briefRef: RefObject<HTMLTextAreaElement | null>;
+  replacementActionRef: RefObject<HTMLButtonElement | null>;
   selectPassage: () => Promise<void>;
   generate: () => Promise<void>;
   save: () => Promise<void>;
@@ -42,6 +43,7 @@ export function SceneWorkspaceView({
   chapterTitle,
   workspaceRef,
   briefRef,
+  replacementActionRef,
   selectPassage,
   generate,
   save,
@@ -72,6 +74,7 @@ export function SceneWorkspaceView({
   return (
     <section
       ref={workspaceRef}
+      tabIndex={-1}
       className={styles.workspace}
       aria-label="Passage visualization"
       onClick={(event) => event.stopPropagation()}
@@ -118,12 +121,18 @@ export function SceneWorkspaceView({
           <h2 className={styles.heading}>Your scene interpretation</h2>
           {replacement && (
             <div role="group" aria-label="Replace current scene">
-              <p className={styles.hint}>
+              <p className={styles.hint} id="reading-scene-replacement-hint">
                 Keep this scene, or download it before replacing it with the new
                 passage. A private save remains in your account.
               </p>
               <div className={styles.actions}>
-                <button type="button" className={button} onClick={keepScene}>
+                <button
+                  ref={replacementActionRef}
+                  type="button"
+                  className={button}
+                  aria-describedby="reading-scene-replacement-hint"
+                  onClick={keepScene}
+                >
                   Keep current scene
                 </button>
                 <button type="button" className={button} onClick={download}>
