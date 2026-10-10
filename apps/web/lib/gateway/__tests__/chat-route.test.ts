@@ -141,6 +141,7 @@ test("upstream failure does not expose provider response contents", async () => 
 test("health describes the public credential contract", async () => {
   const response = await GET();
   const health = await response.json();
+  assert.equal(health.status, "customer-key-required");
   assert.equal(health.credentialMode, "customer-byok");
   assert.equal(health.managedInference, "disabled");
 });
@@ -203,6 +204,11 @@ test("customer streaming preserves text and remaps the model identifier", async 
     ),
   );
   assert.equal(response.status, 200);
+  assert.equal(
+    response.headers.get("cache-control"),
+    "private, no-store, no-transform",
+  );
+  assert.equal(response.headers.get("x-accel-buffering"), "no");
   const text = await response.text();
   assert.match(text, /A scene\./);
   assert.ok(text.includes(model.id));

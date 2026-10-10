@@ -246,7 +246,10 @@ export async function POST(req: NextRequest) {
     finalResponse.headers.set("X-Arcanea-Model", route.model.id);
     finalResponse.headers.set("X-Arcanea-Provider", route.model.provider);
     finalResponse.headers.set("X-Arcanea-Route-Reason", route.reason);
-    finalResponse.headers.set("Cache-Control", "private, no-store");
+    finalResponse.headers.set(
+      "Cache-Control",
+      streaming ? "private, no-store, no-transform" : "private, no-store",
+    );
 
     for (const [header, value] of Object.entries(rlHeaders)) {
       finalResponse.headers.set(header, value);
@@ -275,7 +278,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    status: "ok",
+    status: "customer-key-required",
     service: "Arcanea Intelligence Gateway",
     version: "1.0.0",
     credentialMode: "customer-byok",
