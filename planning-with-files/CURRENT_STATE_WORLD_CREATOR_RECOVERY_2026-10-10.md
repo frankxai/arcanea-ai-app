@@ -124,3 +124,15 @@ offline preload now uses fixed code with fixture data in child environment varia
 Comparison artifacts contain bounded schema-validated final text and typed usage,
 not executable source. No alert is hidden, dismissed or waived; fresh scan/review
 must assess the exact revision and intended remote artifact retention.
+
+Candidate638e66d9e4: real hosted password login, owner private partial save,
+retry without duplicates, reopen, full private source JSON, second-account RLS
+read/update denial, browser anonymous/private content denial, account backup/key
+isolation, late cancellation and exact clipboard action all pass. Generation is
+synthetic;0 creator provider calls and0 production writes. Fresh CodeQL has no
+open PR alerts: all four source fixes passed without dismissal or suppression.
+TypeScript/lint pass; full build and independent review are tracked in38079537406.
+Masked mobile screenshots were inspected. The fixture bypasses CSP only for its
+HTTP loopback API; production HTTPS/CSP still requires its own verification.
+Final follow-up fixes signed-in helper copy and preserves observed calls/attempts
+from a failed browser receipt instead of leaving the service counter at0.

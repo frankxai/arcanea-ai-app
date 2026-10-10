@@ -104,6 +104,7 @@ async function main() {
     syntheticGeneration: !process.env.WORLD_TEST_API_KEY,
     csp: "Disposable HTTP loopback fixture bypasses browser CSP; production HTTPS policy is unchanged and is not certified by this fixture",
     actualProviderCalls: 0,
+    providerRequestsAttempted: 0,
     interactions: [],
     passed: false,
   };
@@ -185,6 +186,7 @@ async function main() {
       assert.equal(route.request().headers()["x-google-key"], customerKey);
       if (process.env.WORLD_TEST_API_KEY) {
         assert.equal(calls, 1, "At most one live app generation; no retry.");
+        evidence.providerRequestsAttempted++;
         return route.continue();
       }
       await route.fulfill({
@@ -429,6 +431,7 @@ async function main() {
     if (process.env.WORLD_TEST_API_KEY) {
       // A direct AI Studio-style response is a serious existing alternative.
       // One sample supports inspecting working material, not superiority claims.
+      evidence.providerRequestsAttempted++;
       const response = await fetch(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
         {

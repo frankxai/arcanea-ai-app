@@ -127,6 +127,7 @@ const receipt = {
   backend: "disposable Supabase Auth/PostgREST/PostgreSQL",
   productionWrites: 0,
   providerCalls: 0,
+  providerRequestsAttempted: 0,
   scope: "App owner save/reopen; projection fixture is not a production clone",
   passed: false,
 };
@@ -440,11 +441,30 @@ try {
     readFileSync(`${output}/browser-evidence.json`, "utf8"),
   );
   receipt.providerCalls = acceptance.actualProviderCalls;
+  receipt.providerRequestsAttempted = acceptance.providerRequestsAttempted;
   receipt.passed = true;
 } catch (error) {
   // Docker and authentication errors may include private environment values.
   receipt.failure = "Hosted disposable acceptance did not complete.";
   receipt.failurePhase = phase;
+  try {
+    const evidence = JSON.parse(
+      readFileSync(`${output}/browser-evidence.json`, "utf8"),
+    );
+    if (evidence.head === head) {
+      for (const [field, source] of [
+        ["providerCalls", "actualProviderCalls"],
+        ["providerRequestsAttempted", "providerRequestsAttempted"],
+      ]) {
+        if (
+          Number.isInteger(evidence[source]) &&
+          evidence[source] >= 0 &&
+          evidence[source] <= 2
+        )
+          receipt[field] = evidence[source];
+      }
+    }
+  } catch {}
   // No exception, container log, token or password is emitted. The controlled
   // failure phase and masked browser screenshot are the diagnostics boundary.
   console.error(

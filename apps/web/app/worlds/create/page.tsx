@@ -1262,9 +1262,10 @@ export default function CreateWorldPage() {
                   </p>
 
                   <p className="text-sm text-white/70 max-w-lg mb-8">
-                    Sign in and connect your own Gemini key. Review and edit the
-                    draft, then save it privately or export a copy. Your concept
-                    is sent to Google for generation.
+                    {isAuthenticated ? "Connect" : "Sign in and connect"} your
+                    own Gemini key. Review and edit the draft, then save it
+                    privately or export a copy. Your concept is sent to Google
+                    for generation.
                   </p>
                   <div className="w-full max-w-2xl mb-6">
                     <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-colors duration-300">
