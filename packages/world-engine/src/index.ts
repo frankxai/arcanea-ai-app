@@ -85,3 +85,30 @@ export {
   locationToImagePrompt,
   creatureToImagePrompt,
 } from "./visual.js";
+
+// Temporal Multiverse Engine (Realms, Corridors, Linguistics, Chronology, Sandersonian Toll, Monomyth)
+export {
+  LINGUISTIC_FAMILIES,
+  CANONICAL_REALMS,
+  CANONICAL_EPOCHS,
+  CANONICAL_GUARDIANS,
+  GATE_TOLL_REGISTRY,
+  MONOMYTH_STAGES,
+  getCanonicalRealms,
+  getLinguisticFamilies,
+  getCanonicalEpochs,
+  getCanonicalGuardians,
+  getMonomythStages,
+  getMonomythStage,
+  calculateCorridorResonance,
+  calculateSandersonianMagicToll,
+  generateRealmName,
+  traceEntityProvenance,
+} from "./temporal-multiverse-engine.js";
+
+export type {
+  MagicTollResult,
+  MonomythStage,
+  CanonicalGuardianEntity,
+} from "./temporal-multiverse-engine.js";
+
