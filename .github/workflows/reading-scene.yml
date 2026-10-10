@@ -1,0 +1,86 @@
+name: Reading scene
+on:
+  pull_request:
+    paths:
+      - "apps/web/components/saga/scene-visualizer*"
+      - "apps/web/components/saga/chapter-reader.tsx"
+      - "apps/web/lib/reading-scene/**"
+      - "apps/web/app/api/reading-scenes/**"
+      - "scripts/*reading-scene*"
+      - "scripts/tests/reading-scene-save.test.cjs"
+      - ".github/workflows/reading-scene.yml"
+  workflow_dispatch:
+concurrency:
+  group: reading-scene-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Verify actual route and scene recovery
+        run: |
+          node --test scripts/tests/reading-scene-save.test.cjs
+          pnpm exec tsx --test apps/web/lib/reading-scene/__tests__/*.test.ts
+      - name: Build and inspect the compiled reading workflow
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
+          READING_SCENE_HEAD: ${{ github.sha }}
+        run: |
+          pnpm --filter @arcanea/web... --workspace-concurrency=1 build
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          setsid pnpm --dir apps/web start > /tmp/reading-scene-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill -- -"$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            if curl --max-time 3 -fsS http://127.0.0.1:3001/books/forge-of-ruin/the-forty-seven-names > /dev/null; then break; fi
+            sleep 2
+          done
+          timeout 300s node scripts/verify-reading-scene-browser.cjs
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reading-scene-${{ github.sha }}-${{ github.run_attempt }}
+          path: screenshots/reading-scene/
+          if-no-files-found: warn
+          retention-days: 7
+  independent-review:
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/reading-scene-20261010'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - name: Independent review of complete pinned source
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          READING_SCENE_HEAD: ${{ github.sha }}
+        run: node scripts/review-reading-scene.mjs
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reading-scene-review-${{ github.sha }}-${{ github.run_attempt }}
+          path: screenshots/reading-scene-review/
+          if-no-files-found: error
+          retention-days: 7

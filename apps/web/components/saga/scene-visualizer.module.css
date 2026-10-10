@@ -1,0 +1,108 @@
+.workspace {
+  color: var(--arc-text-primary);
+  background: var(--arc-cosmic-deep);
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-lg);
+  padding: 1.5rem;
+  margin-block: 1rem 2rem;
+  font-family: var(--arc-font-body);
+}
+.heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.hint {
+  color: var(--arc-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+}
+.button {
+  min-height: 44px;
+  padding: 0.625rem 1rem;
+  border-radius: var(--arc-radius-md);
+  border: 1px solid var(--arc-cosmic-border-bright);
+  background: var(--arc-cosmic-raised);
+  color: var(--arc-text-primary);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.primary {
+  background: var(--arc-brand-atlantean-teal);
+  color: var(--arc-cosmic-void);
+  font-weight: 600;
+}
+.selectionAction {
+  position: fixed;
+  bottom: 8rem;
+  right: 1rem;
+  z-index: 60;
+  max-width: calc(100vw - 2rem);
+}
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.button:focus-visible,
+.field:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--arc-brand-atlantean-teal);
+  outline-offset: 3px;
+}
+.label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+.field,
+.select {
+  width: 100%;
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-md);
+  background: var(--arc-cosmic-void);
+  color: var(--arc-text-primary);
+  padding: 0.75rem;
+  font: inherit;
+  min-height: 44px;
+}
+.field {
+  resize: vertical;
+  min-height: 10rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.passage {
+  border-left: 2px solid var(--arc-brand-atlantean-teal);
+  padding-left: 1rem;
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+.status {
+  color: var(--arc-text-secondary);
+  margin-top: 1rem;
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+.preview {
+  width: 100%;
+  height: auto;
+  border-radius: var(--arc-radius-md);
+  margin-top: 1.25rem;
+}
+@media (max-width: 480px) {
+  .workspace {
+    padding: 1rem;
+  }
+  .actions > * {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
