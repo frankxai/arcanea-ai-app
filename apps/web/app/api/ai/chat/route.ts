@@ -19,6 +19,10 @@ import {
   resolveProviderRoute,
   ProviderRoutingError,
 } from "@/lib/ai/provider-routing";
+import {
+  CredentialPolicyError,
+  validateCustomerKey,
+} from "@/lib/gateway/credential-policy.mjs";
 import { createChatTools } from "@/lib/chat/tools";
 import { buildJarvisTools } from "@/lib/luminors/tools/jarvis";
 import { buildArcaneaRuntimeHeaders } from "@/lib/chat/runtime-metadata";
@@ -245,14 +249,34 @@ export async function POST(req: NextRequest) {
 
     let route;
     try {
+      if (clientApiKey === undefined || clientApiKey === null) {
+        return new Response(
+          "Connect your provider key in Settings → Providers to use chat.",
+          {
+            status: 401,
+            headers: {
+              "Content-Type": "text/plain",
+              "Cache-Control": "private, no-store",
+            },
+          },
+        );
+      }
       route = resolveProviderRoute(
-        { requestedProvider, gatewayModel, clientApiKey },
+        {
+          requestedProvider,
+          gatewayModel,
+          clientApiKey: validateCustomerKey(clientApiKey),
+        },
         { ...PROVIDERS, ...EXTENDED_PROVIDERS },
         GATEWAY_MODELS,
-        process.env,
+        // Public chat is BYOK-only until managed calls have durable authorization.
+        {},
       );
     } catch (error) {
-      if (error instanceof ProviderRoutingError) {
+      if (
+        error instanceof ProviderRoutingError ||
+        error instanceof CredentialPolicyError
+      ) {
         return new Response(error.message, {
           status: error.status,
           headers: {
@@ -882,8 +906,6 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       },
     });
   } catch (error) {
-    console.error("Chat API error:", error);
-
     const message =
       error instanceof Error ? error.message : "Internal server error";
 
@@ -899,7 +921,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       );
     }
 
-    return new Response(message, {
+    return new Response("Provider request failed.", {
       status: 500,
       headers: { "Content-Type": "text/plain" },
     });
@@ -909,15 +931,16 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
 // Health check
 export async function GET() {
   const configured: Record<string, boolean> = {};
-  for (const [id, config] of Object.entries(PROVIDERS)) {
-    configured[id] = config.envKeys.some((k) => Boolean(process.env[k]));
+  for (const id of Object.keys(PROVIDERS)) {
+    configured[id] = false;
   }
-  for (const [id, ext] of Object.entries(EXTENDED_PROVIDERS)) {
-    configured[id] = ext.envKeys.some((k) => Boolean(process.env[k]));
+  for (const id of Object.keys(EXTENDED_PROVIDERS)) {
+    configured[id] = false;
   }
-  const anyConfigured = Object.values(configured).some(Boolean);
   return NextResponse.json({
-    status: anyConfigured ? "ok" : "no-api-key",
+    status: "customer-key-required",
+    credentialMode: "customer-byok",
+    managedInference: "disabled",
     service: "arcanea-intelligence-gateway",
     providers: configured,
     gatewayModels: Object.keys(GATEWAY_MODELS).length,

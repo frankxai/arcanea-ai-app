@@ -1,0 +1,40 @@
+# Public chat credential admission
+
+Scope: customer-key chat and denial of anonymous server-funded inference on `/api/ai/chat`, its `/api/chat` alias, and `/api/v1/chat/completions`.
+Owner: Codex thread `01a123df-58c6-72f3-b86c-65083426cf65`, branch `agent/codex/gateway-admission-20261010` in its isolated worktree.
+Origin: `https://github.com/frankxai/arcanea-ai-app.git`.
+Initial base: `c79b6f4fa4283614ddf12129a7ab1a6e27e3318c`.
+Owning issue: #529; billing recovery remains tracked by #511. This companion does not close either issue.
+
+User job: a creator or developer can use their own provider credentials without letting an unauthenticated caller use Arcanea's account or select a paid tier. Native SDK streaming and OpenAI-compatible text responses must keep working.
+
+Files: both chat handlers, gateway credential policy and declarations, provider error handling, native route tests, the existing CI test step and this pickup.
+Acceptance: no customer credential means no provider call; malformed credentials are rejected without exposing them; provider identity is preserved; caller tier headers confer no entitlement; customer streaming succeeds through the actual adapters and AI SDK.
+Rollback: revert this promotion commit through a reviewed PR. Restoring anonymous funded inference would require a separate authenticated entitlement and credit boundary.
+
+## Implementation and provenance
+
+Reuses the earlier unpromoted creation foundation at `2e78570ed76c1567006ce85284435076fe9b5026`, preserving its original lane and world-write work. Only its four chat/credential files were copied into this lane, then refined. The shared validator rejects oversized or malformed keys, compatibility request structure returns client errors, wrong-provider credentials cannot fall back to environment keys, and upstream error bodies are withheld. Health responses describe the customer-key requirement and disable the client-side server-key indicator. The existing public alias inherits the same handler.
+
+Native tests first reproduced six failures on the initial main source: anonymous server-key execution, client-selected studio tier, ignored malformed credentials, invalid JSON returning 500, provider error content disclosure, and absent credential-mode metadata. All fourteen route cases now pass. They import actual NextRequest/NextResponse, actual routing/provider adapters and the actual Vercel AI SDK. Only outbound fetch uses test credentials and fixture responses. They cover UI SDK streaming, compatibility streaming and error/denial paths. No live account, paid provider, billing migration or payment was invoked.
+
+The named alternative is a direct provider client. The fixtures preserve its text and stream behavior while exercising Arcanea's routing boundary. They do not measure customer value, latency, savings or market advantage.
+
+## Verification and release limits
+
+- Node 24.16.0 and pinned pnpm 11.28.4 frozen-lock install passed on the initial base. A task-local launcher fixes the foreign pnpm 11.5.0 selected by Turbo child processes; global package-manager configuration is unchanged.
+- Full web ESLint and changed-file Prettier passed. Web `tsc --noEmit` passed after adding the required existing docs to the sparse checkout and fixing a test header type.
+- The repository's full type-check reached Next route type generation and was refused by SWC's Windows native cache security check: another SID has replacement rights in the default cache. Documented temporary/custom cache attempts also failed. Security checks and ACLs remain unchanged. Full Next type generation and production build therefore remain pending native Linux CI/Vercel evidence.
+- Exact-revision independent provider review and production/client verification remain release gates. A passing fixture or preview cannot close the whole adoption goal.
+
+Explicit instructions read: root AGENTS.md SHA256 `36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`, `.arcanea/CLAUDE.md` `83ea5b289cdfcf89abd2195111846cda5aa942daccb8a0ed2dec4d30f960ac94`, MASTER_PLAN, current state/backlog and execution protocol. No deeper guide governs the changed app paths. Shared workflow, product quality and machine policies were read. The capability-loading source is the inspected snapshot at `08d6e80f010a6f71ac42eb7482fd13532f05e1fe`; its requested canonical path is absent. Root SYSTEM.md/SCHEMA.md/SKILLS.md are absent; no architectural replacement is claimed. The session started at home and used explicit repository reads, not native rediscovery.
+
+Route guard/check passed for explicit paths. The primary Gemini checkout, earlier Codex foundation and all other lanes are preserved. Build admission was BOUNDED, one workload, no added agents. Free disk exceeded 100 GiB and 8%; the required storage sensor path is absent. Policy loading is recorded separately from runtime enforcement. Generated package build outputs are excluded from the source commit.
+
+## Full adoption goal remains active
+
+Current production was verified at the initial main billing-recovery revision, with no Vercel error clusters returned for the selected 24-hour window. This is evidence for that query, not proof of every user journey. The dependency PR #539 subsequently advanced main; verify the eventual candidate against that state.
+
+The full request still requires authenticated funded inference and entitlements, durable media jobs and asset/world lineage, recoverable account-scoped projects and memory, connected CLI/SDK/ADK/MCP and desktop/mobile behavior, reviewed creator-facing narrative and README claims, bundle economics and release approvals, PR integration and exact production journey proof. Use existing #531/#532/#533/#427 and ecosystem delivery records; preserve all unfinished proposals. Payment onboarding, production migrations and new spend remain human-gated.
+
+Next: finish exact-revision review and native CI, resolve findings, promote only after required gates, then verify the stable domain against the accepted source. Continue the existing creation-engine and subscription work; customer-key containment is an interim boundary, not the completed commercial platform.
