@@ -874,6 +874,9 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       messages: modelMessages,
       temperature: temperature ?? 0.7,
       maxOutputTokens: maxTokens ?? 8192,
+      onError: () => {
+        console.error("Chat provider stream failed.");
+      },
       ...(toolsToUse ? { tools: toolsToUse, maxSteps: 5 } : {}),
     });
 
@@ -928,6 +931,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
 
     return result.toUIMessageStreamResponse({
       headers: responseHeaders,
+      onError: () => "Provider request failed.",
       messageMetadata: ({ part }) => {
         if (part.type === "start") {
           return runtimeMetadata;

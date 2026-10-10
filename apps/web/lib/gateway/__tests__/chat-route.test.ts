@@ -464,3 +464,53 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
   assert.equal(providerCalls, 1);
   assert.equal(response.headers.get("x-arcanea-api-key-source"), "client-byok");
 });
+
+test("UI provider failures after returning the response have a fixed private stream error", async () => {
+  const ui = await import("../../../app/api/ai/chat/route");
+  const customerKey = "test-ui-customer-key";
+  const prompt = "Private scene draft in a provider failure fixture.";
+  const error = {
+    type: "authentication_error",
+    message: `${customerKey}: ${prompt}`,
+  };
+  for (const mode of ["http", "stream"]) {
+    let providerCalls = 0;
+    const originalError = console.error;
+    const logs: string[] = [];
+    console.error = (...values: unknown[]) => {
+      logs.push(values.map(String).join(" "));
+    };
+    globalThis.fetch = async () => {
+      providerCalls++;
+      return mode === "http"
+        ? Response.json({ type: "error", error }, { status: 401 })
+        : new Response(
+            `event: error\ndata: ${JSON.stringify({ type: "error", error })}\n\n`,
+            { headers: { "content-type": "text/event-stream" } },
+          );
+    };
+    try {
+      const response = await ui.POST(
+        request(
+          {},
+          {
+            provider: "anthropic",
+            clientApiKey: customerKey,
+            messages: [{ role: "user", content: prompt }],
+          },
+        ),
+      );
+      assert.equal(response.status, 200);
+      const content = await response.text();
+      assert.ok(!content.includes(customerKey));
+      assert.ok(!content.includes(prompt));
+      assert.ok(!logs.join(" ").includes(customerKey));
+      assert.ok(!logs.join(" ").includes(prompt));
+      assert.match(content, /"errorText":"Provider request failed\."/);
+      assert.deepEqual(logs, ["Chat provider stream failed."]);
+      assert.equal(providerCalls, 1);
+    } finally {
+      console.error = originalError;
+    }
+  }
+});
