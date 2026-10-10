@@ -203,6 +203,13 @@ export async function GET(req: NextRequest) {
     const path = req.nextUrl.searchParams.get("path") ?? "";
     if (!/^\/books\/[a-z0-9-]+\/[a-z0-9-]+$/.test(path) || path.length > 300)
       return reply({ error: "Invalid chapter reference" }, 400);
+    // This prerequisite is private metadata, not a promise of credit entitlement
+    // or model availability. The existing generation route remains authoritative.
+    const imageGeneration = {
+      providerConfigured: Boolean(process.env.OPENROUTER_API_KEY?.trim()),
+    };
+    const sceneReply = (body: Record<string, unknown>, status = 200) =>
+      reply({ ...body, imageGeneration }, status);
     const { data, error } = await supabase
       .from("creations")
       .select("id,content")
@@ -217,8 +224,8 @@ export async function GET(req: NextRequest) {
       .limit(1)
       .maybeSingle();
     if (error)
-      return reply({ error: "Private scenes could not be loaded" }, 503);
-    if (!data) return reply({ scene: null });
+      return sceneReply({ error: "Private scenes could not be loaded" }, 503);
+    if (!data) return sceneReply({ scene: null });
     const content = data.content;
     const validated = sceneSchema.safeParse({
       requestKey: data.id,
@@ -229,12 +236,12 @@ export async function GET(req: NextRequest) {
       image: content?.image,
     });
     if (!validated.success)
-      return reply(
+      return sceneReply(
         { error: "This saved scene needs its original recovery copy" },
         409,
       );
     const s = validated.data;
-    return reply({
+    return sceneReply({
       scene: {
         schema: "arcanea.reading-scene.v1",
         owner: user.id,

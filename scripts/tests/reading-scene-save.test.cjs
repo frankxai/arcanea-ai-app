@@ -27,7 +27,7 @@ const scene = {
   image: { data: "iVBORw0KGgo=", mimeType: "image/png" },
 };
 
-function subject(user = { id: actor }, fail = false) {
+function subject(user = { id: actor }, fail = false, providerKey = "") {
   const rows = new Map();
   const calls = [];
   let activeUser = user;
@@ -136,6 +136,7 @@ function subject(user = { id: actor }, fail = false) {
   vm.runInNewContext(`(function(require,module,exports){${code}\n})`, {
     Buffer,
     URL,
+    process: { env: { OPENROUTER_API_KEY: providerKey } },
   })(requireMock, module, module.exports);
   return {
     ...module.exports,
@@ -256,4 +257,22 @@ test("database failure remains retryable and reveals no provider or database det
     JSON.stringify(await response.json()),
     /database-unavailable/,
   );
+});
+test("authenticated scene reads expose only the provider prerequisite, including failed private reads", async () => {
+  const req = new NextRequest(
+    `https://www.arcanea.ai/api/reading-scenes?path=${encodeURIComponent(scene.source.path)}`,
+  );
+  const absent = await subject().GET(req);
+  privateResponse(absent);
+  assert.equal((await absent.json()).imageGeneration.providerConfigured, false);
+  const providerKey = randomUUID();
+  for (const fail of [false, true]) {
+    const response = await subject({ id: actor }, fail, providerKey).GET(req);
+    const body = await response.json();
+    assert.equal(body.imageGeneration.providerConfigured, true);
+    assert.doesNotMatch(JSON.stringify(body), new RegExp(providerKey));
+  }
+  const anonymous = await subject(null, false, providerKey).GET(req);
+  assert.equal(anonymous.status, 401);
+  assert.equal((await anonymous.json()).imageGeneration, undefined);
 });

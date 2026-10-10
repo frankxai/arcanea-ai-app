@@ -48,7 +48,8 @@ Installed /si, graph-engineering, humanizer and Emil guidance read. Relocated
 design standards resolved under design-agent-standards. Missing config capability
 guides remain unresolved and are not represented as loaded. No config writes.
 
-Status: implementation candidate in draft PR560; no release or creator acceptance certification yet.
+Status: implementation candidate in review-ready PR560; release remains held,
+with no creator acceptance certification yet.
 
 Local implementation evidence: six source/recovery tests and six compiled actual-route
 tests pass; targeted ESLint passes with zero warnings; both browser/review scripts
@@ -94,3 +95,28 @@ the canonical book-reader path, existing media531/gallery472 and creator505.
 No actual production account walkthrough, paid image, comparative creator
 value or rights approval is claimed. Handover is hub242 and programme276.
 The entire platform/team/books/community/developer/commercial objective remains active.
+
+Latest verified source5b0e989026478c4a49ffc797a9d9c333a75e3e7e passes the
+compiled browser38072746669 (desktop,375px touch,reduced motion,forced colors)
+and CodeQL38072746689. Native CI38072746671 is still running at this update.
+Focus now occurs after workspace commit through a layout effect; the prior
+38071810196 focus failure is retained as evidence. Source6d0b54a5 passed full
+native CI38071947747 and CodeQL38072098201, not the later changed revision.
+
+Read-only Vercel environment metadata confirms Supabase and Blob configuration,
+with no image-provider key configured for production or this preview. No values
+were disclosed and no credential/settings mutation occurred. The pending update
+checks the required OpenRouter prerequisite even with a retained local draft;
+new generation stays disabled if unavailable or unknown. A pending request may
+still recover its existing ledger identity. Private saved results and brief
+editing/export stay available. This configuration signal grants no entitlement,
+model availability or rights. The existing generation route is authoritative.
+Seven actual-route tests and six source/recovery tests pass locally; a fresh
+compiled browser check must certify the configuration denial before release.
+
+Required next acceptance: authorize/configure the image-provider rail under
+existing creation-engine531 and credit529 ownership, preserve BYOK/managed
+boundaries, then verify a real scene with two isolated accounts, same-key
+interruption/refund and private reopening. Existing author fixture belongs to
+another session/preview and is not proof for this candidate. Independent review
+budget approval remains unanswered; no review or paid generation has run.

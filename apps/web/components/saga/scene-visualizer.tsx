@@ -57,6 +57,9 @@ function SceneWorkspace({
   const [message, setMessage] = useState("");
   const [selection, setSelection] = useState("");
   const [replacement, setReplacement] = useState<SceneSession | null>(null);
+  const [providerState, setProviderState] = useState<
+    "checking" | "configured" | "unavailable" | "unknown"
+  >("checking");
   const controller = useRef<AbortController | null>(null);
   const actor = useRef(owner);
   const briefRef = useRef<HTMLTextAreaElement | null>(null);
@@ -81,6 +84,7 @@ function SceneWorkspace({
     void (async () => {
       await Promise.resolve();
       if (loadAbort.signal.aborted) return;
+      let hasLocalScene = false;
       try {
         const saved = restoreScene(
           sessionStorage.getItem(sceneSlot(owner, location.pathname)),
@@ -106,41 +110,57 @@ function SceneWorkspace({
           sessionStorage.removeItem(sceneSlot("anonymous", location.pathname));
         }
         setScene(saved ?? draft);
-        if (!saved && !draft && owner !== "anonymous") {
-          void fetch(
-            `/api/reading-scenes?path=${encodeURIComponent(location.pathname)}`,
-            {
-              cache: "no-store",
-              signal: loadAbort.signal,
-            },
-          )
-            .then(async (response) => {
-              if (!response.ok) return;
-              const body = await response.json();
-              const restored = restoreScene(
-                JSON.stringify(body.scene),
-                owner,
-                location.pathname,
-              );
-              if (
-                restored &&
-                revision.current === loadRevision &&
-                actor.current === owner
-              ) {
-                setScene(restored);
-                try {
-                  persistScene(sessionStorage, restored);
-                } catch {
-                  /* The server copy is retained. */
-                }
-              }
-            })
-            .catch(() => {
-              /* Reading remains available; a scene can still be selected. */
-            });
-        }
+        hasLocalScene = Boolean(saved ?? draft);
       } catch {
         setScene(null);
+      }
+      // Check provider configuration even when a browser draft is present.
+      // A late server scene may never overwrite a newer local edit.
+      if (owner !== "anonymous") {
+        void fetch(
+          `/api/reading-scenes?path=${encodeURIComponent(location.pathname)}`,
+          {
+            cache: "no-store",
+            signal: AbortSignal.any([
+              loadAbort.signal,
+              AbortSignal.timeout(15_000),
+            ]),
+          },
+        )
+          .then(async (response) => {
+            const body = await response.json();
+            if (loadAbort.signal.aborted || actor.current !== owner) return;
+            const configured = body.imageGeneration?.providerConfigured;
+            setProviderState(
+              configured === true
+                ? "configured"
+                : configured === false
+                  ? "unavailable"
+                  : "unknown",
+            );
+            if (!response.ok || hasLocalScene) return;
+            const restored = restoreScene(
+              JSON.stringify(body.scene),
+              owner,
+              location.pathname,
+            );
+            if (
+              restored &&
+              revision.current === loadRevision &&
+              actor.current === owner
+            ) {
+              setScene(restored);
+              try {
+                persistScene(sessionStorage, restored);
+              } catch {
+                /* The server copy is retained. */
+              }
+            }
+          })
+          .catch(() => {
+            if (!loadAbort.signal.aborted && actor.current === owner)
+              setProviderState("unknown");
+          });
       }
     })();
     return () => {
@@ -234,6 +254,7 @@ function SceneWorkspace({
 
   async function generate() {
     if (!scene || busy || replacement || !user || isLoading) return;
+    if (providerState !== "configured" && !scene.requestKey) return;
     const next = {
       ...scene,
       requestKey: scene.requestKey ?? crypto.randomUUID(),
@@ -365,6 +386,7 @@ function SceneWorkspace({
       selection={selection}
       authenticated={Boolean(user)}
       isLoading={isLoading}
+      providerState={providerState}
       bookId={bookId}
       chapterTitle={chapterTitle}
       workspaceRef={workspaceRef}

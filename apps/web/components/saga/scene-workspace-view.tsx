@@ -13,6 +13,7 @@ interface Props {
   selection: string;
   authenticated: boolean;
   isLoading: boolean;
+  providerState: "checking" | "configured" | "unavailable" | "unknown";
   bookId: string;
   chapterTitle: string;
   workspaceRef: RefObject<HTMLElement | null>;
@@ -36,6 +37,7 @@ export function SceneWorkspaceView({
   selection,
   authenticated,
   isLoading,
+  providerState,
   bookId,
   chapterTitle,
   workspaceRef,
@@ -181,6 +183,21 @@ export function SceneWorkspaceView({
                     One image · {credits} credits. Reading and editing the brief
                     are free.
                   </p>
+                  {authenticated && providerState !== "configured" && (
+                    <p
+                      className={styles.hint}
+                      id="reading-scene-admission"
+                      role="status"
+                    >
+                      {providerState === "checking"
+                        ? "Checking image generation availability…"
+                        : providerState === "unavailable"
+                          ? "Image generation is currently unavailable. You can edit and download your visual brief."
+                          : "Image generation could not be checked. Your brief is retained; reload to check again."}
+                      {pending &&
+                        " Your earlier request can be recovered with the same identity."}
+                    </p>
+                  )}
                   <div className={styles.actions}>
                     {authenticated ? (
                       <button
@@ -189,8 +206,14 @@ export function SceneWorkspaceView({
                         disabled={
                           busy ||
                           isLoading ||
+                          (!pending && providerState !== "configured") ||
                           Boolean(replacement) ||
                           scene.brief.trim().length < 12
+                        }
+                        aria-describedby={
+                          providerState !== "configured"
+                            ? "reading-scene-admission"
+                            : undefined
                         }
                         onClick={generate}
                       >
@@ -201,7 +224,7 @@ export function SceneWorkspaceView({
                         className={`${button} ${styles.primary}`}
                         href={`/auth/login?next=${encodeURIComponent(scene.source.path)}`}
                       >
-                        Sign in to generate
+                        Sign in to continue
                       </a>
                     )}
                     {busy && (

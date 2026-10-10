@@ -89,9 +89,15 @@ async function main() {
       const requests = [];
       let interrupt = true;
       let saved;
+      let providerConfigured = false;
       await context.route("**/api/reading-scenes**", async (route) => {
         if (route.request().method() === "GET") {
-          return route.fulfill({ json: { scene: saved ?? null } });
+          return route.fulfill({
+            json: {
+              scene: saved ?? null,
+              imageGeneration: { providerConfigured },
+            },
+          });
         }
         const body = route.request().postDataJSON();
         assert.equal(body.source.path, chapter);
@@ -143,7 +149,7 @@ async function main() {
         ).toBeVisible();
         const passage = await selectPassage(page);
         const login = page.getByRole("link", {
-          name: "Sign in to generate",
+          name: "Sign in to continue",
           exact: true,
         });
         await expect(login).toHaveAttribute(
@@ -191,6 +197,27 @@ async function main() {
           .getByRole("button", { name: "Reopen scene", exact: true })
           .click();
         await expect(page.getByLabel("Visual brief")).toHaveValue(brief);
+        await expect(
+          page.getByRole("button", { name: "Generate scene", exact: true }),
+        ).toBeDisabled();
+        await expect(
+          page
+            .getByRole("status")
+            .filter({ hasText: "Image generation is currently unavailable" }),
+        ).toBeVisible();
+        assert.equal(
+          requests.length,
+          0,
+          "An unconfigured provider must not receive a generation request",
+        );
+        providerConfigured = true;
+        await page.reload();
+        await page
+          .getByRole("button", { name: "Reopen scene", exact: true })
+          .click();
+        await expect(
+          page.getByRole("button", { name: "Generate scene", exact: true }),
+        ).toBeEnabled();
         assert.equal(
           await page.evaluate(
             (chapter) =>
@@ -343,6 +370,7 @@ async function main() {
             "source selection",
             "focus",
             "anonymous admission",
+            "unconfigured provider blocks new generation while retaining the brief",
             "edited brief",
             "replacement cancellation preserves current scene",
             "reload",
