@@ -10,6 +10,17 @@ const base = process.env.VOICE_TEST_BASE_URL || "http://localhost:3001";
 // This never requests a real microphone or tests provider audio quality.
 async function installCaptureFixture(context) {
   await context.addInitScript(() => {
+    const originalFetch = window.fetch;
+    window.__transcribeAborts = 0;
+    window.fetch = function (input, init) {
+      if (input === "/api/ai/transcribe")
+        init?.signal?.addEventListener(
+          "abort",
+          () => window.__transcribeAborts++,
+          { once: true },
+        );
+      return originalFetch.call(this, input, init);
+    };
     window.SpeechRecognition = undefined;
     window.webkitSpeechRecognition = undefined;
     Object.defineProperty(navigator.mediaDevices, "getUserMedia", {
@@ -110,6 +121,7 @@ async function verifyChatRecovery(browser, mode) {
     reducedMotion: mode.motion,
   });
   await installCaptureFixture(context);
+  let releaseTranscription;
   try {
     const page = await context.newPage();
     page.setDefaultTimeout(15000);
@@ -117,6 +129,7 @@ async function verifyChatRecovery(browser, mode) {
     page.on("pageerror", (error) => errors.push(error.message));
     let chatPosts = 0;
     let transcriptionStatus = 401;
+    let pendingTranscription = false;
     const transcriptions = [];
     await page.route("**/api/ai/chat", async (route) => {
       if (route.request().method() === "POST") chatPosts++;
@@ -128,17 +141,25 @@ async function verifyChatRecovery(browser, mode) {
     });
     await page.route("**/api/ai/transcribe", async (route) => {
       transcriptions.push(route.request().headers()["x-groq-key"]);
-      await route.fulfill({
-        status: transcriptionStatus,
-        contentType: "application/json",
-        body: JSON.stringify({
-          error:
-            transcriptionStatus === 400
-              ? "Check your voice key in Settings."
-              : "private-upstream-fixture",
-          cta: "byok",
-        }),
-      });
+      const status = transcriptionStatus;
+      if (pendingTranscription)
+        await new Promise((resolve) => {
+          releaseTranscription = resolve;
+        });
+      await route
+        .fulfill({
+          status,
+          contentType: "application/json",
+          body: JSON.stringify({
+            text: status === 200 ? "The keeper returns." : undefined,
+            error:
+              status === 400
+                ? "Check your voice key in Settings."
+                : "private-upstream-fixture",
+            cta: "byok",
+          }),
+        })
+        .catch(() => {});
     });
     await page.route("**/api/ai/speak", (route) =>
       route.fulfill({
@@ -223,6 +244,64 @@ async function verifyChatRecovery(browser, mode) {
       "test-customer-groq",
       "test-customer-groq",
     ]);
+    pendingTranscription = true;
+    for (const status of [401, 200]) {
+      transcriptionStatus = status;
+      releaseTranscription = undefined;
+      await input.fill(originalDraft);
+      await page
+        .getByRole("button", { name: "Voice input (auto-send)", exact: true })
+        .click();
+      await page
+        .getByRole("button", { name: "Stop recording", exact: true })
+        .click();
+      await expect.poll(() => typeof releaseTranscription).toBe("function");
+      await expect(
+        page.getByRole("button", { name: "Cancel transcription", exact: true }),
+      ).toBeVisible();
+      const revisedDraft = "  Edited while transcription was pending.  ";
+      await input.fill(revisedDraft);
+      releaseTranscription();
+      await expect(input).toHaveValue(
+        status === 200 ? revisedDraft + " The keeper returns." : revisedDraft,
+      );
+      if (status === 401) {
+        await expect(inputAlert).toBeVisible();
+        await inputAlert
+          .getByRole("button", {
+            name: "Dismiss voice input error",
+            exact: true,
+          })
+          .click();
+      }
+      assert.equal(
+        chatPosts,
+        0,
+        "Typing while voice is pending must suppress automatic submission",
+      );
+    }
+    transcriptionStatus = 401;
+    releaseTranscription = undefined;
+    await input.fill(originalDraft);
+    await page
+      .getByRole("button", { name: "Voice input (auto-send)", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Stop recording", exact: true })
+      .click();
+    await expect.poll(() => typeof releaseTranscription).toBe("function");
+    const cancelTranscription = page.getByRole("button", {
+      name: "Cancel transcription",
+      exact: true,
+    });
+    await cancelTranscription.focus();
+    await page.keyboard.press("Enter");
+    assert.equal(await page.evaluate(() => window.__transcribeAborts), 1);
+    releaseTranscription();
+    await expect(cancelTranscription).toHaveCount(0);
+    await expect(input).toHaveValue(originalDraft);
+    await expect(inputAlert).toHaveCount(0);
+    pendingTranscription = false;
     await input.fill("");
     await page
       .getByRole("button", {
@@ -267,11 +346,14 @@ async function verifyChatRecovery(browser, mode) {
       draftPreserved: true,
       noSilentTranscription: true,
       noDraftAutoSend: true,
+      pendingDraftEditsPreserved: true,
+      transcriptionCancel: true,
       messageReentrantCancel: true,
       messageErrorVisibleWithoutHover: true,
       providerRequests: 0,
     };
   } finally {
+    releaseTranscription?.();
     await context.close();
   }
 }
@@ -309,11 +391,17 @@ async function verifyRoomRecovery(browser, mode) {
       "The lighthouse keeper carefully unfolds the chart, marks the shoals, and returns to the signal room. ".repeat(
         4,
       );
+    const corsHeaders = {
+      "access-control-allow-origin": "*",
+      "access-control-allow-headers": "authorization,content-type",
+      "access-control-allow-methods": "POST,OPTIONS",
+    };
     await page.route(
       "https://api.groq.com/openai/v1/audio/transcriptions",
       (route) =>
         route.fulfill({
           status: 200,
+          headers: corsHeaders,
           contentType: "text/plain",
           body: "Read my lighthouse scene.",
         }),
@@ -323,6 +411,7 @@ async function verifyRoomRecovery(browser, mode) {
       (route) =>
         route.fulfill({
           status: 200,
+          headers: corsHeaders,
           contentType: "application/json",
           body: JSON.stringify({ choices: [{ message: { content: reply } }] }),
         }),

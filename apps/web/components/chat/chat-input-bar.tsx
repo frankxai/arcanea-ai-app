@@ -477,6 +477,7 @@ export function ChatInputBar({
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [voiceAutoSend, setVoiceAutoSend] = useState(true);
   const [voiceRecovery, setVoiceRecovery] = useState<VoiceRecovery | null>(
     null,
@@ -507,6 +508,13 @@ export function ChatInputBar({
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const transcriptionRef = useRef<AbortController | null>(null);
+  const voiceOperationRef = useRef(false);
+  const voiceMountedRef = useRef(true);
+  const draftRef = useRef({ message, attachments });
+  useEffect(() => {
+    draftRef.current = { message, attachments };
+  }, [message, attachments]);
 
   // Live (on-device) speech preview — Whisper remains the authoritative final text.
   // Destructure the stable functions so recording callbacks don't churn as the
@@ -535,7 +543,11 @@ export function ChatInputBar({
 
   // Cleanup voice recording on unmount to prevent timeout firing on unmounted component
   useEffect(() => {
+    voiceMountedRef.current = true;
     return () => {
+      voiceMountedRef.current = false;
+      transcriptionRef.current?.abort();
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
       if (voiceTimeoutRef.current) {
         clearTimeout(voiceTimeoutRef.current);
         voiceTimeoutRef.current = null;
@@ -569,6 +581,7 @@ export function ChatInputBar({
 
   const handleSend = useCallback(() => {
     if (!canSend) return;
+    transcriptionRef.current?.abort();
     onSend(message.trim(), attachments.length > 0 ? attachments : undefined);
     setMessage("");
     setAttachments([]);
@@ -607,6 +620,7 @@ export function ChatInputBar({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const val = e.target.value.slice(0, MAX_CHARS);
+      draftRef.current.message = val;
       setMessage(val);
 
       const cursorPos = e.target.selectionStart ?? val.length;
@@ -787,6 +801,7 @@ export function ChatInputBar({
   }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
+    if (voiceOperationRef.current) return;
     setVoiceRecovery(null);
     if (
       typeof navigator === "undefined" ||
@@ -795,8 +810,14 @@ export function ChatInputBar({
       showValidationToast("Voice input is not supported in this browser.");
       return;
     }
+    voiceOperationRef.current = true;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!voiceMountedRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        voiceOperationRef.current = false;
+        return;
+      }
       mediaStreamRef.current = stream;
       // Snapshot any already-typed text so live/Whisper transcript appends to it.
       voiceBaseRef.current = message;
@@ -817,6 +838,14 @@ export function ChatInputBar({
 
       mediaRecorder.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
+        if (!voiceMountedRef.current) {
+          voiceOperationRef.current = false;
+          return;
+        }
+        const draftAtStop = { ...draftRef.current };
+        const controller = new AbortController();
+        transcriptionRef.current = controller;
+        setIsTranscribing(true);
         const blob = new Blob(audioChunksRef.current, {
           type: mediaRecorder.mimeType,
         });
@@ -832,6 +861,7 @@ export function ChatInputBar({
           const res = await fetch("/api/ai/transcribe", {
             method: "POST",
             headers: voiceCredentialHeaders(),
+            signal: controller.signal,
             body: formData,
           });
           if (res.ok) {
@@ -846,11 +876,21 @@ export function ChatInputBar({
               "Voice transcription failed. Try again or check your provider settings.",
             cta: "retry",
           };
+        } finally {
+          transcriptionRef.current = null;
+          voiceOperationRef.current = false;
+          if (voiceMountedRef.current) setIsTranscribing(false);
         }
+        if (controller.signal.aborted || !voiceMountedRef.current) return;
         if (!spoken) spoken = spokenRef.current.trim();
 
         const originalDraft = voiceBaseRef.current;
-        const base = originalDraft.trim();
+        const preview = [originalDraft.trim(), spokenRef.current.trim()]
+          .filter(Boolean)
+          .join(" ");
+        const baseDraft =
+          draftAtStop.message === preview ? originalDraft : draftAtStop.message;
+        const base = baseDraft.trim();
         const combined = base ? `${base} ${spoken}` : spoken;
 
         // Clear voice scratch state now that we have an authoritative result.
@@ -859,19 +899,40 @@ export function ChatInputBar({
         resetSpeech();
 
         if (!spoken) {
-          setMessage(originalDraft);
+          setMessage((current) =>
+            current === draftAtStop.message &&
+            (current === originalDraft || current === preview)
+              ? originalDraft
+              : current,
+          );
           setVoiceRecovery(
             recovery ?? {
               message:
-                "No speech was recognized. Your draft is saved here. Try recording again.",
+                "No speech was recognized. Your draft is still here. Try recording again.",
               cta: "retry",
             },
           );
           return;
         }
+        if (
+          draftRef.current.message !== draftAtStop.message ||
+          draftRef.current.attachments !== draftAtStop.attachments
+        ) {
+          setMessage((current) => {
+            const keptDraft =
+              current === draftAtStop.message ? baseDraft : current;
+            return `${keptDraft}${keptDraft.trim() ? " " : ""}${spoken}`;
+          });
+          return;
+        }
         if (voiceAutoSend) {
           // One-step voice: transcribe → send immediately
-          onSend(combined, attachments.length > 0 ? attachments : undefined);
+          onSend(
+            combined,
+            draftAtStop.attachments.length > 0
+              ? draftAtStop.attachments
+              : undefined,
+          );
           setMessage("");
           setAttachments([]);
         } else {
@@ -888,6 +949,7 @@ export function ChatInputBar({
         stopRecording();
       }, 60_000);
     } catch (e) {
+      voiceOperationRef.current = false;
       console.warn("Microphone access denied:", e);
       stopSpeech();
       showValidationToast(
@@ -946,6 +1008,22 @@ export function ChatInputBar({
             aria-label="Dismiss voice input error"
           >
             <PhX className="mx-auto h-4 w-4" />
+          </button>
+        </div>
+      )}
+      {isTranscribing && (
+        <div
+          role="status"
+          aria-label="Voice transcription"
+          className="mb-2 flex flex-wrap items-center gap-2 px-4 text-sm text-[var(--arc-text-secondary)]"
+        >
+          <span>Transcribing your recording…</span>
+          <button
+            type="button"
+            onClick={() => transcriptionRef.current?.abort()}
+            className="inline-flex min-h-11 items-center rounded-lg px-3 text-[var(--arc-brand-atlantean-teal)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+          >
+            Cancel transcription
           </button>
         </div>
       )}
@@ -1121,7 +1199,7 @@ export function ChatInputBar({
           {/* Right-side buttons (mic + send/stop) */}
           <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
             {/* Voice input — always visible, coexists with typing */}
-            {!isStreaming && !isRecording && (
+            {!isStreaming && !isRecording && !isTranscribing && (
               <div className="relative group/voice">
                 <button
                   type="button"
