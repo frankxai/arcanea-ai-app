@@ -118,6 +118,7 @@ interface ResultCardProps {
 function ResultCard({ origin, onRetake }: ResultCardProps) {
   const result = ORIGIN_RESULTS[origin];
   const [copied, setCopied] = useState(false);
+  const [copiedDossier, setCopiedDossier] = useState(false);
 
   const handleShare = useCallback(() => {
     const shareMessage = `${result.shareText} — arcanea.ai/quiz`;
@@ -126,6 +127,25 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
       setTimeout(() => setCopied(false), 2000);
     });
   }, [result.shareText]);
+
+  const handleCopyDossier = useCallback(() => {
+    const dossier = {
+      entityArchetype: result.name,
+      originRealm: result.originRealm,
+      dominantGate: `${result.primaryGate} (${result.frequencyHz} Hz)`,
+      linguisticHeritage: result.linguisticRoot,
+      tactilePhysicalAnchor: result.tactileAnchor,
+      sandersonianMagicToll: result.magicTollSummary,
+      monomythStage: result.monomythStage,
+      guardianPairing: result.guardian,
+      powerSource: result.powerSource,
+      canonProvenance: "Kingdom of Light / Solfeggio Harmonic Grid",
+    };
+    navigator.clipboard.writeText(JSON.stringify(dossier, null, 2)).then(() => {
+      setCopiedDossier(true);
+      setTimeout(() => setCopiedDossier(false), 2000);
+    });
+  }, [result]);
 
   return (
     <m.div
@@ -151,18 +171,30 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
           boxShadow: `0 0 40px ${result.color}15`,
         }}
       >
-        {/* Origin class badge */}
-        <div className="flex items-center gap-3">
-          <span
-            className="text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
-            style={{
-              color: result.color,
-              background: `${result.color}18`,
-              border: `1px solid ${result.color}30`,
-            }}
+        {/* Origin class badge & Frequency Pill */}
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <span
+              className="text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
+              style={{
+                color: result.color,
+                background: `${result.color}18`,
+                border: `1px solid ${result.color}30`,
+              }}
+            >
+              Origin Class
+            </span>
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80">
+              {result.frequencyHz} Hz
+            </span>
+          </div>
+
+          <button
+            onClick={handleCopyDossier}
+            className="text-xs font-mono px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors flex items-center gap-1.5"
           >
-            Origin Class
-          </span>
+            {copiedDossier ? "✓ Dossier Copied" : "Copy Provenance JSON"}
+          </button>
         </div>
 
         {/* Name + tagline */}
@@ -179,22 +211,45 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* Description */}
         <p className="text-white/75 leading-relaxed">{result.description}</p>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Multiverse Stats Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Power Source", value: result.powerSource },
-            { label: "Primary Gate", value: result.primaryGate },
+            { label: "Gate & Resonance", value: `${result.primaryGate} (${result.frequencyHz} Hz)` },
+            { label: "Origin Realm", value: result.originRealm },
             { label: "Guardian", value: result.guardian },
+            { label: "Dialect Root", value: result.linguisticRoot },
           ].map(({ label, value }) => (
             <div
               key={label}
-              className="rounded-xl p-3 text-center"
+              className="rounded-xl p-3 text-left"
               style={{ background: `${result.color}0a`, border: `1px solid ${result.color}20` }}
             >
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-1">{label}</p>
-              <p className="text-white/90 text-sm font-medium">{value}</p>
+              <p className="text-white/40 text-[10px] uppercase font-mono tracking-wider mb-1">{label}</p>
+              <p className="text-white/90 text-xs font-medium truncate">{value}</p>
             </div>
           ))}
+        </div>
+
+        {/* Tactile Anchor & Sandersonian Magic Toll */}
+        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2 text-xs">
+          <div>
+            <span className="text-white/40 uppercase font-mono text-[10px] block">
+              Physical Sensory Anchor
+            </span>
+            <span className="text-white/80 font-medium">{result.tactileAnchor}</span>
+          </div>
+          <div>
+            <span className="text-white/40 uppercase font-mono text-[10px] block">
+              Concrete Channeling Toll & Remedy
+            </span>
+            <span className="text-white/70">{result.magicTollSummary}</span>
+          </div>
+          <div>
+            <span className="text-white/40 uppercase font-mono text-[10px] block">
+              Monomyth Transformation
+            </span>
+            <span className="text-white/70">{result.monomythStage}</span>
+          </div>
         </div>
 
         {/* Quote */}
@@ -224,17 +279,6 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
               border: `1px solid ${copied ? "rgba(127,255,212,0.3)" : result.color + "30"}`,
             }}
           >
-            {/* Inline clipboard SVG */}
-            {copied ? (
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8.5l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <rect x="5" y="1" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M3 5H2.5A1.5 1.5 0 0 0 1 6.5v7A1.5 1.5 0 0 0 2.5 15h7A1.5 1.5 0 0 0 11 13.5V13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-              </svg>
-            )}
             {copied ? "Copied" : "Copy"}
           </button>
         </div>
@@ -242,7 +286,7 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Link
-            href="/worlds/create"
+            href="/atlas"
             className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
               background: `linear-gradient(135deg, ${result.color}35, ${result.color}18)`,
@@ -250,13 +294,13 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
               color: result.color,
             }}
           >
-            Create Your Character
+            Inspect in Multiverse Atlas
           </Link>
           <Link
-            href="/lore"
+            href="/worlds/create"
             className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm border border-white/10 text-white/60 hover:text-white/90 hover:border-white/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
           >
-            Explore the lore
+            Create Your Character
           </Link>
         </div>
 

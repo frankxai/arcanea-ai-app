@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import Link from "next/link";
 import {
   LazyMotion,
   domAnimation,
@@ -48,18 +49,10 @@ const HOW_IT_WORKS = [
 ];
 
 const HERO_STATS = [
-  {
-    value: "12",
-    label: "Supabase tables",
-    color: "var(--arc-brand-atlantean-teal)",
-  },
-  { value: "5", label: "Elements", color: "var(--arc-brand-atlantean-teal)" },
-  { value: "∞", label: "Connected lore", color: "var(--arc-void)" },
-  {
-    value: "Fork anything",
-    label: "Always open",
-    color: "var(--arc-brand-arcanean-gold)",
-  },
+  { value: "10", label: "Solfeggio Gates", color: "var(--arc-brand-arcanean-gold)" },
+  { value: "7", label: "Living Realms", color: "var(--arc-brand-atlantean-teal)" },
+  { value: "6", label: "Dialect Families", color: "var(--arc-brand-cosmic-blue)" },
+  { value: "∞", label: "Forkable Universes", color: "var(--arc-void)" },
 ];
 
 export function WorldsHero() {
@@ -219,6 +212,22 @@ export function WorldsHero() {
             connects into a coherent, living universe — ready to fork, explore,
             and evolve.
           </m.p>
+
+          {/* Multiverse Atlas bridge */}
+          <m.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.16 }}
+            className="mb-10"
+          >
+            <Link
+              href="/atlas"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] hover:border-white/20 text-xs font-medium text-white/70 hover:text-white transition-all backdrop-blur-sm group"
+            >
+              <span>Inspect Acoustic Leylines &amp; Corridors in the Multiverse Atlas</span>
+              <span className="text-[var(--arc-brand-atlantean-teal)] group-hover:translate-x-0.5 transition-transform">→</span>
+            </Link>
+          </m.div>
 
           {/* Stats row — parallax + stagger with spring */}
           <m.div

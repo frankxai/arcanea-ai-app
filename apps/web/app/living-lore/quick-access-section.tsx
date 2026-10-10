@@ -15,7 +15,20 @@ export function QuickAccessSection() {
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <m.div variants={staggerItem}>
+            <Link
+              href="/atlas"
+              className="group block rounded-2xl liquid-glass p-6 hover:border-[var(--arc-brand-arcanean-gold,#d4af37)]/30 hover:shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-all duration-300"
+            >
+              <p className="font-display text-sm font-semibold text-text-primary group-hover:text-[var(--arc-brand-arcanean-gold,#d4af37)] transition-colors">
+                Multiverse Atlas
+              </p>
+              <p className="text-xs text-text-muted mt-1">
+                Acoustic leylines &amp; Solfeggio standing waves.
+              </p>
+            </Link>
+          </m.div>
           <m.div variants={staggerItem}>
             <Link
               href="/living-lore/chronicle"
