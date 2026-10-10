@@ -87,3 +87,15 @@ responsed2HKatz7OMua_uMP05SxmAo, all4 source hashes checked; receipt6099458280.
 
 Incoming package guide SHA256d0a643deab98f91049f2b24ea4615288593cb877ad83a9d3fbbdb3c981afe45b.
 Hub238 merged normally16:04:58UTC at aef3ea93f964d02ac3f08ab0b7ec943736ae9862; receiving tree matches its reviewed source.
+
+The first68e3 MCP response finished STOP but failed source/verdict schema
+validation. Only its manifest and failure phase were retained by the earlier
+script; that attempt earned no approval and its missing final text cannot be
+reconstructed. The rail now retains final non-thought text and response metadata
+before validating, keeps failure closed, and uses an API JSON Schema with the
+exact reviewedCommit enum and a separate system instruction treating source as
+untrusted evidence. Official Google generateContent schema documentation was
+read. The already passed, unchanged hub review is opt-in and is not repeated by
+default for subsequent MCP review attempts. Hub receiving CI38066205322 and
+secret scan38066205309 passed. Full programme status is recorded in existing
+issue276 comment6099504755.

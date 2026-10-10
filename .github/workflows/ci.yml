@@ -2,6 +2,11 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      review_hub_release:
+        description: Review the pinned public release handover
+        type: boolean
+        default: false
   push:
     branches: [main]
   pull_request:
@@ -462,7 +467,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Read the exact public release handover for independent review
-        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010'
+        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
         uses: actions/checkout@v7
         with:
           repository: frankxai/agentic-ops-hub
@@ -471,13 +476,13 @@ jobs:
           fetch-depth: 2
           persist-credentials: false
       - name: Review the exact handover using the existing independent provider
-        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010'
+        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           REVIEW_TARGET: hub-release
         run: node scripts/review-author-recovery.mjs
       - name: Retain handover final findings and source receipt
-        if: always() && github.ref_name == 'agent/codex/mcp-runtime-integration-20261010'
+        if: always() && github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
         uses: actions/upload-artifact@v7
         with:
           name: hub-review-5326dc36c78f-attempt-${{ github.run_attempt }}
