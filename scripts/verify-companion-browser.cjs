@@ -30,6 +30,7 @@ const source = [
   "apps/web/lib/supabase/client.ts",
   "apps/web/app/api/ai/chat/route.ts",
   "apps/web/components/command-palette.tsx",
+  "apps/web/components/worlds/WorldsOnboarding.tsx",
 ];
 const modes = [
   {
@@ -130,21 +131,27 @@ async function main() {
     event({ type: "start", messageId: `fixture-${streams.length}` });
     event({ type: "start-step" });
     event({ type: "text-start", id: "text-1" });
-    event({
-      type: "text-delta",
-      id: "text-1",
-      delta: "A door opens beneath the tide.",
-    });
+    if (streamMode !== "empty")
+      event({
+        type: "text-delta",
+        id: "text-1",
+        delta: "A door opens beneath the tide.",
+      });
     record.finish = () => {
       if (response.destroyed) return;
-      event({ type: "text-delta", id: "text-1", delta: " Late fixture text." });
+      if (streamMode !== "empty")
+        event({
+          type: "text-delta",
+          id: "text-1",
+          delta: " Late fixture text.",
+        });
       event({ type: "text-end", id: "text-1" });
       event({ type: "finish-step" });
       event({ type: "finish", finishReason: "stop" });
       record.finished = true;
       response.end("data: [DONE]\n\n");
     };
-    if (streamMode === "complete") record.finish();
+    if (streamMode === "complete" || streamMode === "empty") record.finish();
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   const fixtureUrl = `http://127.0.0.1:${server.address().port}/chat`;
@@ -186,6 +193,7 @@ async function main() {
         return route.continue();
       });
       await page.goto(`${base}/worlds`);
+      await page.getByRole("button", { name: "Skip", exact: true }).click();
       const opener = page.getByRole("button", {
         name: "Open Arcanea companion",
         exact: true,
@@ -244,7 +252,14 @@ async function main() {
       });
       assert.equal(requests, 0, "IME composition must not send");
       streamMode = "complete";
-      await panel.getByRole("button", { name: "Send", exact: true }).click();
+      await panel.locator("form").evaluate((form) => {
+        form.dispatchEvent(
+          new Event("submit", { bubbles: true, cancelable: true }),
+        );
+        form.dispatchEvent(
+          new Event("submit", { bubbles: true, cancelable: true }),
+        );
+      });
       await expect(log).toContainText(
         "A door opens beneath the tide. Late fixture text.",
       );
@@ -298,6 +313,22 @@ async function main() {
         "Response interrupted",
       );
       await expect(panel).not.toContainText("fixture-private-detail");
+      await panel
+        .getByRole("button", { name: "Edit last message", exact: true })
+        .click();
+      await expect(input).toHaveValue("Draft survives closing.");
+      const userCount = await log
+        .locator("article")
+        .filter({ hasText: /^You/ })
+        .count();
+      streamMode = "empty";
+      await panel.getByRole("button", { name: "Send", exact: true }).click();
+      await expect(panel.getByRole("alert")).toContainText("No text returned");
+      assert.equal(
+        await log.locator("article").filter({ hasText: /^You/ }).count(),
+        userCount,
+        "Editing a failed message replaces it instead of duplicating the turn",
+      );
       await panel
         .getByRole("button", { name: "Edit last message", exact: true })
         .click();

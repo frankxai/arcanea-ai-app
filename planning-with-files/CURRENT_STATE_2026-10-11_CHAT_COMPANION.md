@@ -20,12 +20,16 @@ Owning programme: [#276](https://github.com/frankxai/arcanea-ai-app/issues/276).
 | Ctrl/Cmd+K opens both companion and command palette              | Existing command palette owns its shortcut                                                | One keystroke opens one interface                                               |
 | Missing-key denial becomes “Something went wrong”                | Shared safe error copy points to customer provider settings                               | The customer gets an actionable next step without raw provider details          |
 | Arbitrary consumer styling and animated spring toggles           | Canonical design-system CSS, static keyboard interactions, 44px targets and visible focus | Respect the accepted Arcanea palette and repeated-use accessibility             |
+| Empty SDK streams finish successfully with no visible answer     | Explicit “No text returned” recovery retains the sent message                             | A completed HTTP stream alone does not establish a usable reply                 |
+| Editing a failed prompt could append a duplicate user turn       | The installed SDK replaces the identified failed message                                  | Recovery keeps the conversational context coherent                              |
 
 The named alternative is the existing full chat's SDK transport/provider implementation. Reuse avoids a second protocol implementation. The installed versions are AI SDK `6.0.300` and React bindings `3.0.303`; no package upgrade is included. Current upstream documentation defaults to v7, so installed source remains the implementation reference for this repair.
 
 ## Evidence limits and release state
 
 Implementation is a candidate until its checks and rendered captures pass. The hosted browser fixture intercepts provider requests and emits synthetic SDK stream events. Its synthetic Supabase BroadcastChannel event tests the actual AuthProvider's UI lifetime; it does not establish real login, cookies, production RLS or customer outcomes. No real provider calls or production writes are authorized in that fixture.
+
+Retained attempts: run38092654639 at `010c7077afcff4148e256feca38822c2c192efa6` could not locate the opener after five seconds. Run38092934564 at `735399aeaf437d6d7a718d88dd26fae908cad929` retained a failure screenshot and no page errors: the normal first-visit Worlds dialog correctly hides background controls from accessibility navigation. The fixture now dismisses it through its visible Skip button. Increasing the wait alone did not fix the check. Both failed receipts remain available. A separate in-process check of the installed SDK reproduced an empty stream ending `ready` with no error or answer; explicit empty-response recovery was then added.
 
 Cancellation aborts the browser request. The current server chat route's provider cancellation and billing behaviour are outside this scope; already-started work may still be charged. Provider key storage remains the existing browser settings implementation, whose wider account isolation is a separate owned task. Replies are ephemeral in this page and do not transfer into full chat.
 

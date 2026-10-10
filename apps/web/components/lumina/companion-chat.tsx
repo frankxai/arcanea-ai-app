@@ -25,19 +25,25 @@ function textOf(message: UIMessage) {
 
 export function CompanionChat({ open }: { open: boolean }) {
   const provider = useProvider();
+  const [problem, setProblem] = useState<ChatErrorMessage | null>(null);
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/ai/chat" }),
     [],
   );
   const { messages, sendMessage, status, error, stop, clearError } = useChat({
     transport,
+    onFinish: ({ message, isAbort, isError }) => {
+      if (!isAbort && !isError && !textOf(message).trim()) {
+        setProblem(getErrorMessage("Empty response"));
+      }
+    },
   });
   const [draft, setDraft] = useState("");
-  const [problem, setProblem] = useState<ChatErrorMessage | null>(null);
   const [stopped, setStopped] = useState(false);
   const input = useRef<HTMLTextAreaElement>(null);
   const log = useRef<HTMLDivElement>(null);
   const sending = useRef(false);
+  const editingMessage = useRef<string | undefined>(undefined);
   const busy = status === "submitted" || status === "streaming";
   const recovery = problem ?? (error ? getErrorMessage(error) : null);
 
@@ -69,7 +75,7 @@ export function CompanionChat({ open }: { open: boolean }) {
     setDraft("");
     try {
       await sendMessage(
-        { text },
+        { text, messageId: editingMessage.current },
         {
           body: {
             provider: provider.provider,
@@ -82,6 +88,7 @@ export function CompanionChat({ open }: { open: boolean }) {
       // SDK errors normally arrive through `error`; retain safe recovery for thrown failures too.
       setProblem(getErrorMessage("Response interrupted"));
     } finally {
+      editingMessage.current = undefined;
       sending.current = false;
     }
   }
@@ -94,7 +101,10 @@ export function CompanionChat({ open }: { open: boolean }) {
     const last = [...messages]
       .reverse()
       .find((message) => message.role === "user");
-    if (last) setDraft(textOf(last));
+    if (last) {
+      editingMessage.current = last.id;
+      setDraft(textOf(last));
+    }
     clearError();
     setProblem(null);
     input.current?.focus();

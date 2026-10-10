@@ -8,6 +8,13 @@ export function getErrorMessage(error: string | Error): ChatErrorMessage {
   const message = (
     typeof error === "string" ? error : error.message
   ).toLowerCase();
+  if (message.includes("empty response")) {
+    return {
+      title: "No text returned",
+      action:
+        "Your message remains available. Check your provider before sending again; it may charge for work already started.",
+    };
+  }
   if (
     message.includes("connect your provider key") ||
     message.includes("customer_key_required") ||

@@ -49,6 +49,7 @@ test("rejected keys, rate limits and interrupted requests have distinct recovery
   );
   assert.equal(getErrorMessage("ETIMEDOUT").title, "Response timed out");
   assert.equal(getErrorMessage("HTTP 503").title, "Response interrupted");
+  assert.equal(getErrorMessage("Empty response").title, "No text returned");
 });
 test("raw provider details and credential-looking values are never displayed", () => {
   const secret = "synthetic-private-customer-value";
