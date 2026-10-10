@@ -7,6 +7,14 @@ on:
         description: Review the pinned public release handover
         type: boolean
         default: false
+      review_hub_head:
+        description: Full handover commit hash in the owned review lane
+        type: string
+        default: ""
+      review_hub_base:
+        description: Full first-parent hash of that handover commit
+        type: string
+        default: ""
   push:
     branches: [main]
   pull_request:
@@ -162,6 +170,9 @@ jobs:
 
       - name: Verify preview deployment history handling
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
+
+      - name: Verify independent review admission before provider access
+        run: node --test scripts/test-independent-review-admission.mjs
 
       - name: Verify auth recovery and creator economics
         run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs scripts/tests/provider-routing.test.mjs scripts/tests/provider-preferences.test.mjs scripts/tests/notification-channel.test.mjs
@@ -455,7 +466,7 @@ jobs:
   author-independent-review:
     name: Independent author source review
     needs: author-preview
-    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010')
+    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -466,35 +477,45 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Validate pinned handover inputs before checkout
+        if: github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_release
+        env:
+          REVIEW_HUB_HEAD: ${{ inputs.review_hub_head }}
+          REVIEW_HUB_BASE: ${{ inputs.review_hub_base }}
+        run: |
+          node --input-type=module -e 'for (const key of ["REVIEW_HUB_HEAD", "REVIEW_HUB_BASE"]) { if (!/^[a-f0-9]{40}$/.test(process.env[key] || "")) throw Error("Full pinned handover hashes required"); }'
       - name: Read the exact public release handover for independent review
-        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
+        if: (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
         uses: actions/checkout@v7
         with:
           repository: frankxai/agentic-ops-hub
-          ref: 5326dc36c78f324ad7c47573d875c7b9689e8ecb
+          ref: ${{ github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_head || '5326dc36c78f324ad7c47573d875c7b9689e8ecb' }}
           path: .review-hub
           fetch-depth: 2
           persist-credentials: false
       - name: Review the exact handover using the existing independent provider
-        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
+        if: (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           REVIEW_TARGET: hub-release
+          REVIEW_HUB_HEAD: ${{ inputs.review_hub_head }}
+          REVIEW_HUB_BASE: ${{ inputs.review_hub_base }}
         run: node scripts/review-author-recovery.mjs
       - name: Retain handover final findings and source receipt
-        if: always() && github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
+        if: always() && (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
         uses: actions/upload-artifact@v7
         with:
-          name: hub-review-5326dc36c78f-attempt-${{ github.run_attempt }}
+          name: hub-review-${{ github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_head || '5326dc36c78f' }}-attempt-${{ github.run_attempt }}
           path: screenshots/hub-review/
           retention-days: 7
           if-no-files-found: warn
       - name: Review complete exact source using the existing independent provider
+        if: github.ref_name != 'agent/codex/review-handover-20261010' || !inputs.review_hub_release
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/review-author-recovery.mjs
       - name: Retain final findings and exact source receipt
-        if: always()
+        if: always() && (github.ref_name != 'agent/codex/review-handover-20261010' || !inputs.review_hub_release)
         uses: actions/upload-artifact@v7
         with:
           name: author-review-${{ github.sha }}-attempt-${{ github.run_attempt }}
