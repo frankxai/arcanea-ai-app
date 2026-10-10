@@ -79,6 +79,18 @@ jobs:
   # ============================================
   lint:
     name: Lint
+    services:
+      author-db:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-author-fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     runs-on: ubuntu-latest
     needs: install
     # Runs even when install failed, so this required context fails instead of
@@ -153,6 +165,14 @@ jobs:
 
       - name: Verify customer voice credentials, privacy and recovery
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts
+
+      - name: Verify author credentials and exact draft acknowledgements
+        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts
+
+      - name: Verify author draft ownership, persistence and migration recovery
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -f supabase/tests/author-draft-recovery.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
