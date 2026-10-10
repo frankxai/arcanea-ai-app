@@ -4,8 +4,11 @@
 import { PhCircleNotch } from "@/lib/phosphor-icons";
 
 export default function Loading() {
+  // Fills exactly the visible viewport below the fixed nav (main already has
+  // pt-[var(--nav-h)]), so the spinner is centred on screen and the footer
+  // stays below the fold.
   return (
-    <div className="flex min-h-[100svh] flex-col items-center justify-center px-4 py-16">
+    <div className="flex min-h-[calc(100svh-var(--nav-h,4rem))] flex-col items-center justify-center px-4 py-16">
       {/* Animated loader with cosmic glow */}
       <div className="relative mb-8">
         <div className="absolute inset-0 animate-pulse blur-2xl bg-atlantean-teal-aqua/30 rounded-full" />

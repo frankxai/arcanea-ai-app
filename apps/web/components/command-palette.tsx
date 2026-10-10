@@ -53,8 +53,13 @@ const ACTION_ITEMS = [
   { name: "Take Origin Quiz", href: "/quiz", group: "Actions" },
 ];
 
-export function CommandPalette() {
-  const [open, setOpen] = useState(false);
+export function CommandPalette({
+  initialOpen = false,
+}: {
+  /** Open on mount, e.g. when Cmd/Ctrl+K was pressed before it had loaded. */
+  initialOpen?: boolean;
+} = {}) {
+  const [open, setOpen] = useState(initialOpen);
   const router = useRouter();
 
   useEffect(() => {
