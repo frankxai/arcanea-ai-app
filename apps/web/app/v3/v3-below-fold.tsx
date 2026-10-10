@@ -52,11 +52,11 @@ import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from
 const FAQ_ITEMS = [
   {
     q: "What is a Luminor?",
-    a: "A Luminor is a specialist AI partner — think \"GPT tuned for one craft.\" We have 16 of them: Story Writer, Character Designer, World Builder, Composer, Debugger, Strategist, and more. Each carries its own voice, memory, and toolset. You pick the Luminor for the job.",
+    a: "A Luminor is a sovereign creative intelligence tuned for one craft. We have 16 of them: Story Architect, Character Psychologist, World Builder, Composer, Platform Engineer, Strategist, and more. Each carries its own voice, memory, and sensory toolset. You pick the Luminor for the mission.",
   },
   {
     q: "What makes the Living Worlds engine different?",
-    a: "Most AI tools forget. Arcanea builds a persistent graph of your world — characters, locations, magic, lore — all linked. Reference a character next session and the AI still knows them. Export as markdown, fork the world, run it locally. This is the moat.",
+    a: "Chat tools forget what you told them twenty minutes ago. Arcanea builds worlds that remember. If your captain loses an eye in Chapter Two, he still bears the scar in Book Four. Export as markdown, fork the world, run it on your own machine. This is the moat.",
   },
   {
     q: "How do the Luminors work?",
@@ -112,7 +112,7 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: Chat,
     title: "Chat",
-    description: "16 specialist AI partners — one for every craft",
+    description: "16 specialist Luminors — sovereign intelligence for every craft",
     href: "/chat",
     glowColor: pillarAccents.chat,
   },
@@ -160,7 +160,7 @@ function ProductPillarsGrid() {
         <SectionHeader
           label="What Arcanea Does"
           title="Six ways to create"
-          subtitle="A complete creative ecosystem — not a thin AI wrapper. Each pillar is a full product."
+          subtitle="A creative civilization operating system. Each pillar is a complete, sovereign product."
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -203,7 +203,7 @@ function LivingWorldSection() {
         <SectionHeader
           label="The Living Worlds Engine"
           title="One sentence becomes a universe"
-          subtitle="Type a world idea. Characters, locations, magic, and lore spawn — all linked in a persistent graph. Consistent across sessions. Yours forever."
+          subtitle="Type one sentence. Characters, locations, relics, and lore ignite in a persistent graph. What happens in Chapter One still matters in Book Four. Yours forever."
           accent="teal"
         />
         <Reveal y={20}>
@@ -275,7 +275,7 @@ function LuminorTeamSection() {
         <SectionHeader
           label="The 13 Chosen"
           title="Meet the specialists"
-          subtitle="Not one generic chatbot — 13 specialist AI partners, each tuned for a specific craft. Hover any to see what they do. Click to chat."
+          subtitle="Not one generic chatbot — 13 specialist Luminors, each tuned for a sovereign craft. Hover any to inspect their capability. Click to converse."
           accent="teal"
         />
         <Reveal y={16}>

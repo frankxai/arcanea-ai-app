@@ -216,7 +216,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Type one sentence. Get a world — characters, locations, lore, music — all connected, all yours.
+            Type one sentence. Watch a world ignite — characters with memory, kingdoms with histories, songs that echo across sessions. Built on open source. Yours to keep, forever.
           </m.p>
 
           {/* Secondary clarifier — who it&apos;s for */}
@@ -226,7 +226,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.28 }}
           >
-            16 specialist AI partners &middot; the Living Worlds engine &middot; open source
+            16 specialist Luminors &middot; the Living Worlds engine &middot; open source &amp; sovereign
           </m.p>
 
           {/* Trust signals — glass pill badges with animated numbers */}
@@ -237,8 +237,8 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: Sparkle, num: 16, suffix: "", label: "specialist AI partners", color: "var(--arc-brand-atlantean-teal)" },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of craft", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Sparkle, num: 16, suffix: "", label: "specialist Luminors", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
               { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-arcanean-gold)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "forkable", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (

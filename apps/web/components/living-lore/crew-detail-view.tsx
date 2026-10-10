@@ -271,6 +271,30 @@ export function CrewDetailView({
           </section>
         )}
 
+        {/* Multiverse Resonance & Atlas Link */}
+        <section className="mb-12 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--arc-brand-arcanean-gold,#d4af37)] mb-1">
+                Acoustic Frequency Alignment
+              </p>
+              <h3 className="font-display text-lg text-text-primary capitalize">
+                {member.guardianAffinity} Resonator
+              </h3>
+              <p className="text-xs text-text-muted mt-1 max-w-md">
+                Anchored to the Solfeggio standing-waves of the Kingdom of Light.
+                Inspect cosmic toll parameters and realm leylines in the Multiverse Atlas.
+              </p>
+            </div>
+            <Link
+              href="/atlas"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-white transition-all whitespace-nowrap self-start sm:self-center"
+            >
+              Open Multiverse Atlas →
+            </Link>
+          </div>
+        </section>
+
         {/* Connected Lore */}
         {connectedTexts.length > 0 && (
           <section>

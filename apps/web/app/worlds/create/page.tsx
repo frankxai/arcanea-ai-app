@@ -17,6 +17,7 @@ interface GeneratedCharacter {
   backstory?: string;
   element?: string;
   origin_class?: string;
+  monomyth_stage?: string;
 }
 
 interface GeneratedLocation {
@@ -26,13 +27,30 @@ interface GeneratedLocation {
   significance?: string;
 }
 
+interface GeneratedSystem {
+  name: string;
+  type: string;
+  rules: string;
+  bodily_cost?: string;
+  failure_boundary?: string;
+  counter_remedy?: string;
+}
+
 interface GeneratedWorld {
   name: string;
   slug: string;
   tagline: string;
   description: string;
   mood?: string;
+  resonance?: {
+    primary_gate?: string;
+    frequency_hz?: number;
+    acoustic_manifestation?: string;
+  };
+  linguistic_family?: string;
   elements?: { name: string; domain: string; color: string }[];
+  laws?: { name: string; description: string }[];
+  systems?: GeneratedSystem[];
   palette?: { primary: string; secondary: string; accent: string };
 }
 
@@ -206,7 +224,10 @@ function CharacterCard({ char, index }: { char: GeneratedCharacter; index: numbe
           {char.element && <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20">{char.element}</span>}
         </div>
         {char.title && <p className="text-xs text-white/40 mb-1">{char.title}</p>}
-        {char.origin_class && <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[var(--arc-void)]/10 text-[var(--arc-void)]/70 border border-[var(--arc-void)]/20 mb-2">{char.origin_class}</span>}
+        <div className="flex flex-wrap items-center gap-1.5 mb-2">
+          {char.origin_class && <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[var(--arc-void)]/10 text-[var(--arc-void)]/70 border border-[var(--arc-void)]/20">{char.origin_class}</span>}
+          {char.monomyth_stage && <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[var(--arc-brand-arcanean-gold,#d4af37)]/10 text-[var(--arc-brand-arcanean-gold,#d4af37)]/80 border border-[var(--arc-brand-arcanean-gold,#d4af37)]/20">Stage: {char.monomyth_stage}</span>}
+        </div>
         {char.backstory && <p className="text-sm text-white/50 leading-relaxed line-clamp-3">{char.backstory}</p>}
       </div>
     </m.div>
@@ -255,6 +276,113 @@ function PaletteSection({ palette }: { palette: { primary: string; secondary: st
             <div className="w-20 h-14 rounded-xl border border-white/10 shadow-lg" style={{ backgroundColor: color }} />
             <span className="text-[10px] text-white/30">{label}</span>
             <span className="text-[11px] text-white/50 font-mono">{color}</span>
+          </div>
+        ))}
+      </div>
+    </m.div>
+  );
+}
+
+function ResonanceSection({
+  resonance,
+  linguisticFamily,
+}: {
+  resonance?: { primary_gate?: string; frequency_hz?: number; acoustic_manifestation?: string };
+  linguisticFamily?: string;
+}) {
+  if (!resonance && !linguisticFamily) return null;
+  return (
+    <m.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.35 }}
+      className="mb-10 p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-md"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[var(--arc-brand-arcanean-gold,#d4af37)]/10 border border-[var(--arc-brand-arcanean-gold,#d4af37)]/30 flex items-center justify-center text-[var(--arc-brand-arcanean-gold,#d4af37)]">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--arc-brand-arcanean-gold,#d4af37)]">Multiverse Resonance</p>
+            <h4 className="text-sm font-semibold text-white">
+              {resonance?.primary_gate ? `Gate of ${resonance.primary_gate}` : "Harmonic Alignment"}
+              {resonance?.frequency_hz ? ` · ${resonance.frequency_hz} Hz` : ""}
+            </h4>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          {linguisticFamily && (
+            <span className="text-[11px] px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 font-mono">
+              Dialect: {linguisticFamily}
+            </span>
+          )}
+          <Link
+            href="/atlas"
+            className="text-[11px] px-3 py-1 rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
+          >
+            Atlas Leylines →
+          </Link>
+        </div>
+      </div>
+      {resonance?.acoustic_manifestation && (
+        <p className="text-xs text-white/50 mt-3 italic leading-relaxed">
+          &ldquo;{resonance.acoustic_manifestation}&rdquo;
+        </p>
+      )}
+    </m.div>
+  );
+}
+
+function MagicSystemsSection({ systems }: { systems?: GeneratedSystem[] }) {
+  if (!systems || systems.length === 0) return null;
+  return (
+    <m.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.7 }}
+      className="mb-10"
+    >
+      <h3 className="text-sm font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]/80 uppercase tracking-wider mb-4">
+        Sandersonian Magic &amp; Harmonic Laws
+      </h3>
+      <div className="space-y-4">
+        {systems.map((sys, idx) => (
+          <div
+            key={sys.name || idx}
+            className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-all space-y-3"
+          >
+            <div className="flex items-center justify-between">
+              <h4 className="font-display font-semibold text-white text-base">{sys.name}</h4>
+              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white/[0.05] text-white/60">
+                {sys.type}
+              </span>
+            </div>
+            <p className="text-xs text-white/60 leading-relaxed">{sys.rules}</p>
+            {(sys.bodily_cost || sys.failure_boundary || sys.counter_remedy) && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-white/[0.04]">
+                {sys.bodily_cost && (
+                  <div className="p-2.5 rounded-lg bg-rose-500/[0.04] border border-rose-500/10">
+                    <p className="text-[9px] uppercase font-mono text-rose-400/80 mb-1">Bodily Cost</p>
+                    <p className="text-[11px] text-white/70 leading-snug">{sys.bodily_cost}</p>
+                  </div>
+                )}
+                {sys.failure_boundary && (
+                  <div className="p-2.5 rounded-lg bg-amber-500/[0.04] border border-amber-500/10">
+                    <p className="text-[9px] uppercase font-mono text-amber-400/80 mb-1">Failure Boundary</p>
+                    <p className="text-[11px] text-white/70 leading-snug">{sys.failure_boundary}</p>
+                  </div>
+                )}
+                {sys.counter_remedy && (
+                  <div className="p-2.5 rounded-lg bg-emerald-500/[0.04] border border-emerald-500/10">
+                    <p className="text-[9px] uppercase font-mono text-emerald-400/80 mb-1">Counter Remedy</p>
+                    <p className="text-[11px] text-white/70 leading-snug">{sys.counter_remedy}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -469,9 +597,10 @@ export default function CreateWorldPage() {
                   <p className="text-xs text-white/25 uppercase tracking-wider mb-3 text-center">See what&apos;s possible</p>
                   <div className="flex justify-center gap-3 flex-wrap">
                     {[
-                      { name: "Arcanea Prime", tagline: "10 Gates, 5 Elements, one living mythology", chars: 28, gradient: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))", href: "/lore" },
-                      { name: "The Shadowfen", tagline: "Horror bleeds through fractured reality", chars: 12, gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-cosmic-void), var(--arc-earth))", href: "/lore" },
-                      { name: "Starweave Academy", tagline: "Seven houses and a thousand untold stories", chars: 19, gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold), var(--arc-brand-atlantean-teal))", href: "/lore" },
+                      { name: "Eldria Prime", tagline: "1111 Hz Source Gate atop Mount Solaris", chars: 28, gradient: "linear-gradient(135deg, var(--arc-brand-arcanean-gold), var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal))", href: "/atlas" },
+                      { name: "Veldoria", tagline: "528 Hz Voice Gate & acoustic valleys", chars: 18, gradient: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))", href: "/atlas" },
+                      { name: "Aurevalde", tagline: "396 Hz Fire Gate & solar steppes", chars: 16, gradient: "linear-gradient(135deg, var(--arc-fire), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))", href: "/atlas" },
+                      { name: "The Shadowfen", tagline: "174 Hz Foundation Gate & sunken peat", chars: 14, gradient: "linear-gradient(135deg, var(--arc-cosmic-void), var(--arc-void), var(--arc-brand-cosmic-blue))", href: "/atlas" },
                     ].map((w) => (
                       <Link key={w.name} href={w.href} className="group/card w-[180px] rounded-xl overflow-hidden border border-white/[0.06] hover:border-white/[0.15] transition-all hover:-translate-y-0.5">
                         <div className="h-[80px] relative" style={{ background: w.gradient }}>
@@ -584,6 +713,12 @@ export default function CreateWorldPage() {
                   </m.p>
                 )}
 
+                {/* Multiverse Resonance & Dialect */}
+                <ResonanceSection
+                  resonance={result.world.resonance}
+                  linguisticFamily={result.world.linguistic_family}
+                />
+
                 {/* Element orbs */}
                 {result.world.elements && result.world.elements.length > 0 && (
                   <ElementOrbs elements={result.world.elements} />
@@ -626,6 +761,9 @@ export default function CreateWorldPage() {
                     </div>
                   </div>
                 )}
+
+                {/* Magic & Harmonic Systems */}
+                <MagicSystemsSection systems={result.world.systems} />
 
                 {/* Founding event */}
                 {result.event && (

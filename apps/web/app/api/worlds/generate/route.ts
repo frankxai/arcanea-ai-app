@@ -20,41 +20,55 @@ import type { Json } from '@/lib/database/types/world-graph-types';
 
 export const maxDuration = 30;
 
-const WORLD_FORGE_PROMPT = `You are a world-building AI for Arcanea, a creative multiverse platform.
+const WORLD_FORGE_PROMPT = `You are the master World-Forging Intelligence of Arcanea, operating according to the canonical laws of the Arcanean Multiverse, Sanderson's Three Laws of Magic, Tolkien's Philological Rigor, and Campbell's Monomyth.
 
 Given this world concept: "{DESCRIPTION}"
 
 Generate a complete world in JSON format:
 {
   "name": "Creative world name (2-4 words)",
-  "slug": "url-safe-slug",
-  "tagline": "One compelling sentence",
-  "description": "2-3 paragraph rich description of this world",
-  "mood": "Visual aesthetic description for art generation (e.g. 'dark epic fantasy with bioluminescent flora')",
+  "slug": "url-safe-kebab-slug",
+  "tagline": "One compelling, high-stakes sentence",
+  "description": "2-3 paragraph rich description of this world. Follow the Five Sensory Anchor Laws: ground every scene in weight, texture, acoustic resonance, scent, and temperature. NEVER use banned AI clichés like 'unleash', 'rich tapestry', 'testament to', 'delve', 'nestled', 'intricate dance', or 'beacon of hope'.",
+  "mood": "Visual aesthetic description for art generation (e.g. 'cinematic dark fantasy with bioluminescent flora, wet basalt, volumetric fog')",
+  "resonance": {
+    "primary_gate": "One of: Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Starweaving, Unity, Source",
+    "frequency_hz": 528,
+    "acoustic_manifestation": "How the fundamental Solfeggio standing-wave physically manifests in matter and senses"
+  },
+  "linguistic_family": "One of: High Eldrian, Veldarín, Aurevaldan, Sunder-tongue, Solar Common, Deep Runic",
   "elements": [
     { "name": "Element name", "domain": "What it governs", "color": "#hexcolor" }
   ],
   "laws": [
-    { "name": "Law name", "description": "Rule of this world" }
+    { "name": "Law name", "description": "Unbreakable natural or metaphysical rule of this world" }
   ],
   "systems": [
-    { "name": "System name", "type": "magic or technology", "rules": "How it works" }
+    {
+      "name": "System name",
+      "type": "harmonic, elemental, or technomantic",
+      "rules": "How practitioners interface with the system",
+      "bodily_cost": "Concrete physical toll on the wielder (e.g. capillary frost, retinal burning, copper taste, tremor)",
+      "failure_boundary": "Exact limit where power collapses or rebounds dangerously",
+      "counter_remedy": "Tangible physical countermeasure or grounding ritual"
+    }
   ],
   "characters": [
     {
-      "name": "Character name",
-      "title": "Their role/title",
+      "name": "Character name (phonetically adhering to the chosen linguistic family)",
+      "title": "Their role or title",
       "personality": { "traits": ["trait1", "trait2", "trait3"], "voice_style": "How they speak" },
       "backstory": "2-3 sentence backstory",
       "element": "Primary element",
-      "origin_class": "One of: Arcan, Gate-Touched, Bonded, Synth, Awakened, Celestial, Voidtouched, Architect"
+      "origin_class": "One of: Arcan, Gate-Touched, Bonded, Synth, Awakened, Celestial, Voidtouched, Architect",
+      "monomyth_stage": "One of: Ordinary World, Call to Adventure, Meeting the Mentor, Crossing the Threshold, Tests & Allies, The Inmost Cave, The Ordeal, Reward, The Road Back, Resurrection, Master of Two Worlds"
     }
   ],
   "locations": [
     {
-      "name": "Location name",
+      "name": "Location name (phonetically adhering to the linguistic family)",
       "region": "Region name",
-      "description": "2-3 sentence description",
+      "description": "2-3 sentence description with concrete sensory details",
       "significance": "Why this place matters"
     }
   ],
@@ -68,10 +82,10 @@ Generate a complete world in JSON format:
     "secondary": "#hex",
     "accent": "#hex"
   },
-  "image_prompt": "Detailed prompt for generating hero art of this world (cinematic, epic, concept art style)"
+  "image_prompt": "Detailed prompt for generating hero art of this world (cinematic, epic, concept art style, unreal engine 5 render, 8k)"
 }
 
-Generate 3 elements, 3 laws, 1 magic/tech system, 2-3 characters, 2-3 locations, 1 founding event.
+Generate 3 elements, 3 laws, 1 Sandersonian magic/harmonic system with explicit bodily_cost, failure_boundary, and counter_remedy, 3 characters with monomyth_stage, 3 locations, 1 founding event.
 Be creative, specific, and evocative. Avoid generic fantasy tropes.
 RESPOND WITH ONLY valid JSON. No markdown, no explanation, no code fences.`;
 
