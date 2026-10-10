@@ -90,6 +90,7 @@ async function main() {
     failures: [],
   };
   let browser;
+  let activePage;
   const streams = [];
   let streamMode = "complete";
   const server = http.createServer(async (request, response) => {
@@ -152,9 +153,21 @@ async function main() {
     for (const mode of modes) {
       const context = await browser.newContext(mode);
       const page = await context.newPage();
+      activePage = page;
+      receipt.currentMode = mode.name;
       page.setDefaultTimeout(15000);
       const pageErrors = [];
+      receipt.currentPageErrors = pageErrors;
       page.on("pageerror", (error) => pageErrors.push(error.message));
+      receipt.failedRequests = [];
+      page.on("requestfailed", (request) => {
+        const url = new URL(request.url());
+        receipt.failedRequests.push({
+          origin: url.origin,
+          path: url.pathname,
+          error: request.failure()?.errorText,
+        });
+      });
       let requests = 0;
       await context.route("**/*", async (route) => {
         const url = new URL(route.request().url());
@@ -177,7 +190,7 @@ async function main() {
         name: "Open Arcanea companion",
         exact: true,
       });
-      await expect(opener).toBeVisible();
+      await expect(opener).toBeVisible({ timeout: 15000 });
       await page.keyboard.press("Control+k");
       await expect(
         page.getByPlaceholder("Where do you want to go?"),
@@ -417,6 +430,27 @@ async function main() {
     );
   } catch (error) {
     receipt.failures.push({ message: error.message });
+    if (activePage && !activePage.isClosed()) {
+      const url = new URL(activePage.url());
+      receipt.failedPage = { origin: url.origin, path: url.pathname };
+      const file = `failed-${receipt.currentMode}.png`;
+      await activePage.screenshot({ path: path.join(output, file) });
+      const capture = {
+        file,
+        sha256: digest(await fs.readFile(path.join(output, file))),
+        head,
+        sourceHashes,
+        fixture: true,
+        failed: true,
+        realProviderCalls: 0,
+        productionWrites: 0,
+      };
+      receipt.captures.push(capture);
+      await fs.writeFile(
+        path.join(output, `failed-${receipt.currentMode}.json`),
+        `${JSON.stringify(capture, null, 2)}\n`,
+      );
+    }
     throw error;
   } finally {
     for (const record of streams) delete record.finish;
