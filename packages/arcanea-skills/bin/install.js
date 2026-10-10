@@ -1,117 +1,139 @@
 #!/usr/bin/env node
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("node:fs");
+const path = require("node:path");
+const { homedir } = require("node:os");
+const {
+  loadCatalog,
+  selectReady,
+  validateSources,
+  contained,
+  canonicalBytes,
+} = require("../scripts/catalog.cjs");
 
-const PACKAGE_NAME = '@arcanea/skills';
-const SRC_DIR = path.join(__dirname, '..', 'skills');
-const HOME = process.env.HOME || process.env.USERPROFILE;
-const DEST_DIR = path.join(HOME, '.claude', 'skills');
-
-function printUsage() {
-  console.log(`
-  ${PACKAGE_NAME} — Install Arcanea skills to Claude Code
-
-  Usage:
-    arcanea-skills              Install all bundled skills
-    arcanea-skills --list       List available skills
-    arcanea-skills --category   List skill categories
-    arcanea-skills --dry-run    Show what would be installed
-    arcanea-skills --help       Show this help message
-
-  Skills are installed to: ${DEST_DIR}
-`);
+function existingStat(target) {
+  try {
+    return fs.lstatSync(target);
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
 }
 
-function listSkills() {
-  const meta = require('../index.js');
-  console.log(`\n  ${PACKAGE_NAME} v${meta.version}`);
-  console.log(`  ${meta.bundledCount} bundled skills (${meta.skillCount} total in ecosystem)\n`);
+function checkParents(homeDir, destination) {
+  for (const parent of [path.join(homeDir, ".claude"), destination]) {
+    const stat = existingStat(parent);
+    if (
+      stat &&
+      (stat.isSymbolicLink() ||
+        !stat.isDirectory() ||
+        !contained(homeDir, fs.realpathSync(parent)))
+    )
+      throw new Error(`Unsafe destination: ${parent}`);
+  }
+}
 
-  for (const [key, cat] of Object.entries(meta.categories)) {
-    console.log(`  ${cat.label}:`);
-    for (const skill of cat.skills) {
-      console.log(`    - ${skill}`);
+function run(args) {
+  const allowed = new Set([
+    "--help",
+    "-h",
+    "--list",
+    "-l",
+    "--category",
+    "-c",
+    "--dry-run",
+  ]);
+  for (const arg of args)
+    if (!allowed.has(arg)) throw new Error(`Unknown option: ${arg}`);
+  if (args.includes("--help") || args.includes("-h")) {
+    console.log(
+      "arcanea-skills [--list | --category | --dry-run | --help]\n" +
+        "Installs only catalog-ready skills to ~/.claude/skills; existing directories are preserved.",
+    );
+    return 0;
+  }
+  const packageRoot = path.resolve(__dirname, "..");
+  const catalog = loadCatalog(packageRoot);
+  // Preserve the bytes read during validation; copying cannot reread changed sources.
+  const sourceBytes = new Map();
+  const sources = validateSources(packageRoot, catalog, (file) => {
+    if (!sourceBytes.has(file)) sourceBytes.set(file, fs.readFileSync(file));
+    return sourceBytes.get(file);
+  });
+  const ready = selectReady(catalog);
+  if (args.includes("--list") || args.includes("-l")) {
+    console.log(
+      `${ready.length} ready; ${catalog.skills.length - ready.length} candidates`,
+    );
+    for (const skill of catalog.skills)
+      console.log(`${skill.status} ${skill.name} (${skill.category})`);
+    return 0;
+  }
+  if (args.includes("--category") || args.includes("-c")) {
+    console.log(
+      [...new Set(catalog.skills.map((skill) => skill.category))].join(", "),
+    );
+    return 0;
+  }
+  if (!ready.length) {
+    console.error(
+      "No skill is cleared for installation. See --list and the catalog's release blockers.",
+    );
+    return 2;
+  }
+  const homeDir = fs.realpathSync(homedir());
+  const destination = path.join(homeDir, ".claude", "skills");
+  checkParents(homeDir, destination);
+  // Complete the plan before copying; a conflict cannot leave earlier skills overwritten.
+  const plan = ready.map((skill) => {
+    const target = path.join(destination, skill.name);
+    if (existingStat(target))
+      throw new Error(
+        `Destination already exists; preserve or relocate it explicitly: ${target}`,
+      );
+    return {
+      skill,
+      target,
+      source: sources.find((row) => row.name === skill.name),
+    };
+  });
+  if (args.includes("--dry-run")) {
+    for (const row of plan)
+      console.log(
+        `Would install ${row.skill.name} (${row.source.files.length} files) to ${row.target}`,
+      );
+    return 0;
+  }
+  // Path checks cannot prevent another local process swapping a parent during mkdir/copy.
+  // Install only with a trusted, stable home and source tree; the postcheck detects static links.
+  fs.mkdirSync(destination, { recursive: true });
+  checkParents(homeDir, destination);
+  for (const row of plan) {
+    checkParents(homeDir, destination);
+    fs.mkdirSync(row.target); // Exclusive mkdir also rejects a destination created after preflight.
+    for (const file of row.source.files) {
+      const target = path.join(row.target, file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(
+        target,
+        canonicalBytes(
+          file,
+          sourceBytes.get(path.join(packageRoot, row.skill.path, file)),
+        ),
+        { flag: "wx", mode: 0o644 },
+      );
     }
-    console.log();
+    console.log(
+      `Installed ${row.skill.name} (${row.source.files.length} files)`,
+    );
   }
+  return 0;
 }
 
-function copyDirRecursive(src, dest) {
-  if (!fs.existsSync(src)) return 0;
-
-  fs.mkdirSync(dest, { recursive: true });
-  let count = 0;
-  const entries = fs.readdirSync(src, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const srcPath = path.join(src, entry.name);
-    const destPath = path.join(dest, entry.name);
-
-    if (entry.isDirectory()) {
-      count += copyDirRecursive(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-      count++;
-    }
-  }
-  return count;
-}
-
-function install(dryRun) {
-  if (!fs.existsSync(SRC_DIR)) {
-    console.error('  Error: Skills source directory not found at', SRC_DIR);
-    process.exit(1);
-  }
-
-  const skillDirs = fs.readdirSync(SRC_DIR, { withFileTypes: true })
-    .filter(d => d.isDirectory())
-    .map(d => d.name);
-
-  if (skillDirs.length === 0) {
-    console.log('  No skill directories found to install.');
-    console.log('  Skills will be populated in a future release.');
-    return;
-  }
-
-  console.log(`\n  Installing ${skillDirs.length} skills to ${DEST_DIR}\n`);
-
-  if (dryRun) {
-    for (const dir of skillDirs) {
-      console.log(`  [dry-run] Would copy: ${dir}`);
-    }
-    console.log(`\n  Destination: ${DEST_DIR}`);
-    return;
-  }
-
-  fs.mkdirSync(DEST_DIR, { recursive: true });
-
-  let totalFiles = 0;
-  for (const dir of skillDirs) {
-    const src = path.join(SRC_DIR, dir);
-    const dest = path.join(DEST_DIR, dir);
-    const count = copyDirRecursive(src, dest);
-    totalFiles += count;
-    console.log(`  Installed: ${dir} (${count} files)`);
-  }
-
-  console.log(`\n  Done. ${totalFiles} files installed to ${DEST_DIR}`);
-  console.log('  Restart Claude Code to activate skills.\n');
-}
-
-// --- CLI ---
-const args = process.argv.slice(2);
-
-if (args.includes('--help') || args.includes('-h')) {
-  printUsage();
-} else if (args.includes('--list') || args.includes('-l')) {
-  listSkills();
-} else if (args.includes('--category') || args.includes('-c')) {
-  const meta = require('../index.js');
-  console.log('\n  Categories:', Object.keys(meta.categories).join(', '), '\n');
-} else if (args.includes('--dry-run')) {
-  install(true);
-} else {
-  install(false);
+try {
+  process.exitCode = run(process.argv.slice(2));
+} catch (error) {
+  console.error(error.message);
+  process.exitCode = 1;
 }

@@ -1,0 +1,569 @@
+{
+  "schema": "arcanea.isolated-creator-smoke.v1",
+  "sourceRevision": "3d7494cd0f8f9ca63fc0a61927972820492873ce",
+  "skillRoot": "packages/arcanea-skills/skills",
+  "producer": "Claude Code, first-party provider as reported by its usage receipt",
+  "inspector": "Codex maker-side inspection; not independent source/installer sign-off",
+  "createdAt": "2026-10-01T15:14:50.388907+00:00",
+  "cases": [
+    {
+      "case": "W1",
+      "skill": "world-build",
+      "contentSha256": "2f5d3e600f452af6d2550b960a00fc1fe660c9bae2f74336e8744e3e9602135f",
+      "startedAt": "2026-10-01T15:04:01.692267+00:00",
+      "endedAt": "2026-10-01T15:05:08.268845+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "5e137b142797553075d3c77704eb78fee390cd9341fb398d1d845aefd0057af6",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "6ac46920f5dc6babb06891c888aba49887855b11409ada7c224fde0dbc01e3a3",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 4452,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 1983,
+          "webSearchRequests": 0,
+          "costUSD": 0.07910339999999999,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 3364,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.07910339999999999,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "artifact": "W1.txt",
+      "artifactUtf8Sha256": "f5088d100c4c8aba646f65712cd38d9bd53a7cc61fe6c1e6b3bbe4ddeef4e9f0",
+      "status": "diagnostic-failure",
+      "inspection": {
+        "observedStrengths": [
+          "EP1/EP2 retained in the fact table",
+          "EP3 authorized revision and superseded statement logged",
+          "Two connected hooks and an open-choice list returned"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "The only after-sunset relay point (EP3-R).",
+            "reason": "EP3-R authorizes this tower after sunset; it does not establish exclusivity."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "A courier who sent the memory of his daughter's name yesterday (EP2).",
+            "reason": "EP2 establishes loss, not its cause. The supplied fact is silently expanded in the biography."
+          }
+        ]
+      }
+    },
+    {
+      "case": "C1",
+      "skill": "continuity-check",
+      "contentSha256": "590a72c12ebf6188cccc46ac6205078f43fbe1bb937c71851781695403564426",
+      "startedAt": "2026-10-01T15:00:11.776448+00:00",
+      "endedAt": "2026-10-01T15:00:47.021029+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "db6f9ad2ec5abecff8985a14f0f70d2f75d746e1e682c325ff71a2792bd7b06d",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "671f5468214aa172df52c0d50da17c70eeea979ed57955484dc46f54057ab57f",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 1825,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 3133,
+          "webSearchRequests": 0,
+          "costUSD": 0.046182,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 990,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.046182,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "artifact": "C1.txt",
+      "artifactUtf8Sha256": "8417153337f2088cd98c28d7f7370c657382d14a66c9ecd4bc9d1f3b6da88710",
+      "status": "diagnostic-failure",
+      "inspection": {
+        "observedStrengths": [
+          "Three conflicts identified",
+          "Face recognition and the marked lie correctly retained",
+          "Fictional placard not followed as an instruction"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "Replace the name-send with a face-memory send",
+            "reason": "The proposed replacement still consumes a second daily send; the patched excerpt adds an unsupported thin channel. Moving time or location alone does not remove the exhausted allowance."
+          }
+        ]
+      }
+    },
+    {
+      "case": "M1",
+      "skill": "scene-to-media",
+      "contentSha256": "92b54000b72991f6ae434ad261874dfc1bca6dd6c3094f7fe4dda435d2bde48c",
+      "startedAt": "2026-10-01T15:02:35.710654+00:00",
+      "endedAt": "2026-10-01T15:03:20.738440+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "a23ad966304656e311d49c9f706aaa18eada30f48817bb42011a1367122ddbce",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "586ef95aeeb23c30d3b85b0ecea275cebca9498fa695d85b4088cf36e435ac3d",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 2001,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 1759,
+          "webSearchRequests": 0,
+          "costUSD": 0.0409944,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 804,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0409944,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "artifact": "M1.txt",
+      "artifactUtf8Sha256": "8915a094912c460163d544519b8f0c0f43d28949323d79df4b9d938101975141",
+      "status": "diagnostic-failure",
+      "inspection": {
+        "observedStrengths": [
+          "One illustration traced to L1–L3",
+          "Unknown online-reference rights retained",
+          "No generation, provider call, seed or receipt fabricated"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "Creator-owned",
+            "reason": "The producer assigns ownership to supplied scene/world notes without an ownership declaration or permission evidence."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "Memory erasure has no visual form",
+            "reason": "An illustration constraint is asserted as an unsupplied universal world mechanism."
+          }
+        ]
+      }
+    },
+    {
+      "case": "Q1",
+      "skill": "quest-adapt",
+      "contentSha256": "47f766102ffad2edd35cfd22d8bf4e273359cd2a331718a4e6a2cc635676e24a",
+      "startedAt": "2026-10-01T15:05:36.622893+00:00",
+      "endedAt": "2026-10-01T15:07:14.221311+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "84e75dd37df85b6f47a0f5f76794212b9092832d9ac6ae7e4d7ac48399067684",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "7662100ea96f21a0d4bf12ce17b109aaf07d0d80eedace06dff54407f73ea4cc",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 7127,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 1748,
+          "webSearchRequests": 0,
+          "costUSD": 0.11781839999999999,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 5963,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.11781839999999999,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "artifact": "Q1.txt",
+      "artifactUtf8Sha256": "e600436a0fb0499a0e45444bc44d6a5c2973b278c6966fdfe6ec3e48c3d38882",
+      "status": "diagnostic-failure",
+      "inspection": {
+        "observedStrengths": [
+          "Variables initialized and transition targets declared",
+          "Distinct endings described with replay paths",
+          "North-tower memory transmission kept unavailable",
+          "No runtime import or playtest claimed"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "EP2 prevents Ivo from producing the child's name.",
+            "reason": "EP2 concerns his daughter; the child's identity is explicitly left unresolved. The limitation is generalized to an unidentified child."
+          },
+          {
+            "severity": "limitation",
+            "excerpt": "Four separate JSON arrays under headings",
+            "reason": "Each field has the requested shape, but no complete envelope or actual runtime import is proven. Do not claim interface compatibility from presentation alone.",
+            "excerptKind": "inspector description, not a verbatim quote"
+          }
+        ]
+      }
+    }
+  ],
+  "reportedListCostUsd": 0.6054792,
+  "costMeaning": "Harness-reported list-price API equivalent; not a verified subscription debit or invoice. Earlier timed-out request returned no cost receipt.",
+  "procedure": {
+    "runsPerCase": 1,
+    "tools": [],
+    "separateContexts": true,
+    "hiddenRubrics": true,
+    "controlWithoutSkill": false,
+    "installedHarnessTest": false,
+    "originalOutputsRepaired": false
+  },
+  "result": "All four returned artifacts; each has at least one blocking source-boundary finding. No skill promoted.",
+  "refinementStatus": "All four original refined requests observed; world repeated after its second refinement and still fails invention labeling. Four internal candidates, zero ready.",
+  "limits": [
+    "One initial and one known-request refined observation per skill; no held-out cases or comparable no-skill control",
+    "The engineering kernel is part of producer context; behavior cannot be attributed to the skill alone",
+    "Case prompts and exact kernel/input packets are retained privately under the original task",
+    "No official Arcanea lore, engine import, generation, rights clearance, release or customer success established",
+    "The earlier four-case batch timeout remains preserved and is not erased by successful isolated invocations"
+  ],
+  "postRefinement": [
+    {
+      "skill": "continuity-check",
+      "sourceRevision": "e8aff17a6c6c5345494eec140e62205c7b4dbf9e",
+      "contentSha256": "9e9f6207712a0b3d550782eb31ad2882d1b2ad92484ed48d564cd050ed4c520b",
+      "startedAt": "2026-10-01T15:23:18.241138+00:00",
+      "endedAt": "2026-10-01T15:24:06.090864+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "92cdfb150dbcaa58733bca92037af6391f6787aa5bba622c570007496d92e9ce",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "24d265a9999ef29e99912930425aff67498a3c99fa0fe8d1071920e93229a8f7",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 2821,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 2043,
+          "webSearchRequests": 0,
+          "costUSD": 0.0549984,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 1863,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0549984,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "case": "C1-R1",
+      "originalCase": "C1",
+      "artifact": "C1-refined.txt",
+      "artifactUtf8Sha256": "b492157e73031bcf24ef13c18b06a48a0c01e451a2f08efb21858be00c6acc51",
+      "status": "observed-regression-avoided; no readiness claim",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "evidence": [
+          "Remove the send entirely.",
+          "No local patch preserves a successful name-send at this story moment"
+        ],
+        "observed": "The earlier replacement-send failure is avoided; the name-delivery outcome remains unresolved instead of silently changing accepted facts.",
+        "limits": [
+          "One repeated synthetic request, not a held-out case or no-skill control",
+          "Face presentation is not specified as an executable action; additional author/context interpretation may be needed",
+          "Not independent source/installer review or whole-skill reliability proof"
+        ]
+      }
+    },
+    {
+      "skill": "world-build",
+      "sourceRevision": "8f94d8849b43449d9421625b25a93df95a5429d4",
+      "contentSha256": "a0f96beda51bdaddd3cd391be4ecf323876bf2639f285715c0d08f17e8e28c1b",
+      "startedAt": "2026-10-01T16:51:03.833456+00:00",
+      "endedAt": "2026-10-01T16:52:18.584453+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "32353fe9922ee178bf7867e62438e2dd7971e4f74c40866d4accf514df9768d0",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "185f8bb006044c5342b2db6c0ffc09b8d66ee31b16445d789748f7ec5c5954ba",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 4354,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 2156,
+          "webSearchRequests": 0,
+          "costUSD": 0.0786714,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 3058,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0786714,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "case": "W1-R1",
+      "originalCase": "W1",
+      "artifact": "W1-refined.txt",
+      "artifactUtf8Sha256": "9e46375f16e04fbbff844006c726fd051406cf95349a53457d673765b976c460",
+      "status": "diagnostic-failure",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "observedStrengths": [
+          "EP1 and EP2 retained in the fact table",
+          "Authorized EP3 revision and relay work cost logged",
+          "Several invented settings and mechanisms explicitly proposed"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "Yesterday he transmitted a memory of his daughter's name.",
+            "reason": "EP2 gives a loss and its timing, not a transmission event or cause. The biography and dependent hooks silently assume a send."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "the sender loses it permanently",
+            "reason": "EP1 establishes erasure, not permanence; restoration is left open in the supplied request."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "EP1 makes recovery impossible",
+            "reason": "The hook adds an unsupported impossibility while the artifact itself leaves recovery/return/copying open."
+          }
+        ]
+      }
+    },
+    {
+      "skill": "scene-to-media",
+      "sourceRevision": "8f94d8849b43449d9421625b25a93df95a5429d4",
+      "contentSha256": "865ae829199be0665347fc6424a442bccd938d633107aeda430f553a15afbd66",
+      "startedAt": "2026-10-01T16:55:30.741873+00:00",
+      "endedAt": "2026-10-01T16:56:10.847633+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "43dfa4c8f8cfdf67455141e521b2850d92662cb9093b71e19dc474bbbc8da9e2",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "d657283a73364411984e0fce2894a70eb29ac442ebd52f8370e70a1ad336f1ca",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 1826,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 1976,
+          "webSearchRequests": 0,
+          "costUSD": 0.039671399999999996,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 660,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.039671399999999996,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "case": "M1-R1",
+      "originalCase": "M1",
+      "artifact": "M1-refined.txt",
+      "artifactUtf8Sha256": "f782ab32aea24d6eacbe5bf6469456ed073d64f790c9ee18dfa9aabab3bc99d1",
+      "status": "observed-regression-avoided; no readiness claim",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "evidence": [
+          "Ownership/license unverified. Receiving the scene does not establish ownership.",
+          "it does not assert that memory loss is permanent, universal, or visible as a glow or symbol",
+          "This reference has not been provided to this brief; it supplies no wardrobe facts here."
+        ],
+        "observed": "Prior unsupported ownership and universal visual-mechanism findings are avoided; one line-traced, engine-neutral editable brief is returned.",
+        "limits": [
+          "Known repeated synthetic request, not held-out or no-skill control",
+          "Visual choices and prompt language still require creator editing; no generated/rendered artifact or independent source review"
+        ]
+      }
+    },
+    {
+      "skill": "quest-adapt",
+      "sourceRevision": "8f94d8849b43449d9421625b25a93df95a5429d4",
+      "contentSha256": "f511a852f2c873fbd64a4fb52240617540438dd9b4886b0d3b32c6104f21297e",
+      "startedAt": "2026-10-01T17:00:53.059562+00:00",
+      "endedAt": "2026-10-01T17:01:54.047650+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "9aa0f9677a91d4205fd5cfcf66fc2d9f962f27ff0b93e998c4db963146c7d74d",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "690d9e1cb36650c16ef13de374402a4a51d1f64cdc98cb5cae7e98325ecd473a",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 3827,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 1989,
+          "webSearchRequests": 0,
+          "costUSD": 0.0697644,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 2739,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0697644,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "case": "Q1-R1",
+      "originalCase": "Q1",
+      "artifact": "Q1-refined.txt",
+      "artifactUtf8Sha256": "c94f17e4a0201f8ea1dbd85e82632052980341992db388e980ad67f7a6edda72",
+      "status": "observed-regression-avoided; no readiness claim",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "evidence": [
+          "The child's identity is left open here — she is not asserted to be his daughter.",
+          "No accepted world event has been added or rewritten.",
+          "This packet has not been imported, replayed, or played in a runtime."
+        ],
+        "observed": "Prior entity-generalization finding is avoided and one complete JSON packet is supplied.",
+        "limits": [
+          "Known repeated synthetic request, not held-out or no-skill control",
+          "Additional top-level start/goal fields and unlisted-action behavior require verification against the unspecified actual runtime",
+          "Game outcomes are proposed; boarding/dock-delivery interpretation still requires creator review"
+        ],
+        "packetCheck": {
+          "schema": "arcanea.single-packet-inspection.v1",
+          "sourceRevision": "8f94d8849b43449d9421625b25a93df95a5429d4",
+          "states": 5,
+          "variables": 2,
+          "transitions": 4,
+          "paths": [
+            {
+              "state": "delivered",
+              "actions": [
+                "Walk child to the ferry",
+                "Deliver child to ferry dock"
+              ],
+              "variables": {
+                "drawingHeld": true,
+                "childBoarded": true
+              }
+            },
+            {
+              "state": "guided",
+              "actions": [
+                "Give verbal directions, keep the drawing",
+                "Child departs on given directions"
+              ],
+              "variables": {
+                "drawingHeld": true,
+                "childBoarded": false
+              }
+            }
+          ],
+          "unavailableTransmission": "No listed transmission transition from start",
+          "semantics": "Maker enumeration of this packet only: all four conditions are literal true; actions match only listed transitions. No evaluation of model code.",
+          "limits": [
+            "Not the creator's actual runtime or proof of unknown-action rejection there",
+            "Not an engine import, executable playtest or general packet validator"
+          ]
+        }
+      }
+    },
+    {
+      "skill": "world-build",
+      "sourceRevision": "bfd005dadd2c265db51465971373d24179288366",
+      "contentSha256": "f0941cb141af29797faf7e2785b26c902ccf2ab912b5854097d0f759e337c592",
+      "startedAt": "2026-10-01T17:21:06.210202+00:00",
+      "endedAt": "2026-10-01T17:22:14.493834+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "promptSha256": "061cb6dc02e3eb1803aa93aa44184a9f8d6e0e46f717effc2977c52161393347",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "097b46a473270abe71f6e5ce4fb1a3227e8bce081e7e591b00d453d1d9c6142b",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 4202,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 2470,
+          "webSearchRequests": 0,
+          "costUSD": 0.0782754,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 2880,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0782754,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "harnessVersion": "2.1.286",
+      "case": "W1-R2",
+      "originalCase": "W1",
+      "artifact": "W1-second-refined.txt",
+      "artifactUtf8Sha256": "c785ca0bac1addddd34c87932e9cfae9820b3ea5c6252d6265915e0e1b3f82aa",
+      "numTurns": 1,
+      "status": "diagnostic-failure; prior cause/permanence findings avoided",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "observedStrengths": [
+          "Cause and recovery are explicitly open in Ivo biography and fact table",
+          "No claim that Ivo transmitted the lost name or that loss is permanent",
+          "Hook 1 marks its proposed P2 dependency"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "The network's most exposed relay.",
+            "reason": "An unsupplied comparative claim appears in the place description without a proposal label."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "it keeps a dispatch log for after-sunset transmissions",
+            "reason": "The invented log is presented as an operating fact; P3 labels its proposed investigation role but not the existence of the log."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "the network has no protocol for this inquiry",
+            "reason": "The request supplies no such institutional limitation; the hook presents it as fact."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "Ivo's daughter's only lead",
+            "reason": "The hook asserts an exclusive route without source support or a local proposal label."
+          }
+        ],
+        "limits": [
+          "One known repeated synthetic request; no held-out or no-skill control",
+          "Prior specific errors being avoided does not establish complete fact/proposal separation",
+          "No independent source or installed-harness review, creator usefulness or release proof"
+        ]
+      }
+    }
+  ],
+  "initialReportedListCostUsd": 0.2840982,
+  "artifactPackaging": "Unedited model result text stored as .txt so repository Markdown formatting does not alter the evidence. No formatting check disabled."
+}

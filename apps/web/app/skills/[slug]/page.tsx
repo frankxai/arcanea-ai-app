@@ -1,37 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import ReactMarkdown from 'react-markdown';
-import {
-  ArrowLeft,
-  BookOpen,
-  ExternalLink,
-  Tag,
-  Users,
-} from 'lucide-react';
-import {
-  getAllSkills,
-  getSkillBySlug,
-  type Skill,
-} from '@/lib/skills/loader';
-import InstallTabs from '@/components/skills/InstallTabs';
-import { Badge } from '@/components/ui/badge';
-import { LiquidGlass } from '@/components/ui/liquid-glass';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import SkillDocumentation from "@/components/skills/SkillDocumentation";
+import { ArrowLeft, BookOpen, ExternalLink, Tag, Users } from "lucide-react";
+import { getAllSkills, getSkillBySlug, type Skill } from "@/lib/skills/loader";
+import InstallTabs from "@/components/skills/InstallTabs";
+import { Badge } from "@/components/ui/badge";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 
 // Map skill category to a Liquid Glass tint
-const CATEGORY_TINT: Record<string, 'crystal' | 'gold' | 'fire' | 'void' | 'water' | 'neutral'> = {
-  architecture: 'crystal',
-  design: 'void',
-  development: 'water',
-  writing: 'gold',
-  creative: 'gold',
-  research: 'crystal',
-  operations: 'fire',
-  analysis: 'water',
+const CATEGORY_TINT: Record<
+  string,
+  "crystal" | "gold" | "fire" | "void" | "water" | "neutral"
+> = {
+  architecture: "crystal",
+  design: "void",
+  development: "water",
+  writing: "gold",
+  creative: "gold",
+  research: "crystal",
+  operations: "fire",
+  analysis: "water",
 };
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -43,7 +36,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const skill = await getSkillBySlug(slug);
   if (!skill) {
-    return { title: 'Skill not found — Arcanea', robots: { index: false } };
+    return { title: "Skill not found — Arcanea", robots: { index: false } };
   }
   return {
     title: `${skill.name} — Arcanea Skills`,
@@ -51,20 +44,14 @@ export async function generateMetadata({
     openGraph: {
       title: `${skill.name} — Arcanea Skills`,
       description: skill.description,
-      type: 'article',
+      type: "article",
     },
     alternates: { canonical: `/skills/${skill.slug}` },
     robots: { index: true, follow: true },
   };
 }
 
-function RelatedSkills({
-  current,
-  all,
-}: {
-  current: Skill;
-  all: Skill[];
-}) {
+function RelatedSkills({ current, all }: { current: Skill; all: Skill[] }) {
   if (!current.category) return null;
   const related = all
     .filter((s) => s.slug !== current.slug && s.category === current.category)
@@ -78,11 +65,7 @@ function RelatedSkills({
       </h3>
       <div className="space-y-3">
         {related.map((s) => (
-          <Link
-            key={s.slug}
-            href={`/skills/${s.slug}`}
-            className="block group"
-          >
+          <Link key={s.slug} href={`/skills/${s.slug}`} className="block group">
             <div className="text-sm font-medium text-white/80 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors line-clamp-1">
               {s.name}
             </div>
@@ -102,7 +85,8 @@ export default async function SkillDetailPage({ params }: PageProps) {
   if (!skill) notFound();
 
   const allSkills = await getAllSkills();
-  const heroTint = CATEGORY_TINT[skill.category?.toLowerCase() ?? ''] ?? 'crystal';
+  const heroTint =
+    CATEGORY_TINT[skill.category?.toLowerCase() ?? ""] ?? "crystal";
 
   return (
     <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90">
@@ -119,42 +103,49 @@ export default async function SkillDetailPage({ params }: PageProps) {
             All Skills
           </Link>
 
-          <LiquidGlass intensity="strong" tint={heroTint} glow="medium" className="p-8 sm:p-10">
-          <div className="flex flex-wrap items-center gap-2 mb-5">
-            {skill.category && (
-              <Badge variant="crystal" icon={<Tag className="h-3 w-3" />}>
-                {skill.category}
-              </Badge>
-            )}
-            {skill.version && <Badge variant="default">v{skill.version}</Badge>}
-            {skill.author && (
-              <Badge variant="default" icon={<Users className="h-3 w-3" />}>
-                by {skill.author}
-              </Badge>
-            )}
-            {skill.license && <Badge variant="gold">{skill.license}</Badge>}
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl font-display font-bold tracking-tight text-white/95 mb-5 max-w-3xl">
-            {skill.name}
-          </h1>
-
-          <p className="text-lg text-white/60 max-w-3xl leading-relaxed">
-            {skill.description}
-          </p>
-
-          {skill.tags && skill.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-6">
-              {skill.tags.map((t) => (
-                <span
-                  key={t}
-                  className="text-[10px] px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-white/40"
-                >
-                  #{t}
-                </span>
-              ))}
+          <LiquidGlass
+            intensity="strong"
+            tint={heroTint}
+            glow="medium"
+            className="p-8 sm:p-10"
+          >
+            <div className="flex flex-wrap items-center gap-2 mb-5">
+              {skill.category && (
+                <Badge variant="crystal" icon={<Tag className="h-3 w-3" />}>
+                  {skill.category}
+                </Badge>
+              )}
+              {skill.version && (
+                <Badge variant="default">v{skill.version}</Badge>
+              )}
+              {skill.author && (
+                <Badge variant="default" icon={<Users className="h-3 w-3" />}>
+                  by {skill.author}
+                </Badge>
+              )}
+              {skill.license && <Badge variant="gold">{skill.license}</Badge>}
             </div>
-          )}
+
+            <h1 className="text-4xl sm:text-5xl font-display font-bold tracking-tight text-white/95 mb-5 max-w-3xl">
+              {skill.name}
+            </h1>
+
+            <p className="text-lg text-white/60 max-w-3xl leading-relaxed">
+              {skill.description}
+            </p>
+
+            {skill.tags && skill.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-6">
+                {skill.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[10px] px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-white/40"
+                  >
+                    #{t}
+                  </span>
+                ))}
+              </div>
+            )}
           </LiquidGlass>
         </div>
       </section>
@@ -166,9 +157,14 @@ export default async function SkillDetailPage({ params }: PageProps) {
             {/* Install */}
             <div className="mb-12">
               <h2 className="font-display text-xl font-semibold text-white/95 mb-4">
-                Install
+                Use this skill
               </h2>
-              <LiquidGlass intensity="medium" tint={heroTint} glow="soft" className="p-6">
+              <LiquidGlass
+                intensity="medium"
+                tint={heroTint}
+                glow="soft"
+                className="p-6"
+              >
                 <InstallTabs skill={skill} />
               </LiquidGlass>
             </div>
@@ -179,7 +175,12 @@ export default async function SkillDetailPage({ params }: PageProps) {
                 <h2 className="font-display text-xl font-semibold text-white/95 mb-4">
                   Usage Examples
                 </h2>
-                <LiquidGlass intensity="subtle" tint="neutral" glow="none" className="p-4">
+                <LiquidGlass
+                  intensity="subtle"
+                  tint="neutral"
+                  glow="none"
+                  className="p-4"
+                >
                   <ul className="space-y-2">
                     {skill.usageExamples.map((ex, i) => (
                       <li
@@ -216,11 +217,14 @@ export default async function SkillDetailPage({ params }: PageProps) {
             {/* Full markdown */}
             <div className="mb-12">
               <h2 className="font-display text-xl font-semibold text-white/95 mb-4 inline-flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-[var(--arc-brand-atlantean-teal)]/80" aria-hidden="true" />
+                <BookOpen
+                  className="h-5 w-5 text-[var(--arc-brand-atlantean-teal)]/80"
+                  aria-hidden="true"
+                />
                 Documentation
               </h2>
               <article className="skill-prose">
-                <ReactMarkdown>{skill.readmeContent}</ReactMarkdown>
+                <SkillDocumentation skill={skill} />
               </article>
             </div>
 

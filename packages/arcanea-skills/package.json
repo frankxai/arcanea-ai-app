@@ -1,20 +1,33 @@
 {
   "name": "@arcanea/skills",
   "version": "1.0.0",
-  "description": "97 Claude Code skills for creative intelligence — worldbuilding, coding, writing, design, and more",
+  "description": "Curated Arcanea creator workflow candidates and catalog-controlled installer",
+  "private": true,
   "main": "index.js",
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
   "bin": {
     "arcanea-skills": "bin/install.js"
   },
   "files": [
-    "skills/",
+    "skills/world-build/",
+    "skills/continuity-check/",
+    "skills/scene-to-media/",
+    "skills/quest-adapt/",
     "bin/",
+    "scripts/catalog.cjs",
+    "scripts/plugin.cjs",
+    "catalog.json",
     "index.js",
     "README.md"
   ],
   "scripts": {
     "install-skills": "node bin/install.js",
-    "list": "node -e \"const s = require('./index.js'); console.log(s.skills.join('\\n'));\""
+    "list": "node bin/install.js --list",
+    "validate": "node scripts/catalog.cjs",
+    "build-plugin": "node bin/plugin.js",
+    "test": "node --test --test-concurrency=1 tests/catalog.test.mjs tests/plugin.test.mjs"
   },
   "keywords": [
     "claude-code",
@@ -35,14 +48,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frankxai/arcanea.git",
+    "url": "git+https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/arcanea-skills"
   },
   "homepage": "https://arcanea.ai",
   "bugs": {
-    "url": "https://github.com/frankxai/arcanea/issues"
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.0.0"
   }
 }
