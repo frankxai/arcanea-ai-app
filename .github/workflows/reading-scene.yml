@@ -5,6 +5,7 @@ on:
       - "apps/web/components/saga/scene-visualizer*"
       - "apps/web/components/saga/scene-workspace-view.tsx"
       - "apps/web/components/saga/chapter-reader.tsx"
+      - "apps/web/components/chat/chat-markdown.tsx"
       - "apps/web/lib/reading-scene/**"
       - "apps/web/app/api/reading-scenes/**"
       - "scripts/*reading-scene*"

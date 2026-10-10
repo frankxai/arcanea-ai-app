@@ -76,6 +76,28 @@ async function selectPassage(
         );
       document.dispatchEvent(new Event("selectionchange"));
     });
+  const paragraph = await page
+    .locator("article .prose p")
+    .first()
+    .elementHandle();
+  await page.evaluate(async () => {
+    window.scrollBy(0, 32);
+    await new Promise((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(resolve)),
+    );
+  });
+  assert.equal(
+    await paragraph.evaluate((element) => element.isConnected),
+    true,
+    "Scrolling must preserve the selected paragraph DOM",
+  );
+  assert.equal(
+    await page.evaluate(() =>
+      window.getSelection().toString().replace(/\s+/g, " ").trim(),
+    ),
+    text.replace(/\s+/g, " ").trim(),
+    "Reader scroll updates must preserve the source selection",
+  );
   const action = page.getByRole("button", {
     name: "Visualize selection",
     exact: true,
@@ -106,6 +128,7 @@ async function main() {
   const sha = (value) => createHash("sha256").update(value).digest("hex");
   for (const path of [
     "apps/web/components/saga/chapter-reader.tsx",
+    "apps/web/components/chat/chat-markdown.tsx",
     "apps/web/components/saga/scene-visualizer.tsx",
     "apps/web/components/saga/scene-workspace-view.tsx",
     "apps/web/components/saga/scene-visualizer.module.css",
@@ -504,6 +527,7 @@ async function main() {
           imageSha256,
           checks: [
             "source selection",
+            "scroll updates preserve selected paragraph DOM and text",
             "focus",
             "scene actions clear fixed navigation",
             "anonymous admission",

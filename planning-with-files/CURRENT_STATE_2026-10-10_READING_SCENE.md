@@ -115,6 +115,20 @@ element before selecting prose, and retains bounded range/focus diagnostics.
 No product code, assertion, retry or timeout was relaxed. Fresh verification is
 required; the cause is not certified as a browser or application defect.
 
+At9b669fcc, Reading38084540297 fails on a detached paragraph during selection
+scrolling. Retain artifact11682115367 (3357 bytes) and ui-failed-9b669fcc.
+Inspection finds ChatMarkdown creates every ReactMarkdown component type inside
+render; reader progress/toolbar scroll updates re-render that child and can replace
+paragraph DOM. Stable module-level renderers now preserve those types; the image
+renderer consumes a scoped lightbox callback through context, retaining the existing
+image/lightbox behavior. This fixes the renderer rather than relying on memo for
+correctness. The shared file had no active lease overlap and is added to this lane.
+All browser modes now require that actual scrolling preserves the selected paragraph
+node and text. UI/capture bindings additionally include chat-markdown.tsx, and its
+changes trigger this workflow. Fresh browser/native/Auth/security proof is pending.
+References: https://react.dev/learn/preserving-and-resetting-state and
+https://react.dev/reference/react/memo.
+
 Acceptance: a source-bound passage becomes an editable brief and a real usable
 image; generation shows catalog credits and requires normal authentication;
 uncertain responses retain the request identity; local recovery is scoped to the
