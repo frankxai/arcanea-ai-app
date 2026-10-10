@@ -45,12 +45,18 @@ function QuickStartCard({
     <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}
+      transition={{
+        duration: 0.45,
+        delay: 0.05 * index,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       <Link
         href={href}
         className="group relative flex flex-col items-center justify-center gap-3 rounded-2xl overflow-hidden aspect-square md:aspect-[4/3] border border-white/[0.06] hover:border-white/[0.15] transition-all duration-300 hover:scale-[1.02]"
-        style={{ background: `linear-gradient(135deg, var(--tw-gradient-stops))` }}
+        style={{
+          background: `linear-gradient(135deg, var(--tw-gradient-stops))`,
+        }}
       >
         {/* Gradient background */}
         <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
@@ -132,7 +138,13 @@ function CategoryFilter({
 // ---------------------------------------------------------------------------
 
 function BrandKitPreview() {
-  const swatches = ["var(--arc-brand-atlantean-teal)", "var(--arc-brand-atlantean-teal)", "var(--arc-brand-arcanean-gold)", "var(--arc-brand-cosmic-blue)", "var(--arc-cosmic-void)"];
+  const swatches = [
+    "var(--arc-brand-atlantean-teal)",
+    "var(--arc-brand-atlantean-teal)",
+    "var(--arc-brand-arcanean-gold)",
+    "var(--arc-brand-cosmic-blue)",
+    "var(--arc-cosmic-void)",
+  ];
   return (
     <FeatureCard glowColor="var(--arc-brand-arcanean-gold)" delay={0.1}>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
@@ -253,7 +265,9 @@ function UniversalCreatePanel() {
               ))}
             </div>
 
-            <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${active.gradient} p-5`}>
+            <div
+              className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${active.gradient} p-5`}
+            >
               <Image
                 src={active.media.poster}
                 alt={`${active.name} preview`}
@@ -273,8 +287,10 @@ function UniversalCreatePanel() {
                       What are you making?
                     </h3>
                     <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/62">
-                      Start with one sentence, attach references with <span className="font-mono text-white/90">@asset</span>,
-                      then route the output into a studio, a vault, or an MCP handoff.
+                      Start with one sentence, attach references with{" "}
+                      <span className="font-mono text-white/90">@asset</span>,
+                      then route the output into a studio, a vault, or an MCP
+                      handoff.
                     </p>
                   </div>
                   <div className="mt-8 rounded-2xl border border-white/[0.12] bg-black/25 p-3 backdrop-blur-sm">
@@ -285,7 +301,9 @@ function UniversalCreatePanel() {
                       {active.prompt}
                     </div>
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-                      <span className="text-xs font-mono text-white/45">{active.assetHint}</span>
+                      <span className="text-xs font-mono text-white/45">
+                        {active.assetHint}
+                      </span>
                       <Link
                         href={active.href}
                         className="rounded-full px-5 py-2 text-sm font-semibold text-[var(--arc-cosmic-void)]"
@@ -304,7 +322,12 @@ function UniversalCreatePanel() {
                       className="rounded-xl border border-white/[0.10] bg-black/20 p-3 backdrop-blur-sm"
                       initial={{ opacity: 0.55, x: 10 }}
                       animate={{ opacity: [0.55, 1, 0.55], x: [10, 0, 10] }}
-                      transition={{ duration: 3.2, repeat: Infinity, delay: index * 0.25, ease: "easeInOut" }}
+                      transition={{
+                        duration: 3.2,
+                        repeat: Infinity,
+                        delay: index * 0.25,
+                        ease: "easeInOut",
+                      }}
                     >
                       <span className="text-[10px] font-mono text-white/30">
                         {String(index + 1).padStart(2, "0")}
@@ -342,15 +365,18 @@ function UniversalCreatePanel() {
                         />
                       </div>
                       <div className="min-w-0">
-                      <p className="text-sm font-display font-semibold text-white/80">
-                        {mode.name}
-                      </p>
-                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/36">
-                        {mode.output}
-                      </p>
+                        <p className="text-sm font-display font-semibold text-white/80">
+                          {mode.name}
+                        </p>
+                        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/36">
+                          {mode.output}
+                        </p>
                       </div>
                     </div>
-                    <span className="shrink-0 text-xs font-mono" style={{ color: mode.accent }}>
+                    <span
+                      className="shrink-0 text-xs font-mono"
+                      style={{ color: mode.accent }}
+                    >
                       * {mode.cost}
                     </span>
                   </div>
@@ -428,24 +454,24 @@ export function CreateHub() {
               text="What are you"
               as="span"
               className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent"
-              delay={0.05}
-              stagger={0.022}
+              delay={0}
+              stagger={0}
             />
             <br />{" "}
             <SplitText
               text="making today?"
               as="span"
               className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent"
-              delay={0.35}
-              stagger={0.022}
+              delay={0}
+              stagger={0}
             />
           </h1>
 
           <Reveal delay={0.6}>
             <p className="text-base md:text-lg text-white/40 leading-relaxed text-center max-w-xl mx-auto font-body">
-              Start from a studio, a template, or a blank canvas. Worlds,
-              books, games, music, scenes, campaigns, and agents -- all
-              connected, all yours.
+              Start from a studio, a template, or a blank canvas. Worlds, books,
+              games, music, scenes, campaigns, and agents -- all connected, all
+              yours.
             </p>
           </Reveal>
         </div>
@@ -524,7 +550,9 @@ export function CreateHub() {
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/60 text-sm font-medium hover:bg-white/[0.07] hover:border-white/[0.15] hover:text-white/90 transition-all duration-200"
               >
                 Browse all templates
-                <span className="text-xs text-[var(--arc-brand-atlantean-teal)]">→</span>
+                <span className="text-xs text-[var(--arc-brand-atlantean-teal)]">
+                  →
+                </span>
               </Link>
             </Magnetic>
           </div>
