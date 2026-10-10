@@ -93,65 +93,78 @@ async function main() {
   let browser;
   let activePage;
   const streams = [];
+  const fixtureServerErrors = [];
   let streamMode = "complete";
   const server = http.createServer(async (request, response) => {
-    const chunks = [];
-    for await (const chunk of request) chunks.push(chunk);
-    const payload = JSON.parse(Buffer.concat(chunks).toString("utf8"));
-    // Assert credentials in memory only. Never put request bodies or keys in artifacts/logs.
-    assert.equal(payload.provider, "google");
-    assert.equal(payload.clientApiKey, fakeKey);
-    assert.equal(payload.gatewayModel, "arcanea-gemini-flash");
-    assert.ok(Array.isArray(payload.messages));
-    const record = {
-      mode: streamMode,
-      aborted: false,
-      finished: false,
-      providerMatched: true,
-      keyMatched: true,
-      modelMatched: true,
-    };
-    streams.push(record);
-    response.on("close", () => {
-      if (!record.finished) record.aborted = true;
-    });
-    if (streamMode === "error") {
-      record.finished = true;
-      response.writeHead(503, { "content-type": "text/plain" });
-      response.end("Synthetic provider failure: fixture-private-detail");
+    if (request.method !== "POST") {
+      response.writeHead(405, { allow: "POST" });
+      response.end();
       return;
     }
-    response.writeHead(200, {
-      "content-type": "text/event-stream",
-      "x-vercel-ai-ui-message-stream": "v1",
-      "cache-control": "no-store",
-    });
-    const event = (value) =>
-      response.write(`data: ${JSON.stringify(value)}\n\n`);
-    event({ type: "start", messageId: `fixture-${streams.length}` });
-    event({ type: "start-step" });
-    event({ type: "text-start", id: "text-1" });
-    if (streamMode !== "empty")
-      event({
-        type: "text-delta",
-        id: "text-1",
-        delta: "A door opens beneath the tide.",
+    try {
+      const chunks = [];
+      for await (const chunk of request) chunks.push(chunk);
+      const payload = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+      // Assert credentials in memory only. Never put request bodies or keys in artifacts/logs.
+      assert.equal(payload.provider, "google");
+      assert.equal(payload.clientApiKey, fakeKey);
+      assert.equal(payload.gatewayModel, "arcanea-gemini-flash");
+      assert.ok(Array.isArray(payload.messages));
+      const record = {
+        mode: streamMode,
+        aborted: false,
+        finished: false,
+        providerMatched: true,
+        keyMatched: true,
+        modelMatched: true,
+      };
+      streams.push(record);
+      response.on("close", () => {
+        if (!record.finished) record.aborted = true;
       });
-    record.finish = () => {
-      if (response.destroyed) return;
+      if (streamMode === "error") {
+        record.finished = true;
+        response.writeHead(503, { "content-type": "text/plain" });
+        response.end("Synthetic provider failure: fixture-private-detail");
+        return;
+      }
+      response.writeHead(200, {
+        "content-type": "text/event-stream",
+        "x-vercel-ai-ui-message-stream": "v1",
+        "cache-control": "no-store",
+      });
+      const event = (value) =>
+        response.write(`data: ${JSON.stringify(value)}\n\n`);
+      event({ type: "start", messageId: `fixture-${streams.length}` });
+      event({ type: "start-step" });
+      event({ type: "text-start", id: "text-1" });
       if (streamMode !== "empty")
         event({
           type: "text-delta",
           id: "text-1",
-          delta: " Late fixture text.",
+          delta: "A door opens beneath the tide.",
         });
-      event({ type: "text-end", id: "text-1" });
-      event({ type: "finish-step" });
-      event({ type: "finish", finishReason: "stop" });
-      record.finished = true;
-      response.end("data: [DONE]\n\n");
-    };
-    if (streamMode === "complete" || streamMode === "empty") record.finish();
+      record.finish = () => {
+        if (response.destroyed) return;
+        if (streamMode !== "empty")
+          event({
+            type: "text-delta",
+            id: "text-1",
+            delta: " Late fixture text.",
+          });
+        event({ type: "text-end", id: "text-1" });
+        event({ type: "finish-step" });
+        event({ type: "finish", finishReason: "stop" });
+        record.finished = true;
+        response.end("data: [DONE]\n\n");
+      };
+      if (streamMode === "complete" || streamMode === "empty") record.finish();
+    } catch {
+      fixtureServerErrors.push(
+        "Fixture rejected a request; provider payloads remain private",
+      );
+      response.destroy();
+    }
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   const fixtureUrl = `http://127.0.0.1:${server.address().port}/chat`;
@@ -180,7 +193,10 @@ async function main() {
         const url = new URL(route.request().url());
         if (url.origin !== target.origin)
           return route.fulfill({ status: 200, json: {} });
-        if (url.pathname === "/api/ai/chat") {
+        if (
+          url.pathname === "/api/ai/chat" &&
+          route.request().method() === "POST"
+        ) {
           requests++;
           return route.continue({ url: fixtureUrl });
         }
@@ -452,6 +468,7 @@ async function main() {
       });
       await context.close();
     }
+    assert.deepEqual(fixtureServerErrors, []);
     console.log(
       JSON.stringify({
         head,
@@ -487,6 +504,7 @@ async function main() {
   } finally {
     for (const record of streams) delete record.finish;
     receipt.streams = streams;
+    receipt.fixtureServerErrors = fixtureServerErrors;
     receipt.cleanup = {
       attempted: true,
       browserClosed: false,
