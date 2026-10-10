@@ -39,7 +39,6 @@ type SortKey =
   | "magic"
   | "context"
   | "input-price"
-  | "speed"
   | "name";
 
 const DISPLAY_LIMIT = 48;
@@ -66,43 +65,43 @@ function awardBadge(award?: string) {
   switch (award) {
     case "editors-choice":
       return {
-        label: "🏆 Editor’s Choice",
+        label: "High fantasy novels",
         color:
           "bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/30",
       };
     case "best-lore":
       return {
-        label: "📜 Best Lore Vault",
+        label: "📜 Long-context lore",
         color:
           "bg-[var(--arc-brand-cosmic-blue)]/15 text-[var(--arc-brand-cosmic-blue)] border-[var(--arc-brand-cosmic-blue)]/30",
       };
     case "best-prose":
       return {
-        label: "👑 Supreme Prose",
+        label: "Prose",
         color:
           "bg-[var(--arc-void)]/15 text-[var(--arc-void)] border-[var(--arc-void)]/30",
       };
     case "best-free":
       return {
-        label: "⚡ Best Free Model",
+        label: "⚡ Free worldbuilding",
         color:
           "bg-[var(--arc-wind)]/15 text-[var(--arc-wind)] border-[var(--arc-wind)]/30",
       };
     case "best-magic":
       return {
-        label: "🔮 Grand Enchanter",
+        label: "🔮 Hard magic logic",
         color:
           "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border-[var(--arc-brand-atlantean-teal)]/30",
       };
     case "best-dialogue":
       return {
-        label: "🎭 Bard of Truth",
+        label: "🎭 Character dialogue",
         color:
           "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
       };
     case "best-tactics":
       return {
-        label: "⚔️ War Master",
+        label: "⚔️ Combat scenes",
         color:
           "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
       };
@@ -261,10 +260,7 @@ function WorldCraftModelCard({
               : `${formatPrice(model.inputPrice)} / ${formatPrice(model.outputPrice)}`}
           </span>
         </div>
-        <div className="flex justify-between items-center pt-2 mt-2">
-          <span className="text-[10px] text-white/30">
-            {model.speed === null ? "" : `${model.speed} tok/s`}
-          </span>
+        <div className="flex justify-end items-center pt-2 mt-2">
           <Link
             href="/chat"
             className="inline-flex items-center gap-1 text-[11px] text-[var(--arc-brand-atlantean-teal)] hover:underline font-medium"
@@ -366,9 +362,6 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
       case "input-price":
         arr.sort((a, b) => a.inputPrice - b.inputPrice);
         break;
-      case "speed":
-        arr.sort((a, b) => byRatingDesc(a.speed, b.speed));
-        break;
       case "name":
         arr.sort((a, b) => a.name.localeCompare(b.name));
         break;
@@ -408,7 +401,7 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
             label: `★ My Favorites (${favoriteCount})`,
             highlight: favoriteCount > 0,
           },
-          { id: "curated", label: "🏆 Curated Best" },
+          { id: "curated", label: "Curated Picks" },
           { id: "1m-lore", label: "📜 1M+ Lore Vaults" },
           { id: "prose", label: "✍️ Lyrical Prose (90+)" },
           { id: "magic", label: "🔮 Hard Magic Logic" },
@@ -508,9 +501,6 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
               </option>
               <option value="input-price" className="bg-gray-900 text-white">
                 Price (Lowest first)
-              </option>
-              <option value="speed" className="bg-gray-900 text-white">
-                Speed (Fastest first)
               </option>
               <option value="name" className="bg-gray-900 text-white">
                 Name (A-Z)
