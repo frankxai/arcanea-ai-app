@@ -65,6 +65,10 @@ Authentication delivery and owner profiles are synthetic seams; production
 triggers/grants/session creation are excluded. No live database write, migration,
 provider call or production-account acceptance follows from these checks.
 Local syntax/format verification and hosted terminal results remain required.
+The first hosted database run38076583339 at67f1841f failed because the test
+adapter added a second slash to PostgREST paths; use the validated URL origin
+as the client base. The failure is retained and does not establish a production
+reader fault. The artifact now explicitly selects the TAP reporter.
 
 Local implementation evidence: six source/recovery tests and six compiled actual-route
 tests pass; targeted ESLint passes with zero warnings; both browser/review scripts

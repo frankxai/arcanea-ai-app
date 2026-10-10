@@ -82,7 +82,7 @@ jobs:
             if curl --max-time 3 -fsS http://127.0.0.1:3801/creations > /dev/null; then break; fi
             sleep 2
           done
-          timeout 90s node --test scripts/tests/reading-scene-postgrest.test.cjs | tee screenshots/reading-scene-database/result.tap
+          timeout 90s node --test --test-reporter=tap scripts/tests/reading-scene-postgrest.test.cjs | tee screenshots/reading-scene-database/result.tap
       - name: Build and inspect the compiled reading workflow
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co

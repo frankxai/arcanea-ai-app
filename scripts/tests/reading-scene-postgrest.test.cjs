@@ -60,7 +60,7 @@ function jwt(actor) {
   return `${unsigned}.${createHmac("sha256", signingKey).update(unsigned).digest("base64url")}`;
 }
 function client(actor) {
-  return new PostgrestClient(endpoint.href, {
+  return new PostgrestClient(endpoint.origin, {
     headers: actor ? { Authorization: `Bearer ${jwt(actor)}` } : {},
     fetch: (url, options) =>
       fetch(url, { ...options, signal: AbortSignal.timeout(10_000) }),
