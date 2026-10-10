@@ -301,11 +301,16 @@ export async function POST(req: NextRequest) {
         },
       });
     }
-    // The shared image tool uses platform keys without a billing reservation.
-    // Keep image generation on Imagine's authenticated credit boundary.
-    if (enabledTools?.includes("image")) {
+    // These shared tools use platform credentials or host access without the
+    // durable admission required by this public customer-key route.
+    const blockedTool = enabledTools?.find((name) =>
+      ["image", "search", "research", "think", "jarvis"].includes(name),
+    );
+    if (blockedTool) {
       return new Response(
-        "Image generation in chat is unavailable. Open Imagine to generate images with your account credits.",
+        blockedTool === "image"
+          ? "Image generation in chat is unavailable. Open Imagine to generate images with your account credits."
+          : "This chat tool is unavailable. Continue with text chat using your provider key.",
         {
           status: 403,
           headers: {

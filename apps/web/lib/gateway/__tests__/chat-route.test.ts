@@ -246,7 +246,7 @@ test("UI chat and its alias deny missing keys and advertise customer credentials
   );
 });
 
-test("UI chat cannot invoke a platform-funded image tool with a customer text key", async () => {
+test("UI chat cannot invoke platform-funded tools with a customer text key", async () => {
   const ui = await import("../../../app/api/ai/chat/route");
   const response = await ui.POST(
     request(
@@ -262,6 +262,22 @@ test("UI chat cannot invoke a platform-funded image tool with a customer text ke
   assert.equal(response.status, 403);
   assert.match(await response.text(), /Imagine/);
   assert.equal(calls.length, 0);
+  for (const tool of ["search", "research", "think", "jarvis"]) {
+    const funded = await ui.POST(
+      request(
+        {},
+        {
+          provider: "openai",
+          clientApiKey: "test-customer-key",
+          searchApiKey: "test-customer-search-key",
+          enabledTools: [tool],
+          messages: [{ role: "user", content: "Investigate this topic." }],
+        },
+      ),
+    );
+    assert.equal(funded.status, 403);
+  }
+  assert.equal(calls.length, 0);
   for (const enabledTools of ["image", null, {}, [7]]) {
     const malformed = await ui.POST(
       request(
@@ -275,6 +291,32 @@ test("UI chat cannot invoke a platform-funded image tool with a customer text ke
       ),
     );
     assert.equal(malformed.status, 400);
+  }
+  assert.equal(calls.length, 0);
+});
+
+test("public operator endpoint refuses host actions without inspecting files", async () => {
+  const operator = await import("../../../app/api/voice/tools/route");
+  for (const action of [
+    "system_status",
+    "git_today",
+    "list_open_prs",
+    "search_repo",
+    "read_file",
+    "explain_arcanea",
+  ]) {
+    const response = await operator.POST(
+      new Request("https://arcanea.example/api/voice/tools", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action,
+          args: { path: "sensitive-marker.env", query: "fixture" },
+        }),
+      }),
+    );
+    assert.equal(response.status, 403);
+    assert.equal((await response.json()).ok, false);
   }
   assert.equal(calls.length, 0);
 });
