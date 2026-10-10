@@ -452,7 +452,7 @@ async function main() {
         assert.ok(box.height >= 44);
         const geometry = await page
           .getByRole("region", { name: "Passage visualization" })
-          .evaluate(async (workspace) => {
+          .evaluate((workspace) => {
             const root = document.documentElement;
             const button = Array.from(
               workspace.querySelectorAll("button"),
@@ -464,6 +464,7 @@ async function main() {
             const compact = innerWidth <= 480;
             const original = {
               padding: parseFloat(getComputedStyle(workspace).paddingTop),
+              buttonPadding: parseFloat(getComputedStyle(button).paddingLeft),
               companionSpace: parseFloat(
                 getComputedStyle(actions).paddingRight,
               ),
@@ -474,31 +475,7 @@ async function main() {
               root.style.getPropertyValue(name),
               root.style.getPropertyPriority(name),
             ]);
-            try {
-              for (const name of names) root.style.setProperty(name, "1.75rem");
-              // The global reduced-motion rule gives all properties a 0.01ms
-              // transition. Read the settled geometry after the next paint.
-              await new Promise((resolve) => requestAnimationFrame(resolve));
-              await new Promise((resolve) => requestAnimationFrame(resolve));
-              return {
-                compact,
-                rem,
-                original,
-                overriddenPadding: parseFloat(
-                  getComputedStyle(workspace).paddingTop,
-                ),
-                overriddenButtonPadding: parseFloat(
-                  getComputedStyle(button).paddingLeft,
-                ),
-              };
-            } finally {
-              for (const [name, value, priority] of previous) {
-                if (value) root.style.setProperty(name, value, priority);
-                else root.style.removeProperty(name);
-              }
-              await new Promise((resolve) => requestAnimationFrame(resolve));
-              await new Promise((resolve) => requestAnimationFrame(resolve));
-            }
+            return { compact, rem, original, previous };
           });
         assert.equal(
           geometry.original.padding,
@@ -508,8 +485,49 @@ async function main() {
           geometry.original.companionSpace,
           geometry.rem * (geometry.compact ? 3.5 : 0),
         );
-        assert.equal(geometry.overriddenPadding, geometry.rem * 1.75);
-        assert.equal(geometry.overriddenButtonPadding, geometry.rem * 1.75);
+        const workspace = page.getByRole("region", {
+          name: "Passage visualization",
+        });
+        const returnButton = workspace.getByRole("button", {
+          name: "Return to reading",
+          exact: true,
+        });
+        try {
+          await page.evaluate(() => {
+            for (const name of ["--arc-space-4", "--arc-space-6"])
+              document.documentElement.style.setProperty(name, "1.75rem");
+          });
+          // Reduced-motion CSS still defines a brief transition. Assert the
+          // computed destination, rather than a fixed number of paint frames.
+          await expect(workspace).toHaveCSS(
+            "padding-top",
+            `${geometry.rem * 1.75}px`,
+          );
+          await expect(returnButton).toHaveCSS(
+            "padding-left",
+            `${geometry.rem * 1.75}px`,
+          );
+        } finally {
+          await page.evaluate((previous) => {
+            for (const [name, value, priority] of previous) {
+              if (value)
+                document.documentElement.style.setProperty(
+                  name,
+                  value,
+                  priority,
+                );
+              else document.documentElement.style.removeProperty(name);
+            }
+          }, geometry.previous);
+        }
+        await expect(workspace).toHaveCSS(
+          "padding-top",
+          `${geometry.original.padding}px`,
+        );
+        await expect(returnButton).toHaveCSS(
+          "padding-left",
+          `${geometry.original.buttonPadding}px`,
+        );
         assert.equal(
           await page.evaluate(
             () => document.documentElement.scrollWidth <= innerWidth,
