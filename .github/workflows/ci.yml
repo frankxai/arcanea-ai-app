@@ -168,7 +168,9 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts
 
       - name: Verify author credentials and exact draft acknowledgements
-        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
+        run: |
+          pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
+          node --test scripts/tests/auth-response-privacy.test.cjs
 
       - name: Verify author draft ownership, persistence and migration recovery
         env:
@@ -435,7 +437,7 @@ jobs:
   author-independent-review:
     name: Independent author source review
     needs: author-preview
-    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/author-draft-recovery-20261010'
+    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010')
     runs-on: ubuntu-latest
     timeout-minutes: 7
     steps:

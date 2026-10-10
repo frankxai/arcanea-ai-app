@@ -25,6 +25,11 @@ function matchesPrefix(pathname: string, prefixes: string[] = []) {
   );
 }
 
+function privateAuthResponse(response: NextResponse) {
+  response.headers.set("Cache-Control", "private, no-store");
+  return response;
+}
+
 /** Preserve only the approved world draft return destination on auth pages. */
 export function authenticatedRedirectUrl(
   request: NextRequest,
@@ -143,12 +148,14 @@ export async function updateSession(
 
     // If explicitly protected, or if it's an API route not explicitly public → block
     if (isProtectedApi || !isPublicApi) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: { code: "UNAUTHORIZED", message: "Authentication required" },
-        },
-        { status: 401 },
+      return privateAuthResponse(
+        NextResponse.json(
+          {
+            success: false,
+            error: { code: "UNAUTHORIZED", message: "Authentication required" },
+          },
+          { status: 401 },
+        ),
       );
     }
   }
@@ -158,14 +165,16 @@ export async function updateSession(
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = loginPath;
     redirectUrl.searchParams.set("next", pathname);
-    return NextResponse.redirect(redirectUrl);
+    return privateAuthResponse(NextResponse.redirect(redirectUrl));
   }
 
   if (isAuthRoute && user) {
-    return NextResponse.redirect(
-      authenticatedRedirectUrl(request, authenticatedRedirectPath),
+    return privateAuthResponse(
+      NextResponse.redirect(
+        authenticatedRedirectUrl(request, authenticatedRedirectPath),
+      ),
     );
   }
 
-  return response;
+  return privateAuthResponse(response);
 }
