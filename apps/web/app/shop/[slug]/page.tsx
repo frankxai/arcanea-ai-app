@@ -7,6 +7,7 @@ import {
   findEdition,
   editionReleased,
   editionDescription,
+  editionPageCopy,
   productStructuredData,
 } from "@/lib/shop/catalog";
 import { checkoutUrlForEdition } from "@/lib/shop/checkout";
@@ -48,6 +49,7 @@ export default async function EditionPage({
   const edition = findEdition(slug);
   if (!edition) notFound();
   const released = editionReleased(edition);
+  const copy = editionPageCopy(edition);
   const available = Boolean(checkoutUrlForEdition(edition, process.env));
   const schema = productStructuredData(edition);
   return (
@@ -109,6 +111,7 @@ export default async function EditionPage({
             available={available}
             released={released}
             previewHref={edition.previewHref}
+            previewNoun={copy.previewNoun}
           />
           <dl>
             <div>
@@ -123,16 +126,15 @@ export default async function EditionPage({
               <dd>
                 {released
                   ? "Hosted download access after confirmed payment"
-                  : "Paid files are not released. The linked sample is free."}
+                  : copy.previewDelivery}
               </dd>
             </div>
-            <div>
-              <dt>Tools</dt>
-              <dd>
-                Use the materials with your existing writing and production
-                tools.
-              </dd>
-            </div>
+            {copy.tools && (
+              <div>
+                <dt>Tools</dt>
+                <dd>{copy.tools}</dd>
+              </div>
+            )}
           </dl>
           <Link href="/shop/delivery" className="shop-text-link">
             Read delivery & license details{" "}
@@ -161,29 +163,26 @@ export default async function EditionPage({
           <p className="shop-small">
             {released
               ? "The contents of this edition match its versioned file manifest."
-              : "These are the intended contents of the proposed paid edition. A release must match an exact file manifest. The sample does not establish paid-edition readiness."}
+              : copy.previewScope}
           </p>
         </div>
       </section>
-      <section className="shop-proof">
-        <div className="shop-proof-number">
-          Your world.
-          <br />
-          <em>Your authorship.</em>
-        </div>
-        <div>
-          <h2>Keep what you create.</h2>
-          <p>
-            {released ? "The edition license" : "The proposed license"} governs
-            the kit and its examples. Your original characters, setting and
-            story remain yours. Software, sample artwork and official Arcanea IP
-            have separate permissions.
-          </p>
-          <Link href="/shop/sample" className="shop-text-link">
-            Inspect the original example{" "}
-          </Link>
-        </div>
-      </section>
+      {copy.rights && (
+        <section className="shop-proof">
+          <div className="shop-proof-number">
+            Your world.
+            <br />
+            <em>Your authorship.</em>
+          </div>
+          <div>
+            <h2>Keep what you create.</h2>
+            <p>{copy.rights}</p>
+            <Link href="/shop/sample" className="shop-text-link">
+              Inspect the original example{" "}
+            </Link>
+          </div>
+        </section>
+      )}
       <div className="shop-next-edition">
         <Link href="/shop"> Explore all editions</Link>
         <Link
