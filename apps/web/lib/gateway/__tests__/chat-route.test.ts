@@ -246,6 +246,39 @@ test("UI chat and its alias deny missing keys and advertise customer credentials
   );
 });
 
+test("UI chat cannot invoke a platform-funded image tool with a customer text key", async () => {
+  const ui = await import("../../../app/api/ai/chat/route");
+  const response = await ui.POST(
+    request(
+      {},
+      {
+        provider: "openai",
+        clientApiKey: "test-customer-key",
+        enabledTools: ["image"],
+        messages: [{ role: "user", content: "Generate an image." }],
+      },
+    ),
+  );
+  assert.equal(response.status, 403);
+  assert.match(await response.text(), /Imagine/);
+  assert.equal(calls.length, 0);
+  for (const enabledTools of ["image", null, {}, [7]]) {
+    const malformed = await ui.POST(
+      request(
+        {},
+        {
+          provider: "openai",
+          clientApiKey: "test-customer-key",
+          enabledTools,
+          messages: [{ role: "user", content: "Generate an image." }],
+        },
+      ),
+    );
+    assert.equal(malformed.status, 400);
+  }
+  assert.equal(calls.length, 0);
+});
+
 test("UI chat refuses malformed customer keys before SDK transport", async () => {
   const ui = await import("../../../app/api/ai/chat/route");
   for (const clientApiKey of [7, " ", "x".repeat(8193), "test\nkey"]) {

@@ -287,6 +287,34 @@ export async function POST(req: NextRequest) {
       }
       throw error;
     }
+
+    if (
+      enabledTools !== undefined &&
+      (!Array.isArray(enabledTools) ||
+        !enabledTools.every((name) => typeof name === "string"))
+    ) {
+      return new Response("Tool selection must be a list of names.", {
+        status: 400,
+        headers: {
+          "Content-Type": "text/plain",
+          "Cache-Control": "private, no-store",
+        },
+      });
+    }
+    // The shared image tool uses platform keys without a billing reservation.
+    // Keep image generation on Imagine's authenticated credit boundary.
+    if (enabledTools?.includes("image")) {
+      return new Response(
+        "Image generation in chat is unavailable. Open Imagine to generate images with your account credits.",
+        {
+          status: 403,
+          headers: {
+            "Content-Type": "text/plain",
+            "Cache-Control": "private, no-store",
+          },
+        },
+      );
+    }
     const resolvedProviderId = route.providerId;
     const providerApiKeySource = route.apiKeySource;
     const resolvedGateway = route.gatewayModelId
@@ -757,8 +785,6 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const selected: Record<string, any> = { ...autoVault };
-      if (enabledTools.includes("image") && chatToolSet.image_generate)
-        selected.image_generate = chatToolSet.image_generate;
       if (enabledTools.includes("search") && chatToolSet.web_search)
         selected.web_search = chatToolSet.web_search;
       if (

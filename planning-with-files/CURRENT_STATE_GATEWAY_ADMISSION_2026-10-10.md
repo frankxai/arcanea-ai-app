@@ -22,6 +22,10 @@ The named alternative is a direct provider client. The fixtures preserve its tex
 
 ## Verification and release limits
 
+Follow-up: exact b4332f1b passed full Linux CI, actual CodeQL, Vercel preview and rendered gallery desktop/375px/reduced-motion checks. Its preview verified both public missing-key responses. Prior101b Grok review passed with two medium findings; cache controls and explicit health status were corrected and asserted. Fresh b433 review was admitted after a temporary RAM HOLD recovered; it is pending and cannot approve later changes.
+
+A subsequent source inspection found `image_generate` directly invokes platform-key `generateImages` without Imagine's reservation path. A native test first reproduced HTTP200 with a customer text key and image enabled. The public chat handler now refuses that image option with403 before SDK/provider I/O and directs the creator to Imagine; malformed tool selections return400. The existing Imagine route uses verified identity and `withReservation` before its provider call. This chat repair does not certify other tool factory callers or deployed billing storage. Fifteen native cases now cover the expanded scope. Exact-final-head review and cloud gates must be renewed before promotion.
+
 - Node 24.16.0 and pinned pnpm 11.28.4 frozen-lock install passed on the initial base. A task-local launcher fixes the foreign pnpm 11.5.0 selected by Turbo child processes; global package-manager configuration is unchanged.
 - Full web ESLint and changed-file Prettier passed. Web `tsc --noEmit` passed after adding the required existing docs to the sparse checkout and fixing a test header type.
 - The repository's full type-check reached Next route type generation and was refused by SWC's Windows native cache security check: another SID has replacement rights in the default cache. Documented temporary/custom cache attempts also failed. Security checks and ACLs remain unchanged. Full Next type generation and production build therefore remain pending native Linux CI/Vercel evidence.
