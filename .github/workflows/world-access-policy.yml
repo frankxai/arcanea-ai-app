@@ -3,15 +3,18 @@ name: World access policy
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "supabase/migrations/**"
       - "supabase/tests/world-policy-recursion.sql"
+      - "supabase/tests/billing-*"
       - ".github/workflows/world-access-policy.yml"
   push:
     branches: [main]
     paths:
       - "supabase/migrations/**"
       - "supabase/tests/world-policy-recursion.sql"
+      - "supabase/tests/billing-*"
       - ".github/workflows/world-access-policy.yml"
 
 permissions:
@@ -19,7 +22,6 @@ permissions:
 
 jobs:
   world-access-policy:
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 5
     services:
@@ -44,3 +46,9 @@ jobs:
         run: |
           psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 -f supabase/tests/world-policy-recursion.sql
           psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 --set missing_membership=true -f supabase/tests/world-policy-recursion.sql
+      - name: Verify billing transactions, privileges and concurrent recovery
+        env:
+          PGPASSWORD: local-test-only
+        run: |
+          psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 -f supabase/tests/billing-kernel.sql
+          bash supabase/tests/billing-concurrency.sh
