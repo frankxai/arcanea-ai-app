@@ -70,7 +70,7 @@ function SceneWorkspace({
   useLayoutEffect(() => {
     if (!focusAfterSelection.current || !open || !scene) return;
     workspaceRef.current?.scrollIntoView({
-      block: "center",
+      block: "start",
       behavior: "instant",
     });
     briefRef.current?.focus({ preventScroll: true });

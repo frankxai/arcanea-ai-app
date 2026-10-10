@@ -57,6 +57,14 @@ async function selectPassage(page) {
     .click();
   await expect(page.getByLabel("Visual brief", { exact: true })).toBeVisible();
   await expect(page.getByLabel("Visual brief", { exact: true })).toBeFocused();
+  const firstAction = await page
+    .getByRole("button", { name: "Visualize a passage", exact: true })
+    .boundingBox();
+  const navigation = await page.locator("nav").first().boundingBox();
+  assert.ok(
+    firstAction.y >= navigation.y + navigation.height,
+    "The reader's first action must remain below fixed navigation after selection",
+  );
   return text.replace(/\s+/g, " ").trim();
 }
 async function main() {
@@ -343,7 +351,12 @@ async function main() {
         assert.deepEqual(errors, []);
         await page
           .getByRole("region", { name: "Passage visualization" })
-          .screenshot({ path: `screenshots/reading-scene/${mode.name}.png` });
+          .evaluate((element) =>
+            element.scrollIntoView({ block: "start", behavior: "instant" }),
+          );
+        await page.screenshot({
+          path: `screenshots/reading-scene/${mode.name}.png`,
+        });
         const capturePath = `screenshots/reading-scene/${mode.name}.png`;
         const imageSha256 = sha(await fs.readFile(capturePath));
         await fs.writeFile(
@@ -369,6 +382,7 @@ async function main() {
           checks: [
             "source selection",
             "focus",
+            "scene actions clear fixed navigation",
             "anonymous admission",
             "unconfigured provider blocks new generation while retaining the brief",
             "edited brief",
