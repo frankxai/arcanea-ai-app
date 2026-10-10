@@ -33,7 +33,7 @@ Full CI, exact independent review,
 hosted preview and receiving-production HTTP checks are required before completion.
 
 Files: middleware.ts; scripts/tests/auth-response-privacy.test.cjs; ci.yml;
-scripts/review-author-recovery.mjs; this pickup. Reuse the existing manual Google review rail,
+scripts/review-author-recovery.mjs; scripts/verify-sovereign-browser.cjs; this pickup. Reuse the existing manual Google review rail,
 restricted to frankxai and the two explicitly owned branch names; no new provider secret.
 Acceptance: preserved status/auth routing and cookies, explicit private/no-store, zero paid
 creator-provider calls, normal protected merge, exact stable deployment/source binding.
@@ -46,3 +46,14 @@ Policy loading is session evidence, not runtime enforcement. PP browser-qa HOLD7
 prevents new local browser/build/agent workloads; small tests and hosted verification continue.
 Production account linkage, chapter creation/navigation, Guardian review, publish/export/rights,
 paid/editorial usefulness, financial rollout and the broad original goal remain open.
+
+Follow-up15:15UTC:97531891a79f7795428b64266fbb9f155ddf6344 PR CI38062262168 and CodeQL38062262192 passed;
+its manual38062276191 independent Gemini3.1Pro response xlTKatPrKt2ez7IP28CemAw passed with0 blocking findings
+and all28 source hashes verified. All four exact hosted HTTP checks passed private/no-store and proper307
+login destination without following redirects. The same manual run's full Build failed on an inherited
+gallery locator matching two identical Pelagic Cathedral links, also seen historically in MCP388.
+Preserve that failure; do not rerun until green or use it as approval of a changed head. Gallery verification
+now selects the exact destination among visible cards and requires exactly one match; search input also
+requires visible uniqueness. Hidden streaming markup may be ignored, while duplicate visible cards still fail.
+The actual cause of the transient duplicate DOM was not captured; no permanent visible UI defect is claimed.
+No gallery UI/canon content was changed. Fresh full CI and independent review are required again.

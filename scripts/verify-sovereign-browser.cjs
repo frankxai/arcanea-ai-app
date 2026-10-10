@@ -1,6 +1,7 @@
 const assert = require("node:assert/strict");
 const crypto = require("node:crypto");
 const fs = require("node:fs");
+const { expect } = require("../apps/web/node_modules/@playwright/test");
 
 const experimental = (value) =>
   value &&
@@ -28,12 +29,18 @@ module.exports.verifySovereignPreview = async ({
   );
   await page.getByRole("button", { name: "Dungeons", exact: true }).click();
   await page.getByText("12 works", { exact: true }).waitFor();
-  await page.locator("#sovereign-depths-search").first().fill("Pelagic Cathedral");
-  await page.getByText("1 work", { exact: true }).waitFor();
   await page
-    .locator("#collection a")
-    .filter({ hasText: "The Pelagic Cathedral" })
-    .click();
+    .locator("#sovereign-depths-search:visible")
+    .fill("Pelagic Cathedral");
+  await page.getByText("1 work", { exact: true }).waitFor();
+  const cathedral = page
+    .locator(
+      '#collection a[href="/gallery/sovereign-depths/the-pelagic-cathedral"]:visible',
+    )
+    .filter({ hasText: "The Pelagic Cathedral" });
+  // Streaming markup can contain hidden copies. Visible duplicates still fail.
+  await expect(cathedral).toHaveCount(1);
+  await cathedral.click();
   await page.waitForURL(
     `${base}/gallery/sovereign-depths/the-pelagic-cathedral`,
   );
@@ -57,7 +64,9 @@ module.exports.verifySovereignPreview = async ({
   });
   await page.getByRole("button", { name: "Bosses", exact: true }).click();
   await page.getByText("24 works", { exact: true }).waitFor();
-  await page.locator("#sovereign-depths-search").first().fill("no-such-sovereign-entry-12345");
+  await page
+    .locator("#sovereign-depths-search:visible")
+    .fill("no-such-sovereign-entry-12345");
   await page
     .getByText("No works match this search.", { exact: true })
     .waitFor();

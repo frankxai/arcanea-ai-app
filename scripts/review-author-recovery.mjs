@@ -36,6 +36,8 @@ const contexts = [
   "apps/web/lib/ai/provider-preferences.ts",
   "apps/web/lib/rate-limit/rate-limiter.ts",
   "apps/web/proxy.ts",
+  "apps/web/app/gallery/sovereign-depths/collection-grid.tsx",
+  "apps/web/app/gallery/sovereign-depths/page.tsx",
   "apps/web/app/studio/author/components/chapter-nav.tsx",
   "apps/web/app/studio/author/components/character-tracker.tsx",
   "apps/web/app/api/author/[bookSlug]/publish/route.ts",
