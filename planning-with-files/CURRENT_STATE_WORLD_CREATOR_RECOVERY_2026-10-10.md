@@ -229,3 +229,11 @@ service failure and complete typecheck log. Attach the signal to the typed filte
 builder before single(), preserving runtime abort and result types without casts
 or suppressed errors. Fresh CI/review remains required. Native query mocks had
 not revealed this SDK type boundary; the required hosted gate did.
+
+The first follow-up manual dispatch38086013796 resolved the prior e6a head because
+the push had returned an ongoing shell session. Cancel that owned run; the verified
+fresh dispatch38086049046 resolves b844d8f142. Do not dispatch dependent workflows
+before awaiting push completion. Existing always() review jobs keep starting or
+running after cancellation and delay current source. Add !cancelled() to their
+trusted manual job condition, retaining failure receipts and every release gate.
+No stale review approval or cancelled build qualifies the updated revision.
