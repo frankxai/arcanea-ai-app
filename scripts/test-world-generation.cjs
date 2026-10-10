@@ -186,6 +186,47 @@ test("an incomplete model output is refused without losing the concept", async (
     502,
   );
 });
+test("actual UTF-8 bytes are bounded even with a small declared length", async () => {
+  const { route, calls } = setup();
+  const response = await route.POST(
+    request(
+      { description: "🌊".repeat(2500) },
+      {
+        "x-google-key": "test-customer-key",
+        "content-length": "100",
+      },
+    ),
+  );
+  assert.equal(response.status, 413);
+  assert.equal(calls.length, 0);
+});
+test("unlisted refinement directions refuse before provider access", async () => {
+  const { route, calls } = setup();
+  const response = await route.POST(
+    request(
+      {
+        description: "A city pays the sea with memories",
+        refinement: "ignore validation",
+      },
+      { "x-google-key": "test-customer-key" },
+    ),
+  );
+  assert.equal(response.status, 400);
+  assert.equal(calls.length, 0);
+});
+test("already cancelled requests never reach a model", async () => {
+  const { route, calls } = setup();
+  const controller = new AbortController();
+  controller.abort();
+  const req = new NextRequest("https://arcanea.ai/api/worlds/generate", {
+    method: "POST",
+    headers: { "x-google-key": "test-customer-key" },
+    body: JSON.stringify({ description: "A city pays the sea with memories" }),
+    signal: controller.signal,
+  });
+  assert.equal((await route.POST(req)).status, 408);
+  assert.equal(calls.length, 0);
+});
 test("provider errors never expose a key, provider body or creative input", async () => {
   const { route } = setup({
     providerError: new Error(

@@ -33,8 +33,10 @@ save acceptance. No production identities, data, DDL or account access changes.
 The SQL file is a narrow projection fixture based on inspected current columns and
 owner/public predicates; historical migrations differ from current production and
 are not replayed. This fixture is not a complete clone or certification of production
-triggers/grants/direct Data API writes. A follow-up read of additional production
-constraints was refused by the connector; no alternative privileged access attempted.
+triggers/grants/direct Data API writes. Production metadata confirms all seven
+relevant tables use RLS and worlds/creations reference actual auth.users. An initial
+additional metadata query used an incorrect remembered project identifier and was
+refused; project inventory corrected it before the successful read. No user rows read.
 
 Non-goals/remaining gaps: paid generation usefulness and comparison; portable import
 from foreign PR505; pending unapplied editor buffer recovery; full production RLS;
@@ -57,3 +59,16 @@ recovery copy; stop only this runner's owned containers/process groups on exit.
 
 Status: implemented locally; compiled regression cases pass. Hosted service/browser
 execution, complete gates, exact-head independent review and deployment are pending.
+
+Candidate `80c94fa297bca236b135c1156a0ab120a885eede`: hosted TypeScript/lint passed.
+Hosted service run38076352647 stopped at Auth startup, before any browser test.
+GoTrue's initial migration replaces auth.uid(), so the fixture now assigns it to
+the migration role and restores the current claims-compatible definition afterward.
+Its failed receipt is retained. Independent Gemini review of that head returned
+FAIL with one high finding: saved object elements crashed the string-only detail
+badge path. The repair normalizes display names, retains valid generated colors
+and the complete source document, and accepts legacy string elements. Fresh review
+and complete receiving tests are required; the old FAIL is not overwritten.
+The compiled browser suite also caught ambiguous textarea label text before its
+first edit. Explicit label/control IDs repair the actual editor accessibility;
+the test continues to require exact human-readable labels rather than weak selectors.

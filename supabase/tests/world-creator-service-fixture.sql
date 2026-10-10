@@ -15,6 +15,11 @@ create function auth.uid() returns uuid language sql stable as $$
   select coalesce(nullif(current_setting('request.jwt.claim.sub', true), ''),
     (nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub'))::uuid
 $$;
+-- GoTrue's initial migration replaces uid(); it must own that function. Its
+-- legacy definition is refreshed to the inspected claims-compatible form after
+-- Auth migrations finish, before any app or PostgREST request is accepted.
+alter function auth.uid() owner to supabase_auth_admin;
+alter role supabase_auth_admin set search_path = auth, public;
 grant usage on schema public, auth to anon, authenticated, service_role;
 grant execute on function auth.uid() to anon, authenticated, service_role;
 
@@ -30,13 +35,14 @@ create table public.worlds (
   elements jsonb default '[]', laws jsonb default '[]', systems jsonb default '[]',
   palette jsonb default '{}', mood text, hero_image_url text,
   visibility text default 'private' check (visibility in ('private','unlisted','public')),
-  license text default 'personal', version text default '0.1.0',
+  license text default 'personal' check (license in ('personal','cc-by','commercial','open')), version text default '0.1.0',
   character_count integer default 0, creation_count integer default 0,
   star_count integer default 0, fork_count integer default 0,
   created_at timestamptz default now(), updated_at timestamptz default now()
 );
 create table public.world_collaborators (
-  world_id uuid references public.worlds(id), user_id uuid not null, role text
+  world_id uuid references public.worlds(id), user_id uuid not null,
+  role text check (role in ('viewer','editor','admin')), primary key(world_id,user_id)
 );
 create schema arcanea_world_access;
 create function arcanea_world_access.current_user_collaborates_on_world(target_world uuid)
@@ -60,7 +66,7 @@ create policy "World owners manage collaborators" on public.world_collaborators 
 create table public.world_characters (
   id uuid primary key, world_id uuid not null references public.worlds(id), name text not null,
   title text, origin_class text, backstory text, motivation text, personality jsonb not null default '{}',
-  portrait_url text, is_agent boolean default false, element text, gate integer
+  portrait_url text, is_agent boolean default false, element text, gate integer check(gate >= 1 and gate <= 10)
 );
 create table public.world_locations (
   id uuid primary key, world_id uuid not null references public.worlds(id), name text not null,

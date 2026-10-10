@@ -176,6 +176,17 @@ try {
   );
   phase = "auth-readiness";
   await ready("http://127.0.0.1:54323/health");
+  docker([
+    "exec",
+    db,
+    "psql",
+    "-U",
+    "postgres",
+    "-v",
+    "ON_ERROR_STOP=1",
+    "-c",
+    "create or replace function auth.uid() returns uuid language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claim.sub', true), ''), (nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub'))::uuid $$; alter table public.worlds add foreign key(creator_id) references auth.users(id); alter table public.world_creations add foreign key(creator_id) references auth.users(id); alter table public.world_collaborators add foreign key(user_id) references auth.users(id);",
+  ]);
   container(
     "rest",
     "postgrest/postgrest:v14.17",
@@ -350,6 +361,16 @@ try {
   ].filter(Boolean))
     message = message.replaceAll(value, "[redacted]");
   console.error(message);
+  // Startup diagnostics only, with every generated credential removed. Do not
+  // retain container logs or private configuration in public artifacts.
+  if (phase === "auth-readiness") {
+    try {
+      let log = docker(["logs", "--tail", "15", `${network}-auth`]);
+      for (const value of [secret, password, anon, admin])
+        log = log.replaceAll(value, "[redacted]");
+      console.error(log);
+    } catch {}
+  }
   console.error(
     "Hosted disposable world acceptance failed; inspect retained safe browser evidence.",
   );

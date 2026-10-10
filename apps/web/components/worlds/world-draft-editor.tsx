@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { worldDraftSchema, type WorldDraft } from "@/lib/worlds/draft";
 
 function replace<T>(items: T[], index: number, patch: Partial<T>): T[] {
@@ -20,6 +20,7 @@ export function WorldDraftEditor({
 }) {
   const [editing, setEditing] = useState<WorldDraft | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const editorId = useId();
   if (!editing)
     return (
       <button
@@ -40,16 +41,22 @@ export function WorldDraftEditor({
     change: (value: string) => void,
     maxLength = 12000,
   ) => (
-    <label className="block text-sm" key={label}>
-      {label}
+    <div className="text-sm" key={label}>
+      <label
+        htmlFor={`${editorId}-${label.replaceAll(" ", "-")}`}
+        className="block"
+      >
+        {label}
+      </label>
       <textarea
+        id={`${editorId}-${label.replaceAll(" ", "-")}`}
         value={value || ""}
         onChange={(event) => change(event.target.value)}
         maxLength={maxLength}
         rows={maxLength <= 500 ? 1 : 3}
         className="mt-2 min-h-11 w-full resize-y rounded-lg border border-white/20 bg-transparent px-3 py-2 text-base outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]"
       />
-    </label>
+    </div>
   );
   return (
     <section

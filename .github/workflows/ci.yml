@@ -201,7 +201,7 @@ jobs:
       - name: Verify exact world drafts and account return paths
         run: |
           pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
-          node --test scripts/test-world-generation.cjs
+          node --test scripts/test-world-generation.cjs scripts/test-world-elements.cjs
 
       - name: Verify feedback persistence receipts
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
