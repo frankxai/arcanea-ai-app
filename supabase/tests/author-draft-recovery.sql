@@ -67,6 +67,8 @@ reset role;
 delete from public.book_authors where author_name='Unexpected cross-book invitation';
 \ir ../migrations/20261010142500_author_membership_scope.sql
 \ir ../migrations/20261010142500_author_membership_scope.sql
+\ir ../migrations/20261010144038_author_membership_scope.sql
+\ir ../migrations/20261010144038_author_membership_scope.sql
 set local role authenticated;
 set local request.jwt.claim.sub = '00000000-0000-4000-8000-000000000001';
 -- The legitimate creator can still invite a co-author to their own book.
