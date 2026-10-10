@@ -254,3 +254,23 @@ boundaries, then verify a real scene with two isolated accounts, same-key
 interruption/refund and private reopening. Existing author fixture belongs to
 another session/preview and is not proof for this candidate. Independent review
 budget approval remains unanswered; no review or paid generation has run.
+
+Reader geometry maintenance extends the existing candidate without changing its
+palette, content, account boundaries or billing behavior. The spacing, type,
+control and preview geometry now live in packages/design-system/src/{tokens.ts,
+tokens.css}. Its reading-scene.module.css owns the 480px responsive rule; the
+app module composes that rule and consumes shared variables. The package stays
+private. Turbopack does not support @value, so no build plugin or viewport script
+is added. Reference: https://nextjs.org/docs/app/api-reference/turbopack.
+Owner and rollback remain this candidate's existing thread and scoped commits.
+Acceptance: token overrides must change computed padding, the original desktop
+and mobile geometry must remain, and all four browser modes must retain focus,
+44px controls, source export and recovery. Verification binds all four new
+design-system files into the browser capture hashes and workflow triggers.
+Eight source, nine route and five review-boundary checks pass locally. The last
+fully verified revision is ef52f90e04424b8c4c3cf35e27c0a7696e707e26:
+Reading scene38085149302, native CI38085149279 and CodeQL analysis38085149281
+passed, with zero new findings in check114310501523. That proof includes the
+portable export privacy repair and stable paragraph selection on scroll.
+The geometry change requires fresh hosted verification at its own revision;
+the prior revision's green checks are not evidence for changed source.

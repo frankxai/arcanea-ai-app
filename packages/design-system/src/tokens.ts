@@ -47,6 +47,42 @@ export const fonts = {
   mono: '"Geist Mono", "JetBrains Mono", "Fira Code", monospace',
 } as const;
 
+/** Shared product geometry. Keep the CSS variable mirror in tokens.css in sync. */
+export const spacing = {
+  0: '0',
+  2: '0.5rem',
+  '2.5': '0.625rem',
+  3: '0.75rem',
+  4: '1rem',
+  5: '1.25rem',
+  6: '1.5rem',
+  8: '2rem',
+  14: '3.5rem',
+  32: '8rem',
+  40: '10rem',
+} as const;
+
+export const typeScale = {
+  small: '0.875rem',
+  heading: '1.125rem',
+  semibold: 600,
+  lineHeight: { compact: 1.5, body: 1.6, reading: 1.7 },
+} as const;
+
+export const controlGeometry = {
+  touchTarget: '44px',
+  border: '1px',
+  accentBorder: '2px',
+  focusWidth: '2px',
+  focusOffset: '3px',
+  disabledOpacity: 0.6,
+} as const;
+
+export const readingSceneGeometry = {
+  selectionLayer: 60,
+  previewAspectRatio: '16 / 9',
+} as const;
+
 export const radii = {
   none: '0',
   sm: '0.25rem',

@@ -132,6 +132,10 @@ async function main() {
     "apps/web/components/saga/scene-visualizer.tsx",
     "apps/web/components/saga/scene-workspace-view.tsx",
     "apps/web/components/saga/scene-visualizer.module.css",
+    "packages/design-system/src/tokens.ts",
+    "packages/design-system/src/tokens.css",
+    "packages/design-system/src/reading-scene.module.css",
+    "packages/design-system/package.json",
     "apps/web/lib/reading-scene/brief.ts",
     "apps/web/lib/reading-scene/session.ts",
     "apps/web/app/api/reading-scenes/route.ts",
@@ -446,6 +450,60 @@ async function main() {
           .getByRole("button", { name: "Return to reading", exact: true })
           .boundingBox();
         assert.ok(box.height >= 44);
+        const geometry = await page
+          .getByRole("region", { name: "Passage visualization" })
+          .evaluate((workspace) => {
+            const root = document.documentElement;
+            const button = Array.from(
+              workspace.querySelectorAll("button"),
+            ).find(
+              (control) => control.textContent.trim() === "Return to reading",
+            );
+            const actions = button.parentElement;
+            const rem = parseFloat(getComputedStyle(root).fontSize);
+            const compact = innerWidth <= 480;
+            const original = {
+              padding: parseFloat(getComputedStyle(workspace).paddingTop),
+              companionSpace: parseFloat(
+                getComputedStyle(actions).paddingRight,
+              ),
+            };
+            const names = ["--arc-space-4", "--arc-space-6"];
+            const previous = names.map((name) => [
+              name,
+              root.style.getPropertyValue(name),
+              root.style.getPropertyPriority(name),
+            ]);
+            try {
+              for (const name of names) root.style.setProperty(name, "1.75rem");
+              return {
+                compact,
+                rem,
+                original,
+                overriddenPadding: parseFloat(
+                  getComputedStyle(workspace).paddingTop,
+                ),
+                overriddenButtonPadding: parseFloat(
+                  getComputedStyle(button).paddingLeft,
+                ),
+              };
+            } finally {
+              for (const [name, value, priority] of previous) {
+                if (value) root.style.setProperty(name, value, priority);
+                else root.style.removeProperty(name);
+              }
+            }
+          });
+        assert.equal(
+          geometry.original.padding,
+          geometry.rem * (geometry.compact ? 1 : 1.5),
+        );
+        assert.equal(
+          geometry.original.companionSpace,
+          geometry.rem * (geometry.compact ? 3.5 : 0),
+        );
+        assert.equal(geometry.overriddenPadding, geometry.rem * 1.75);
+        assert.equal(geometry.overriddenButtonPadding, geometry.rem * 1.75);
         assert.equal(
           await page.evaluate(
             () => document.documentElement.scrollWidth <= innerWidth,
@@ -544,6 +602,7 @@ async function main() {
             "retained result and portable export exclude private billing metadata",
             "private save/reopen",
             "touch target",
+            "shared geometry tokens control padding and preserve responsive companion space",
             "no overflow",
             "companion does not cover scene controls",
           ],
