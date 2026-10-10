@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import ChatMarkdown from './chat-markdown';
-import { ThinkingSection } from './thinking-section';
-import { ToolResultBlock } from './tool-result-block';
-import { SaveCreationButton } from './save-creation-button';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import ChatMarkdown from "./chat-markdown";
+import { ThinkingSection } from "./thinking-section";
+import { ToolResultBlock } from "./tool-result-block";
+import { SaveCreationButton } from "./save-creation-button";
 import {
   Copy,
   Check,
@@ -15,15 +15,20 @@ import {
   ThumbsDown,
   PhSpeakerHigh,
   PhStop,
-} from '@/lib/phosphor-icons';
-import { getMessageText, parseFollowUps } from '@/hooks/use-conversation';
+} from "@/lib/phosphor-icons";
+import { getMessageText, parseFollowUps } from "@/hooks/use-conversation";
 import {
   generateFallbackSuggestions,
   type ContentType,
-} from '@/lib/chat/suggestion-engine';
-import { ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
-import Image from 'next/image';
-import { LuminaPresence } from '@/components/presence/lumina-presence';
+} from "@/lib/chat/suggestion-engine";
+import { ArcaneanMarkSmall } from "@/components/brand/arcanea-mark";
+import Image from "next/image";
+import { LuminaPresence } from "@/components/presence/lumina-presence";
+import Link from "next/link";
+import {
+  voiceCredentialHeaders,
+  voiceResponseMessage,
+} from "@/lib/voice/customer-credentials";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -43,7 +48,7 @@ interface AutoSaveState {
 export interface MessageBubbleProps {
   message: {
     id: string;
-    role: 'user' | 'assistant' | 'system';
+    role: "user" | "assistant" | "system";
     parts?: Array<Record<string, unknown> & { type: string; text?: string }>;
     content?: string;
     createdAt?: Date | string | number;
@@ -88,13 +93,13 @@ export interface MessageBubbleProps {
 // Constants
 // ---------------------------------------------------------------------------
 
-const ACCENT = 'var(--arc-brand-atlantean-teal)';
+const ACCENT = "var(--arc-brand-atlantean-teal)";
 
 const TEAM_COLORS: Record<string, string> = {
-  development: 'var(--arc-brand-atlantean-teal)',
-  creative: 'var(--arc-void)',
-  writing: 'var(--arc-fire)',
-  research: 'var(--arc-wind)',
+  development: "var(--arc-brand-atlantean-teal)",
+  creative: "var(--arc-void)",
+  writing: "var(--arc-fire)",
+  research: "var(--arc-wind)",
 };
 
 // ---------------------------------------------------------------------------
@@ -102,26 +107,32 @@ const TEAM_COLORS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 function formatRelativeTime(date?: Date | string | number): string {
-  if (!date) return '';
+  if (!date) return "";
   const now = Date.now();
   const then = new Date(date).getTime();
-  if (Number.isNaN(then)) return '';
+  if (Number.isNaN(then)) return "";
   const diff = now - then;
 
-  if (diff < 60_000) return 'just now';
+  if (diff < 60_000) return "just now";
   if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
   if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
   if (diff < 604_800_000) return `${Math.floor(diff / 86_400_000)}d ago`;
-  return new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return new Date(date).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
 }
 
 function highlightSearch(text: string, query: string): React.ReactNode {
   if (!query) return text;
-  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const parts = text.split(new RegExp(`(${escaped})`, "gi"));
   return parts.map((part, i) =>
     part.toLowerCase() === query.toLowerCase() ? (
-      <mark key={i} className="bg-[var(--arc-brand-atlantean-teal)]/25 text-white rounded-sm px-0.5">
+      <mark
+        key={i}
+        className="bg-[var(--arc-brand-atlantean-teal)]/25 text-white rounded-sm px-0.5"
+      >
         {part}
       </mark>
     ) : (
@@ -152,11 +163,11 @@ function EditForm({
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (text.trim()) onSave(text.trim());
     }
-    if (e.key === 'Escape') onCancel();
+    if (e.key === "Escape") onCancel();
   };
 
   return (
@@ -168,7 +179,7 @@ function EditForm({
         onKeyDown={handleKeyDown}
         aria-label="Edit message text"
         className="w-full px-4 py-3 rounded-2xl bg-[var(--arc-cosmic-void)] border border-[var(--arc-brand-atlantean-teal)]/30 text-white/90 text-[15px] leading-relaxed resize-none focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/50 focus:shadow-[0_0_8px_rgba(0,188,212,0.15)]"
-        rows={Math.min(text.split('\n').length + 1, 8)}
+        rows={Math.min(text.split("\n").length + 1, 8)}
       />
       <div className="flex justify-end gap-2 mt-2">
         <button
@@ -224,13 +235,16 @@ export const MessageBubble = React.memo(function MessageBubble({
   const [isEditing, setIsEditing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showCopyToast, setShowCopyToast] = useState(false);
-  const [liked, setLiked] = useState<'up' | 'down' | null>(null);
+  const [liked, setLiked] = useState<"up" | "down" | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [voicePersona, setVoicePersona] = useState<string>('lumina');
+  const [voiceError, setVoiceError] = useState<string | null>(null);
+  const [voicePersona, setVoicePersona] = useState<string>("lumina");
   const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
-  const [speakingAudio, setSpeakingAudio] = useState<HTMLAudioElement | null>(null);
+  const [speakingAudio, setSpeakingAudio] = useState<HTMLAudioElement | null>(
+    null,
+  );
   const progressRef = useRef<number | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
 
@@ -238,39 +252,53 @@ export const MessageBubble = React.memo(function MessageBubble({
   useEffect(() => {
     if (!showVoiceMenu) return;
     function handleClick(e: MouseEvent) {
-      if (voiceMenuRef.current && !voiceMenuRef.current.contains(e.target as Node)) {
+      if (
+        voiceMenuRef.current &&
+        !voiceMenuRef.current.contains(e.target as Node)
+      ) {
         setShowVoiceMenu(false);
       }
     }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, [showVoiceMenu]);
 
   // Persist reaction to backend (fire-and-forget)
   const handleReaction = useCallback(
-    (type: 'up' | 'down') => {
+    (type: "up" | "down") => {
       const newReaction = liked === type ? null : type;
       setLiked(newReaction);
 
       if (newReaction) {
-        fetch('/api/feedback/reactions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messageId: message.id, reaction: newReaction }),
+        fetch("/api/feedback/reactions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messageId: message.id,
+            reaction: newReaction,
+          }),
         }).catch(() => {});
       } else {
-        fetch(`/api/feedback/reactions?messageId=${encodeURIComponent(message.id)}`, {
-          method: 'DELETE',
-        }).catch(() => {});
+        fetch(
+          `/api/feedback/reactions?messageId=${encodeURIComponent(message.id)}`,
+          {
+            method: "DELETE",
+          },
+        ).catch(() => {});
       }
     },
     [liked, message.id],
   );
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const speechAbortRef = useRef<AbortController | null>(null);
+  const speechUrlRef = useRef<string | null>(null);
 
   // Clean up audio on unmount to prevent setState on unmounted component
   useEffect(() => {
     return () => {
+      speechAbortRef.current?.abort();
+      if (speechUrlRef.current) URL.revokeObjectURL(speechUrlRef.current);
+      if (progressRef.current) cancelAnimationFrame(progressRef.current);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.onended = null;
@@ -284,43 +312,56 @@ export const MessageBubble = React.memo(function MessageBubble({
 
   // Reasoning / thinking parts (e.g. from extended thinking, o-series reasoning)
   const reasoningParts = (message.parts ?? []).filter(
-    (p) => p.type === 'reasoning' || p.type === 'thinking',
+    (p) => p.type === "reasoning" || p.type === "thinking",
   );
   const reasoningText = reasoningParts
-    .map((p) => (typeof p.text === 'string' ? p.text : ''))
-    .join('\n')
+    .map((p) => (typeof p.text === "string" ? p.text : ""))
+    .join("\n")
     .trim();
 
   // Tool result parts
   const toolParts = (message.parts ?? []).flatMap((part, index) => {
-    const isNamedToolPart = part.type.startsWith('tool-');
-    const isDynamicToolPart = part.type === 'dynamic-tool';
+    const isNamedToolPart = part.type.startsWith("tool-");
+    const isDynamicToolPart = part.type === "dynamic-tool";
 
     if (!isNamedToolPart && !isDynamicToolPart) {
       return [];
     }
 
     const toolName = isDynamicToolPart
-      ? (typeof part.toolName === 'string' ? part.toolName : 'tool')
-      : part.type.replace(/^tool-/, '');
+      ? typeof part.toolName === "string"
+        ? part.toolName
+        : "tool"
+      : part.type.replace(/^tool-/, "");
 
-    const state = typeof part.state === 'string' ? part.state : '';
-    const toolCallId = typeof part.toolCallId === 'string' ? part.toolCallId : `${toolName}-${index}`;
+    const state = typeof part.state === "string" ? part.state : "";
+    const toolCallId =
+      typeof part.toolCallId === "string"
+        ? part.toolCallId
+        : `${toolName}-${index}`;
 
-    if (state === 'output-available') {
-      return [{
-        key: toolCallId,
-        toolName,
-        result: part.output,
-      }];
+    if (state === "output-available") {
+      return [
+        {
+          key: toolCallId,
+          toolName,
+          result: part.output,
+        },
+      ];
     }
 
-    if (state === 'output-error') {
-      return [{
-        key: toolCallId,
-        toolName,
-        result: { error: (typeof part.errorText === 'string' ? part.errorText : '') || 'Tool execution failed' },
-      }];
+    if (state === "output-error") {
+      return [
+        {
+          key: toolCallId,
+          toolName,
+          result: {
+            error:
+              (typeof part.errorText === "string" ? part.errorText : "") ||
+              "Tool execution failed",
+          },
+        },
+      ];
     }
 
     return [];
@@ -344,8 +385,11 @@ export const MessageBubble = React.memo(function MessageBubble({
 
   // TTS handler — supports persona-based voices, speed control, progress tracking
   const handleSpeak = useCallback(async () => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.pause();
+    if (isPlaying) {
+      speechAbortRef.current?.abort();
+      audioRef.current?.pause();
+      if (speechUrlRef.current) URL.revokeObjectURL(speechUrlRef.current);
+      speechUrlRef.current = null;
       audioRef.current = null;
       setSpeakingAudio(null);
       setIsPlaying(false);
@@ -357,24 +401,35 @@ export const MessageBubble = React.memo(function MessageBubble({
     if (!text || text.length < 10) return;
 
     setIsPlaying(true);
+    setVoiceError(null);
     setAudioProgress(0);
+    const controller = new AbortController();
+    speechAbortRef.current = controller;
     try {
-      const res = await fetch('/api/ai/speak', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/ai/speak", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...voiceCredentialHeaders(),
+        },
+        signal: controller.signal,
         body: JSON.stringify({
-          text: text.slice(0, 4000),
+          text,
           persona: voicePersona,
           speed: playbackSpeed,
         }),
       });
 
-      if (!res.ok) throw new Error('TTS failed');
+      if (!res.ok) throw new Error(await voiceResponseMessage(res));
 
       const blob = await res.blob();
+      if (controller.signal.aborted) return;
       const url = URL.createObjectURL(blob);
+      speechUrlRef.current = url;
       const audio = new Audio(url);
-      audio.crossOrigin = 'anonymous';
+      audio.playbackRate =
+        res.headers.get("x-provider") === "groq" ? playbackSpeed : 1;
+      audio.crossOrigin = "anonymous";
       audioRef.current = audio;
       setSpeakingAudio(audio);
 
@@ -392,24 +447,37 @@ export const MessageBubble = React.memo(function MessageBubble({
         progressRef.current = requestAnimationFrame(updateProgress);
       };
       audio.onended = () => {
+        if (controller.signal.aborted) return;
         setIsPlaying(false);
         setAudioProgress(0);
         setSpeakingAudio(null);
         audioRef.current = null;
         if (progressRef.current) cancelAnimationFrame(progressRef.current);
         URL.revokeObjectURL(url);
+        speechUrlRef.current = null;
       };
       audio.onerror = () => {
+        if (controller.signal.aborted) return;
+        setVoiceError("Voice audio could not be played. Try again.");
         setIsPlaying(false);
         setAudioProgress(0);
         setSpeakingAudio(null);
         audioRef.current = null;
         if (progressRef.current) cancelAnimationFrame(progressRef.current);
         URL.revokeObjectURL(url);
+        speechUrlRef.current = null;
       };
 
       await audio.play();
-    } catch {
+    } catch (error) {
+      if (controller.signal.aborted) return;
+      setVoiceError(
+        error instanceof Error
+          ? error.message
+          : "Voice playback failed. Try again.",
+      );
+      if (speechUrlRef.current) URL.revokeObjectURL(speechUrlRef.current);
+      speechUrlRef.current = null;
       setIsPlaying(false);
       setAudioProgress(0);
       setSpeakingAudio(null);
@@ -435,7 +503,7 @@ export const MessageBubble = React.memo(function MessageBubble({
   // User message
   // -------------------------------------------------------------------------
 
-  if (message.role === 'user') {
+  if (message.role === "user") {
     return (
       <div className="mb-6 flex justify-end">
         <div className="ml-auto max-w-[90%] sm:max-w-[85%] group/user">
@@ -448,7 +516,8 @@ export const MessageBubble = React.memo(function MessageBubble({
           ) : (
             <div className="relative">
               <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-gradient-to-br from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm">
-                {searchQuery && text.toLowerCase().includes(searchQuery.toLowerCase())
+                {searchQuery &&
+                text.toLowerCase().includes(searchQuery.toLowerCase())
                   ? highlightSearch(text, searchQuery)
                   : text}
               </div>
@@ -484,7 +553,7 @@ export const MessageBubble = React.memo(function MessageBubble({
         {isPlaying ? (
           <div className="w-10 h-10 shrink-0 -mt-1 -ml-1">
             <LuminaPresence
-              state={speakingAudio ? 'speaking' : 'thinking'}
+              state={speakingAudio ? "speaking" : "thinking"}
               audio={speakingAudio}
               color={accentColor}
               accent="var(--arc-brand-arcanean-gold)"
@@ -503,7 +572,13 @@ export const MessageBubble = React.memo(function MessageBubble({
           </div>
         ) : (
           <div className="w-8 h-8 rounded-full bg-[var(--arc-cosmic-void)] flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_8px_rgba(127,255,212,0.12)] overflow-hidden">
-            <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={32} height={32} className="object-contain" />
+            <Image
+              src="/images/mascot/arcanea-primary.png"
+              alt="Arcanea"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
           </div>
         )}
 
@@ -514,12 +589,10 @@ export const MessageBubble = React.memo(function MessageBubble({
               className="text-xs font-medium"
               style={{ color: accentColor }}
             >
-              {luminorName || 'Arcanea'}
+              {luminorName || "Arcanea"}
             </span>
             {luminorTitle && (
-              <span className="text-[10px] text-white/25">
-                {luminorTitle}
-              </span>
+              <span className="text-[10px] text-white/25">{luminorTitle}</span>
             )}
             {providerLabel && (
               <span className="text-[10px] text-white/20 font-mono">
@@ -554,8 +627,10 @@ export const MessageBubble = React.memo(function MessageBubble({
               isStreaming={isStreaming && isLast}
               duration={
                 // If the message has a thinking_duration field, use it; otherwise estimate 0
-                typeof (message as Record<string, unknown>).thinking_duration === 'number'
-                  ? (message as Record<string, unknown>).thinking_duration as number
+                typeof (message as Record<string, unknown>)
+                  .thinking_duration === "number"
+                  ? ((message as Record<string, unknown>)
+                      .thinking_duration as number)
                   : 0
               }
               defaultExpanded={isStreaming && isLast ? true : undefined}
@@ -565,11 +640,14 @@ export const MessageBubble = React.memo(function MessageBubble({
           {/* Message content */}
           {clean && (
             <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[var(--arc-brand-atlantean-teal)]/80 prose-a:text-[var(--arc-brand-atlantean-teal)] prose-strong:text-white/90 overflow-hidden">
-              <ChatMarkdown content={clean} isStreaming={isStreaming && isLast} />
+              <ChatMarkdown
+                content={clean}
+                isStreaming={isStreaming && isLast}
+              />
               {isStreaming && isLast && (
                 <span
                   className="inline-block w-[2px] h-[1.1em] bg-[var(--arc-brand-atlantean-teal)] ml-0.5 align-text-bottom shadow-[0_0_6px_rgba(0,188,212,0.5)]"
-                  style={{ animation: 'cursorBlink 1s steps(2) infinite' }}
+                  style={{ animation: "cursorBlink 1s steps(2) infinite" }}
                   aria-hidden="true"
                 />
               )}
@@ -578,10 +656,14 @@ export const MessageBubble = React.memo(function MessageBubble({
 
           {/* Streaming indicator — no text yet */}
           {isStreaming && isLast && !clean && (
-            <div className="flex items-center gap-2 py-2" role="status" aria-label="Generating response">
+            <div
+              className="flex items-center gap-2 py-2"
+              role="status"
+              aria-label="Generating response"
+            >
               <span
                 className="inline-block w-[2px] h-5 bg-[var(--arc-brand-atlantean-teal)] shadow-[0_0_8px_rgba(0,188,212,0.6)]"
-                style={{ animation: 'cursorBlink 1s steps(2) infinite' }}
+                style={{ animation: "cursorBlink 1s steps(2) infinite" }}
               />
               <span className="text-xs text-white/25">Composing...</span>
             </div>
@@ -594,68 +676,77 @@ export const MessageBubble = React.memo(function MessageBubble({
                 <div
                   className="h-full w-1/3 bg-[var(--arc-brand-atlantean-teal)]/20 rounded-full"
                   style={{
-                    animation: 'slide 1.5s ease-in-out infinite',
+                    animation: "slide 1.5s ease-in-out infinite",
                   }}
                 />
               </div>
-              <span className="text-[10px] text-white/20 select-none">generating...</span>
+              <span className="text-[10px] text-white/20 select-none">
+                generating...
+              </span>
             </div>
           )}
 
           {/* Creation detected — inline card with save action */}
-          {isComplete &&
-            isLast &&
-            autoSave?.lastDetection && (
-              <div className="flex items-center justify-between gap-3 mt-3 px-3 py-2.5 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/5 border border-[var(--arc-brand-atlantean-teal)]/15 text-sm animate-in fade-in slide-in-from-bottom-1 duration-300">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span
-                    className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] shrink-0 shadow-[0_0_6px_rgba(0,188,212,0.4)]"
-                    aria-hidden="true"
-                  />
-                  <span className="text-[var(--arc-brand-atlantean-teal)]/80 text-xs truncate">
-                    {autoSave.notification || `${autoSave.lastDetection.type} detected`}
-                  </span>
-                </div>
-                <SaveCreationButton content={clean} />
+          {isComplete && isLast && autoSave?.lastDetection && (
+            <div className="flex items-center justify-between gap-3 mt-3 px-3 py-2.5 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/5 border border-[var(--arc-brand-atlantean-teal)]/15 text-sm animate-in fade-in slide-in-from-bottom-1 duration-300">
+              <div className="flex items-center gap-2 min-w-0">
+                <span
+                  className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] shrink-0 shadow-[0_0_6px_rgba(0,188,212,0.4)]"
+                  aria-hidden="true"
+                />
+                <span className="text-[var(--arc-brand-atlantean-teal)]/80 text-xs truncate">
+                  {autoSave.notification ||
+                    `${autoSave.lastDetection.type} detected`}
+                </span>
               </div>
-            )}
+              <SaveCreationButton content={clean} />
+            </div>
+          )}
 
           {/* Follow-up suggestions — fill input on click, never auto-send */}
-          {isComplete && (onSetInput || onSendMessage) && (() => {
-            const allSuggestions = followUps.length > 0
-              ? followUps
-              : generateFallbackSuggestions(
-                  clean,
-                  luminorId,
-                  autoSave?.lastDetection?.type as ContentType | undefined,
-                );
-            // Cap at 3 chips max
-            const suggestions = allSuggestions.slice(0, 3);
-            if (suggestions.length === 0) return null;
-            return (
-              <nav aria-label="Suggested follow-ups" className="flex flex-wrap gap-2 mt-3">
-                {suggestions.map((suggestion, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => {
-                      if (onSetInput) {
-                        onSetInput(suggestion);
-                        onFocusInput?.();
-                      } else {
-                        onSendMessage?.({ text: suggestion });
-                      }
-                    }}
-                    className="group/fu flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-white/[0.05] text-white/50 hover:text-white/80 text-[12px] transition-all duration-200 animate-luminor-fade-in focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
-                    style={{ animationDelay: `${i * 80}ms` }}
-                  >
-                    <span className="text-[var(--arc-brand-atlantean-teal)]/50 group-hover/fu:text-[var(--arc-brand-atlantean-teal)] text-[11px] shrink-0">{'\u2192'}</span>
-                    <span>{suggestion}</span>
-                  </button>
-                ))}
-              </nav>
-            );
-          })()}
+          {isComplete &&
+            (onSetInput || onSendMessage) &&
+            (() => {
+              const allSuggestions =
+                followUps.length > 0
+                  ? followUps
+                  : generateFallbackSuggestions(
+                      clean,
+                      luminorId,
+                      autoSave?.lastDetection?.type as ContentType | undefined,
+                    );
+              // Cap at 3 chips max
+              const suggestions = allSuggestions.slice(0, 3);
+              if (suggestions.length === 0) return null;
+              return (
+                <nav
+                  aria-label="Suggested follow-ups"
+                  className="flex flex-wrap gap-2 mt-3"
+                >
+                  {suggestions.map((suggestion, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        if (onSetInput) {
+                          onSetInput(suggestion);
+                          onFocusInput?.();
+                        } else {
+                          onSendMessage?.({ text: suggestion });
+                        }
+                      }}
+                      className="group/fu flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-white/[0.05] text-white/50 hover:text-white/80 text-[12px] transition-all duration-200 animate-luminor-fade-in focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+                      style={{ animationDelay: `${i * 80}ms` }}
+                    >
+                      <span className="text-[var(--arc-brand-atlantean-teal)]/50 group-hover/fu:text-[var(--arc-brand-atlantean-teal)] text-[11px] shrink-0">
+                        {"\u2192"}
+                      </span>
+                      <span>{suggestion}</span>
+                    </button>
+                  ))}
+                </nav>
+              );
+            })()}
 
           {/* Swarm luminor suggestions */}
           {isComplete &&
@@ -666,7 +757,8 @@ export const MessageBubble = React.memo(function MessageBubble({
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {swarmLuminors.slice(0, 3).map((l, idx) => {
                   const teamColor = TEAM_COLORS[l.team] || ACCENT;
-                  const displayName = l.id.charAt(0).toUpperCase() + l.id.slice(1);
+                  const displayName =
+                    l.id.charAt(0).toUpperCase() + l.id.slice(1);
                   return (
                     <button
                       key={l.id}
@@ -675,7 +767,7 @@ export const MessageBubble = React.memo(function MessageBubble({
                       aria-label={`Ask ${displayName}`}
                       className="group/lum flex items-center gap-2 pl-1 pr-3 py-1 rounded-full text-[11px] border border-white/[0.06] text-white/35 hover:text-white/65 hover:bg-white/[0.03] transition-all duration-200 animate-luminor-fade-in"
                       style={{
-                        borderLeftWidth: '2px',
+                        borderLeftWidth: "2px",
                         borderLeftColor: `${teamColor}50`,
                         animationDelay: `${idx * 50}ms`,
                       }}
@@ -686,7 +778,7 @@ export const MessageBubble = React.memo(function MessageBubble({
                       }}
                       onMouseLeave={(e) => {
                         const el = e.currentTarget as HTMLElement;
-                        el.style.boxShadow = 'none';
+                        el.style.boxShadow = "none";
                         el.style.borderLeftColor = `${teamColor}50`;
                       }}
                       title={l.hint}
@@ -701,10 +793,13 @@ export const MessageBubble = React.memo(function MessageBubble({
                         {displayName.charAt(0)}
                       </span>
                       <span>
-                        <span className="font-medium" style={{ color: `${teamColor}cc` }}>
+                        <span
+                          className="font-medium"
+                          style={{ color: `${teamColor}cc` }}
+                        >
                           {displayName}
                         </span>
-                        <span className="text-white/20 mx-1">{'\u00B7'}</span>
+                        <span className="text-white/20 mx-1">{"\u00B7"}</span>
                         <span className="text-white/30">{l.hint}</span>
                       </span>
                     </button>
@@ -742,91 +837,133 @@ export const MessageBubble = React.memo(function MessageBubble({
               </button>
 
               {clean.length >= 10 && (
-                <div className="relative flex items-center gap-0.5" ref={voiceMenuRef}>
-                  {/* Play / Stop button */}
-                  <button
-                    type="button"
-                    onClick={handleSpeak}
-                    className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
-                    aria-label={isPlaying ? 'Stop reading' : 'Read aloud'}
+                <>
+                  {voiceError && (
+                    <div
+                      role="alert"
+                      className="text-sm text-[var(--arc-text-secondary)]"
+                    >
+                      {voiceError}{" "}
+                      <Link
+                        href="/settings/providers"
+                        className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
+                      >
+                        Provider settings
+                      </Link>
+                    </div>
+                  )}
+                  <div
+                    className="relative flex items-center gap-0.5"
+                    ref={voiceMenuRef}
                   >
-                    {isPlaying ? (
-                      <>
-                        <PhStop className="w-3.5 h-3.5" />
-                        <span>Stop</span>
-                      </>
-                    ) : (
-                      <>
-                        <PhSpeakerHigh className="w-3.5 h-3.5" />
-                        <span className="capitalize">{voicePersona}</span>
-                      </>
+                    {/* Play / Stop button */}
+                    <button
+                      type="button"
+                      onClick={handleSpeak}
+                      className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
+                      aria-label={isPlaying ? "Stop reading" : "Read aloud"}
+                    >
+                      {isPlaying ? (
+                        <>
+                          <PhStop className="w-3.5 h-3.5" />
+                          <span>Stop</span>
+                        </>
+                      ) : (
+                        <>
+                          <PhSpeakerHigh className="w-3.5 h-3.5" />
+                          <span className="capitalize">{voicePersona}</span>
+                        </>
+                      )}
+                    </button>
+
+                    {/* Progress bar (shown while playing) */}
+                    {isPlaying && (
+                      <div className="w-12 h-1 rounded-full bg-white/5 overflow-hidden mx-1">
+                        <div
+                          className="h-full bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] rounded-full transition-all duration-100"
+                          style={{ width: `${audioProgress}%` }}
+                        />
+                      </div>
                     )}
-                  </button>
 
-                  {/* Progress bar (shown while playing) */}
-                  {isPlaying && (
-                    <div className="w-12 h-1 rounded-full bg-white/5 overflow-hidden mx-1">
-                      <div
-                        className="h-full bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] rounded-full transition-all duration-100"
-                        style={{ width: `${audioProgress}%` }}
-                      />
-                    </div>
-                  )}
+                    {/* Voice menu trigger */}
+                    <button
+                      type="button"
+                      onClick={() => setShowVoiceMenu(!showVoiceMenu)}
+                      className="w-5 h-5 min-h-[36px] rounded-md flex items-center justify-center text-[11px] text-white/20 hover:text-white/40 transition-colors"
+                      aria-label="Voice settings"
+                    >
+                      <svg
+                        width="8"
+                        height="5"
+                        viewBox="0 0 8 5"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M0.5 0.5L4 4L7.5 0.5"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          fill="none"
+                        />
+                      </svg>
+                    </button>
 
-                  {/* Voice menu trigger */}
-                  <button
-                    type="button"
-                    onClick={() => setShowVoiceMenu(!showVoiceMenu)}
-                    className="w-5 h-5 min-h-[36px] rounded-md flex items-center justify-center text-[11px] text-white/20 hover:text-white/40 transition-colors"
-                    aria-label="Voice settings"
-                  >
-                    <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0.5 0.5L4 4L7.5 0.5" stroke="currentColor" strokeWidth="1" fill="none"/></svg>
-                  </button>
-
-                  {/* Voice persona & speed menu */}
-                  {showVoiceMenu && (
-                    <div className="absolute bottom-full right-0 mb-2 w-48 rounded-xl bg-[var(--arc-cosmic-void)]/95 border border-white/[0.06] backdrop-blur-xl shadow-2xl z-50 overflow-hidden">
-                      <div className="px-3 py-2 border-b border-white/[0.04]">
-                        <p className="text-[9px] uppercase tracking-wider text-white/25 mb-1.5">Voice</p>
-                        <div className="grid grid-cols-3 gap-1">
-                          {['lumina', 'draconia', 'shinkami', 'lyria', 'alera', 'nero'].map((p) => (
-                            <button
-                              key={p}
-                              type="button"
-                              onClick={() => setVoicePersona(p)}
-                              className={`px-1.5 py-1 rounded-md text-[10px] capitalize transition-all ${
-                                voicePersona === p
-                                  ? 'bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20'
-                                  : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03] border border-transparent'
-                              }`}
-                            >
-                              {p}
-                            </button>
-                          ))}
+                    {/* Voice persona & speed menu */}
+                    {showVoiceMenu && (
+                      <div className="absolute bottom-full right-0 mb-2 w-48 rounded-xl bg-[var(--arc-cosmic-void)]/95 border border-white/[0.06] backdrop-blur-xl shadow-2xl z-50 overflow-hidden">
+                        <div className="px-3 py-2 border-b border-white/[0.04]">
+                          <p className="text-[9px] uppercase tracking-wider text-white/25 mb-1.5">
+                            Voice
+                          </p>
+                          <div className="grid grid-cols-3 gap-1">
+                            {[
+                              "lumina",
+                              "draconia",
+                              "shinkami",
+                              "lyria",
+                              "alera",
+                              "nero",
+                            ].map((p) => (
+                              <button
+                                key={p}
+                                type="button"
+                                onClick={() => setVoicePersona(p)}
+                                className={`px-1.5 py-1 rounded-md text-[10px] capitalize transition-all ${
+                                  voicePersona === p
+                                    ? "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20"
+                                    : "text-white/40 hover:text-white/60 hover:bg-white/[0.03] border border-transparent"
+                                }`}
+                              >
+                                {p}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="px-3 py-2">
+                          <p className="text-[9px] uppercase tracking-wider text-white/25 mb-1.5">
+                            Speed
+                          </p>
+                          <div className="flex items-center gap-1">
+                            {[0.75, 1.0, 1.25, 1.5, 2.0].map((s) => (
+                              <button
+                                key={s}
+                                type="button"
+                                onClick={() => setPlaybackSpeed(s)}
+                                className={`flex-1 py-1 rounded-md text-[10px] transition-all ${
+                                  playbackSpeed === s
+                                    ? "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)]"
+                                    : "text-white/30 hover:text-white/50 hover:bg-white/[0.03]"
+                                }`}
+                              >
+                                {s}x
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                      <div className="px-3 py-2">
-                        <p className="text-[9px] uppercase tracking-wider text-white/25 mb-1.5">Speed</p>
-                        <div className="flex items-center gap-1">
-                          {[0.75, 1.0, 1.25, 1.5, 2.0].map((s) => (
-                            <button
-                              key={s}
-                              type="button"
-                              onClick={() => setPlaybackSpeed(s)}
-                              className={`flex-1 py-1 rounded-md text-[10px] transition-all ${
-                                playbackSpeed === s
-                                  ? 'bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)]'
-                                  : 'text-white/30 hover:text-white/50 hover:bg-white/[0.03]'
-                              }`}
-                            >
-                              {s}x
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                </>
               )}
 
               {onRegenerate && (
@@ -845,30 +982,36 @@ export const MessageBubble = React.memo(function MessageBubble({
 
               <button
                 type="button"
-                onClick={() => handleReaction('up')}
+                onClick={() => handleReaction("up")}
                 className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none ${
-                  liked === 'up'
-                    ? 'text-emerald-400 bg-emerald-400/10 shadow-[0_0_12px_rgba(52,211,153,0.2)] scale-110'
-                    : 'text-white/30 hover:text-emerald-400 hover:bg-emerald-400/5 active:scale-125'
+                  liked === "up"
+                    ? "text-emerald-400 bg-emerald-400/10 shadow-[0_0_12px_rgba(52,211,153,0.2)] scale-110"
+                    : "text-white/30 hover:text-emerald-400 hover:bg-emerald-400/5 active:scale-125"
                 }`}
                 aria-label="Good response"
-                aria-pressed={liked === 'up'}
+                aria-pressed={liked === "up"}
               >
-                <ThumbsUp className="w-3.5 h-3.5" weight={liked === 'up' ? 'fill' : 'regular'} />
+                <ThumbsUp
+                  className="w-3.5 h-3.5"
+                  weight={liked === "up" ? "fill" : "regular"}
+                />
               </button>
 
               <button
                 type="button"
-                onClick={() => handleReaction('down')}
+                onClick={() => handleReaction("down")}
                 className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none ${
-                  liked === 'down'
-                    ? 'text-red-400 bg-red-400/10 shadow-[0_0_12px_rgba(248,113,113,0.2)]'
-                    : 'text-white/30 hover:text-red-400 hover:bg-red-400/5 active:scale-125'
+                  liked === "down"
+                    ? "text-red-400 bg-red-400/10 shadow-[0_0_12px_rgba(248,113,113,0.2)]"
+                    : "text-white/30 hover:text-red-400 hover:bg-red-400/5 active:scale-125"
                 }`}
                 aria-label="Bad response"
-                aria-pressed={liked === 'down'}
+                aria-pressed={liked === "down"}
               >
-                <ThumbsDown className="w-3.5 h-3.5" weight={liked === 'down' ? 'fill' : 'regular'} />
+                <ThumbsDown
+                  className="w-3.5 h-3.5"
+                  weight={liked === "down" ? "fill" : "regular"}
+                />
               </button>
 
               {/* Branch navigation */}
@@ -903,5 +1046,5 @@ export const MessageBubble = React.memo(function MessageBubble({
   );
 });
 
-MessageBubble.displayName = 'MessageBubble';
+MessageBubble.displayName = "MessageBubble";
 export default MessageBubble;
