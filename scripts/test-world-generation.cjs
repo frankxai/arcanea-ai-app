@@ -63,6 +63,8 @@ function setup({
       createOpenAI: (options) => (model) => ({ options, model }),
     },
     ai: {
+      APICallError: webRequire("ai").APICallError,
+      NoObjectGeneratedError: webRequire("ai").NoObjectGeneratedError,
       Output: { object: (options) => options },
       generateText: async (input) => {
         calls.push(input);
@@ -260,4 +262,63 @@ test("provider errors never expose a key, provider body or creative input", asyn
     await response.text(),
     /test-customer-key|private-brief|upstream-error-body/,
   );
+});
+test("provider access, quota and model failures expose only safe categories", async () => {
+  const { APICallError } = webRequire("ai");
+  for (const [statusCode, code] of [
+    [400, "PROVIDER_REQUEST"],
+    [401, "PROVIDER_ACCESS"],
+    [403, "PROVIDER_ACCESS"],
+    [404, "MODEL_UNAVAILABLE"],
+    [429, "PROVIDER_QUOTA"],
+    [503, "PROVIDER_UNAVAILABLE"],
+  ]) {
+    const { route } = setup({
+      providerError: new APICallError({
+        message: "private-brief test-customer-key",
+        url: "https://provider.invalid?key=test-customer-key",
+        requestBodyValues: { prompt: "private-brief" },
+        statusCode,
+        responseBody: "upstream-error-body",
+      }),
+    });
+    const response = await route.POST(
+      request(undefined, { "x-google-key": "test-customer-key" }),
+    );
+    assert.equal(response.status, 502);
+    const body = await response.json();
+    assert.equal(body.code, code);
+    assert.equal(body.providerStatus, statusCode);
+    assert.doesNotMatch(
+      JSON.stringify(body),
+      /test-customer-key|private-brief|upstream-error-body|provider\.invalid/,
+    );
+  }
+});
+test("invalid and truncated SDK outputs retain no provider text", async () => {
+  const { NoObjectGeneratedError } = webRequire("ai");
+  for (const finishReason of ["length", "stop"]) {
+    const { route } = setup({
+      providerError: new NoObjectGeneratedError({
+        message: "private-brief",
+        text: "upstream-error-body test-customer-key",
+        response: {},
+        usage: {},
+        finishReason,
+      }),
+    });
+    const response = await route.POST(
+      request(undefined, { "x-google-key": "test-customer-key" }),
+    );
+    const body = await response.json();
+    assert.equal(response.status, 502);
+    assert.equal(
+      body.code,
+      finishReason === "length" ? "OUTPUT_LIMIT" : "OUTPUT_INVALID",
+    );
+    assert.doesNotMatch(
+      JSON.stringify(body),
+      /private-brief|upstream-error-body|test-customer-key/,
+    );
+  }
 });

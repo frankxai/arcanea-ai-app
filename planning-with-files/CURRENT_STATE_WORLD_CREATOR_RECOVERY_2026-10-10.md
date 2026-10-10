@@ -167,3 +167,17 @@ preceded this source-level diagnosis. Add actual compiled handler402 missing-key
 and403 foreign-origin checks to every synthetic fixture run before live admission.
 Native loopback/port regressions use the installed actual NextRequest,0 model calls.
 Retain every failed attempt, screenshot, public receipt edit and private transcript.
+
+Candidate d3754db2c3: full synthetic/manual CI38082812219, normal38082815259,
+CodeQL and exact Gemini3.1Pro response dJ3KatqcKrD4qtsPyO-c6Q0 PASS with all37
+sources verified; formal receipt6101820571. Live38083619443 passed real login
+and actual compiled402/403 access checks, then generation returned the generic
+failure before a draft existed. One app request was attempted; zero successful
+model outputs were observed. Upstream call count is unknown, not certified zero.
+No model retry, comparison, world writes or production writes occurred. Retain
+the masked screenshot and browser/service receipts. Actual installed AI SDK6
+Google schema conversion reaches a blocked offline transport successfully, so
+an unsupported local schema conversion was excluded without any provider call.
+Add bounded error categories/status only, never upstream bodies, URLs, creator
+content or keys, and preserve those categories in failed browser receipts. This
+improves customer recovery and makes the next explicitly bounded test diagnostic.

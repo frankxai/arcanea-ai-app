@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { generateText, Output } from "ai";
+import { APICallError, NoObjectGeneratedError, generateText, Output } from "ai";
 import { randomUUID } from "node:crypto";
 import { createClient } from "@/lib/supabase/server";
 import { withAbortDeadline } from "@/lib/async-deadline";
@@ -97,12 +97,58 @@ export async function POST(req: NextRequest) {
         502,
       );
     return reply(draftResult(parsed.data, randomUUID()));
-  } catch {
+  } catch (error) {
     // Upstream errors can contain the credential and full creator prompt.
+    if (APICallError.isInstance(error)) {
+      const providerStatus = error.statusCode;
+      const code =
+        providerStatus === 429
+          ? "PROVIDER_QUOTA"
+          : providerStatus === 401 || providerStatus === 403
+            ? "PROVIDER_ACCESS"
+            : providerStatus === 404
+              ? "MODEL_UNAVAILABLE"
+              : providerStatus === 400
+                ? "PROVIDER_REQUEST"
+                : "PROVIDER_UNAVAILABLE";
+      const message =
+        code === "PROVIDER_QUOTA"
+          ? "Gemini quota is unavailable. Check your Google quota before trying again."
+          : code === "PROVIDER_ACCESS"
+            ? "Google refused this key's access. Check its Gemini API permissions."
+            : code === "MODEL_UNAVAILABLE"
+              ? "This Gemini model is unavailable to your key. Your concept is unchanged."
+              : code === "PROVIDER_REQUEST"
+                ? "Google rejected the generation request. Your concept is unchanged."
+                : "Gemini is unavailable. Your concept is unchanged; try again later.";
+      return reply(
+        {
+          error: message,
+          code,
+          ...(Number.isInteger(providerStatus) &&
+          providerStatus! >= 400 &&
+          providerStatus! <= 599
+            ? { providerStatus }
+            : {}),
+        },
+        502,
+      );
+    }
+    if (NoObjectGeneratedError.isInstance(error))
+      return reply(
+        {
+          error:
+            "Gemini did not return a complete valid draft. Your concept is unchanged.",
+          code:
+            error.finishReason === "length" ? "OUTPUT_LIMIT" : "OUTPUT_INVALID",
+        },
+        502,
+      );
     return reply(
       {
         error:
           "Generation did not finish. Check your key and quota, then retry. Your concept is unchanged.",
+        code: "GENERATION_FAILED",
       },
       502,
     );

@@ -233,6 +233,28 @@ async function main() {
     );
     await button("Create world").click();
     const generatedResponse = await generationResponse;
+    evidence.generationResponseStatus = generatedResponse.status();
+    if (generatedResponse.status() !== 200) {
+      const body = await generatedResponse.json().catch(() => ({}));
+      const codes = [
+        "PROVIDER_QUOTA",
+        "PROVIDER_ACCESS",
+        "MODEL_UNAVAILABLE",
+        "PROVIDER_REQUEST",
+        "PROVIDER_UNAVAILABLE",
+        "OUTPUT_LIMIT",
+        "OUTPUT_INVALID",
+        "GENERATION_FAILED",
+      ];
+      if (codes.includes(body.code)) evidence.generationFailureCode = body.code;
+      if (
+        Number.isInteger(body.providerStatus) &&
+        body.providerStatus >= 400 &&
+        body.providerStatus <= 599
+      )
+        evidence.providerResponseStatus = body.providerStatus;
+      evidence.providerCallCountKnown = false;
+    }
     assert.equal(generatedResponse.status(), 200);
     const generatedWorld = (await generatedResponse.json()).world;
     if (process.env.WORLD_TEST_API_KEY) {
