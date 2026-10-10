@@ -452,7 +452,7 @@ async function main() {
         assert.ok(box.height >= 44);
         const geometry = await page
           .getByRole("region", { name: "Passage visualization" })
-          .evaluate((workspace) => {
+          .evaluate(async (workspace) => {
             const root = document.documentElement;
             const button = Array.from(
               workspace.querySelectorAll("button"),
@@ -476,6 +476,10 @@ async function main() {
             ]);
             try {
               for (const name of names) root.style.setProperty(name, "1.75rem");
+              // The global reduced-motion rule gives all properties a 0.01ms
+              // transition. Read the settled geometry after the next paint.
+              await new Promise((resolve) => requestAnimationFrame(resolve));
+              await new Promise((resolve) => requestAnimationFrame(resolve));
               return {
                 compact,
                 rem,
@@ -492,6 +496,8 @@ async function main() {
                 if (value) root.style.setProperty(name, value, priority);
                 else root.style.removeProperty(name);
               }
+              await new Promise((resolve) => requestAnimationFrame(resolve));
+              await new Promise((resolve) => requestAnimationFrame(resolve));
             }
           });
         assert.equal(
