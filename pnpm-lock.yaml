@@ -231,6 +231,9 @@ importers:
       '@arcanea/publishing-house':
         specifier: workspace:^
         version: link:../../packages/publishing-house
+      '@arcanea/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@arcanea/world-engine':
         specifier: workspace:^
         version: link:../../packages/world-engine
@@ -836,6 +839,34 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/create-world:
+    dependencies:
+      chalk:
+        specifier: ^5.3.0
+        version: 5.6.2
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+      ora:
+        specifier: ^8.1.0
+        version: 8.2.0
+      prompts:
+        specifier: ^2.4.2
+        version: 2.4.2
+    devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.43
+      '@types/prompts':
+        specifier: ^2.4.9
+        version: 2.4.9
+      tsx:
+        specifier: ^4.22.3
+        version: 4.23.15
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/creative-pipeline:
     devDependencies:
       '@types/node':
@@ -1160,6 +1191,15 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/peak-performance:
+    devDependencies:
+      tsx:
+        specifier: ^4.19.0
+        version: 4.23.15
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
   packages/presence:
     dependencies:
       framer-motion:
@@ -1252,6 +1292,19 @@ importers:
       tsx:
         specifier: ^4.23.15
         version: 4.23.15
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/schemas:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.43
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1349,6 +1402,10 @@ importers:
         version: 5.9.3
 
   packages/world-engine:
+    dependencies:
+      '@arcanea/schemas':
+        specifier: workspace:*
+        version: link:../schemas
     devDependencies:
       '@types/node':
         specifier: ^20.19.43
@@ -12546,7 +12603,7 @@ snapshots:
 
   '@types/better-sqlite3@7.6.13':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
 
   '@types/chai@5.2.3':
     dependencies:
@@ -12560,7 +12617,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
 
   '@types/d3-array@3.2.2': {}
 
@@ -12660,7 +12717,7 @@ snapshots:
 
   '@types/memcached@2.2.10':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
 
   '@types/ms@2.1.0': {}
 
@@ -12689,7 +12746,7 @@ snapshots:
 
   '@types/pg@8.15.6':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
       pg-protocol: 1.16.1
       pg-types: 2.2.0
 
