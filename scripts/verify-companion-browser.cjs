@@ -22,6 +22,8 @@ const source = [
   "packages/design-system/package.json",
   "scripts/verify-companion-browser.cjs",
   "scripts/tests/chat-error-message.test.cjs",
+  "scripts/capture-sovereign-built-app.cjs",
+  "scripts/verify-author-draft-browser.cjs",
   ".github/workflows/companion.yml",
   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_COMPANION.md",
   "apps/web/hooks/use-provider.ts",
