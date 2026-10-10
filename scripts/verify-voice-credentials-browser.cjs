@@ -22,6 +22,10 @@ async function main() {
       try {
         const page = await context.newPage();
         page.setDefaultTimeout(15000);
+        const voiceAlert = page.getByRole("alert", {
+          name: "Voice playback",
+          exact: true,
+        });
         const errors = [];
         const requests = [];
         page.on("pageerror", (error) => errors.push(error.message));
@@ -67,11 +71,12 @@ async function main() {
         assert.ok(box && box.width >= 44 && box.height >= 44);
         await listen.focus();
         await page.keyboard.press("Enter");
-        await expect(page.getByRole("alert")).toContainText("Settings");
+        await expect(voiceAlert).toContainText("Settings");
         await expect(
-          page
-            .getByRole("alert")
-            .getByRole("link", { name: "Provider settings", exact: true }),
+          voiceAlert.getByRole("link", {
+            name: "Provider settings",
+            exact: true,
+          }),
         ).toHaveAttribute("href", "/settings/providers");
         assert.deepEqual(requests[0].keys, {
           groq: undefined,
@@ -89,9 +94,7 @@ async function main() {
           ),
         );
         await listen.click();
-        await expect(page.getByRole("alert")).toContainText(
-          "Voice provider request failed",
-        );
+        await expect(voiceAlert).toContainText("Voice provider request failed");
         assert.deepEqual(requests[1].keys, {
           groq: "test-customer-groq",
           openai: "sk-test-key",
@@ -99,11 +102,11 @@ async function main() {
         });
         pending = true;
         await listen.click();
-        await expect(page.getByRole("alert")).toHaveCount(0);
+        await expect(voiceAlert).toHaveCount(0);
         await expect.poll(() => requests.length).toBe(3);
         await listen.click();
         await page.waitForTimeout(500);
-        await expect(page.getByRole("alert")).toHaveCount(0);
+        await expect(voiceAlert).toHaveCount(0);
         assert.equal(
           requests.length,
           3,

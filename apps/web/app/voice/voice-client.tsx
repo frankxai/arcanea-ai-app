@@ -467,6 +467,7 @@ export default function VoicePage() {
           {voiceError && (
             <div
               role="alert"
+              aria-label="Voice playback"
               className="mx-auto mb-6 max-w-xl text-sm text-[var(--arc-text-secondary)]"
             >
               {voiceError}{" "}

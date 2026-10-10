@@ -146,7 +146,7 @@ test("OpenAI transcription cannot fall back to a configured platform Groq key", 
 
 test("transcription fallback requires the second customer key", async () => {
   upstream = (url) =>
-    url.includes("groq.com")
+    url === "https://api.groq.com/openai/v1/audio/transcriptions"
       ? new Response("dummy provider failure", { status: 503 })
       : Response.json({ text: "Recovered transcript." });
   const response = await transcribe(
@@ -203,7 +203,7 @@ test("long speech uses supplied OpenAI credentials without losing text", async (
   );
   assert.equal(response.status, 200);
   assert.equal(calls.length, 1);
-  assert.ok(calls[0].url.includes("openai.com"));
+  assert.equal(calls[0].url, "https://api.openai.com/v1/audio/speech");
   assert.equal(calls[0].key, "Bearer sk-test-key");
   assert.equal((calls[0].body as Record<string, unknown>).input, text);
   assert.equal((calls[0].body as Record<string, unknown>).speed, 1.5);
@@ -425,7 +425,7 @@ test("rejected customer key returns a private, actionable response without platf
 test("speech fallback uses only supplied customer keys and cancels the rejected body", async () => {
   let cancelled = false;
   upstream = (url) =>
-    url.includes("groq.com")
+    url === "https://api.groq.com/openai/v1/audio/speech"
       ? new Response(
           new ReadableStream({
             cancel() {
