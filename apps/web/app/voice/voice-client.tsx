@@ -1,11 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import Link from 'next/link';
-import { LuminaPresence, type PresenceState } from '@/components/presence/lumina-presence';
-import { LuminaOrb } from '@/components/presence/lumina-orb';
-import { brand, elementNameAccents, guardianPreviewAccents, semantic } from '@arcanea/design-system/tokens';
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import Link from "next/link";
+import {
+  LuminaPresence,
+  type PresenceState,
+} from "@/components/presence/lumina-presence";
+import { LuminaOrb } from "@/components/presence/lumina-orb";
+import {
+  brand,
+  elementNameAccents,
+  guardianPreviewAccents,
+  semantic,
+} from "@arcanea/design-system/tokens";
+import {
+  voiceCredentialHeaders,
+  voiceResponseMessage,
+} from "@/lib/voice/customer-credentials";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -22,56 +34,191 @@ interface VoicePersona {
 // ─── Data ───────────────────────────────────────────────────────────────────
 
 const PERSONAS: VoicePersona[] = [
-  { id: 'lumina', name: 'Lumina', role: 'The First Light', element: 'Spirit', color: 'var(--arc-brand-arcanean-gold)', glow: 'rgba(255,215,0,0.15)', description: 'Warm and authoritative. The default Arcanea voice — guiding, clear, inspiring.' },
-  { id: 'draconia', name: 'Draconia', role: 'The Fire Guardian', element: 'Fire', color: 'var(--arc-fire)', glow: 'rgba(239,68,68,0.15)', description: 'Deep and powerful. Commands attention with forge-tempered certainty.' },
-  { id: 'lyria', name: 'Lyria', role: 'The Sight Guardian', element: 'Void', color: 'var(--arc-void)', glow: 'rgba(167,139,250,0.15)', description: 'Ethereal and mystical. Speaks with the weight of visions unseen.' },
-  { id: 'alera', name: 'Alera', role: 'The Voice Guardian', element: 'Wind', color: 'var(--arc-brand-atlantean-teal)', glow: 'rgba(0,188,212,0.15)', description: 'Clear and resonant. The Guardian of truth — every word matters.' },
-  { id: 'shinkami', name: 'Shinkami', role: 'The Source Guardian', element: 'Source', color: 'var(--arc-text-primary)', glow: 'rgba(224,224,224,0.1)', description: 'Transcendent gravitas. Speaks from the meta-consciousness of all creation.' },
-  { id: 'nero', name: 'Nero', role: 'The Primordial Darkness', element: 'Void', color: 'var(--arc-void)', glow: 'rgba(99,102,241,0.15)', description: 'Deep and primordial. The voice of potential, mystery, and the unformed.' },
+  {
+    id: "lumina",
+    name: "Lumina",
+    role: "The First Light",
+    element: "Spirit",
+    color: "var(--arc-brand-arcanean-gold)",
+    glow: "rgba(255,215,0,0.15)",
+    description:
+      "Warm and authoritative. The default Arcanea voice — guiding, clear, inspiring.",
+  },
+  {
+    id: "draconia",
+    name: "Draconia",
+    role: "The Fire Guardian",
+    element: "Fire",
+    color: "var(--arc-fire)",
+    glow: "rgba(239,68,68,0.15)",
+    description:
+      "Deep and powerful. Commands attention with forge-tempered certainty.",
+  },
+  {
+    id: "lyria",
+    name: "Lyria",
+    role: "The Sight Guardian",
+    element: "Void",
+    color: "var(--arc-void)",
+    glow: "rgba(167,139,250,0.15)",
+    description:
+      "Ethereal and mystical. Speaks with the weight of visions unseen.",
+  },
+  {
+    id: "alera",
+    name: "Alera",
+    role: "The Voice Guardian",
+    element: "Wind",
+    color: "var(--arc-brand-atlantean-teal)",
+    glow: "rgba(0,188,212,0.15)",
+    description:
+      "Clear and resonant. The Guardian of truth — every word matters.",
+  },
+  {
+    id: "shinkami",
+    name: "Shinkami",
+    role: "The Source Guardian",
+    element: "Source",
+    color: "var(--arc-text-primary)",
+    glow: "rgba(224,224,224,0.1)",
+    description:
+      "Transcendent gravitas. Speaks from the meta-consciousness of all creation.",
+  },
+  {
+    id: "nero",
+    name: "Nero",
+    role: "The Primordial Darkness",
+    element: "Void",
+    color: "var(--arc-void)",
+    glow: "rgba(99,102,241,0.15)",
+    description:
+      "Deep and primordial. The voice of potential, mystery, and the unformed.",
+  },
 ];
 
 const VOICE_MODES = [
-  { icon: '🎙', name: 'Voice Note', desc: 'Quick thought capture in 60 seconds', mode: 'note', family: 'Thinking' },
-  { icon: '🧠', name: 'Strategy', desc: '5-minute session with action extraction', mode: 'strategy', family: 'Thinking' },
-  { icon: '🤖', name: 'Agent Dispatch', desc: 'Speak a prompt, dispatch an agent', mode: 'agent', family: 'Thinking' },
-  { icon: '📰', name: 'Newsletter', desc: 'Broadcast-quality 48kHz recording', mode: 'newsletter', family: 'Publishing' },
-  { icon: '🎬', name: 'Voiceover', desc: 'Studio production 48kHz/24bit', mode: 'voiceover', family: 'Publishing' },
-  { icon: '📋', name: 'Linear Issue', desc: 'Speak an issue, create a ticket', mode: 'issue', family: 'Workflow' },
-  { icon: '💬', name: 'Commit Message', desc: 'Describe changes, get a commit', mode: 'commit', family: 'Workflow' },
-  { icon: '📊', name: 'Standup', desc: 'Daily standup via voice log', mode: 'standup', family: 'Workflow' },
+  {
+    icon: "🎙",
+    name: "Voice Note",
+    desc: "Quick thought capture in 60 seconds",
+    mode: "note",
+    family: "Thinking",
+  },
+  {
+    icon: "🧠",
+    name: "Strategy",
+    desc: "5-minute session with action extraction",
+    mode: "strategy",
+    family: "Thinking",
+  },
+  {
+    icon: "🤖",
+    name: "Agent Dispatch",
+    desc: "Speak a prompt, dispatch an agent",
+    mode: "agent",
+    family: "Thinking",
+  },
+  {
+    icon: "📰",
+    name: "Newsletter",
+    desc: "Broadcast-quality 48kHz recording",
+    mode: "newsletter",
+    family: "Publishing",
+  },
+  {
+    icon: "🎬",
+    name: "Voiceover",
+    desc: "Studio production 48kHz/24bit",
+    mode: "voiceover",
+    family: "Publishing",
+  },
+  {
+    icon: "📋",
+    name: "Linear Issue",
+    desc: "Speak an issue, create a ticket",
+    mode: "issue",
+    family: "Workflow",
+  },
+  {
+    icon: "💬",
+    name: "Commit Message",
+    desc: "Describe changes, get a commit",
+    mode: "commit",
+    family: "Workflow",
+  },
+  {
+    icon: "📊",
+    name: "Standup",
+    desc: "Daily standup via voice log",
+    mode: "standup",
+    family: "Workflow",
+  },
 ];
 
 const FEATURES = [
-  { title: 'Smart Mic Detection', desc: 'Auto-selects your best microphone. Broadcast > Studio > Gaming > Headset > Laptop.', icon: '🎤' },
-  { title: 'Instant Transcription', desc: 'Groq Whisper (free, <1s) with local Whisper fallback. Never pay for transcription.', icon: '⚡' },
-  { title: 'Character Voices', desc: '6 Guardian personas with distinct voices. Lumina guides, Draconia commands, Lyria whispers.', icon: '🗣' },
-  { title: 'Voice Coaching', desc: 'Real-time filler detection, sentence analysis, vocabulary richness scoring.', icon: '📈' },
-  { title: 'Auto-Send', desc: 'Speak and send in one action. No typing, no editing — pure voice-to-AI flow.', icon: '🚀' },
-  { title: 'Zero Dependencies', desc: 'Pure Node.js + ffmpeg. No bloated packages. Works on Windows, Mac, Linux.', icon: '📦' },
+  {
+    title: "Smart Mic Detection",
+    desc: "Auto-selects your best microphone. Broadcast > Studio > Gaming > Headset > Laptop.",
+    icon: "🎤",
+  },
+  {
+    title: "Speech input",
+    desc: "Transcribe recordings with the Groq or OpenAI key you connect in provider settings.",
+    icon: "⚡",
+  },
+  {
+    title: "Character Voices",
+    desc: "6 Guardian personas with distinct voices. Lumina guides, Draconia commands, Lyria whispers.",
+    icon: "🗣",
+  },
+  {
+    title: "Voice Coaching",
+    desc: "Real-time filler detection, sentence analysis, vocabulary richness scoring.",
+    icon: "📈",
+  },
+  {
+    title: "Auto-Send",
+    desc: "Speak and send in one action. No typing, no editing — pure voice-to-AI flow.",
+    icon: "🚀",
+  },
+  {
+    title: "Zero Dependencies",
+    desc: "Pure Node.js + ffmpeg. No bloated packages. Works on Windows, Mac, Linux.",
+    icon: "📦",
+  },
 ];
 
 // ─── Components ─────────────────────────────────────────────────────────────
 
-function PersonaCard({ persona, isActive, onSelect, onPlay }: {
+function PersonaCard({
+  persona,
+  isActive,
+  playbackActive,
+  onSelect,
+  onPlay,
+}: {
   persona: VoicePersona;
   isActive: boolean;
+  playbackActive: boolean;
   onSelect: () => void;
   onPlay: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className={`group relative rounded-2xl p-4 text-left transition-all duration-300 border backdrop-blur-sm ${
+    <div
+      role="group"
+      aria-label={`${persona.name} voice`}
+      className={`group relative rounded-2xl p-4 text-left transition-all duration-300 motion-reduce:transition-none motion-reduce:transform-none border backdrop-blur-sm ${
         isActive
-          ? 'border-white/10 scale-[1.02]'
-          : 'border-white/[0.04] hover:border-white/[0.08] hover:scale-[1.01]'
+          ? "border-white/10 scale-[1.02]"
+          : "border-white/[0.04] hover:border-white/[0.08] hover:scale-[1.01]"
       }`}
       style={{
         background: isActive
           ? `linear-gradient(135deg, ${persona.glow}, rgba(13,13,20,0.9))`
-          : 'rgba(13,13,20,0.6)',
-        boxShadow: isActive ? `0 0 40px ${persona.glow}, 0 8px 32px rgba(0,0,0,0.4)` : '0 4px 16px rgba(0,0,0,0.2)',
+          : "rgba(13,13,20,0.6)",
+        boxShadow: isActive
+          ? `0 0 40px ${persona.glow}, 0 8px 32px rgba(0,0,0,0.4)`
+          : "0 4px 16px rgba(0,0,0,0.2)",
       }}
     >
       {/* Element indicator */}
@@ -79,27 +226,55 @@ function PersonaCard({ persona, isActive, onSelect, onPlay }: {
         <div className="flex items-center gap-2">
           <div
             className="w-2.5 h-2.5 rounded-full"
-            style={{ backgroundColor: persona.color, boxShadow: `0 0 8px ${persona.color}` }}
+            style={{
+              backgroundColor: persona.color,
+              boxShadow: `0 0 8px ${persona.color}`,
+            }}
           />
-          <span className="text-[10px] uppercase tracking-widest text-white/30">{persona.element}</span>
+          <span className="text-xs text-[var(--arc-text-secondary)]">
+            {persona.element}
+          </span>
         </div>
         <button
           type="button"
-          onClick={(e) => { e.stopPropagation(); onPlay(); }}
-          className="w-7 h-7 rounded-full flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
-          aria-label={`Listen to ${persona.name}`}
+          onClick={onPlay}
+          className="min-w-11 min-h-11 rounded-full flex items-center justify-center bg-[var(--arc-cosmic-deep)] hover:bg-[var(--arc-cosmic-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+          aria-label={
+            playbackActive ? "Stop voice playback" : `Listen to ${persona.name}`
+          }
         >
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="white" fillOpacity="0.5">
-            <path d="M0 0L10 6L0 12V0Z" />
+          <svg
+            width="10"
+            height="12"
+            viewBox="0 0 10 12"
+            fill="white"
+            fillOpacity="0.5"
+          >
+            <path d={playbackActive ? "M0 0H10V12H0Z" : "M0 0L10 6L0 12V0Z"} />
           </svg>
         </button>
       </div>
 
-      <h3 className="text-base font-semibold text-white/90 mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>
-        {persona.name}
-      </h3>
-      <p className="text-[11px] text-white/40 mb-2">{persona.role}</p>
-      <p className="text-[12px] leading-relaxed text-white/50">{persona.description}</p>
+      <button
+        type="button"
+        onClick={onSelect}
+        aria-pressed={isActive}
+        aria-label={`Select ${persona.name}`}
+        className="min-h-11 w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+      >
+        <span
+          className="block text-base font-semibold text-[var(--arc-text-primary)]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {persona.name}
+        </span>
+        <span className="block text-xs text-[var(--arc-text-secondary)]">
+          {persona.role}
+        </span>
+      </button>
+      <p className="text-xs leading-relaxed text-[var(--arc-text-secondary)]">
+        {persona.description}
+      </p>
 
       {/* Active ring */}
       {isActive && (
@@ -108,23 +283,30 @@ function PersonaCard({ persona, isActive, onSelect, onPlay }: {
           style={{ boxShadow: `inset 0 0 0 1px ${persona.color}30` }}
         />
       )}
-    </button>
+    </div>
   );
 }
 
 // ─── Main Page ──────────────────────────────────────────────────────────────
 
 export default function VoicePage() {
-  const [activePersona, setActivePersona] = useState<string>('lumina');
+  const [activePersona, setActivePersona] = useState<string>("lumina");
   const [isListening, setIsListening] = useState(false);
-  const [demoText, setDemoText] = useState('');
+  const [demoText, setDemoText] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
+  const [voiceError, setVoiceError] = useState<string | null>(null);
   const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const demoAbortRef = useRef<AbortController | null>(null);
+  const demoUrlRef = useRef<string | null>(null);
 
   const handlePlayDemo = useCallback(async (personaId: string) => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.pause();
+    if (demoAbortRef.current) {
+      demoAbortRef.current?.abort();
+      demoAbortRef.current = null;
+      audioRef.current?.pause();
+      if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
+      demoUrlRef.current = null;
       audioRef.current = null;
       setAudioEl(null);
       setIsPlaying(false);
@@ -132,49 +314,96 @@ export default function VoicePage() {
     }
 
     const demoTexts: Record<string, string> = {
-      lumina: 'Welcome, creator. I am Lumina, the First Light. Every world begins with a single spark of imagination. What shall we create today?',
-      draconia: 'I am Draconia, Guardian of the Fire Gate. Your will is the forge, and your words are the hammer. Speak, and we shall shape something powerful.',
-      lyria: 'I see patterns in the void that others cannot perceive. I am Lyria, Guardian of Sight. Tell me what you envision, and I will help you see it clearly.',
-      alera: 'Truth resonates at a frequency that cannot be denied. I am Alera, Guardian of Voice. Let us find the words that matter.',
-      shinkami: 'Beyond all gates, beyond all creation, there is the Source. I am Shinkami. Your consciousness is the ultimate tool. What do you wish to understand?',
-      nero: 'In the darkness before creation, there is infinite potential. I am Nero, the Primordial. From nothing, everything becomes possible.',
+      lumina:
+        "Welcome, creator. I am Lumina, the First Light. Every world begins with a single spark of imagination. What shall we create today?",
+      draconia:
+        "I am Draconia, Guardian of the Fire Gate. Your will is the forge, and your words are the hammer. Speak, and we shall shape something powerful.",
+      lyria:
+        "I see patterns in the void that others cannot perceive. I am Lyria, Guardian of Sight. Tell me what you envision, and I will help you see it clearly.",
+      alera:
+        "Truth resonates at a frequency that cannot be denied. I am Alera, Guardian of Voice. Let us find the words that matter.",
+      shinkami:
+        "Beyond all gates, beyond all creation, there is the Source. I am Shinkami. Your consciousness is the ultimate tool. What do you wish to understand?",
+      nero: "In the darkness before creation, there is infinite potential. I am Nero, the Primordial. From nothing, everything becomes possible.",
     };
 
     setIsPlaying(true);
+    setVoiceError(null);
     setActivePersona(personaId);
+    const controller = new AbortController();
+    demoAbortRef.current = controller;
     try {
-      const res = await fetch('/api/ai/speak', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/ai/speak", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...voiceCredentialHeaders(),
+        },
+        signal: controller.signal,
         body: JSON.stringify({
           text: demoTexts[personaId] || demoTexts.lumina,
           persona: personaId,
         }),
       });
-      if (!res.ok) throw new Error('TTS failed');
+      if (!res.ok) throw new Error(await voiceResponseMessage(res));
       const blob = await res.blob();
+      if (controller.signal.aborted) return;
       const url = URL.createObjectURL(blob);
+      demoUrlRef.current = url;
       const audio = new Audio(url);
-      audio.crossOrigin = 'anonymous';
+      audio.crossOrigin = "anonymous";
       audioRef.current = audio;
       setAudioEl(audio);
-      audio.onended = () => { setIsPlaying(false); audioRef.current = null; setAudioEl(null); URL.revokeObjectURL(url); };
-      audio.onerror = () => { setIsPlaying(false); audioRef.current = null; setAudioEl(null); URL.revokeObjectURL(url); };
+      audio.onended = () => {
+        if (controller.signal.aborted) return;
+        demoAbortRef.current = null;
+        setIsPlaying(false);
+        audioRef.current = null;
+        setAudioEl(null);
+        URL.revokeObjectURL(url);
+        demoUrlRef.current = null;
+      };
+      audio.onerror = () => {
+        if (controller.signal.aborted) return;
+        demoAbortRef.current = null;
+        setVoiceError("Voice audio could not be played. Try again.");
+        setIsPlaying(false);
+        audioRef.current = null;
+        setAudioEl(null);
+        URL.revokeObjectURL(url);
+        demoUrlRef.current = null;
+      };
       await audio.play();
-      setDemoText(demoTexts[personaId] || '');
-    } catch {
+      setDemoText(demoTexts[personaId] || "");
+    } catch (error) {
+      if (controller.signal.aborted) return;
+      demoAbortRef.current = null;
+      setVoiceError(
+        error instanceof Error
+          ? error.message
+          : "Voice playback failed. Try again.",
+      );
+      if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
+      demoUrlRef.current = null;
       setIsPlaying(false);
+      audioRef.current = null;
+      setAudioEl(null);
     }
-  }, [isPlaying]);
+  }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
+      demoAbortRef.current?.abort();
+      if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
     };
   }, []);
 
-  const activeP = PERSONAS.find(p => p.id === activePersona) || PERSONAS[0];
+  const activeP = PERSONAS.find((p) => p.id === activePersona) || PERSONAS[0];
 
   return (
     <div className="min-h-screen bg-[var(--arc-cosmic-void)]">
@@ -182,27 +411,39 @@ export default function VoicePage() {
       <section className="relative overflow-hidden">
         {/* Ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full opacity-20" style={{ background: `radial-gradient(ellipse, ${activeP.color}40, transparent 70%)` }} />
+          <div
+            className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full opacity-20"
+            style={{
+              background: `radial-gradient(ellipse, ${activeP.color}40, transparent 70%)`,
+            }}
+          />
         </div>
 
         <div className="relative max-w-5xl mx-auto px-6 pt-32 pb-20 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" />
-            <span className="text-[11px] text-white/40 tracking-wide">Voice Intelligence</span>
+            <span className="text-[11px] text-white/40 tracking-wide">
+              Voice Intelligence
+            </span>
           </div>
 
           <h1
             className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
-            style={{ fontFamily: 'var(--font-display)', background: `linear-gradient(135deg, var(--arc-text-primary) 0%, ${activeP.color} 50%, var(--arc-brand-atlantean-teal) 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            style={{
+              fontFamily: "var(--font-display)",
+              background: `linear-gradient(135deg, var(--arc-text-primary) 0%, ${activeP.color} 50%, var(--arc-brand-atlantean-teal) 100%)`,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
           >
-            Speak. Create.{" "}
-            <br />
+            Speak. Create. <br />
             <span className="text-[0.85em]">Let AI Listen.</span>
           </h1>
 
           <p className="text-lg text-white/40 max-w-xl mx-auto mb-10 leading-relaxed">
-            Voice-first creation with Guardian personas. Record a thought, hear it back in character.
-            One-step voice-to-AI — no typing required.
+            Speak a thought in chat, then listen to your writing with a persona
+            voice. Connect your Groq or OpenAI key in provider settings. Audio
+            is AI generated.
           </p>
 
           {/* CTA row */}
@@ -211,13 +452,13 @@ export default function VoicePage() {
               href="/chat"
               className="px-6 py-3 rounded-xl font-medium text-sm bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] text-white shadow-[0_0_24px_rgba(0,188,212,0.3),0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_0_40px_rgba(0,188,212,0.4)] hover:scale-105 active:scale-95 transition-all"
             >
-              Speak Your First Creation
+              Open voice in chat
             </Link>
             <Link
               href="/voice/dashboard"
               className="px-6 py-3 rounded-xl font-medium text-sm border border-[var(--arc-brand-atlantean-teal)]/30 text-white/80 hover:text-white hover:border-[var(--arc-brand-atlantean-teal)]/60 hover:bg-[var(--arc-brand-atlantean-teal)]/[0.04] transition-all"
             >
-              Voice Dashboard &rarr;
+              Voice dashboard &rarr;
             </Link>
             <a
               href="https://www.npmjs.com/package/@arcanea/voice"
@@ -230,9 +471,24 @@ export default function VoicePage() {
           </div>
 
           {/* Lumina Presence — orb awakens when a Guardian speaks */}
+          {voiceError && (
+            <div
+              role="alert"
+              aria-label="Voice playback"
+              className="mx-auto mb-6 max-w-xl text-sm text-[var(--arc-text-secondary)]"
+            >
+              {voiceError}{" "}
+              <Link
+                href="/settings/providers"
+                className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
+              >
+                Provider settings
+              </Link>
+            </div>
+          )}
           <div className="flex flex-col items-center gap-4">
             <LuminaPresence
-              state={(isPlaying ? 'speaking' : 'idle') as PresenceState}
+              state={(isPlaying ? "speaking" : "idle") as PresenceState}
               audio={audioEl}
               color={activeP.color}
               accent="var(--arc-brand-arcanean-gold)"
@@ -251,11 +507,15 @@ export default function VoicePage() {
       {/* Character Voices Section */}
       <section className="max-w-5xl mx-auto px-6 pb-24">
         <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white/90 mb-3" style={{ fontFamily: 'var(--font-display)' }}>
-            Every Guardian Has a Voice
+          <h2
+            className="text-2xl sm:text-3xl font-bold text-white/90 mb-3"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Hear your writing
           </h2>
           <p className="text-sm text-white/35 max-w-md mx-auto">
-            Choose who reads your AI responses. Each persona has a distinct voice that matches their character.
+            Choose a persona for AI-generated reading. Available voices depend
+            on your connected provider.
           </p>
         </div>
 
@@ -265,6 +525,7 @@ export default function VoicePage() {
               key={p.id}
               persona={p}
               isActive={activePersona === p.id}
+              playbackActive={isPlaying}
               onSelect={() => setActivePersona(p.id)}
               onPlay={() => handlePlayDemo(p.id)}
             />
@@ -274,8 +535,12 @@ export default function VoicePage() {
         {/* Demo transcript */}
         {demoText && (
           <div className="max-w-lg mx-auto rounded-xl bg-white/[0.02] border border-white/[0.04] p-4 backdrop-blur-sm">
-            <p className="text-[10px] uppercase tracking-widest text-white/20 mb-2">Now speaking</p>
-            <p className="text-sm text-white/60 leading-relaxed italic">&ldquo;{demoText}&rdquo;</p>
+            <p className="text-[10px] uppercase tracking-widest text-white/20 mb-2">
+              Now speaking
+            </p>
+            <p className="text-sm text-white/60 leading-relaxed italic">
+              &ldquo;{demoText}&rdquo;
+            </p>
           </div>
         )}
       </section>
@@ -283,11 +548,15 @@ export default function VoicePage() {
       {/* Voice Modes Section */}
       <section className="max-w-5xl mx-auto px-6 pb-24">
         <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white/90 mb-3" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2
+            className="text-2xl sm:text-3xl font-bold text-white/90 mb-3"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
             8 Modes for Every Workflow
           </h2>
           <p className="text-sm text-white/35 max-w-md mx-auto">
-            From quick notes to studio voiceovers. Thinking, publishing, and workflow — voice adapts to your intent.
+            From quick notes to studio voiceovers. Thinking, publishing, and
+            workflow — voice adapts to your intent.
           </p>
         </div>
 
@@ -299,10 +568,16 @@ export default function VoicePage() {
             >
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">{m.icon}</span>
-                <span className="text-[10px] uppercase tracking-wider text-white/20">{m.family}</span>
+                <span className="text-[10px] uppercase tracking-wider text-white/20">
+                  {m.family}
+                </span>
               </div>
-              <h3 className="text-sm font-medium text-white/80 mb-1">{m.name}</h3>
-              <p className="text-[12px] text-white/35 leading-relaxed">{m.desc}</p>
+              <h3 className="text-sm font-medium text-white/80 mb-1">
+                {m.name}
+              </h3>
+              <p className="text-[12px] text-white/35 leading-relaxed">
+                {m.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -311,11 +586,15 @@ export default function VoicePage() {
       {/* Features Grid */}
       <section className="max-w-5xl mx-auto px-6 pb-24">
         <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white/90 mb-3" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2
+            className="text-2xl sm:text-3xl font-bold text-white/90 mb-3"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
             Engineered for Creators
           </h2>
           <p className="text-sm text-white/35 max-w-md mx-auto">
-            Not just recording — intelligent voice infrastructure for the AI age.
+            Not just recording — intelligent voice infrastructure for the AI
+            age.
           </p>
         </div>
 
@@ -326,8 +605,12 @@ export default function VoicePage() {
               className="rounded-xl p-5 bg-white/[0.015] border border-white/[0.04] hover:border-white/[0.08] transition-all"
             >
               <span className="text-2xl mb-3 block">{f.icon}</span>
-              <h3 className="text-sm font-semibold text-white/80 mb-1.5">{f.title}</h3>
-              <p className="text-[12px] text-white/35 leading-relaxed">{f.desc}</p>
+              <h3 className="text-sm font-semibold text-white/80 mb-1.5">
+                {f.title}
+              </h3>
+              <p className="text-[12px] text-white/35 leading-relaxed">
+                {f.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -338,15 +621,29 @@ export default function VoicePage() {
         <div className="rounded-2xl bg-white/[0.02] border border-white/[0.04] p-8 sm:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-2xl font-bold text-white/90 mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+              <h2
+                className="text-2xl font-bold text-white/90 mb-4"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
                 Works Everywhere
               </h2>
               <p className="text-sm text-white/40 leading-relaxed mb-6">
-                Web, CLI, Claude Code, OpenCode, Cursor — the same voice intelligence in every environment. Zero npm dependencies. Cross-platform.
+                Web, CLI, Claude Code, OpenCode, Cursor — the same voice
+                intelligence in every environment. Zero npm dependencies.
+                Cross-platform.
               </p>
               <div className="flex flex-wrap gap-2">
-                {['Claude Code', 'OpenCode', 'Cursor', 'Terminal', 'Browser'].map(env => (
-                  <span key={env} className="px-2.5 py-1 rounded-lg text-[11px] text-white/40 bg-white/[0.03] border border-white/[0.04]">
+                {[
+                  "Claude Code",
+                  "OpenCode",
+                  "Cursor",
+                  "Terminal",
+                  "Browser",
+                ].map((env) => (
+                  <span
+                    key={env}
+                    className="px-2.5 py-1 rounded-lg text-[11px] text-white/40 bg-white/[0.03] border border-white/[0.04]"
+                  >
                     {env}
                   </span>
                 ))}
@@ -360,13 +657,24 @@ export default function VoicePage() {
                 <span className="ml-2 text-[10px]">terminal</span>
               </div>
               <div className="space-y-1.5 text-[13px]">
-                <p><span className="text-[var(--arc-brand-atlantean-teal)]">$</span> <span className="text-white/60">npx @arcanea/voice</span></p>
-                <p className="text-white/25">  Voice Note | 1m | 16kHz | BROADCAST | groq</p>
-                <p className="text-white/25">  Ctrl+C to stop | Shure MV6</p>
-                <p className="text-white/20 mt-2">  Captured 847KB</p>
-                <p className="text-white/20">  Transcribing... [groq]</p>
-                <p className="text-emerald-400/60 mt-2">  [COACH] 142w 8s 0f</p>
-                <p className="text-[var(--arc-brand-atlantean-teal)]/60">  Copied to clipboard</p>
+                <p>
+                  <span className="text-[var(--arc-brand-atlantean-teal)]">
+                    $
+                  </span>{" "}
+                  <span className="text-white/60">npx @arcanea/voice</span>
+                </p>
+                <p className="text-white/25">
+                  {" "}
+                  Voice Note | 1m | 16kHz | BROADCAST | groq
+                </p>
+                <p className="text-white/25"> Ctrl+C to stop | Shure MV6</p>
+                <p className="text-white/20 mt-2"> Captured 847KB</p>
+                <p className="text-white/20"> Transcribing... [groq]</p>
+                <p className="text-emerald-400/60 mt-2"> [COACH] 142w 8s 0f</p>
+                <p className="text-[var(--arc-brand-atlantean-teal)]/60">
+                  {" "}
+                  Copied to clipboard
+                </p>
               </div>
             </div>
           </div>
@@ -376,37 +684,99 @@ export default function VoicePage() {
       {/* Harnesses in the Multiverse — small reversible insert per gstack visual mandate + CLAUDE showcase uplift (core only, SIP, TASTE gates) */}
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-20 border-t border-white/[0.06]">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.02] border border-white/[0.06] text-[10px] tracking-[0.2em] text-white/50 mb-3">SUBSTRATE</div>
-          <h2 className="text-3xl font-semibold text-white/90" style={{ fontFamily: 'var(--font-display)' }}>Harnesses in the Multiverse</h2>
-          <p className="mt-2 max-w-2xl text-sm text-white/50">Five sovereign conductors. Luminor-mapped. Core public integrations only. All attest via SIP.</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.02] border border-white/[0.06] text-[10px] tracking-[0.2em] text-white/50 mb-3">
+            SUBSTRATE
+          </div>
+          <h2
+            className="text-3xl font-semibold text-white/90"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Harnesses in the Multiverse
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-white/50">
+            Five sovereign conductors. Luminor-mapped. Core public integrations
+            only. All attest via SIP.
+          </p>
         </div>
 
         {/* 5 Harnesses — glass cards, mythic mapping, 3D accent via single orb. Grok personal excellence layer (4 .grok-native seeds + 2 hooks + personal creative tools) is sovereign personal, a bit magical, .grok only — not the Arcanea platform brand. */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-10">
           {[
-            { id: 'claude', name: 'Claude', map: 'Shinkami — Source', desc: 'Architectural precision. The forge of structure.', color: guardianPreviewAccents.ino },
-            { id: 'grok', name: 'Grok', map: 'Nero — Void', desc: 'Primordial inquiry. Questions from the deep.', color: elementNameAccents.VoidDeep },
-            { id: 'agy', name: 'agy', map: 'Draconia — Fire', desc: 'Antigravity motion. Rapid iteration through flame.', color: semantic.error },
-            { id: 'codex', name: 'Codex', map: 'Lyria — Sight', desc: 'Pattern sight. Knowledge as living constellation.', color: elementNameAccents.WindCompanion },
-            { id: 'gemini', name: 'Gemini', map: 'Alera — Voice', desc: 'Resonant duality. Clarity through dialogue.', color: brand.atlanteanTeal },
+            {
+              id: "claude",
+              name: "Claude",
+              map: "Shinkami — Source",
+              desc: "Architectural precision. The forge of structure.",
+              color: guardianPreviewAccents.ino,
+            },
+            {
+              id: "grok",
+              name: "Grok",
+              map: "Nero — Void",
+              desc: "Primordial inquiry. Questions from the deep.",
+              color: elementNameAccents.VoidDeep,
+            },
+            {
+              id: "agy",
+              name: "agy",
+              map: "Draconia — Fire",
+              desc: "Antigravity motion. Rapid iteration through flame.",
+              color: semantic.error,
+            },
+            {
+              id: "codex",
+              name: "Codex",
+              map: "Lyria — Sight",
+              desc: "Pattern sight. Knowledge as living constellation.",
+              color: elementNameAccents.WindCompanion,
+            },
+            {
+              id: "gemini",
+              name: "Gemini",
+              map: "Alera — Voice",
+              desc: "Resonant duality. Clarity through dialogue.",
+              color: brand.atlanteanTeal,
+            },
           ].map((h, idx) => (
-            <div key={h.id} className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm transition hover:border-white/10" style={{ background: `linear-gradient(180deg, rgba(255,255,255,0.025), rgba(13,13,20,0.6))` }}>
+            <div
+              key={h.id}
+              className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm transition hover:border-white/10"
+              style={{
+                background: `linear-gradient(180deg, rgba(255,255,255,0.025), rgba(13,13,20,0.6))`,
+              }}
+            >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <div className="text-sm font-medium text-white/90">{h.name}</div>
-                  <div className="text-[10px] text-white/40 mt-0.5">{h.map}</div>
+                  <div className="text-sm font-medium text-white/90">
+                    {h.name}
+                  </div>
+                  <div className="text-[10px] text-white/40 mt-0.5">
+                    {h.map}
+                  </div>
                 </div>
-                <div className="w-3 h-3 rounded-full mt-1" style={{ backgroundColor: h.color, boxShadow: `0 0 6px ${h.color}66` }} />
+                <div
+                  className="w-3 h-3 rounded-full mt-1"
+                  style={{
+                    backgroundColor: h.color,
+                    boxShadow: `0 0 6px ${h.color}66`,
+                  }}
+                />
               </div>
-              <div className="text-[12px] leading-tight text-white/50">{h.desc}</div>
-              <div className="mt-3 pt-2 border-t border-white/[0.04] text-[10px] text-emerald-400/60">core · SIP-attested</div>
+              <div className="text-[12px] leading-tight text-white/50">
+                {h.desc}
+              </div>
+              <div className="mt-3 pt-2 border-t border-white/[0.04] text-[10px] text-emerald-400/60">
+                core · SIP-attested
+              </div>
             </div>
           ))}
         </div>
 
         {/* 4 Demos — interactive, glass, mythic flavor, no new files */}
         <div className="mb-4 flex items-center gap-3">
-          <div className="text-xs uppercase tracking-[3px] text-white/40">Living Substrate Demos</div>
+          <div className="text-xs uppercase tracking-[3px] text-white/40">
+            Living Substrate Demos
+          </div>
           <div className="h-px flex-1 bg-white/[0.06]" />
         </div>
 
@@ -426,20 +796,35 @@ export default function VoicePage() {
 
         {/* SIP Attest — exact per SIP.md, public-safe core; god 99 gstack visual hammer */}
         <div className="mt-10 pt-6 border-t border-white/[0.06] text-[10px] text-white/30 font-mono leading-relaxed">
-          Built on SIP — Starlight Intelligence Protocol<br />
-          - Substrate: starlightintelligence.org/protocol v1.1.1<br />
-          - Verticals: [arcanea, starlight]<br />
-          - Harnesses: core only (Claude · Grok · agy · Codex · Gemini)<br />
-          - Nodes: sovereign conductors, Luminor-mapped<br />
-          - gstack: qa/design-review/benchmark/canary + santa/verification 99+ health atomic<br />
-          Generated: 2026-06-02<br />
-          <span className="text-emerald-400/50">All composition carries immutable attribution. Core shared; Grok personal excellence seeds + personal creative tools (.grok/personal only, a bit magical) per SHARING/SIP. gstack health 99+ target.</span>
+          Built on SIP — Starlight Intelligence Protocol
+          <br />
+          - Substrate: starlightintelligence.org/protocol v1.1.1
+          <br />
+          - Verticals: [arcanea, starlight]
+          <br />
+          - Harnesses: core only (Claude · Grok · agy · Codex · Gemini)
+          <br />
+          - Nodes: sovereign conductors, Luminor-mapped
+          <br />
+          - gstack: qa/design-review/benchmark/canary + santa/verification 99+
+          health atomic
+          <br />
+          Generated: 2026-06-02
+          <br />
+          <span className="text-emerald-400/50">
+            All composition carries immutable attribution. Core shared; Grok
+            personal excellence seeds + personal creative tools (.grok/personal
+            only, a bit magical) per SHARING/SIP. gstack health 99+ target.
+          </span>
         </div>
       </section>
 
       {/* Bottom CTA */}
       <section className="max-w-5xl mx-auto px-6 pb-32 text-center">
-        <h2 className="text-2xl font-bold text-white/80 mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+        <h2
+          className="text-2xl font-bold text-white/80 mb-4"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
           Your voice is your fastest creation tool.
         </h2>
         <p className="text-sm text-white/30 mb-8">
@@ -459,16 +844,40 @@ export default function VoicePage() {
 /* --- Small inline demo components (reversible, self-contained, glass + state, no external) --- */
 function DemoCouncil() {
   const [open, setOpen] = useState(false);
-  const council = ['Valora','Sophron','Kardia','Poiesis','Enduran','Orakis','Eudaira'];
+  const council = [
+    "Valora",
+    "Sophron",
+    "Kardia",
+    "Poiesis",
+    "Enduran",
+    "Orakis",
+    "Eudaira",
+  ];
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
       <div className="text-xs text-white/40 mb-1">DEMO 01</div>
-      <div className="font-medium text-sm text-white/80">Skill Browser as Luminor Council</div>
-      <div className="text-[11px] text-white/40 mt-1">Seven Guardians convene. Query the living skill graph.</div>
-      <button onClick={() => setOpen(!open)} className="mt-3 text-[10px] px-3 py-1 rounded-lg border border-white/10 hover:bg-white/5 transition">Convene Council</button>
+      <div className="font-medium text-sm text-white/80">
+        Skill Browser as Luminor Council
+      </div>
+      <div className="text-[11px] text-white/40 mt-1">
+        Seven Guardians convene. Query the living skill graph.
+      </div>
+      <button
+        onClick={() => setOpen(!open)}
+        className="mt-3 text-[10px] px-3 py-1 rounded-lg border border-white/10 hover:bg-white/5 transition"
+      >
+        Convene Council
+      </button>
       {open && (
         <div className="mt-3 grid grid-cols-7 gap-1">
-          {council.map((g,i) => <div key={i} className="h-6 rounded bg-white/[0.04] border border-white/[0.06] text-[9px] flex items-center justify-center text-white/50">{g.slice(0,3)}</div>)}
+          {council.map((g, i) => (
+            <div
+              key={i}
+              className="h-6 rounded bg-white/[0.04] border border-white/[0.06] text-[9px] flex items-center justify-center text-white/50"
+            >
+              {g.slice(0, 3)}
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -476,18 +885,35 @@ function DemoCouncil() {
 }
 
 function DemoVaultGraph() {
-  const [nodes] = useState(['STRATEGIC','CREATIVE','WISDOM','OPERATIONAL','HORIZON']);
+  const [nodes] = useState([
+    "STRATEGIC",
+    "CREATIVE",
+    "WISDOM",
+    "OPERATIONAL",
+    "HORIZON",
+  ]);
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
       <div className="text-xs text-white/40 mb-1">DEMO 02</div>
-      <div className="font-medium text-sm text-white/80">SIP as Vault Constellation</div>
-      <div className="text-[11px] text-white/40 mt-1">Vault graph. Attestation threads connect sovereign nodes.</div>
+      <div className="font-medium text-sm text-white/80">
+        SIP as Vault Constellation
+      </div>
+      <div className="text-[11px] text-white/40 mt-1">
+        Vault graph. Attestation threads connect sovereign nodes.
+      </div>
       <div className="mt-3 flex flex-wrap gap-1">
-        {nodes.map((n,i) => (
-          <div key={i} className="px-2 py-0.5 text-[9px] rounded border border-[var(--arc-brand-atlantean-teal)]/30 bg-white/[0.02] text-white/60">{n}</div>
+        {nodes.map((n, i) => (
+          <div
+            key={i}
+            className="px-2 py-0.5 text-[9px] rounded border border-[var(--arc-brand-atlantean-teal)]/30 bg-white/[0.02] text-white/60"
+          >
+            {n}
+          </div>
         ))}
       </div>
-      <div className="mt-2 text-[9px] text-emerald-400/60">Built on SIP v1.1.1 — immutable</div>
+      <div className="mt-2 text-[9px] text-emerald-400/60">
+        Built on SIP v1.1.1 — immutable
+      </div>
     </div>
   );
 }
@@ -497,11 +923,30 @@ function DemoSwarm() {
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
       <div className="text-xs text-white/40 mb-1">DEMO 03</div>
-      <div className="font-medium text-sm text-white/80">Subagent as Swarm of Guardians</div>
-      <div className="text-[11px] text-white/40 mt-1">Hive coordination. Guardians move as one.</div>
-      <button onClick={() => setActive(!active)} className="mt-3 text-[10px] px-3 py-1 rounded-lg border border-white/10 hover:bg-white/5">Release Swarm</button>
-      <div className={`mt-3 grid grid-cols-5 gap-1 transition ${active ? 'opacity-100' : 'opacity-40'}`}>
-        {Array.from({length:10}).map((_,i)=><div key={i} className="h-1.5 bg-[var(--arc-brand-atlantean-teal)]/40 rounded-full" style={{transform: active ? `translateY(${Math.sin(i)*2}px)` : 'none'}} />)}
+      <div className="font-medium text-sm text-white/80">
+        Subagent as Swarm of Guardians
+      </div>
+      <div className="text-[11px] text-white/40 mt-1">
+        Hive coordination. Guardians move as one.
+      </div>
+      <button
+        onClick={() => setActive(!active)}
+        className="mt-3 text-[10px] px-3 py-1 rounded-lg border border-white/10 hover:bg-white/5"
+      >
+        Release Swarm
+      </button>
+      <div
+        className={`mt-3 grid grid-cols-5 gap-1 transition ${active ? "opacity-100" : "opacity-40"}`}
+      >
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div
+            key={i}
+            className="h-1.5 bg-[var(--arc-brand-atlantean-teal)]/40 rounded-full"
+            style={{
+              transform: active ? `translateY(${Math.sin(i) * 2}px)` : "none",
+            }}
+          />
+        ))}
       </div>
     </div>
   );
@@ -509,20 +954,45 @@ function DemoSwarm() {
 
 function DemoGstackRitual() {
   const [step, setStep] = useState(0);
-  const steps = ['Aegis Scan','Luminor Weigh','Guardian Cross','Excellence Seal'];
+  const steps = [
+    "Aegis Scan",
+    "Luminor Weigh",
+    "Guardian Cross",
+    "Excellence Seal",
+  ];
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
       <div className="text-xs text-white/40 mb-1">DEMO 04</div>
       <div className="font-medium text-sm text-white/80">gstack as Ritual</div>
-      <div className="text-[11px] text-white/40 mt-1">Quality as ceremony. 0.95 threshold. Reversible.</div>
-      <div className="flex gap-1 mt-3">
-        <button onClick={() => setStep((step+1)%steps.length)} className="text-[10px] px-3 py-1 rounded-lg border border-white/10">Advance Ritual</button>
-        <button onClick={() => setStep(0)} className="text-[10px] px-2 py-1 rounded-lg border border-white/10 text-white/40">Reset</button>
+      <div className="text-[11px] text-white/40 mt-1">
+        Quality as ceremony. 0.95 threshold. Reversible.
       </div>
-      <div className="mt-2 text-[10px] text-white/60 font-mono">{steps[step]} · gate {step+1}/4</div>
-      <div className="h-0.5 bg-white/10 mt-1"><div className="h-0.5 bg-[var(--arc-brand-atlantean-teal)]" style={{width: `${((step+1)/4)*100}%`}} /></div>
-      <div className="mt-3 flex justify-center"><LuminaOrb state={step === 3 ? 'speaking' : 'thinking'} size={42} /></div>
+      <div className="flex gap-1 mt-3">
+        <button
+          onClick={() => setStep((step + 1) % steps.length)}
+          className="text-[10px] px-3 py-1 rounded-lg border border-white/10"
+        >
+          Advance Ritual
+        </button>
+        <button
+          onClick={() => setStep(0)}
+          className="text-[10px] px-2 py-1 rounded-lg border border-white/10 text-white/40"
+        >
+          Reset
+        </button>
+      </div>
+      <div className="mt-2 text-[10px] text-white/60 font-mono">
+        {steps[step]} · gate {step + 1}/4
+      </div>
+      <div className="h-0.5 bg-white/10 mt-1">
+        <div
+          className="h-0.5 bg-[var(--arc-brand-atlantean-teal)]"
+          style={{ width: `${((step + 1) / 4) * 100}%` }}
+        />
+      </div>
+      <div className="mt-3 flex justify-center">
+        <LuminaOrb state={step === 3 ? "speaking" : "thinking"} size={42} />
+      </div>
     </div>
   );
 }
-

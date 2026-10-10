@@ -1,163 +1,106 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-/**
- * Speech-to-Text API Route (Whisper STT)
- *
- * Transcribes audio files using Groq Whisper (primary, faster/cheaper)
- * with OpenAI Whisper as fallback.
- *
- * Accepts multipart/form-data with an 'audio' field.
- * Returns { text, language?, provider }.
- */
+import { NextRequest } from "next/server";
+import {
+  getClientIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit/rate-limiter";
+import {
+  voiceCredentials,
+  voiceFailure,
+  voiceJson,
+  VoiceRequestError,
+} from "@/lib/voice/route-utils";
 
-import { NextRequest, NextResponse } from 'next/server';
-import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
-
-export const runtime = 'edge';
+export const runtime = "edge";
 export const maxDuration = 30;
+const RATE_LIMIT = { maxRequests: 5, windowMs: 60_000 };
 
-// 5 transcriptions per minute — protects Groq/OpenAI quota
-const TRANSCRIBE_RATE_LIMIT = { maxRequests: 5, windowMs: 60_000 };
-
+/** Customer-key transcription; a second supplied key permits provider fallback. */
 export async function POST(req: NextRequest) {
-  // Rate limit check
-  const clientId = getClientIdentifier(req);
-  const rl = checkRateLimit(clientId, TRANSCRIBE_RATE_LIMIT);
-  if (!rl.allowed) {
-    return NextResponse.json(
-      { error: 'Rate limit exceeded. Try again in a minute.' },
-      {
-        status: 429,
-        headers: { 'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)) },
-      }
-    );
-  }
-
   try {
-    const formData = await req.formData();
-    const audioFile = formData.get('audio') as File;
-
-    if (!audioFile) {
-      return NextResponse.json(
-        { error: 'No audio file provided' },
-        { status: 400 },
-      );
-    }
-
-    // Validate file size (max 25MB for Whisper)
-    if (audioFile.size > 25 * 1024 * 1024) {
-      return NextResponse.json(
-        { error: 'Audio file too large (max 25MB)' },
-        { status: 400 },
-      );
-    }
-
-    const groqKey = process.env.GROQ_API_KEY;
-    const openaiKey = process.env.OPENAI_API_KEY;
-
-    if (!groqKey && !openaiKey) {
-      return NextResponse.json(
+    const keys = voiceCredentials(req);
+    const limit = checkRateLimit(
+      `voice:transcribe:${getClientIdentifier(req)}`,
+      RATE_LIMIT,
+    );
+    if (!limit.allowed)
+      return voiceJson(
+        { error: "Rate limit exceeded. Try again in a minute.", cta: "retry" },
+        429,
         {
-          error: 'Voice transcription is not connected on this deployment.',
-          provider: 'none',
-          cta: 'byok',
-          hint: 'Add your own Groq or OpenAI key in Settings to use voice immediately.',
+          "Retry-After": String(
+            Math.ceil((limit.resetTime - Date.now()) / 1000),
+          ),
         },
-        { status: 503 },
       );
+    let form: FormData;
+    try {
+      form = await req.formData();
+    } catch {
+      throw new VoiceRequestError("Invalid audio upload.", 400);
     }
-
-    if (groqKey) {
+    const audio = form.get("audio");
+    if (!(audio instanceof Blob) || !audio.size)
+      throw new VoiceRequestError("Provide a non-empty audio file.", 400);
+    if (audio.size > 25 * 1024 * 1024)
+      throw new VoiceRequestError("Audio file too large (max 25MB).", 400);
+    const signal = AbortSignal.any([req.signal, AbortSignal.timeout(20_000)]);
+    let lastStatus: number | undefined;
+    for (const provider of ["groq", "openai"] as const) {
+      const key = keys[provider];
+      if (!key) continue;
+      if (signal.aborted)
+        throw new VoiceRequestError(
+          "Voice request cancelled or timed out. Try again when ready.",
+          408,
+        );
+      const upstreamForm = new FormData();
+      upstreamForm.append("file", audio, audio.name || "audio.webm");
+      upstreamForm.append(
+        "model",
+        provider === "groq" ? "whisper-large-v3-turbo" : "whisper-1",
+      );
+      upstreamForm.append("response_format", "json");
       try {
-        const groqForm = new FormData();
-        groqForm.append('file', audioFile, audioFile.name || 'audio.webm');
-        groqForm.append('model', 'whisper-large-v3-turbo');
-        groqForm.append('response_format', 'json');
-
-        const res = await fetch(
-          'https://api.groq.com/openai/v1/audio/transcriptions',
+        const response = await fetch(
+          provider === "groq"
+            ? "https://api.groq.com/openai/v1/audio/transcriptions"
+            : "https://api.openai.com/v1/audio/transcriptions",
           {
-            method: 'POST',
-            headers: { Authorization: `Bearer ${groqKey}` },
-            body: groqForm,
+            method: "POST",
+            headers: { Authorization: `Bearer ${key}` },
+            body: upstreamForm,
+            signal,
           },
         );
-
-        if (res.ok) {
-          const data = await res.json();
-          return NextResponse.json({
-            text: data.text,
-            language: data.language,
-            provider: 'groq',
-          });
-        }
-
-        const body = await res.text().catch(() => res.statusText);
-        console.error(`[transcribe] Groq failed status=${res.status} body=${body.slice(0, 400)}`);
-
-        if (!openaiKey) {
-          return NextResponse.json(
-            {
-              error: 'Voice provider is misconfigured.',
-              provider: 'groq',
-              cta: 'byok',
-              hint: 'Hosted Groq key rejected the request. Add your own key in Settings to bypass.',
-            },
-            { status: 502 },
+        lastStatus = response.status;
+        if (response.ok) {
+          const data: unknown = await response.json();
+          if (
+            data &&
+            typeof data === "object" &&
+            "text" in data &&
+            typeof data.text === "string"
+          )
+            return voiceJson({
+              text: data.text,
+              ...("language" in data && typeof data.language === "string"
+                ? { language: data.language }
+                : {}),
+              provider,
+            });
+          lastStatus = 502;
+        } else await response.body?.cancel();
+      } catch {
+        if (signal.aborted)
+          throw new VoiceRequestError(
+            "Voice request cancelled or timed out. Try again when ready.",
+            408,
           );
-        }
-      } catch (e) {
-        console.error('[transcribe] Groq threw:', (e as Error).message);
+        lastStatus = undefined;
       }
     }
-
-    if (openaiKey) {
-      const oaiForm = new FormData();
-      oaiForm.append('file', audioFile, audioFile.name || 'audio.webm');
-      oaiForm.append('model', 'whisper-1');
-      oaiForm.append('response_format', 'json');
-
-      const res = await fetch(
-        'https://api.openai.com/v1/audio/transcriptions',
-        {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${openaiKey}` },
-          body: oaiForm,
-        },
-      );
-
-      if (res.ok) {
-        const data = await res.json();
-        return NextResponse.json({ text: data.text, provider: 'openai' });
-      }
-
-      const body = await res.text().catch(() => res.statusText);
-      console.error(`[transcribe] OpenAI failed status=${res.status} body=${body.slice(0, 400)}`);
-
-      return NextResponse.json(
-        {
-          error: 'Voice provider is misconfigured.',
-          provider: 'openai',
-          cta: 'byok',
-          hint: 'Hosted OpenAI key rejected the request. Add your own key in Settings to bypass.',
-        },
-        { status: 502 },
-      );
-    }
-
-    return NextResponse.json(
-      {
-        error: 'Voice transcription is not connected on this deployment.',
-        provider: 'none',
-        cta: 'byok',
-        hint: 'Add your own Groq or OpenAI key in Settings to use voice immediately.',
-      },
-      { status: 503 },
-    );
+    return voiceFailure(undefined, lastStatus);
   } catch (error) {
-    console.error('[transcribe] unexpected error:', error);
-    return NextResponse.json(
-      { error: 'Transcription error', cta: 'retry' },
-      { status: 500 },
-    );
+    return voiceFailure(error);
   }
 }

@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
+import {
+  voiceCredentialHeaders,
+  voiceResponseRecovery,
+  type VoiceRecovery,
+} from "@/lib/voice/customer-credentials";
 import Image from "next/image";
+import Link from "next/link";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
@@ -471,7 +477,11 @@ export function ChatInputBar({
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [voiceAutoSend, setVoiceAutoSend] = useState(true);
+  const [voiceRecovery, setVoiceRecovery] = useState<VoiceRecovery | null>(
+    null,
+  );
   const [validationToast, setValidationToast] = useState<string | null>(null);
 
   // @mention state
@@ -498,6 +508,13 @@ export function ChatInputBar({
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const transcriptionRef = useRef<AbortController | null>(null);
+  const voiceOperationRef = useRef(false);
+  const voiceMountedRef = useRef(true);
+  const draftRef = useRef({ message, attachments });
+  useEffect(() => {
+    draftRef.current = { message, attachments };
+  }, [message, attachments]);
 
   // Live (on-device) speech preview — Whisper remains the authoritative final text.
   // Destructure the stable functions so recording callbacks don't churn as the
@@ -526,7 +543,11 @@ export function ChatInputBar({
 
   // Cleanup voice recording on unmount to prevent timeout firing on unmounted component
   useEffect(() => {
+    voiceMountedRef.current = true;
     return () => {
+      voiceMountedRef.current = false;
+      transcriptionRef.current?.abort();
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
       if (voiceTimeoutRef.current) {
         clearTimeout(voiceTimeoutRef.current);
         voiceTimeoutRef.current = null;
@@ -560,6 +581,7 @@ export function ChatInputBar({
 
   const handleSend = useCallback(() => {
     if (!canSend) return;
+    transcriptionRef.current?.abort();
     onSend(message.trim(), attachments.length > 0 ? attachments : undefined);
     setMessage("");
     setAttachments([]);
@@ -598,6 +620,7 @@ export function ChatInputBar({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const val = e.target.value.slice(0, MAX_CHARS);
+      draftRef.current.message = val;
       setMessage(val);
 
       const cursorPos = e.target.selectionStart ?? val.length;
@@ -778,6 +801,8 @@ export function ChatInputBar({
   }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
+    if (voiceOperationRef.current) return;
+    setVoiceRecovery(null);
     if (
       typeof navigator === "undefined" ||
       !navigator.mediaDevices?.getUserMedia
@@ -785,8 +810,14 @@ export function ChatInputBar({
       showValidationToast("Voice input is not supported in this browser.");
       return;
     }
+    voiceOperationRef.current = true;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!voiceMountedRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        voiceOperationRef.current = false;
+        return;
+      }
       mediaStreamRef.current = stream;
       // Snapshot any already-typed text so live/Whisper transcript appends to it.
       voiceBaseRef.current = message;
@@ -807,6 +838,14 @@ export function ChatInputBar({
 
       mediaRecorder.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
+        if (!voiceMountedRef.current) {
+          voiceOperationRef.current = false;
+          return;
+        }
+        const draftAtStop = { ...draftRef.current };
+        const controller = new AbortController();
+        transcriptionRef.current = controller;
+        setIsTranscribing(true);
         const blob = new Blob(audioChunksRef.current, {
           type: mediaRecorder.mimeType,
         });
@@ -814,39 +853,86 @@ export function ChatInputBar({
         // Resolve the spoken text: prefer accurate Whisper, fall back to the
         // on-device Web Speech transcript (already shown live) if Whisper fails.
         let spoken = "";
+        let recovery: VoiceRecovery | null = null;
         try {
           const formData = new FormData();
           const ext = mediaRecorder.mimeType.includes("webm") ? "webm" : "mp4";
           formData.append("audio", blob, `recording.${ext}`);
           const res = await fetch("/api/ai/transcribe", {
             method: "POST",
+            headers: voiceCredentialHeaders(),
+            signal: controller.signal,
             body: formData,
           });
           if (res.ok) {
             const { text } = await res.json();
-            if (text) spoken = String(text).trim();
+            if (typeof text === "string") spoken = text.trim();
+          } else {
+            recovery = await voiceResponseRecovery(res);
           }
-        } catch (e) {
-          console.warn("Transcription failed:", e);
+        } catch {
+          recovery = {
+            message:
+              "Voice transcription failed. Try again or check your provider settings.",
+            cta: "retry",
+          };
+        } finally {
+          transcriptionRef.current = null;
+          voiceOperationRef.current = false;
+          if (voiceMountedRef.current) setIsTranscribing(false);
         }
+        if (controller.signal.aborted || !voiceMountedRef.current) return;
         if (!spoken) spoken = spokenRef.current.trim();
 
-        const base = voiceBaseRef.current.trim();
-        const combined = base ? (spoken ? `${base} ${spoken}` : base) : spoken;
+        const originalDraft = voiceBaseRef.current;
+        const preview = [originalDraft.trim(), spokenRef.current.trim()]
+          .filter(Boolean)
+          .join(" ");
+        const baseDraft =
+          draftAtStop.message === preview ? originalDraft : draftAtStop.message;
+        const base = baseDraft.trim();
+        const combined = base ? `${base} ${spoken}` : spoken;
 
         // Clear voice scratch state now that we have an authoritative result.
         voiceBaseRef.current = "";
         spokenRef.current = "";
         resetSpeech();
 
-        if (!combined) {
-          // Nothing transcribed — restore the user's pre-recording text.
-          setMessage(base);
+        if (!spoken) {
+          setMessage((current) =>
+            current === draftAtStop.message &&
+            (current === originalDraft || current === preview)
+              ? originalDraft
+              : current,
+          );
+          setVoiceRecovery(
+            recovery ?? {
+              message:
+                "No speech was recognized. Your draft is still here. Try recording again.",
+              cta: "retry",
+            },
+          );
+          return;
+        }
+        if (
+          draftRef.current.message !== draftAtStop.message ||
+          draftRef.current.attachments !== draftAtStop.attachments
+        ) {
+          setMessage((current) => {
+            const keptDraft =
+              current === draftAtStop.message ? baseDraft : current;
+            return `${keptDraft}${keptDraft.trim() ? " " : ""}${spoken}`;
+          });
           return;
         }
         if (voiceAutoSend) {
           // One-step voice: transcribe → send immediately
-          onSend(combined, attachments.length > 0 ? attachments : undefined);
+          onSend(
+            combined,
+            draftAtStop.attachments.length > 0
+              ? draftAtStop.attachments
+              : undefined,
+          );
           setMessage("");
           setAttachments([]);
         } else {
@@ -863,6 +949,7 @@ export function ChatInputBar({
         stopRecording();
       }, 60_000);
     } catch (e) {
+      voiceOperationRef.current = false;
       console.warn("Microphone access denied:", e);
       stopSpeech();
       showValidationToast(
@@ -901,6 +988,45 @@ export function ChatInputBar({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {voiceRecovery && (
+        <div
+          role="alert"
+          aria-label="Voice input"
+          className="mb-2 flex flex-wrap items-center gap-2 rounded-xl border border-[var(--arc-glass-border)] bg-[var(--arc-cosmic-surface)] px-4 py-2 text-sm text-[var(--arc-text-secondary)]"
+        >
+          <span>{voiceRecovery.message}</span>
+          <Link
+            href="/settings/providers"
+            className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
+          >
+            Provider settings
+          </Link>
+          <button
+            type="button"
+            onClick={() => setVoiceRecovery(null)}
+            className="ml-auto min-h-11 min-w-11 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            aria-label="Dismiss voice input error"
+          >
+            <PhX className="mx-auto h-4 w-4" />
+          </button>
+        </div>
+      )}
+      {isTranscribing && (
+        <div
+          role="status"
+          aria-label="Voice transcription"
+          className="mb-2 flex flex-wrap items-center gap-2 px-4 text-sm text-[var(--arc-text-secondary)]"
+        >
+          <span>Transcribing your recording…</span>
+          <button
+            type="button"
+            onClick={() => transcriptionRef.current?.abort()}
+            className="inline-flex min-h-11 items-center rounded-lg px-3 text-[var(--arc-brand-atlantean-teal)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+          >
+            Cancel transcription
+          </button>
+        </div>
+      )}
       {/* Validation toast */}
       {validationToast && (
         <div className="absolute -top-12 left-4 right-4 flex items-center justify-center z-20">
@@ -1073,7 +1199,7 @@ export function ChatInputBar({
           {/* Right-side buttons (mic + send/stop) */}
           <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
             {/* Voice input — always visible, coexists with typing */}
-            {!isStreaming && !isRecording && (
+            {!isStreaming && !isRecording && !isTranscribing && (
               <div className="relative group/voice">
                 <button
                   type="button"

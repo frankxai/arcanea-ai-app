@@ -151,6 +151,9 @@ jobs:
       - name: Verify public chat credentials and denial before provider execution
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/gateway/__tests__/chat-route.test.ts
 
+      - name: Verify customer voice credentials, privacy and recovery
+        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts
+
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
@@ -331,12 +334,14 @@ jobs:
           draft_status=0
           shop_status=0
           chat_tools_status=0
+          voice_credentials_status=0
           node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
           node scripts/verify-creator-starters-browser.cjs || starter_status=$?
           node scripts/verify-world-draft-browser.cjs || draft_status=$?
           node scripts/verify-shop-browser.cjs || shop_status=$?
           timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ]; then
+          timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
             exit 1
           fi
 
