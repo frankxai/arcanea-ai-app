@@ -16,6 +16,8 @@ grant usage on schema auth to anon, authenticated;
 \ir ../migrations/20261010000002_author_draft_recovery.sql
 -- Reapplying the repair must preserve drafts and policies.
 \ir ../migrations/20261010000002_author_draft_recovery.sql
+\ir ../migrations/20261010124756_author_draft_recovery_revision_clock.sql
+\ir ../migrations/20261010124756_author_draft_recovery_revision_clock.sql
 insert into auth.users values
   ('00000000-0000-4000-8000-000000000001'),
   ('00000000-0000-4000-8000-000000000002');

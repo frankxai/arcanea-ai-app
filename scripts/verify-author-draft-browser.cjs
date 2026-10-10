@@ -37,7 +37,10 @@ async function login(page, base, account) {
   await page.goto(`${base}/auth/login?next=${encodeURIComponent(chapter)}`);
   await page.getByLabel("Email", { exact: true }).fill(account.email);
   await page.getByLabel("Password", { exact: true }).fill(account.password);
-  await page.getByRole("button", { name: "Sign In", exact: true }).click();
+  await page
+    .locator("form")
+    .getByRole("button", { name: "Sign In", exact: true })
+    .click();
   await page.waitForURL(`**${chapter}`, { timeout: 30000 });
 }
 async function download(page, button) {

@@ -206,6 +206,9 @@ jobs:
         env:
           FORMAT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
+          if [ -z "$FORMAT_BASE_SHA" ]; then
+            FORMAT_BASE_SHA=$(git merge-base origin/main "$GITHUB_SHA")
+          fi
           bash scripts/check-changed-format.sh "$FORMAT_BASE_SHA" "$GITHUB_SHA"
 
   # ============================================
