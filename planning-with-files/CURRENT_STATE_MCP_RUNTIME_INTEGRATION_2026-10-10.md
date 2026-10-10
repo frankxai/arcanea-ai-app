@@ -112,3 +112,15 @@ Read-only npm identity is authenticated as frankxai and registry maintainers lis
 frankxai; only0.7.0 is published. No credential was printed or added. Root/package
 LICENSE text is absent and package MIT metadata is not a new rights approval.
 No npm publication or rights/publication acceptance is claimed.
+
+Candidate714f24f98eab6310e0f4f6219384d11316ea2f1c earned exact Gemini3.1Pro
+PASS0 blocking findings, responseWWbKapqHPNadz7IPtYzy2Qo, all93 source hashes
+verified, receipt6099670139. Actual pack and fresh installation then succeeded,
+but the verifier resolved SDK dependencies from pnpm's top-level package symlink
+rather than its real installed package.json path. Retain that false-failure log.
+The check now uses the resolved package path and requires SDK resolution within
+the entirely isolated consumer/store temporary root, outside the workspace.
+Runtime CLI/restart checks still must pass. Fresh source invalidates the earlier
+approval, so a new review and complete CI are required. Registry access-list
+inspection returned403 despite successful whoami; package write scope is therefore
+unverified. No credentials, access policy or publisher rail were changed.

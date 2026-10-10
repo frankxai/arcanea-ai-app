@@ -137,11 +137,13 @@ try {
   );
   const installed = join(consumer, "node_modules/@arcanea/mcp-server");
   const entry = join(installed, "dist/cli.js");
-  const requireInstalled = createRequire(join(installed, "package.json"));
+  const requireInstalled = createRequire(
+    realpathSync(join(installed, "package.json")),
+  );
   const sdk = realpathSync(
     requireInstalled.resolve("@modelcontextprotocol/sdk/server/mcp.js"),
   );
-  const sdkRelative = relative(realpathSync(consumer), sdk);
+  const sdkRelative = relative(realpathSync(temporary), sdk);
   assert.ok(
     sdkRelative && !sdkRelative.startsWith("..") && !isAbsolute(sdkRelative),
     "Installed server must resolve its consumer SDK, not workspace dependencies",
