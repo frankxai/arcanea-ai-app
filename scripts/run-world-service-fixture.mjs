@@ -206,7 +206,9 @@ try {
   let available = false;
   for (let i = 0; i < 60; i++) {
     try {
-      docker(["exec", db, "pg_isready", "-U", "postgres"]);
+      // The entrypoint's temporary init server only listens on a Unix socket.
+      // Require TCP readiness so seeding cannot race its intentional shutdown.
+      docker(["exec", db, "pg_isready", "-h", "127.0.0.1", "-U", "postgres"]);
       available = true;
       break;
     } catch {

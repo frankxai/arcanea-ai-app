@@ -72,12 +72,16 @@ async function main() {
     realPasswordLogin: true,
     realPostgrestWrites: true,
     syntheticGeneration: !process.env.WORLD_TEST_API_KEY,
+    csp: "Disposable HTTP loopback fixture bypasses browser CSP; production HTTPS policy is unchanged and is not certified by this fixture",
     actualProviderCalls: 0,
     interactions: [],
     passed: false,
   };
   const browser = await chromium.launch();
   const context = await browser.newContext({
+    // Production permits HTTPS *.supabase.co. This disposable Auth service is
+    // loopback HTTP; do not weaken the application's deployed security headers.
+    bypassCSP: true,
     viewport: { width: 375, height: 900 },
     acceptDownloads: true,
     reducedMotion: "reduce",
@@ -288,15 +292,35 @@ async function main() {
     const denied = await page.goto(
       `${config.base}/worlds/${partial.data.slug}`,
     );
-    assert.equal(denied.status(), 404);
-    const anon = await browser.newContext();
-    const anonymous = await anon.newPage();
-    assert.equal(
-      (
-        await anonymous.goto(`${config.base}/worlds/${partial.data.slug}`)
-      ).status(),
-      404,
+    assert.ok([200, 404].includes(denied.status()));
+    await expect(
+      page.getByRole("heading", { name: "404", exact: true }),
+    ).toBeVisible();
+    assert.ok(
+      await page.locator('meta[name="robots"][content*="noindex"]').count(),
     );
+    assert.ok(!(await denied.text()).includes("The remembered harbor"));
+    const anon = await browser.newContext({ bypassCSP: true });
+    const anonymous = await anon.newPage();
+    const anonymousDenied = await anonymous.goto(
+      `${config.base}/worlds/${partial.data.slug}`,
+    );
+    assert.ok([200, 404].includes(anonymousDenied.status()));
+    await expect(
+      anonymous.getByRole("heading", { name: "404", exact: true }),
+    ).toBeVisible();
+    assert.ok(
+      await anonymous
+        .locator('meta[name="robots"][content*="noindex"]')
+        .count(),
+    );
+    assert.ok(
+      !(await anonymousDenied.text()).includes("The remembered harbor"),
+    );
+    evidence.privateDenials = [
+      { account: "second", status: denied.status() },
+      { account: "anonymous", status: anonymousDenied.status() },
+    ];
     await anon.close();
     await page.goto(`${config.base}/worlds/create?resume=1`);
     await page
@@ -304,8 +328,12 @@ async function main() {
       .fill("A city inside a clock");
     await key.fill("disposable-browser-key");
     await page.unroute("**/api/worlds/generate");
+    let releaseLate;
+    const late = new Promise((resolve) => {
+      releaseLate = resolve;
+    });
     await page.route("**/api/worlds/generate", async (route) => {
-      await new Promise((r) => setTimeout(r, 1500));
+      await late;
       try {
         await route.fulfill({
           status: 200,
@@ -320,10 +348,11 @@ async function main() {
     });
     await button("Create world").click();
     await button("Cancel generation").click();
+    releaseLate();
     await expect(
       page.getByRole("textbox", { name: "Describe your world" }),
     ).toHaveValue("A city inside a clock");
-    await page.waitForTimeout(1700);
+    await page.waitForTimeout(250);
     await expect(
       page.getByRole("heading", { name: fixtureWorld.name, exact: true }),
     ).toHaveCount(0);
@@ -427,7 +456,7 @@ async function main() {
       "complete source JSON retained privately",
       "second-account read/write denial",
       "same-tab backup owner isolation",
-      "anonymous private-world 404",
+      "anonymous private-world not-found without private payload",
       "cancel ignores late result",
       "key absent from recovery storage",
       "375px reduced-motion no overflow",

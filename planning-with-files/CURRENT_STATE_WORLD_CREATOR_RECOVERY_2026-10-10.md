@@ -88,3 +88,13 @@ build/server defaults. One real app draft and one direct same-concept model answ
 are bounded to6000 output tokens each, thinking0,45seconds and no automatic retry.
 These outputs require inspection for actual usefulness; no superiority or market
 advantage follows from a single comparison. No production identities or data touched.
+
+Candidateabb8793505: the fixture hit PostgreSQL's temporary initialization server
+and its planned shutdown interrupted schema seeding. TCP-only readiness avoids
+that startup race. The app's CSP permits production HTTPS Supabase endpoints and
+correctly excludes the disposable HTTP loopback API. This fixture explicitly
+bypasses browser CSP to test real Auth/RLS without changing deployed security
+headers. It does not certify production CSP/TLS or signed-in production onboarding.
+Private page denial requires the actual not-found UI, noindex and absence of private
+content from the response, plus empty RLS reads; status is recorded because Next's
+streamed not-found response can be200. See the official Next not-found convention.
