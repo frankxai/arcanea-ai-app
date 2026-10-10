@@ -61,13 +61,8 @@ export async function saveWorldDraft(
   if (root.error) throw new DraftSaveError();
 
   const existing = await bounded(
-    db
-      .from("worlds")
-      .select("id,slug")
-      .eq("id", id)
-      .eq("creator_id", owner)
-      .single(),
-  );
+    db.from("worlds").select("id,slug").eq("id", id).eq("creator_id", owner),
+  ).single();
   if (existing.error || !existing.data) throw new DraftSaveError();
 
   // Keep the complete input before projecting individual records. This retains

@@ -221,3 +221,11 @@ and each failed-child retry. Hosted acceptance now tests actual save400 invalid
 body and403 foreign-origin refusals before any generation. Preserve foreign505's
 occupied deadline work; these fixes were independently implemented in this lane.
 Fresh full review, build, real Auth/save and bounded actual generation still required.
+
+Candidatee6a91121de: hosted TypeScript38085652931 rejects attaching abortSignal
+after single(), whose declared return type is the narrower PostgrestBuilder.
+The compiled fixture stops at build before any browser/model/write; retain its
+service failure and complete typecheck log. Attach the signal to the typed filter
+builder before single(), preserving runtime abort and result types without casts
+or suppressed errors. Fresh CI/review remains required. Native query mocks had
+not revealed this SDK type boundary; the required hosted gate did.
