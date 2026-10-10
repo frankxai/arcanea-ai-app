@@ -45,6 +45,61 @@ reset role;
 insert into auth.users values
   ('00000000-0000-4000-8000-000000000001'),
   ('00000000-0000-4000-8000-000000000002');
+-- Reproduce the inherited cross-book invitation bug before applying its repair.
+insert into public.books(id,slug) values
+  ('00000000-0000-4000-8000-000000000011','fixture-book-one'),
+  ('00000000-0000-4000-8000-000000000012','fixture-book-two');
+insert into public.book_authors(book_id,user_id,role,author_name) values
+  ('00000000-0000-4000-8000-000000000011','00000000-0000-4000-8000-000000000001','creator','First fixture creator'),
+  ('00000000-0000-4000-8000-000000000012','00000000-0000-4000-8000-000000000002','creator','Second fixture creator');
+alter table public.book_authors enable row level security;
+create policy "Book authors are publicly readable" on public.book_authors for select using (true);
+grant insert(book_id,user_id,role,author_name) on public.book_authors to authenticated;
+create policy "Authors can add co-authors to their books" on public.book_authors for insert
+  with check (auth.uid() in (
+    select user_id from public.book_authors where book_id=book_authors.book_id and role='creator'
+  ));
+set local role authenticated;
+set local request.jwt.claim.sub = '00000000-0000-4000-8000-000000000001';
+insert into public.book_authors(book_id,user_id,role,author_name) values
+  ('00000000-0000-4000-8000-000000000012',auth.uid(),'editor','Unexpected cross-book invitation');
+reset role;
+delete from public.book_authors where author_name='Unexpected cross-book invitation';
+\ir ../migrations/20261010142500_author_membership_scope.sql
+\ir ../migrations/20261010142500_author_membership_scope.sql
+set local role authenticated;
+set local request.jwt.claim.sub = '00000000-0000-4000-8000-000000000001';
+-- The legitimate creator can still invite a co-author to their own book.
+insert into public.book_authors(book_id,user_id,role,author_name) values
+  ('00000000-0000-4000-8000-000000000011','00000000-0000-4000-8000-000000000002','editor','Allowed own-book invitation');
+do $$ begin
+  begin
+    insert into public.book_authors(book_id,user_id,role,author_name) values
+      ('00000000-0000-4000-8000-000000000012',auth.uid(),'editor','Forbidden cross-book invitation');
+    raise exception 'Creator of one book gained access to another book';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+-- A creator elsewhere, who is only an editor here, cannot add this book's authors.
+set local request.jwt.claim.sub = '00000000-0000-4000-8000-000000000002';
+do $$ begin
+  begin
+    insert into public.book_authors(book_id,user_id,role,author_name) values
+      ('00000000-0000-4000-8000-000000000011',auth.uid(),'creator','Forbidden editor escalation');
+    raise exception 'Editor gained creator invitation authority';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+set local request.jwt.claim.sub = '';
+do $$ begin
+  begin
+    insert into public.book_authors(book_id,user_id,role,author_name) values
+      ('00000000-0000-4000-8000-000000000011','00000000-0000-4000-8000-000000000002','editor','Forbidden expired invitation');
+    raise exception 'Expired session gained invitation authority';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+reset role;
 set local role authenticated;
 set local request.jwt.claim.sub = '00000000-0000-4000-8000-000000000001';
 insert into public.book_chapter_drafts(book_slug,chapter_slug,author_user_id,content,content_json)
