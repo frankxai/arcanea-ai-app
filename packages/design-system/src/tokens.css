@@ -67,6 +67,33 @@
   --arc-story-night: #14201d;
   --arc-font-reading: "Newsreader Variable", Georgia, serif;
 
+  /* Product geometry — mirror of spacing, typeScale and controlGeometry. */
+  --arc-space-0: 0;
+  --arc-space-2: 0.5rem;
+  --arc-space-2-5: 0.625rem;
+  --arc-space-3: 0.75rem;
+  --arc-space-4: 1rem;
+  --arc-space-5: 1.25rem;
+  --arc-space-6: 1.5rem;
+  --arc-space-8: 2rem;
+  --arc-space-14: 3.5rem;
+  --arc-space-32: 8rem;
+  --arc-space-40: 10rem;
+  --arc-font-size-sm: 0.875rem;
+  --arc-font-size-heading: 1.125rem;
+  --arc-font-weight-semibold: 600;
+  --arc-line-height-compact: 1.5;
+  --arc-line-height-body: 1.6;
+  --arc-line-height-reading: 1.7;
+  --arc-touch-target: 44px;
+  --arc-border-width: 1px;
+  --arc-border-accent-width: 2px;
+  --arc-focus-width: 2px;
+  --arc-focus-offset: 3px;
+  --arc-disabled-opacity: 0.6;
+  --arc-scene-layer: 60;
+  --arc-scene-aspect-ratio: 16 / 9;
+
   /* Radii */
   --arc-radius-sm: 0.25rem;
   --arc-radius-md: 0.5rem;
