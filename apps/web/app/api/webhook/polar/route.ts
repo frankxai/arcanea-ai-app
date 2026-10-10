@@ -3,12 +3,8 @@
  *
  * Processing order per delivery:
  *   1. verify signature (Standard Webhooks headers) or 403
- *   2. record the delivery id; a repeat delivery returns 200 without re-applying
- *   3. map the event to ledger intents (pure) and apply each one
- *   4. mark the delivery processed, with the error text if any intent failed
- *
- * Every ledger write is idempotent on its own reference, so even a crash between
- * steps 3 and 4 cannot double-grant credits on redelivery.
+ *   2. apply verified ledger intents and mark the event in one transaction
+ *   3. acknowledge only a committed event; failed processing remains retryable
  */
 
 import {
@@ -16,12 +12,7 @@ import {
   WebhookVerificationError,
 } from "@polar-sh/sdk/webhooks";
 import { mapPolarEvent, type PolarEventLike } from "@/lib/billing/polar";
-import {
-  grantCredits,
-  markEvent,
-  recordEvent,
-  setPlan,
-} from "@/lib/billing/ledger";
+import { applyEvent } from "@/lib/billing/ledger";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -60,62 +51,19 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ error: "Missing webhook-id" }, { status: 400 });
   }
 
-  const firstDelivery = await recordEvent(deliveryId, event.type, event);
-  if (!firstDelivery) {
-    return Response.json({ received: true, duplicate: true });
-  }
-
-  const intents = mapPolarEvent(event);
-  const applied: string[] = [];
-  let failure: string | undefined;
-
-  for (const intent of intents) {
-    try {
-      if (intent.kind === "grant") {
-        await grantCredits({
-          userId: intent.userId,
-          amount: intent.amount,
-          kind: intent.grantKind,
-          reference: intent.reference,
-          metadata: intent.metadata,
-        });
-      } else {
-        await setPlan({
-          userId: intent.userId,
-          plan: intent.plan,
-          status: intent.status,
-          polarCustomerId: intent.polarCustomerId,
-          polarSubscriptionId: intent.polarSubscriptionId,
-          polarProductId: intent.polarProductId,
-          currentPeriodEnd: intent.currentPeriodEnd,
-          cancelAtPeriodEnd: intent.cancelAtPeriodEnd,
-        });
-      }
-      applied.push(intent.kind);
-    } catch (error) {
-      failure = error instanceof Error ? error.message : String(error);
-      console.error("[webhook/polar] intent failed", {
-        type: event.type,
-        intent: intent.kind,
-        failure,
-      });
-      break;
-    }
-  }
-
-  await markEvent(deliveryId, failure).catch(() => undefined);
-
-  if (failure) {
-    // 500 makes Polar retry. The delivery row keeps the error for the operator.
+  try {
+    const outcome = await applyEvent(
+      deliveryId,
+      event.type,
+      event,
+      mapPolarEvent(event),
+    );
+    return Response.json({ received: true, type: event.type, ...outcome });
+  } catch {
+    // A failed transaction leaves the event eligible for the provider's retry.
     return Response.json(
-      { error: "Ledger write failed", applied },
-      { status: 500 },
+      { error: "Ledger processing unavailable" },
+      { status: 503 },
     );
   }
-  return Response.json({
-    received: true,
-    type: event.type,
-    applied,
-    ignored: intents.length === 0,
-  });
 }

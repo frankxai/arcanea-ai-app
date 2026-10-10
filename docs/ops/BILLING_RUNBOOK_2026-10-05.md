@@ -1,12 +1,15 @@
 # Billing runbook — turning checkout on
 
 Owner: Frank. Everything here is an account or production action an agent must not take alone.
-Code references: `apps/web/lib/billing/*`, `supabase/migrations/20261005000001_billing_kernel.sql`.
+Code references: `apps/web/lib/billing/*`, `supabase/migrations/20261005000001_billing_kernel.sql`
+and `supabase/migrations/20261010000001_billing_recovery.sql`.
 
 ## 0. Preconditions
 
 - Branch `claude/admiring-heisenberg-besi86` merged (or the billing kernel files cherry-picked).
-- `pnpm --dir apps/web test:billing` passes locally.
+- `pnpm --dir apps/web test:billing` and the disposable PostgreSQL billing fixtures pass.
+- Both billing migrations are reviewed. Merging code does not apply production migrations
+  or enable checkout; those actions still require Frank's release approval.
 
 ## 1. Polar
 
@@ -51,13 +54,15 @@ plan product ids are present. Packs appear individually as their ids are added.
 
 ## 3. Supabase (project `hcfhyssdzphudaqatxbk`)
 
-Apply `supabase/migrations/20261005000001_billing_kernel.sql` through the dashboard SQL editor or
-the Supabase MCP `apply_migration`. It creates three tables and nine functions, grants nothing to
-`anon`, and leaves every existing table untouched. Then run the security advisors; the new tables
-must show no RLS findings.
+Apply `20261005000001_billing_kernel.sql`, then `20261010000001_billing_recovery.sql`, through
+the approved migration process. The second adds private operation receipts, serializes account
+mutations and commits signed webhook deliveries together with their effects. Then run the security
+advisors; verify `anon` and `authenticated` cannot execute the service-only billing mutations.
 
-Rollback: `drop table billing_events, credit_ledger, billing_accounts cascade;` plus
-`drop function` for the nine `billing_*` functions. No existing data is affected.
+Rollback before any production billing data exists: revert the code and remove the new billing
+schema in the disposable environment. After live billing begins, preserve the ledger and receipts;
+disable purchase entry points and use a reviewed corrective migration. Dropping billing tables
+would destroy financial history and requires separate approval.
 
 ## 4. Verify in sandbox
 
@@ -69,7 +74,8 @@ Rollback: `drop table billing_events, credit_ledger, billing_accounts cascade;` 
 4. Redeliver the same webhook from the Polar dashboard: response `{duplicate:true}`, balance
    unchanged.
 5. `/imagine` → generate 2 standard images → balance drops by 20; `credit_ledger` shows
-   `reserve` then `settle`.
+   `reserve` then `settle`. Replay the same request key and settings: the stored result returns,
+   with no second provider call or charge. Denied requests make no enhancement or image calls.
 6. Subscribe to Creator → `billing_accounts.plan = creator`, `plan_status = active`, +1,500 credits
    from the `subscription_create` order.
 7. Cancel from the portal → `plan_status = canceled`, `cancel_at_period_end = true`, plan unchanged
@@ -83,8 +89,18 @@ Founding Circle list (`waitlists` table) with the 40% discount code created in P
 
 ## 6. Operating
 
-- Failed webhook deliveries: `select * from billing_events where error is not null`. Polar retries
-  on our 500; the ledger is idempotent so a retry never double-grants.
+- Webhook failures return 503 so Polar can retry. The transaction rolls back its inbox receipt
+  and every intent together; a failed attempt may therefore leave no `billing_events` row.
+  Inspect delivery logs as well as rows with `processed_at is null` or `error is not null`.
+- Generation retries must keep the original browser session and request key. `result_ready`
+  resumes settlement with the stored output; `refund_pending` resumes the refund. Both avoid
+  another provider call. Only confirmed completion or refunded failure clears the browser key.
+- `running` with no receipt after a worker interruption is deliberately pending. A support owner
+  must reconcile provider logs and the operation reference before refunding or completing it.
+  Age alone is insufficient evidence of failure; do not regenerate it automatically.
+- `billing_operations.result` can contain private prompts and image data (up to 32 MiB per
+  operation). It is service-only. Access and retention need a reviewed operational policy before
+  paid rollout; deleting receipts prevents reliable replay. Avoid copying payloads into logs or issues.
 - Manual credit adjustment (support): `select billing_grant_credits('<user>', 100, 'adjust',
 'support:<ticket>', '{"by":"frank"}')` with the service role.
 - Weekly: `select kind, count(*), sum(amount) from credit_ledger where created_at > now() -

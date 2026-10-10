@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { enhanceImagePrompt } from "@/lib/imagine/enhance-image-prompt";
 /**
  * POST /api/imagine/generate
  *
@@ -16,6 +18,9 @@ import { createClient } from "@/lib/supabase/server";
 import { costFor, type ActionId } from "@/lib/billing/catalog";
 import {
   BillingError,
+  OperationPendingError,
+  OperationConflictError,
+  OperationFailedError,
   InsufficientCreditsError,
   withReservation,
 } from "@/lib/billing/ledger";
@@ -44,6 +49,7 @@ export async function POST(req: NextRequest) {
   try {
     const {
       prompt,
+      requestKey,
       count = 4,
       aspectRatio = "1:1",
       provider,
@@ -66,6 +72,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (
+      typeof requestKey !== "string" ||
+      !/^[a-f0-9-]{36}$/i.test(requestKey)
+    ) {
+      return NextResponse.json(
+        { error: "A stable generation request key is required" },
+        { status: 400 },
+      );
+    }
+    if (
+      (model != null && typeof model !== "string") ||
+      (style != null && typeof style !== "string") ||
+      (provider != null &&
+        !["grok", "openrouter", "gemini"].includes(provider)) ||
+      !["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3", "21:9"].includes(
+        aspectRatio,
+      )
+    ) {
+      return NextResponse.json(
+        { error: "Invalid generation settings" },
+        { status: 400 },
+      );
+    }
     const supabase = await createClient();
     const {
       data: { user },
@@ -81,27 +110,19 @@ export async function POST(req: NextRequest) {
     const perImage = costFor(action, 1);
     const requested = costFor(action, count);
 
-    let processedPrompt = prompt;
-    if (shouldEnhance) {
-      try {
-        const enhanceRes = await fetch(new URL("/api/apl/enhance", req.url), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: processedPrompt, mode: "image" }),
-        });
-        if (enhanceRes.ok) {
-          const enhanceData = await enhanceRes.json();
-          if (enhanceData.enhanced) processedPrompt = enhanceData.enhanced;
-        }
-      } catch {
-        // Enhancement is optional. Continue with the original prompt.
-      }
-    }
-
-    const { prompt: styledPrompt } = applyStyle(
-      processedPrompt,
-      style || "none",
-    );
+    const fingerprint = createHash("sha256")
+      .update(
+        JSON.stringify({
+          prompt,
+          count,
+          aspectRatio,
+          provider: provider ?? null,
+          model: model ?? null,
+          style: style ?? null,
+          enhance: Boolean(shouldEnhance),
+        }),
+      )
+      .digest("hex");
 
     let outcome: Awaited<
       ReturnType<
@@ -112,6 +133,8 @@ export async function POST(req: NextRequest) {
       outcome = await withReservation(
         {
           userId: user.id,
+          requestKey,
+          fingerprint,
           action,
           amount: requested,
           metadata: {
@@ -122,6 +145,13 @@ export async function POST(req: NextRequest) {
           },
         },
         async () => {
+          const processedPrompt = shouldEnhance
+            ? await enhanceImagePrompt(prompt)
+            : prompt;
+          const { prompt: styledPrompt } = applyStyle(
+            processedPrompt,
+            style || "none",
+          );
           const result = await generateImages({
             prompt: styledPrompt,
             count,
@@ -133,6 +163,21 @@ export async function POST(req: NextRequest) {
         },
       );
     } catch (error) {
+      if (error instanceof OperationPendingError)
+        return NextResponse.json(
+          { error: error.message, reason: "operation_pending", requestKey },
+          { status: 409 },
+        );
+      if (error instanceof OperationConflictError)
+        return NextResponse.json(
+          { error: error.message, reason: "request_conflict", requestKey },
+          { status: 409 },
+        );
+      if (error instanceof OperationFailedError)
+        return NextResponse.json(
+          { error: error.message, reason: "generation_failed", requestKey },
+          { status: 502 },
+        );
       if (error instanceof InsufficientCreditsError) {
         return NextResponse.json(
           {
@@ -182,7 +227,7 @@ export async function POST(req: NextRequest) {
     const response: ImagineGenerationResponse & {
       credits: { action: ActionId; charged: number; balance: number };
     } = {
-      generationId: `gen_${startedAt.getTime()}`,
+      generationId: `gen_${requestKey}`,
       status: "completed",
       provider: result.provider,
       model: result.model,

@@ -6,12 +6,14 @@ on:
     paths:
       - "supabase/migrations/**"
       - "supabase/tests/world-policy-recursion.sql"
+      - "supabase/tests/billing-*"
       - ".github/workflows/world-access-policy.yml"
   push:
     branches: [main]
     paths:
       - "supabase/migrations/**"
       - "supabase/tests/world-policy-recursion.sql"
+      - "supabase/tests/billing-*"
       - ".github/workflows/world-access-policy.yml"
 
 permissions:
@@ -44,3 +46,9 @@ jobs:
         run: |
           psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 -f supabase/tests/world-policy-recursion.sql
           psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 --set missing_membership=true -f supabase/tests/world-policy-recursion.sql
+      - name: Verify billing transactions, privileges and concurrent recovery
+        env:
+          PGPASSWORD: local-test-only
+        run: |
+          psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 -f supabase/tests/billing-kernel.sql
+          bash supabase/tests/billing-concurrency.sh

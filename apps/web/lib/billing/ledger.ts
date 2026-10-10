@@ -6,7 +6,18 @@
  * never races itself. Use `withReservation` around any paid provider call.
  */
 
-import { randomUUID } from "node:crypto";
+import {
+  runReservedOperation,
+  BillingError,
+  type OperationInput,
+} from "./operations";
+export {
+  BillingError,
+  InsufficientCreditsError,
+  OperationPendingError,
+  OperationConflictError,
+  OperationFailedError,
+} from "./operations";
 import { createAdminClient } from "@/lib/supabase/server";
 import { WELCOME_CREDITS, type ActionId, type PlanId } from "./catalog";
 
@@ -57,13 +68,6 @@ async function call<T>(fn: string, args: Record<string, unknown>): Promise<T> {
     throw new BillingError(`${fn} failed: ${error.message}`);
   }
   return data as T;
-}
-
-export class BillingError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "BillingError";
-  }
 }
 
 /** Account state. Creates the account with the welcome grant on first contact. */
@@ -156,84 +160,24 @@ export async function setPlan(input: {
   });
 }
 
-/** True the first time a provider delivery id is seen. */
-export async function recordEvent(
+/** Verified webhook fulfillment and acknowledgement commit in one transaction. */
+export async function applyEvent(
   id: string,
   type: string,
   payload: unknown,
-): Promise<boolean> {
-  return call<boolean>("billing_record_event", {
+  intents: unknown[],
+): Promise<{ duplicate: boolean; applied: number }> {
+  return call("billing_apply_event", {
     p_id: id,
     p_type: type,
     p_payload: payload,
+    p_intents: intents,
   });
 }
 
-export async function markEvent(id: string, error?: string): Promise<void> {
-  await call("billing_mark_event", { p_id: id, p_error: error ?? null });
-}
-
-export class InsufficientCreditsError extends BillingError {
-  constructor(
-    public readonly required: number,
-    public readonly balance: number,
-  ) {
-    super(`insufficient credits: need ${required}, have ${balance}`);
-    this.name = "InsufficientCreditsError";
-  }
-}
-
-/**
- * Reserve, run, settle. If `work` throws, the reservation is released in full.
- * `work` returns the actual number of units completed so partial results are
- * charged only for what was delivered.
- */
-export async function withReservation<T>(
-  input: {
-    userId: string;
-    action: ActionId;
-    amount: number;
-    metadata?: Record<string, unknown>;
-  },
+export function withReservation<T>(
+  input: OperationInput,
   work: (reference: string) => Promise<{ result: T; actualCredits: number }>,
-): Promise<{
-  result: T;
-  charged: number;
-  account: BillingAccount;
-  reference: string;
-}> {
-  const reference = `${input.action}:${randomUUID()}`;
-  const reservation = await reserveCredits({ ...input, reference });
-  if (!reservation.ok) {
-    throw new InsufficientCreditsError(
-      reservation.required,
-      reservation.balance,
-    );
-  }
-
-  let outcome: { result: T; actualCredits: number };
-  try {
-    outcome = await work(reference);
-  } catch (error) {
-    await releaseReservation({
-      userId: input.userId,
-      reference,
-      metadata: {
-        error: error instanceof Error ? error.message : String(error),
-      },
-    }).catch(() => undefined);
-    throw error;
-  }
-
-  const settled = await settleReservation({
-    userId: input.userId,
-    reference,
-    actual: outcome.actualCredits,
-  });
-  return {
-    result: outcome.result,
-    charged: settled.charged ?? outcome.actualCredits,
-    account: settled,
-    reference,
-  };
+) {
+  return runReservedOperation<T>(call, input, work);
 }
