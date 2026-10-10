@@ -3,6 +3,7 @@ name: World access policy
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "supabase/migrations/**"
       - "supabase/tests/world-policy-recursion.sql"
@@ -21,7 +22,6 @@ permissions:
 
 jobs:
   world-access-policy:
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 5
     services:
