@@ -157,6 +157,9 @@ jobs:
       - name: Verify feedback persistence receipts
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
 
+      - name: Verify billing admission and operation recovery
+        run: pnpm --dir apps/web test:billing
+
       - name: Verify waitlist signups are saved or honestly refused
         run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
 

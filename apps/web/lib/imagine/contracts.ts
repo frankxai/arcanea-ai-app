@@ -20,8 +20,6 @@ export interface ImagineGenerationResponse {
   prompt: string;
   revisedPrompt?: string;
   aspectRatio: string;
-  assetUrls: string[];
-  assets: GenerationAsset[];
   timing: {
     startedAt: string;
     completedAt: string;
