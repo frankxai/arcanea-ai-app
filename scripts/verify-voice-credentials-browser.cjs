@@ -367,6 +367,27 @@ async function verifyRoomRecovery(browser, mode) {
   await installCaptureFixture(context);
   let releaseBriefing;
   try {
+    // Voice thresholds must use elapsed time when the UI renders slowly.
+    await context.addInitScript(() => {
+      const requestFrame = window.requestAnimationFrame.bind(window);
+      const cancelFrame = window.cancelAnimationFrame.bind(window);
+      const pendingFrames = new Map();
+      window.requestAnimationFrame = (callback) => {
+        const id = requestFrame(() => {
+          const timer = window.setTimeout(() => {
+            pendingFrames.delete(id);
+            callback(performance.now());
+          }, 100);
+          pendingFrames.set(id, timer);
+        });
+        return id;
+      };
+      window.cancelAnimationFrame = (id) => {
+        cancelFrame(id);
+        window.clearTimeout(pendingFrames.get(id));
+        pendingFrames.delete(id);
+      };
+    });
     const page = await context.newPage();
     page.setDefaultTimeout(15000);
     const errors = [];
@@ -499,6 +520,7 @@ async function verifyRoomRecovery(browser, mode) {
     return {
       roomStickySettingsRecovery: true,
       roomSpaceReleaseSurvivesBriefing: true,
+      roomVadUsesElapsedTimeAtLowFrameRate: true,
       fullRoomReplyPreserved: true,
       roomUsesCustomerServerRoutes: true,
       roomEscapeAndUnmountDiscardCapture: true,

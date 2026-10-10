@@ -100,6 +100,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const discardCaptureRef = useRef(false);
   const chunksRef = useRef<Blob[]>([]);
   const vadAboveRef = useRef(0);
+  const vadFrameAtRef = useRef<number | null>(null);
   const vadSilentRef = useRef(0);
   const hasSpokenRef = useRef(false);
   const vadRafRef = useRef(0);
@@ -415,12 +416,18 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       sum += v * v;
     }
     const rms = Math.sqrt(sum / buf.length);
+    const now = performance.now();
+    const elapsed =
+      vadFrameAtRef.current === null
+        ? 0
+        : Math.max(0, now - vadFrameAtRef.current);
+    vadFrameAtRef.current = now;
 
     if (rms > 0.035) {
-      vadAboveRef.current += 16;
+      vadAboveRef.current += elapsed;
       vadSilentRef.current = 0;
     } else {
-      vadSilentRef.current += 16;
+      vadSilentRef.current += elapsed;
     }
 
     if (!hasSpokenRef.current && vadAboveRef.current > 180)
@@ -777,6 +784,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       recorderRef.current = rec;
       hasSpokenRef.current = false;
       vadAboveRef.current = 0;
+      vadFrameAtRef.current = null;
       vadSilentRef.current = 0;
       discardCaptureRef.current = false;
       recordingRef.current = true;
