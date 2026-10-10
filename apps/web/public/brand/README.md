@@ -14,6 +14,19 @@ brand/
 └── mockups/         # Marketing and showcase mockups
 ```
 
+## Production 2026-06-16 Update (Visual Ecosystem Overhaul)
+New subdirs populated from .arcanea/visual-assets/ (source of truth + MANIFEST):
+- heroes/ — site + github 16:9 (worlds living engine, arcanea main per VISUAL_ECOSYSTEM prompt, onchain web3, guardian variants etc)
+- factions/ — 8 Academy Houses + Starlight Corps cards/lineups (VISUAL_DOCTRINE grammar + franchise eq)
+- stellaris/ — mascot solos + contexts (exact STELLARIS.md prompts + full profile)
+- godbeasts/full/ — 10+ godbeast variants (v2 base + new per lore + VISUAL)
+- diagrams/ — ecosystem constellation, SIS network, web3/web4 graphs, living worlds (Ethereum-style partner + multi-lab + agentic OS luminous)
+- icons/custom/ — 40-60+ SVG (Gates, Elements, MCPs, Origins, features; token colors, sacred geometry, no emoji per TASTE)
+
+All assets: next/image + sizes/WebP, non-orphan (archivedPath in .arcanea/visual-assets/ + public copy), god-mode quality (full TASTE 7 gates + DESIGN tokens + VISUAL_DOCTRINE franchise/faction/origin + 48px silhouette where applicable). Brand kit "arcanea" active for arcanea.ai (see packages/design-system/src/brand-kits.ts). See root plan for full matrix/wiring/MCP github updates.
+
+Usage example remains; import from new subdirs as needed. All tracked in .arcanea/visual-assets/MANIFEST.json with verbatim prompts + qualityNotes.
+
 ## Asset Guidelines
 
 ### Logos

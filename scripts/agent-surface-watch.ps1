@@ -1,6 +1,7 @@
 param(
   [switch]$Watch,
-  [int]$IntervalSeconds = 5
+  [switch]$Quiet,
+  [int]$IntervalSeconds = 120
 )
 
 $ErrorActionPreference = 'Stop'
@@ -206,9 +207,11 @@ function Write-Snapshot([string]$RepoRoot) {
     "processes: $($snapshot.processes.Count)"
   ) | Set-Content -LiteralPath $TextPath -Encoding UTF8
 
-  Write-Host "[agent-surface] wrote $JsonPath"
-  Write-Host ("claude: " + ($summary.claude -join ' | '))
-  Write-Host ("antigravity: " + ($summary.antigravity -join ' | '))
+  if (-not $Quiet) {
+    Write-Host "[agent-surface] wrote $JsonPath"
+    Write-Host ("claude: " + ($summary.claude -join ' | '))
+    Write-Host ("antigravity: " + ($summary.antigravity -join ' | '))
+  }
 }
 
 $repoRoot = (Get-Location).Path
