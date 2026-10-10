@@ -290,6 +290,7 @@ async function main() {
         "ArcaneaA door opens beneath the tide.",
       );
       await expect(input).toHaveValue("Draft survives stopping.");
+      assert.equal(requests, 2, "Stopping must never submit an unsent draft");
       await expect(panel.getByRole("status")).toContainText("may charge");
       await panel.getByRole("button", { name: "Send", exact: true }).click();
       await expect(log.locator("article").last()).toContainText(
@@ -486,13 +487,31 @@ async function main() {
   } finally {
     for (const record of streams) delete record.finish;
     receipt.streams = streams;
+    receipt.cleanup = {
+      attempted: true,
+      browserClosed: false,
+      streamServerClosed: false,
+      errors: [],
+    };
+    try {
+      if (browser) await browser.close();
+      receipt.cleanup.browserClosed = true;
+    } catch (error) {
+      receipt.cleanup.errors.push(error.message);
+    }
+    try {
+      server.closeAllConnections();
+      await new Promise((resolve) => server.close(resolve));
+      receipt.cleanup.streamServerClosed = true;
+    } catch (error) {
+      receipt.cleanup.errors.push(error.message);
+    }
     await fs.writeFile(
       path.join(output, "receipt.json"),
       `${JSON.stringify(receipt, null, 2)}\n`,
     );
-    if (browser) await browser.close();
-    server.closeAllConnections();
-    await new Promise((resolve) => server.close(resolve));
+    if (receipt.cleanup.errors.length)
+      throw new Error("Owned companion fixture cleanup failed");
   }
 }
 main().catch((error) => {

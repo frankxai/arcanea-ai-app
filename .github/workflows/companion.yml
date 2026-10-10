@@ -55,7 +55,7 @@ jobs:
         run: pnpm --dir apps/web exec playwright install --with-deps chromium
       - name: Exercise provider, stream, keyboard and account lifetime
         run: |
-          pnpm --dir apps/web exec next start --hostname 127.0.0.1 -p 3001 > "$RUNNER_TEMP/companion-next.log" 2>&1 &
+          node apps/web/node_modules/next/dist/bin/next start apps/web --hostname 127.0.0.1 -p 3001 > "$RUNNER_TEMP/companion-next.log" 2>&1 &
           companion_server_pid=$!
           trap 'kill "$companion_server_pid" 2>/dev/null || true' EXIT
           ready=false

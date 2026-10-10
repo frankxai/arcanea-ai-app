@@ -215,11 +215,20 @@ export function CompanionChat({ open }: { open: boolean }) {
         <div className={styles.actions}>
           <span>Enter to send · Shift + Enter for a new line</span>
           {busy ? (
-            <button type="button" onClick={stopResponse}>
+            <button
+              key="stop"
+              type="button"
+              onClick={(event) => {
+                // Aborting can switch this control to Send before the click's default action.
+                event.preventDefault();
+                stopResponse();
+              }}
+            >
               Stop response
             </button>
           ) : (
             <button
+              key="send"
               className={styles.send}
               type="submit"
               disabled={!draft.trim()}
