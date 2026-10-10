@@ -15,6 +15,19 @@ scripts/review-reading-scene.mjs; scripts/tests/reading-scene-{save,postgrest}.t
 scripts/fixtures/reading-scene-postgrest.sql;
 .github/workflows/reading-scene.yml; this pickup.
 
+Real Auth verification extension: scripts/run-reading-scene-auth-fixture.mjs,
+scripts/verify-reading-scene-auth-browser.cjs and scripts/fixtures/reading-scene-auth.sql
+add two disposable GoTrue password identities to the existing hosted Postgres
+fixture. The app is rebuilt with a loopback Auth/Data API gateway; ordinary login
+must produce actual SSR cookies, carry the anonymous brief, save through the real
+Next route, retry a committed save after losing its acknowledgement, reopen in a
+fresh tab and deny a second account/anonymous request. Generation alone is an
+intercepted synthetic raster. No production identity, provider credential, live
+migration, actual generation/credit proof or production profile-trigger proof is
+included. Loopback browser CSP is bypassed without changing deployed headers.
+The runner must stop its own containers, app children and gateway and remove the
+private fixture config. Source-bound hosted terminal evidence is still pending.
+
 Non-goals: no canon or manuscript change, new billing rail or prices, provider
 migration, automatic publication, new orchestrator, historical migration replay,
 or replacement of the accepted creator-entry PR505. This is one implementation

@@ -11,6 +11,7 @@ on:
       - "scripts/tests/reading-scene-save.test.cjs"
       - "scripts/tests/reading-scene-postgrest.test.cjs"
       - "scripts/fixtures/reading-scene-postgrest.sql"
+      - "scripts/fixtures/reading-scene-auth.sql"
       - ".github/workflows/reading-scene.yml"
   workflow_dispatch:
     inputs:
@@ -99,6 +100,11 @@ jobs:
             sleep 2
           done
           timeout 300s node scripts/verify-reading-scene-browser.cjs
+      - name: Verify real password login, session cookies and private scene recovery
+        env:
+          READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+          READING_SCENE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: timeout 1200s node scripts/run-reading-scene-auth-fixture.mjs
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -106,6 +112,7 @@ jobs:
           path: |
             screenshots/reading-scene/
             screenshots/reading-scene-database/
+            screenshots/reading-scene-auth/
           if-no-files-found: warn
           retention-days: 7
   independent-review:
