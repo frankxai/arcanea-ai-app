@@ -9,6 +9,8 @@ on:
       - "apps/web/app/api/reading-scenes/**"
       - "scripts/*reading-scene*"
       - "scripts/tests/reading-scene-save.test.cjs"
+      - "scripts/tests/reading-scene-postgrest.test.cjs"
+      - "scripts/fixtures/reading-scene-postgrest.sql"
       - ".github/workflows/reading-scene.yml"
   workflow_dispatch:
     inputs:
@@ -27,6 +29,19 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    services:
+      reading-db:
+        image: postgres:17
+        env:
+          POSTGRES_DB: reading_scene_fixture
+          POSTGRES_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v7
         with:
@@ -44,6 +59,30 @@ jobs:
         run: |
           node --test scripts/tests/reading-scene-save.test.cjs
           pnpm exec tsx --test apps/web/lib/reading-scene/__tests__/*.test.ts
+      - name: Verify saves and account isolation through PostgREST and Postgres
+        env:
+          PGPASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+          READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+          READING_SCENE_TEST_API: http://127.0.0.1:3801
+          READING_SCENE_TEST_JWT_KEY: reading-scene-${{ github.run_id }}-${{ github.run_attempt }}-disposable-only
+        run: |
+          set -euo pipefail
+          psql -h 127.0.0.1 -U postgres -d reading_scene_fixture -v ON_ERROR_STOP=1 -f scripts/fixtures/reading-scene-postgrest.sql
+          READING_SCENE_FIXTURE_CONTAINER="reading-scene-rest-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          trap 'docker rm -f "$READING_SCENE_FIXTURE_CONTAINER" > /dev/null 2>&1 || true' EXIT
+          docker run --detach --name "$READING_SCENE_FIXTURE_CONTAINER" --network host \
+            -e PGRST_DB_URI="host=127.0.0.1 port=5432 dbname=reading_scene_fixture user=authenticator" \
+            -e PGPASSWORD -e PGRST_DB_SCHEMAS=public -e PGRST_DB_ANON_ROLE=anon \
+            -e PGRST_DB_POOL=2 -e PGRST_SERVER_PORT=3801 \
+            -e PGRST_JWT_SECRET="$READING_SCENE_TEST_JWT_KEY" postgrest/postgrest:v13.0.7
+          mkdir -p screenshots/reading-scene-database
+          git rev-parse HEAD > screenshots/reading-scene-database/source.txt
+          sha256sum scripts/fixtures/reading-scene-postgrest.sql scripts/tests/reading-scene-postgrest.test.cjs apps/web/app/api/reading-scenes/route.ts .github/workflows/reading-scene.yml > screenshots/reading-scene-database/source-hashes.txt
+          for attempt in $(seq 1 30); do
+            if curl --max-time 3 -fsS http://127.0.0.1:3801/creations > /dev/null; then break; fi
+            sleep 2
+          done
+          timeout 90s node --test scripts/tests/reading-scene-postgrest.test.cjs | tee screenshots/reading-scene-database/result.tap
       - name: Build and inspect the compiled reading workflow
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
@@ -64,7 +103,9 @@ jobs:
         if: always()
         with:
           name: reading-scene-${{ github.sha }}-${{ github.run_attempt }}
-          path: screenshots/reading-scene/
+          path: |
+            screenshots/reading-scene/
+            screenshots/reading-scene-database/
           if-no-files-found: warn
           retention-days: 7
   independent-review:

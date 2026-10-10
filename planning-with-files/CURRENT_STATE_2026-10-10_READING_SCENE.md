@@ -11,6 +11,8 @@ the old branch and all other owners' work remain preserved.
 Files: components/saga/{chapter-reader.tsx,scene-visualizer.tsx,scene-workspace-view.tsx,scene-visualizer.module.css};
 lib/reading-scene/{brief.ts,session.ts,**tests**/brief.test.ts,**tests**/session.test.ts};
 app/api/reading-scenes/route.ts; scripts/verify-reading-scene-browser.cjs;
+scripts/review-reading-scene.mjs; scripts/tests/reading-scene-{save,postgrest}.test.cjs;
+scripts/fixtures/reading-scene-postgrest.sql;
 .github/workflows/reading-scene.yml; this pickup.
 
 Non-goals: no canon or manuscript change, new billing rail or prices, provider
@@ -50,6 +52,19 @@ guides remain unresolved and are not represented as loaded. No config writes.
 
 Status: implementation candidate in review-ready PR560; release remains held,
 with no creator acceptance certification yet.
+
+Database verification extension: the reader workflow now runs the actual save/
+reopen route against the installed PostgREST client, PostgREST13.0.7 and disposable
+Postgres17. The fixture copies the columns, constraints, RLS expressions and
+auth.uid body inspected read-only on2026-10-10; the January repository schema
+differs. Requests must run as non-owner, non-bypass anon/authenticated roles.
+The six cases cover concurrent same-key saves, lost acknowledgement retries,
+JSON chapter filtering/latest reopening, foreign reads/writes/deletes, forged
+ownership/owner transfer, changed visibility and missing profile failure.
+Authentication delivery and owner profiles are synthetic seams; production
+triggers/grants/session creation are excluded. No live database write, migration,
+provider call or production-account acceptance follows from these checks.
+Local syntax/format verification and hosted terminal results remain required.
 
 Local implementation evidence: six source/recovery tests and six compiled actual-route
 tests pass; targeted ESLint passes with zero warnings; both browser/review scripts
