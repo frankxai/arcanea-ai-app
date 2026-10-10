@@ -1,0 +1,9 @@
+{
+  "schema": "arcanea.release_manifest.v1",
+  "releaseId": "rel-001",
+  "canonStatus": "LOCKED",
+  "rights": {
+    "commercialCleared": true,
+    "licenseType": "Arcanea Commercial v1"
+  }
+}
