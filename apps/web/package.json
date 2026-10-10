@@ -4,7 +4,7 @@
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
-    "node": ">=20.18.1 <21 || >=22.0.0"
+    "node": ">=24"
   },
   "scripts": {
     "dev": "node ../../scripts/build-creator-starters.mjs && next dev -p 3001",
@@ -23,6 +23,7 @@
     "test:mcp-world-context": "tsx --test lib/mcp/__tests__/world-context.test.ts",
     "test:saga-gate": "tsx --test lib/saga/__tests__/public-release-gate.test.ts",
     "test:safe-fetch": "tsx --test lib/security/__tests__/safe-fetch.test.ts",
+    "test:video-admission": "tsx --test lib/imagine/__tests__/video-admission.test.ts",
     "test:models": "tsx lib/models/__tests__/models-data.test.ts",
     "type-check": "node -e \"require('fs').rmSync('.next/types',{recursive:true,force:true});require('fs').rmSync('.next/dev/types',{recursive:true,force:true});require('fs').rmSync('tsconfig.tsbuildinfo',{force:true})\" && next typegen && tsc --noEmit",
     "check:env": "tsx ../../scripts/check-env.ts",
@@ -63,7 +64,7 @@
     "@radix-ui/react-tabs": "^1.1.21",
     "@radix-ui/react-toast": "^1.2.23",
     "@radix-ui/react-tooltip": "^1.2.16",
-    "@react-three/drei": "^10.7.8",
+    "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
     "@starlight/multilingual": "workspace:^",
     "@supabase/ssr": "^0.12.7",
@@ -72,9 +73,9 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "@vercel/analytics": "^1.6.1",
+    "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.8.0",
-    "@vercel/speed-insights": "^1.3.1",
+    "@vercel/speed-insights": "^2.0.0",
     "@xyflow/react": "^12.12.0",
     "ai": "^6.0.185",
     "autoprefixer": "^10.6.1",
@@ -91,8 +92,8 @@
     "lenis": "^1.3.26",
     "lucide-react": "^1.48.0",
     "mammoth": "^1.13.0",
-    "next": "16.3.6",
-    "next-intl": "^4.14.4",
+    "next": "16.3.8",
+    "next-intl": "^4.14.8",
     "novel": "^1.0.2",
     "postcss": "^8.5.28",
     "react": "^19.3.0",
@@ -120,8 +121,8 @@
     "@playwright/test": "1.63.0",
     "@types/three": "^0.185.4",
     "eslint": "10.2.0",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "16.3.8",
     "schema-dts": "^2.0.0",
-    "sharp": "^0.35.4"
+    "sharp": "^0.35.5"
   }
 }

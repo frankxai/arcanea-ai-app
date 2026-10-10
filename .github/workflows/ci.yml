@@ -19,8 +19,8 @@ permissions:
   contents: read
 
 env:
-  NODE_VERSION: "22"
-  PNPM_VERSION: "8.15.0"
+  NODE_VERSION: "24"
+  PNPM_VERSION: "11.28.4"
 
 jobs:
   # ============================================
@@ -140,7 +140,7 @@ jobs:
         run: node --test scripts/tests/changed-format.test.mjs
 
       - name: Verify visual-review trust and evidence boundaries
-        run: node --test scripts/excellence-review.test.mjs
+        run: node --test scripts/excellence-review.test.mjs scripts/tests/visual-preview.test.mjs
 
       - name: Verify preview deployment history handling
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
@@ -306,6 +306,9 @@ jobs:
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
 
+      - name: Verify shop checkout trust boundaries
+        run: pnpm --dir apps/web exec tsx --test lib/shop/__tests__/checkout.test.ts
+
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
         env:
@@ -320,10 +323,12 @@ jobs:
           gallery_status=0
           starter_status=0
           draft_status=0
+          shop_status=0
           node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
           node scripts/verify-creator-starters-browser.cjs || starter_status=$?
           node scripts/verify-world-draft-browser.cjs || draft_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ]; then
+          node scripts/verify-shop-browser.cjs || shop_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ]; then
             exit 1
           fi
 
@@ -331,7 +336,7 @@ jobs:
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
         uses: actions/upload-artifact@v7
         with:
-          name: galleries-built-app-${{ github.sha }}
+          name: galleries-built-app-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/
           retention-days: 7
           if-no-files-found: warn

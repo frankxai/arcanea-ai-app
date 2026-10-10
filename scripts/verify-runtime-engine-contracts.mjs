@@ -81,17 +81,24 @@ function findLockfileDependencyRanges(dependencyName) {
     join(repositoryRoot, "pnpm-lock.yaml"),
     "utf8",
   ).split(/\r?\n/);
-  const header = `  /${dependencyName}@`;
+  // pnpm 9+ lockfiles key packages as `  name@version:`; v6 used `  /name@version:`.
+  const escapedName = dependencyName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const header = new RegExp(`^  /?${escapedName}@([^\\s:]+):$`);
   const ranges = [];
 
   for (let index = 0; index < lines.length; index += 1) {
-    if (!lines[index].startsWith(header)) continue;
+    const headerMatch = lines[index].match(header);
+    if (!headerMatch) continue;
 
-    const version = lines[index].slice(header.length, -1);
+    const version = headerMatch[1];
     let dependencyRange = null;
-    for (let blockIndex = index + 1; blockIndex < lines.length; blockIndex += 1) {
+    for (
+      let blockIndex = index + 1;
+      blockIndex < lines.length;
+      blockIndex += 1
+    ) {
       const line = lines[blockIndex];
-      if (line.startsWith("  /") || line.startsWith("snapshots:")) break;
+      if (/^  \S/.test(line) || line.startsWith("snapshots:")) break;
       const match = line.match(/^    engines: \{node: ['"]([^'"]+)['"]\}$/);
       if (match) {
         dependencyRange = match[1];
@@ -136,7 +143,9 @@ async function verifyActionsHttpClientCompatibility() {
   try {
     const address = server.address();
     if (!address || typeof address === "string") {
-      throw new Error("Loopback runtime-contract server did not expose a port.");
+      throw new Error(
+        "Loopback runtime-contract server did not expose a port.",
+      );
     }
 
     const client = new HttpClient("arcanea-runtime-contract-smoke");

@@ -24,6 +24,7 @@ const footerLinks = {
   explore: {
     label: "Explore",
     links: [
+      { href: "/shop", label: "Shop & Editions" },
       { href: "/gallery", label: "Gallery" },
       { href: "/library", label: "Library" },
       { href: "/story", label: "The First Light" },

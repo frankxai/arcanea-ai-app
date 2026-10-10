@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { getOAuthRecoveryPath } from "@/lib/auth/redirect";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Redirect non-www to www (permanent 308) so all client-side fetches
   // (including streamed POST requests to /api/ai/chat) go directly to
   // the canonical origin without an extra 307 hop.
@@ -22,13 +22,14 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // Newsletter, founding-circle, and the public feedback form are exact POSTs.
+  // Public submissions and the stateless shop checkout lookup are exact POSTs.
   // Other methods, nested paths, and world generation/save APIs still require auth.
   // The Polar webhook authenticates itself with a signature, not a session.
   if (
     (request.nextUrl.pathname === "/api/waitlist" ||
       request.nextUrl.pathname === "/api/subscribe" ||
       request.nextUrl.pathname === "/api/feedback" ||
+      request.nextUrl.pathname === "/api/shop/checkout" ||
       request.nextUrl.pathname === "/api/webhook/polar") &&
     request.method === "POST"
   ) {
