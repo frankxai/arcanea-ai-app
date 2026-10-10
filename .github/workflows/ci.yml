@@ -199,7 +199,9 @@ jobs:
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
       - name: Verify exact world drafts and account return paths
-        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+        run: |
+          pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+          node --test scripts/test-world-generation.cjs
 
       - name: Verify feedback persistence receipts
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
@@ -463,10 +465,44 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+  world-preview:
+    name: Authenticated world acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/world-creator-recovery-20261010'
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real password login, private partial-write recovery and account isolation
+        run: node scripts/run-world-service-fixture.mjs
+      - name: Retain safe world acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: world-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/world-service/
+          retention-days: 7
+          if-no-files-found: warn
+
   author-independent-review:
     name: Independent author source review
-    needs: author-preview
-    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010')
+    needs: [author-preview, world-preview]
+    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:

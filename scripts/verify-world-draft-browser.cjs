@@ -7,9 +7,9 @@ const { chromium, expect } = createRequire(resolve("apps/web/package.json"))(
 );
 const base = "http://127.0.0.1:3001/worlds/create?resume=1";
 const output = "screenshots/world-drafts";
-const currentKey = "arcanea.world-draft.v1";
-const previousKey = "arcanea.world-draft.previous.v1";
-const conceptKey = "arcanea.world-concept";
+const currentKey = "arcanea.world-draft.v1.anonymous";
+const previousKey = "arcanea.world-draft.previous.v1.anonymous";
+const conceptKey = "arcanea.world-concept.anonymous";
 const draft = {
   version: 1,
   description: "A library inside a dying star",
@@ -142,6 +142,36 @@ const draft = {
       await button("Keep this draft").click();
       await expect(choice).toHaveCount(0);
       assert.equal(await readStorage(conceptKey), null);
+      await button("Edit world draft").click();
+      await page
+        .getByLabel("World name", { exact: true })
+        .fill("The remembered library");
+      await page
+        .getByLabel("Rule 1 consequence", { exact: true })
+        .fill("Reading costs a memory; closing the book returns it.");
+      await expect(button("Export draft")).toBeDisabled();
+      await button("Apply draft changes").click();
+      await expect(
+        page.getByRole("heading", {
+          name: "The remembered library",
+          exact: true,
+        }),
+      ).toBeVisible();
+      await page.reload();
+      await expect(
+        page.getByRole("heading", {
+          name: "The remembered library",
+          exact: true,
+        }),
+      ).toBeVisible();
+      await button("Edit world draft").click();
+      await page
+        .getByLabel("World name", { exact: true })
+        .fill(draft.world.name);
+      await page
+        .getByLabel("Rule 1 consequence", { exact: true })
+        .fill(draft.world.laws[0].description);
+      await button("Apply draft changes").click();
       page.once("dialog", (dialog) => dialog.dismiss());
       await button("Start over").click();
       await expect(worldTitle).toBeVisible();
@@ -203,6 +233,7 @@ const draft = {
     assert.deepEqual(errors, [], "Unexpected browser runtime errors");
     evidence.interactions = [
       "complete draft inspection and exact JSON export",
+      "applied creator edits survive reload without a model request",
       "explicit pending-concept choice",
       "cancel and confirm start over",
       "previous draft survives reload",

@@ -1,209 +1,110 @@
-/**
- * World Generator API — "Describe your world in one sentence"
- *
- * POST /api/worlds/generate
- *
- * The killer feature: a creator types "A world where music is magic" and gets
- * back a complete World — name, characters, locations, lore, and concept art
- * prompt. Powered by Gemini via Vercel AI SDK.
- *
- * Generation returns an unsaved draft for every user. Saving is a separate action.
- */
-
 import { NextRequest, NextResponse } from "next/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createOpenAI } from "@ai-sdk/openai";
-import { generateText } from "ai";
+import { generateText, Output } from "ai";
 import { randomUUID } from "node:crypto";
+import { createClient } from "@/lib/supabase/server";
+import { withAbortDeadline } from "@/lib/async-deadline";
+import { extractCustomerKeys } from "@/lib/gateway/credential-policy.mjs";
+import { draftResult } from "@/lib/worlds/draft";
 import {
-  worldDraftSchema,
-  draftResult,
-  WORLD_REFINEMENTS,
-} from "@/lib/worlds/draft";
+  WORLD_MODEL,
+  WORLD_FORGE_PROMPT,
+  worldGenerationSchema,
+  worldGenerationRequestSchema,
+  readWorldRequest,
+} from "@/lib/worlds/generation";
 
-export const maxDuration = 30;
-
-const WORLD_FORGE_PROMPT = `You are a world-building AI for Arcanea, a creative multiverse platform.
-
-Given this world concept: "{DESCRIPTION}"
-
-Generate a complete world in JSON format:
-{
-  "name": "Creative world name (2-4 words)",
-  "slug": "url-safe-slug",
-  "tagline": "One compelling sentence",
-  "description": "2-3 paragraph rich description of this world",
-  "mood": "Visual aesthetic description for art generation (e.g. 'dark epic fantasy with bioluminescent flora')",
-  "elements": [
-    { "name": "Element name", "domain": "What it governs", "color": "#hexcolor" }
-  ],
-  "laws": [
-    { "name": "Law name", "description": "Rule of this world" }
-  ],
-  "systems": [
-    { "name": "System name", "type": "magic or technology", "rules": "How it works" }
-  ],
-  "characters": [
-    {
-      "name": "Character name",
-      "title": "Their role/title",
-      "personality": { "traits": ["trait1", "trait2", "trait3"], "voice_style": "How they speak" },
-      "backstory": "2-3 sentence backstory",
-      "element": "Primary element",
-      "origin_class": "One of: Arcan, Gate-Touched, Bonded, Synth, Awakened, Celestial, Voidtouched, Architect"
-    }
-  ],
-  "locations": [
-    {
-      "name": "Location name",
-      "region": "Region name",
-      "description": "2-3 sentence description",
-      "significance": "Why this place matters"
-    }
-  ],
-  "first_event": {
-    "title": "Founding event name",
-    "description": "What happened to create this world",
-    "era": "Era name"
-  },
-  "palette": {
-    "primary": "#hex",
-    "secondary": "#hex",
-    "accent": "#hex"
-  },
-  "image_prompt": "Detailed prompt for generating hero art of this world (cinematic, epic, concept art style)"
-}
-
-Generate 3 elements, 3 laws, 1 magic/tech system, 2-3 characters, 2-3 locations, 1 founding event.
-Be creative, specific, and evocative. Avoid generic fantasy tropes.
-RESPOND WITH ONLY valid JSON. No markdown, no explanation, no code fences.`;
-
-function resolveModel() {
-  const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-  const openrouterKey = process.env.OPENROUTER_API_KEY;
-
-  if (googleKey) {
-    const google = createGoogleGenerativeAI({ apiKey: googleKey });
-    return google("gemini-2.5-flash");
-  }
-  if (openrouterKey) {
-    const openrouter = createOpenAI({
-      apiKey: openrouterKey,
-      baseURL: "https://openrouter.ai/api/v1",
-    });
-    return openrouter("google/gemini-2.5-flash");
-  }
-  return null;
-}
-
-function parseJsonResponse(text: string): Record<string, unknown> | null {
-  let cleaned = text.trim();
-  if (cleaned.startsWith("```")) {
-    cleaned = cleaned.replace(/^```(?:json)?\s*/, "").replace(/\s*```$/, "");
-  }
-  try {
-    return JSON.parse(cleaned);
-  } catch {
-    return null;
-  }
-}
+export const runtime = "nodejs";
+export const maxDuration = 60;
+const privateHeaders = { "Cache-Control": "private, no-store, no-transform" };
+const reply = (body: unknown, status = 200) =>
+  NextResponse.json(body, { status, headers: privateHeaders });
 
 export async function POST(req: NextRequest) {
+  // Cookies authorize the account; the customer key authorizes only this model request.
+  const origin = req.headers.get("origin");
+  if (origin && origin !== req.nextUrl.origin)
+    return reply({ error: "Create the draft from this Arcanea page." }, 403);
   try {
-    let body: unknown;
-    try {
-      body = await req.json();
-    } catch {
-      return NextResponse.json({ error: "Invalid request." }, { status: 400 });
-    }
-    const description =
-      body &&
-      typeof body === "object" &&
-      "description" in body &&
-      typeof body.description === "string"
-        ? body.description.trim()
-        : "";
-
-    if (
-      !description ||
-      typeof description !== "string" ||
-      description.length < 5
-    ) {
-      return NextResponse.json(
-        { error: "Describe your world in at least a few words." },
-        { status: 400 },
-      );
-    }
-
-    if (description.length > 500) {
-      return NextResponse.json(
-        { error: "Description too long. Keep it under 500 characters." },
-        { status: 400 },
-      );
-    }
-
-    const refinement =
-      typeof body === "object" && body && "refinement" in body
-        ? body.refinement
-        : undefined;
-    if (
-      refinement !== undefined &&
-      !WORLD_REFINEMENTS.some((choice) => choice === refinement)
-    ) {
-      return NextResponse.json(
-        { error: "Choose a listed refinement direction." },
-        { status: 400 },
-      );
-    }
-
-    // --- Resolve AI model ---
-    const model = resolveModel();
-    if (!model) {
-      return NextResponse.json(
-        {
-          error:
-            "World generation is temporarily unavailable. Please try again later.",
-        },
-        { status: 503 },
-      );
-    }
-
-    // --- Generate world ---
-    const systemPrompt = WORLD_FORGE_PROMPT.replace(
-      "{DESCRIPTION}",
-      description,
+    const db = await createClient();
+    const { data, error } = await withAbortDeadline(
+      "world authentication",
+      4500,
+      () => db.auth.getUser(),
     );
-
+    if (error || !data.user)
+      return reply({ error: "Sign in to create a world draft." }, 401);
+  } catch {
+    return reply(
+      { error: "Your session could not be checked. Try again." },
+      503,
+    );
+  }
+  let key: string | undefined;
+  try {
+    key = extractCustomerKeys(req.headers).google;
+  } catch {
+    return reply({ error: "Check your Gemini API key." }, 400);
+  }
+  if (!key)
+    return reply({ error: "Add your Gemini API key to create a draft." }, 402);
+  let input;
+  try {
+    const body = await readWorldRequest(req);
+    input = worldGenerationRequestSchema.safeParse(JSON.parse(body));
+  } catch (error) {
+    return reply(
+      { error: "The world request is invalid or too large." },
+      error instanceof RangeError ? 413 : 400,
+    );
+  }
+  if (!input.success)
+    return reply(
+      {
+        error: "Use a concept of 5 to 500 characters and a listed refinement.",
+      },
+      400,
+    );
+  if (req.signal.aborted)
+    return reply(
+      { error: "Generation was cancelled. Your concept is unchanged." },
+      408,
+    );
+  try {
+    const google = createGoogleGenerativeAI({ apiKey: key });
     const result = await generateText({
-      model,
-      system: systemPrompt,
-      prompt: `Create a world based on: "${description}"${refinement ? `\nRefinement direction: ${refinement}. Preserve the original concept.` : ""}`,
+      model: google(WORLD_MODEL),
+      system: WORLD_FORGE_PROMPT,
+      prompt: JSON.stringify(input.data),
+      output: Output.object({ schema: worldGenerationSchema }),
       temperature: 0.9,
-      maxOutputTokens: 4096,
+      maxOutputTokens: 6000,
       maxRetries: 0,
-      abortSignal: AbortSignal.timeout(25000),
-      providerOptions: { google: { thinkingConfig: { thinkingBudget: 0 } } },
+      abortSignal: AbortSignal.any([req.signal, AbortSignal.timeout(45000)]),
+      providerOptions: {
+        google: {
+          thinkingConfig: { thinkingBudget: 0, includeThoughts: false },
+        },
+      },
     });
-
-    const parsed = worldDraftSchema.safeParse(parseJsonResponse(result.text));
-    if (!parsed.success) {
-      return NextResponse.json(
+    const parsed = worldGenerationSchema.safeParse(result.output);
+    if (!parsed.success)
+      return reply(
         {
           error:
-            "The generated draft was incomplete. Your concept is still here; please try again.",
+            "The draft was incomplete. Your concept is unchanged; retry when ready.",
         },
-        { status: 502 },
+        502,
       );
-    }
-    return NextResponse.json(draftResult(parsed.data, randomUUID()));
+    return reply(draftResult(parsed.data, randomUUID()));
   } catch {
-    console.error("World generation failed.");
-    return NextResponse.json(
+    // Upstream errors can contain the credential and full creator prompt.
+    return reply(
       {
         error:
-          "World generation failed. Your concept is still here; please try again.",
+          "Generation did not finish. Check your key and quota, then retry. Your concept is unchanged.",
       },
-      { status: 500 },
+      502,
     );
   }
 }
