@@ -109,10 +109,6 @@ const output = "screenshots/world-service";
 mkdirSync(output, { recursive: true });
 const secret = randomBytes(32).toString("hex");
 const password = randomBytes(24).toString("hex");
-const mask = (value) => console.log(`::add-mask::${value}`);
-mask(secret);
-mask(password);
-if (process.env.WORLD_TEST_API_KEY) mask(process.env.WORLD_TEST_API_KEY);
 function jwt(role) {
   const encoded = (x) => Buffer.from(JSON.stringify(x)).toString("base64url");
   const body = `${encoded({ alg: "HS256", typ: "JWT" })}.${encoded({ role, iss: "supabase", iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 3600 })}`;
@@ -120,8 +116,6 @@ function jwt(role) {
 }
 const anon = jwt("anon"),
   admin = jwt("service_role");
-mask(anon);
-mask(admin);
 const network = `world-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
 const containers = [];
 const children = new Set();
@@ -181,7 +175,9 @@ async function ready(url) {
 async function run(command, args, env, timeoutMs) {
   const child = spawn(command, args, {
     env: { ...process.env, ...env },
-    stdio: "inherit",
+    // Assertions and subprocess errors can contain fixture credentials. Keep
+    // subprocess output private; retain only controlled phases and safe artifacts.
+    stdio: "ignore",
     detached: true,
   });
   children.add(child);
@@ -346,7 +342,6 @@ try {
       email: `world-${i}@example.invalid`,
       password: randomBytes(24).toString("hex"),
     };
-    mask(account.password);
     const res = await fetch("http://127.0.0.1:54321/auth/v1/admin/users", {
       method: "POST",
       headers: {
@@ -450,26 +445,8 @@ try {
   // Docker and authentication errors may include private environment values.
   receipt.failure = "Hosted disposable acceptance did not complete.";
   receipt.failurePhase = phase;
-  let message = String(error.message || error).slice(-2400);
-  for (const value of [
-    secret,
-    password,
-    anon,
-    admin,
-    process.env.WORLD_TEST_API_KEY,
-  ].filter(Boolean))
-    message = message.replaceAll(value, "[redacted]");
-  console.error(message);
-  // Startup diagnostics only, with every generated credential removed. Do not
-  // retain container logs or private configuration in public artifacts.
-  if (phase === "auth-readiness") {
-    try {
-      let log = docker(["logs", "--tail", "15", `${network}-auth`]);
-      for (const value of [secret, password, anon, admin])
-        log = log.replaceAll(value, "[redacted]");
-      console.error(log);
-    } catch {}
-  }
+  // No exception, container log, token or password is emitted. The controlled
+  // failure phase and masked browser screenshot are the diagnostics boundary.
   console.error(
     "Hosted disposable world acceptance failed; inspect retained safe browser evidence.",
   );

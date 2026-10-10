@@ -80,6 +80,7 @@ const draft = {
         viewport: { width: mode.width, height: mode.height },
         reducedMotion: mode.reducedMotion,
         acceptDownloads: true,
+        permissions: ["clipboard-read", "clipboard-write"],
       });
       const page = await context.newPage();
       const button = (name) => page.getByRole("button", { name, exact: true });
@@ -140,6 +141,12 @@ const draft = {
         draft.world,
       );
       await button("Keep this draft").click();
+      await button("Copy art brief").click();
+      await expect(button("Art brief copied")).toBeVisible();
+      assert.equal(
+        await page.evaluate(() => navigator.clipboard.readText()),
+        draft.world.image_prompt,
+      );
       await expect(choice).toHaveCount(0);
       assert.equal(await readStorage(conceptKey), null);
       await button("Edit world draft").click();
@@ -232,6 +239,7 @@ const draft = {
     }
     assert.deepEqual(errors, [], "Unexpected browser runtime errors");
     evidence.interactions = [
+      "complete art brief copied without model requests",
       "complete draft inspection and exact JSON export",
       "applied creator edits survive reload without a model request",
       "explicit pending-concept choice",

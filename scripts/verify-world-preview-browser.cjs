@@ -8,6 +8,36 @@ const { chromium, expect } = createRequire(resolve("apps/web/package.json"))(
 const { createClient } = createRequire(resolve("apps/web/package.json"))(
   "@supabase/supabase-js",
 );
+const { z } = createRequire(resolve("apps/web/package.json"))("zod");
+// Remote model output is untrusted review material, never executable source.
+// Validate and retain only bounded final text and bounded, typed usage fields.
+const comparisonSchema = z.object({
+  candidates: z
+    .array(
+      z.object({
+        finishReason: z.literal("STOP"),
+        content: z.object({
+          parts: z
+            .array(
+              z.object({
+                text: z.string().max(50000).optional(),
+                thought: z.boolean().optional(),
+              }),
+            )
+            .max(20),
+        }),
+      }),
+    )
+    .min(1)
+    .max(4),
+  modelVersion: z.string().max(160),
+  responseId: z.string().max(256),
+  usageMetadata: z.object({
+    promptTokenCount: z.number().int().nonnegative().max(100000),
+    candidatesTokenCount: z.number().int().nonnegative().max(6000),
+    totalTokenCount: z.number().int().nonnegative().max(106000),
+  }),
+});
 const fixtureWorld = {
   name: "Tide Ledger",
   slug: "tide-ledger",
@@ -69,8 +99,8 @@ async function main() {
   assert.ok(config.accounts.every((a) => a.email.endsWith("@example.invalid")));
   const evidence = {
     head: config.head,
-    realPasswordLogin: true,
-    realPostgrestWrites: true,
+    realPasswordLogin: false,
+    realPostgrestWrites: false,
     syntheticGeneration: !process.env.WORLD_TEST_API_KEY,
     csp: "Disposable HTTP loopback fixture bypasses browser CSP; production HTTPS policy is unchanged and is not certified by this fixture",
     actualProviderCalls: 0,
@@ -84,11 +114,17 @@ async function main() {
     bypassCSP: true,
     viewport: { width: 375, height: 900 },
     acceptDownloads: true,
+    permissions: ["clipboard-read", "clipboard-write"],
     reducedMotion: "reduce",
   });
   const page = await context.newPage();
   page.setDefaultTimeout(20000);
   const errors = [];
+  let imageRequests = 0;
+  page.on("request", (request) => {
+    if (new URL(request.url()).pathname === "/api/worlds/generate-image")
+      imageRequests += 1;
+  });
   const failedRequests = [];
   let stage = "login";
   page.on("pageerror", (e) => errors.push(e.message));
@@ -131,12 +167,15 @@ async function main() {
       null,
     );
     await login(config.accounts[0]);
+    evidence.realPasswordLogin = true;
     stage = "generation-and-edit";
     await expect(key).toHaveValue("");
     const input = page.getByRole("textbox", { name: "Describe your world" });
     await input.fill("A coastal city pays the sea with memories");
     await button("Create world").click();
-    await expect(page.getByRole("alert")).toContainText("Gemini");
+    await expect(
+      page.getByRole("alert").filter({ hasText: "Add your Gemini API key" }),
+    ).toContainText("Gemini");
     const customerKey =
       process.env.WORLD_TEST_API_KEY || "disposable-browser-key";
     await key.fill(customerKey);
@@ -177,6 +216,12 @@ async function main() {
       page.getByRole("heading", { name: generatedWorld.name, exact: true }),
     ).toBeVisible();
     assert.equal(calls, 1);
+    await button("Copy art brief").click();
+    await expect(button("Art brief copied")).toBeVisible();
+    assert.equal(
+      await page.evaluate(() => navigator.clipboard.readText()),
+      generatedWorld.image_prompt,
+    );
     await button("Edit world draft").click();
     await page
       .getByLabel("World name", { exact: true })
@@ -202,7 +247,9 @@ async function main() {
     stage = "private-partial-save";
     assert.equal(draft.world.name, "The remembered harbor");
     await button("Save this world").click();
-    await expect(page.getByRole("alert")).toContainText("Saving is incomplete");
+    await expect(
+      page.getByRole("alert").filter({ hasText: "Saving is incomplete" }),
+    ).toContainText("Saving is incomplete");
     assert.equal(
       await page.evaluate((k) => sessionStorage.getItem(k), currentKey),
       raw,
@@ -212,6 +259,7 @@ async function main() {
       .select("id,slug,visibility")
       .single();
     assert.equal(partial.error, null);
+    evidence.realPostgrestWrites = true;
     assert.equal(partial.data.visibility, "private");
     assert.equal(
       (await db.from("world_characters").select("*")).data.length,
@@ -415,13 +463,14 @@ async function main() {
         throw Error(
           `Bounded direct comparison failed (${response.status}); no retry.`,
         );
-      const result = await response.json();
+      const result = comparisonSchema.parse(await response.json());
       assert.equal(result.candidates?.[0]?.finishReason, "STOP");
       const text = (result.candidates[0].content?.parts || [])
         .filter((p) => !p.thought)
         .map((p) => p.text || "")
         .join("");
       assert.ok(text.length > 100);
+      assert.ok(Buffer.byteLength(text, "utf8") <= 100000);
       await fs.writeFile(`${config.output}/direct-model-comparison.md`, text);
       await fs.writeFile(
         `${config.output}/generation-comparison-receipt.json`,
@@ -445,6 +494,7 @@ async function main() {
       );
     }
     evidence.interactions = [
+      "complete art brief copied without image generation",
       "real password login",
       "missing customer key refuses",
       process.env.WORLD_TEST_API_KEY
@@ -461,6 +511,8 @@ async function main() {
       "key absent from recovery storage",
       "375px reduced-motion no overflow",
     ];
+    assert.equal(imageRequests, 0);
+    evidence.imageProviderCalls = 0;
     evidence.passed = true;
   } catch (error) {
     evidence.failureStage = stage;

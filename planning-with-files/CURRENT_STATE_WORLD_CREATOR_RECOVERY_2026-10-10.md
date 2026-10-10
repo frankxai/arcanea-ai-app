@@ -6,7 +6,7 @@ Owner: Codex root, sole writer in arcanea-gateway-admission-20261010, branch
 `https://github.com/frankxai/arcanea-ai-app.git`.
 Base: `123f84ea2d05586f780b89edca68533d7b8d9786`.
 
-Files: generation route and helper, world creation page and two small components,
+Files: generation route and helper, world creation page and three small components,
 compiled route/browser tests, disposable service fixture, manual hosted acceptance,
 existing independent review rail, this task record. No dependency change.
 
@@ -98,3 +98,29 @@ headers. It does not certify production CSP/TLS or signed-in production onboardi
 Private page denial requires the actual not-found UI, noindex and absence of private
 content from the response, plus empty RLS reads; status is recorded because Next's
 streamed not-found response can be200. See the official Next not-found convention.
+
+Candidate8a9d683ac2: full build, three viewport recovery tests, TypeScript, lint,
+CodeQL source scan and independent Gemini source review passed. Real browser
+password login also passed. The fixture then stopped on a selector matching both
+the expected missing-key alert and Next's route announcer, before any world save.
+The next revision selects the specific alert and records authentication/writes
+only after those operations succeed. The old failed receipt's early true flags
+were configuration claims, not completed write evidence; retain it with this correction.
+Production metadata confirms authenticated SELECT/INSERT/UPDATE on all five save
+tables, schema access and the matching auth.uid definition. No user records read
+or written. Disposable fixture acceptance still does not certify production onboarding.
+
+The existing concept-art endpoint needs an absent platform key and returns
+generated:false without one. Replace its creator CTA with a working Copy art brief
+action; retain the endpoint and complete exported prompt. Browser tests check the
+exact clipboard text and zero image requests. Paid image generation remains outside
+this slice. Added file: apps/web/components/worlds/world-art-brief.tsx, same sole owner.
+
+PR561's separate CodeQL alert gate reported one high clear-text masking-command
+output, one medium generated-test-code interpolation, and two medium remote model
+artifact writes. Remove all credential emission and credential-bearing subprocess
+output; controlled phases and masked screenshots remain diagnostic evidence. The
+offline preload now uses fixed code with fixture data in child environment variables.
+Comparison artifacts contain bounded schema-validated final text and typed usage,
+not executable source. No alert is hidden, dismissed or waived; fresh scan/review
+must assess the exact revision and intended remote artifact retention.

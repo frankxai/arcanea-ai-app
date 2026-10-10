@@ -52,7 +52,7 @@ test("actual live acceptance rejects missing, forged and mismatched review befor
     };
     writeFileSync(
       preload,
-      `import cp from 'node:child_process';import {syncBuiltinESMExports} from 'node:module';import {writeFileSync} from 'node:fs';cp.execFileSync=(command,args)=>{if(command==='git'){if(args[0]==='rev-parse')return '${head}\\n';if(args[0]==='diff')return 'fixture.ts\\n';if(args[0]==='show')return Buffer.from(${JSON.stringify(source)});}if(command==='docker'){writeFileSync(process.env.TEST_MARKER,'Reached offline container boundary');throw Error('Offline container boundary');}throw Error('Unexpected subprocess');};syncBuiltinESMExports();globalThis.fetch=async url=>{if(!String(url).startsWith('https://api.github.com/repos/frankxai/arcanea-ai-app/issues/561/comments?'))throw Error('Unexpected provider request');return {ok:true,json:async()=>JSON.parse(process.env.TEST_COMMENTS)};};`,
+      `import cp from 'node:child_process';import {syncBuiltinESMExports} from 'node:module';import {writeFileSync} from 'node:fs';cp.execFileSync=(command,args)=>{if(command==='git'){if(args[0]==='rev-parse')return process.env.TEST_HEAD+'\\n';if(args[0]==='diff')return 'fixture.ts\\n';if(args[0]==='show')return Buffer.from(process.env.TEST_SOURCE);}if(command==='docker'){writeFileSync(process.env.TEST_MARKER,'Reached offline container boundary');throw Error('Offline container boundary');}throw Error('Unexpected subprocess');};syncBuiltinESMExports();globalThis.fetch=async url=>{if(!String(url).startsWith('https://api.github.com/repos/frankxai/arcanea-ai-app/issues/561/comments?'))throw Error('Unexpected provider request');return {ok:true,json:async()=>JSON.parse(process.env.TEST_COMMENTS)};};`,
     );
     const comment = (r = receipt, id = 132689939) => ({
       user: { id },
@@ -93,6 +93,8 @@ test("actual live acceptance rejects missing, forged and mismatched review befor
             WORLD_LIVE_GENERATION: "true",
             TEST_COMMENTS: JSON.stringify(comments),
             TEST_MARKER: marker,
+            TEST_HEAD: head,
+            TEST_SOURCE: source,
           },
         },
       );
@@ -105,7 +107,11 @@ test("actual live acceptance rejects missing, forged and mismatched review befor
     const admitted = run([comment()]);
     assert.equal(admitted.status, 1);
     assert.equal(existsSync(marker), true);
-    assert.match(admitted.stderr, /Offline container boundary/);
+    assert.match(admitted.stderr, /Hosted disposable world acceptance failed/);
+    assert.doesNotMatch(
+      admitted.stderr,
+      /Offline container boundary|offline-fixture-key/,
+    );
     assert.equal(
       JSON.parse(
         readFileSync(

@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { WorldModelSettings } from "@/components/worlds/world-model-settings";
 import { WorldDraftEditor } from "@/components/worlds/world-draft-editor";
+import { WorldArtBrief } from "@/components/worlds/world-art-brief";
 import { createClient } from "@/lib/supabase/client";
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import {
@@ -1529,28 +1530,18 @@ export default function CreateWorldPage() {
                     >
                       Export draft
                     </button>
-                    {result.image_prompt && !heroImage && (
-                      <button
-                        disabled={imageLoading}
-                        onClick={() =>
-                          generateHeroImage(
-                            result.image_prompt!,
-                            result.world.name,
-                          )
-                        }
-                        className="px-5 py-3 rounded-lg border border-white/20 text-sm disabled:opacity-50"
-                      >
-                        {imageLoading
-                          ? "Creating concept art…"
-                          : isAuthenticated
-                            ? "Generate concept art"
-                            : "Sign in to create concept art"}
-                      </button>
+                    {result.image_prompt && (
+                      <WorldArtBrief
+                        key={result.draft_id}
+                        brief={result.image_prompt}
+                        disabled={editingDraft || saving || imageLoading}
+                        onError={setError}
+                      />
                     )}
                   </div>
                   <p className="text-xs text-white/70 text-center">
-                    Concept art is a separate generation and is not included in
-                    the saved text draft.
+                    Copy the art brief into your image tool; the complete prompt
+                    is also in the exported draft.
                   </p>
                   {/* CTA */}
                   <m.div
