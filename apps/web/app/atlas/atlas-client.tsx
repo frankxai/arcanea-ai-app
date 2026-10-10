@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import type {
   RealmDefinition,
   LinguisticFamily,
@@ -18,24 +18,14 @@ import {
   type MonomythStage,
 } from "@arcanea/world-engine";
 import {
-  Globe,
   Compass,
-  Waves,
-  Waveform,
   Sparkle,
   Crown,
-  Lightning,
   ArrowsClockwise,
   Check,
   Copy,
   MapTrifold,
   Scales,
-  Fire,
-  Wind,
-  Drop,
-  Sun,
-  Eye,
-  SpeakerHigh,
   Scroll,
 } from "@/lib/phosphor-icons";
 import { RealmConstellation } from "./realm-constellation";
@@ -76,12 +66,17 @@ export function AtlasClient({
   const [selectedRealmAId, setSelectedRealmAId] = useState<string>(realmKeys[0] || "eldria_prime");
   const [selectedRealmBId, setSelectedRealmBId] = useState<string>(realmKeys[1] || "veldoria");
 
+type GeneratedNameKind =
+  | "character_masculine"
+  | "character_feminine"
+  | "character_neutral"
+  | "toponym"
+  | "relic";
+
   // Linguistics State
   const langKeys = Object.keys(linguisticFamilies);
   const [selectedLangId, setSelectedLangId] = useState<string>(langKeys[0] || "eldrian");
-  const [generatedNameKind, setGeneratedNameKind] = useState<
-    "character_masculine" | "character_feminine" | "character_neutral" | "toponym" | "relic"
-  >("character_masculine");
+  const [generatedNameKind, setGeneratedNameKind] = useState<GeneratedNameKind>("character_masculine");
   const [generatedName, setGeneratedName] = useState<string>("");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
@@ -144,38 +139,41 @@ export function AtlasClient({
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get("tab") as TabKey | null;
-    if (
-      tabParam &&
-      ["cartography", "linguistics", "magic_toll", "monomyth", "provenance"].includes(tabParam)
-    ) {
-      setActiveTab(tabParam);
-    }
     const realmA = params.get("realmA");
-    if (realmA && initialRealms[realmA]) {
-      setSelectedRealmAId(realmA);
-    }
     const realmB = params.get("realmB");
-    if (realmB && initialRealms[realmB]) {
-      setSelectedRealmBId(realmB);
-    }
     const gate = params.get("gate") as GateId | null;
-    if (
-      gate &&
-      [
-        "foundation",
-        "flow",
-        "fire",
-        "heart",
-        "voice",
-        "sight",
-        "crown",
-        "starweaving",
-        "unity",
-        "source",
-      ].includes(gate)
-    ) {
-      setSelectedGateId(gate);
-    }
+
+    requestAnimationFrame(() => {
+      if (
+        tabParam &&
+        ["cartography", "linguistics", "magic_toll", "monomyth", "provenance"].includes(tabParam)
+      ) {
+        setActiveTab(tabParam);
+      }
+      if (realmA && initialRealms[realmA]) {
+        setSelectedRealmAId(realmA);
+      }
+      if (realmB && initialRealms[realmB]) {
+        setSelectedRealmBId(realmB);
+      }
+      if (
+        gate &&
+        [
+          "foundation",
+          "flow",
+          "fire",
+          "heart",
+          "voice",
+          "sight",
+          "crown",
+          "starweaving",
+          "unity",
+          "source",
+        ].includes(gate)
+      ) {
+        setSelectedGateId(gate);
+      }
+    });
   }, [initialRealms]);
 
   const handleTabChange = (tabId: TabKey) => {
@@ -448,7 +446,7 @@ export function AtlasClient({
                       <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-1">
                         <span className="text-xs text-white/40 block">Sensory Tone</span>
                         <p className="text-sm font-medium text-white">
-                          "{linguisticFamilies[selectedLangId].phonology.sensoryTone}"
+                          &ldquo;{linguisticFamilies[selectedLangId].phonology.sensoryTone}&rdquo;
                         </p>
                       </div>
 
@@ -489,7 +487,7 @@ export function AtlasClient({
                               <span className="font-mono font-semibold text-[var(--arc-brand-arcanean-gold,#d4af37)]">
                                 {root}-
                               </span>
-                              <span className="text-white/60 block mt-0.5">"{meaning}"</span>
+                              <span className="text-white/60 block mt-0.5">&ldquo;{meaning}&rdquo;</span>
                             </div>
                           )
                         )}
@@ -506,7 +504,7 @@ export function AtlasClient({
                         </span>
                         <h3 className="text-xl font-serif text-white">Authentic Dialect Forge</h3>
                         <p className="text-xs text-white/60 mt-1">
-                          Generate phonologically accurate names compliant with this language's roots.
+                          Generate phonologically accurate names compliant with this language&apos;s roots.
                         </p>
                       </div>
 
@@ -515,7 +513,7 @@ export function AtlasClient({
                         <label className="text-xs text-white/40 block">Generation Target</label>
                         <select
                           value={generatedNameKind}
-                          onChange={(e) => setGeneratedNameKind(e.target.value as any)}
+                          onChange={(e) => setGeneratedNameKind(e.target.value as GeneratedNameKind)}
                           className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-white/30"
                         >
                           <option value="character_masculine" className="bg-[#0b0f19]">Character (Masculine)</option>
@@ -584,7 +582,7 @@ export function AtlasClient({
               <div className="p-6 sm:p-8 rounded-3xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl space-y-6">
                 <div>
                   <span className="text-xs uppercase font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]">
-                    Sanderson's Second Law: Limitations &gt; Powers
+                    Sanderson&apos;s Second Law: Limitations &gt; Powers
                   </span>
                   <h2 className="text-2xl font-serif text-white mt-1">
                     The Concrete Cost of Channeling
@@ -675,7 +673,7 @@ export function AtlasClient({
                     Sensory Feedback (Smell / Taste / Sound)
                   </span>
                   <p className="text-base text-white leading-relaxed">
-                    "{magicTollResult.sensoryFeedback}"
+                    &ldquo;{magicTollResult.sensoryFeedback}&rdquo;
                   </p>
                 </div>
 
@@ -716,7 +714,7 @@ export function AtlasClient({
                   The 12 Stages of the Arcanean Monomyth
                 </h2>
                 <p className="text-xs text-white/60">
-                  Every hero's arc synchronizes with the Ten Solfeggio Gates, progressing from the
+                  Every hero&apos;s arc synchronizes with the Ten Solfeggio Gates, progressing from the
                   mundane Foundation (174 Hz) to the sovereign Source (1111 Hz).
                 </p>
               </div>
@@ -778,7 +776,7 @@ export function AtlasClient({
                         Sensory Threshold (Physical Anchors)
                       </span>
                       <p className="text-sm text-white/80 leading-relaxed">
-                        "{activeStage.sensoryThreshold}"
+                        &ldquo;{activeStage.sensoryThreshold}&rdquo;
                       </p>
                     </div>
                   </div>
@@ -866,7 +864,7 @@ export function AtlasClient({
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
                       <span className="text-xs text-white/40 block">Linguistic Root & Meaning</span>
                       <p className="text-sm text-white font-medium">
-                        "{activeProvenance.linguisticRoot.literalMeaning}" (Root: {activeProvenance.linguisticRoot.etymologicalSource})
+                        &ldquo;{activeProvenance.linguisticRoot.literalMeaning}&rdquo; (Root: {activeProvenance.linguisticRoot.etymologicalSource})
                       </p>
                     </div>
                   </div>
