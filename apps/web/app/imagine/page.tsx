@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import {
+  formatApiError,
+  isAuthFailure,
+  SIGN_IN_TO_GENERATE,
+} from "@/lib/imagine/api-error";
 import { requestImages } from "@/lib/imagine/request";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -9,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PromptInput } from "@/components/imagine/PromptInput";
 import { ImageCard } from "@/components/imagine/ImageCard";
+import { AuthModal } from "@/components/auth";
 import {
   getFavorites,
   removeFavorite,
@@ -126,6 +132,8 @@ export default function ImaginePage() {
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [authNeeded, setAuthNeeded] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState("");
   const [currentAspectRatio, setCurrentAspectRatio] = useState("1:1");
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false);
@@ -195,8 +203,13 @@ export default function ImaginePage() {
         enhance,
       });
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Generation failed");
+        const data = await res.json().catch(() => ({}));
+        if (isAuthFailure(res.status, data)) {
+          const authErr = new Error(SIGN_IN_TO_GENERATE);
+          (authErr as Error & { authRequired?: boolean }).authRequired = true;
+          throw authErr;
+        }
+        throw new Error(formatApiError(data, "Generation failed"));
       }
       const data = await res.json();
       const images: GeneratedImage[] = (data.images || []).map(
@@ -251,6 +264,7 @@ export default function ImaginePage() {
       setIsGenerating(true);
       isGeneratingRef.current = true;
       setError(null);
+      setAuthNeeded(false);
       setCurrentPrompt(prompt);
       setCurrentAspectRatio(aspectRatio);
 
@@ -321,7 +335,17 @@ export default function ImaginePage() {
           });
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong");
+        const message =
+          err instanceof Error
+            ? err.message
+            : formatApiError(err, "Something went wrong");
+        const needsAuth = Boolean(
+          err &&
+          typeof err === "object" &&
+          (err as { authRequired?: boolean }).authRequired,
+        );
+        setAuthNeeded(needsAuth || message.toLowerCase().includes("sign in"));
+        setError(message);
         setRows((prev) => prev.filter((r) => r.id !== loadingId));
       } finally {
         clearInterval(progressInterval);
@@ -406,6 +430,7 @@ export default function ImaginePage() {
     async (imageId: string, imageUrl: string) => {
       setAnimatingIds((prev) => new Set(prev).add(imageId));
       setError(null);
+      setAuthNeeded(false);
       try {
         let urlForAnimation = imageUrl;
         if (imageUrl.startsWith("data:")) {
@@ -431,8 +456,13 @@ export default function ImaginePage() {
           body: JSON.stringify({ imageUrl: urlForAnimation }),
         });
         if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error || "Animation failed");
+          const data = await res.json().catch(() => ({}));
+          if (isAuthFailure(res.status, data)) {
+            const authErr = new Error(SIGN_IN_TO_GENERATE);
+            (authErr as Error & { authRequired?: boolean }).authRequired = true;
+            throw authErr;
+          }
+          throw new Error(formatApiError(data, "Animation failed"));
         }
         const data = await res.json();
         if (data.videoUrl) {
@@ -446,7 +476,17 @@ export default function ImaginePage() {
           );
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Animation failed");
+        const message =
+          err instanceof Error
+            ? err.message
+            : formatApiError(err, "Animation failed");
+        const needsAuth = Boolean(
+          err &&
+          typeof err === "object" &&
+          (err as { authRequired?: boolean }).authRequired,
+        );
+        setAuthNeeded(needsAuth || message.toLowerCase().includes("sign in"));
+        setError(message);
       } finally {
         setAnimatingIds((prev) => {
           const next = new Set(prev);
@@ -620,48 +660,7 @@ export default function ImaginePage() {
           </div>
         )}
 
-        {/* ═══ Error display ═══ */}
-        <AnimatePresence>
-          {error && (
-            <m.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="max-w-2xl mx-auto px-4 py-3 mt-2"
-            >
-              <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
-                <span className="truncate">{error}</span>
-                <div className="flex items-center gap-2 ml-3 flex-shrink-0">
-                  {currentPrompt && (
-                    <button
-                      onClick={() => {
-                        setError(null);
-                        handleGenerate(
-                          currentPrompt,
-                          4,
-                          currentAspectRatio,
-                          currentStyleRef.current,
-                          currentModelRef.current,
-                          currentEnhanceRef.current,
-                          currentNegativePromptRef.current,
-                        );
-                      }}
-                      className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
-                    >
-                      Retry
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setError(null)}
-                    className="text-red-400 hover:text-red-300 p-1"
-                  >
-                    <X size={14} />
-                  </button>
-                </div>
-              </div>
-            </m.div>
-          )}
-        </AnimatePresence>
+        {/* Error banner sits next to the submit bar */}
 
         {/* ═══ Discover Section Header ═══ */}
         {!hasResults && (
@@ -775,13 +774,75 @@ export default function ImaginePage() {
           </div>
         )}
 
-        {/* ═══ Floating Prompt Input (Grok-style bottom bar) ═══ */}
+        {/* ═══ Error near submit + floating prompt ═══ */}
+        <div className="fixed bottom-36 left-0 right-0 z-[45] pointer-events-none sm:bottom-40">
+          <AnimatePresence>
+            {error && (
+              <m.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                className="max-w-2xl mx-auto px-4 pb-2 pointer-events-auto"
+              >
+                <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
+                  <span className="truncate">{error}</span>
+                  <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+                    {authNeeded ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowAuthModal(true)}
+                        className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
+                      >
+                        Sign in
+                      </button>
+                    ) : currentPrompt ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setError(null);
+                          setAuthNeeded(false);
+                          handleGenerate(
+                            currentPrompt,
+                            4,
+                            currentAspectRatio,
+                            currentStyleRef.current,
+                            currentModelRef.current,
+                            currentEnhanceRef.current,
+                            currentNegativePromptRef.current,
+                          );
+                        }}
+                        className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
+                      >
+                        Retry
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError(null);
+                        setAuthNeeded(false);
+                      }}
+                      className="text-red-400 hover:text-red-300 p-1"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                </div>
+              </m.div>
+            )}
+          </AnimatePresence>
+        </div>
         <PromptInput
           onGenerate={handleGenerate}
           isGenerating={isGenerating}
           hasResults={hasResults}
           externalPrompt={externalPrompt}
           generationProgress={generationProgress}
+        />
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          defaultTab="login"
         />
 
         {/* ═══ Favorites Drawer ═══ */}

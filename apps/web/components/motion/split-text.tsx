@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import {
-  LazyMotion,
-  domAnimation,
-  m,
-  useReducedMotion,
-  type Easing,
-} from "framer-motion";
+import { LazyMotion, domAnimation, m, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { EASE } from "@/lib/motion";
 
 interface Props {
   text: string;
@@ -32,6 +25,8 @@ export function SplitText({
   as = "span",
 }: Props) {
   const chars = text.split("");
+  void delay;
+  void stagger;
   const Tag: "h1" | "h2" | "h3" | "p" | "span" = as;
 
   // Gate reduced-motion behind mount to avoid hydration mismatch
@@ -62,12 +57,15 @@ export function SplitText({
             <MSpan
               key={i}
               aria-hidden="true"
-              initial={{ opacity: 1, y: "0.3em", filter: "blur(0px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              // Fail-open: visible on first paint. No opacity/filter/y gate —
+              // those broke bg-clip-text headings (e.g. /create) on desktop.
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
               transition={{
-                duration: 0.4,
-                ease: EASE.smooth as Easing,
-                delay: delay + i * stagger,
+                duration: 0,
+                // delay/stagger kept in the API for callers; not applied so
+                // first paint is never blank.
+                delay: 0,
               }}
               style={{
                 display: "inline-block",
