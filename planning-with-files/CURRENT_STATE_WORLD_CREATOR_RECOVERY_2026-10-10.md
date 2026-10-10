@@ -196,3 +196,28 @@ https://ai.google.dev/gemini-api/docs/pricing. Hosted source/build/runtime gates
 must verify this new head; neither d375 nor a5e approval transfers. Preserve the
 actual failed request and its unknown upstream call count. New bounded status
 receipts distinguish known provider responses from unknown transport failures.
+
+Candidate58fa547527: synthetic Auth/save suite passes at38084469088; TypeScript,
+lint and CodeQL pass. Exact Gemini3.1Pro review laPKaveqLZrmz7IP-e3wuA0 returns
+FAIL: one high unbounded save body read and two medium save origin/deadline gaps
+in the inherited endpoint. Retain the complete37-source review and failed hash
+841276e963023b57a7d666dbe0b6b831c5db837cfe8f668474bad9d2db445037;
+earlier PASS receipts did not discover those inherited flaws. No live model test
+was dispatched on this failed revision. Seven finite native regressions reproduce
+all seven expected save protections as failures. The first oversized-stream test
+was mistakenly unbounded; stop only this session's verified node runner39084 and
+child53556, then cap the test stream at320000 bytes. No foreign process was killed.
+
+Reuse the existing byte reader with explicit150000-byte save limit and5s body
+deadline, abort and UTF-8 validation; generation retains its8192-byte limit.
+Save rejects a foreign origin before authentication, explicitly uses private/no-store
+responses, bounds real getUser waiting to4.5s and writes to18s/30s route duration.
+Auth API has no per-call AbortSignal; its promise is bounded but transport abort
+is not claimed. Every PostgREST query receives the combined request/deadline
+signal, and a late acknowledgement cannot start a subsequent child write.
+All9 new save cases and12 existing durable-draft cases pass, including the real
+five-second body timeout, exact payload, concurrent idempotency, owner isolation
+and each failed-child retry. Hosted acceptance now tests actual save400 invalid
+body and403 foreign-origin refusals before any generation. Preserve foreign505's
+occupied deadline work; these fixes were independently implemented in this lane.
+Fresh full review, build, real Auth/save and bounded actual generation still required.

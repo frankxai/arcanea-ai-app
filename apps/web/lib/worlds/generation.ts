@@ -20,15 +20,20 @@ export const worldGenerationSchema = worldDraftSchema.extend({
   first_event: worldDraftSchema.shape.first_event.unwrap(),
 });
 
-export async function readWorldRequest(request: Request): Promise<string> {
+export async function readWorldRequest(
+  request: Request,
+  byteLimit = WORLD_REQUEST_BYTES,
+): Promise<string> {
   const length = request.headers.get("content-length");
-  if (
-    length !== null &&
-    (!/^\d+$/.test(length) || Number(length) > WORLD_REQUEST_BYTES)
-  )
+  if (length !== null && (!/^\d+$/.test(length) || Number(length) > byteLimit))
     throw new RangeError("Request exceeds the byte limit.");
   if (!request.body) throw new Error("Missing request body.");
+  request.signal.throwIfAborted();
   const reader = request.body.getReader();
+  const cancel = () => {
+    void reader.cancel().catch(() => undefined);
+  };
+  request.signal.addEventListener("abort", cancel, { once: true });
   const chunks: Uint8Array[] = [];
   let bytes = 0;
   let timedOut = false;
@@ -39,10 +44,12 @@ export async function readWorldRequest(request: Request): Promise<string> {
   try {
     for (;;) {
       const { value, done } = await reader.read();
-      if (timedOut) throw new Error("Request body timed out.");
+      if (timedOut)
+        throw new DOMException("Request body timed out.", "TimeoutError");
+      request.signal.throwIfAborted();
       if (done) break;
       bytes += value.byteLength;
-      if (bytes > WORLD_REQUEST_BYTES)
+      if (bytes > byteLimit)
         throw new RangeError("Request exceeds the byte limit.");
       chunks.push(value);
     }
@@ -55,6 +62,7 @@ export async function readWorldRequest(request: Request): Promise<string> {
     return new TextDecoder("utf-8", { fatal: true }).decode(data);
   } finally {
     clearTimeout(deadline);
+    request.signal.removeEventListener("abort", cancel);
     void reader.cancel().catch(() => undefined);
     reader.releaseLock();
   }

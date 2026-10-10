@@ -53,6 +53,11 @@ export async function POST(req: NextRequest) {
     const body = await readWorldRequest(req);
     input = worldGenerationRequestSchema.safeParse(JSON.parse(body));
   } catch (error) {
+    if (req.signal.aborted)
+      return reply(
+        { error: "Generation was cancelled. Your concept is unchanged." },
+        408,
+      );
     return reply(
       { error: "The world request is invalid or too large." },
       error instanceof RangeError ? 413 : 400,

@@ -198,6 +198,28 @@ async function main() {
       sameOriginMissingKey: 402,
       foreignOrigin: 403,
     };
+    const invalidSave = await page.evaluate(async () => {
+      const response = await fetch("/api/worlds/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{}",
+      });
+      return {
+        status: response.status,
+        cache: response.headers.get("Cache-Control"),
+      };
+    });
+    assert.equal(invalidSave.status, 400);
+    assert.match(invalidSave.cache, /private.*no-store/);
+    const foreignSave = await page.request.post(
+      `${config.base}/api/worlds/save`,
+      { headers: { Origin: "https://other.invalid" }, data: {} },
+    );
+    assert.equal(foreignSave.status(), 403);
+    evidence.compiledSaveAdmission = {
+      sameOriginInvalid: invalidSave.status,
+      foreignOrigin: foreignSave.status(),
+    };
     stage = "generation-and-edit";
     await expect(key).toHaveValue("");
     const input = page.getByRole("textbox", { name: "Describe your world" });
