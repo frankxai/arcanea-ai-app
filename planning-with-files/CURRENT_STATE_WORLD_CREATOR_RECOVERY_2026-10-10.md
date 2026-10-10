@@ -136,3 +136,16 @@ Masked mobile screenshots were inspected. The fixture bypasses CSP only for its
 HTTP loopback API; production HTTPS/CSP still requires its own verification.
 Final follow-up fixes signed-in helper copy and preserves observed calls/attempts
 from a failed browser receipt instead of leaving the service counter at0.
+
+Candidate00bd3881a5: full manual CI38079943764, normal CI38080093538,
+CodeQL38079947496, real Auth/private-save fixture and all three compiled recovery
+viewports pass. Independent Gemini3.1Pro response85LKat-RGc7E_PUPtKy7yQo STOP
+PASS0 blocking findings, all37 complete sources/18 changed sources verified;
+formal receipt6101408881. Live run38080599475 failed its Git base lookup before
+containers or model calls because checkout's default shallow history omitted
+base123f84ea. Set full history for this owned job, retaining persist-credentials:false.
+The receipt comment's code fence was separately corrected to the raw JSON required
+by the admission parser. The first commentary attributed the failure to formatting
+before the job log established the earlier missing-base cause. Preserve both records.
+No creator request or production write occurred. This CI-only correction requires
+fresh exact-source gates/review before any live-model test; no provider retry claimed.

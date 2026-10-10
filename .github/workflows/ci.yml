@@ -478,6 +478,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          # Exact-source review hashes require the immutable base revision.
+          fetch-depth: 0
           persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
