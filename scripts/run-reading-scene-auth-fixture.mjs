@@ -39,6 +39,16 @@ const anon = jwt("anon"),
   admin = jwt("service_role");
 mask(anon);
 mask(admin);
+const redact = (value) =>
+  [secret, password, anon, admin]
+    .reduce(
+      (text, credential) => text.split(credential).join("[redacted]"),
+      String(value),
+    )
+    .replace(
+      /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,
+      "[redacted-jwt]",
+    );
 const namePrefix = `reading-auth-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
 const containers = [];
 const children = new Set();
@@ -371,8 +381,8 @@ try {
 } catch (error) {
   // Keep bounded diagnostics without credentials, SQL account rows or headers.
   receipt.phase = phase;
-  receipt.error = error.message.slice(0, 1000);
-  throw error;
+  receipt.error = redact(error.message).slice(0, 1000);
+  throw Error(receipt.error);
 } finally {
   await finish();
 }

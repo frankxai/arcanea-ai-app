@@ -23,6 +23,16 @@ async function main() {
   assert.equal(config.accounts.length, 2);
   assert.ok(config.accounts.every((a) => a.email.endsWith("@example.invalid")));
   const output = config.output;
+  const redact = (value) =>
+    [config.anon, ...config.accounts.map((a) => a.password)]
+      .reduce(
+        (text, credential) => text.split(credential).join("[redacted]"),
+        String(value),
+      )
+      .replace(
+        /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,
+        "[redacted-jwt]",
+      );
   const receipt = {
     head: config.head,
     auth: "real password login and Auth-validated SSR cookies in disposable GoTrue",
@@ -298,15 +308,15 @@ async function main() {
     receipt.passed = true;
   } catch (error) {
     receipt.stage = stage;
-    receipt.error = (error.stack || error.message).slice(0, 2500);
+    receipt.error = redact(error.stack || error.message).slice(0, 2500);
     receipt.workspace = await page
       ?.getByRole("region", { name: "Passage visualization" })
       .innerText()
       .catch(() => "Unavailable");
-    throw error;
+    throw Error(receipt.error);
   } finally {
     // Never record passwords, sessions, JWTs or cookie values in public evidence.
-    receipt.pageErrors = pageErrors;
+    receipt.pageErrors = pageErrors.map(redact);
     receipt.sourceHashes = Object.fromEntries(
       await Promise.all(
         [
