@@ -29,12 +29,12 @@ export const CharacterEntitySchema = z.object({
   primaryGate: GateIdSchema,
   element: ElementSchema,
   rank: MagicRankSchema.default("apprentice"),
-  
+
   // Humanizer Mandates
   flawOrTension: z.string().min(10), // Required psychological flaw or internal conflict
   physicalAnchors: z.array(z.string()).min(3), // 3 tangible, tactile details (e.g. scar, smell of cedar, cracked locket)
   voiceCadence: z.string(), // How this character speaks (blunt, whisper, rapid, lyrical)
-  
+
   // Narrative Relationships
   bonds: z.record(z.string(), z.string()).default({}), // targetEntityId -> relationship description
   backstorySnippet: z.string(),
@@ -55,7 +55,13 @@ export const LocationEntitySchema = z.object({
   worldId: z.string(),
   realm: z.string(),
   dominantGate: GateIdSchema,
-  era: z.enum(["heartland", "first_settling", "second_settling", "frontier", "fallen"]),
+  era: z.enum([
+    "heartland",
+    "first_settling",
+    "second_settling",
+    "frontier",
+    "fallen",
+  ]),
   sensoryAtmosphere: z.object({
     soundscape: z.string(),
     weatherAndLight: z.string(),

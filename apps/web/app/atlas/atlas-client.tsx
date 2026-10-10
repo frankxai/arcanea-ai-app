@@ -42,9 +42,14 @@ interface AtlasClientProps {
   monomythStages: MonomythStage[];
 }
 
-type TabKey = "cartography" | "linguistics" | "magic_toll" | "monomyth" | "provenance";
+type TabKey =
+  "cartography" | "linguistics" | "magic_toll" | "monomyth" | "provenance";
 
-const TABS: { id: TabKey; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const TABS: {
+  id: TabKey;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+}[] = [
   { id: "cartography", label: "Realms & Corridors", icon: MapTrifold },
   { id: "linguistics", label: "Linguistic Matrices", icon: Scroll },
   { id: "magic_toll", label: "Sandersonian Tolls", icon: Scales },
@@ -63,32 +68,44 @@ export function AtlasClient({
 
   // Cartography State
   const realmKeys = Object.keys(initialRealms);
-  const [selectedRealmAId, setSelectedRealmAId] = useState<string>(realmKeys[0] || "eldria_prime");
-  const [selectedRealmBId, setSelectedRealmBId] = useState<string>(realmKeys[1] || "veldoria");
+  const [selectedRealmAId, setSelectedRealmAId] = useState<string>(
+    realmKeys[0] || "eldria_prime",
+  );
+  const [selectedRealmBId, setSelectedRealmBId] = useState<string>(
+    realmKeys[1] || "veldoria",
+  );
 
-type GeneratedNameKind =
-  | "character_masculine"
-  | "character_feminine"
-  | "character_neutral"
-  | "toponym"
-  | "relic";
+  type GeneratedNameKind =
+    | "character_masculine"
+    | "character_feminine"
+    | "character_neutral"
+    | "toponym"
+    | "relic";
 
   // Linguistics State
   const langKeys = Object.keys(linguisticFamilies);
-  const [selectedLangId, setSelectedLangId] = useState<string>(langKeys[0] || "eldrian");
-  const [generatedNameKind, setGeneratedNameKind] = useState<GeneratedNameKind>("character_masculine");
+  const [selectedLangId, setSelectedLangId] = useState<string>(
+    langKeys[0] || "eldrian",
+  );
+  const [generatedNameKind, setGeneratedNameKind] = useState<GeneratedNameKind>(
+    "character_masculine",
+  );
   const [generatedName, setGeneratedName] = useState<string>("");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   // Sandersonian Magic Toll State
   const [selectedGateId, setSelectedGateId] = useState<GateId>("fire");
-  const [selectedIntensity, setSelectedIntensity] = useState<"minor" | "moderate" | "severe" | "cataclysmic">("moderate");
+  const [selectedIntensity, setSelectedIntensity] = useState<
+    "minor" | "moderate" | "severe" | "cataclysmic"
+  >("moderate");
 
   // Monomyth State
   const [selectedStageNum, setSelectedStageNum] = useState<number>(1);
 
   // Provenance State
-  const [selectedGuardianId, setSelectedGuardianId] = useState<string>(guardians[0]?.id || "lyssandria");
+  const [selectedGuardianId, setSelectedGuardianId] = useState<string>(
+    guardians[0]?.id || "lyssandria",
+  );
 
   // Computed Corridor
   const corridorResult = useMemo(() => {
@@ -102,7 +119,10 @@ type GeneratedNameKind =
 
   // Active Stage
   const activeStage = useMemo(() => {
-    return monomythStages.find((s) => s.stageNumber === selectedStageNum) || monomythStages[0];
+    return (
+      monomythStages.find((s) => s.stageNumber === selectedStageNum) ||
+      monomythStages[0]
+    );
   }, [monomythStages, selectedStageNum]);
 
   // Active Guardian & Provenance
@@ -116,7 +136,7 @@ type GeneratedNameKind =
       activeGuardian.id,
       activeGuardian.name,
       activeGuardian.realmId,
-      epochs[0]?.id || "epoch_primordial"
+      epochs[0]?.id || "epoch_primordial",
     );
   }, [activeGuardian, epochs]);
 
@@ -127,9 +147,10 @@ type GeneratedNameKind =
   };
 
   const handleGenerateName = () => {
-    const realmForLang = Object.values(initialRealms).find(
-      (r) => r.linguisticFamilyId === selectedLangId
-    )?.id || "eldria_prime";
+    const realmForLang =
+      Object.values(initialRealms).find(
+        (r) => r.linguisticFamilyId === selectedLangId,
+      )?.id || "eldria_prime";
     const name = generateRealmName(realmForLang, generatedNameKind);
     setGeneratedName(name);
   };
@@ -146,7 +167,13 @@ type GeneratedNameKind =
     requestAnimationFrame(() => {
       if (
         tabParam &&
-        ["cartography", "linguistics", "magic_toll", "monomyth", "provenance"].includes(tabParam)
+        [
+          "cartography",
+          "linguistics",
+          "magic_toll",
+          "monomyth",
+          "provenance",
+        ].includes(tabParam)
       ) {
         setActiveTab(tabParam);
       }
@@ -199,9 +226,10 @@ type GeneratedNameKind =
               The Multiverse Atlas
             </h1>
             <p className="text-base sm:text-lg text-white/60 leading-relaxed font-sans">
-              Inspect the physical leylines of the Kingdom of Light. Calculate Solfeggio standing-wave
-              resonance across Realm Corridors, explore Tolkien-grade linguistic matrices, and measure
-              the tactile toll of Sandersonian magic.
+              Inspect the physical leylines of the Kingdom of Light. Calculate
+              Solfeggio standing-wave resonance across Realm Corridors, explore
+              Tolkien-grade linguistic matrices, and measure the tactile toll of
+              Sandersonian magic.
             </p>
           </div>
 
@@ -221,7 +249,9 @@ type GeneratedNameKind =
                         : "text-white/50 hover:text-white/80 hover:bg-white/[0.04]"
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${isActive ? "text-[var(--arc-brand-arcanean-gold,#d4af37)]" : ""}`} />
+                    <Icon
+                      className={`w-4 h-4 ${isActive ? "text-[var(--arc-brand-arcanean-gold,#d4af37)]" : ""}`}
+                    />
                     <span>{tab.label}</span>
                   </button>
                 );
@@ -261,8 +291,8 @@ type GeneratedNameKind =
                         isSelectedA
                           ? "bg-emerald-500/[0.08] border-emerald-500/40 ring-1 ring-emerald-500/20"
                           : isSelectedB
-                          ? "bg-cyan-500/[0.08] border-cyan-500/40 ring-1 ring-cyan-500/20"
-                          : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
+                            ? "bg-cyan-500/[0.08] border-cyan-500/40 ring-1 ring-cyan-500/20"
+                            : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
                       }`}
                     >
                       <div className="space-y-3">
@@ -275,9 +305,12 @@ type GeneratedNameKind =
                           </span>
                         </div>
                         <div>
-                          <h3 className="text-lg font-medium text-white">{realm.name}</h3>
+                          <h3 className="text-lg font-medium text-white">
+                            {realm.name}
+                          </h3>
                           <p className="text-xs text-white/50 capitalize">
-                            Gate: {realm.dominantGate} · Element: {realm.primaryElement}
+                            Gate: {realm.dominantGate} · Element:{" "}
+                            {realm.primaryElement}
                           </p>
                         </div>
                         <p className="text-xs text-white/70 line-clamp-2 leading-relaxed">
@@ -321,7 +354,9 @@ type GeneratedNameKind =
                         Acoustic Leyline Calculator
                       </span>
                       <h2 className="text-2xl font-serif text-white">
-                        Corridor Resonance: {initialRealms[selectedRealmAId]?.name} ↔ {initialRealms[selectedRealmBId]?.name}
+                        Corridor Resonance:{" "}
+                        {initialRealms[selectedRealmAId]?.name} ↔{" "}
+                        {initialRealms[selectedRealmBId]?.name}
                       </h2>
                     </div>
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono border uppercase tracking-wider">
@@ -330,8 +365,8 @@ type GeneratedNameKind =
                           corridorResult.status === "open"
                             ? "bg-emerald-400 animate-pulse"
                             : corridorResult.status === "drifting"
-                            ? "bg-amber-400 animate-pulse"
-                            : "bg-rose-400"
+                              ? "bg-amber-400 animate-pulse"
+                              : "bg-rose-400"
                         }`}
                       />
                       <span>Status: {corridorResult.status}</span>
@@ -341,40 +376,54 @@ type GeneratedNameKind =
                   {/* Metrics Row */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-                      <span className="text-xs text-white/40 block">Harmonic Delta</span>
+                      <span className="text-xs text-white/40 block">
+                        Harmonic Delta
+                      </span>
                       <span className="text-xl font-mono text-white mt-1 block">
                         {corridorResult.harmonicDelta} Hz
                       </span>
                       <span className="text-[11px] text-white/40 block mt-0.5">
-                        {corridorResult.harmonicDelta === 0 ? "Perfect lock" : "Acoustic divergence"}
+                        {corridorResult.harmonicDelta === 0
+                          ? "Perfect lock"
+                          : "Acoustic divergence"}
                       </span>
                     </div>
 
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-                      <span className="text-xs text-white/40 block">Stability Index</span>
+                      <span className="text-xs text-white/40 block">
+                        Stability Index
+                      </span>
                       <span className="text-xl font-mono text-white mt-1 block">
                         {(corridorResult.stability * 100).toFixed(0)}%
                       </span>
                       <div className="w-full bg-white/10 rounded-full h-1 mt-2 overflow-hidden">
                         <div
                           className="bg-emerald-400 h-full rounded-full transition-all"
-                          style={{ width: `${Math.min(100, corridorResult.stability * 100)}%` }}
+                          style={{
+                            width: `${Math.min(100, corridorResult.stability * 100)}%`,
+                          }}
                         />
                       </div>
                     </div>
 
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-                      <span className="text-xs text-white/40 block">Corridor Transit</span>
+                      <span className="text-xs text-white/40 block">
+                        Corridor Transit
+                      </span>
                       <span className="text-xl font-mono text-white mt-1 block">
                         {corridorResult.corridorDays} Days
                       </span>
                       <span className="text-[11px] text-emerald-400 block mt-0.5">
-                        {corridorResult.isAquifer ? "Aquifer highway" : "Sub-spatial rift"}
+                        {corridorResult.isAquifer
+                          ? "Aquifer highway"
+                          : "Sub-spatial rift"}
                       </span>
                     </div>
 
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-                      <span className="text-xs text-white/40 block">Surface Transit</span>
+                      <span className="text-xs text-white/40 block">
+                        Surface Transit
+                      </span>
                       <span className="text-xl font-mono text-white mt-1 block">
                         {corridorResult.surfaceDays} Days
                       </span>
@@ -387,12 +436,17 @@ type GeneratedNameKind =
                   {/* Physics & Environmental Insight */}
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs text-white/70 space-y-2">
                     <p>
-                      <strong className="text-white">Soil & Acoustic Resonance:</strong>{" "}
+                      <strong className="text-white">
+                        Soil & Acoustic Resonance:
+                      </strong>{" "}
                       {initialRealms[selectedRealmAId]?.geography.soilResonance}
                     </p>
                     <p>
                       <strong className="text-white">Weather Phenomena:</strong>{" "}
-                      {initialRealms[selectedRealmAId]?.geography.weatherPhenomena}
+                      {
+                        initialRealms[selectedRealmAId]?.geography
+                          .weatherPhenomena
+                      }
                     </p>
                   </div>
                 </div>
@@ -432,42 +486,65 @@ type GeneratedNameKind =
                   <div className="lg:col-span-2 p-6 sm:p-8 rounded-3xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl space-y-6">
                     <div className="space-y-1">
                       <span className="text-xs uppercase font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]">
-                        Phonological Engine · {linguisticFamilies[selectedLangId].harmonicFrequencyHz} Hz
+                        Phonological Engine ·{" "}
+                        {linguisticFamilies[selectedLangId].harmonicFrequencyHz}{" "}
+                        Hz
                       </span>
                       <h2 className="text-2xl font-serif text-white">
                         {linguisticFamilies[selectedLangId].name}
                       </h2>
                       <p className="text-xs text-white/50">
-                        Dominant Gate: {linguisticFamilies[selectedLangId].dominantGate}
+                        Dominant Gate:{" "}
+                        {linguisticFamilies[selectedLangId].dominantGate}
                       </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-1">
-                        <span className="text-xs text-white/40 block">Sensory Tone</span>
+                        <span className="text-xs text-white/40 block">
+                          Sensory Tone
+                        </span>
                         <p className="text-sm font-medium text-white">
-                          &ldquo;{linguisticFamilies[selectedLangId].phonology.sensoryTone}&rdquo;
+                          &ldquo;
+                          {
+                            linguisticFamilies[selectedLangId].phonology
+                              .sensoryTone
+                          }
+                          &rdquo;
                         </p>
                       </div>
 
                       <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-1">
-                        <span className="text-xs text-white/40 block">Cadence Pattern</span>
+                        <span className="text-xs text-white/40 block">
+                          Cadence Pattern
+                        </span>
                         <p className="text-sm font-medium text-white">
-                          {linguisticFamilies[selectedLangId].phonology.cadencePattern}
+                          {
+                            linguisticFamilies[selectedLangId].phonology
+                              .cadencePattern
+                          }
                         </p>
                       </div>
 
                       <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-1">
-                        <span className="text-xs text-white/40 block">Preferred Consonants</span>
+                        <span className="text-xs text-white/40 block">
+                          Preferred Consonants
+                        </span>
                         <p className="text-sm font-mono text-white">
-                          {linguisticFamilies[selectedLangId].phonology.preferredConsonants.join(", ")}
+                          {linguisticFamilies[
+                            selectedLangId
+                          ].phonology.preferredConsonants.join(", ")}
                         </p>
                       </div>
 
                       <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-1">
-                        <span className="text-xs text-white/40 block">Vowel Harmony</span>
+                        <span className="text-xs text-white/40 block">
+                          Vowel Harmony
+                        </span>
                         <p className="text-sm font-mono text-white">
-                          {linguisticFamilies[selectedLangId].phonology.vowelHarmony.join(" · ")}
+                          {linguisticFamilies[
+                            selectedLangId
+                          ].phonology.vowelHarmony.join(" · ")}
                         </p>
                       </div>
                     </div>
@@ -478,19 +555,21 @@ type GeneratedNameKind =
                         Core Etymological Roots
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        {Object.entries(linguisticFamilies[selectedLangId].etymologicalRoots).map(
-                          ([root, meaning]) => (
-                            <div
-                              key={root}
-                              className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] text-xs"
-                            >
-                              <span className="font-mono font-semibold text-[var(--arc-brand-arcanean-gold,#d4af37)]">
-                                {root}-
-                              </span>
-                              <span className="text-white/60 block mt-0.5">&ldquo;{meaning}&rdquo;</span>
-                            </div>
-                          )
-                        )}
+                        {Object.entries(
+                          linguisticFamilies[selectedLangId].etymologicalRoots,
+                        ).map(([root, meaning]) => (
+                          <div
+                            key={root}
+                            className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] text-xs"
+                          >
+                            <span className="font-mono font-semibold text-[var(--arc-brand-arcanean-gold,#d4af37)]">
+                              {root}-
+                            </span>
+                            <span className="text-white/60 block mt-0.5">
+                              &ldquo;{meaning}&rdquo;
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -502,25 +581,53 @@ type GeneratedNameKind =
                         <span className="text-xs uppercase font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]">
                           Generative Tooling
                         </span>
-                        <h3 className="text-xl font-serif text-white">Authentic Dialect Forge</h3>
+                        <h3 className="text-xl font-serif text-white">
+                          Authentic Dialect Forge
+                        </h3>
                         <p className="text-xs text-white/60 mt-1">
-                          Generate phonologically accurate names compliant with this language&apos;s roots.
+                          Generate phonologically accurate names compliant with
+                          this language&apos;s roots.
                         </p>
                       </div>
 
                       {/* Kind Selector */}
                       <div className="space-y-2">
-                        <label className="text-xs text-white/40 block">Generation Target</label>
+                        <label className="text-xs text-white/40 block">
+                          Generation Target
+                        </label>
                         <select
                           value={generatedNameKind}
-                          onChange={(e) => setGeneratedNameKind(e.target.value as GeneratedNameKind)}
+                          onChange={(e) =>
+                            setGeneratedNameKind(
+                              e.target.value as GeneratedNameKind,
+                            )
+                          }
                           className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-white/30"
                         >
-                          <option value="character_masculine" className="bg-[#0b0f19]">Character (Masculine)</option>
-                          <option value="character_feminine" className="bg-[#0b0f19]">Character (Feminine)</option>
-                          <option value="character_neutral" className="bg-[#0b0f19]">Character (Neutral)</option>
-                          <option value="toponym" className="bg-[#0b0f19]">Toponym (City / Landmark)</option>
-                          <option value="relic" className="bg-[#0b0f19]">Relic / Artifact</option>
+                          <option
+                            value="character_masculine"
+                            className="bg-[#0b0f19]"
+                          >
+                            Character (Masculine)
+                          </option>
+                          <option
+                            value="character_feminine"
+                            className="bg-[#0b0f19]"
+                          >
+                            Character (Feminine)
+                          </option>
+                          <option
+                            value="character_neutral"
+                            className="bg-[#0b0f19]"
+                          >
+                            Character (Neutral)
+                          </option>
+                          <option value="toponym" className="bg-[#0b0f19]">
+                            Toponym (City / Landmark)
+                          </option>
+                          <option value="relic" className="bg-[#0b0f19]">
+                            Relic / Artifact
+                          </option>
                         </select>
                       </div>
 
@@ -542,7 +649,9 @@ type GeneratedNameKind =
                             {generatedName}
                           </span>
                           <button
-                            onClick={() => handleCopy(generatedName, "gen_name")}
+                            onClick={() =>
+                              handleCopy(generatedName, "gen_name")
+                            }
                             className="inline-flex items-center gap-1.5 text-xs text-white/60 hover:text-white font-mono mt-1"
                           >
                             {copiedKey === "gen_name" ? (
@@ -562,7 +671,8 @@ type GeneratedNameKind =
                     </div>
 
                     <div className="pt-4 border-t border-white/[0.06] text-[11px] text-white/40">
-                      Adheres to the Five Sensory Anchor Laws: every synthesized name carries tactile roots.
+                      Adheres to the Five Sensory Anchor Laws: every synthesized
+                      name carries tactile roots.
                     </div>
                   </div>
                 </div>
@@ -588,13 +698,16 @@ type GeneratedNameKind =
                     The Concrete Cost of Channeling
                   </h2>
                   <p className="text-xs text-white/60 mt-1">
-                    Magic is not frictionless hand-waving. Every frequency channeled exerts a biological and acoustic price.
+                    Magic is not frictionless hand-waving. Every frequency
+                    channeled exerts a biological and acoustic price.
                   </p>
                 </div>
 
                 {/* Gate Selectors */}
                 <div className="space-y-2">
-                  <label className="text-xs text-white/40 block">Select Solfeggio Gate</label>
+                  <label className="text-xs text-white/40 block">
+                    Select Solfeggio Gate
+                  </label>
                   <div className="flex flex-wrap gap-1.5">
                     {(
                       [
@@ -627,9 +740,13 @@ type GeneratedNameKind =
 
                 {/* Intensity Selectors */}
                 <div className="space-y-2">
-                  <label className="text-xs text-white/40 block">Channeling Intensity</label>
+                  <label className="text-xs text-white/40 block">
+                    Channeling Intensity
+                  </label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {(["minor", "moderate", "severe", "cataclysmic"] as const).map((intensity) => (
+                    {(
+                      ["minor", "moderate", "severe", "cataclysmic"] as const
+                    ).map((intensity) => (
                       <button
                         key={intensity}
                         onClick={() => setSelectedIntensity(intensity)}
@@ -646,10 +763,10 @@ type GeneratedNameKind =
                           {intensity === "minor"
                             ? "Subtle cantrip"
                             : intensity === "moderate"
-                            ? "Field combat"
-                            : intensity === "severe"
-                            ? "High trial"
-                            : "Cataclysmic rupture"}
+                              ? "Field combat"
+                              : intensity === "severe"
+                                ? "High trial"
+                                : "Cataclysmic rupture"}
                         </span>
                       </button>
                     ))}
@@ -714,8 +831,9 @@ type GeneratedNameKind =
                   The 12 Stages of the Arcanean Monomyth
                 </h2>
                 <p className="text-xs text-white/60">
-                  Every hero&apos;s arc synchronizes with the Ten Solfeggio Gates, progressing from the
-                  mundane Foundation (174 Hz) to the sovereign Source (1111 Hz).
+                  Every hero&apos;s arc synchronizes with the Ten Solfeggio
+                  Gates, progressing from the mundane Foundation (174 Hz) to the
+                  sovereign Source (1111 Hz).
                 </p>
               </div>
 
@@ -750,7 +868,8 @@ type GeneratedNameKind =
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.06]">
                     <div>
                       <span className="text-xs uppercase font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]">
-                        Stage {activeStage.stageNumber} of 12 · Gate of {activeStage.gateId} ({activeStage.frequencyHz} Hz)
+                        Stage {activeStage.stageNumber} of 12 · Gate of{" "}
+                        {activeStage.gateId} ({activeStage.frequencyHz} Hz)
                       </span>
                       <h3 className="text-3xl font-serif text-white mt-1">
                         {activeStage.name}
@@ -825,18 +944,26 @@ type GeneratedNameKind =
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.06]">
                     <div>
                       <span className="text-xs uppercase font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]">
-                        Gate {activeGuardian.gateNumber} · {activeGuardian.frequencyHz} Hz · {activeGuardian.element}
+                        Gate {activeGuardian.gateNumber} ·{" "}
+                        {activeGuardian.frequencyHz} Hz ·{" "}
+                        {activeGuardian.element}
                       </span>
                       <h3 className="text-3xl font-serif text-white mt-1">
                         {activeGuardian.name} — {activeGuardian.title}
                       </h3>
                       <p className="text-xs text-white/50 mt-1">
-                        Bonded Godbeast: {activeGuardian.godbeast} · Origin Realm: {activeGuardian.realmId}
+                        Bonded Godbeast: {activeGuardian.godbeast} · Origin
+                        Realm: {activeGuardian.realmId}
                       </p>
                     </div>
 
                     <button
-                      onClick={() => handleCopy(JSON.stringify(activeProvenance, null, 2), "prov_json")}
+                      onClick={() =>
+                        handleCopy(
+                          JSON.stringify(activeProvenance, null, 2),
+                          "prov_json",
+                        )
+                      }
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-mono transition-colors self-start sm:self-auto"
                     >
                       {copiedKey === "prov_json" ? (
@@ -855,27 +982,39 @@ type GeneratedNameKind =
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                      <span className="text-xs text-white/40 block">Tactile Physical Anchor</span>
+                      <span className="text-xs text-white/40 block">
+                        Tactile Physical Anchor
+                      </span>
                       <p className="text-sm text-white font-medium">
                         {activeGuardian.tactileAnchor}
                       </p>
                     </div>
 
                     <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                      <span className="text-xs text-white/40 block">Linguistic Root & Meaning</span>
+                      <span className="text-xs text-white/40 block">
+                        Linguistic Root & Meaning
+                      </span>
                       <p className="text-sm text-white font-medium">
-                        &ldquo;{activeProvenance.linguisticRoot.literalMeaning}&rdquo; (Root: {activeProvenance.linguisticRoot.etymologicalSource})
+                        &ldquo;{activeProvenance.linguisticRoot.literalMeaning}
+                        &rdquo; (Root:{" "}
+                        {activeProvenance.linguisticRoot.etymologicalSource})
                       </p>
                     </div>
                   </div>
 
                   <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
-                    <span className="text-xs text-white/40 block">Deep-Time Provenance & Causality Path</span>
+                    <span className="text-xs text-white/40 block">
+                      Deep-Time Provenance & Causality Path
+                    </span>
                     <p className="text-xs font-mono text-white/70 leading-relaxed">
                       {activeProvenance.temporalCausalityPath[0]?.eventSummary}
                     </p>
                     <p className="text-[11px] text-white/50 font-mono mt-1">
-                      Modification: {activeProvenance.temporalCausalityPath[0]?.physicalModification}
+                      Modification:{" "}
+                      {
+                        activeProvenance.temporalCausalityPath[0]
+                          ?.physicalModification
+                      }
                     </p>
                   </div>
                 </div>
@@ -886,18 +1025,28 @@ type GeneratedNameKind =
           {/* Bottom Footnote & Lore Bridge */}
           <div className="pt-12 border-t border-white/[0.06] text-center text-xs text-white/40 space-y-2">
             <p>
-              Arcanea Living Worlds Engine · Grounded in the Ten Solfeggio Gates (174–1111 Hz) and the Primordial Duality.
+              Arcanea Living Worlds Engine · Grounded in the Ten Solfeggio Gates
+              (174–1111 Hz) and the Primordial Duality.
             </p>
             <div className="flex items-center justify-center gap-4 text-white/60">
-              <Link href="/lore" className="hover:text-white transition-colors underline underline-offset-4">
+              <Link
+                href="/lore"
+                className="hover:text-white transition-colors underline underline-offset-4"
+              >
                 Canonical Lore
               </Link>
               <span>·</span>
-              <Link href="/worlds" className="hover:text-white transition-colors underline underline-offset-4">
+              <Link
+                href="/worlds"
+                className="hover:text-white transition-colors underline underline-offset-4"
+              >
                 World Weaver
               </Link>
               <span>·</span>
-              <Link href="/quiz" className="hover:text-white transition-colors underline underline-offset-4">
+              <Link
+                href="/quiz"
+                className="hover:text-white transition-colors underline underline-offset-4"
+              >
                 Awakening Quiz
               </Link>
             </div>

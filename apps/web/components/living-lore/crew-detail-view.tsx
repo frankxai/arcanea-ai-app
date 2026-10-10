@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import {
   slideUp,
   staggerContainer,
   staggerItem,
   hoverPresets,
   transitions,
-} from '@/lib/design/motion';
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import { BondMeter } from './bond-meter';
-import { CrewPortrait } from './crew-portrait';
-import type { CrewMember, Encounter } from '@/lib/living-lore/types';
-import { getCrewVisual } from '@/lib/living-lore/crew-visuals';
+} from "@/lib/design/motion";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import { BondMeter } from "./bond-meter";
+import { CrewPortrait } from "./crew-portrait";
+import type { CrewMember, Encounter } from "@/lib/living-lore/types";
+import { getCrewVisual } from "@/lib/living-lore/crew-visuals";
 
 interface Props {
   member: CrewMember;
@@ -145,8 +145,8 @@ export function CrewDetailView({
                 key={trait}
                 className="glass-subtle rounded-full px-3 py-1 text-xs capitalize text-text-muted"
                 style={{
-                  background: member.color + '08',
-                  borderColor: member.color + '15',
+                  background: member.color + "08",
+                  borderColor: member.color + "15",
                 }}
               >
                 {trait}
@@ -160,7 +160,7 @@ export function CrewDetailView({
               href={`/chat/${member.id}`}
               className="liquid-glass inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:brightness-110"
               style={{
-                borderColor: member.color + '30',
+                borderColor: member.color + "30",
                 color: member.color,
               }}
             >
@@ -232,7 +232,7 @@ export function CrewDetailView({
               Interactive scenes featuring {member.name}
             </p>
             <m.div
-              variants={staggerContainer('normal')}
+              variants={staggerContainer("normal")}
               initial="hidden"
               animate="visible"
               className="space-y-3"
@@ -282,8 +282,9 @@ export function CrewDetailView({
                 {member.guardianAffinity} Resonator
               </h3>
               <p className="text-xs text-text-muted mt-1 max-w-md">
-                Anchored to the Solfeggio standing-waves of the Kingdom of Light.
-                Inspect cosmic toll parameters and realm leylines in the Multiverse Atlas.
+                Anchored to the Solfeggio standing-waves of the Kingdom of
+                Light. Inspect cosmic toll parameters and realm leylines in the
+                Multiverse Atlas.
               </p>
             </div>
             <Link
@@ -305,7 +306,7 @@ export function CrewDetailView({
               Library texts connected to {member.name}&apos;s journey
             </p>
             <m.div
-              variants={staggerContainer('normal')}
+              variants={staggerContainer("normal")}
               initial="hidden"
               animate="visible"
               className="space-y-3"

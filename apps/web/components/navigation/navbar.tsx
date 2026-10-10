@@ -48,7 +48,11 @@ const navLinks: NavLink[] = [
       {
         title: "Agents",
         items: [
-          { href: "/agent", label: "Arcanea Agent", desc: "Desktop app + profile" },
+          {
+            href: "/agent",
+            label: "Arcanea Agent",
+            desc: "Desktop app + profile",
+          },
           { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
           { href: "/forge/companion", label: "Forge", desc: "Create your own" },
         ],
@@ -108,7 +112,11 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
-          { href: "/atlas", label: "Multiverse Atlas", desc: "Realms, corridors & dialects" },
+          {
+            href: "/atlas",
+            label: "Multiverse Atlas",
+            desc: "Realms, corridors & dialects",
+          },
           {
             href: "/story",
             label: "The First Light",

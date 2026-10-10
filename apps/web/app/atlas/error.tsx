@@ -16,9 +16,12 @@ export default function AtlasError({
           <Warning className="w-7 h-7" />
         </div>
         <div className="space-y-2">
-          <h2 className="text-xl font-medium tracking-tight">Corridor Resonance Desynchronized</h2>
+          <h2 className="text-xl font-medium tracking-tight">
+            Corridor Resonance Desynchronized
+          </h2>
           <p className="text-sm text-white/60">
-            The multiverse cartography matrix encountered an unexpected acoustic rift.
+            The multiverse cartography matrix encountered an unexpected acoustic
+            rift.
           </p>
         </div>
         <div className="flex items-center justify-center gap-4 pt-2">

@@ -36,17 +36,29 @@ export interface PantheonAgent {
 
 export interface HephaestusAgent extends PantheonAgent {
   generateOutline(prompt: string, context?: any): Promise<StoryOutline>;
-  validateStructure(outline: StoryOutline): Promise<{ valid: boolean; issues: string[] }>;
+  validateStructure(
+    outline: StoryOutline,
+  ): Promise<{ valid: boolean; issues: string[] }>;
 }
 
 export interface CalliopeAgent extends PantheonAgent {
-  generateDialogue(characters: string[], context: string, profile?: VoiceProfile[]): Promise<string>;
-  checkVoiceConsistency(text: string, voiceSpec: string): Promise<{ score: number; suggestions: string[] }>;
+  generateDialogue(
+    characters: string[],
+    context: string,
+    profile?: VoiceProfile[],
+  ): Promise<string>;
+  checkVoiceConsistency(
+    text: string,
+    voiceSpec: string,
+  ): Promise<{ score: number; suggestions: string[] }>;
 }
 
 export interface ApolloAgent extends PantheonAgent {
   editProse(text: string, constraints: string[]): Promise<string>;
-  auditNamesAndPronouns(text: string, registry: Record<string, string>): Promise<{ corrected: string; changes: string[] }>;
+  auditNamesAndPronouns(
+    text: string,
+    registry: Record<string, string>,
+  ): Promise<{ corrected: string; changes: string[] }>;
 }
 
 export interface MnemosyneAgent extends PantheonAgent {

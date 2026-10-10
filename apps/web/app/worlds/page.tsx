@@ -42,7 +42,8 @@ const TEMPLATE_WORLDS: WorldCard[] = [
       { name: "Spirit", color: ELEMENT_COLORS.Spirit },
       { name: "Wind", color: ELEMENT_COLORS.Wind },
     ],
-    gradient: "linear-gradient(135deg, var(--arc-brand-arcanean-gold), var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal))",
+    gradient:
+      "linear-gradient(135deg, var(--arc-brand-arcanean-gold), var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal))",
     isTemplate: true,
   },
   {
@@ -58,13 +59,15 @@ const TEMPLATE_WORLDS: WorldCard[] = [
       { name: "Wind", color: ELEMENT_COLORS.Wind },
       { name: "Water", color: ELEMENT_COLORS.Water },
     ],
-    gradient: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
+    gradient:
+      "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
     isTemplate: true,
   },
   {
     id: "aurevalde",
     name: "Aurevalde",
-    tagline: "Thermal ironstone mesas and solar-tempered steppes — 396 Hz Fire Gate",
+    tagline:
+      "Thermal ironstone mesas and solar-tempered steppes — 396 Hz Fire Gate",
     creator: "Draconia",
     stars: 82,
     forks: 19,
@@ -74,13 +77,15 @@ const TEMPLATE_WORLDS: WorldCard[] = [
       { name: "Fire", color: ELEMENT_COLORS.Fire },
       { name: "Earth", color: ELEMENT_COLORS.Earth },
     ],
-    gradient: "linear-gradient(135deg, var(--arc-fire), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
+    gradient:
+      "linear-gradient(135deg, var(--arc-fire), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
     isTemplate: true,
   },
   {
     id: "mar-arcano",
     name: "Mar Arcano",
-    tagline: "Subterranean bioluminescent sea and 5-realm aquifer — 285 Hz Flow Gate",
+    tagline:
+      "Subterranean bioluminescent sea and 5-realm aquifer — 285 Hz Flow Gate",
     creator: "Leyla",
     stars: 110,
     forks: 31,
@@ -90,13 +95,15 @@ const TEMPLATE_WORLDS: WorldCard[] = [
       { name: "Water", color: ELEMENT_COLORS.Water },
       { name: "Void", color: ELEMENT_COLORS.Void },
     ],
-    gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal), var(--arc-cosmic-void))",
+    gradient:
+      "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal), var(--arc-cosmic-void))",
     isTemplate: true,
   },
   {
     id: "the-shadowfen",
     name: "The Shadowfen",
-    tagline: "Sunken obsidian arches and petrified cedar groves — 174 Hz Foundation Gate",
+    tagline:
+      "Sunken obsidian arches and petrified cedar groves — 174 Hz Foundation Gate",
     creator: "Malachar / Sealed Archive",
     stars: 75,
     forks: 42,
@@ -106,7 +113,8 @@ const TEMPLATE_WORLDS: WorldCard[] = [
       { name: "Void", color: ELEMENT_COLORS.Void },
       { name: "Earth", color: ELEMENT_COLORS.Earth },
     ],
-    gradient: "linear-gradient(135deg, var(--arc-cosmic-void), var(--arc-void), var(--arc-brand-cosmic-blue))",
+    gradient:
+      "linear-gradient(135deg, var(--arc-cosmic-void), var(--arc-void), var(--arc-brand-cosmic-blue))",
     isTemplate: true,
   },
 ];

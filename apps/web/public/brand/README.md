@@ -15,7 +15,9 @@ brand/
 ```
 
 ## Production 2026-06-16 Update (Visual Ecosystem Overhaul)
+
 New subdirs populated from .arcanea/visual-assets/ (source of truth + MANIFEST):
+
 - heroes/ — site + github 16:9 (worlds living engine, arcanea main per VISUAL_ECOSYSTEM prompt, onchain web3, guardian variants etc)
 - factions/ — 8 Academy Houses + Starlight Corps cards/lineups (VISUAL_DOCTRINE grammar + franchise eq)
 - stellaris/ — mascot solos + contexts (exact STELLARIS.md prompts + full profile)
@@ -30,16 +32,19 @@ Usage example remains; import from new subdirs as needed. All tracked in .arcane
 ## Asset Guidelines
 
 ### Logos
+
 - Use SVG format for scalability
 - Provide PNG fallbacks in multiple sizes
 - Include light/dark variants
 
 ### Icons
+
 - 16x16, 32x32, 180x180, 512x512 sizes
 - SVG and PNG formats
 - Follow app icon guidelines
 
 ### Backgrounds
+
 - High resolution (2x for retina)
 - WebP format preferred for web
 - Include dark mode variants
@@ -47,11 +52,13 @@ Usage example remains; import from new subdirs as needed. All tracked in .arcane
 ## Usage
 
 Import assets in components:
+
 ```tsx
-import Arcanea from '/brand/logos/arcanea.svg'
+import Arcanea from "/brand/logos/arcanea.svg";
 ```
 
 Reference in HTML:
+
 ```html
 <img src="/brand/logos/arcanea-logo.png" alt="Arcanea" />
 ```

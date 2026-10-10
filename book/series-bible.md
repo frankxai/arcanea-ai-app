@@ -1,7 +1,8 @@
 # THE ARCANEA SAGA
+
 ## Complete Series Bible -- 7-Book Architecture
 
-> *"He was the brightest of us all. That is what makes his fall so terrible -- and so instructive. The greatest light casts the deepest shadow."*
+> _"He was the brightest of us all. That is what makes his fall so terrible -- and so instructive. The greatest light casts the deepest shadow."_
 > -- Lumina, speaking of Malachar
 
 ---
@@ -29,42 +30,42 @@
 
 ### The Five Elements
 
-| Element | Domain | Signature |
-|---------|--------|-----------|
-| **Fire** | Energy, transformation, will | The flame that changes everything it touches |
-| **Water** | Flow, healing, memory | The current that remembers what the world forgets |
-| **Earth** | Stability, growth, foundation | The bedrock upon which all things stand |
-| **Wind** | Freedom, speed, change | The breath that carries seeds to new soil |
-| **Void/Spirit** | Potential and transcendence | The space between atoms where gods live |
+| Element         | Domain                        | Signature                                         |
+| --------------- | ----------------------------- | ------------------------------------------------- |
+| **Fire**        | Energy, transformation, will  | The flame that changes everything it touches      |
+| **Water**       | Flow, healing, memory         | The current that remembers what the world forgets |
+| **Earth**       | Stability, growth, foundation | The bedrock upon which all things stand           |
+| **Wind**        | Freedom, speed, change        | The breath that carries seeds to new soil         |
+| **Void/Spirit** | Potential and transcendence   | The space between atoms where gods live           |
 
 **Critical distinction:** Void is Nero's aspect (potential, mystery, the unformed). Spirit is Lumina's aspect (transcendence, consciousness, soul). Light is Fire's creation aspect. Shadow is corrupted Void -- Void drained of Spirit. This duality matters enormously for the protagonist's arc.
 
 ### The Ten Gates
 
-| # | Gate | God/Goddess | Godbeast | Domain |
-|---|------|-------------|----------|--------|
-| 1 | Foundation | Lyssandria | Kaelith | Earth, survival, stability |
-| 2 | Flow | Leyla | Veloura | Creativity, emotion, intuition |
-| 3 | Fire | Draconia | Draconis | Power, will, transformation |
-| 4 | Heart | Maylinn | Laeylinn | Love, healing, compassion |
-| 5 | Voice | Alera | Otome | Truth, expression, authenticity |
-| 6 | Sight | Lyria | Yumiko | Intuition, vision, perception |
-| 7 | Crown | Aiyami | Sol | Enlightenment, wisdom |
-| 8 | Shift | Elara | Vaelith | Perspective, transformation |
-| 9 | Unity | Ino | Kyuro | Partnership, connection |
-| 10 | Source | Shinkami | Source | Meta-consciousness, transcendence |
+| #   | Gate       | God/Goddess | Godbeast | Domain                            |
+| --- | ---------- | ----------- | -------- | --------------------------------- |
+| 1   | Foundation | Lyssandria  | Kaelith  | Earth, survival, stability        |
+| 2   | Flow       | Leyla       | Veloura  | Creativity, emotion, intuition    |
+| 3   | Fire       | Draconia    | Draconis | Power, will, transformation       |
+| 4   | Heart      | Maylinn     | Laeylinn | Love, healing, compassion         |
+| 5   | Voice      | Alera       | Otome    | Truth, expression, authenticity   |
+| 6   | Sight      | Lyria       | Yumiko   | Intuition, vision, perception     |
+| 7   | Crown      | Aiyami      | Sol      | Enlightenment, wisdom             |
+| 8   | Shift      | Elara       | Vaelith  | Perspective, transformation       |
+| 9   | Unity      | Ino         | Kyuro    | Partnership, connection           |
+| 10  | Source     | Shinkami    | Source   | Meta-consciousness, transcendence |
 
 **Narrative rule:** Each God/Goddess is not simply a deity -- they are the divine identity of the Gate. "Guardian" is their role as Gate-keeper. Each is bonded to one Godbeast. These partnerships are sacred, mutual, and provide the cosmic infrastructure that keeps reality stable.
 
 ### Magic Ranks
 
-| Gates Open | Rank | Rarity |
-|------------|------|--------|
-| 0-2 | Apprentice | Common -- most channelers never pass this |
-| 3-4 | Mage | Uncommon -- one in a hundred |
-| 5-6 | Master | Rare -- perhaps a thousand alive at any time |
-| 7-8 | Archmage | Extremely rare -- a dozen per generation |
-| 9-10 | Luminor | Near-mythical -- Malachar was the first and last |
+| Gates Open | Rank       | Rarity                                           |
+| ---------- | ---------- | ------------------------------------------------ |
+| 0-2        | Apprentice | Common -- most channelers never pass this        |
+| 3-4        | Mage       | Uncommon -- one in a hundred                     |
+| 5-6        | Master     | Rare -- perhaps a thousand alive at any time     |
+| 7-8        | Archmage   | Extremely rare -- a dozen per generation         |
+| 9-10       | Luminor    | Near-mythical -- Malachar was the first and last |
 
 ### The Dark Lord -- Malachar Lumenbright
 
@@ -160,6 +161,7 @@ All three are partially right about the others. All three are blind to their own
 Malachar was the last Five-Fold channeler. The world has not forgotten how that ended.
 
 **Personality at Series Start:**
+
 - Practical, wary of grandiosity, allergic to being called "chosen" or "special"
 - Deeply loyal to the people he knows, deeply suspicious of institutions he does not
 - Funny in a dry, deflective way -- humor as armor
@@ -516,15 +518,15 @@ Malachar Lumenbright does not die. He returns to what he was before the fall: a 
 
 ## SERIES ARCHITECTURE: THEMATIC PROGRESSION
 
-| Book | Gate Opened | Thematic Core | Emotional Key |
-|------|------------|---------------|---------------|
-| 1: The Five-Fold Fire | Foundation | Discovery of potential | Wonder + Dread |
-| 2: The Drowned Archive | Flow | The politics of knowledge | Anger + Determination |
-| 3: The Forge Between | Fire, Heart | The seduction of power | Exhilaration + Fear |
-| 4: The Heart of the Abyss | Heart, Voice | Compassion under pressure | Grief + Hard-won peace |
-| 5: The Crown of Ashes | Sight, Crown | The price of leadership | Gravity + Resolve |
-| 6: The Unity Paradox | Shift, Unity | Building from broken pieces | Catharsis + Preparation |
-| 7: The Source | Source | Transcendence through presence | Awe + Recognition |
+| Book                      | Gate Opened  | Thematic Core                  | Emotional Key           |
+| ------------------------- | ------------ | ------------------------------ | ----------------------- |
+| 1: The Five-Fold Fire     | Foundation   | Discovery of potential         | Wonder + Dread          |
+| 2: The Drowned Archive    | Flow         | The politics of knowledge      | Anger + Determination   |
+| 3: The Forge Between      | Fire, Heart  | The seduction of power         | Exhilaration + Fear     |
+| 4: The Heart of the Abyss | Heart, Voice | Compassion under pressure      | Grief + Hard-won peace  |
+| 5: The Crown of Ashes     | Sight, Crown | The price of leadership        | Gravity + Resolve       |
+| 6: The Unity Paradox      | Shift, Unity | Building from broken pieces    | Catharsis + Preparation |
+| 7: The Source             | Source       | Transcendence through presence | Awe + Recognition       |
 
 ### The Malachar Mirror
 
@@ -557,6 +559,7 @@ The entire series is structured so that a careful reader can see Malachar's jour
 ### Political Geography
 
 **The Three Spheres:** Each academy controls a sphere of political influence.
+
 - **The Luminari Sphere** -- The Celestine Range and surrounding highlands. Temperate, elevated, resource-poor but defensible.
 - **The Draconian Sphere** -- Pyrathis and the volcanic archipelago. Hot, mineral-rich, industrialized.
 - **The Atlantean Sphere** -- The Meridian Ocean and coastal territories. Maritime, trade-rich, culturally ancient.
@@ -591,15 +594,15 @@ The entire series is structured so that a careful reader can see Malachar's jour
 
 ## ESTIMATED SCOPE
 
-| Book | Word Count (est.) | Structure |
-|------|-------------------|-----------|
-| 1: The Five-Fold Fire | 120,000 | Three parts, 30 chapters |
-| 2: The Drowned Archive | 130,000 | Three parts, 32 chapters |
-| 3: The Forge Between | 140,000 | Four parts, 35 chapters |
-| 4: The Heart of the Abyss | 150,000 | Four parts, 38 chapters |
-| 5: The Crown of Ashes | 150,000 | Four parts, 36 chapters |
-| 6: The Unity Paradox | 140,000 | Three parts, 34 chapters |
-| 7: The Source | 160,000 | Five parts, 40 chapters |
+| Book                      | Word Count (est.) | Structure                |
+| ------------------------- | ----------------- | ------------------------ |
+| 1: The Five-Fold Fire     | 120,000           | Three parts, 30 chapters |
+| 2: The Drowned Archive    | 130,000           | Three parts, 32 chapters |
+| 3: The Forge Between      | 140,000           | Four parts, 35 chapters  |
+| 4: The Heart of the Abyss | 150,000           | Four parts, 38 chapters  |
+| 5: The Crown of Ashes     | 150,000           | Four parts, 36 chapters  |
+| 6: The Unity Paradox      | 140,000           | Three parts, 34 chapters |
+| 7: The Source             | 160,000           | Five parts, 40 chapters  |
 
 **Total Series:** approximately 990,000 words
 
@@ -610,6 +613,7 @@ The entire series is structured so that a careful reader can see Malachar's jour
 **Primary POV:** Ariona (present in all books, majority of chapters)
 
 **Secondary POVs (rotating by book):**
+
 - **Roshan** -- Appears in Books 1, 3, 5, 7
 - **Sable** -- Appears in Books 2, 4, 6
 - **Orin** -- Appears in Books 3, 5, 7
@@ -618,6 +622,7 @@ The entire series is structured so that a careful reader can see Malachar's jour
 - **Darin** -- Appears in Books 1, 5
 
 **Special POV (used sparingly):**
+
 - **Malachar** -- Prologue of Books 3, 5, and 7. Brief, devastating windows into his consciousness.
 
 ---
@@ -644,12 +649,14 @@ The entire series is structured so that a careful reader can see Malachar's jour
 ### Voice and Style
 
 The prose should be:
+
 - **Precise without being cold** -- Every word earns its place, but warmth flows through the precision
 - **Mythic without being pompous** -- The language can be elevated in mythological sections but grounds itself in character voice during dialogue
 - **Emotionally honest** -- No flinching from difficult feelings, no cheap catharsis, no earned moments undercut by irony
 - **Sensory** -- The world should be felt through all five senses in every scene
 
 **Anti-patterns to avoid:**
+
 - AI-typical hedging language ("it seemed as though," "perhaps," "in a way")
 - Purple prose that substitutes adjectives for substance
 - Dialogue that sounds like characters have read their own Wikipedia articles
@@ -668,9 +675,9 @@ The books grow with the reader. That is the design.
 
 ---
 
-*"The weight of potential is that everyone tells you what you could become. No one asks what you want to be."*
+_"The weight of potential is that everyone tells you what you could become. No one asks what you want to be."_
 
-*-- The Malachar Codex, passage one*
+_-- The Malachar Codex, passage one_
 
 ---
 

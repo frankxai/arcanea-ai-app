@@ -49,9 +49,21 @@ const HOW_IT_WORKS = [
 ];
 
 const HERO_STATS = [
-  { value: "10", label: "Solfeggio Gates", color: "var(--arc-brand-arcanean-gold)" },
-  { value: "7", label: "Living Realms", color: "var(--arc-brand-atlantean-teal)" },
-  { value: "6", label: "Dialect Families", color: "var(--arc-brand-cosmic-blue)" },
+  {
+    value: "10",
+    label: "Solfeggio Gates",
+    color: "var(--arc-brand-arcanean-gold)",
+  },
+  {
+    value: "7",
+    label: "Living Realms",
+    color: "var(--arc-brand-atlantean-teal)",
+  },
+  {
+    value: "6",
+    label: "Dialect Families",
+    color: "var(--arc-brand-cosmic-blue)",
+  },
   { value: "∞", label: "Forkable Universes", color: "var(--arc-void)" },
 ];
 
@@ -224,8 +236,13 @@ export function WorldsHero() {
               href="/atlas"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] hover:border-white/20 text-xs font-medium text-white/70 hover:text-white transition-all backdrop-blur-sm group"
             >
-              <span>Inspect Acoustic Leylines &amp; Corridors in the Multiverse Atlas</span>
-              <span className="text-[var(--arc-brand-atlantean-teal)] group-hover:translate-x-0.5 transition-transform">→</span>
+              <span>
+                Inspect Acoustic Leylines &amp; Corridors in the Multiverse
+                Atlas
+              </span>
+              <span className="text-[var(--arc-brand-atlantean-teal)] group-hover:translate-x-0.5 transition-transform">
+                →
+              </span>
             </Link>
           </m.div>
 

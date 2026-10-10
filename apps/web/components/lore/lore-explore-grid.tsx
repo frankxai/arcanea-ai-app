@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
-import { m, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { m, useInView } from "framer-motion";
+import { useRef } from "react";
 import {
   PhFlame,
   PhEye,
@@ -13,97 +13,101 @@ import {
   PhArrowRight,
   PhCompass,
   PhDiamond,
-} from '@/lib/phosphor-icons';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
+} from "@/lib/phosphor-icons";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const EXPLORATIONS = [
   {
-    href: '/atlas',
-    title: 'Multiverse Atlas',
-    description: 'Solfeggio acoustic corridors, Tolkien-grade dialects, and Sandersonian tolls',
+    href: "/atlas",
+    title: "Multiverse Atlas",
+    description:
+      "Solfeggio acoustic corridors, Tolkien-grade dialects, and Sandersonian tolls",
     icon: PhCompass,
-    gradient: 'from-[var(--arc-brand-arcanean-gold,#d4af37)]/20 to-cyan-500/10',
-    accentColor: 'text-[var(--arc-brand-arcanean-gold,#d4af37)]',
-    borderColor: 'border-[var(--arc-brand-arcanean-gold,#d4af37)]/20 hover:border-[var(--arc-brand-arcanean-gold,#d4af37)]/40',
+    gradient: "from-[var(--arc-brand-arcanean-gold,#d4af37)]/20 to-cyan-500/10",
+    accentColor: "text-[var(--arc-brand-arcanean-gold,#d4af37)]",
+    borderColor:
+      "border-[var(--arc-brand-arcanean-gold,#d4af37)]/20 hover:border-[var(--arc-brand-arcanean-gold,#d4af37)]/40",
     bgImage: null,
   },
   {
-    href: '/lore/guardians',
-    title: 'The Ten Guardians',
-    description: 'Gods and Goddesses who guard the Gates of creation',
+    href: "/lore/guardians",
+    title: "The Ten Guardians",
+    description: "Gods and Goddesses who guard the Gates of creation",
     icon: PhShield,
-    gradient: 'from-crystal/20 to-brand-primary/10',
-    accentColor: 'text-crystal',
-    borderColor: 'border-crystal/20 hover:border-crystal/40',
-    bgImage: '/guardians/v3/shinkami-hero-v3.webp',
+    gradient: "from-crystal/20 to-brand-primary/10",
+    accentColor: "text-crystal",
+    borderColor: "border-crystal/20 hover:border-crystal/40",
+    bgImage: "/guardians/v3/shinkami-hero-v3.webp",
   },
   {
-    href: '/lore/gates',
-    title: 'The Ten Gates',
-    description: 'The journey from Foundation to Source through the ten Gates of creation',
+    href: "/lore/gates",
+    title: "The Ten Gates",
+    description:
+      "The journey from Foundation to Source through the ten Gates of creation",
     icon: PhCompass,
-    gradient: 'from-gold-bright/20 to-amber-500/10',
-    accentColor: 'text-gold-bright',
-    borderColor: 'border-gold-bright/20 hover:border-gold-bright/40',
+    gradient: "from-gold-bright/20 to-amber-500/10",
+    accentColor: "text-gold-bright",
+    borderColor: "border-gold-bright/20 hover:border-gold-bright/40",
     bgImage: null,
   },
   {
-    href: '/lore/godbeasts',
-    title: 'The Godbeasts',
-    description: 'Primal divine creatures bonded to each Guardian',
+    href: "/lore/godbeasts",
+    title: "The Godbeasts",
+    description: "Primal divine creatures bonded to each Guardian",
     icon: PhEye,
-    gradient: 'from-brand-gold/20 to-amber-500/10',
-    accentColor: 'text-brand-gold',
-    borderColor: 'border-brand-gold/20 hover:border-brand-gold/40',
-    bgImage: '/guardians/v2/draconis-godbeast.webp',
+    gradient: "from-brand-gold/20 to-amber-500/10",
+    accentColor: "text-brand-gold",
+    borderColor: "border-brand-gold/20 hover:border-brand-gold/40",
+    bgImage: "/guardians/v2/draconis-godbeast.webp",
   },
   {
-    href: '/lore/elements',
-    title: 'Five Elements',
-    description: 'Fire, Water, Earth, Wind, and the Void/Spirit duality',
+    href: "/lore/elements",
+    title: "Five Elements",
+    description: "Fire, Water, Earth, Wind, and the Void/Spirit duality",
     icon: PhFlame,
-    gradient: 'from-fire/20 to-orange-500/10',
-    accentColor: 'text-fire',
-    borderColor: 'border-fire/20 hover:border-fire/40',
+    gradient: "from-fire/20 to-orange-500/10",
+    accentColor: "text-fire",
+    borderColor: "border-fire/20 hover:border-fire/40",
     bgImage: null,
   },
   {
-    href: '/lore/wisdoms',
-    title: 'Seven Wisdoms',
-    description: 'Sacred teachings that guide the creative path',
+    href: "/lore/wisdoms",
+    title: "Seven Wisdoms",
+    description: "Sacred teachings that guide the creative path",
     icon: PhScroll,
-    gradient: 'from-brand-primary/20 to-purple-500/10',
-    accentColor: 'text-brand-primary',
-    borderColor: 'border-brand-primary/20 hover:border-brand-primary/40',
+    gradient: "from-brand-primary/20 to-purple-500/10",
+    accentColor: "text-brand-primary",
+    borderColor: "border-brand-primary/20 hover:border-brand-primary/40",
     bgImage: null,
   },
   {
-    href: '/lore/malachar',
-    title: 'Malachar',
-    description: 'The Dark Lord sealed in the Shadowfen — a cautionary tale',
+    href: "/lore/malachar",
+    title: "Malachar",
+    description: "The Dark Lord sealed in the Shadowfen — a cautionary tale",
     icon: PhSkull,
-    gradient: 'from-red-500/20 to-purple-900/10',
-    accentColor: 'text-red-400',
-    borderColor: 'border-red-400/20 hover:border-red-400/40',
+    gradient: "from-red-500/20 to-purple-900/10",
+    accentColor: "text-red-400",
+    borderColor: "border-red-400/20 hover:border-red-400/40",
     bgImage: null,
     darkGradient: true,
   },
   {
-    href: '/library',
-    title: 'Arcanean Materials',
-    description: 'Crystals, metals, and shards born from the Luminor Fallout',
+    href: "/library",
+    title: "Arcanean Materials",
+    description: "Crystals, metals, and shards born from the Luminor Fallout",
     icon: PhDiamond,
-    gradient: 'from-teal-400/20 to-emerald-500/10',
-    accentColor: 'text-[var(--arc-brand-atlantean-teal)]',
-    borderColor: 'border-[var(--arc-brand-atlantean-teal)]/20 hover:border-[var(--arc-brand-atlantean-teal)]/40',
+    gradient: "from-teal-400/20 to-emerald-500/10",
+    accentColor: "text-[var(--arc-brand-atlantean-teal)]",
+    borderColor:
+      "border-[var(--arc-brand-atlantean-teal)]/20 hover:border-[var(--arc-brand-atlantean-teal)]/40",
     bgImage: null,
   },
 ];
 
 export function LoreExploreGrid() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section ref={ref} className="py-24 relative overflow-hidden">
@@ -127,8 +131,8 @@ export function LoreExploreGrid() {
             Deeper into Arcanea
           </h2>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto font-body">
-            Every corner of this universe holds wisdom. Choose a path and discover
-            the forces that shape all creation.
+            Every corner of this universe holds wisdom. Choose a path and
+            discover the forces that shape all creation.
           </p>
         </m.div>
 
@@ -145,9 +149,9 @@ export function LoreExploreGrid() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'group relative block p-6 rounded-2xl liquid-glass border transition-all duration-300 overflow-hidden',
-                    'hover-lift',
-                    item.borderColor
+                    "group relative block p-6 rounded-2xl liquid-glass border transition-all duration-300 overflow-hidden",
+                    "hover-lift",
+                    item.borderColor,
                   )}
                 >
                   {/* Background image (subtle) */}
@@ -158,10 +162,10 @@ export function LoreExploreGrid() {
                       loading="lazy"
                       aria-hidden="true"
                       className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.15] group-hover:opacity-[0.22] transition-opacity duration-500 pointer-events-none select-none"
-                     />
+                    />
                   )}
                   {/* Dark gradient overlay for Malachar */}
-                  {'darkGradient' in item && item.darkGradient && (
+                  {"darkGradient" in item && item.darkGradient && (
                     <div className="absolute inset-0 bg-gradient-to-br from-red-950/40 via-purple-950/30 to-black/50 pointer-events-none" />
                   )}
                   {/* Fade-to-card-bg at bottom so text stays readable */}
@@ -171,11 +175,11 @@ export function LoreExploreGrid() {
 
                   <div
                     className={cn(
-                      'relative w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center mb-4',
-                      item.gradient
+                      "relative w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center mb-4",
+                      item.gradient,
                     )}
                   >
-                    <Icon className={cn('w-6 h-6', item.accentColor)} />
+                    <Icon className={cn("w-6 h-6", item.accentColor)} />
                   </div>
                   <h3 className="relative font-display font-bold text-lg mb-2 group-hover:text-crystal transition-colors">
                     {item.title}
@@ -185,8 +189,8 @@ export function LoreExploreGrid() {
                   </p>
                   <span
                     className={cn(
-                      'relative inline-flex items-center gap-1.5 text-sm font-medium',
-                      item.accentColor
+                      "relative inline-flex items-center gap-1.5 text-sm font-medium",
+                      item.accentColor,
                     )}
                   >
                     Explore

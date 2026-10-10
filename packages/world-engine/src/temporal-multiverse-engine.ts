@@ -200,9 +200,12 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     primaryElement: "spirit",
     linguisticFamilyId: "eldrian",
     geography: {
-      terrain: "Mount Solaris, floating crystalline monasteries above cloudline",
-      soilResonance: "Pure Lapis-veined marble holding primordial harmonic memory",
-      weatherPhenomena: "Perpetual dawn, prism-refracted cloud rivers, ozone mists",
+      terrain:
+        "Mount Solaris, floating crystalline monasteries above cloudline",
+      soilResonance:
+        "Pure Lapis-veined marble holding primordial harmonic memory",
+      weatherPhenomena:
+        "Perpetual dawn, prism-refracted cloud rivers, ozone mists",
     },
     corridors: [
       {
@@ -237,9 +240,12 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     primaryElement: "wind",
     linguisticFamilyId: "veldarín",
     geography: {
-      terrain: "Limestone valleys, living stone caves, and reed-choked river deltas",
-      soilResonance: "Acoustically responsive chalk-stone that hums when stepped on",
-      weatherPhenomena: "Harmonic wind-gales that tune chimes naturally across ridges",
+      terrain:
+        "Limestone valleys, living stone caves, and reed-choked river deltas",
+      soilResonance:
+        "Acoustically responsive chalk-stone that hums when stepped on",
+      weatherPhenomena:
+        "Harmonic wind-gales that tune chimes naturally across ridges",
     },
     corridors: [
       {
@@ -284,8 +290,10 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     linguisticFamilyId: "aurevaldan",
     geography: {
       terrain: "Red clay mesas, obsidian cliffs, and solar-tempered steppes",
-      soilResonance: "Thermal ironstone that holds heat through seven-night freezes",
-      weatherPhenomena: "Dry lightning storms that spark purple phosphor across granite",
+      soilResonance:
+        "Thermal ironstone that holds heat through seven-night freezes",
+      weatherPhenomena:
+        "Dry lightning storms that spark purple phosphor across granite",
     },
     corridors: [
       {
@@ -329,9 +337,12 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     primaryElement: "water",
     linguisticFamilyId: "veldarín",
     geography: {
-      terrain: "Inland subterranean sea fed by five realm-aquifers under bedrock",
-      soilResonance: "Salt-crusted basalt with silver sediment reflecting bioluminescence",
-      weatherPhenomena: "Subsurface tidal surges responding to celestial gate alignments",
+      terrain:
+        "Inland subterranean sea fed by five realm-aquifers under bedrock",
+      soilResonance:
+        "Salt-crusted basalt with silver sediment reflecting bioluminescence",
+      weatherPhenomena:
+        "Subsurface tidal surges responding to celestial gate alignments",
     },
     corridors: [
       {
@@ -375,9 +386,12 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     primaryElement: "void",
     linguisticFamilyId: "sunder_tongue",
     geography: {
-      terrain: "Black peat wetlands, sunken obsidian arches, and petrified cedar groves",
-      soilResonance: "Cold-conducting peat that absorbs sound within three paces",
-      weatherPhenomena: "Perpetual silver twilight, fog dampening all acoustic echoes",
+      terrain:
+        "Black peat wetlands, sunken obsidian arches, and petrified cedar groves",
+      soilResonance:
+        "Cold-conducting peat that absorbs sound within three paces",
+      weatherPhenomena:
+        "Perpetual silver twilight, fog dampening all acoustic echoes",
     },
     corridors: [
       {
@@ -404,8 +418,10 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     linguisticFamilyId: "eldrian",
     geography: {
       terrain: "Twin needles of quartz rising above glacial valleys",
-      soilResonance: "Optical quartz that refracts starlight directly into harmonic tone",
-      weatherPhenomena: "Aurora ribbons descending to touch the observatory domes",
+      soilResonance:
+        "Optical quartz that refracts starlight directly into harmonic tone",
+      weatherPhenomena:
+        "Aurora ribbons descending to touch the observatory domes",
     },
     corridors: [
       {
@@ -431,9 +447,12 @@ export const CANONICAL_REALMS: Record<string, RealmDefinition> = {
     primaryElement: "earth",
     linguisticFamilyId: "deep_runic",
     geography: {
-      terrain: "Tiered granite canyons, iron foundry forges carved into bedrock",
-      soilResonance: "Magnetized lodestone that anchors gravitational equilibrium",
-      weatherPhenomena: "Dust devils laced with copper filings that glint under sun",
+      terrain:
+        "Tiered granite canyons, iron foundry forges carved into bedrock",
+      soilResonance:
+        "Magnetized lodestone that anchors gravitational equilibrium",
+      weatherPhenomena:
+        "Dust devils laced with copper filings that glint under sun",
     },
     corridors: [
       {
@@ -460,7 +479,8 @@ export const CANONICAL_EPOCHS: TemporalEpoch[] = [
     id: "epoch_primordial",
     name: "Dawn of the Duality",
     order: 1,
-    timeframeDescription: "Before recorded reckoning; Lumina and Nero establish the First Pattern",
+    timeframeDescription:
+      "Before recorded reckoning; Lumina and Nero establish the First Pattern",
     cosmicEvents: [
       "Formation of the Ten Solfeggio Gates",
       "Bonding of the Ten Godbeasts with elemental leylines",
@@ -472,7 +492,8 @@ export const CANONICAL_EPOCHS: TemporalEpoch[] = [
     id: "epoch_first_war",
     name: "The First War & The Fall of Malachar",
     order: 2,
-    timeframeDescription: "3,000 years prior to the Saga; Malachar's attempted forced fusion with Shinkami",
+    timeframeDescription:
+      "3,000 years prior to the Saga; Malachar's attempted forced fusion with Shinkami",
     cosmicEvents: [
       "The Shattering of Mount Solaris",
       "Corridor shifts across all Heartlands",
@@ -484,7 +505,8 @@ export const CANONICAL_EPOCHS: TemporalEpoch[] = [
     id: "epoch_settlings",
     name: "The Era of Settlings & Corridors",
     order: 3,
-    timeframeDescription: "Centuries 1 through 25 post-Sealing; migration into Veldoria, Aurevalde, and Mar Arcano",
+    timeframeDescription:
+      "Centuries 1 through 25 post-Sealing; migration into Veldoria, Aurevalde, and Mar Arcano",
     cosmicEvents: [
       "Establishment of the Seven Academy Houses",
       "Discovery of the Mar Arcano five-realm aquifer",
@@ -496,7 +518,8 @@ export const CANONICAL_EPOCHS: TemporalEpoch[] = [
     id: "epoch_present_saga",
     name: "The Awakening Trials (Current Epoch)",
     order: 4,
-    timeframeDescription: "Present day; Arion, Mera, and Emilia enter the Entrance Trials",
+    timeframeDescription:
+      "Present day; Arion, Mera, and Emilia enter the Entrance Trials",
     cosmicEvents: [
       "The Void Portal breach at the Entrance Crucible",
       "Resurgence of the Lapis Chords across Eldria",
@@ -527,7 +550,13 @@ export const GATE_TOLL_REGISTRY: Record<
     frequencyHz: GateFrequency;
     costs: Record<
       "minor" | "moderate" | "severe" | "cataclysmic",
-      { physical: string; sensory: string; limitation: string; dissonance: string; remedy: string }
+      {
+        physical: string;
+        sensory: string;
+        limitation: string;
+        dissonance: string;
+        remedy: string;
+      }
     >;
   }
 > = {
@@ -543,24 +572,31 @@ export const GATE_TOLL_REGISTRY: Record<
       },
       moderate: {
         physical: "Joint stiffness and marrow fatigue lasting two sun-turns",
-        sensory: "Tasting dry river clay; hearing distant subterranean grinding",
+        sensory:
+          "Tasting dry river clay; hearing distant subterranean grinding",
         limitation: "Density alteration limited to 3 paces radius",
         dissonance: "Temporary inability to sense ambient temperature",
-        remedy: "Submersion in Mar Arcano brine accompanied by 528 Hz wind chime tuning",
+        remedy:
+          "Submersion in Mar Arcano brine accompanied by 528 Hz wind chime tuning",
       },
       severe: {
-        physical: "Micro-fractures in tibia and radius; acute calcium depletion",
-        sensory: "Total silence in auditory field as lower frequencies overwhelm ears",
-        limitation: "Structural anchor breaks if the channeler moves from their stance",
+        physical:
+          "Micro-fractures in tibia and radius; acute calcium depletion",
+        sensory:
+          "Total silence in auditory field as lower frequencies overwhelm ears",
+        limitation:
+          "Structural anchor breaks if the channeler moves from their stance",
         dissonance: "Prolonged numbness across limbs for seven days",
-        remedy: "Ingestion of crushed basalt lichen and total sensory rest in silence",
+        remedy:
+          "Ingestion of crushed basalt lichen and total sensory rest in silence",
       },
       cataclysmic: {
         physical: "Partial petrification of peripheral muscular tissue",
         sensory: "Sensation of unyielding bedrock collapsing inward",
         limitation: "Channeler is physically pinned to the earth for 24 hours",
         dissonance: "Harmonic inversion causing local earth rifts",
-        remedy: "Emergency intervention by Guardian Lyssandria with Solfeggio acoustic reset",
+        remedy:
+          "Emergency intervention by Guardian Lyssandria with Solfeggio acoustic reset",
       },
     },
   },
@@ -575,25 +611,30 @@ export const GATE_TOLL_REGISTRY: Record<
         remedy: "Drinking two cups of spring water with silver sediment",
       },
       moderate: {
-        physical: "Acute cellular dehydration; tears taste intensely of sea brine",
+        physical:
+          "Acute cellular dehydration; tears taste intensely of sea brine",
         sensory: "Auditory phantom of rushing tides behind eardrums",
         limitation: "Fluid volume cannot exceed channeler's own body weight",
         dissonance: "Dizziness and sudden cold sweat",
         remedy: "Thermal stone immersion and 396 Hz subharmonic warmth",
       },
       severe: {
-        physical: "Severe plasma dehydration; skin pales and puckers at fingertips",
+        physical:
+          "Severe plasma dehydration; skin pales and puckers at fingertips",
         sensory: "Visual blurring as tear ducts dry completely",
         limitation: "Flow dissolves instantly if channeler experiences panic",
         dissonance: "Cardiac rhythm temporarily mimics oceanic swell cadence",
-        remedy: "Direct infusion of Mar Arcano aquifer water under medical supervision",
+        remedy:
+          "Direct infusion of Mar Arcano aquifer water under medical supervision",
       },
       cataclysmic: {
-        physical: "Total bodily desiccation risk; blood viscosity thickens dangerously",
+        physical:
+          "Total bodily desiccation risk; blood viscosity thickens dangerously",
         sensory: "Absolute aquatic silence, smelling deep ocean trenches",
         limitation: "Channeler cannot manifest warmth for one lunar cycle",
         dissonance: "Rupture of local aquifer membranes",
-        remedy: "Continuous suspension in a living water chamber guided by Guardian Leyla",
+        remedy:
+          "Continuous suspension in a living water chamber guided by Guardian Leyla",
       },
     },
   },
@@ -615,14 +656,18 @@ export const GATE_TOLL_REGISTRY: Record<
         remedy: "Application of aloe and Mar Arcano river sediment packs",
       },
       severe: {
-        physical: "Second-degree epidermal thermal burns along forearm channels",
+        physical:
+          "Second-degree epidermal thermal burns along forearm channels",
         sensory: "Deafening roar of furnace winds in inner ear",
-        limitation: "Flame immediately turns on the caster if breath control slips",
+        limitation:
+          "Flame immediately turns on the caster if breath control slips",
         dissonance: "Persistent hyperthermia and metabolic exhaustion",
-        remedy: "Cryo-infusion of deep aquifer ice and 285 Hz subharmonic calming",
+        remedy:
+          "Cryo-infusion of deep aquifer ice and 285 Hz subharmonic calming",
       },
       cataclysmic: {
-        physical: "Spontaneous combustion of outer dermis; carbonization of fingernails",
+        physical:
+          "Spontaneous combustion of outer dermis; carbonization of fingernails",
         sensory: "Smell of melting iron; absolute white-out vision",
         limitation: "Consumes all available oxygen within 20 paces radius",
         dissonance: "Atmospheric thermal storm that lingers for hours",
@@ -636,28 +681,36 @@ export const GATE_TOLL_REGISTRY: Record<
       minor: {
         physical: "Emotional fatigue and dull ache behind sternum",
         sensory: "Tasting raw copper and struck iron",
-        limitation: "Cannot mend wounds caused by malice without knowing the victim's name",
+        limitation:
+          "Cannot mend wounds caused by malice without knowing the victim's name",
         dissonance: "Heightened sensitivity to loud voices",
         remedy: "Solitary quietude and chamomile brew",
       },
       moderate: {
-        physical: "Arrhythmia and palpitations; acute empathy bleed (feeling pain of nearby beings)",
+        physical:
+          "Arrhythmia and palpitations; acute empathy bleed (feeling pain of nearby beings)",
         sensory: "Smell of damp earth after heavy thunder",
         limitation: "Equal emotional burden taken onto the channeler",
         dissonance: "Involuntary weeping or trembling for 3 hours",
-        remedy: "Resting in a silent granite chamber with 174 Hz foundation hum",
+        remedy:
+          "Resting in a silent granite chamber with 174 Hz foundation hum",
       },
       severe: {
         physical: "Tearing of pectoral muscle fibers; severe tachycardia",
-        sensory: "Feeling the heartbeat of every living creature in a 50-pace circle",
-        limitation: "Cannot undo structural organ failure without a living anchor",
+        sensory:
+          "Feeling the heartbeat of every living creature in a 50-pace circle",
+        limitation:
+          "Cannot undo structural organ failure without a living anchor",
         dissonance: "Psychic numbness and loss of personal joy for seven weeks",
-        remedy: "Guardian Maylinn's empathetic grounding rite and willow bark poultice",
+        remedy:
+          "Guardian Maylinn's empathetic grounding rite and willow bark poultice",
       },
       cataclysmic: {
         physical: "Acute cardiac arrest risk; structural heart chamber strain",
-        sensory: "A profound, crushing silence as if the world stopped breathing",
-        limitation: "Life-force tether permanently binds channeler to the recipient",
+        sensory:
+          "A profound, crushing silence as if the world stopped breathing",
+        limitation:
+          "Life-force tether permanently binds channeler to the recipient",
         dissonance: "Permanent sympathetic pain connection to the subject",
         remedy: "Immediate resuscitation by dual masters of Flow and Matter",
       },
@@ -685,14 +738,17 @@ export const GATE_TOLL_REGISTRY: Record<
         sensory: "Temporary partial deafness to human speech frequencies",
         limitation: "Spoken commands cannot violate the subject's true name",
         dissonance: "Prolonged vestibular imbalance and nausea",
-        remedy: "Application of soothing veldar reed ointment and silence for one moon cycle",
+        remedy:
+          "Application of soothing veldar reed ointment and silence for one moon cycle",
       },
       cataclysmic: {
-        physical: "Permanent destruction of vocal folds; internal acoustic concussion",
+        physical:
+          "Permanent destruction of vocal folds; internal acoustic concussion",
         sensory: "Total shatter sound like splitting crystal in both ears",
         limitation: "Reverberation shatters all glass and crystal in 100 paces",
         dissonance: "Acoustic shockwave inducing immediate blackout",
-        remedy: "Reconstruction through High Eldrian crystal harmony by Guardian Alera",
+        remedy:
+          "Reconstruction through High Eldrian crystal harmony by Guardian Alera",
       },
     },
   },
@@ -707,25 +763,34 @@ export const GATE_TOLL_REGISTRY: Record<
         remedy: "Cool cucumber compress and darkness for 30 minutes",
       },
       moderate: {
-        physical: "Severe photophobia, bursting of sclera capillaries (bloodshot eyes)",
+        physical:
+          "Severe photophobia, bursting of sclera capillaries (bloodshot eyes)",
         sensory: "Chromatic aberration; seeing emotional auras involuntarily",
-        limitation: "True sight reveals illusions but blinds normal vision for 10 minutes",
+        limitation:
+          "True sight reveals illusions but blinds normal vision for 10 minutes",
         dissonance: "Intense ocular migraine with flashing scotoma",
-        remedy: "Wearing an obsidian-tinted visor and sleeping in absolute dark",
+        remedy:
+          "Wearing an obsidian-tinted visor and sleeping in absolute dark",
       },
       severe: {
         physical: "Retinal scorching; temporary blindness lasting 3 sun-turns",
         sensory: "Hallucinatory flashes of ancient cosmic battles",
-        limitation: "Cannot look upon Malachar's void runes without psychic trauma",
-        dissonance: "Inability to differentiate physical bodies from spirit projections",
-        remedy: "Herbal eyewash of Astraea quartz water and 417 Hz soothing compress",
+        limitation:
+          "Cannot look upon Malachar's void runes without psychic trauma",
+        dissonance:
+          "Inability to differentiate physical bodies from spirit projections",
+        remedy:
+          "Herbal eyewash of Astraea quartz water and 417 Hz soothing compress",
       },
       cataclysmic: {
-        physical: "Permanent loss of optical sight in one eye; optic nerve crystallization",
+        physical:
+          "Permanent loss of optical sight in one eye; optic nerve crystallization",
         sensory: "Perpetual prism fracturing across the remaining visual field",
-        limitation: "Forces the channeler to see future outcomes that cannot be changed",
+        limitation:
+          "Forces the channeler to see future outcomes that cannot be changed",
         dissonance: "Total sensory detachment from physical surroundings",
-        remedy: "Guardian Lyria's sight-transference blessing and permanent starlight veil",
+        remedy:
+          "Guardian Lyria's sight-transference blessing and permanent starlight veil",
       },
     },
   },
@@ -735,28 +800,37 @@ export const GATE_TOLL_REGISTRY: Record<
       minor: {
         physical: "Tingling sensation across scalp and occipital ridge",
         sensory: "Smell of fresh snow on hot stone",
-        limitation: "Requires uninterrupted concentration; touch breaks the link",
+        limitation:
+          "Requires uninterrupted concentration; touch breaks the link",
         dissonance: "Brief mental fog when shifting tasks",
         remedy: "Drinking rosemary tea and brisk walking outdoors",
       },
       moderate: {
         physical: "Severe tension headache; memory blips of the preceding hour",
         sensory: "Feeling a crown of cold iron pressing down into skull",
-        limitation: "Cannot read minds with contrary moral alignment without consent",
+        limitation:
+          "Cannot read minds with contrary moral alignment without consent",
         dissonance: "Auditory phantom thoughts from strangers within 10 paces",
-        remedy: "Holding a cold iron sphere and reciting one's ancestral line aloud",
+        remedy:
+          "Holding a cold iron sphere and reciting one's ancestral line aloud",
       },
       severe: {
         physical: "Nosebleeds; temporary loss of short-term episodic memory",
-        sensory: "Sensation of consciousness expanding past the skull into the clouds",
-        limitation: "Ego dissolution; risk of forgetting one's own name and purpose",
-        dissonance: "Disorientation regarding whether an event occurred or was imagined",
-        remedy: "Tactile grounding with packed Aurevalde red clay and Guardian Aiyami's counsel",
+        sensory:
+          "Sensation of consciousness expanding past the skull into the clouds",
+        limitation:
+          "Ego dissolution; risk of forgetting one's own name and purpose",
+        dissonance:
+          "Disorientation regarding whether an event occurred or was imagined",
+        remedy:
+          "Tactile grounding with packed Aurevalde red clay and Guardian Aiyami's counsel",
       },
       cataclysmic: {
-        physical: "Comatose psychic state lasting several days; neural exhaustion",
+        physical:
+          "Comatose psychic state lasting several days; neural exhaustion",
         sensory: "Total cosmic white-out where time has no linear progression",
-        limitation: "Permanent opening of the crown fontanelle to cosmic radio static",
+        limitation:
+          "Permanent opening of the crown fontanelle to cosmic radio static",
         dissonance: "Schism between conscious self and subconscious universe",
         remedy: "Full cranial resonance retuning by Archmages of Eldria",
       },
@@ -768,29 +842,38 @@ export const GATE_TOLL_REGISTRY: Record<
       minor: {
         physical: "Sensation of zero gravity; hair floating upward slightly",
         sensory: "Faint musical chiming in the teeth",
-        limitation: "Cannot warp space through consecrated ground without permission",
+        limitation:
+          "Cannot warp space through consecrated ground without permission",
         dissonance: "Slight disorientation when stepping over thresholds",
         remedy: "Wearing heavy bronze anklets and eating roasted grain",
       },
       moderate: {
         physical: "Gravitational vertigo; body weight fluctuates by 20%",
         sensory: "Smell of interstellar vacuum (burnt electrical ozone)",
-        limitation: "Cannot fold distances greater than what the eye can clearly see",
+        limitation:
+          "Cannot fold distances greater than what the eye can clearly see",
         dissonance: "Shadows detached from physical limbs for 2 hours",
         remedy: "Sleeping beneath weighted lead blankets on solid bedrock",
       },
       severe: {
-        physical: "Cellular density distortion; bruising along spatial stress lines",
-        sensory: "Seeing stars in broad daylight; feeling pulled in multiple directions",
-        limitation: "Corridor creation causes temporal lag in the local environment",
-        dissonance: "Displacement sickness; body feels out of phase with physical matter",
+        physical:
+          "Cellular density distortion; bruising along spatial stress lines",
+        sensory:
+          "Seeing stars in broad daylight; feeling pulled in multiple directions",
+        limitation:
+          "Corridor creation causes temporal lag in the local environment",
+        dissonance:
+          "Displacement sickness; body feels out of phase with physical matter",
         remedy: "Subterranean lodging in Matter Reach for seven full rotations",
       },
       cataclysmic: {
-        physical: "Phase-drift; physical matter becomes semi-transparent and intangible",
-        sensory: "Hearing the rotation of planets; absolute spatial disorientation",
+        physical:
+          "Phase-drift; physical matter becomes semi-transparent and intangible",
+        sensory:
+          "Hearing the rotation of planets; absolute spatial disorientation",
         limitation: "May tear an uncontrolled micro-corridor into the void",
-        dissonance: "Temporal dislocation; channeler appears 5 seconds after they speak",
+        dissonance:
+          "Temporal dislocation; channeler appears 5 seconds after they speak",
         remedy: "Containment in Guardian Ino's star-woven anchor matrix",
       },
     },
@@ -802,27 +885,38 @@ export const GATE_TOLL_REGISTRY: Record<
         physical: "Mild tingling across both palms; feeling communal heartbeat",
         sensory: "Taste of sweet rainwater and honey",
         limitation: "Must have willing participation of at least two souls",
-        dissonance: "Slight confusion of personal pronouns (saying 'we' instead of 'I')",
+        dissonance:
+          "Slight confusion of personal pronouns (saying 'we' instead of 'I')",
         remedy: "Writing a personal journal entry alone in quiet solitude",
       },
       moderate: {
-        physical: "Sympathetic physical fatigue matching the weakest party member",
-        sensory: "Experiencing shared sensory perceptions (smelling what partner smells)",
-        limitation: "Broken trust immediately shatters the harmonic link with concussive force",
-        dissonance: "Temporary bleed of foreign childhood memories into consciousness",
-        remedy: "Carving a personal stone rune and meditating on one's private boundaries",
+        physical:
+          "Sympathetic physical fatigue matching the weakest party member",
+        sensory:
+          "Experiencing shared sensory perceptions (smelling what partner smells)",
+        limitation:
+          "Broken trust immediately shatters the harmonic link with concussive force",
+        dissonance:
+          "Temporary bleed of foreign childhood memories into consciousness",
+        remedy:
+          "Carving a personal stone rune and meditating on one's private boundaries",
       },
       severe: {
-        physical: "Severe psychic drain; physical wounds shared across the entire circle",
+        physical:
+          "Severe psychic drain; physical wounds shared across the entire circle",
         sensory: "Loss of the sensation of individual skin and body boundaries",
-        limitation: "If one member falls into the void, the entire circle is pulled toward it",
+        limitation:
+          "If one member falls into the void, the entire circle is pulled toward it",
         dissonance: "Identity dissociation lasting several weeks",
-        remedy: "Isolation in a silent salt room with Guardian Elara's anchoring chords",
+        remedy:
+          "Isolation in a silent salt room with Guardian Elara's anchoring chords",
       },
       cataclysmic: {
         physical: "Complete dissolution of individual ego into hive resonance",
-        sensory: "Total oceanic merging where individual thought ceases to exist",
-        limitation: "Irreversible without the external intervention of a Source Luminor",
+        sensory:
+          "Total oceanic merging where individual thought ceases to exist",
+        limitation:
+          "Irreversible without the external intervention of a Source Luminor",
         dissonance: "Permanent loss of private thoughts between bonded members",
         remedy: "Ritual severance at Mount Solaris by Guardian Shinkami",
       },
@@ -832,32 +926,44 @@ export const GATE_TOLL_REGISTRY: Record<
     frequencyHz: 1111,
     costs: {
       minor: {
-        physical: "Skin glows with silver bioluminescence for 1 hour; increased body heat",
+        physical:
+          "Skin glows with silver bioluminescence for 1 hour; increased body heat",
         sensory: "Pure crystalline chord resonating through all marrow",
         limitation: "Cannot be directed toward selfish or destructive ends",
         dissonance: "Ordinary food tastes bland and ashen for 24 hours",
         remedy: "Eating fresh fruit and drinking morning dew",
       },
       moderate: {
-        physical: "Rapid metabolic burn; hair strands turn silver at the temples",
+        physical:
+          "Rapid metabolic burn; hair strands turn silver at the temples",
         sensory: "Smell of primordial starlight and burning cedar incense",
-        limitation: "Channeler cannot lie or conceal truth while channeling Source",
+        limitation:
+          "Channeler cannot lie or conceal truth while channeling Source",
         dissonance: "Insomnia as the pineal gland vibrates continuously",
-        remedy: "Drinking pure gold-veined glacial meltwater from Mount Solaris",
+        remedy:
+          "Drinking pure gold-veined glacial meltwater from Mount Solaris",
       },
       severe: {
-        physical: "Cellular crystallization; fingernails and iris turn iridescent silver",
-        sensory: "Vision encompasses all 10 gates simultaneously; auditory overload",
-        limitation: "Draws directly upon the channeler's natural lifespan as fuel",
-        dissonance: "Physical reality feels thin, like paper waiting to dissolve",
+        physical:
+          "Cellular crystallization; fingernails and iris turn iridescent silver",
+        sensory:
+          "Vision encompasses all 10 gates simultaneously; auditory overload",
+        limitation:
+          "Draws directly upon the channeler's natural lifespan as fuel",
+        dissonance:
+          "Physical reality feels thin, like paper waiting to dissolve",
         remedy: "Three-week stasis in the Primordial Spring of Lumina",
       },
       cataclysmic: {
-        physical: "Ascension or total burnout; body dissolves into pure photonic energy",
+        physical:
+          "Ascension or total burnout; body dissolves into pure photonic energy",
         sensory: "The Voice of Lumina and Nero speaking in unison",
-        limitation: "Changes the fundamental laws of physics in the local realm forever",
-        dissonance: "Creation of a permanent cosmic singularity or new Solfeggio Gate",
-        remedy: "Only Shinkami and the Assembly of Luminors can stabilize the remnant",
+        limitation:
+          "Changes the fundamental laws of physics in the local realm forever",
+        dissonance:
+          "Creation of a permanent cosmic singularity or new Solfeggio Gate",
+        remedy:
+          "Only Shinkami and the Assembly of Luminors can stabilize the remnant",
       },
     },
   },
@@ -865,7 +971,7 @@ export const GATE_TOLL_REGISTRY: Record<
 
 export function calculateSandersonianMagicToll(
   gateId: GateId,
-  intensity: "minor" | "moderate" | "severe" | "cataclysmic" = "moderate"
+  intensity: "minor" | "moderate" | "severe" | "cataclysmic" = "moderate",
 ): MagicTollResult {
   const gateData = GATE_TOLL_REGISTRY[gateId] || GATE_TOLL_REGISTRY.voice;
   const cost = gateData.costs[intensity];
@@ -904,9 +1010,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "foundation",
     frequencyHz: 174,
     archetypeRole: "The Unawakened Apprentice",
-    narrativeTension: "Comfortable stagnation; mundane safety masking a deeper yearning",
-    sensoryThreshold: "Smell of chimney woodsmoke and hearth bread; heavy boots on farm soil",
-    transformationMilestone: "Recognition that the mundane world cannot answer the soul's questions",
+    narrativeTension:
+      "Comfortable stagnation; mundane safety masking a deeper yearning",
+    sensoryThreshold:
+      "Smell of chimney woodsmoke and hearth bread; heavy boots on farm soil",
+    transformationMilestone:
+      "Recognition that the mundane world cannot answer the soul's questions",
   },
   {
     stageNumber: 2,
@@ -914,9 +1023,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "flow",
     frequencyHz: 285,
     archetypeRole: "The Herald",
-    narrativeTension: "A disruption in the aquifer leylines or a song heard across the water",
-    sensoryThreshold: "Sudden chill in the river water; a low vibration that ripples tea cups",
-    transformationMilestone: "The seeker feels the tug of the current pulling them past familiar borders",
+    narrativeTension:
+      "A disruption in the aquifer leylines or a song heard across the water",
+    sensoryThreshold:
+      "Sudden chill in the river water; a low vibration that ripples tea cups",
+    transformationMilestone:
+      "The seeker feels the tug of the current pulling them past familiar borders",
   },
   {
     stageNumber: 3,
@@ -924,9 +1036,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "fire",
     frequencyHz: 396,
     archetypeRole: "The Reluctant Hero",
-    narrativeTension: "Fear of the physical cost; burning doubts about one's worthiness",
-    sensoryThreshold: "Dry throat, heat flushing the cheeks, the bitter taste of fear",
-    transformationMilestone: "Confronting the truth that staying safe is a slower form of dying",
+    narrativeTension:
+      "Fear of the physical cost; burning doubts about one's worthiness",
+    sensoryThreshold:
+      "Dry throat, heat flushing the cheeks, the bitter taste of fear",
+    transformationMilestone:
+      "Confronting the truth that staying safe is a slower form of dying",
   },
   {
     stageNumber: 4,
@@ -934,9 +1049,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "heart",
     frequencyHz: 417,
     archetypeRole: "The Gate Guardian",
-    narrativeTension: "Encountering a Master who does not flatter, but tests resolve with unbending stone",
-    sensoryThreshold: "Sound of struck granite; a weathered hand offering a cracked compass",
-    transformationMilestone: "Receiving the first tactile tool or relic and the discipline to wield it",
+    narrativeTension:
+      "Encountering a Master who does not flatter, but tests resolve with unbending stone",
+    sensoryThreshold:
+      "Sound of struck granite; a weathered hand offering a cracked compass",
+    transformationMilestone:
+      "Receiving the first tactile tool or relic and the discipline to wield it",
   },
   {
     stageNumber: 5,
@@ -944,9 +1062,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "voice",
     frequencyHz: 528,
     archetypeRole: "The Threshold Guardian",
-    narrativeTension: "Speaking the First Incantation aloud; leaving the familiar heartlands behind",
-    sensoryThreshold: "Passing from warm valleys into cold mountain wind; ringing in the inner ear",
-    transformationMilestone: "There is no turning back; the seeker is now an active Mage in the world",
+    narrativeTension:
+      "Speaking the First Incantation aloud; leaving the familiar heartlands behind",
+    sensoryThreshold:
+      "Passing from warm valleys into cold mountain wind; ringing in the inner ear",
+    transformationMilestone:
+      "There is no turning back; the seeker is now an active Mage in the world",
   },
   {
     stageNumber: 6,
@@ -954,9 +1075,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "heart",
     frequencyHz: 417,
     archetypeRole: "The Fellowship & The Rival",
-    narrativeTension: "Navigating competing agendas, shared bread, and the friction of diverse spirits",
-    sensoryThreshold: "Campfires under unfamiliar constellations; the clatter of swords and shared laughter",
-    transformationMilestone: "Forging authentic bonds of brotherhood and discovering who stands firm under fire",
+    narrativeTension:
+      "Navigating competing agendas, shared bread, and the friction of diverse spirits",
+    sensoryThreshold:
+      "Campfires under unfamiliar constellations; the clatter of swords and shared laughter",
+    transformationMilestone:
+      "Forging authentic bonds of brotherhood and discovering who stands firm under fire",
   },
   {
     stageNumber: 7,
@@ -964,9 +1088,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "sight",
     frequencyHz: 741,
     archetypeRole: "The Seer",
-    narrativeTension: "Piercing through comfortable illusions; seeing the true magnitude of the Shadowfen rift",
-    sensoryThreshold: "Light fracturing into prismatic spectrums; shadows lengthening across ancient stone",
-    transformationMilestone: "Accepting that victory will demand a permanent, irrecoverable physical sacrifice",
+    narrativeTension:
+      "Piercing through comfortable illusions; seeing the true magnitude of the Shadowfen rift",
+    sensoryThreshold:
+      "Light fracturing into prismatic spectrums; shadows lengthening across ancient stone",
+    transformationMilestone:
+      "Accepting that victory will demand a permanent, irrecoverable physical sacrifice",
   },
   {
     stageNumber: 8,
@@ -974,9 +1101,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "crown",
     frequencyHz: 852,
     archetypeRole: "The Shadow / Malachar's Echo",
-    narrativeTension: "Direct confrontation with the Void; ego death and psychic collapse in darkness",
-    sensoryThreshold: "Absolute cold; the taste of ash; the terrible silence of the abyss",
-    transformationMilestone: "Death of the false self; finding the spark of Lumina inside the deepest black",
+    narrativeTension:
+      "Direct confrontation with the Void; ego death and psychic collapse in darkness",
+    sensoryThreshold:
+      "Absolute cold; the taste of ash; the terrible silence of the abyss",
+    transformationMilestone:
+      "Death of the false self; finding the spark of Lumina inside the deepest black",
   },
   {
     stageNumber: 9,
@@ -984,9 +1114,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "starweave",
     frequencyHz: 963,
     archetypeRole: "The Awakened Victor",
-    narrativeTension: "Claiming the Lapis chord; harmonizing the gate with triumphant revelation",
-    sensoryThreshold: "Blinding silver light; the ringing of ten cosmic bells in perfect fifths",
-    transformationMilestone: "Attaining the rank of Archmage; wielding the power with humility rather than pride",
+    narrativeTension:
+      "Claiming the Lapis chord; harmonizing the gate with triumphant revelation",
+    sensoryThreshold:
+      "Blinding silver light; the ringing of ten cosmic bells in perfect fifths",
+    transformationMilestone:
+      "Attaining the rank of Archmage; wielding the power with humility rather than pride",
   },
   {
     stageNumber: 10,
@@ -994,9 +1127,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "unity",
     frequencyHz: 963,
     archetypeRole: "The Trailblazer",
-    narrativeTension: "Navigating unstable, drifting corridors back toward civilization under pursuit",
-    sensoryThreshold: "Collapsing stone arches; the rush of aquifer tides flooding subterranean exits",
-    transformationMilestone: "Committing to bring the light back rather than staying in solitary bliss",
+    narrativeTension:
+      "Navigating unstable, drifting corridors back toward civilization under pursuit",
+    sensoryThreshold:
+      "Collapsing stone arches; the rush of aquifer tides flooding subterranean exits",
+    transformationMilestone:
+      "Committing to bring the light back rather than staying in solitary bliss",
   },
   {
     stageNumber: 11,
@@ -1004,9 +1140,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "unity",
     frequencyHz: 963,
     archetypeRole: "The Transformed Self",
-    narrativeTension: "The final test where old wounds threaten to drag the hero back down; the synthesis",
-    sensoryThreshold: "The simultaneous presence of blazing light and deep shadow, reconciled in peace",
-    transformationMilestone: "Complete transcendence; understanding that Nero and Lumina are the two hands of one life",
+    narrativeTension:
+      "The final test where old wounds threaten to drag the hero back down; the synthesis",
+    sensoryThreshold:
+      "The simultaneous presence of blazing light and deep shadow, reconciled in peace",
+    transformationMilestone:
+      "Complete transcendence; understanding that Nero and Lumina are the two hands of one life",
   },
   {
     stageNumber: 12,
@@ -1014,9 +1153,12 @@ export const MONOMYTH_STAGES: MonomythStage[] = [
     gateId: "source",
     frequencyHz: 1111,
     archetypeRole: "The Sovereign Luminor",
-    narrativeTension: "Re-entering the ordinary village transformed; serving the community as healer and builder",
-    sensoryThreshold: "Touching the soil of home with silver-veined hands; the calm silence of mastery",
-    transformationMilestone: "The Apprentice has become the Teacher; the cycle renews for the next generation",
+    narrativeTension:
+      "Re-entering the ordinary village transformed; serving the community as healer and builder",
+    sensoryThreshold:
+      "Touching the soil of home with silver-veined hands; the calm silence of mastery",
+    transformationMilestone:
+      "The Apprentice has become the Teacher; the cycle renews for the next generation",
   },
 ];
 
@@ -1207,7 +1349,7 @@ export function getCanonicalGuardians(): CanonicalGuardianEntity[] {
  */
 export function calculateCorridorResonance(
   realmAId: string,
-  realmBId: string
+  realmBId: string,
 ): {
   harmonicDelta: number;
   stability: number;
@@ -1225,7 +1367,9 @@ export function calculateCorridorResonance(
   let stability = Math.max(0.1, 1 - delta / 1200);
 
   // Existing explicit corridor override
-  const existingConn = realmA.corridors.find((c) => c.targetRealmId === realmBId);
+  const existingConn = realmA.corridors.find(
+    (c) => c.targetRealmId === realmBId,
+  );
   let corridorDays = 14;
   let surfaceDays = 120;
   let isAquifer = false;
@@ -1240,9 +1384,17 @@ export function calculateCorridorResonance(
     surfaceDays = corridorDays * 12;
   }
 
-  const status = stability > 0.6 ? "open" : stability > 0.3 ? "drifting" : "closed";
+  const status =
+    stability > 0.6 ? "open" : stability > 0.3 ? "drifting" : "closed";
 
-  return { harmonicDelta: delta, stability, status, corridorDays, surfaceDays, isAquifer };
+  return {
+    harmonicDelta: delta,
+    stability,
+    status,
+    corridorDays,
+    surfaceDays,
+    isAquifer,
+  };
 }
 
 /**
@@ -1250,10 +1402,17 @@ export function calculateCorridorResonance(
  */
 export function generateRealmName(
   realmId: string,
-  kind: "character_masculine" | "character_feminine" | "character_neutral" | "toponym" | "relic"
+  kind:
+    | "character_masculine"
+    | "character_feminine"
+    | "character_neutral"
+    | "toponym"
+    | "relic",
 ): string {
   const realm = CANONICAL_REALMS[realmId] || CANONICAL_REALMS.veldoria;
-  const lang = LINGUISTIC_FAMILIES[realm.linguisticFamilyId] || LINGUISTIC_FAMILIES.veldarín;
+  const lang =
+    LINGUISTIC_FAMILIES[realm.linguisticFamilyId] ||
+    LINGUISTIC_FAMILIES.veldarín;
 
   const roots = Object.keys(lang.etymologicalRoots);
   const root = roots[Math.floor(Math.random() * roots.length)] || "vel";
@@ -1261,7 +1420,8 @@ export function generateRealmName(
 
   if (kind === "toponym") {
     const prefixes = lang.namingPatterns.toponymPrefixes;
-    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)] || "Vel-";
+    const prefix =
+      prefixes[Math.floor(Math.random() * prefixes.length)] || "Vel-";
     const suffix = lang.namingPatterns.masculineSuffixes[0] || "ia";
     return `${prefix}${root}${suffix}`;
   }
@@ -1275,8 +1435,8 @@ export function generateRealmName(
     kind === "character_masculine"
       ? lang.namingPatterns.masculineSuffixes
       : kind === "character_feminine"
-      ? lang.namingPatterns.feminineSuffixes
-      : lang.namingPatterns.neutralSuffixes;
+        ? lang.namingPatterns.feminineSuffixes
+        : lang.namingPatterns.neutralSuffixes;
 
   const suffix = suffixes[Math.floor(Math.random() * suffixes.length)] || "or";
   return `${capitalizedRoot}${suffix}`;
@@ -1289,14 +1449,18 @@ export function traceEntityProvenance(
   entityId: string,
   entityName: string,
   realmId: string,
-  epochId: string
+  epochId: string,
 ): MultiverseProvenanceRecord {
   const realm = CANONICAL_REALMS[realmId] || CANONICAL_REALMS.veldoria;
-  const lang = LINGUISTIC_FAMILIES[realm.linguisticFamilyId] || LINGUISTIC_FAMILIES.veldarín;
-  const epoch = CANONICAL_EPOCHS.find((e) => e.id === epochId) || CANONICAL_EPOCHS[2];
+  const lang =
+    LINGUISTIC_FAMILIES[realm.linguisticFamilyId] ||
+    LINGUISTIC_FAMILIES.veldarín;
+  const epoch =
+    CANONICAL_EPOCHS.find((e) => e.id === epochId) || CANONICAL_EPOCHS[2];
 
   const rootKey = Object.keys(lang.etymologicalRoots)[0] || "vel";
-  const rootMeaning = Object.values(lang.etymologicalRoots)[0] || "unfolding presence";
+  const rootMeaning =
+    Object.values(lang.etymologicalRoots)[0] || "unfolding presence";
 
   return {
     entityId,

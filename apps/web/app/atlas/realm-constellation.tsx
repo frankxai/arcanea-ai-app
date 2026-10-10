@@ -114,7 +114,8 @@ export function RealmConstellation({
           <span>Interactive Leyline Mandala</span>
         </div>
         <p className="text-xs text-white/50 mt-1 max-w-sm">
-          Click nodes to assign Origin (A) or Target (B). Witness the standing-wave corridor lock.
+          Click nodes to assign Origin (A) or Target (B). Witness the
+          standing-wave corridor lock.
         </p>
       </div>
 
@@ -126,8 +127,8 @@ export function RealmConstellation({
               corridorStatus === "open"
                 ? "bg-emerald-400 animate-ping"
                 : corridorStatus === "drifting"
-                ? "bg-amber-400 animate-pulse"
-                : "bg-rose-400"
+                  ? "bg-amber-400 animate-pulse"
+                  : "bg-rose-400"
             }`}
           />
           <span className="text-white/80 uppercase">
@@ -146,8 +147,16 @@ export function RealmConstellation({
           <defs>
             {/* Radial Gradients for Glows */}
             <radialGradient id="source-pulse" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={brand.arcaneanGold} stopOpacity="0.3" />
-              <stop offset="100%" stopColor={brand.arcaneanGold} stopOpacity="0" />
+              <stop
+                offset="0%"
+                stopColor={brand.arcaneanGold}
+                stopOpacity="0.3"
+              />
+              <stop
+                offset="100%"
+                stopColor={brand.arcaneanGold}
+                stopOpacity="0"
+              />
             </radialGradient>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="6" result="blur" />
@@ -159,9 +168,33 @@ export function RealmConstellation({
           </defs>
 
           {/* Background Concentric Harmonic Waves */}
-          <circle cx="480" cy="260" r="120" fill="none" stroke="white" strokeOpacity="0.03" strokeDasharray="3 6" />
-          <circle cx="480" cy="260" r="200" fill="none" stroke="white" strokeOpacity="0.02" strokeDasharray="4 8" />
-          <circle cx="480" cy="260" r="300" fill="none" stroke="white" strokeOpacity="0.015" strokeDasharray="5 10" />
+          <circle
+            cx="480"
+            cy="260"
+            r="120"
+            fill="none"
+            stroke="white"
+            strokeOpacity="0.03"
+            strokeDasharray="3 6"
+          />
+          <circle
+            cx="480"
+            cy="260"
+            r="200"
+            fill="none"
+            stroke="white"
+            strokeOpacity="0.02"
+            strokeDasharray="4 8"
+          />
+          <circle
+            cx="480"
+            cy="260"
+            r="300"
+            fill="none"
+            stroke="white"
+            strokeOpacity="0.015"
+            strokeDasharray="5 10"
+          />
 
           {/* Canonical Leyline Edges */}
           {CANONICAL_EDGES.map(([aId, bId]) => {
@@ -202,8 +235,8 @@ export function RealmConstellation({
                   corridorStatus === "open"
                     ? elements.wind.base
                     : corridorStatus === "drifting"
-                    ? gold.bright
-                    : elements.fire.base
+                      ? gold.bright
+                      : elements.fire.base
                 }
                 strokeWidth="3.5"
                 filter="url(#glow)"
@@ -224,7 +257,13 @@ export function RealmConstellation({
               <g
                 transform={`translate(${(activeA.x + activeB.x) / 2}, ${(activeA.y + activeB.y) / 2})`}
               >
-                <circle r="18" fill={cosmic.void} stroke="white" strokeOpacity="0.3" strokeWidth="1" />
+                <circle
+                  r="18"
+                  fill={cosmic.void}
+                  stroke="white"
+                  strokeOpacity="0.3"
+                  strokeWidth="1"
+                />
                 <text
                   textAnchor="middle"
                   dy="4"
@@ -298,11 +337,7 @@ export function RealmConstellation({
                 />
 
                 {/* Inner Dot */}
-                <circle
-                  r="5"
-                  fill={pos.color}
-                  filter="url(#glow)"
-                />
+                <circle r="5" fill={pos.color} filter="url(#glow)" />
 
                 {/* Node Label Below */}
                 <text
@@ -331,16 +366,42 @@ export function RealmConstellation({
                 {/* Origin / Target Pill */}
                 {isA && (
                   <g transform="translate(0, -28)">
-                    <rect x="-24" y="-8" width="48" height="16" rx="8" fill={elements.wind.base} />
-                    <text textAnchor="middle" dy="3.5" fill="black" fontSize="9" fontWeight="bold">
+                    <rect
+                      x="-24"
+                      y="-8"
+                      width="48"
+                      height="16"
+                      rx="8"
+                      fill={elements.wind.base}
+                    />
+                    <text
+                      textAnchor="middle"
+                      dy="3.5"
+                      fill="black"
+                      fontSize="9"
+                      fontWeight="bold"
+                    >
                       ORIGIN (A)
                     </text>
                   </g>
                 )}
                 {isB && (
                   <g transform="translate(0, -28)">
-                    <rect x="-24" y="-8" width="48" height="16" rx="8" fill={brand.atlanteanTeal} />
-                    <text textAnchor="middle" dy="3.5" fill="black" fontSize="9" fontWeight="bold">
+                    <rect
+                      x="-24"
+                      y="-8"
+                      width="48"
+                      height="16"
+                      rx="8"
+                      fill={brand.atlanteanTeal}
+                    />
+                    <text
+                      textAnchor="middle"
+                      dy="3.5"
+                      fill="black"
+                      fontSize="9"
+                      fontWeight="bold"
+                    >
                       TARGET (B)
                     </text>
                   </g>
@@ -363,7 +424,8 @@ export function RealmConstellation({
             </span>
           </div>
           <p className="text-xs text-white/50 mb-2 capitalize">
-            Gate: {hoveredRealm.dominantGate} · Element: {hoveredRealm.primaryElement}
+            Gate: {hoveredRealm.dominantGate} · Element:{" "}
+            {hoveredRealm.primaryElement}
           </p>
           <p className="text-xs text-white/70 line-clamp-2 leading-relaxed">
             {hoveredRealm.geography.terrain}

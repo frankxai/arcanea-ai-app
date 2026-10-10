@@ -24,7 +24,6 @@ maintainer: frankxai
 # ─── Model catalog ──────────────────────────────────────────────────────────
 
 models:
-
   # ── Frontier (paid / sub) ─────────────────────────────────────────────────
 
   claude-opus-4-7:
@@ -32,7 +31,7 @@ models:
     family: claude
     context: 1000000
     sweBench: 80.3
-    tier: sub            # Claude Max $200/mo covers unlimited in Claude Code
+    tier: sub # Claude Max $200/mo covers unlimited in Claude Code
     byokPrice: { input: 15, output: 75 }
     strengths: [orchestration, extended-thinking, long-context, agentic]
     aliases: ["opus-4.7", "opus-4-7", "claude-opus-4-7[1m]"]
@@ -120,7 +119,7 @@ models:
     family: nemotron
     upstream: nvidia/nemotron-3-super
     context: 1000000
-    sweBench: 85.6   # PinchBench (not SWE-Bench)
+    sweBench: 85.6 # PinchBench (not SWE-Bench)
     tier: free
     strengths: [throughput, rapid-agent-tasks, 5x-speed]
 
@@ -144,7 +143,7 @@ models:
 
   big-pickle:
     provider: opencode-zen
-    family: glm      # stealth rebrand of GLM-4.6
+    family: glm # stealth rebrand of GLM-4.6
     upstream: zhipu/glm-4.6
     context: 200000
     sweBench: 70.0
@@ -190,7 +189,6 @@ models:
 # unavailable or over quota.
 
 tasks:
-
   # ── Orchestration & planning ──────────────────────────────────────────────
 
   orchestrate:
@@ -316,7 +314,6 @@ tasks:
 # How each Arcanea surface consumes this spec.
 
 surfaces:
-
   claude-arcanea:
     description: Claude Code overlay. Opus 4.7 is always available via Max sub.
     prefer: sub
@@ -324,7 +321,7 @@ surfaces:
     taskOverrides:
       # In Claude Code, default to Opus for everything not explicitly downgraded,
       # because the sub amortizes.
-      code.implement: [claude-sonnet-4-6, claude-opus-4-7]   # Sonnet for speed, Opus fallback
+      code.implement: [claude-sonnet-4-6, claude-opus-4-7] # Sonnet for speed, Opus fallback
       transform.bulk: [claude-haiku-4-5]
 
   oh-my-arcanea:
@@ -410,12 +407,12 @@ surfaces:
 delegation:
   codex-cli:
     binary: codex
-    useFor: [code.review, code.debug]        # second opinion
+    useFor: [code.review, code.debug] # second opinion
     rationale: OpenAI's Codex provides independent perspective on complex code.
 
   gemini-cli:
     binary: gemini
-    useFor: [research.deep, world.expand]   # multimodal + long context
+    useFor: [research.deep, world.expand] # multimodal + long context
     rationale: Gemini's 2M context + grounding suits long research.
 
   opencode:

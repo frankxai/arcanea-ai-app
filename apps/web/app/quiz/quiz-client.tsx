@@ -5,19 +5,13 @@ import { useState, useCallback } from "react";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { CosmicParticles } from "@/components/magic/particles";
-import {
-  QUIZ_QUESTIONS,
-  ORIGIN_RESULTS,
-  type OriginClass,
-} from "./quiz-data";
+import { QUIZ_QUESTIONS, ORIGIN_RESULTS, type OriginClass } from "./quiz-data";
 
 // ---------------------------------------------------------------------------
 // Scoring
 // ---------------------------------------------------------------------------
 
-function calculateResult(
-  answers: Record<number, OriginClass>
-): OriginClass {
+function calculateResult(answers: Record<number, OriginClass>): OriginClass {
   const scores: Record<OriginClass, number> = {
     Arcan: 0,
     "Gate-Touched": 0,
@@ -35,7 +29,7 @@ function calculateResult(
 
   return (Object.entries(scores) as [OriginClass, number][]).reduce(
     (best, [origin, score]) => (score > scores[best] ? origin : best),
-    "Arcan" as OriginClass
+    "Arcan" as OriginClass,
   );
 }
 
@@ -54,7 +48,10 @@ function ProgressBar({ current, total }: ProgressBarProps) {
     <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
       <m.div
         className="h-full rounded-full"
-        style={{ background: "linear-gradient(90deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue))" }}
+        style={{
+          background:
+            "linear-gradient(90deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue))",
+        }}
         initial={{ width: 0 }}
         animate={{ width: `${pct}%` }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -81,7 +78,10 @@ function QuestionCard({ question, selected, onSelect }: QuestionCardProps) {
     >
       <div
         className="rounded-2xl border border-white/[0.08] p-8"
-        style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(12px)" }}
+        style={{
+          background: "rgba(255,255,255,0.03)",
+          backdropFilter: "blur(12px)",
+        }}
       >
         <p className="text-xl font-medium text-white/90 mb-6 leading-snug">
           {question.text}
@@ -214,7 +214,10 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* Multiverse Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Gate & Resonance", value: `${result.primaryGate} (${result.frequencyHz} Hz)` },
+            {
+              label: "Gate & Resonance",
+              value: `${result.primaryGate} (${result.frequencyHz} Hz)`,
+            },
             { label: "Origin Realm", value: result.originRealm },
             { label: "Guardian", value: result.guardian },
             { label: "Dialect Root", value: result.linguisticRoot },
@@ -222,10 +225,17 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
             <div
               key={label}
               className="rounded-xl p-3 text-left"
-              style={{ background: `${result.color}0a`, border: `1px solid ${result.color}20` }}
+              style={{
+                background: `${result.color}0a`,
+                border: `1px solid ${result.color}20`,
+              }}
             >
-              <p className="text-white/40 text-[10px] uppercase font-mono tracking-wider mb-1">{label}</p>
-              <p className="text-white/90 text-xs font-medium truncate">{value}</p>
+              <p className="text-white/40 text-[10px] uppercase font-mono tracking-wider mb-1">
+                {label}
+              </p>
+              <p className="text-white/90 text-xs font-medium truncate">
+                {value}
+              </p>
             </div>
           ))}
         </div>
@@ -236,7 +246,9 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
             <span className="text-white/40 uppercase font-mono text-[10px] block">
               Physical Sensory Anchor
             </span>
-            <span className="text-white/80 font-medium">{result.tactileAnchor}</span>
+            <span className="text-white/80 font-medium">
+              {result.tactileAnchor}
+            </span>
           </div>
           <div>
             <span className="text-white/40 uppercase font-mono text-[10px] block">
@@ -263,10 +275,15 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* Share row */}
         <div
           className="rounded-xl p-4 flex items-start justify-between gap-4"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
         >
           <div className="flex-1 min-w-0">
-            <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Share your origin</p>
+            <p className="text-white/40 text-xs uppercase tracking-wider mb-1">
+              Share your origin
+            </p>
             <p className="text-white/70 text-sm truncate">{result.shareText}</p>
           </div>
           <button
@@ -275,7 +292,9 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
             className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
               color: copied ? "var(--arc-brand-atlantean-teal)" : result.color,
-              background: copied ? "rgba(127,255,212,0.12)" : `${result.color}15`,
+              background: copied
+                ? "rgba(127,255,212,0.12)"
+                : `${result.color}15`,
               border: `1px solid ${copied ? "rgba(127,255,212,0.3)" : result.color + "30"}`,
             }}
           >
@@ -343,7 +362,7 @@ export default function QuizClient() {
         }
       }, 320);
     },
-    [answers, currentIndex, total]
+    [answers, currentIndex, total],
   );
 
   const handleRetake = useCallback(() => {
@@ -360,12 +379,18 @@ export default function QuizClient() {
         {/* Background glow orbs */}
         <div
           className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(120,166,255,0.04) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(120,166,255,0.04) 0%, transparent 70%)",
+          }}
           aria-hidden="true"
         />
         <div
           className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(127,255,212,0.04) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(127,255,212,0.04) 0%, transparent 70%)",
+          }}
           aria-hidden="true"
         />
 
@@ -387,7 +412,8 @@ export default function QuizClient() {
               What Is Your Origin Class?
             </h1>
             <p className="text-white/50 text-sm max-w-md mx-auto">
-              Eight questions. Eight possible origins. Discover the source of your power in the Arcanean multiverse.
+              Eight questions. Eight possible origins. Discover the source of
+              your power in the Arcanean multiverse.
             </p>
           </m.div>
 
@@ -396,8 +422,12 @@ export default function QuizClient() {
             <div className="mb-8 space-y-2">
               <ProgressBar current={currentIndex} total={total} />
               <div className="flex justify-between text-xs text-white/30">
-                <span>Question {currentIndex + 1} of {total}</span>
-                <span>{Math.round((currentIndex / total) * 100)}% complete</span>
+                <span>
+                  Question {currentIndex + 1} of {total}
+                </span>
+                <span>
+                  {Math.round((currentIndex / total) * 100)}% complete
+                </span>
               </div>
             </div>
           )}
@@ -406,7 +436,11 @@ export default function QuizClient() {
           <div className="relative">
             <AnimatePresence mode="wait">
               {result ? (
-                <ResultCard key="result" origin={result} onRetake={handleRetake} />
+                <ResultCard
+                  key="result"
+                  origin={result}
+                  onRetake={handleRetake}
+                />
               ) : (
                 <QuestionCard
                   key={currentQuestion.id}

@@ -111,4 +111,3 @@ export type {
   MonomythStage,
   CanonicalGuardianEntity,
 } from "./temporal-multiverse-engine.js";
-

@@ -92,9 +92,13 @@ test("Campbell-Vogler Monomyth progression maps all 12 stages to Gates", () => {
 test("Canonical Guardians registry has all 10 Guardians anchored", () => {
   const guardians = getCanonicalGuardians();
   assert.equal(guardians.length, 10);
-  assert.ok(guardians.some((g) => g.name === "Lyssandria" && g.gateNumber === 1));
+  assert.ok(
+    guardians.some((g) => g.name === "Lyssandria" && g.gateNumber === 1),
+  );
   assert.ok(guardians.some((g) => g.name === "Alera" && g.gateNumber === 5));
-  assert.ok(guardians.some((g) => g.name === "Shinkami" && g.gateNumber === 10));
+  assert.ok(
+    guardians.some((g) => g.name === "Shinkami" && g.gateNumber === 10),
+  );
 });
 
 test("Realm name generation adheres to phonology", () => {
@@ -113,7 +117,7 @@ test("Entity provenance traces causality and deep-time origins", () => {
     "123e4567-e89b-12d3-a456-426614174000",
     "Staff of Lapis Chords",
     "eldria_prime",
-    "epoch_first_war"
+    "epoch_first_war",
   );
   assert.equal(record.entityName, "Staff of Lapis Chords");
   assert.equal(record.originRealmId, "eldria_prime");

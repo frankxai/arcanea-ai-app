@@ -1,16 +1,20 @@
 import { z } from "zod";
-import { GateIdSchema, GateFrequencySchema, ElementSchema } from "./universe.js";
+import {
+  GateIdSchema,
+  GateFrequencySchema,
+  ElementSchema,
+} from "./universe.js";
 
 // ============================================================================
 // SETTLEMENT ERAS (DEEP TIME CHRONOLOGY)
 // ============================================================================
 
 export const SettlementEraSchema = z.enum([
-  "heartland",       // Settled before the First War; carries deep-time wound memory
-  "first_settling",  // Founded in immediate aftermath of Malachar's sealing
+  "heartland", // Settled before the First War; carries deep-time wound memory
+  "first_settling", // Founded in immediate aftermath of Malachar's sealing
   "second_settling", // Settled 400 years post-sealing; clear, transparent arcane flow
-  "frontier",        // Reached in last 2-3 generations; volatile, fast-evolving
-  "fallen",          // Extinct or closed realm; dormant arcane signature
+  "frontier", // Reached in last 2-3 generations; volatile, fast-evolving
+  "fallen", // Extinct or closed realm; dormant arcane signature
 ]);
 
 export type SettlementEra = z.infer<typeof SettlementEraSchema>;
@@ -29,7 +33,7 @@ export const LinguisticFamilySchema = z.object({
     vowelHarmony: z.array(z.string()),
     prohibitedClusters: z.array(z.string()),
     cadencePattern: z.string(), // e.g. "Dactylic with resonant caesuras"
-    sensoryTone: z.string(),     // e.g. "Gravel and struck iron", "Silver flute over water"
+    sensoryTone: z.string(), // e.g. "Gravel and struck iron", "Silver flute over water"
   }),
   etymologicalRoots: z.record(z.string(), z.string()), // prefix/root -> meaning
   namingPatterns: z.object({
@@ -49,10 +53,10 @@ export type LinguisticFamily = z.infer<typeof LinguisticFamilySchema>;
 export const CorridorConnectionSchema = z.object({
   targetRealmId: z.string(),
   resonanceHarmonicDelta: z.number().int().min(0), // Abs frequency diff (0 = perfect harmonic lock)
-  stabilityIndex: z.number().min(0).max(1),       // 1.0 = permanent, 0.1 = imminent drift/closure
+  stabilityIndex: z.number().min(0).max(1), // 1.0 = permanent, 0.1 = imminent drift/closure
   travelDaysByCorridor: z.number().positive(),
   travelDaysBySurface: z.number().positive(),
-  isAquifer: z.boolean().default(false),          // Deep aquifer corridors do not move across geological time
+  isAquifer: z.boolean().default(false), // Deep aquifer corridors do not move across geological time
   status: z.enum(["open", "drifting", "closed"]),
 });
 
@@ -111,9 +115,11 @@ export const MultiverseProvenanceRecordSchema = z.object({
       locationRealmId: z.string(),
       eventSummary: z.string(),
       physicalModification: z.string().optional(), // Scars, reforging, weathering
-    })
+    }),
   ),
   humanCostSummary: z.string(), // Physical price paid for its existence/creation
 });
 
-export type MultiverseProvenanceRecord = z.infer<typeof MultiverseProvenanceRecordSchema>;
+export type MultiverseProvenanceRecord = z.infer<
+  typeof MultiverseProvenanceRecordSchema
+>;

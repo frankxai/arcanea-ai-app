@@ -26,7 +26,14 @@ export type CosmicDuality = z.infer<typeof CosmicDualitySchema>;
 // THE FIVE ELEMENTS & VOID/SPIRIT DUALITY
 // ============================================================================
 
-export const ElementSchema = z.enum(["fire", "water", "earth", "wind", "void", "spirit"]);
+export const ElementSchema = z.enum([
+  "fire",
+  "water",
+  "earth",
+  "wind",
+  "void",
+  "spirit",
+]);
 export type Element = z.infer<typeof ElementSchema>;
 
 export const ElementDefinitionSchema = z.object({
@@ -129,10 +136,10 @@ export type SolfeggioGate = z.infer<typeof SolfeggioGateSchema>;
 
 export const MagicRankSchema = z.enum([
   "apprentice", // 0-2 Gates
-  "mage",       // 3-4 Gates
-  "master",     // 5-6 Gates
-  "archmage",   // 7-8 Gates
-  "luminor",    // 9-10 Gates
+  "mage", // 3-4 Gates
+  "master", // 5-6 Gates
+  "archmage", // 7-8 Gates
+  "luminor", // 9-10 Gates
 ]);
 
 export type MagicRank = z.infer<typeof MagicRankSchema>;

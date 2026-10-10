@@ -1,7 +1,8 @@
 # THE EIGHT ORIGIN CLASSES
+
 ## A Complete Taxonomy of Extraordinary Beings in Arcanea
 
-> *"Power does not ask permission. It arrives — through blood, through trauma, through construction, through corruption, through the stars themselves. The question is never how it arrived. The question is what happens next."*
+> _"Power does not ask permission. It arrives — through blood, through trauma, through construction, through corruption, through the stars themselves. The question is never how it arrived. The question is what happens next."_
 > — From the Athenaeum's Introduction to Kindred Studies, Year Four curriculum
 
 ---
@@ -103,6 +104,7 @@ The academic literature describes Gate-Touched awakening as "spontaneous element
 The Gate opening is not painful in most cases. It is disorienting at a level that language does not fully cover. The Gate-Touched individual experiences their elemental affinity not as an external force but as a sudden clarity about what they have always been, accompanied by the loss of the distance between themselves and that thing. A Fire-affinity awakening is not "I can make fire now." It is "I understand, in my body and not abstractly, what fire has always been trying to tell me, and also I am inadvertently on fire."
 
 In the hours and days following an awakening event, Gate-Touched individuals typically experience:
+
 - Extreme sensitivity to their element (a Water-affinity individual cannot be in the same room as rain without being aware of every drop)
 - Involuntary elemental expression (the element responds to emotion without conscious direction)
 - Sensory overload in their dominant affinity (they hear, feel, see things others cannot, and cannot turn it off)
@@ -400,5 +402,5 @@ The third is between Arcans and everyone the institutional framework was not bui
 
 ---
 
-> *"We make categories because we need them. We mistake them for nature because it is easier. The people who suffer most from that mistake are the ones whose existence the categories were not built to describe."*
+> _"We make categories because we need them. We mistake them for nature because it is easier. The people who suffer most from that mistake are the ones whose existence the categories were not built to describe."_
 > — Tidecaller Nerissa Pelagius, private correspondence with Headmistress Aelindra Voss-Cayne, Year of the Cold Tide

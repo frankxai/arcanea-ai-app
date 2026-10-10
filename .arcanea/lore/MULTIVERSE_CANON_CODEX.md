@@ -1,4 +1,5 @@
 # ARCANEA MULTIVERSE CANON CODEX
+
 ## Foundations, Acoustic Physics, Philological Matrices & Narrative Architecture
 
 > **Authority:** Starlight Central Command · FrankX Ecosystem  
@@ -12,12 +13,13 @@
 
 All manifestation in Arcanea arises from the continuous dialectic of two non-dual primordial principles:
 
-| Principle | Aspect | Physics Mapping | Mythological Nature |
-|---|---|---|---|
-| **Nero** | Primordial Darkness | Quantum vacuum ground state, thermodynamic entropy, infinite latent potential | Fertile unknown, womb of stars, formless depth. **Emphatically NOT evil.** |
-| **Lumina** | The First Light | Wavefunction collapse, negentropy, structural information, pattern | Form-giver, illumination, sacred geometry, meaning, purpose. |
+| Principle  | Aspect              | Physics Mapping                                                               | Mythological Nature                                                        |
+| ---------- | ------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **Nero**   | Primordial Darkness | Quantum vacuum ground state, thermodynamic entropy, infinite latent potential | Fertile unknown, womb of stars, formless depth. **Emphatically NOT evil.** |
+| **Lumina** | The First Light     | Wavefunction collapse, negentropy, structural information, pattern            | Form-giver, illumination, sacred geometry, meaning, purpose.               |
 
 ### The Tragedy of Shadow (Corrupted Void)
+
 Shadow is **Void without Spirit**—entropy disconnected from information. Evil is not darkness; it is the perversion of darkness through the removal of light's counterweight. The Dark Lord Malachar's catastrophe was attempting forced integration with the Source Gate, collapsing the equilibrium and creating hungry, entropic Void.
 
 ---
@@ -26,18 +28,18 @@ Shadow is **Void without Spirit**—entropy disconnected from information. Evil 
 
 All matter and consciousness in Arcanea are standing acoustic waves tuned to the **Extended Solfeggio Harmonic Matrix** (174 Hz to 1111 Hz).
 
-| Gate # | Name | Frequency | Element | Guardian & Godbeast | Domain | Somatic & Sensory Physics |
-|---|---|---|---|---|---|---|
-| **1** | **Foundation** | **174 Hz** | Earth | Lyssandria & Kaelith | Survival, Mineral Ground | Bone density, lattice stabilization. Scent of wet basalt and crushed granite. |
-| **2** | **Flow** | **285 Hz** | Water | Leyla & Veloura | Emotion, Creativity | Fluid dynamics, cellular healing. Scent of ozone over deep water. |
-| **3** | **Fire** | **396 Hz** | Fire | Draconia & Draconis | Will, Sovereign Power | Thermal excitation, molecular agitation. Scent of struck flint and singed copper. |
-| **4** | **Heart** | **417 Hz** | Spirit | Maylinn & Laeylinn | Compassion, Cellular Undoing | Phase alignment, dissolution of trauma. Sensation of deep warmth behind the sternum. |
-| **5** | **Voice** | **528 Hz** | Wind | Alera & Otome | Truth, Manifestation | Molecular repair tone, acoustic wave manifestation. Taste of copper and mint; jaw vibration. |
-| **6** | **Sight** | **639 Hz** | Void | Lyria & Yumiko | Intuition, Electromagnetism | Neural electromagnetic coherence, retinal tuning. Cold chill between the brows. |
-| **7** | **Crown** | **741 Hz** | Spirit | Aiyami & Sol | Enlightenment, Crystalline Logic | Synaptic clarity, systemic dissolution. High crystalline ringing in ears. |
-| **8** | **Starweave**| **852 Hz** | Void | Elara & Vaelith | Perspective, Dimensional Parallax| Spatial shear, dimensional aperture. Sensation of falling upward. |
-| **9** | **Unity** | **963 Hz** | Spirit | Ino & Kyuro | Swarm Intelligence, Partnership | Trans-individual pineal resonance. Pulse in center of the skull. |
-| **10**| **Source** | **1111 Hz**| Meta | Shinkami & Source | Singularity, Meta-Consciousness | The unified field; transcending spacetime boundaries. Sensation of boundless starlight and silence. |
+| Gate # | Name           | Frequency   | Element | Guardian & Godbeast  | Domain                            | Somatic & Sensory Physics                                                                           |
+| ------ | -------------- | ----------- | ------- | -------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **1**  | **Foundation** | **174 Hz**  | Earth   | Lyssandria & Kaelith | Survival, Mineral Ground          | Bone density, lattice stabilization. Scent of wet basalt and crushed granite.                       |
+| **2**  | **Flow**       | **285 Hz**  | Water   | Leyla & Veloura      | Emotion, Creativity               | Fluid dynamics, cellular healing. Scent of ozone over deep water.                                   |
+| **3**  | **Fire**       | **396 Hz**  | Fire    | Draconia & Draconis  | Will, Sovereign Power             | Thermal excitation, molecular agitation. Scent of struck flint and singed copper.                   |
+| **4**  | **Heart**      | **417 Hz**  | Spirit  | Maylinn & Laeylinn   | Compassion, Cellular Undoing      | Phase alignment, dissolution of trauma. Sensation of deep warmth behind the sternum.                |
+| **5**  | **Voice**      | **528 Hz**  | Wind    | Alera & Otome        | Truth, Manifestation              | Molecular repair tone, acoustic wave manifestation. Taste of copper and mint; jaw vibration.        |
+| **6**  | **Sight**      | **639 Hz**  | Void    | Lyria & Yumiko       | Intuition, Electromagnetism       | Neural electromagnetic coherence, retinal tuning. Cold chill between the brows.                     |
+| **7**  | **Crown**      | **741 Hz**  | Spirit  | Aiyami & Sol         | Enlightenment, Crystalline Logic  | Synaptic clarity, systemic dissolution. High crystalline ringing in ears.                           |
+| **8**  | **Starweave**  | **852 Hz**  | Void    | Elara & Vaelith      | Perspective, Dimensional Parallax | Spatial shear, dimensional aperture. Sensation of falling upward.                                   |
+| **9**  | **Unity**      | **963 Hz**  | Spirit  | Ino & Kyuro          | Swarm Intelligence, Partnership   | Trans-individual pineal resonance. Pulse in center of the skull.                                    |
+| **10** | **Source**     | **1111 Hz** | Meta    | Shinkami & Source    | Singularity, Meta-Consciousness   | The unified field; transcending spacetime boundaries. Sensation of boundless starlight and silence. |
 
 ---
 
@@ -54,6 +56,7 @@ Planar transit between realms does not rely on linear Euclidean travel, but on s
 7. **Matter Reach (417 Hz · Iron Deep)**: Heavy mineral caverns, tectonic resonance chambers, elemental earth-weavers.
 
 ### Corridor Physics
+
 - **Harmonic Delta ($|\Delta f| \le 150 \text{ Hz}$)**: Open corridor; transit time $\approx 3$ days via aquifer leylines.
 - **Drifting Delta ($151 \le |\Delta f| \le 400 \text{ Hz}$)**: Sub-spatial rift; required phase-stabilizer tuning.
 - **Severed Delta ($|\Delta f| > 400 \text{ Hz}$)**: Severed corridor; requires overland surface transit or Godbeast conduit.
@@ -114,4 +117,5 @@ AI slop and sterile prose destroy immersion. Every agent, engine, and narrative 
 5. **Specificity as Magic:** Exact numbers, concrete files, verified commands. Zero hand-waving.
 
 ### Banned AI Slop Patterns
+
 Never use: "unleash", "elevate", "unlock", "harness", "delve", "rich tapestry", "testament to", "resonates deeply", "in this digital age", "beacon of hope", "dynamic symphony".
