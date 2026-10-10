@@ -341,9 +341,9 @@ export function ChatArea({
                 />
               </div>
 
-              {/* Time-aware greeting — gradient text */}
+              {/* Time-aware greeting */}
               <h1
-                className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight animate-empty-fade-in bg-gradient-to-r from-white via-white/95 to-[var(--arc-brand-atlantean-teal)]/80 bg-clip-text text-transparent"
+                className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight animate-empty-fade-in text-[var(--arc-text-primary)]"
                 style={{ animationDelay: "60ms" }}
               >
                 {activeLuminor ? activeLuminor.name : emptyGreeting}
@@ -677,8 +677,8 @@ export function ChatArea({
               animation: "fadeInUp 200ms cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
-            <h2 className="text-sm font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent mb-4">
-              Keyboard Shortcuts
+            <h2 className="text-sm font-semibold text-[var(--arc-text-primary)] mb-4">
+              Keyboard shortcuts
             </h2>
             <div className="space-y-2 text-xs">
               {KEYBOARD_SHORTCUTS.map(([key, desc]) => (

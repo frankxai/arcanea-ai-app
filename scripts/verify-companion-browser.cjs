@@ -92,6 +92,24 @@ async function main() {
     captures: [],
     failures: [],
   };
+  const capturePage = async (page, name) => {
+    const file = `${name}.png`;
+    await page.screenshot({ path: path.join(output, file) });
+    const capture = {
+      file,
+      sha256: digest(await fs.readFile(path.join(output, file))),
+      head,
+      sourceHashes,
+      fixture: true,
+      realProviderCalls: 0,
+      productionWrites: 0,
+    };
+    await fs.writeFile(
+      path.join(output, `${name}.json`),
+      `${JSON.stringify(capture, null, 2)}\n`,
+    );
+    receipt.captures.push(capture);
+  };
   let browser;
   let activePage;
   const streams = [];
@@ -353,22 +371,7 @@ async function main() {
         .click();
       await expect(input).toHaveValue("Draft survives closing.");
       // Capture the useful working surface, not provider payloads or authentic account data.
-      const screenshot = `${mode.name}.png`;
-      await page.screenshot({ path: path.join(output, screenshot) });
-      const capture = {
-        file: screenshot,
-        sha256: digest(await fs.readFile(path.join(output, screenshot))),
-        head,
-        sourceHashes,
-        fixture: true,
-        realProviderCalls: 0,
-        productionWrites: 0,
-      };
-      await fs.writeFile(
-        path.join(output, `${mode.name}.json`),
-        `${JSON.stringify(capture, null, 2)}\n`,
-      );
-      receipt.captures.push(capture);
+      await capturePage(page, mode.name);
       const geometry = await panel.evaluate((element) => {
         const rect = element.getBoundingClientRect();
         const controls = [...element.querySelectorAll("button,a,textarea")]
@@ -447,6 +450,16 @@ async function main() {
       await expect(log).not.toContainText("Previous account");
       await page.goto(`${base}/chat`);
       await expect(opener).toBeHidden();
+      const fullChatHeading = page.getByRole("heading", { level: 1 });
+      await expect(fullChatHeading).toBeVisible();
+      await capturePage(page, `full-chat-${mode.name}`);
+      await fullChatHeading.click();
+      await page.keyboard.press("?");
+      await expect(
+        page.getByRole("heading", { name: "Keyboard shortcuts", exact: true }),
+      ).toBeVisible();
+      await capturePage(page, `shortcuts-${mode.name}`);
+      await page.keyboard.press("Escape");
       await page.goto(base);
       await expect(opener).toBeHidden();
       assert.deepEqual(pageErrors, []);
@@ -465,6 +478,8 @@ async function main() {
         noRawProviderError: true,
         shortcutSingleOwner: true,
         keyboardFocus: true,
+        fullChatHeadingVisible: true,
+        shortcutsHeadingVisible: true,
         geometry,
         pageErrors,
       });
