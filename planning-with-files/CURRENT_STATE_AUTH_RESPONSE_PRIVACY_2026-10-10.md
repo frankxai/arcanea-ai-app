@@ -19,10 +19,17 @@ was returned; this is a cache-policy gap, not evidence of a leaked draft. The in
 receipt remains preserved. Its page200 followed the login redirect, so it does not prove
 anonymous author-page access. Correctly test redirects without following them.
 
-Seven native tests compile the actual middleware and use real NextRequest/NextResponse with
+Ten native tests compile the actual middleware and use real NextRequest/NextResponse with
 only Supabase/env network dependencies mocked. Five failed before the change; public-provider
 auth bypass already passed. Private,no-store covers auth-dependent401, redirects and signed-in
-pass-through; refresh cookies remain intact and public routes retain existing bypass behavior. Full CI, exact independent review,
+pass-through; refresh cookies remain intact and public routes retain existing bypass behavior.
+Two expanded cases reproduced dropped first-cookie chunks on pass-through and dropped refresh
+cookies on auth redirects. Cookie updates/removals now preserve accumulated cookies, and redirects
+and refusals copy the session response cookies. The removal case verifies obsolete-cookie expiry
+without dropping refreshed chunks. Official Supabase SSR guidance was read on10October2026:
+https://supabase.com/docs/guides/auth/server-side/advanced-guide and
+https://supabase.com/docs/guides/auth/server-side/creating-a-client.
+Full CI, exact independent review,
 hosted preview and receiving-production HTTP checks are required before completion.
 
 Files: middleware.ts; scripts/tests/auth-response-privacy.test.cjs; ci.yml;

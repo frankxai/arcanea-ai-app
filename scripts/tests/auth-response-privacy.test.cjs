@@ -9,7 +9,7 @@ const {
   NextResponse,
 } = require("../../apps/web/node_modules/next/server");
 
-function middleware(user, refreshCookie = false) {
+function middleware(user, refreshCookie = false, removeCookie = false) {
   let authCalls = 0;
   const source = fs.readFileSync(
     path.join(__dirname, "../../apps/web/lib/supabase/middleware.ts"),
@@ -32,12 +32,18 @@ function middleware(user, refreshCookie = false) {
               authCalls++;
               if (user instanceof Error) throw user;
               if (refreshCookie) {
-                cookies.set("sb-fixture", "refreshed-fixture", {
-                  path: "/",
-                  httpOnly: true,
-                  secure: true,
-                  sameSite: "lax",
-                });
+                const names = Array.isArray(refreshCookie)
+                  ? refreshCookie
+                  : ["sb-fixture"];
+                for (const name of names)
+                  cookies.set(name, "refreshed-fixture", {
+                    path: "/",
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "lax",
+                  });
+                if (removeCookie)
+                  cookies.remove("sb-obsolete", { path: "/", maxAge: 0 });
               }
               return { data: { user } };
             },
@@ -152,5 +158,46 @@ test("session refresh cookies survive private pass-through", async () => {
   assert.equal(response.cookies.get("sb-fixture").value, "refreshed-fixture");
   assert.match(response.headers.get("set-cookie"), /HttpOnly/);
   assert.match(response.headers.get("set-cookie"), /Secure/);
+  privateResponse(response);
+});
+
+for (const pathname of [
+  "/api/author/forge-of-ruin/chapters/one",
+  "/auth/login",
+])
+  test(`all refresh-cookie chunks survive ${pathname}`, async () => {
+    const response = await middleware({ id: "fixture" }, [
+      "sb-fixture.0",
+      "sb-fixture.1",
+    ]).updateSession(
+      new NextRequest(`https://www.arcanea.ai${pathname}`),
+      options,
+    );
+    assert.equal(
+      response.cookies.get("sb-fixture.0")?.value,
+      "refreshed-fixture",
+    );
+    assert.equal(
+      response.cookies.get("sb-fixture.1")?.value,
+      "refreshed-fixture",
+    );
+    privateResponse(response);
+  });
+
+test("removing obsolete session cookies retains every refreshed chunk", async () => {
+  const response = await middleware(
+    { id: "fixture" },
+    ["sb-fixture.0", "sb-fixture.1"],
+    true,
+  ).updateSession(
+    new NextRequest(
+      "https://www.arcanea.ai/api/author/forge-of-ruin/chapters/one",
+    ),
+    options,
+  );
+  for (const name of ["sb-fixture.0", "sb-fixture.1"])
+    assert.equal(response.cookies.get(name)?.value, "refreshed-fixture");
+  assert.equal(response.cookies.get("sb-obsolete")?.value, "");
+  assert.equal(response.cookies.get("sb-obsolete")?.maxAge, 0);
   privateResponse(response);
 });

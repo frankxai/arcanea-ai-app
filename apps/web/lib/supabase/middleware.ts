@@ -25,7 +25,13 @@ function matchesPrefix(pathname: string, prefixes: string[] = []) {
   );
 }
 
-function privateAuthResponse(response: NextResponse) {
+function privateAuthResponse(
+  response: NextResponse,
+  sessionResponse?: NextResponse,
+) {
+  for (const cookie of sessionResponse?.cookies.getAll() ?? []) {
+    response.cookies.set(cookie);
+  }
   response.headers.set("Cache-Control", "private, no-store");
   return response;
 }
@@ -88,6 +94,12 @@ export async function updateSession(
     },
   });
 
+  function refreshedResponse() {
+    const next = NextResponse.next({ request: { headers: request.headers } });
+    for (const cookie of response.cookies.getAll()) next.cookies.set(cookie);
+    return next;
+  }
+
   const { url, anonKey } = getSupabaseEnv();
 
   const supabase = createServerClient(url, anonKey, {
@@ -101,11 +113,7 @@ export async function updateSession(
           value,
           ...options,
         });
-        response = NextResponse.next({
-          request: {
-            headers: request.headers,
-          },
-        });
+        response = refreshedResponse();
         response.cookies.set({
           name,
           value,
@@ -118,11 +126,7 @@ export async function updateSession(
           value: "",
           ...options,
         });
-        response = NextResponse.next({
-          request: {
-            headers: request.headers,
-          },
-        });
+        response = refreshedResponse();
         response.cookies.set({
           name,
           value: "",
@@ -156,6 +160,7 @@ export async function updateSession(
           },
           { status: 401 },
         ),
+        response,
       );
     }
   }
@@ -165,7 +170,7 @@ export async function updateSession(
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = loginPath;
     redirectUrl.searchParams.set("next", pathname);
-    return privateAuthResponse(NextResponse.redirect(redirectUrl));
+    return privateAuthResponse(NextResponse.redirect(redirectUrl), response);
   }
 
   if (isAuthRoute && user) {
@@ -173,6 +178,7 @@ export async function updateSession(
       NextResponse.redirect(
         authenticatedRedirectUrl(request, authenticatedRedirectPath),
       ),
+      response,
     );
   }
 
