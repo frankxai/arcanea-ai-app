@@ -14,6 +14,7 @@ import { BookHeader } from "../../components/book-header";
 import { createClient } from "@/lib/supabase/server";
 import { isBookPublic } from "@/lib/content/book-visibility";
 import { getBookRoot } from "@/lib/content/book-path";
+import { getChapterTitle } from "@/lib/author/book-files";
 
 export const dynamic = "force-dynamic";
 
@@ -126,16 +127,16 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
     mdFiles.map(async (filename, idx) => {
       const raw = await readFile(join(chaptersDir, filename), "utf-8");
       const wordCount = raw.split(/\s+/).filter(Boolean).length;
-      const titleMatch = raw.match(/^#\s+(.+)$/m);
       return {
         slug: filename.replace(/\.md$/, ""),
-        title: titleMatch
-          ? titleMatch[1].trim()
-          : filename
-              .replace(/\.md$/, "")
-              .replace(/^\d+-/, "")
-              .replace(/-/g, " ")
-              .replace(/\b\w/g, (c) => c.toUpperCase()),
+        title: getChapterTitle(
+          raw,
+          filename
+            .replace(/\.md$/, "")
+            .replace(/^\d+-/, "")
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase()),
+        ),
         wordCount,
         order: idx,
       };
@@ -154,8 +155,7 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
     join(chaptersDir, currentFile),
     "utf-8",
   );
-  const chapterTitle =
-    chapterContent.match(/^#\s+(.+)$/m)?.[1]?.trim() || chapterSlug;
+  const chapterTitle = getChapterTitle(chapterContent, chapterSlug);
 
   // Convert markdown to HTML for the rich editor (Tiptap/Novel.js)
   const htmlResult = await remark().use(remarkHtml).process(chapterContent);

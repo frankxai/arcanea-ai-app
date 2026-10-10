@@ -10,6 +10,27 @@ create function auth.uid() returns uuid language sql stable as $$
   select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
 $$;
 grant usage on schema auth to anon, authenticated;
+-- Preview clones can omit production's catalog grants. Repair only lookup columns.
+create table public.books (id uuid primary key, slug text, description text);
+create table public.book_authors (book_id uuid, user_id uuid, role text, author_name text);
+\ir ../migrations/20261010133546_author_lookup_read_permissions.sql
+\ir ../migrations/20261010133546_author_lookup_read_permissions.sql
+set local role authenticated;
+select id from public.books where slug='fixture-book';
+select role from public.book_authors where book_id='00000000-0000-4000-8000-000000000001' and user_id=auth.uid();
+do $$ begin
+  begin
+    perform description from public.books;
+    raise exception 'Catalog repair exposed unrelated metadata';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    insert into public.books(id,slug) values ('00000000-0000-4000-8000-000000000001','fixture-book');
+    raise exception 'Catalog repair granted a write';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+reset role;
 \if :original_first
 \ir ../migrations/20260414000001_author_drafts.sql
 \endif

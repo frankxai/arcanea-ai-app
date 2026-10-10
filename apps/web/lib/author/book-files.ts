@@ -1,6 +1,19 @@
 import { readFile, readdir, realpath } from "fs/promises";
 import { resolve, sep } from "path";
 
+/** Manuscript files often repeat the book heading above their chapter heading. */
+export function getChapterTitle(content: string, fallback: string): string {
+  return (
+    content
+      .match(
+        /^#{1,2}\s+((?:chapter|prologue|epilogue|interlude)\b[^\n]*)/im,
+      )?.[1]
+      ?.trim() ||
+    content.match(/^#\s+([^\n]+)/m)?.[1]?.trim() ||
+    fallback
+  );
+}
+
 /** Resolve symlinks as well as traversal before any author context read. */
 export async function readBookContextFile(root: string, candidate: string) {
   const base = await realpath(root);

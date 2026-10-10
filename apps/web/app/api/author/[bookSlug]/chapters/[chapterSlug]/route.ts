@@ -16,6 +16,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getBookRoot } from "@/lib/content/book-path";
 import { isBookPublic } from "@/lib/content/book-visibility";
+import { getChapterTitle } from "@/lib/author/book-files";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -48,8 +49,7 @@ function countWords(content: string): number {
 }
 
 function extractTitle(content: string, fallback: string): string {
-  const titleMatch = content.match(/^#\s+(.+)$/m);
-  return titleMatch ? titleMatch[1].trim() : fallback;
+  return getChapterTitle(content, fallback);
 }
 
 /**

@@ -538,7 +538,7 @@ export function AuthorEditor({
         </div>
       )}
       {loaded && (
-        <div className="sticky bottom-0 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-[var(--arc-cosmic-void)] py-3 text-sm text-white/70">
+        <div className="sticky bottom-0 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-[var(--arc-cosmic-void)] py-3 pr-20 text-sm text-white/70 lg:pr-0">
           <span>{(state.value?.word_count ?? 0).toLocaleString()} words</span>
           <span role="status" aria-live="polite">
             {state.saving

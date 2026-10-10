@@ -309,6 +309,38 @@ async function main() {
             page.getByRole("navigation", { name: "Chapters", exact: true }),
           ).toBeVisible();
         }
+        await expect(
+          page.getByRole("link", {
+            name: /Chapter One: The Forty-Seven Names/,
+          }),
+        ).toBeVisible();
+        if (mode.name === "desktop") {
+          const collapse = await page
+            .getByRole("button", { name: "Collapse chapters", exact: true })
+            .boundingBox();
+          assert.ok(collapse && collapse.width >= 44 && collapse.height >= 44);
+        } else {
+          const status = page
+            .getByRole("status")
+            .filter({ hasText: "Draft loaded" });
+          await status.scrollIntoViewIfNeeded();
+          const a = await status.boundingBox();
+          const b = await page
+            .getByRole("button", {
+              name: "Open Arcanea assistant",
+              exact: true,
+            })
+            .boundingBox();
+          assert.ok(
+            a &&
+              b &&
+              (a.x + a.width <= b.x ||
+                b.x + b.width <= a.x ||
+                a.y + a.height <= b.y ||
+                b.y + b.height <= a.y),
+            "Draft status must remain clear of the assistant control",
+          );
+        }
         assert.deepEqual(errors, []);
         await page.screenshot({
           path: `${output}/${mode.name}.png`,
@@ -327,6 +359,8 @@ async function main() {
           conflictDenial: !!config,
           touchTargets: true,
           reflow: true,
+          distinctChapterTitles: true,
+          statusClearOfAssistant: mode.name !== "desktop",
           paidProviderRequests: 0,
         });
       } finally {

@@ -10,7 +10,36 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { readBookContextFile, listBookContextFiles } from "../book-files";
+import {
+  readBookContextFile,
+  listBookContextFiles,
+  getChapterTitle,
+} from "../book-files";
+
+test("chapter navigation distinguishes repeated book headings without mistaking scene headings", () => {
+  assert.equal(
+    getChapterTitle(
+      "# The Forge of Ruin\n\n## Chapter One: The Forty-Seven Names",
+      "one",
+    ),
+    "Chapter One: The Forty-Seven Names",
+  );
+  assert.equal(
+    getChapterTitle(
+      "# The Forge of Ruin\n\n## Prologue: Final Entry",
+      "prologue",
+    ),
+    "Prologue: Final Entry",
+  );
+  assert.equal(
+    getChapterTitle("# The Grate\n\n## A scene break", "two"),
+    "The Grate",
+  );
+  assert.equal(
+    getChapterTitle("A chapter without headings", "Unwritten chapter"),
+    "Unwritten chapter",
+  );
+});
 
 test("author context allows in-root files and refuses traversal, sibling prefixes and symlinks", async (t) => {
   const fixture = await mkdtemp(join(tmpdir(), "arcanea-author-path-"));
