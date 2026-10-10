@@ -127,7 +127,7 @@ export function SceneWorkspaceView({
                 <button
                   type="button"
                   className={button}
-                  disabled={busy}
+                  disabled={busy || pending}
                   onClick={replaceScene}
                 >
                   Replace with selected passage
@@ -184,7 +184,10 @@ export function SceneWorkspaceView({
                         type="button"
                         className={`${button} ${styles.primary}`}
                         disabled={
-                          busy || isLoading || scene.brief.trim().length < 12
+                          busy ||
+                          isLoading ||
+                          Boolean(replacement) ||
+                          scene.brief.trim().length < 12
                         }
                         onClick={generate}
                       >

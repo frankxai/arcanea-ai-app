@@ -138,18 +138,6 @@ async function main() {
         const brief = `${await page.getByLabel("Visual brief").inputValue()}\nShow the river at dusk.`;
         await page.getByLabel("Visual brief").fill(brief);
         // UI fixtures only: no account is created and no provider is contacted.
-        await page.evaluate(
-          ({ owner, chapter }) => {
-            const anonymousKey = `arcanea:reading-scene:v1:anonymous:${encodeURIComponent(chapter)}`;
-            const scene = JSON.parse(sessionStorage.getItem(anonymousKey));
-            scene.owner = owner;
-            sessionStorage.setItem(
-              `arcanea:reading-scene:v1:${owner}:${encodeURIComponent(chapter)}`,
-              JSON.stringify(scene),
-            );
-          },
-          { owner, chapter },
-        );
         await context.route("**/auth/v1/**", (route) =>
           route.fulfill({
             json: {
@@ -188,6 +176,17 @@ async function main() {
           .getByRole("button", { name: "Reopen scene", exact: true })
           .click();
         await expect(page.getByLabel("Visual brief")).toHaveValue(brief);
+        assert.equal(
+          await page.evaluate(
+            (chapter) =>
+              sessionStorage.getItem(
+                `arcanea:reading-scene:v1:anonymous:${encodeURIComponent(chapter)}`,
+              ),
+            chapter,
+          ),
+          null,
+          "The anonymous brief must be consumed only after account persistence",
+        );
         await page
           .locator("article .prose p")
           .first()

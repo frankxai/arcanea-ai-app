@@ -84,7 +84,10 @@ function SceneWorkspace({
           anonymous && !anonymous.requestKey && !anonymous.result
             ? { ...anonymous, owner }
             : null;
-        if (draft) persistScene(sessionStorage, draft);
+        if (draft) {
+          persistScene(sessionStorage, draft);
+          sessionStorage.removeItem(sceneSlot("anonymous", location.pathname));
+        }
         setScene(saved ?? draft);
         if (!saved && !draft && owner !== "anonymous") {
           void fetch(
@@ -219,7 +222,7 @@ function SceneWorkspace({
   }
 
   async function generate() {
-    if (!scene || busy || !user || isLoading) return;
+    if (!scene || busy || replacement || !user || isLoading) return;
     const next = {
       ...scene,
       requestKey: scene.requestKey ?? crypto.randomUUID(),
@@ -365,7 +368,8 @@ function SceneWorkspace({
       replacement={replacement}
       keepScene={() => setReplacement(null)}
       replaceScene={() => {
-        if (!replacement) return;
+        if (!replacement || busy || (scene?.requestKey && !scene.result))
+          return;
         retain(replacement);
         setReplacement(null);
         setSelection("");
