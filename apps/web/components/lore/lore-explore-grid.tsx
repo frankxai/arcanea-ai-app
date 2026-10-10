@@ -19,6 +19,16 @@ import { cn } from '@/lib/utils';
 
 const EXPLORATIONS = [
   {
+    href: '/atlas',
+    title: 'Multiverse Atlas',
+    description: 'Solfeggio acoustic corridors, Tolkien-grade dialects, and Sandersonian tolls',
+    icon: PhCompass,
+    gradient: 'from-[var(--arc-brand-arcanean-gold,#d4af37)]/20 to-cyan-500/10',
+    accentColor: 'text-[var(--arc-brand-arcanean-gold,#d4af37)]',
+    borderColor: 'border-[var(--arc-brand-arcanean-gold,#d4af37)]/20 hover:border-[var(--arc-brand-arcanean-gold,#d4af37)]/40',
+    bgImage: null,
+  },
+  {
     href: '/lore/guardians',
     title: 'The Ten Guardians',
     description: 'Gods and Goddesses who guard the Gates of creation',
