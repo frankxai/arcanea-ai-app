@@ -146,6 +146,57 @@ test("health describes the public credential contract", async () => {
   assert.equal(health.managedInference, "disabled");
 });
 
+test("proxy admits only the exact customer-key compatibility path and verbs", async () => {
+  const { proxy } = await import("../../../proxy");
+  for (const method of ["GET", "POST"]) {
+    const response = await proxy(
+      new NextRequest("https://www.arcanea.ai/api/v1/chat/completions", {
+        method,
+      }),
+    );
+    assert.equal(response.headers.get("x-middleware-next"), "1");
+  }
+  for (const [method, pathname] of [
+    ["PUT", "/api/v1/chat/completions"],
+    ["GET", "/api/v1/chat/completions/extra"],
+    ["GET", "/api/v1/chat/completions-evil"],
+    ["GET", "/api/v1/models"],
+  ]) {
+    const response = await proxy(
+      new NextRequest("https://www.arcanea.ai" + pathname, { method }),
+    );
+    assert.notEqual(response.headers.get("x-middleware-next"), "1");
+    assert.ok(response.status >= 400);
+  }
+  assert.equal(calls.length, 0);
+});
+
+test("a real AI SDK client reaches customer-key chat through middleware without a session", async () => {
+  const { createOpenAI } = await import("@ai-sdk/openai");
+  const { generateText } = await import("ai");
+  const { proxy } = await import("../../../proxy");
+  const customer = createOpenAI({
+    apiKey: "sk-test-key",
+    baseURL: "https://www.arcanea.ai/api/v1",
+    fetch: async (input, init) => {
+      const headers = new Headers(init?.headers);
+      headers.set("x-forwarded-for", `198.51.100.${++requestNumber}`);
+      const req = new NextRequest(String(input), { ...init, headers });
+      assert.equal(req.nextUrl.pathname, "/api/v1/chat/completions");
+      assert.equal((await proxy(req)).headers.get("x-middleware-next"), "1");
+      return POST(req);
+    },
+  });
+  const result = await generateText({
+    model: customer.chat(model.id),
+    prompt: "Draft a scene.",
+    maxRetries: 0,
+  });
+  assert.equal(result.text, "A scene.");
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].headers.get("authorization"), "Bearer sk-test-key");
+});
+
 test("keys for another provider cannot fall back to server credentials", async () => {
   const response = await POST(
     request({ "x-anthropic-key": "test-anthropic-key" }),
