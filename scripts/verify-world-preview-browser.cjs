@@ -93,7 +93,7 @@ async function main() {
     await fs.readFile(process.env.WORLD_TEST_CONFIG, "utf8"),
   );
   assert.equal(config.head, process.env.GITHUB_SHA);
-  assert.equal(config.base, "http://127.0.0.1:3001");
+  assert.equal(config.base, "http://localhost:3001");
   assert.equal(config.supabaseUrl, "http://127.0.0.1:54321");
   assert.equal(config.accounts.length, 2);
   assert.ok(config.accounts.every((a) => a.email.endsWith("@example.invalid")));
@@ -169,6 +169,34 @@ async function main() {
     );
     await login(config.accounts[0]);
     evidence.realPasswordLogin = true;
+    stage = "compiled-handler-admission";
+    const noKey = await page.evaluate(async () => {
+      const response = await fetch("/api/worlds/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          description: "A coastal city pays the sea with memories",
+        }),
+      });
+      return {
+        status: response.status,
+        cacheControl: response.headers.get("Cache-Control"),
+      };
+    });
+    assert.equal(noKey.status, 402);
+    assert.match(noKey.cacheControl, /private.*no-store/);
+    const foreign = await page.request.post(
+      `${config.base}/api/worlds/generate`,
+      {
+        headers: { Origin: "https://other.invalid" },
+        data: { description: "A coastal city pays the sea with memories" },
+      },
+    );
+    assert.equal(foreign.status(), 403);
+    evidence.compiledHandlerAdmission = {
+      sameOriginMissingKey: 402,
+      foreignOrigin: 403,
+    };
     stage = "generation-and-edit";
     await expect(key).toHaveValue("");
     const input = page.getByRole("textbox", { name: "Describe your world" });
@@ -499,6 +527,7 @@ async function main() {
     evidence.interactions = [
       "complete art brief copied without image generation",
       "real password login",
+      "actual compiled handler missing-key and foreign-origin denial",
       "missing customer key refuses",
       process.env.WORLD_TEST_API_KEY
         ? "actual customer-key model generation"

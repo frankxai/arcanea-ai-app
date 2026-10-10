@@ -148,6 +148,25 @@ test("a cross-origin request refuses before model or body use", async () => {
   assert.equal(response.status, 403);
   assert.equal(calls.length, 0);
 });
+test("canonical loopback origin reaches key admission while aliases remain closed", async () => {
+  const { route, calls } = setup();
+  const local = (origin) =>
+    new NextRequest("http://127.0.0.1:3001/api/worlds/generate", {
+      method: "POST",
+      headers: { origin, "content-type": "application/json" },
+      body: JSON.stringify({
+        description: "A coastal city pays the sea with memories",
+      }),
+    });
+  assert.equal(
+    local("http://localhost:3001").nextUrl.origin,
+    "http://localhost:3001",
+  );
+  assert.equal((await route.POST(local("http://localhost:3001"))).status, 402);
+  assert.equal((await route.POST(local("http://127.0.0.1:3001"))).status, 403);
+  assert.equal((await route.POST(local("http://localhost:3002"))).status, 403);
+  assert.equal(calls.length, 0);
+});
 test("customer credential, structured output and cancellation are bound to one call", async () => {
   const { route, calls } = setup();
   const response = await route.POST(

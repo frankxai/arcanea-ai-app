@@ -149,3 +149,21 @@ by the admission parser. The first commentary attributed the failure to formatti
 before the job log established the earlier missing-base cause. Preserve both records.
 No creator request or production write occurred. This CI-only correction requires
 fresh exact-source gates/review before any live-model test; no provider retry claimed.
+
+Candidateca0872c33d: full synthetic CI38080945713/normal38080948328, CodeQL,
+real Auth/save/reopen and independent Gemini responseu5bKas2QJeHUz7IPnuOxwAE
+STOP PASS0; all37 source hashes verified, receipt6101540586. Live38081641169
+attempt1 refused the public comment's CRLF marker before containers/models; the
+publisher now emits canonical LF. Actual source admission against the corrected
+public receipt and real Git passes offline with Docker/model execution blocked.
+Attempt2 reached real browser authentication but returned403 on generation,
+before the handler's auth/provider code. There was1 app request attempt,0 completed
+provider calls and0 production writes, not a model-quality verdict. Installed
+Next16.3.8 normalizes127.0.0.1 tolocalhost in NextURL; the strict Origin check thus
+correctly rejected the fixture's different literal browser origin. Use localhost
+for the app fixture/CORS/site URL while services stay bound to loopback. Production
+origin enforcement is unchanged; the prior commentary promising a guard change
+preceded this source-level diagnosis. Add actual compiled handler402 missing-key
+and403 foreign-origin checks to every synthetic fixture run before live admission.
+Native loopback/port regressions use the installed actual NextRequest,0 model calls.
+Retain every failed attempt, screenshot, public receipt edit and private transcript.

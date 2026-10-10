@@ -242,8 +242,8 @@ try {
       API_EXTERNAL_URL: "http://127.0.0.1:54321/auth/v1",
       GOTRUE_DB_DRIVER: "postgres",
       GOTRUE_DB_DATABASE_URL: `postgres://supabase_auth_admin:${password}@db:5432/postgres`,
-      GOTRUE_SITE_URL: "http://127.0.0.1:3001",
-      GOTRUE_URI_ALLOW_LIST: "http://127.0.0.1:3001/**",
+      GOTRUE_SITE_URL: "http://localhost:3001",
+      GOTRUE_URI_ALLOW_LIST: "http://localhost:3001/**",
       GOTRUE_DISABLE_SIGNUP: "true",
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "true",
       GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "false",
@@ -288,7 +288,7 @@ try {
       return;
     }
     const headers = {
-      "access-control-allow-origin": "http://127.0.0.1:3001",
+      "access-control-allow-origin": "http://localhost:3001",
       "access-control-allow-headers":
         "authorization,apikey,content-type,x-client-info,x-supabase-api-version,x-supabase-client-platform,x-supabase-client-platform-version,x-supabase-client-runtime,x-supabase-client-runtime-version",
       "access-control-allow-methods": "GET,POST,PATCH,PUT,DELETE,OPTIONS",
@@ -374,7 +374,7 @@ try {
     configPath,
     JSON.stringify({
       head,
-      base: "http://127.0.0.1:3001",
+      base: "http://localhost:3001",
       supabaseUrl: "http://127.0.0.1:54321",
       anon,
       accounts,
@@ -429,7 +429,7 @@ try {
     { env: { ...process.env, ...env }, stdio: "ignore", detached: true },
   );
   children.add(server);
-  await ready("http://127.0.0.1:3001/worlds/create?resume=1");
+  await ready("http://localhost:3001/worlds/create?resume=1");
   phase = "browser-acceptance";
   await run(
     "node",
