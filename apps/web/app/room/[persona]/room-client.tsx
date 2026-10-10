@@ -1351,38 +1351,41 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
               {error.hint}
             </p>
           )}
-          {error.cta === "byok" && (
-            <div className="mt-3 flex items-center gap-2">
+          {error.cta && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
               <Link
                 href="/settings/providers"
                 className="inline-flex min-h-11 items-center text-[var(--arc-text-primary)] underline"
               >
                 Provider settings
               </Link>
+              {error.cta === "byok" && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSettingsOpen(true);
+                    setError(null);
+                  }}
+                  className="min-h-11 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors"
+                  style={{
+                    background: "rgba(0,188,212,0.18)",
+                    color: "var(--arc-text-primary)",
+                    border: "1px solid rgba(0,188,212,0.35)",
+                    cursor: "pointer",
+                  }}
+                >
+                  Connect voice
+                </button>
+              )}
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSettingsOpen(true);
-                  setError(null);
-                }}
-                className="min-h-11 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors"
-                style={{
-                  background: "rgba(0,188,212,0.18)",
-                  color: "var(--arc-text-primary)",
-                  border: "1px solid rgba(0,188,212,0.35)",
-                  cursor: "pointer",
-                }}
-              >
-                Connect voice
-              </button>
-              <button
-                type="button"
+                aria-label="Dismiss voice room error"
                 onClick={(e) => {
                   e.stopPropagation();
                   setError(null);
                 }}
-                className="px-3 py-1.5 rounded-lg text-[11px] tracking-[0.18em] uppercase text-rose-200/60 hover:text-rose-100 border border-white/[0.06] transition-colors"
+                className="min-h-11 px-3 py-1.5 rounded-lg text-[11px] text-rose-200/60 hover:text-rose-100 border border-white/[0.06] transition-colors"
                 style={{ cursor: "pointer" }}
               >
                 Dismiss

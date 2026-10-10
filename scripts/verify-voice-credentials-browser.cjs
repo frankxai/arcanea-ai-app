@@ -419,12 +419,17 @@ async function verifyRoomRecovery(browser, mode) {
       await route.abort();
     });
     const transcriptionKeys = [];
+    let transcriptionStatus = 200;
     await page.route("**/api/ai/transcribe", async (route) => {
       transcriptionKeys.push(route.request().headers()["x-groq-key"]);
       await route.fulfill({
-        status: 200,
+        status: transcriptionStatus,
         contentType: "application/json",
-        body: JSON.stringify({ text: "Read my lighthouse scene." }),
+        body: JSON.stringify(
+          transcriptionStatus === 200
+            ? { text: "Read my lighthouse scene." }
+            : { error: "Synthetic provider failure", cta: "retry" },
+        ),
       });
     });
     const chatRequests = [];
@@ -506,19 +511,46 @@ async function verifyRoomRecovery(browser, mode) {
     assert.equal(chatRequests[0].clientApiKey, "test-customer-groq");
     assert.equal(chatRequests[0].enabledTools, undefined);
     assert.equal(directProviderRequests, 0);
+    await alert
+      .getByRole("button", { name: "Dismiss voice room error", exact: true })
+      .click();
+    await expect(alert).toHaveCount(0);
+    transcriptionStatus = 502;
     await page.keyboard.down("Space");
     await expect
       .poll(() => page.evaluate(() => window.__captureStarts || 0))
       .toBe(3);
+    await page.waitForTimeout(1500);
+    await page.keyboard.up("Space");
+    await expect(alert).toBeVisible();
+    await expect(alert).not.toContainText("Synthetic provider failure");
+    await expect(
+      alert.getByRole("button", { name: "Connect voice", exact: true }),
+    ).toHaveCount(0);
+    const dismiss = alert.getByRole("button", {
+      name: "Dismiss voice room error",
+      exact: true,
+    });
+    assert.ok((await dismiss.boundingBox()).height >= 44);
+    await dismiss.focus();
+    await page.keyboard.press("Enter");
+    await expect(alert).toHaveCount(0);
+    assert.equal(transcriptionKeys.length, 2);
+    assert.equal(chatRequests.length, 1);
+    await page.keyboard.down("Space");
+    await expect
+      .poll(() => page.evaluate(() => window.__captureStarts || 0))
+      .toBe(4);
     await page.getByRole("link", { name: "← Arcanea", exact: true }).click();
     await page.keyboard.up("Space");
     await expect(page).toHaveURL(base + "/");
-    assert.equal(transcriptionKeys.length, 1);
+    assert.equal(transcriptionKeys.length, 2);
     assert.equal(chatRequests.length, 1);
     assert.equal(speechRequests.length, 1);
     assert.deepEqual(errors, []);
     return {
       roomStickySettingsRecovery: true,
+      roomRetryErrorsHaveAccessibleDismiss: true,
       roomSpaceReleaseSurvivesBriefing: true,
       roomVadUsesElapsedTimeAtLowFrameRate: true,
       fullRoomReplyPreserved: true,
