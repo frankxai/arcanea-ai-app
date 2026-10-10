@@ -1,0 +1,127 @@
+## Quest Packet — The Kitchen Drawing
+
+**Source:** EP-v3 (EP1–EP3 accepted, unmodified)
+**Start state:** `dockside`
+**Goal:** Child boards the ferry before departure. Scene opens after sunset; north-tower signal is unavailable per EP3.
+
+---
+
+### Variables
+```json
+[
+  { "id": "drawingHeld",  "initial": true  },
+  { "id": "childFerried", "initial": false }
+]
+```
+
+### States
+```json
+[
+  { "id": "dockside"  },
+  { "id": "escorting" },
+  { "id": "advising"  },
+  { "id": "ferried"   },
+  { "id": "adrift"    }
+]
+```
+
+### Transitions
+```json
+[
+  {
+    "from":   "dockside",
+    "action": "Walk child to ferry",
+    "when":   "true",
+    "set":    { "drawingHeld": false },
+    "to":     "escorting"
+  },
+  {
+    "from":   "dockside",
+    "action": "Give verbal directions, keep drawing",
+    "when":   "drawingHeld == true",
+    "set":    {},
+    "to":     "advising"
+  },
+  {
+    "from":   "escorting",
+    "action": "Help child aboard",
+    "when":   "true",
+    "set":    { "childFerried": true },
+    "to":     "ferried"
+  },
+  {
+    "from":   "advising",
+    "action": "Rush after child",
+    "when":   "true",
+    "set":    { "drawingHeld": false },
+    "to":     "escorting"
+  },
+  {
+    "from":   "advising",
+    "action": "Hold position, trust directions",
+    "when":   "true",
+    "set":    {},
+    "to":     "adrift"
+  }
+]
+```
+
+### Endings
+```json
+[
+  {
+    "state":  "ferried",
+    "result": "Child boards safely. drawingHeld=false — Ivo released the drawing to take the child's hand. Whether it is recoverable is unresolved."
+  },
+  {
+    "state":  "adrift",
+    "result": "Child loses bearing in the dark. drawingHeld=true — Ivo kept the drawing. Ferry departs without the child."
+  }
+]
+```
+
+---
+
+### Unavailable action
+
+**Action:** Transmit kitchen drawing as memory via north-tower signal
+**Blocked at all states.** EP3 forbids north-tower signal after sunset; scene opens after sunset. EP1 would additionally erase the memory on transmission even if signal existed. No state change, no variable change. Action is rejected without transition.
+
+---
+
+### Dialogue constraint
+
+EP2 prevents Ivo from producing the child's name. At `dockside` all lines must omit a name. Player choices are physical action or directional description only. Recognition without naming is expressed through action framing, not spoken text.
+
+---
+
+### Replay cases
+
+| Path | End state | drawingHeld | childFerried |
+|---|---|---|---|
+| Walk → Help aboard | `ferried` | false | true |
+| Direct → Rush after → Help aboard | `ferried` | false | true |
+| Direct → Hold position | `adrift` | true | false |
+| Transmit memory (any state) | *(rejected)* | unchanged | unchanged |
+
+No reachable path produces `ferried` with `drawingHeld=true`. The only route to `ferried` requires `drawingHeld` to be set false first; that combination is correctly impossible.
+
+---
+
+### Unresolved choices
+
+- Whether the child is Ivo's daughter — EP2 is consistent with either reading; left open
+- Whether the drawing is recoverable from the dock after a `ferried` outcome
+- Whether Ivo has already used his EP1 daily send — confirmed irrelevant, EP3 blocks transmission regardless
+
+### Playtest questions
+
+- Should a timed failure path exist on `escorting` (ferry departs mid-walk)?
+- Should `advising → Rush after` route through the shared `escorting` state or collapse to a dedicated ending to distinguish the two `ferried` contexts?
+- Is EP2 recognition surfaced in UI, or handled through the dialogue constraint alone?
+
+---
+
+**Asset needs:** Dockside at night, Ivo figure, child figure, kitchen drawing prop, ferry. No art or audio supplied; rights and visual identities unresolved.
+
+**Status:** Packet delivered. Not imported, engine-replayed, or playtested against a running runtime. Confirm all targets are reachable and retry logic is defined before implementation.

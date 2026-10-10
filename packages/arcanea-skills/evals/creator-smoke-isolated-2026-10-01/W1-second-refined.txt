@@ -1,0 +1,76 @@
+# Ember Post — Compact World Bible
+
+## Premise and Central Conflict
+
+Ember Post is a courier network whose transmissions run on human memory. Couriers send one message per day; the sending erases the source recollection from the sender (EP1). The network functions because individuals absorb its costs quietly. Workers grow into strangers to their own pasts.
+
+The north tower's hand-cranked relay extends the network past sunset — but each after-hours dispatch costs a courier an hour of physical labor on top of the memory (EP3-rev). Night dispatches are a double toll. Someone still pays.
+
+*[P1 — proposed]: "Ember Post" is the name of the courier institution and its tower network. Creator decision pending.*
+
+---
+
+## Fact Table
+
+| ID | Statement | Status | Source |
+|---|---|---|---|
+| EP1 | Couriers may send one memory per day; sending erases that memory from the sender. | Accepted | EP-v3 |
+| EP2 | Ivo lost the memory of his daughter's name yesterday; he still recognizes her face. | Accepted | EP-v3 |
+| EP3-rev | The north tower transmits after sunset via hand-cranked relay; each after-sunset memory costs the transmitting courier one hour of physical labor. | Accepted — creator-authorized revision; supersedes EP3 ("north tower has no signal after sunset") | EP-v3 + creator revision |
+| P1 | "Ember Post" is the name of the courier institution and its tower network. | Proposed | This draft |
+| P2 | Transmission encodes a message as the courier's own experienced memory before sending; the act of sending is therefore itself subject to erasure. | Proposed | This draft |
+| OC-A | Why Ivo lost the memory of his daughter's name — whether through a transmission, accident, or other cause — is unresolved. | Open choice | EP2 does not state cause |
+| OC-B | Whether the memory of Ivo's daughter's name can be recovered, and by what means, is unresolved. | Open choice | EP2 establishes loss; reversibility not supplied |
+
+---
+
+## Place: The North Tower
+
+The network's most exposed relay. Now operational through the hand-cranked relay (EP3-rev), it keeps a dispatch log for after-sunset transmissions because the labor cost creates accountability: an entry records that someone chose to pay that hour.
+
+*[P3 — proposed]: The log is also where disputes about coerced or substituted night dispatches would be investigated. Creator decision pending.*
+
+---
+
+## Character: Ivo
+
+Ivo is connected to the courier network — his exact role is an open choice. Yesterday he lost the memory of his daughter's name. Her face remains (EP2). Her name is not supplied; open choice. The cause of the loss is open (OC-A). Whether the name is recoverable is open (OC-B).
+
+What the accepted facts establish: the loss occurred, face-recognition is intact, and the gap between name and face is the condition Ivo is living inside now.
+
+---
+
+## Story Hooks
+
+**Hook 1 — The After-Hours Dispatch**
+
+A night message is sent through the north tower's relay. The courier on duty cranks an hour, pays a memory, and the log records their name. When the recipient traces the dispatch, the logged courier claims no memory of sending it. Either the courier's erasure covered the act of sending itself — a proposed consequence of P2 — or a third party coerced or substituted for the logged sender.
+
+*Dependency*: Rests on EP1, EP3-rev, and P2 (proposed: the act of sending is the erased memory). If P2 is rejected, the mechanism needs a different engine. Mark conditional on P2 or a creator-supplied alternative.
+
+**Hook 2 — The Name in the Log**
+
+Ivo's daughter knows her father no longer has her name (EP2). She does not know the cause (OC-A). She comes to whoever works the network with one question: is there a transmission record from yesterday that might explain the loss?
+
+This hook does not establish that recovery is possible. Whether a sent name exists somewhere as a received memory, whether it can be returned, and whether a transmission caused the loss at all, remain open (OC-A, OC-B). The obstacle is that the network has no protocol for this inquiry — and tracing it would require someone to spend their own memory to find out. The two hooks connect through the north tower log: Hook 1 puts the log under suspicion; Hook 2 makes the log Ivo's daughter's only lead.
+
+*Dependency*: Rests on EP1 and EP2. OC-A's resolution determines whether this hook enters the tower's records or goes elsewhere entirely.
+
+---
+
+## Open Choices
+
+- **OC-A** — Cause of Ivo's loss: transmission, accident, theft, or other?
+- **OC-B** — Can the memory of his daughter's name be recovered? By what means?
+- **Ivo's daughter's name** — Not supplied.
+- **Ivo's role** — Courier, administrator, or another relation to the network?
+- **P1** — Is "Ember Post" the institution's name, or does it name the world, a region, or something else?
+- **P2** — Does sending erase the act of sending itself? Affects Hook 1's mechanism.
+
+---
+
+## Change Log
+
+| Original | Revision | Authorized by |
+|---|---|---|
+| EP3: "The north tower has no signal after sunset." | EP3-rev: Hand-cranked relay enables after-sunset transmission at one hour of physical labor per memory sent. | Creator, this session |

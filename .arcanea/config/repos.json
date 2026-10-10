@@ -4,10 +4,10 @@
   "repos": [
     {
       "name": "arcanea-ai-app",
-      "description": "Main platform - arcanea.ai production",
+      "description": "Public Arcanea integration source and arcanea.ai app",
       "github": "frankxai/arcanea-ai-app",
-      "visibility": "private",
-      "publicUrl": "https://arcanea.ai",
+      "visibility": "public",
+      "publicUrl": "https://github.com/frankxai/arcanea-ai-app",
       "role": "production",
       "stack": ["next.js", "react", "typescript", "supabase"],
       "vercel": "arcanea-ai-app",
@@ -20,7 +20,7 @@
     },
     {
       "name": "arcanea",
-      "description": "OSS monorepo - the open-source engine",
+      "description": "Legacy diverged Arcanea source; unique-content salvage review pending",
       "github": "frankxai/arcanea",
       "visibility": "public",
       "publicUrl": "https://github.com/frankxai/arcanea",
@@ -180,7 +180,13 @@
     },
     "substrate": {
       "source": "starlight-intelligence-system",
-      "targets": ["arcanea-ai-app", "oh-my-arcanea", "arcanea-orchestrator", "arcanea-code", "arcanea-vault"],
+      "targets": [
+        "arcanea-ai-app",
+        "oh-my-arcanea",
+        "arcanea-orchestrator",
+        "arcanea-code",
+        "arcanea-vault"
+      ],
       "trigger": "release"
     },
     "harness": {

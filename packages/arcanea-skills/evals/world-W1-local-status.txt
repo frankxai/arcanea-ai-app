@@ -1,0 +1,86 @@
+# Ember Post — Compact World Bible
+
+## Premise
+
+Accepted (EP1): The Ember Post moves memories between towers. Each courier sends one per day; sending erases it from the sender permanently.
+
+Proposed premise (P1; uses EP1, EP3-R): If P1 is adopted, distance is measured in couriers consumed — each relay hop costs another erasure. The Post keeps settlements connected; the work slowly hollows out those who run it.
+
+Open choice (O1): Whether a sent memory arrives intact at a named recipient, dissipates as signal, or can be intercepted is unspecified.
+
+---
+
+## Fact Table
+
+| ID | Statement | Status | Source |
+|----|-----------|--------|--------|
+| EP1 | Couriers may send one memory per day; sending erases it from the sender | Accepted | EP-v3 |
+| EP2 | Ivo lost the memory of his daughter's name yesterday; he still recognizes her face | Accepted | EP-v3 |
+| EP3-R | The north tower can transmit after sunset via hand-cranked relay, at one hour of physical work per memory sent | Accepted (revision; supersedes EP3) | EP-v3 |
+| EP3 | The north tower has no signal after sunset | Superseded | EP-v3; replaced by EP3-R |
+| P1 | Memory travels through a tower chain; each relay courier pays the same erasure cost | Proposed | This draft |
+| P2 | Ivo is a courier — his daughter's name was a sent memory, not an accidental loss | Proposed | This draft |
+| P3 | Sable is a senior courier who cannot name most of her years before the Post | Proposed | This draft |
+| P4 | Long-service couriers lose identity coherence over years of daily sending | Proposed | This draft |
+| P5 | A received memory can be re-sent; the new sender pays the same erasure cost | Proposed | This draft |
+| P6 | The north tower serves a highland district unreachable overland after dark in winter | Proposed | This draft |
+
+---
+
+## North Tower
+
+Accepted (EP3-R): Transmits after sunset via hand-cranked relay. Cost: one hour of physical work per memory sent.
+
+Proposed place (P6; uses EP3-R): If P6 is adopted, the tower's highland district is cut off from daylight travel in winter; night transmission becomes the only connection, and the relay's cost falls on whoever can still stand at the crank.
+
+Open choice (O2): Whether the hour-of-work cost applies at every hop in a multi-tower chain, and whether a non-courier can operate the crank, are unspecified.
+
+---
+
+## Characters
+
+**Ivo** — Accepted (EP2): Lost his daughter's name yesterday. Still recognizes her face.
+
+Proposed (P2; uses EP1, EP2): If P2 is adopted, Ivo is a courier who transmitted that memory as a sent message. Why a father would send his child's name is open choice (O3).
+
+**Sable** — Proposed character (P3, P4): Long-serving courier. Cannot name most of her years before she joined the Post. Not established as the only courier in this condition; open choice (O4) is how widespread the erosion runs and whether the Post acknowledges it.
+
+---
+
+## Connected Hooks
+
+### Proposed hook (H1): The Name She Carries
+*Uses EP2, EP3-R; proposed dependencies on P2, P5*
+
+If P2 is adopted, the memory of Ivo's daughter's name was received in the highland district. If P5 is adopted, the recipient could re-send it — but would lose it herself. It may be the only name she has for him.
+
+The relay puts this within reach after sunset. One hour on the crank, per memory in the chain. The obstacle is not the machinery; it is whether she agrees to pay. If P2 is not adopted and Ivo is not a courier, someone transmitted his daughter's name without his knowledge — and the question shifts to by whose authority.
+
+### Proposed hook (H2): The Relay Debt
+*Uses EP3-R, H1; proposed dependencies on P6*
+
+If H1 is adopted, the transmission must run at night. If P6 is adopted, the two north tower couriers have already spent their daily sends. Neither can both crank the relay and pay the erasure. The hook's obstacle: who operates the crank, who sends, and what each one loses. H1's outcome — agreement, refusal, silence — determines whether the hour of work was worth spending at all.
+
+Open choice (O2, continued): If a non-courier can operate the crank, the cost structure of H2 changes entirely.
+
+---
+
+## Open Choices
+
+| ID | Question |
+|----|----------|
+| O1 | Does a sent memory arrive at a named recipient, dissipate, or travel as open signal? |
+| O2 | Does the hour-of-work apply at every relay hop? Can a non-courier crank? |
+| O3 | Why did Ivo send his daughter's name? Was the choice deliberate? |
+| O4 | How many couriers share Sable's long-term erosion? Does the Post acknowledge it? |
+| O5 | Can a received memory be re-sent? (P5 proposes yes; O1 affects feasibility.) |
+
+---
+
+## Change Log
+
+| Revision | Superseded | Reason | Authorization |
+|----------|------------|--------|---------------|
+| EP3-R replaces EP3 | "no signal after sunset" | Hand-cranked relay enables after-sunset transmission at one hour of physical work per memory | EP-v3 request |
+
+EP1 and EP2 are unchanged. No accepted fact was extended without a proposal label.

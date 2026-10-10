@@ -1,85 +1,51 @@
-<div align="center">
-
 # Arcanea
 
-**The imagination layer for AI.**
-Superintelligent prompts that make every model feel like magic.
+Arcanea's universe, stories and software live in this app repository. Explore
+[arcanea.ai](https://arcanea.ai), or use the map below to find the source you need.
 
-[![arcanea.ai](https://img.shields.io/badge/arcanea.ai-live-00bcd4?style=flat-square)](https://arcanea.ai)
-[![npm](https://img.shields.io/badge/npm-@arcanea-00bcd4?style=flat-square&logo=npm)](https://www.npmjs.com/org/arcanea)
-[![License](https://img.shields.io/badge/License-Proprietary-gray?style=flat-square)](./LICENSE)
+| Start here                                                     | What it contains                                                                  |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [apps/web](apps/web/)                                          | Web app, reader and creator interfaces                                            |
+| [.arcanea/lore/CANON_LOCKED.md](.arcanea/lore/CANON_LOCKED.md) | Locked Arcanea canon; proposed changes require human approval                     |
+| [book](book/)                                                  | Library source material; public releases have separate editorial and rights gates |
+| [packages](packages/)                                          | Shared libraries and integration packages                                         |
+| [packages/arcanea-skills](packages/arcanea-skills/)            | Proposed curated creator skills, passports and evaluation records                 |
+| [packages/arcanea-mcp](packages/arcanea-mcp/)                  | Local MCP package source; confirm its own configuration and release status        |
+| [planning-with-files](planning-with-files/)                    | Current task records and integration limits                                       |
 
-</div>
+## Review creator skills
 
----
+The curated package contains internal candidates and zero ready skills. Its
+installer excludes candidates. Earlier skill roots still exist in this repository;
+a repository-wide skills scan is not a curated installation.
 
-## Use Arcanea now
+From a checkout, using Node from [.nvmrc](.nvmrc):
 
-| How | What you get |
-|:----|:-------------|
-| **[arcanea.ai](https://arcanea.ai)** | Chat, create images, write stories, compose music — free |
-| **Claude Code** | `claude mcp add arcanea -- npx -y @arcanea/mcp-server` |
-| **Any AI** | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
-| **Authors** | `npx author-os-cli init` — AI-native book production |
-
-## What's inside
-
-```
-apps/web/          The platform — Next.js 16, Supabase, Vercel
-packages/          42 shared libraries, VS Code extension, MCP server
-book/              200K+ words of original creative philosophy
-.arcanea/lore/     The canon — mythology that doubles as architecture
-prompts/           Arcanean Prompt Language spec + templates
+```sh
+node packages/arcanea-skills/scripts/catalog.cjs
+node packages/arcanea-skills/bin/install.js --list
+node --test packages/arcanea-skills/tests/catalog.test.mjs
 ```
 
-## The philosophy
+These checks need no provider keys or web-app setup. See the
+[package README](packages/arcanea-skills/README.md) for readiness and installation
+rules. Bundle entries should pin this repo, their selected folder and a commit.
 
-Arcanea is a creative multiverse where mythology *is* methodology. Every character, location, and progression system in the world is also an architectural pattern you can use to build your own.
+## Contribute
 
-Think **Unreal Engine** (not a game — the engine for making games), **D&D** (not a story — the system for infinite stories). Arcanea's world is both real content people engage with *and* templates anyone can fork for their own universe.
+Use [CONTRIBUTING.md](CONTRIBUTING.md) for creator feedback, reproducible bugs and
+development checks. Follow the [code of conduct](CODE_OF_CONDUCT.md). Report
+vulnerabilities using [SECURITY.md](SECURITY.md).
 
-**The creator journey:** Imagine a world → Build AI agents that live in it → Create consistent content → Publish → Earn → Expand as your fans become creators too.
+Work on the universe and its releases is tracked in
+[issue #276](https://github.com/frankxai/arcanea-ai-app/issues/276). The
+[source-consolidation proposal](docs/strategy/arcanea-source-consolidation-2026-10-01.md)
+records the proposed repo and bundle boundaries; it is not release approval.
 
-## Build with Arcanea
+## Rights status
 
-| Package | What it does |
-|:--------|:-------------|
-| [`@arcanea/mcp-server`](https://www.npmjs.com/package/@arcanea/mcp-server) | MCP server — add Arcanea to Claude Code, Cursor, or any MCP client |
-| [`author-os-cli`](https://www.npmjs.com/package/author-os-cli) | AI-native book production pipeline |
-| [`arcanea-claw`](./arcanea-claw/) | 24/7 media processing daemon |
-| [`@arcanea/vscode`](./packages/vscode/) | VS Code extension with Guardian-powered AI modes |
-
-## For developers
-
-```bash
-git clone https://github.com/frankxai/arcanea.git
-cd arcanea && pnpm install
-cp .env.example .env.local
-pnpm dev
-```
-
-**Stack:** Next.js 16 · React 19 · TypeScript (strict) · Supabase · Vercel AI SDK · Gemini + Claude
-
-## The Library
-
-> *"These books are not entertainment. They are equipment for living."*
-
-17 collections of creative philosophy in [`book/`](./book/) — Laws, Legends, Meditations, an Academy Handbook, and more. Not content to consume, but frameworks to practice.
-
-## Contributing
-
-We welcome contributions from creators and developers. See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## License
-
-Proprietary. See [LICENSE](./LICENSE). Source is viewable for transparency; viewing does not grant usage rights.
-
----
-
-<div align="center">
-
-*"Enter seeking, leave transformed, return whenever needed."*
-
-**[arcanea.ai](https://arcanea.ai)** · Built by [FrankX](https://github.com/frankxai)
-
-</div>
+A root LICENSE file is absent. A repository-wide license choice and the rights
+review of older skill sources remain open. Package metadata and public visibility
+do not establish clearance for every code, lore or media component. Check the
+specific component's terms and provenance before reuse. This README adds no license.
+See [GitHub's licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
