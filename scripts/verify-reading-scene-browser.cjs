@@ -157,41 +157,61 @@ async function main() {
             },
           }),
         );
-        await page.evaluate(
-          ({ owner }) => {
-            const url = [...document.querySelectorAll("script")]
-              .map((s) => s.textContent)
-              .join(" ");
-            // Build fixture uses placeholder Supabase; no real auth token exists.
-            const payload = btoa(
-              JSON.stringify({
-                sub: owner,
-                exp: Math.floor(Date.now() / 1000) + 3600,
-              }),
-            );
-            localStorage.setItem(
-              "sb-placeholder-auth-token",
-              JSON.stringify({
-                access_token: `fixture.${payload}.fixture`,
-                refresh_token: "fixture",
-                expires_at: Math.floor(Date.now() / 1000) + 3600,
-                token_type: "bearer",
-                user: {
-                  id: owner,
-                  email: "reading-fixture@example.invalid",
-                  app_metadata: {},
-                  user_metadata: {},
-                },
-              }),
-            );
+        // The application uses SSR cookies, not localStorage auth persistence.
+        // This cookie is only a compiled-UI fixture; it is never a real credential.
+        const encode = (value) =>
+          Buffer.from(JSON.stringify(value)).toString("base64url");
+        const expiry = Math.floor(Date.now() / 1000) + 3600;
+        const session = {
+          access_token: `${encode({ alg: "HS256", typ: "JWT" })}.${encode({ sub: owner, exp: expiry })}.Zml4dHVyZQ`,
+          refresh_token: "fixture",
+          expires_at: expiry,
+          expires_in: 3600,
+          token_type: "bearer",
+          user: {
+            id: owner,
+            email: "reading-fixture@example.invalid",
+            app_metadata: {},
+            user_metadata: {},
           },
-          { owner },
-        );
+        };
+        await context.addCookies([
+          {
+            name: "sb-placeholder-auth-token",
+            value: `base64-${encode(session)}`,
+            url: base,
+            sameSite: "Lax",
+          },
+        ]);
         await page.reload();
         await page
           .getByRole("button", { name: "Reopen scene", exact: true })
           .click();
         await expect(page.getByLabel("Visual brief")).toHaveValue(brief);
+        await page
+          .locator("article .prose p")
+          .first()
+          .evaluate((element) => {
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.dispatchEvent(new Event("selectionchange"));
+          });
+        await page
+          .getByRole("button", { name: "Visualize a passage", exact: true })
+          .click();
+        await expect(
+          page.getByRole("group", { name: "Replace current scene" }),
+        ).toBeVisible();
+        await expect(page.getByLabel("Visual brief")).toHaveValue(brief);
+        await page
+          .getByRole("button", { name: "Keep current scene", exact: true })
+          .click();
+        await expect(
+          page.getByRole("group", { name: "Replace current scene" }),
+        ).toHaveCount(0);
         await page
           .getByRole("button", { name: "Generate scene", exact: true })
           .click();
@@ -270,6 +290,7 @@ async function main() {
             "focus",
             "anonymous admission",
             "edited brief",
+            "replacement cancellation preserves current scene",
             "reload",
             "interruption",
             "same-key recovery",

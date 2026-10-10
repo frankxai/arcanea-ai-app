@@ -5,7 +5,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const git = (...args) =>
   execFileSync("git", args, { encoding: "utf8", maxBuffer: 4 * 1024 * 1024 });
 const head = git("rev-parse", "HEAD").trim();
-const base = "2ed6ae8b362689d21075aa983ecc3f438e36bcb6";
+const base = "e98249fd8f84499cacfec864a9d0aef9f1b0396f";
 if (
   process.env.READING_SCENE_HEAD !== head ||
   !process.env.GEMINI_API_KEY ||
@@ -26,6 +26,7 @@ const contexts = [
   "apps/web/app/api/imagine/generate/route.ts",
   "apps/web/lib/billing/catalog.ts",
   "apps/web/lib/auth/context.tsx",
+  "apps/web/lib/rate-limit/rate-limiter.ts",
 ];
 const sha = (source) => createHash("sha256").update(source).digest("hex");
 const receipt = { head, base, sourceHashes: {}, packetSha256: null };

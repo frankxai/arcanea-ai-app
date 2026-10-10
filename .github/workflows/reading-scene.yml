@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "apps/web/components/saga/scene-visualizer*"
+      - "apps/web/components/saga/scene-workspace-view.tsx"
       - "apps/web/components/saga/chapter-reader.tsx"
       - "apps/web/lib/reading-scene/**"
       - "apps/web/app/api/reading-scenes/**"
@@ -23,6 +24,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: pnpm/action-setup@v4
         with:
           version: "11.28.4"
@@ -36,11 +38,10 @@ jobs:
           node --test scripts/tests/reading-scene-save.test.cjs
           pnpm exec tsx --test apps/web/lib/reading-scene/__tests__/*.test.ts
       - name: Build and inspect the compiled reading workflow
-        if: github.event_name == 'workflow_dispatch'
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
-          READING_SCENE_HEAD: ${{ github.sha }}
+          READING_SCENE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           pnpm --filter @arcanea/web... --workspace-concurrency=1 build
           pnpm --dir apps/web exec playwright install --with-deps chromium

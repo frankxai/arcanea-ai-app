@@ -24,6 +24,9 @@ interface Props {
   stopWaiting: () => void;
   setOpen: (open: boolean) => void;
   retain: (scene: SceneSession) => boolean;
+  replacement: SceneSession | null;
+  keepScene: () => void;
+  replaceScene: () => void;
 }
 export function SceneWorkspaceView({
   scene,
@@ -44,6 +47,9 @@ export function SceneWorkspaceView({
   stopWaiting,
   setOpen,
   retain,
+  replacement,
+  keepScene,
+  replaceScene,
 }: Props) {
   const selectedModel = OPENROUTER_IMAGE_MODELS.find(
     (m) => m.id === scene?.model,
@@ -105,6 +111,30 @@ export function SceneWorkspaceView({
       {open && (
         <>
           <h2 className={styles.heading}>Your scene interpretation</h2>
+          {replacement && (
+            <div role="group" aria-label="Replace current scene">
+              <p className={styles.hint}>
+                Keep this scene, or download it before replacing it with the new
+                passage. A private save remains in your account.
+              </p>
+              <div className={styles.actions}>
+                <button type="button" className={button} onClick={keepScene}>
+                  Keep current scene
+                </button>
+                <button type="button" className={button} onClick={download}>
+                  Download current scene
+                </button>
+                <button
+                  type="button"
+                  className={button}
+                  disabled={busy}
+                  onClick={replaceScene}
+                >
+                  Replace with selected passage
+                </button>
+              </div>
+            </div>
+          )}
           {scene && (
             <>
               <blockquote className={styles.passage}>

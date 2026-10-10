@@ -50,6 +50,7 @@ function SceneWorkspace({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [selection, setSelection] = useState("");
+  const [replacement, setReplacement] = useState<SceneSession | null>(null);
   const controller = useRef<AbortController | null>(null);
   const actor = useRef(owner);
   const briefRef = useRef<HTMLTextAreaElement | null>(null);
@@ -173,7 +174,7 @@ function SceneWorkspace({
       const startOwner = owner;
       const hash = await chapterHash(sourceText);
       if (actor.current !== startOwner) return;
-      retain({
+      const next: SceneSession = {
         schema: "arcanea.reading-scene.v1",
         owner,
         source: {
@@ -185,11 +186,20 @@ function SceneWorkspace({
           passage: selection,
         },
         brief,
-        model: OPENROUTER_IMAGE_MODELS[1].id,
+        model:
+          OPENROUTER_IMAGE_MODELS.find((model) => model.tier === "fast")?.id ??
+          OPENROUTER_IMAGE_MODELS[0].id,
         requestKey: null,
         result: null,
         creationId: null,
-      });
+      };
+      if (scene) {
+        setReplacement(next);
+        setOpen(true);
+        setMessage("");
+        return;
+      }
+      retain(next);
       setOpen(true);
       setMessage("");
       setSelection("");
@@ -352,6 +362,16 @@ function SceneWorkspace({
       stopWaiting={() => controller.current?.abort()}
       setOpen={setOpen}
       retain={retain}
+      replacement={replacement}
+      keepScene={() => setReplacement(null)}
+      replaceScene={() => {
+        if (!replacement) return;
+        retain(replacement);
+        setReplacement(null);
+        setSelection("");
+        setMessage("");
+        requestAnimationFrame(() => briefRef.current?.focus());
+      }}
     />
   );
 }
