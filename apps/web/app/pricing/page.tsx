@@ -5,11 +5,11 @@ import { PricingClient } from "./pricing-client";
 export const metadata: Metadata = {
   title: "Pricing — Your keys are free. Continuity is what you pay for.",
   description:
-    "Bring your own API keys and build for nothing, forever. Creator and Studio plans keep your world's memory alive and publish it under your name. Credits buy generation on Arcanea-managed keys. Export anytime, no lock-in.",
+    "Explore free BYOK chat and worlds. Creator and Studio plans, hosted memory, publishing and managed generation are planned. Join the release list for availability updates.",
   openGraph: {
     title: "Arcanea Pricing — BYOK free, continuity paid",
     description:
-      "Free on your own keys. Plans for hosted world memory and publishing. Credits for managed generation. Export anytime.",
+      "Free BYOK chat and worlds. Planned paid plans for hosted memory and publishing. Join the release list for availability updates.",
     type: "website",
   },
   alternates: { canonical: "/pricing" },

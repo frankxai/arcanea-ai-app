@@ -486,6 +486,8 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                   <AnimatePresence mode="wait">
                     {status === "success" ? (
                       <m.div
+                        role="status"
+                        aria-live="polite"
                         initial={
                           reducedMotion ? false : { opacity: 0, scale: 0.95 }
                         }
@@ -503,7 +505,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                         <h4 className="font-semibold text-sm">
                           You are on the list.
                         </h4>
-                        <p className="text-[11px] text-[var(--arc-brand-atlantean-teal)]/70 font-body">
+                        <p className="text-xs text-[var(--arc-text-secondary)] font-body">
                           We will email you when plans are available.
                         </p>
                       </m.div>
@@ -537,7 +539,10 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                         </div>
 
                         {status === "error" && (
-                          <div className="flex gap-2 text-[10px] text-[var(--arc-fire)] items-start">
+                          <div
+                            role="alert"
+                            className="flex gap-2 text-xs text-[var(--arc-fire)] items-start"
+                          >
                             <Warning className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                             <span>{errorMessage}</span>
                           </div>
