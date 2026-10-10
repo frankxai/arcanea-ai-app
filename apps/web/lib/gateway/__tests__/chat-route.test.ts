@@ -301,6 +301,46 @@ test("UI chat and its alias deny missing keys and advertise customer credentials
   );
 });
 
+test("UI malformed JSON and non-object bodies return a private client error before transport", async () => {
+  const ui = await import("../../../app/api/ai/chat/route");
+  for (const body of ["{invalid", "null", "[]", "7"]) {
+    const response = await ui.POST(
+      new NextRequest("https://arcanea.example/api/ai/chat", {
+        method: "POST",
+        headers: { "x-forwarded-for": `198.51.100.${++requestNumber}` },
+        body,
+      }),
+    );
+    assert.equal(response.status, 400);
+    assert.equal(await response.text(), "Invalid request body.");
+    assert.equal(response.headers.get("cache-control"), "private, no-store");
+  }
+  assert.equal(calls.length, 0);
+});
+
+test("UI empty customer keys use the same private Settings recovery as missing keys", async () => {
+  const ui = await import("../../../app/api/ai/chat/route");
+  for (const clientApiKey of ["", " ", "\t"]) {
+    const response = await ui.POST(
+      request(
+        {},
+        {
+          provider: "openai",
+          clientApiKey,
+          messages: [{ role: "user", content: "Draft a scene." }],
+        },
+      ),
+    );
+    assert.equal(response.status, 401);
+    assert.equal(
+      await response.text(),
+      "Connect your provider key in Settings → Providers to use chat.",
+    );
+    assert.equal(response.headers.get("cache-control"), "private, no-store");
+  }
+  assert.equal(calls.length, 0);
+});
+
 test("UI chat cannot invoke platform-funded tools with a customer text key", async () => {
   const ui = await import("../../../app/api/ai/chat/route");
   const response = await ui.POST(
@@ -378,7 +418,7 @@ test("public operator endpoint refuses host actions without inspecting files", a
 
 test("UI chat refuses malformed customer keys before SDK transport", async () => {
   const ui = await import("../../../app/api/ai/chat/route");
-  for (const clientApiKey of [7, " ", "x".repeat(8193), "test\nkey"]) {
+  for (const clientApiKey of [7, "x".repeat(8193), "test\nkey"]) {
     const response = await ui.POST(
       request(
         {},
@@ -463,6 +503,11 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
   assert.match(content, /A scene from the customer provider\./);
   assert.equal(providerCalls, 1);
   assert.equal(response.headers.get("x-arcanea-api-key-source"), "client-byok");
+  assert.equal(
+    response.headers.get("cache-control"),
+    "private, no-store, no-transform",
+  );
+  assert.equal(response.headers.get("x-accel-buffering"), "no");
 });
 
 test("UI provider failures after returning the response have a fixed private stream error", async () => {
@@ -501,6 +546,11 @@ test("UI provider failures after returning the response have a fixed private str
         ),
       );
       assert.equal(response.status, 200);
+      assert.equal(
+        response.headers.get("cache-control"),
+        "private, no-store, no-transform",
+      );
+      assert.equal(response.headers.get("x-accel-buffering"), "no");
       const content = await response.text();
       assert.ok(!content.includes(customerKey));
       assert.ok(!content.includes(prompt));

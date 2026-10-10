@@ -219,7 +219,21 @@ export async function POST(req: NextRequest) {
 
   try {
     // --- Parse request ---
-    const body: ChatRequest = await req.json();
+    const parsedBody: unknown = await req.json().catch(() => null);
+    if (
+      parsedBody === null ||
+      typeof parsedBody !== "object" ||
+      Array.isArray(parsedBody)
+    ) {
+      return new Response("Invalid request body.", {
+        status: 400,
+        headers: {
+          "Content-Type": "text/plain",
+          "Cache-Control": "private, no-store",
+        },
+      });
+    }
+    const body = parsedBody as ChatRequest;
     const {
       messages,
       systemPrompt,
@@ -249,7 +263,11 @@ export async function POST(req: NextRequest) {
 
     let route;
     try {
-      if (clientApiKey === undefined || clientApiKey === null) {
+      if (
+        clientApiKey === undefined ||
+        clientApiKey === null ||
+        (typeof clientApiKey === "string" && clientApiKey.trim() === "")
+      ) {
         return new Response(
           "Connect your provider key in Settings → Providers to use chat.",
           {
@@ -881,6 +899,8 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     });
 
     const responseHeaders: Record<string, string> = {
+      "Cache-Control": "private, no-store, no-transform",
+      "X-Accel-Buffering": "no",
       "x-arcanea-gates": activeGates.join(","),
       "x-arcanea-coordination": coordinationMode,
       "x-arcanea-lead": leadGuardian || "",
@@ -952,13 +972,24 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     ) {
       return new Response(
         "Invalid API key. Check your key in Settings → Providers.",
-        { status: 401, headers: { "Content-Type": "text/plain" } },
+        {
+          status: 401,
+          headers: {
+            "Content-Type": "text/plain",
+            "Cache-Control": "private, no-store, no-transform",
+            "X-Accel-Buffering": "no",
+          },
+        },
       );
     }
 
     return new Response("Provider request failed.", {
       status: 500,
-      headers: { "Content-Type": "text/plain" },
+      headers: {
+        "Content-Type": "text/plain",
+        "Cache-Control": "private, no-store, no-transform",
+        "X-Accel-Buffering": "no",
+      },
     });
   }
 }
