@@ -194,7 +194,12 @@ export async function POST(
   if (!SLUG.test(bookSlug) || !SLUG.test(chapterSlug))
     return json({ error: "Invalid chapter path" }, { status: 400 });
 
-  let body: { content?: unknown; contentJson?: unknown; authorId?: unknown };
+  let body: {
+    content?: unknown;
+    contentJson?: unknown;
+    authorId?: unknown;
+    draftUpdatedAt?: unknown;
+  };
   try {
     body = await req.json();
     if (!body || typeof body !== "object" || Array.isArray(body))
@@ -210,6 +215,14 @@ export async function POST(
     );
   }
   const content = body.content;
+  const expected = body.draftUpdatedAt ?? null;
+  if (
+    expected !== null &&
+    (typeof expected !== "string" ||
+      !/^\d{4}-\d{2}-\d{2}T/.test(expected) ||
+      !Number.isFinite(Date.parse(expected)))
+  )
+    return json({ error: "Invalid draft revision" }, { status: 400 });
   const contentJson =
     body.contentJson && typeof body.contentJson === "object"
       ? body.contentJson
@@ -275,19 +288,35 @@ export async function POST(
       return json({ error: "Invalid editor document" }, { status: 400 });
     const word_count = countWords(content);
 
-    const { error: upsertError } = await supabase
-      .from("book_chapter_drafts")
-      .upsert(
+    const value = {
+      book_slug: bookSlug,
+      chapter_slug: chapterSlug,
+      author_user_id: user.id,
+      content,
+      content_json: contentJson,
+      word_count,
+    };
+    // Atomic compare-and-set: another tab's saved revision must never be overwritten.
+    const write =
+      expected === null
+        ? supabase.from("book_chapter_drafts").insert(value)
+        : supabase
+            .from("book_chapter_drafts")
+            .update(value)
+            .eq("book_slug", bookSlug)
+            .eq("chapter_slug", chapterSlug)
+            .eq("author_user_id", user.id)
+            .eq("updated_at", expected);
+    const { data: saved, error: upsertError } = await write
+      .select("updated_at")
+      .maybeSingle();
+    if (upsertError?.code === "23505" || (!upsertError && !saved))
+      return json(
         {
-          book_slug: bookSlug,
-          chapter_slug: chapterSlug,
-          author_user_id: user.id,
-          content,
-          content_json: contentJson,
-          word_count,
-          updated_at: new Date().toISOString(),
+          error:
+            "Draft changed in another editor. Download your edits, then reopen the saved revision.",
         },
-        { onConflict: "book_slug,chapter_slug,author_user_id" },
+        { status: 409 },
       );
 
     if (upsertError) {
@@ -299,6 +328,7 @@ export async function POST(
       success: true,
       wordCount: word_count,
       source: "draft",
+      draftUpdatedAt: saved.updated_at,
     });
   } catch (err) {
     console.error("[chapter POST] draft service unavailable");

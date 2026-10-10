@@ -45,11 +45,13 @@ export function AuthorEditor({
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [recovered, setRecovered] = useState<DocEditorSavePayload | null>(null);
   const [backupError, setBackupError] = useState(false);
+  const [invalidBackup, setInvalidBackup] = useState<string | null>(null);
   const recovering = useRef(false);
   const mounted = useRef(true);
   const abortRef = useRef<AbortController | null>(null);
   const loadAbortRef = useRef<AbortController | null>(null);
   const authorRef = useRef<string | null>(null);
+  const revisionRef = useRef<string | null>(null);
   const backupKey = useCallback(
     (authorId: string) =>
       `arcanea-author-draft:${authorId}:${bookSlug}:${chapterSlug}`,
@@ -73,6 +75,7 @@ export function AuthorEditor({
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               authorId: authorRef.current,
+              draftUpdatedAt: revisionRef.current,
               content: payload.content_text,
               contentJson: payload.content_json,
             }),
@@ -83,7 +86,7 @@ export function AuthorEditor({
             response.status === 401
               ? "Sign in to save this private draft. Your current edits are still here."
               : response.status === 409
-                ? "Your account changed. Download this draft, then reload before saving."
+                ? "The account or saved draft changed in another editor. Download your edits, then reopen the saved revision before continuing."
                 : response.status === 403
                   ? "This account cannot save this book. Download your current draft."
                   : "Saving failed. Your current edits are still here; retry or download a copy.",
@@ -93,11 +96,14 @@ export function AuthorEditor({
           !data ||
           typeof data !== "object" ||
           !("success" in data) ||
-          data.success !== true
+          data.success !== true ||
+          !("draftUpdatedAt" in data) ||
+          typeof data.draftUpdatedAt !== "string"
         )
           throw new DraftSaveError(
             "Saving was not confirmed. Retry or download your current draft.",
           );
+        revisionRef.current = data.draftUpdatedAt;
         if (mounted.current) {
           setSaveError("");
           setLastSaved(new Date());
@@ -139,11 +145,21 @@ export function AuthorEditor({
         throw new Error();
       if (!mounted.current || controller.signal.aborted) return;
       authorRef.current = data.authorId;
+      revisionRef.current =
+        "draftUpdatedAt" in data && typeof data.draftUpdatedAt === "string"
+          ? data.draftUpdatedAt
+          : null;
       let backup: DocEditorSavePayload | null = null;
       try {
         const raw = localStorage.getItem(backupKey(data.authorId));
         if (raw) {
-          const candidate: unknown = JSON.parse(raw);
+          let candidate: unknown;
+          try {
+            candidate = JSON.parse(raw);
+          } catch {
+            setInvalidBackup(raw);
+            return;
+          }
           if (
             candidate &&
             typeof candidate === "object" &&
@@ -155,13 +171,26 @@ export function AuthorEditor({
             typeof candidate.content_json === "object" &&
             "type" in candidate.content_json &&
             candidate.content_json.type === "doc" &&
+            "content" in candidate.content_json &&
+            Array.isArray(candidate.content_json.content) &&
+            JSON.stringify(candidate.content_json).length <= 500_000 &&
             "word_count" in candidate &&
-            typeof candidate.word_count === "number"
+            typeof candidate.word_count === "number" &&
+            Number.isFinite(candidate.word_count) &&
+            candidate.word_count >= 0
           )
             backup = candidate as DocEditorSavePayload;
+          else {
+            setInvalidBackup(raw);
+            return;
+          }
         }
       } catch {
         setBackupError(true);
+        setLoadError(
+          "Browser recovery could not be read. Retry before editing, or allow browser storage for this site.",
+        );
+        return;
       }
       if (backup) {
         setRecovered(backup);
@@ -217,6 +246,42 @@ export function AuthorEditor({
     }
   }, [session, writeDraft]);
   useEffect(() => {
+    const chapterUrl = window.location.href;
+    const chapterHistory = { ...window.history.state };
+    let guarded = window.history.state?.arcaneaDraftGuard === chapterUrl;
+    const guardBack = () => {
+      if (!guarded && session.snapshot().dirty) {
+        window.history.pushState(
+          { ...chapterHistory, arcaneaDraftGuard: chapterUrl },
+          "",
+          chapterUrl,
+        );
+        guarded = true;
+      }
+    };
+    const unsubscribe = session.subscribe(guardBack);
+    const back = (event: PopStateEvent) => {
+      if (!guarded) return;
+      // The duplicate entry keeps native Back on this chapter until its save succeeds.
+      // Capture precedes the App Router's bubble listener and retains its original state.
+      event.stopImmediatePropagation();
+      if (!session.snapshot().dirty) {
+        guarded = false;
+        window.history.back();
+        return;
+      }
+      window.history.pushState(
+        { ...chapterHistory, arcaneaDraftGuard: chapterUrl },
+        "",
+        chapterUrl,
+      );
+      void (async () => {
+        await flush();
+        if (session.snapshot().dirty) return;
+        guarded = false;
+        window.history.go(-2);
+      })();
+    };
     const key = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
@@ -266,10 +331,13 @@ export function AuthorEditor({
       })();
     };
     window.addEventListener("keydown", key);
+    window.addEventListener("popstate", back, true);
     window.addEventListener("beforeunload", leave);
     document.addEventListener("click", navigate, true);
     return () => {
       window.removeEventListener("keydown", key);
+      window.removeEventListener("popstate", back, true);
+      unsubscribe();
       window.removeEventListener("beforeunload", leave);
       document.removeEventListener("click", navigate, true);
     };
@@ -363,7 +431,50 @@ export function AuthorEditor({
           </div>
         </div>
       )}
-      {!loaded && !loadError && !recovered && (
+      {invalidBackup !== null && (
+        <div
+          role="alert"
+          aria-label="Unreadable recovery copy"
+          className="my-4 rounded-xl border border-white/15 p-4 text-sm text-white/80"
+        >
+          <p>
+            A recovery copy could not be opened. Download it before discarding
+            it; editing will stay blocked so it cannot be overwritten.
+          </p>
+          <button
+            className={control}
+            onClick={() => {
+              const url = URL.createObjectURL(
+                new Blob([invalidBackup], { type: "application/json" }),
+              );
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `${bookSlug}-${chapterSlug}-recovery.json`;
+              link.click();
+              setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }}
+          >
+            Download recovery copy
+          </button>
+          <button
+            className={control}
+            onClick={() => {
+              try {
+                if (authorRef.current)
+                  localStorage.removeItem(backupKey(authorRef.current));
+              } catch {
+                setBackupError(true);
+                return;
+              }
+              setInvalidBackup(null);
+              void loadDraft();
+            }}
+          >
+            Discard unreadable copy
+          </button>
+        </div>
+      )}
+      {!loaded && !loadError && !recovered && invalidBackup === null && (
         <p role="status" className="text-sm text-white/70">
           Loading your draft…
         </p>

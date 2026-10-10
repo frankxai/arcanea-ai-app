@@ -10,6 +10,9 @@ create function auth.uid() returns uuid language sql stable as $$
   select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
 $$;
 grant usage on schema auth to anon, authenticated;
+\if :original_first
+\ir ../migrations/20260414000001_author_drafts.sql
+\endif
 \ir ../migrations/20261010000002_author_draft_recovery.sql
 -- Reapplying the repair must preserve drafts and policies.
 \ir ../migrations/20261010000002_author_draft_recovery.sql
@@ -21,6 +24,17 @@ set local request.jwt.claim.sub = '00000000-0000-4000-8000-000000000001';
 insert into public.book_chapter_drafts(book_slug,chapter_slug,author_user_id,content,content_json)
 values ('fixture-book','one',auth.uid(),'first revision','{"type":"doc","content":[]}');
 update public.book_chapter_drafts set content='latest revision' where book_slug='fixture-book';
+-- Two editors starting at the same revision cannot both acknowledge a save.
+do $$ declare previous timestamptz; changed integer; begin
+  select updated_at into previous from public.book_chapter_drafts where book_slug='fixture-book';
+  update public.book_chapter_drafts set content='winning editor' where book_slug='fixture-book' and updated_at=previous;
+  get diagnostics changed = row_count;
+  if changed <> 1 then raise exception 'First editor was not acknowledged'; end if;
+  update public.book_chapter_drafts set content='stale editor' where book_slug='fixture-book' and updated_at=previous;
+  get diagnostics changed = row_count;
+  if changed <> 0 then raise exception 'Stale editor overwrote acknowledged revision'; end if;
+  update public.book_chapter_drafts set content='latest revision' where book_slug='fixture-book';
+end $$;
 do $$ begin
   if (select count(*) from public.book_chapter_drafts where content='latest revision') <> 1 then
     raise exception 'Owner save/reopen failed';

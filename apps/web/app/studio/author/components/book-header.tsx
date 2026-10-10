@@ -23,8 +23,6 @@ export function BookHeader({
   const [reviewing, setReviewing] = useState(false);
   const [reviewResult, setReviewResult] = useState<string | null>(null);
   const [draftCount, setDraftCount] = useState<number>(0);
-  const [publishing, setPublishing] = useState(false);
-  const [publishResult, setPublishResult] = useState<string | null>(null);
 
   const loadDraftCount = useCallback(async () => {
     try {
@@ -67,35 +65,6 @@ export function BookHeader({
     }
   };
 
-  const triggerPublish = async () => {
-    if (publishing) return;
-    if (draftCount === 0) {
-      setPublishResult("No drafts to publish");
-      return;
-    }
-    setPublishing(true);
-    setPublishResult(null);
-    try {
-      const res = await fetch(`/api/author/${bookSlug}/publish`, {
-        method: "POST",
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        const failedNote = data.failed > 0 ? ` (${data.failed} failed)` : "";
-        setPublishResult(
-          `Published ${data.published} chapter${data.published === 1 ? "" : "s"}${failedNote}`,
-        );
-        await loadDraftCount();
-      } else {
-        setPublishResult(data.error || "Publish failed");
-      }
-    } catch {
-      setPublishResult("Publish unavailable");
-    } finally {
-      setPublishing(false);
-    }
-  };
-
   return (
     <header className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 border-b border-white/[0.06] bg-[var(--arc-cosmic-void)]/90 backdrop-blur-sm">
       <div className="flex min-w-0 items-center gap-4">
@@ -129,12 +98,6 @@ export function BookHeader({
           </span>
         )}
 
-        {publishResult && (
-          <span className="px-2 py-1 rounded-md bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)]">
-            {publishResult}
-          </span>
-        )}
-
         <button
           onClick={triggerReview}
           disabled={reviewing}
@@ -144,21 +107,19 @@ export function BookHeader({
         </button>
 
         <button
-          onClick={triggerPublish}
-          disabled={publishing || draftCount === 0}
-          className="inline-flex min-h-11 items-center px-3 py-2 rounded-md bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-          title={
-            draftCount === 0
-              ? "No drafts to publish"
-              : `Publish ${draftCount} draft${draftCount === 1 ? "" : "s"} to git`
-          }
+          disabled
+          aria-describedby="author-publication-status"
+          className="inline-flex min-h-11 items-center px-3 py-2 rounded-md border border-white/15 text-white/60 disabled:cursor-not-allowed"
         >
-          {publishing
-            ? "Publishing..."
-            : draftCount > 0
-              ? `Publish (${draftCount} draft${draftCount === 1 ? "" : "s"})`
-              : "Publish to Git"}
+          Publish (review pending)
         </button>
+        <span
+          id="author-publication-status"
+          className="max-w-xs text-xs text-white/70"
+        >
+          Rich drafts stay private until publication export is verified.
+          Download your draft in the editor.
+        </span>
 
         <a
           href={`/books/drafts/${bookSlug}`}

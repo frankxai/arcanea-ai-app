@@ -167,12 +167,14 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts
 
       - name: Verify author credentials and exact draft acknowledgements
-        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts
+        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
 
       - name: Verify author draft ownership, persistence and migration recovery
         env:
           PGPASSWORD: disposable-author-fixture
-        run: psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -f supabase/tests/author-draft-recovery.sql
+        run: |
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=0 -f supabase/tests/author-draft-recovery.sql
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=1 -f supabase/tests/author-draft-recovery.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
@@ -355,13 +357,15 @@ jobs:
           shop_status=0
           chat_tools_status=0
           voice_credentials_status=0
+          author_drafts_status=0
           node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
           node scripts/verify-creator-starters-browser.cjs || starter_status=$?
           node scripts/verify-world-draft-browser.cjs || draft_status=$?
           node scripts/verify-shop-browser.cjs || shop_status=$?
           timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
           timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
+          timeout 180s node scripts/verify-author-draft-browser.cjs || author_drafts_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ] || [ "$author_drafts_status" -ne 0 ]; then
             exit 1
           fi
 

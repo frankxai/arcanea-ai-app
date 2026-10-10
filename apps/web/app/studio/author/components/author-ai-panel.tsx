@@ -70,7 +70,9 @@ export function AuthorAIPanel({
                 ? "Sign in and connect your Anthropic key in Settings → Providers, then retry. Your question is still here."
                 : response.status === 429
                   ? "Too many requests. Wait a moment, then retry. Your question is still here."
-                  : "Author request failed. Your chapter and question are still here; retry or check Settings → Providers.",
+                  : response.status === 400
+                    ? "Use a supported model, a chapter draft of at most 32,000 characters and up to 40 text messages (64,000 characters total). Your question is still here."
+                    : "Author request failed. Your chapter and question are still here; retry or check Settings → Providers.",
             );
           }
           return response;
@@ -258,7 +260,7 @@ export function AuthorAIPanel({
             setInput(event.target.value);
           }}
           rows={3}
-          className="w-full resize-y rounded-xl border border-white/15 bg-[var(--arc-cosmic-void)] p-3 text-sm text-white/90 focus-visible:outline focus-visible:outline-2"
+          className="w-full resize-y rounded-xl border border-white/15 bg-[var(--arc-cosmic-void)] p-3 text-base text-white/90 focus-visible:outline focus-visible:outline-2"
         />
         <div className="mt-2 flex gap-2">
           <button

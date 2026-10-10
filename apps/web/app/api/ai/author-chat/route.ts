@@ -11,8 +11,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { streamText, tool } from "ai";
 import { z } from "zod";
-import { readFile, readdir, access } from "fs/promises";
-import { join } from "path";
+import { readFile, access, realpath } from "fs/promises";
+import { join, resolve, sep } from "path";
 import yaml from "js-yaml";
 import {
   getClientIdentifier,
@@ -21,6 +21,10 @@ import {
 import { getBookRoot } from "@/lib/content/book-path";
 import { createClient } from "@/lib/supabase/server";
 import { isBookPublic } from "@/lib/content/book-visibility";
+import {
+  readAuthorBookFile,
+  listAuthorBookFiles,
+} from "@/lib/author/book-files";
 import {
   extractCustomerKeys,
   validateCustomerKey,
@@ -71,9 +75,22 @@ interface BookManifest {
 
 async function loadBookManifest(bookSlug: string): Promise<BookManifest> {
   const yamlPath = join(BOOK_ROOT, bookSlug, "book.yaml");
-  if (!(await exists(yamlPath))) return {};
-  const raw = await readFile(yamlPath, "utf-8");
-  return (yaml.load(raw) as BookManifest) ?? {};
+  try {
+    const raw = await readAuthorBookFile(BOOK_ROOT, yamlPath);
+    return (yaml.load(raw) as BookManifest) ?? {};
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
+    throw error;
+  }
+}
+
+async function contextFiles(directory: string) {
+  try {
+    return await listAuthorBookFiles(BOOK_ROOT, directory);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  }
 }
 
 async function loadBookContext(
@@ -109,13 +126,16 @@ async function loadBookContext(
     );
   } else if (currentChapter) {
     const chaptersDir = join(bookDir, "chapters");
-    if (await exists(chaptersDir)) {
-      const files = await readdir(chaptersDir);
+    {
+      const files = await contextFiles(chaptersDir);
       const match = files.find(
         (f) => f.replace(/\.md$/, "") === currentChapter,
       );
       if (match) {
-        const content = await readFile(join(chaptersDir, match), "utf-8");
+        const content = await readAuthorBookFile(
+          BOOK_ROOT,
+          join(chaptersDir, match),
+        );
         parts.push(
           `## Published chapter excerpt (not the current editor draft)\n${content.slice(0, 8000)}`,
         );
@@ -126,10 +146,13 @@ async function loadBookContext(
   // Load outline — default behavior is to load as DRAFT unless explicitly disabled
   if (curated.outline !== false) {
     const outlineDir = join(bookDir, "outline");
-    if (await exists(outlineDir)) {
-      const files = await readdir(outlineDir);
+    {
+      const files = await contextFiles(outlineDir);
       for (const f of files.filter((f) => f.endsWith(".md")).slice(0, 1)) {
-        const content = await readFile(join(outlineDir, f), "utf-8");
+        const content = await readAuthorBookFile(
+          BOOK_ROOT,
+          join(outlineDir, f),
+        );
         parts.push(
           `## Story Blueprint (DRAFT — author's working notes, not yet reviewed)\n${content.slice(0, 3000)}`,
         );
@@ -140,11 +163,11 @@ async function loadBookContext(
   // Load character sheets only if curated by the author
   if (curated.characters) {
     const charsDir = join(bookDir, "characters");
-    if (await exists(charsDir)) {
-      const files = await readdir(charsDir);
+    {
+      const files = await contextFiles(charsDir);
       const mdFiles = files.filter((f) => f.endsWith(".md")).slice(0, 5);
       for (const f of mdFiles) {
-        const content = await readFile(join(charsDir, f), "utf-8");
+        const content = await readAuthorBookFile(BOOK_ROOT, join(charsDir, f));
         parts.push(
           `## Character Sheet — CURATED (${f.replace(/\.md$/, "")})\n${content.slice(0, 2000)}`,
         );
@@ -155,11 +178,11 @@ async function loadBookContext(
   // Load worldbuilding only if curated by the author
   if (curated.worldbuilding) {
     const worldDir = join(bookDir, "worldbuilding");
-    if (await exists(worldDir)) {
-      const files = await readdir(worldDir);
+    {
+      const files = await contextFiles(worldDir);
       const mdFiles = files.filter((f) => f.endsWith(".md")).slice(0, 3);
       for (const f of mdFiles) {
-        const content = await readFile(join(worldDir, f), "utf-8");
+        const content = await readAuthorBookFile(BOOK_ROOT, join(worldDir, f));
         parts.push(
           `## World Bible — CURATED (${f.replace(/\.md$/, "")})\n${content.slice(0, 3000)}`,
         );
@@ -338,10 +361,15 @@ export async function POST(req: NextRequest) {
   }
   if (req.signal.aborted) return refusal(408, "Author request was stopped.");
   try {
-    if (
-      typeof bookSlug === "string" &&
-      !(await isBookPublic(join(BOOK_ROOT, bookSlug)))
-    ) {
+    let publicBook = true;
+    if (typeof bookSlug === "string") {
+      const root = await realpath(BOOK_ROOT);
+      const directory = await realpath(resolve(BOOK_ROOT, bookSlug));
+      if (!directory.startsWith(root + sep))
+        return refusal(403, "This book is outside the content workspace.");
+      publicBook = await isBookPublic(directory);
+    }
+    if (!publicBook) {
       const supabase = await createClient();
       const {
         data: { user },
