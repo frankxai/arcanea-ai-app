@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import type { RealmDefinition } from "@arcanea/schemas";
-import { Sparkle, Compass, Waveform } from "@/lib/phosphor-icons";
+import { Waveform } from "@/lib/phosphor-icons";
+import { brand, elements, gold, cosmic } from "@arcanea/design-system";
 
 interface RealmNodeLayout {
   id: string;
@@ -17,50 +18,50 @@ const REALM_POSITIONS: Record<string, RealmNodeLayout> = {
     id: "eldria_prime",
     x: 480,
     y: 90,
-    color: "#d4af37",
-    glow: "rgba(212, 175, 55, 0.4)",
+    color: brand.arcaneanGold,
+    glow: "rgba(255, 215, 0, 0.4)",
   },
   astraea_spires: {
     id: "astraea_spires",
     x: 750,
     y: 170,
-    color: "#60a5fa",
-    glow: "rgba(96, 165, 250, 0.4)",
+    color: elements.water.bright,
+    glow: "rgba(120, 166, 255, 0.4)",
   },
   aurevalde: {
     id: "aurevalde",
     x: 780,
     y: 390,
-    color: "#f87171",
-    glow: "rgba(248, 113, 113, 0.4)",
+    color: elements.fire.base,
+    glow: "rgba(255, 107, 53, 0.4)",
   },
   matter_reach: {
     id: "matter_reach",
     x: 520,
     y: 440,
-    color: "#34d399",
-    glow: "rgba(52, 211, 153, 0.4)",
+    color: elements.wind.base,
+    glow: "rgba(0, 255, 136, 0.4)",
   },
   shadowfen: {
     id: "shadowfen",
     x: 180,
     y: 400,
-    color: "#a78bfa",
-    glow: "rgba(167, 139, 250, 0.4)",
+    color: elements.void.base,
+    glow: "rgba(153, 102, 255, 0.4)",
   },
   mar_arcano: {
     id: "mar_arcano",
     x: 200,
     y: 190,
-    color: "#2dd4bf",
-    glow: "rgba(45, 212, 191, 0.4)",
+    color: brand.atlanteanTeal,
+    glow: "rgba(0, 188, 212, 0.4)",
   },
   veldoria: {
     id: "veldoria",
     x: 460,
     y: 260,
-    color: "#fbbf24",
-    glow: "rgba(251, 191, 36, 0.4)",
+    color: gold.bright,
+    glow: "rgba(255, 204, 51, 0.4)",
   },
 };
 
@@ -145,8 +146,8 @@ export function RealmConstellation({
           <defs>
             {/* Radial Gradients for Glows */}
             <radialGradient id="source-pulse" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#d4af37" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#d4af37" stopOpacity="0" />
+              <stop offset="0%" stopColor={brand.arcaneanGold} stopOpacity="0.3" />
+              <stop offset="100%" stopColor={brand.arcaneanGold} stopOpacity="0" />
             </radialGradient>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="6" result="blur" />
@@ -199,10 +200,10 @@ export function RealmConstellation({
                 y2={activeB.y}
                 stroke={
                   corridorStatus === "open"
-                    ? "#34d399"
+                    ? elements.wind.base
                     : corridorStatus === "drifting"
-                    ? "#fbbf24"
-                    : "#f43f5e"
+                    ? gold.bright
+                    : elements.fire.base
                 }
                 strokeWidth="3.5"
                 filter="url(#glow)"
@@ -223,11 +224,11 @@ export function RealmConstellation({
               <g
                 transform={`translate(${(activeA.x + activeB.x) / 2}, ${(activeA.y + activeB.y) / 2})`}
               >
-                <circle r="18" fill="#05070f" stroke="white" strokeOpacity="0.3" strokeWidth="1" />
+                <circle r="18" fill={cosmic.void} stroke="white" strokeOpacity="0.3" strokeWidth="1" />
                 <text
                   textAnchor="middle"
                   dy="4"
-                  fill="#ffffff"
+                  fill="white"
                   fontSize="9"
                   fontFamily="monospace"
                   fontWeight="bold"
@@ -280,7 +281,7 @@ export function RealmConstellation({
                   <circle
                     r="24"
                     fill="none"
-                    stroke={isA ? "#10b981" : "#06b6d4"}
+                    stroke={isA ? elements.wind.base : brand.atlanteanTeal}
                     strokeWidth="2.5"
                     strokeDasharray="4 2"
                     className="animate-spin"
@@ -291,7 +292,7 @@ export function RealmConstellation({
                 {/* Central Core Circle */}
                 <circle
                   r={isA || isB ? "18" : "14"}
-                  fill="#0a0d18"
+                  fill={cosmic.void}
                   stroke={pos.color}
                   strokeWidth={isA || isB ? "2.5" : "1.5"}
                 />
@@ -307,7 +308,7 @@ export function RealmConstellation({
                 <text
                   y="34"
                   textAnchor="middle"
-                  fill="#ffffff"
+                  fill="white"
                   fontSize="12"
                   fontWeight={isA || isB ? "600" : "500"}
                   className="tracking-wide"
@@ -330,16 +331,16 @@ export function RealmConstellation({
                 {/* Origin / Target Pill */}
                 {isA && (
                   <g transform="translate(0, -28)">
-                    <rect x="-24" y="-8" width="48" height="16" rx="8" fill="#10b981" />
-                    <text textAnchor="middle" dy="3.5" fill="#000000" fontSize="9" fontWeight="bold">
+                    <rect x="-24" y="-8" width="48" height="16" rx="8" fill={elements.wind.base} />
+                    <text textAnchor="middle" dy="3.5" fill="black" fontSize="9" fontWeight="bold">
                       ORIGIN (A)
                     </text>
                   </g>
                 )}
                 {isB && (
                   <g transform="translate(0, -28)">
-                    <rect x="-24" y="-8" width="48" height="16" rx="8" fill="#06b6d4" />
-                    <text textAnchor="middle" dy="3.5" fill="#000000" fontSize="9" fontWeight="bold">
+                    <rect x="-24" y="-8" width="48" height="16" rx="8" fill={brand.atlanteanTeal} />
+                    <text textAnchor="middle" dy="3.5" fill="black" fontSize="9" fontWeight="bold">
                       TARGET (B)
                     </text>
                   </g>
@@ -357,7 +358,7 @@ export function RealmConstellation({
             <h4 className="font-display font-medium text-white text-sm">
               {hoveredRealm.name}
             </h4>
-            <span className="text-[11px] font-mono text-[var(--arc-brand-arcanean-gold,#d4af37)]">
+            <span className="text-[11px] font-mono text-[var(--arc-brand-gold)]">
               {hoveredRealm.frequencyHz} Hz
             </span>
           </div>

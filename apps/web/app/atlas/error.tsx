@@ -4,14 +4,13 @@ import Link from "next/link";
 import { Warning, ArrowCounterClockwise, Globe } from "@/lib/phosphor-icons";
 
 export default function AtlasError({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-[var(--arc-cosmic-void,#05070f)] text-white flex items-center justify-center px-4 py-24">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white flex items-center justify-center px-4 py-24">
       <div className="max-w-md w-full text-center space-y-6 bg-white/[0.03] border border-white/10 rounded-2xl p-8 backdrop-blur-xl">
         <div className="w-14 h-14 mx-auto rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
           <Warning className="w-7 h-7" />

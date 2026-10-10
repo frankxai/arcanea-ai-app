@@ -17,7 +17,6 @@ import {
   Coins,
   Plus,
   GraduationCap,
-  MagnifyingGlass,
   ArrowRight,
 } from '@/lib/phosphor-icons';
 import type { PhosphorIcon as Icon } from '@/lib/phosphor-icons';
