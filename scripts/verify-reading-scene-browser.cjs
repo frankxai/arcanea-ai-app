@@ -383,7 +383,10 @@ async function main() {
           "result",
         ]);
         assert.equal(artifact.result.credits, undefined);
+        assert.equal(artifact.result.generationId, undefined);
         assert.equal(artifact.result.images[0].providerAccount, undefined);
+        assert.equal(JSON.stringify(artifact).includes(owner), false);
+        assert.equal(JSON.stringify(artifact).includes(key), false);
         await page
           .getByRole("button", { name: "Save private creation", exact: true })
           .click();
@@ -441,6 +444,24 @@ async function main() {
           .evaluate((element) =>
             element.scrollIntoView({ block: "start", behavior: "instant" }),
           );
+        await page
+          .getByRole("button", { name: "Return to reading", exact: true })
+          .click();
+        await selectPassage(page, { keyboard: true, replacement: true });
+        await page
+          .getByRole("button", { name: "Keep current scene", exact: true })
+          .press("Enter");
+        await expect(
+          page.getByRole("region", { name: "Passage visualization" }),
+        ).toBeFocused();
+        await expect(
+          page.getByRole("img", { name: /Personal visual interpretation/ }),
+        ).toBeVisible();
+        await expect(
+          page.getByRole("button", { name: "Saved privately", exact: true }),
+        ).toBeVisible();
+        assert.equal(requests.length, 2);
+        assert.deepEqual(errors, []);
         await page.screenshot({
           path: `screenshots/reading-scene/${mode.name}.png`,
         });
@@ -476,6 +497,7 @@ async function main() {
             "passage action snapshots selection before the queued change event",
             "replacement cancellation preserves current scene",
             "keyboard replacement moves focus to confirmation and back",
+            "completed scene cancellation retains image/save and focuses workspace",
             "reload",
             "interruption",
             "same-key recovery",

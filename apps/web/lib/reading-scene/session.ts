@@ -42,6 +42,7 @@ export function projectSceneResult(
 /** Portable source and image provenance excludes account and database state. */
 export function exportScene(session: SceneSession) {
   const { source } = session;
+  const result = session.result ? projectSceneResult(session.result) : null;
   return {
     schema: "arcanea.reading-scene-export.v1" as const,
     source: {
@@ -54,7 +55,14 @@ export function exportScene(session: SceneSession) {
     },
     brief: session.brief,
     model: session.model,
-    result: session.result ? projectSceneResult(session.result) : null,
+    result: result
+      ? {
+          status: result.status,
+          provider: result.provider,
+          model: result.model,
+          images: result.images,
+        }
+      : null,
   };
 }
 

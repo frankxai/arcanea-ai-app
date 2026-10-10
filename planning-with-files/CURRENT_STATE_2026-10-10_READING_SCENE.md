@@ -95,11 +95,16 @@ The result now uses an explicit field allowlist, including image fields. Existin
 browser recovery is projected on restoration; persistence also projects results.
 A separate arcanea.reading-scene-export.v1 export retains source, brief, model and
 generation provenance while omitting owner, creationId, requestKey and billing.
+The exported result also omits generationId, whose suffix is the private save key;
+Provider/model, image bytes and the chapter hash retain portable provenance.
 Replacement focuses its first action with the explanatory text as its description;
 cancellation restores focus to the brief or the workspace for a completed scene.
 Two meaningful source tests and all four browser modes exercise metadata exclusion
 and keyboard replacement. This is the existing owner's six-file repair, with no
-lease overlap. New hosted verification is pending; bb482ab2's green checks certify
+lease overlap.
+Completed-scene cancellation additionally retains the image/private save and
+focuses the workspace because the completed brief is disabled.
+New hosted verification is pending; bb482ab2's green checks certify
 only the previous revision. No paid provider review or production release occurred.
 
 Acceptance: a source-bound passage becomes an editable brief and a real usable

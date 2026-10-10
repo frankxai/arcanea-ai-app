@@ -171,7 +171,16 @@ test("portable exports retain provenance without account or recovery state", () 
     source: scene.source,
     brief: scene.brief,
     model: scene.model,
-    result: projectSceneResult(result),
+    result: {
+      status: result.status,
+      provider: result.provider,
+      model: result.model,
+      images: result.images,
+    },
   });
+  const serialized = JSON.stringify(exportScene(internal));
+  assert.equal(serialized.includes(scene.requestKey!), false);
+  assert.equal(serialized.includes(internal.creationId), false);
+  assert.equal(serialized.includes(scene.owner), false);
   assert.equal(exportScene(scene).result, null);
 });
