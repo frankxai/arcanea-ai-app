@@ -1,0 +1,63 @@
+## Illustration Brief — EP-scene-8
+
+**Source:** Creator-supplied scene, EP-series. World rules: EP1 sending erases memory; EP2 Ivo recognizes his daughter but has forgotten her name.
+
+---
+
+### Illustration Table
+
+| Field | Detail |
+|---|---|
+| **Shot ID** | I1 |
+| **Source lines** | L1 · L2 · L3 (composite; all three lines pictured) |
+| **Decisive action** | Ivo grips the offered drawing; recognition is complete, language is not |
+| **Emotional change** | Recognition without retrieval — the face is known, the name is gone |
+| **Subject** | Ivo (foreground-left) and his daughter (foreground-right), facing each other in near-profile; the kitchen drawing held between them at mid-frame |
+| **Framing** | Medium-close two-figure composition. Ivo's hands close around the paper — the grip is the event. Daughter's extended arm and face visible. Rain-wetted north tower occupies the upper background, softened by atmosphere. No text, caption, or speech element in frame. |
+| **World-rule constraint** | Memory erasure has no visual form — no glow, shimmer, or effect on Ivo. The loss is expressed through posture and grip, not magic. Do not depict Ivo speaking or mouthing a name. |
+| **Prompt text** | An older man and a younger woman stand close in an exterior threshold, facing each other. She holds out a hand-drawn paper sketch of a domestic kitchen; his hands grip it firmly — not taking it, not releasing it. His expression carries full recognition of her face and utter stillness in his throat. Her posture is open, waiting. A tall stone tower rises behind them in the rain; wet stone, low sky, diffuse grey light. No magical effects. No speech or text in frame. Mood: quiet catastrophe, love without language. *(Costume, age, palette, and kitchen-drawing style: see proposals below.)* |
+| **Narrative purpose** | Externalizes the show's central erasure: recognition can survive the sending, but naming cannot. The paper is the object-bridge — offered, gripped, unnamed. |
+| **Duration** | N/A — single illustration |
+
+---
+
+### Proposals (invented; not sourced from supplied scene)
+
+The following are editorial drafts for review. Revise or override before generation is authorized.
+
+- **Age:** Ivo rendered as late 50s–60s; daughter as early-to-mid 30s. Not established in supplied lines.
+- **Palette:** Desaturated cool grey-green with warm paper-tone at center (the drawing). Not specified in scene.
+- **Costume:** Wardrobe for both figures derived from the online costume reference (see Rights). Pending rights clearance, treat as placeholder silhouette only — no generation using this reference without resolved rights.
+- **Kitchen drawing:** Rendered as a simple pencil-on-paper sketch, spare linework, visible fold. Drawing style and subject detail are proposals.
+- **Tower architecture:** Stone, north-facing, narrow windows, rain-wet face. Architectural detail is a proposal; no official world diagram supplied.
+- **Lighting:** Overcast diffuse rain light, slight rim separation from the tower. Proposal.
+
+---
+
+### Assets and Rights Record
+
+| Asset | Source | Rights Status | Intended Use |
+|---|---|---|---|
+| Scene text (L1–L3) | Creator-supplied | Creator-owned (commercial release: ownership declaration still needed) | Source material |
+| EP world rules (EP1/EP2) | Creator-supplied | Creator-owned | Constraint continuity |
+| Online costume reference image | Public internet URL (not lodged) | **Unknown — rights not cleared** | Wardrobe reference proposal only |
+
+**Rights flag:** The costume reference image carries unknown rights. Public visibility is not rights clearance. This brief does not authorize use of that image in a generation prompt, a style-reference field, or any provider submission until rights are resolved or a cleared substitute is supplied. Until then, wardrobe is a proposal shape, not a locked specification.
+
+**Provider / model / seed:** Not selected. No generation authorized. No sidecar fabricated.
+
+---
+
+### World-Rule Continuity Check
+
+| Rule | Depicted? | Status |
+|---|---|---|
+| Ivo recognizes daughter's face | Yes — grip and gaze encode recognition | ✓ Consistent |
+| Ivo cannot name her | Yes — no speech, no mouthed word, stillness in expression | ✓ Consistent |
+| No new power or invented event | No magic, no glow, no memory-retrieval visual | ✓ Consistent |
+| Rain / north tower | L3 sourced directly into background | ✓ Sourced |
+| Drawing of kitchen | L1 sourced directly as held object | ✓ Sourced |
+
+---
+
+**Deliverable status:** Editable brief. Costume, age, palette, tower detail, and drawing style are proposals pending creator review. Rights question on costume reference is open. Generation and provider selection remain separate authorized actions.

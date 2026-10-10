@@ -1,0 +1,58 @@
+# Cinder Orchard — Compact World Bible
+
+## Premise
+
+Cinder Orchard is a working orchard governed by two parallel systems: glyph markings carved into gate posts and tree boards (P1), and keeper songs whose verses encode harvest timing (P2). Its central tension is practical: a verse that went missing yesterday and a visitor who cannot read the glyphs may each hold what the other needs.
+
+---
+
+## Fact Table
+
+| ID | Statement | Status | Source |
+|---|---|---|---|
+| CO1 | The east orchard gate opens at noon | Accepted | CO-v2 |
+| CO2 | Yesterday Neri forgot the harvest song's final verse; the melody remains | Accepted | CO-v2 |
+| CO3 | Vale is a traveling potter who cannot read orchard glyphs | Accepted | CO-v2 |
+| P1 | Glyph markings appear on gate posts, tree boards, and work notices throughout the orchard | Proposed | This draft |
+| P2 | The harvest song's final verse closes the picking-sequence announcement | Proposed | This draft; creator decision pending |
+| P3 | The east gate is one entrance among others; CO1 specifies its noon schedule, not exclusivity | Proposed scope note | CO1 |
+| P4 | A painted board near the east gate posts directions and access claims; its accuracy is unverified in-world | Proposed story prop | Creator note |
+
+---
+
+## Place — The East Gate
+
+The east gate opens at noon (CO1). Its timber arch carries glyph-carved posts on both sides (P1). A weathered painted board nearby asserts directions and permissions (P4); whether it was accurate when posted or still honored is an open choice. Vale cannot parse what the posts or the board say in glyphs (CO3). What a keeper would normally sing at this threshold, Neri can only hum (CO2).
+
+The board makes useful story material for a character disputing access — it does not establish the east gate as the only entrance (P3). The condition of the surrounding trees, other gates, and the full glyph vocabulary are open choices.
+
+---
+
+## Characters
+
+**Neri** is a keeper of the harvest song. Yesterday the final verse disappeared; the melody holds (CO2). The cause of that loss and any path to recovery are open choices. *Proposed (P2):* Neri's role involves announcing the picking sequence to workers, giving the missing verse practical stakes beyond personal loss. Neri is not established as the song's only custodian or as unable to work without the verse; those would each require a separate supplied fact.
+
+**Vale** is a traveling potter who cannot read orchard glyphs (CO3). Why Vale cannot read them is open. *Proposed (P1):* Vale depends on work-board postings to know who needs clay goods, making the glyph illiteracy a daily dependency on spoken help. Vale is not established as having any prior connection to Neri.
+
+---
+
+## Story Hooks
+
+**Hook 1 — The Board at Noon.** Vale arrives before noon and waits at the east gate, unable to read the glyph posts or evaluate what the painted board claims (CO3, P4). Neri approaches from inside, able to hum a threshold melody but not deliver the verse that would formally open the picking season (CO2, P2 proposed). Three partial authorities — board, glyphs, song — and none of them whole. *If P2 does not fit the creator's intent, redirect the verse's stakes to whatever role it carries.*
+
+**Hook 2 — The Outside Variant.** A worker needs Neri to certify the picking sequence. Neri can hum but not deliver the closing verse (CO2). Vale, who trades across many orchards, has heard other harvest melodies and may recognize this one (proposed). Vale cannot verify a match against the glyph records (CO3). Using an unverified verse risks a mistimed harvest; withholding it stalls the work. Whether Neri can recover the verse through Vale's knowledge or another route is explicitly open — this hook poses the question; it does not answer it.
+
+---
+
+## Open Choices
+
+- Cause of CO2, and whether the verse can be recovered and how
+- Why Vale cannot read glyphs
+- What the glyph posts at the east gate say
+- Whether the painted board (P4) is accurate, outdated, or deliberately misleading
+- Other gates, their schedules, and the full reach of P3
+- Whether P2 fits the creator's intent for the harvest song
+
+## Change Log
+
+No supplied facts modified. CO1, CO2, and CO3 are carried forward unchanged. All new material is labeled proposed.

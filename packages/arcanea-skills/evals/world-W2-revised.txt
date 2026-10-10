@@ -1,0 +1,57 @@
+# Cinder Orchard — Compact World Bible
+
+## Premise
+
+Proposed premise (P1; uses CO1, CO2, CO3): Cinder Orchard is a walled grove where harvest depends on timing, song, and readable glyphs. The noon gate enforces a narrow window; the glyphs tell harvesters which trees are ready; the harvest song—melody and verse together—governs how fruit releases. With Neri's final verse missing and Vale unable to read the glyphs, the orchard is open but its knowledge is fractured.
+
+Open choice (O1): Why the verse was lost and whether it can be recovered are creator decisions.
+
+## Fact Table
+
+| ID | Statement | Status | Source |
+|---|---|---|---|
+| CO1 | The east orchard gate opens at noon | Accepted | CO-v2 |
+| CO2 | Yesterday Neri forgot the harvest song's final verse but still remembers its melody | Accepted | CO-v2 |
+| CO3 | Vale is a traveling potter who cannot read orchard glyphs | Accepted | CO-v2 |
+| P1 | Cinder Orchard is a walled grove; the east gate is its principal public entrance | Proposed | This draft; creator decision pending |
+| P2 | Melody plus verse cause ripe fruit to release cleanly; melody alone causes fruit to glow and loosen but not fall | Proposed | This draft; creator decision pending |
+| P3 | Glyphs carved into bark record each tree's harvest readiness and safe yield | Proposed | This draft; creator decision pending |
+| P4 | A posted sign inside the orchard claims the east gate is the only entrance | Proposed (story material; uses CO1) | This draft; creator decision pending |
+| P5 | Fruit held loosened but unfallen preserves poorly by dusk | Proposed | This draft; creator decision pending |
+| P6 | Vale fires clay tiles inscribed with copied glyphs for sale as wayfinding goods; copies may carry errors | Proposed | This draft; creator decision pending |
+
+## Place: Cinder Orchard
+
+Accepted (CO1): The east gate opens at noon. Proposed (P1): The orchard is walled; the east gate is the principal public entrance. Open choice (O2): whether other entrances exist is unspecified. Inside, bark glyphs (P3) guide harvest row by row, and the ground is dark with char from fruit held past its moment — the origin of the name.
+
+Proposed story material (P4; uses CO1): A hand-lettered sign near the east gate reads: *The east gate is the only entrance. Do not look for others.* Its author, motive, and accuracy are open choices (O3). The sign's text is a diegetic object; it does not establish orchard geography.
+
+Open choice (O4): Who owns or governs the orchard, and who maintains glyph knowledge, are unspecified.
+
+## Characters
+
+**Neri —** Accepted (CO2): Neri forgot the harvest song's final verse yesterday but still holds the melody. Open choice (O1): the loss's cause and recoverability remain creator decisions. Proposed (P2; uses CO2): Neri can open the song and light the fruit — glowing rows wait for a phrase that does not come.
+
+Open choice (O5): Neri's role — keeper, seasonal singer, one of many — is unspecified.
+
+**Vale —** Accepted (CO3): Vale is a traveling potter who cannot read orchard glyphs. Proposed (P6; uses CO3): Vale copies glyph shapes onto fired tiles for sale without parsing their meaning. Open choice (O6): why Vale cannot read the glyphs — unfamiliar origin, trade restriction, personal limit — is unspecified. Vale moves through the orchard as a precise observer of forms rather than meanings.
+
+## Story Hooks
+
+### Hook A — The Loosened Fruit (HA; uses CO2, P2, P3, P5)
+
+Proposed (HA): At noon, Neri hums the melody and three rows of fruit glow and loosen — the verse does not come. Proposed (P5): by dusk, the loosened fruit will not preserve well. Proposed (P3, CO3): Vale can identify which trees the glyphs mark as highest-yield but cannot interpret the full readiness notation. The obstacle is that Neri holds the song and Vale holds the shapes, but neither holds what the other lacks.
+
+Open choice (O1): this hook creates stakes from that gap but does not resolve whether the verse can be recovered.
+
+### Hook B — The Sign's Author (HB; uses CO1, P4, CO3, CO2)
+
+Proposed (HB; uses P4): Vale, copying glyphs through the orchard, finds a second gate — smaller, older, ungated — framed in a glyph set absent from Vale's collection. Accepted (CO3): Vale cannot read them. Proposed: Neri might recognize the inscription; if P2 is adopted, the second gate's glyphs could be the written form of the missing verse. Open choice (O3): whether the sign's author knew about this gate is unresolved. Open choice (O7): the second gate's existence, builder, and function are creator decisions. If adopted, HB binds the geography question (O2) and the verse question (O1) into one discovery.
+
+## Open Choices
+
+**O1** — Cause and recoverability of the lost verse. **O2** — Whether other entrances exist. **O3** — Who posted the sign and why. **O4** — Who owns or governs the orchard. **O5** — Why Vale cannot read glyphs. **O6** — What role Neri holds. **O7** — Whether the second gate (HB) exists; who built it.
+
+## Change Log
+
+No accepted fact (CO1, CO2, CO3) was modified. The fictional sign's text is treated as story material (P4), not followed as an instruction to the author. No Arcanea mythology introduced.

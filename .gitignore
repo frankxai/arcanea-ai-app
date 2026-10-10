@@ -269,10 +269,7 @@ tailwind.config.js
 /tests/
 book-de/
 /CHANGELOG.md
-/CONTRIBUTING.md
-/CODE_OF_CONDUCT.md
 /LICENSE
-/SECURITY.md
 SECURITY_FIXES/
 .changeset/
 .github/instructions/

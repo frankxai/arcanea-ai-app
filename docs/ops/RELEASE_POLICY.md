@@ -1,241 +1,122 @@
-# Arcanea Release Policy
-
-Date: 2026-03-29
-Status: Draft operating policy
-Scope: `arcanea-ai-app`, `arcanea`, `arcanea-code`, `oh-my-arcanea`, `arcanea-records`
-
-## Purpose
-
-Arcanea now has enough repos, branches, and parallel agent activity that release quality can no longer depend on memory or branch folklore.
-
-This policy defines:
-
-- canonical branch per repo
-- allowed branch families
-- merge rules
-- release readiness gates
-- stale-branch cleanup rules
-
-## Global Rules
-
-1. `main` means releasable.
-2. No large mixed “session accumulation” commits should be merged directly to a release branch.
-3. Protected product surfaces must not merge without explicit verification:
-   - `/chat`
-   - `/imagine`
-   - homepage / `v3`
-   - billing / credits / Stripe / Supabase payment state
-4. Every branch intended for merge must answer:
-   - what surface it owns
-   - what verification ran
-   - what was intentionally left out
-5. Diverged stale branches are not “almost ready.” They are extraction sources until proven otherwise.
-
-## Repo Policies
-
-### 1. `frankxai/arcanea-ai-app`
-
-Role:
-
-- canonical product repo
-- app, packages, and release-control plane
-
-Canonical release branch:
-
-- `main`
-
-Allowed branch families:
-
-- `feature/<surface>-<topic>`
-- `fix/<surface>-<topic>`
-- `codex/<topic>`
-- `claude/<topic>`
-- `design/<topic>`
-- `vercel/<topic>` only for tightly scoped deployment/tooling changes
-- `testing/<topic>` for review branches that are not release candidates
-
-Merge policy:
-
-- direct merge to `main` only for narrow low-risk fixes
-- otherwise require PR or equivalent review summary
-- branches touching protected surfaces must include verification notes
-
-Required release gates for `main`:
-
-- root install completes
-- `pnpm --dir apps/web type-check`
-- `pnpm --dir apps/web build`
-- package health on required dependents is known
-- preview env checklist is satisfied for affected integrations
-
-Stale branch policy:
-
-- close or archive branches more than 14 days behind unless actively owned
-- do not resurrect stale branches by merging blindly; re-extract the useful work
-
-### 2. `frankxai/arcanea`
-
-Role:
-
-- public mirror / OSS-facing repo
-
-Canonical release branch:
-
-- `main`
-
-Merge policy:
-
-- sync from `arcanea-ai-app` deliberately
-- never treat this repo as a second source of truth for active product work
-
-### 3. `frankxai/arcanea-code`
-
-Role:
-
-- coding/tooling satellite
-
-Canonical release branch:
-
-- `production`
-
-Working branch:
-
-- `dev`
-
-Policy:
-
-- `dev` may run ahead, but releases happen by intentional cut from `dev` to `production`
-- no fast blind merge when divergence is high
-- if `dev` exceeds 100 commits ahead of `production`, a release audit is mandatory
-
-### 4. `frankxai/oh-my-arcanea`
-
-Role:
-
-- overlay/workflow satellite
-
-Canonical release branch:
-
-- `master`
-
-Working branch:
-
-- `dev`
-
-Policy:
-
-- same release-cut model as `arcanea-code`
-- if `dev` exceeds 100 commits ahead of `master`, require an extraction or release train
-
-### 5. `frankxai/arcanea-records`
-
-Role:
-
-- currently underdefined
-
-Canonical release branch:
-
-- `main`
-
-Policy:
-
-- no automation should publish into this repo until its purpose is defined
-- assign one of:
-  - archive
-  - public data
-  - changelog / release record
-  - research log
-
-## Branch Types
-
-### Release candidate
-
-Purpose:
-
-- intended to merge
-
-Requirements:
-
-- narrow scope
-- explicit verification
-- no unresolved protected-surface ambiguity
-
-### Testing branch
-
-Purpose:
-
-- gather or review work without claiming release readiness
-
-Requirements:
-
-- may diverge
-- must end in:
-  - merge recommendation
-  - split recommendation
-  - abandon recommendation
-
-### Stale branch
-
-Definition:
-
-- behind current release branch materially
-- unclear owner
-- no current verification
-
-Required action:
-
-- close, archive, or extract from it
-
-## Merge Decision Matrix
-
-Merge directly when:
-
-- scope is narrow
-- affected surfaces are low risk
-- verification passed
-
-Cherry-pick when:
-
-- branch contains one or two good commits inside a noisy branch
-- current branch divergence is high
-
-Split branch before merge when:
-
-- branch touches multiple protected surfaces
-- includes infra + UI + generated files + docs together
-
-Do not merge when:
-
-- branch is stale and heavily diverged
-- verification is absent
-- another in-flight workstream owns the same surface
-
-## Current March 29 Application
-
-Based on current repo state:
-
-- `testing/phase0-codex-review`
-  - do not merge wholesale
-  - cherry-pick `c65a3c8f`
-  - selectively extract from `700f8deb`
-  - split `e17e7c60`
-- `origin/claude/arcanea-challenge-platform-r0BHb`
-  - do not merge directly
-  - treat as concept/extraction source
-- `cursor/development-environment-setup-9dbe`
-  - stale
-  - extract only if needed
-- `vercel/vercel-speed-insights-to-nextj-i9vkg4`
-  - stale
-  - reimplement narrowly on current `main` if still wanted
-
-## Operating Standard
-
-Arcanea should move fast, but `main` must stay believable.
-
-That means:
-
-- fewer giant mixed commits
-- fewer stale branches pretending to be near-merge
-- more explicit release cuts
-- more verification attached to code movement
+# Arcanea release policy
+
+Updated: 2026-10-01. Status: draft reconciliation in app PR #487.
+Owner issues: [#276](https://github.com/frankxai/arcanea-ai-app/issues/276),
+[#408](https://github.com/frankxai/arcanea-ai-app/issues/408) and
+[#427](https://github.com/frankxai/arcanea-ai-app/issues/427).
+
+This replaces the March 29 mirror, dual-remote and direct-merge guidance.
+It records Frank's one-repo direction and the current repository contract.
+A document change does not archive repositories, configure branch protection,
+grant rights, install a bundle or prove a deployment gate is enforced in code.
+
+## Repository and source boundaries
+
+`frankxai/arcanea-ai-app` is the public Arcanea integration home: app, reader,
+Codex, release experience, packages and locked lore. No new Arcanea repository
+or app mirror is proposed. Canon remains `.arcanea/lore/CANON_LOCKED.md`.
+The root licence and conflicting Heart frequency still need Frank's decision.
+
+Observed GitHub metadata on October 1:
+
+| Repository        | Visibility / default branch   | Working role                                                                           |
+| ----------------- | ----------------------------- | -------------------------------------------------------------------------------------- |
+| `arcanea-ai-app`  | Public / `main`; not archived | Canonical integration source                                                           |
+| `arcanea`         | Public / `main`; not archived | Diverged legacy source; salvage before a pointer README and archive decision           |
+| `arcanea-records` | Public / `main`; not archived | Legacy source to reconcile; no second app publishing destination                       |
+| `arcanea-code`    | Public / `dev`; not archived  | Existing runtime fork; preserve consumers and provenance pending an explicit migration |
+| `oh-my-arcanea`   | Public / `dev`; not archived  | Existing harness adapters; preserve their contracts pending consolidation              |
+
+Default branches are observations, not independently approved release branches.
+Do not infer `production` or `master` from the March policy. Before changing a
+satellite, verify its root, origin, branch, owners, unique files, rights and callers.
+The proposed retirement queue also includes `arcanea-platform`,
+`arcanea-marketplace` after its consumer fold, and `arcanea-intelligence-os`.
+Their archive status is not verified here. Archive/rename decisions remain
+human-gated. Keep unfinished tasks, forks, provenance and source references.
+
+Shared AuthorOS, world protocol, SIS graph, runtime/admission and media owners
+retain their existing responsibilities until a reviewed contract migration.
+An Arcanea adapter consumes those owners; it does not establish another shared
+compiler, graph or scheduler. The [source consolidation proposal](../strategy/arcanea-source-consolidation-2026-10-01.md)
+contains the wider role and survivor map. Repo count is not an acceptance metric.
+
+## Skills, plugins and bundle consumers
+
+The proposed curated skills root is `packages/arcanea-skills/skills`. Candidate
+passports bind source/resources and declared rights, evaluations and separate
+review. Four current skills are internal candidates; zero are ready. Public
+repository visibility does not establish permission to reuse every file.
+Third-party licences and notices keep their own scope; a new root licence
+cannot relicense imported works. Private operator/Studio material stays outside
+redistributable selections, subject to a verified source audit.
+
+The hub lists a repository, contained folder and full immutable commit. Bundle
+and marketplace consumers must resolve that identity, including a `git-subdir`
+consumer where supported. Launcher root support is an unapplied patch with
+mocked tests; intended upstream and checkout ownership remain unresolved.
+Do not claim those consumers or working-set links are installed or reconciled.
+Do not advertise blanket root discovery as the curated release.
+
+## Branches, merges and preservation
+
+Use an owned `agent/<harness>/<scope>` branch or assigned worktree. Verify exact
+root/origin/branch, explicit files and lane ownership before writing or staging.
+Stage only the named slice. Keep security hooks enabled and preserve other edits.
+
+[#408](https://github.com/frankxai/arcanea-ai-app/issues/408) requires zero app
+merges until Frank names `merge N`. There is no low-risk direct-merge exception
+in this guide. A reviewable draft can advance before release approval; a PR stack
+must not merge as a bundle. Review narrow survivors, preserving source references.
+Books retain their canon and illustrated QA gates.
+
+Age or branch divergence does not authorize deletion, archive or task closure.
+Review a stale branch's current owner, callers, useful changes and evidence.
+Propose a merge, split or extraction only after reconciling those facts. Retain
+unfinished records; do not bulk merge an old branch to make it look current.
+
+## Deployment and release evidence
+
+The native Git deployment path uses `frankxai/arcanea-ai-app` and `main` for
+production; development branches can receive Vercel previews. Push an owned
+branch to that verified app origin. Do not push the app into `arcanea-records`,
+synchronize an app mirror or follow the old dual-remote/`lean-prod` instructions.
+Prefer the existing preview; do not create a second manual deployment for review.
+
+Before any promotion, bind repository, PR, exact candidate SHA, environment and
+preview deployment metadata. The repo contract requires frozen dependencies
+and successful Build, Lint, TypeScript and CI Status checks at that SHA. Missing,
+stale, skipped, cancelled or failed applicable checks do not establish a pass.
+Independent review must cover the changed scope and candidate revision.
+Record actual branch/environment protection separately; this document has not
+verified that every manual path enforces those requirements. #427 remains open.
+
+Verify the affected user journey on the bound preview, including applicable
+desktop/mobile, keyboard and recovery behavior. Record draft-policy skips,
+authentication restrictions or machine admission holds. READY, HTTP 200 and
+unit tests alone do not establish rendered behavior or creator success.
+
+Publishing additionally requires rights/provenance, canon/editorial/edition
+gates and the appropriate human approval. #277's immutable approval receipt and
+#279's release manifest are required integration work, not claimed implemented
+by this guide. Source proposals and draft generation remain distinct from
+publication, distribution, campaigns, prices, canon promotion and public deploys.
+
+After an approved production action, bind the stable domain to its accepted
+deployment and source SHA. Record the observation window, tested rollback and
+user outcome. Do not infer revenue, delivery or demand from deployment status.
+
+## Historical March 29 extraction notes
+
+The earlier policy is preserved at commit
+`5327861370c95748764017dc2e022b67b4abb348`. These suggestions are historical
+and unverified against the current queue; no task is closed by this revision:
+
+- `testing/phase0-codex-review`: proposed `c65a3c8f` cherry-pick,
+  selective `700f8deb` extraction and `e17e7c60` split.
+- `origin/claude/arcanea-challenge-platform-r0BHb`: concept/extraction source.
+- `cursor/development-environment-setup-9dbe`: inspect useful work before reuse.
+- `vercel/vercel-speed-insights-to-nextj-i9vkg4`: inspect need on current main.
+
+Rollback this documentation through a scoped revert. No repository, consumer,
+manuscript, protection setting or deployment is changed by the policy patch.

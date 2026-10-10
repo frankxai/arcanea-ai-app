@@ -1,0 +1,114 @@
+{
+  "id": "ARC-CONTINUITY-PROOF-20261002",
+  "state": "proposal",
+  "purpose": "Editable local continuity repair for an actual Arcanea two-chapter manuscript",
+  "sourceRevision": "fcad9bf92db5932e7093fcabe0fa3b934beea6d3",
+  "sourceRepo": "frankxai/arcanea-ai-app",
+  "inputs": [
+    {
+      "path": "book/chapters/book1/01-the-storm-that-remembered.md",
+      "blob": "09347ce1aac9cafca029be0b4d850aa3eba33f35",
+      "sha256": "7e5c15361e16a7a38dea9da94d2f08778a5b3474de2208561d19010a038d5aaa"
+    },
+    {
+      "path": "book/chapters/book1/02-the-ones-who-came.md",
+      "blob": "58863e810601de652ed3fb0936a0434db31126d7",
+      "sha256": "8ebdaccb59c3b864cf8d8150aff9ff77ab34e9e6cb13e3195fa19da0ad17840f"
+    },
+    {
+      "path": ".arcanea/lore/CANON_LOCKED.md",
+      "blob": "ecb9f8f393478c0b41d0829fac654090090ecd11",
+      "sha256": "58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f"
+    },
+    {
+      "path": "packages/arcanea-skills/skills/continuity-check/SKILL.md",
+      "blob": "289fb74fca1232a06e10277c7bb400a10a7648bf",
+      "sha256": "5bf48bbc7cedcdbea27210abe5e6364a1fd8a3277a34765edf8205c7f01c6fb0"
+    }
+  ],
+  "authority": {
+    "canon": ".arcanea/lore/CANON_LOCKED.md",
+    "manuscript": "Original book/chapters/book1 files are unchanged and authoritative; these exports/patches are proposed derivatives.",
+    "canonChange": "none",
+    "releaseSelection": "none; #280 still requires Frank selection",
+    "visibility": "Draft evaluation material in existing app; no live posting or publication"
+  },
+  "generatedWith": {
+    "A": "Codex lead A3, three replacements; ambiguous Maret-date edit withdrawn after independent REVISE",
+    "B": "Claude Code 2.1.287 claude-sonnet-5-5/high, explicit 1 USD requested cap, actual cost/seconds in comparison"
+  },
+  "sharedExporter": {
+    "repo": "frankxai/author-os",
+    "commit": "30d90432d84c526315985d806cd938c726b4271d",
+    "branchStatus": "Existing codex/author-os-preview checkout; this component run does not accept the whole preview product.",
+    "path": "packages/core/src/exporter.js",
+    "sha256": "6370e201b87aeb1cf2fcdf0fa84f5caedb3a205147b901d88fa8963c5f596b63",
+    "node": "v24.14.0",
+    "format": "Markdown only; embedded timestamp nondeterministic"
+  },
+  "rights": "Source-derived proposal; no licence or authorship/rights clearance asserted. Owner decisions remain pending.",
+  "humanDisposition": "pending",
+  "artifacts": [
+    "edited-manuscript.md",
+    "revision.patch",
+    "edits.json",
+    "baseline-manuscript.md",
+    "baseline.patch",
+    "baseline.json",
+    "comparison.json"
+  ],
+  "highestEnvironment": "Local Node24 component export; isolated provider baseline; no installed-harness, cloud cockpit, EPUB, PDF or production proof",
+  "failureHistory": "Four local integration/editing failures retained: initial Windows LF/CRLF patch, Windows ESM URL and staged patch whitespace, then index UTF-8 corruption. All resolved without disabling checks. Patch support is Git-only; other consumers untested. Final bytes rechecked.",
+  "artifactSha256": {
+    "edited-manuscript.md": "72104abf25c788a56f0299d4d692acfee4665516182ec28c884e4e86705ac0fb",
+    "revision.patch": "32faaf683d0cd0164171843a4d1fcfb555adda5c8445fdbf9501a96dfe9e70a4",
+    "edits.json": "602c6bbd1a8a23fcf4a0ea406ba66abf8b48db0f1abe71fc52d2cee3c0c9b037",
+    "baseline-manuscript.md": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
+    "baseline.patch": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
+    "baseline.json": "3bb3b8c2d152f4d147f79593ccaaf67721354b4a1b0dccc59e9b3ba0aed68b24",
+    "comparison.json": "c92b89ea7c2694a02987d85796e6da7dec6bd2ddb57937c155342efb4a4b52cd"
+  },
+  "authorQuestions": [
+    {
+      "id": "MOTHER_MEMORY",
+      "disposition": "author decision"
+    },
+    {
+      "id": "DAY_COUNT",
+      "disposition": "unresolved convention; retain source"
+    },
+    {
+      "id": "WRECK",
+      "disposition": "author question"
+    },
+    {
+      "id": "SLEEP",
+      "disposition": "author question"
+    },
+    {
+      "id": "VOID_SPIRIT",
+      "disposition": "author question"
+    },
+    {
+      "id": "INSTITUTIONS",
+      "disposition": "owner question referencing locked Tier 6; conflict not established"
+    },
+    {
+      "id": "HISTORY",
+      "disposition": "author question"
+    },
+    {
+      "id": "FREQUENCY",
+      "disposition": "owner-only source conflict"
+    },
+    {
+      "id": "TESTIMONY",
+      "disposition": "preserve character belief"
+    },
+    {
+      "id": "PROLEPSIS",
+      "disposition": "author question"
+    }
+  ],
+  "authorQuestionDetails": "edits.json unresolved and comparison.json unresolvedAuthorChoices carry the same complete ten questions."
+}

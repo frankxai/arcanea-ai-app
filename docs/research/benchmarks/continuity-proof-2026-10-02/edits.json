@@ -1,0 +1,165 @@
+{
+  "candidate": "A",
+  "maker": "Codex lead using the existing continuity-check candidate and Canon Guardian instructions",
+  "state": "proposal",
+  "humanDisposition": "pending",
+  "scope": "Two-chapter source-derived internal continuity proposal; not a release selection",
+  "edits": [
+    {
+      "path": "book/chapters/book1/02-the-ones-who-came.md",
+      "before": "The first arrived at dawn. The second at midday. The third was already there when Kael turned around.",
+      "after": "The first arrived at dawn. The second later that morning. The third was already there when Kael turned around.",
+      "reason": "The later narration places Bren's arrival as the sun clears the sea-cliffs and the subsequent conversations in the morning. Change the opening summary rather than moving every later event.",
+      "disposition": "recommended temporal repair"
+    },
+    {
+      "path": "book/chapters/book1/02-the-ones-who-came.md",
+      "before": "There was something about the directness that was restful after two days of people with agendas wrapped in care.",
+      "after": "There was something about the directness that was restful after a morning of people with agendas wrapped in care.",
+      "reason": "Sirvaine and Bren have just made their offers on the same morning; this local repair keeps the contrast without implying two days of emissary meetings.",
+      "disposition": "recommended temporal repair"
+    },
+    {
+      "path": "book/chapters/book1/01-the-storm-that-remembered.md",
+      "before": "were not found until morning.",
+      "after": "were not found that night.",
+      "reason": "Optional wording judgment: two crew members are explicitly never recovered. The original until-morning phrase can imply recovery of all three. That-night wording avoids that implication while preserving the 26/23/3 outcome, but removes the only original recovery-time cue; when the one body was recovered is not independently stated.",
+      "disposition": "optional wording proposal"
+    }
+  ],
+  "controls": [
+    "Six open Gates and Master rank agree with locked canon; preserve Sirvaine's introduction.",
+    "Five elemental manifestations do not establish five named Gates or a Luminor rank; add no rank promotion.",
+    "Eight hundred years since First Siege and twelve hundred years of sealing are not explicitly the same event; no automatic numerical retcon.",
+    "Heart table and historical approval log disagree. Neither chapter depends on a numerical Heart frequency; leave that owner decision unresolved.",
+    "Bren's explanation of Malachar's fall and Sela's bloodline claim are character testimony, not locked canon updates."
+  ],
+  "iterations": [
+    {
+      "version": "A1",
+      "edits": 3,
+      "status": "Initial three-edit list is now in committed history; generation order is lead-reported, not independently established."
+    },
+    {
+      "version": "A2",
+      "edits": 4,
+      "status": "After seeing baseline, add supported casualty-wording repair. Unblinded refinement, not independent configuration uplift."
+    },
+    {
+      "version": "A3",
+      "edits": 3,
+      "status": "Independent REVISE: retain original date; explicit unresolved author choices and corrected export/recovery evidence."
+    }
+  ],
+  "history": {
+    "A1": {
+      "edits": [
+        {
+          "path": "book/chapters/book1/01-the-storm-that-remembered.md",
+          "before": "On the fourth day, Maret showed up at the lighthouse door before dawn",
+          "after": "On the third day, Maret showed up at the lighthouse door before dawn",
+          "reason": "The visitors arrive the next morning. Moving this visit one day earlier reconciles their day-four arrival with chapter two's repeated four-days-ago statements; the warning, fish and goodbye remain."
+        },
+        {
+          "path": "book/chapters/book1/02-the-ones-who-came.md",
+          "before": "The first arrived at dawn. The second at midday. The third was already there when Kael turned around.",
+          "after": "The first arrived at dawn. The second later that morning. The third was already there when Kael turned around.",
+          "reason": "The later narration places Bren's arrival as the sun clears the sea-cliffs and the subsequent conversations in the morning. Change the opening summary rather than moving every later event."
+        },
+        {
+          "path": "book/chapters/book1/02-the-ones-who-came.md",
+          "before": "There was something about the directness that was restful after two days of people with agendas wrapped in care.",
+          "after": "There was something about the directness that was restful after a morning of people with agendas wrapped in care.",
+          "reason": "Sirvaine and Bren have just made their offers on the same morning; this local repair keeps the contrast without implying two days of emissary meetings."
+        }
+      ],
+      "status": "Initial three-edit list retained privately until this correction. Lead-reported order, not a blinded/proven-independent arm."
+    },
+    "A2": {
+      "commit": "c642d556f7ce9960fbf5bfa7c7b66d8ff8e04d0f",
+      "status": "Four-edit proposal; independent REVISE. Exact source retained in Git."
+    },
+    "A3": {
+      "status": "Withdraws Maret date change after reviewer found day-count convention ambiguous; final three-edit proposal."
+    }
+  },
+  "unresolved": [
+    {
+      "id": "MOTHER_MEMORY",
+      "disposition": "author decision",
+      "evidence": [
+        "Your mother had the same eyes for three days after she was born.",
+        "I have thought for nineteen years that I was wrong about what I saw.",
+        "She settled here. You were born.",
+        "She came here to quiet it."
+      ],
+      "options": [
+        {
+          "choice": "Keep original",
+          "consequence": "Retains the mother link; the nineteen-year interval, birth location and what Maret saw still need explanation."
+        },
+        {
+          "choice": "Use baseline Kael-newborn reading",
+          "consequence": "Adds multicolored eyes at Kael birth; affects Not again and Sela undetected/suppression hypothesis. Requires owner approval."
+        },
+        {
+          "choice": "Remove birth/date details",
+          "proposal": "Your mother had the same eyes once. I thought I was wrong about what I saw.",
+          "consequence": "Retains a mother memory but loses the precise three-day/nineteen-year clue. Requires owner approval."
+        }
+      ]
+    },
+    {
+      "id": "DAY_COUNT",
+      "disposition": "unresolved convention; retain source",
+      "evidence": "Storm night, fourth day visit, next morning, three days of reflection and colloquial four days ago do not fix an unambiguous time origin.",
+      "options": [
+        "Leave unchanged pending author timeline",
+        "If a precise Day0 convention is selected, change repeated chapter2 day-count language coherently",
+        "Change the next morning or Maret day only with author acceptance and recheck three-day reflection"
+      ]
+    },
+    {
+      "id": "WRECK",
+      "disposition": "author question",
+      "evidence": "Calloway merchant vessel and unnamed wreck may be different ships. Preserve the stated26/23/3 arithmetic, without resolving identity."
+    },
+    {
+      "id": "SLEEP",
+      "disposition": "author question",
+      "evidence": "A week of poor sleep may predate the storm; source does not explicitly exclude it. Retain original."
+    },
+    {
+      "id": "VOID_SPIRIT",
+      "disposition": "author question",
+      "evidence": "Void names the fifth manifestation; locked source groups Void/Spirit and distinguishes aspects. Do not invent a new mechanic to repair terminology."
+    },
+    {
+      "id": "INSTITUTIONS",
+      "disposition": "owner question referencing locked Tier 6; conflict not established",
+      "evidence": "Locked Tier 6 names seven Academy Houses; these chapters name three working Academies and a Lost Academy. No supplied exclusive Academy-to-House mapping or required equality establishes a contradiction. The relationship needs owner clarification before a lore change."
+    },
+    {
+      "id": "HISTORY",
+      "disposition": "author question",
+      "evidence": "First Siege and sealing dates may name distinct events; do not infer a contradiction."
+    },
+    {
+      "id": "FREQUENCY",
+      "disposition": "owner-only source conflict",
+      "evidence": "Locked-source Heart table/log conflict is unchanged and not needed by either chapter."
+    },
+    {
+      "id": "TESTIMONY",
+      "disposition": "preserve character belief",
+      "evidence": "Bren and Sela give interpretations, not new accepted canon."
+    },
+    {
+      "id": "PROLEPSIS",
+      "disposition": "author question",
+      "evidence": "Kael will think of the losses while polishing brass/eating porridge in the weeks after, yet departs next morning after the emissaries. Probably prolepsis or recurring habits, not an automatic retcon."
+    }
+  ],
+  "comparisonLimits": "Lead A received iterative review while frozen B did not. Lead has no preset edit/word cap; baseline max6 edits/1600 words. Final3 vs observed5 counts are descriptive only.",
+  "patchSupport": "Git-only patch compatibility is verified. Use git apply --check --cached with revision.patch for a read-only context check from the repository root. Inverse/stale checks use the exact replacements in memory, not a crash-safe patch application. Other unified-diff consumers remain untested."
+}

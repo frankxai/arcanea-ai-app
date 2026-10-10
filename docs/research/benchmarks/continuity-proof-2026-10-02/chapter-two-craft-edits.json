@@ -1,0 +1,36 @@
+{
+  "status": "proposal; human acceptance and exact-revision independent review pending",
+  "sourceCommit": "3b730335c70aaa23685f6bf1a6f4e8b46b098472",
+  "sourcePath": "book/chapters/book1/02-the-ones-who-came.md",
+  "sourceSha256": "8ebdaccb59c3b864cf8d8150aff9ff77ab34e9e6cb13e3195fa19da0ad17840f",
+  "rawProposedChapterSha256": "1ef60f5e29714d7f738c84d3b892625dfab9a833a4244fd57fe8994b906f5a23",
+  "patchSha256": "1e3d314a7e3f0473f048fe188f08fab224f3e6628293c079b1c64900bdd1c661",
+  "edits": [
+    {
+      "id": "MORNING_ARRIVAL",
+      "before": "The first arrived at dawn. The second at midday. The third was already there when Kael turned around.",
+      "after": "The first arrived at dawn. The second later that morning. The third was already there when Kael turned around.",
+      "reason": "Bren arrives as the sun clears the sea-cliffs; subsequent source observations still name the morning."
+    },
+    {
+      "id": "MORNING_MEETINGS",
+      "before": "There was something about the directness that was restful after two days of people with agendas wrapped in care.",
+      "after": "There was something about the directness that was restful after a morning of people with agendas wrapped in care.",
+      "reason": "All three encounters occur before the source evening scene."
+    },
+    {
+      "id": "NOTES_AGENCY",
+      "before": "\"Nineteen years old. Born Ashenmere. Elemental sensitivity undetected until four days ago, which is — I genuinely do not know how to explain that. It should not have been undetectable. The sensitivity you're showing is not something that appears suddenly at nineteen, it's something that has been present your entire life and somehow presenting as nothing.\" She looked at Kael with a focused attention that was not warm but was not cold either — it was interested, which was different. \"The only theory I have is suppression. Something was holding it closed. Four days ago the something let go.\"",
+      "after": "\"Nineteen years old. Born Ashenmere. Elemental sensitivity undetected until four days ago, which is — I genuinely do not know how to explain that. It should not have been undetectable. The sensitivity you're showing is not something that appears suddenly at nineteen, it's something that has been present your entire life and somehow presenting as nothing.\" She looked at Kael with a focused attention that was not warm but was not cold either — it was interested, which was different. \"The only theory I have is suppression. Something was holding it closed. Four days ago the something let go.\"\n\n\"Can I see what you have about her?\"\n\nSela put the apple on the step and took a notebook from her coat. She found a page, held it a moment, then passed it over.\n\n\"These are my notes. I didn't bring the file.\"\n\nKael read the small, crowded writing. Twelve years old. Minor Water affinity. Declined further study. It was strange to see a stranger's handwriting give so little space to a person who had once filled the kitchen.\n\n\"Where did you get the part about something holding it closed?\"\n\n\"From what happened on the cliff. And what the instruments should have detected before it.\"\n\nKael turned the notebook toward her. \"So that's you.\"\n\n\"That's my theory. Yes.\"\n\n\"Then write that down too. When you write about me.\"\n\nSela looked at the page. She had already written Kael's name below the notes about the registration. She uncapped her pen, drew a short line beneath it, and wrote in the margin. Kael waited until she turned the notebook back.\n\nTheory.\n\nKael gave it to her. \"All right. Tell me about the cliff.\"",
+      "reason": "Proposed dramatic action: Kael asks to read Sela's notes, challenges her suppression inference and gets her to mark it as theory. The notes and exchange are new fiction, not authenticated Archive contents."
+    },
+    {
+      "id": "ATLANTEAN_CHOICE",
+      "before": "Sela studied Kael's face. Something changed in her expression — not quite a smile, more the look of someone whose model of a thing has just been confirmed.\n\n\"Come with me,\" she said. \"All the way to the end of the path. Let me show you where it goes.\"",
+      "after": "\"I'll come to Atlantean,\" Kael said. \"And when we get there, I want to see my mother's file.\"\n\nSela's hand moved toward her notebook, then stopped.\n\n\"I can ask for it.\"\n\n\"With me there.\"\n\nShe considered that with the same attention she had given the question about the storm. \"With you there.\"\n\nKael looked up at the lamp room window. The glass needed cleaning before the evening watch. It was a small thing to remember at a time like this, and a relief to remember it.\n\n\"Tomorrow morning,\" Kael said.\n\nSela put the notebook away. \"I'll be ready.\"",
+      "reason": "Chapter three explicitly says Kael chose Atlantean and told Sela yes. Proposed dialogue stages that existing decision and a request about the mother's file; access is not guaranteed."
+    }
+  ],
+  "unresolvedLedger": "edits.json: existing ten owner questions remain open",
+  "newFollowThrough": "An original-file request is proposed, not fulfilled. Author review of later chapters must decide whether and where to honor it; chapter-three road research remains permitted."
+}
