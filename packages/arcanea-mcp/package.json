@@ -31,7 +31,8 @@
     "test:delivery": "node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs",
     "verify:package": "node scripts/verify-package.mjs",
     "prepack": "tsc && node scripts/verify-package.mjs",
-    "prepublishOnly": "tsc && node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs && node scripts/verify-package.mjs"
+    "prepublishOnly": "tsc && node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs && node scripts/verify-package.mjs",
+    "test:consumer": "node ../../scripts/verify-mcp-installed-package.mjs"
   },
   "keywords": [
     "mcp",

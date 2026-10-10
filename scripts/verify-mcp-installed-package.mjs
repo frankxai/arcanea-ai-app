@@ -16,13 +16,15 @@ import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 
-// Run through the repository's pinned pnpm: pnpm exec node scripts/verify-mcp-installed-package.mjs.
+// Run through the repository's pinned pnpm: pnpm --dir packages/arcanea-mcp test:consumer.
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pnpmEntry = process.env.npm_execpath;
-assert.ok(
-  pnpmEntry && /pnpm\.(?:c?js)$/.test(pnpmEntry),
-  "Use pinned pnpm exec.",
-);
+assert.ok(pnpmEntry, "Use the pinned pnpm package script.");
+const pnpmPath = realpathSync(pnpmEntry);
+// Hosted pnpm can be a native executable; Corepack uses a JS entry on Windows.
+const pnpmCommand = /\.(?:c|m)?js$/.test(pnpmPath)
+  ? [process.execPath, pnpmPath]
+  : [pnpmPath];
 const repository = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const manifest = JSON.parse(
   readFileSync(join(root, "packages/arcanea-mcp/package.json"), "utf8"),
@@ -63,15 +65,15 @@ function run(label, command, args, options = {}) {
 }
 
 try {
-  const pinned = run("pnpm-version", process.execPath, [
-    pnpmEntry,
+  const pinned = run("pnpm-version", pnpmCommand[0], [
+    ...pnpmCommand.slice(1),
     "--version",
   ]);
   assert.equal(`pnpm@${pinned.stdout.trim()}`, repository.packageManager);
   const artifacts = join(temporary, "artifacts");
   mkdirSync(artifacts);
-  run("pack", process.execPath, [
-    pnpmEntry,
+  run("pack", pnpmCommand[0], [
+    ...pnpmCommand.slice(1),
     "--dir",
     "packages/arcanea-mcp",
     "pack",
@@ -120,9 +122,9 @@ try {
   cleanEnv.NPM_CONFIG_USERCONFIG = userConfig;
   run(
     "fresh-install",
-    process.execPath,
+    pnpmCommand[0],
     [
-      pnpmEntry,
+      ...pnpmCommand.slice(1),
       "install",
       "--ignore-scripts",
       "--lockfile=false",

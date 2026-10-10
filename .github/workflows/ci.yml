@@ -321,7 +321,7 @@ jobs:
       - name: Verify MCP runtime and installed consumer package
         run: |
           pnpm --dir packages/arcanea-mcp test:delivery
-          pnpm exec node scripts/verify-mcp-installed-package.mjs
+          pnpm --dir packages/arcanea-mcp test:consumer
       - name: Retain MCP consumer delivery evidence
         if: always()
         uses: actions/upload-artifact@v7

@@ -99,3 +99,16 @@ read. The already passed, unchanged hub review is opt-in and is not repeated by
 default for subsequent MCP review attempts. Hub receiving CI38066205322 and
 secret scan38066205309 passed. Full programme status is recorded in existing
 issue276 comment6099504755.
+
+Candidate3862b74d668905390fe4e70ab4e1c5b7f151e8b3 earned exact Gemini3.1Pro
+review PASS0 blocking findings, responsexmPKavrnNdin1MkPgKOT-Ak, all93 full-source
+hashes verified, receipt6099585361. Lint/types/CodeQL and delivery tests passed,
+but both hosted full Builds failed before the fresh consumer installation because
+the verifier assumed npm_execpath must end in pnpm.cjs. Retain those failures.
+The verifier now runs as a package script, resolves its actual pinned launcher,
+supports both JS/Corepack and native pnpm executables, and still verifies exact
+pnpm11.28.4 before packing/installing. Fresh review and all gates are required.
+Read-only npm identity is authenticated as frankxai and registry maintainers list
+frankxai; only0.7.0 is published. No credential was printed or added. Root/package
+LICENSE text is absent and package MIT metadata is not a new rights approval.
+No npm publication or rights/publication acceptance is claimed.
