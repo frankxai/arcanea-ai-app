@@ -1,0 +1,75 @@
+name: Companion
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+    paths:
+      - apps/web/components/lumina/**
+      - apps/web/components/chat/chat-area.tsx
+      - apps/web/lib/chat/error-message.ts
+      - apps/web/hooks/use-provider.ts
+      - apps/web/lib/auth/context.tsx
+      - packages/design-system/**
+      - scripts/verify-companion-browser.cjs
+      - scripts/tests/chat-error-message.test.cjs
+      - .github/workflows/companion.yml
+      - planning-with-files/CURRENT_STATE_2026-10-11_CHAT_COMPANION.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: companion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  companion:
+    name: Compiled companion recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+      COMPANION_EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Verify useful safe errors
+        run: node --test scripts/tests/chat-error-message.test.cjs
+      - name: Build the actual web application
+        run: pnpm turbo run build --filter=@arcanea/web
+      - name: Install hosted browser
+        run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Exercise provider, stream, keyboard and account lifetime
+        run: |
+          pnpm --dir apps/web exec next start --hostname 127.0.0.1 -p 3001 > "$RUNNER_TEMP/companion-next.log" 2>&1 &
+          companion_server_pid=$!
+          trap 'kill "$companion_server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --max-time 2 http://127.0.0.1:3001/worlds > /dev/null; then ready=true; break; fi
+            sleep 1
+          done
+          if [ "$ready" != true ]; then echo "Compiled app did not become ready"; exit 1; fi
+          timeout 240 node scripts/verify-companion-browser.cjs
+      - name: Keep revision-bound captures and safe fixture receipts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: companion-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_attempt }}
+          path: screenshots/companion/
+          if-no-files-found: ignore
+          retention-days: 7
