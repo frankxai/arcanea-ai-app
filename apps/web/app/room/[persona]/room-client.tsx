@@ -17,7 +17,7 @@ import {
 import { SettingsPanel } from "./settings-panel";
 import {
   voiceCredentialHeaders,
-  voiceResponseMessage,
+  voiceResponseRecovery,
 } from "@/lib/voice/customer-credentials";
 import {
   PERSONAS,
@@ -653,7 +653,10 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
             body: JSON.stringify({ text: full, persona: persona.voiceKey }),
             signal: ctl.signal,
           });
-          if (!ttsRes.ok) throw new Error(await voiceResponseMessage(ttsRes));
+          if (!ttsRes.ok) {
+            showErr(await voiceResponseRecovery(ttsRes));
+            return;
+          }
           audioBlob = await ttsRes.blob();
         }
 
@@ -1322,6 +1325,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         <div
           data-ignore-click
           role="alert"
+          aria-label="Voice room"
           className="absolute top-[22%] left-1/2 -translate-x-1/2 max-w-md w-[min(92vw,28rem)] px-5 py-4 rounded-2xl bg-rose-950/40 border border-rose-400/20 text-rose-100 backdrop-blur-xl shadow-[0_8px_32px_rgba(244,63,94,0.15)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
@@ -1335,6 +1339,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           )}
           {error.cta === "byok" && (
             <div className="mt-3 flex items-center gap-2">
+              <Link
+                href="/settings/providers"
+                className="inline-flex min-h-11 items-center text-[var(--arc-text-primary)] underline"
+              >
+                Provider settings
+              </Link>
               <button
                 type="button"
                 onClick={(e) => {
@@ -1342,7 +1352,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
                   setSettingsOpen(true);
                   setError(null);
                 }}
-                className="px-3 py-1.5 rounded-lg text-[11px] tracking-[0.18em] uppercase font-medium transition-colors"
+                className="min-h-11 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors"
                 style={{
                   background: "rgba(0,188,212,0.18)",
                   color: "var(--arc-text-primary)",

@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
-import { voiceCredentialHeaders } from "@/lib/voice/customer-credentials";
+import {
+  voiceCredentialHeaders,
+  voiceResponseRecovery,
+  type VoiceRecovery,
+} from "@/lib/voice/customer-credentials";
 import Image from "next/image";
+import Link from "next/link";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
@@ -473,6 +478,9 @@ export function ChatInputBar({
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [voiceAutoSend, setVoiceAutoSend] = useState(true);
+  const [voiceRecovery, setVoiceRecovery] = useState<VoiceRecovery | null>(
+    null,
+  );
   const [validationToast, setValidationToast] = useState<string | null>(null);
 
   // @mention state
@@ -779,6 +787,7 @@ export function ChatInputBar({
   }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
+    setVoiceRecovery(null);
     if (
       typeof navigator === "undefined" ||
       !navigator.mediaDevices?.getUserMedia
@@ -815,6 +824,7 @@ export function ChatInputBar({
         // Resolve the spoken text: prefer accurate Whisper, fall back to the
         // on-device Web Speech transcript (already shown live) if Whisper fails.
         let spoken = "";
+        let recovery: VoiceRecovery | null = null;
         try {
           const formData = new FormData();
           const ext = mediaRecorder.mimeType.includes("webm") ? "webm" : "mp4";
@@ -826,24 +836,37 @@ export function ChatInputBar({
           });
           if (res.ok) {
             const { text } = await res.json();
-            if (text) spoken = String(text).trim();
+            if (typeof text === "string") spoken = text.trim();
+          } else {
+            recovery = await voiceResponseRecovery(res);
           }
-        } catch (e) {
-          console.warn("Transcription failed:", e);
+        } catch {
+          recovery = {
+            message:
+              "Voice transcription failed. Try again or check your provider settings.",
+            cta: "retry",
+          };
         }
         if (!spoken) spoken = spokenRef.current.trim();
 
-        const base = voiceBaseRef.current.trim();
-        const combined = base ? (spoken ? `${base} ${spoken}` : base) : spoken;
+        const originalDraft = voiceBaseRef.current;
+        const base = originalDraft.trim();
+        const combined = base ? `${base} ${spoken}` : spoken;
 
         // Clear voice scratch state now that we have an authoritative result.
         voiceBaseRef.current = "";
         spokenRef.current = "";
         resetSpeech();
 
-        if (!combined) {
-          // Nothing transcribed — restore the user's pre-recording text.
-          setMessage(base);
+        if (!spoken) {
+          setMessage(originalDraft);
+          setVoiceRecovery(
+            recovery ?? {
+              message:
+                "No speech was recognized. Your draft is saved here. Try recording again.",
+              cta: "retry",
+            },
+          );
           return;
         }
         if (voiceAutoSend) {
@@ -903,6 +926,29 @@ export function ChatInputBar({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {voiceRecovery && (
+        <div
+          role="alert"
+          aria-label="Voice input"
+          className="mb-2 flex flex-wrap items-center gap-2 rounded-xl border border-[var(--arc-glass-border)] bg-[var(--arc-cosmic-surface)] px-4 py-2 text-sm text-[var(--arc-text-secondary)]"
+        >
+          <span>{voiceRecovery.message}</span>
+          <Link
+            href="/settings/providers"
+            className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
+          >
+            Provider settings
+          </Link>
+          <button
+            type="button"
+            onClick={() => setVoiceRecovery(null)}
+            className="ml-auto min-h-11 min-w-11 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            aria-label="Dismiss voice input error"
+          >
+            <PhX className="mx-auto h-4 w-4" />
+          </button>
+        </div>
+      )}
       {/* Validation toast */}
       {validationToast && (
         <div className="absolute -top-12 left-4 right-4 flex items-center justify-center z-20">

@@ -3,7 +3,10 @@ import { after, beforeEach, test } from "node:test";
 import { NextRequest } from "next/server";
 import { POST as transcribe } from "../../../app/api/ai/transcribe/route";
 import { POST as speak } from "../../../app/api/ai/speak/route";
-import { voiceCredentialHeaders } from "../customer-credentials";
+import {
+  voiceCredentialHeaders,
+  voiceResponseRecovery,
+} from "../customer-credentials";
 
 const originalFetch = globalThis.fetch;
 const originalLog = console.error;
@@ -11,6 +14,42 @@ const originalGroq = process.env.GROQ_API_KEY;
 const originalOpenAI = process.env.OPENAI_API_KEY;
 const calls: { url: string; key: string | null; body: unknown }[] = [];
 const logs: unknown[][] = [];
+
+test("voice key and text-limit denials retain a Settings recovery action", async () => {
+  const missingKey = await voiceResponseRecovery(
+    Response.json({ error: "private-upstream-fixture" }, { status: 401 }),
+  );
+  assert.equal(missingKey.cta, "byok");
+  assert.match(missingKey.message, /Settings/);
+  assert.ok(!missingKey.message.includes("private-upstream-fixture"));
+  const limit = await voiceResponseRecovery(
+    Response.json(
+      { error: "Connect OpenAI to read this longer response.", cta: "byok" },
+      { status: 400 },
+    ),
+  );
+  assert.deepEqual(limit, {
+    message: "Connect OpenAI to read this longer response.",
+    cta: "byok",
+  });
+});
+
+test("voice recovery masks provider errors and bounds malformed request errors", async () => {
+  for (const response of [
+    Response.json(
+      { error: "private-upstream-fixture", cta: "byok" },
+      { status: 502 },
+    ),
+    Response.json({ error: "x".repeat(301), cta: "byok" }, { status: 400 }),
+    Response.json({ error: 7, cta: "byok" }, { status: 400 }),
+  ]) {
+    const recovery = await voiceResponseRecovery(response);
+    assert.equal(recovery.cta, "retry");
+    assert.match(recovery.message, /Try again/);
+    assert.ok(!recovery.message.includes("private-upstream-fixture"));
+    assert.ok(recovery.message.length < 300);
+  }
+});
 let sequence = 0;
 let upstream: (url: string) => Response = (url) =>
   url.endsWith("transcriptions")

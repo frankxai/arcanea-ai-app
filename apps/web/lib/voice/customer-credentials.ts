@@ -28,11 +28,20 @@ export function voiceCredentialHeaders(
   }
 }
 
-export async function voiceResponseMessage(
+export interface VoiceRecovery {
+  message: string;
+  cta: "byok" | "retry";
+}
+
+export async function voiceResponseRecovery(
   response: Response,
-): Promise<string> {
+): Promise<VoiceRecovery> {
   if (response.status === 401)
-    return "Connect your Groq or OpenAI key in Settings → Providers to use voice.";
+    return {
+      message:
+        "Connect your Groq or OpenAI key in Settings → Providers to use voice.",
+      cta: "byok",
+    };
   if (response.status === 400) {
     const payload: unknown = await response.json().catch(() => null);
     if (
@@ -42,7 +51,20 @@ export async function voiceResponseMessage(
       typeof payload.error === "string" &&
       payload.error.length <= 300
     )
-      return payload.error;
+      return {
+        message: payload.error,
+        cta: "cta" in payload && payload.cta === "byok" ? "byok" : "retry",
+      };
   }
-  return "Voice provider request failed. Try again or check your provider settings.";
+  return {
+    message:
+      "Voice provider request failed. Try again or check your provider settings.",
+    cta: "retry",
+  };
+}
+
+export async function voiceResponseMessage(
+  response: Response,
+): Promise<string> {
+  return (await voiceResponseRecovery(response)).message;
 }

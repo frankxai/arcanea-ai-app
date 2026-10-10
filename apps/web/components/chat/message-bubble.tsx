@@ -385,8 +385,9 @@ export const MessageBubble = React.memo(function MessageBubble({
 
   // TTS handler — supports persona-based voices, speed control, progress tracking
   const handleSpeak = useCallback(async () => {
-    if (isPlaying) {
+    if (speechAbortRef.current) {
       speechAbortRef.current?.abort();
+      speechAbortRef.current = null;
       audioRef.current?.pause();
       if (speechUrlRef.current) URL.revokeObjectURL(speechUrlRef.current);
       speechUrlRef.current = null;
@@ -448,6 +449,7 @@ export const MessageBubble = React.memo(function MessageBubble({
       };
       audio.onended = () => {
         if (controller.signal.aborted) return;
+        speechAbortRef.current = null;
         setIsPlaying(false);
         setAudioProgress(0);
         setSpeakingAudio(null);
@@ -458,6 +460,7 @@ export const MessageBubble = React.memo(function MessageBubble({
       };
       audio.onerror = () => {
         if (controller.signal.aborted) return;
+        speechAbortRef.current = null;
         setVoiceError("Voice audio could not be played. Try again.");
         setIsPlaying(false);
         setAudioProgress(0);
@@ -471,6 +474,7 @@ export const MessageBubble = React.memo(function MessageBubble({
       await audio.play();
     } catch (error) {
       if (controller.signal.aborted) return;
+      speechAbortRef.current = null;
       setVoiceError(
         error instanceof Error
           ? error.message
@@ -481,8 +485,9 @@ export const MessageBubble = React.memo(function MessageBubble({
       setIsPlaying(false);
       setAudioProgress(0);
       setSpeakingAudio(null);
+      audioRef.current = null;
     }
-  }, [isPlaying, text, voicePersona, playbackSpeed]);
+  }, [text, voicePersona, playbackSpeed]);
 
   // Save edit handler
   const handleSaveEdit = useCallback(
@@ -838,20 +843,6 @@ export const MessageBubble = React.memo(function MessageBubble({
 
               {clean.length >= 10 && (
                 <>
-                  {voiceError && (
-                    <div
-                      role="alert"
-                      className="text-sm text-[var(--arc-text-secondary)]"
-                    >
-                      {voiceError}{" "}
-                      <Link
-                        href="/settings/providers"
-                        className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
-                      >
-                        Provider settings
-                      </Link>
-                    </div>
-                  )}
                   <div
                     className="relative flex items-center gap-0.5"
                     ref={voiceMenuRef}
@@ -1031,6 +1022,22 @@ export const MessageBubble = React.memo(function MessageBubble({
                   ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {voiceError && (
+            <div
+              role="alert"
+              aria-label="Voice playback"
+              className="mt-2 text-sm text-[var(--arc-text-secondary)]"
+            >
+              {voiceError}{" "}
+              <Link
+                href="/settings/providers"
+                className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
+              >
+                Provider settings
+              </Link>
             </div>
           )}
 

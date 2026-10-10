@@ -300,93 +300,96 @@ export default function VoicePage() {
   const demoAbortRef = useRef<AbortController | null>(null);
   const demoUrlRef = useRef<string | null>(null);
 
-  const handlePlayDemo = useCallback(
-    async (personaId: string) => {
-      if (isPlaying) {
-        demoAbortRef.current?.abort();
-        audioRef.current?.pause();
-        if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
-        demoUrlRef.current = null;
+  const handlePlayDemo = useCallback(async (personaId: string) => {
+    if (demoAbortRef.current) {
+      demoAbortRef.current?.abort();
+      demoAbortRef.current = null;
+      audioRef.current?.pause();
+      if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
+      demoUrlRef.current = null;
+      audioRef.current = null;
+      setAudioEl(null);
+      setIsPlaying(false);
+      return;
+    }
+
+    const demoTexts: Record<string, string> = {
+      lumina:
+        "Welcome, creator. I am Lumina, the First Light. Every world begins with a single spark of imagination. What shall we create today?",
+      draconia:
+        "I am Draconia, Guardian of the Fire Gate. Your will is the forge, and your words are the hammer. Speak, and we shall shape something powerful.",
+      lyria:
+        "I see patterns in the void that others cannot perceive. I am Lyria, Guardian of Sight. Tell me what you envision, and I will help you see it clearly.",
+      alera:
+        "Truth resonates at a frequency that cannot be denied. I am Alera, Guardian of Voice. Let us find the words that matter.",
+      shinkami:
+        "Beyond all gates, beyond all creation, there is the Source. I am Shinkami. Your consciousness is the ultimate tool. What do you wish to understand?",
+      nero: "In the darkness before creation, there is infinite potential. I am Nero, the Primordial. From nothing, everything becomes possible.",
+    };
+
+    setIsPlaying(true);
+    setVoiceError(null);
+    setActivePersona(personaId);
+    const controller = new AbortController();
+    demoAbortRef.current = controller;
+    try {
+      const res = await fetch("/api/ai/speak", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...voiceCredentialHeaders(),
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          text: demoTexts[personaId] || demoTexts.lumina,
+          persona: personaId,
+        }),
+      });
+      if (!res.ok) throw new Error(await voiceResponseMessage(res));
+      const blob = await res.blob();
+      if (controller.signal.aborted) return;
+      const url = URL.createObjectURL(blob);
+      demoUrlRef.current = url;
+      const audio = new Audio(url);
+      audio.crossOrigin = "anonymous";
+      audioRef.current = audio;
+      setAudioEl(audio);
+      audio.onended = () => {
+        if (controller.signal.aborted) return;
+        demoAbortRef.current = null;
+        setIsPlaying(false);
         audioRef.current = null;
         setAudioEl(null);
-        setIsPlaying(false);
-        return;
-      }
-
-      const demoTexts: Record<string, string> = {
-        lumina:
-          "Welcome, creator. I am Lumina, the First Light. Every world begins with a single spark of imagination. What shall we create today?",
-        draconia:
-          "I am Draconia, Guardian of the Fire Gate. Your will is the forge, and your words are the hammer. Speak, and we shall shape something powerful.",
-        lyria:
-          "I see patterns in the void that others cannot perceive. I am Lyria, Guardian of Sight. Tell me what you envision, and I will help you see it clearly.",
-        alera:
-          "Truth resonates at a frequency that cannot be denied. I am Alera, Guardian of Voice. Let us find the words that matter.",
-        shinkami:
-          "Beyond all gates, beyond all creation, there is the Source. I am Shinkami. Your consciousness is the ultimate tool. What do you wish to understand?",
-        nero: "In the darkness before creation, there is infinite potential. I am Nero, the Primordial. From nothing, everything becomes possible.",
-      };
-
-      setIsPlaying(true);
-      setVoiceError(null);
-      setActivePersona(personaId);
-      const controller = new AbortController();
-      demoAbortRef.current = controller;
-      try {
-        const res = await fetch("/api/ai/speak", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...voiceCredentialHeaders(),
-          },
-          signal: controller.signal,
-          body: JSON.stringify({
-            text: demoTexts[personaId] || demoTexts.lumina,
-            persona: personaId,
-          }),
-        });
-        if (!res.ok) throw new Error(await voiceResponseMessage(res));
-        const blob = await res.blob();
-        if (controller.signal.aborted) return;
-        const url = URL.createObjectURL(blob);
-        demoUrlRef.current = url;
-        const audio = new Audio(url);
-        audio.crossOrigin = "anonymous";
-        audioRef.current = audio;
-        setAudioEl(audio);
-        audio.onended = () => {
-          if (controller.signal.aborted) return;
-          setIsPlaying(false);
-          audioRef.current = null;
-          setAudioEl(null);
-          URL.revokeObjectURL(url);
-          demoUrlRef.current = null;
-        };
-        audio.onerror = () => {
-          if (controller.signal.aborted) return;
-          setVoiceError("Voice audio could not be played. Try again.");
-          setIsPlaying(false);
-          audioRef.current = null;
-          setAudioEl(null);
-          URL.revokeObjectURL(url);
-          demoUrlRef.current = null;
-        };
-        await audio.play();
-        setDemoText(demoTexts[personaId] || "");
-      } catch (error) {
-        if (controller.signal.aborted) return;
-        setVoiceError(
-          error instanceof Error
-            ? error.message
-            : "Voice playback failed. Try again.",
-        );
-        if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
+        URL.revokeObjectURL(url);
         demoUrlRef.current = null;
+      };
+      audio.onerror = () => {
+        if (controller.signal.aborted) return;
+        demoAbortRef.current = null;
+        setVoiceError("Voice audio could not be played. Try again.");
         setIsPlaying(false);
-      }
-    },
-    [isPlaying],
-  );
+        audioRef.current = null;
+        setAudioEl(null);
+        URL.revokeObjectURL(url);
+        demoUrlRef.current = null;
+      };
+      await audio.play();
+      setDemoText(demoTexts[personaId] || "");
+    } catch (error) {
+      if (controller.signal.aborted) return;
+      demoAbortRef.current = null;
+      setVoiceError(
+        error instanceof Error
+          ? error.message
+          : "Voice playback failed. Try again.",
+      );
+      if (demoUrlRef.current) URL.revokeObjectURL(demoUrlRef.current);
+      demoUrlRef.current = null;
+      setIsPlaying(false);
+      audioRef.current = null;
+      setAudioEl(null);
+    }
+  }, []);
 
   // Cleanup on unmount
   useEffect(() => {
