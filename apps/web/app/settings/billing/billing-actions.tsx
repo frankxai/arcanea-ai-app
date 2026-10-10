@@ -57,7 +57,7 @@ export function BillingActions({
         >
           pricing page
         </Link>
-        , and the Founding Circle list there gets first access.
+        , and join the release list there for availability updates.
       </section>
     );
   }

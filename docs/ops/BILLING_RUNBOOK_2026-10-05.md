@@ -119,3 +119,7 @@ Founding Circle list (`waitlists` table) with the 40% discount code created in P
 'support:<ticket>', '{"by":"frank"}')` with the service role.
 - Weekly: `select kind, count(*), sum(amount) from credit_ledger where created_at > now() -
 interval '7 days' group by kind`.
+
+### Delivery size and retry options
+
+Imagine retries retain the complete original style, model, enhancement and negative prompt. The API returns image bytes once in `images`; duplicate `assets` and `assetUrls` payloads are removed. Provider results over 3 MiB are rejected inside the reservation callback and refunded before staging or charging. Validate actual model output sizes before rollout; large-image delivery needs durable asset storage rather than a larger inline response. A delivered receipt is replayable, but the network cannot prove receipt by the browser; a lost response reuses the same key.

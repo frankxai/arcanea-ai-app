@@ -29,6 +29,7 @@ function load(path: string, imports: Record<string, unknown>) {
     Request,
     Response,
     URL,
+    Buffer,
     process: { env: { POLAR_WEBHOOK_SECRET: "test-only" } },
     console: { error() {} },
   });
@@ -96,7 +97,11 @@ test("anonymous and zero-credit image denial call neither enhancer nor image pro
 });
 
 test("unknown models are refused; catalog models charge their quoted tier and count", async () => {
-  for (const model of ["unknown/expensive", "fixture/quality"]) {
+  for (const model of [
+    "unknown/expensive",
+    "fixture/quality",
+    "fixture/oversized",
+  ]) {
     let providers = 0,
       reserved = 0;
     const route = load("../../../app/api/imagine/generate/route.ts", {
@@ -108,14 +113,21 @@ test("unknown models are refused; catalog models charge their quoted tier and co
         enhanceImagePrompt: async (p: string) => p,
       },
       "@/lib/imagine/generate": {
-        OPENROUTER_IMAGE_MODELS: [{ id: "fixture/quality", tier: "quality" }],
+        OPENROUTER_IMAGE_MODELS: [
+          { id: "fixture/quality", tier: "quality" },
+          { id: "fixture/oversized", tier: "quality" },
+        ],
         generateImages: async () => {
           providers++;
           return {
             provider: "openrouter",
             model,
             images: [
-              { url: "https://fixture.invalid/1" },
+              {
+                url: model.endsWith("oversized")
+                  ? "data:image/png;base64," + "A".repeat(3 * 1024 * 1024)
+                  : "data:image/png;base64,UNIQUE_IMAGE_BYTES",
+              },
               { url: "https://fixture.invalid/2" },
             ],
           };
@@ -139,7 +151,13 @@ test("unknown models are refused; catalog models charge their quoted tier and co
           work: () => Promise<{ result: unknown; actualCredits: number }>,
         ) => {
           reserved = input.amount;
-          const { result, actualCredits } = await work();
+          let completed;
+          try {
+            completed = await work();
+          } catch {
+            throw new OperationFailedError();
+          }
+          const { result, actualCredits } = completed;
           return { result, charged: actualCredits, account: { balance: 10 } };
         },
       },
@@ -155,13 +173,26 @@ test("unknown models are refused; catalog models charge their quoted tier and co
         }),
       }),
     );
-    assert.equal(res.status, model.startsWith("unknown") ? 400 : 200);
+    assert.equal(
+      res.status,
+      model.startsWith("unknown")
+        ? 400
+        : model.endsWith("oversized")
+          ? 502
+          : 200,
+    );
     if (res.ok) {
       const response = await res.json();
       assert.equal(reserved, costFor("image.premium"));
       assert.equal(response.images.length, 1);
+      assert.equal(
+        JSON.stringify(response).split("UNIQUE_IMAGE_BYTES").length - 1,
+        1,
+      );
+      assert.equal(response.assetUrls, undefined);
+      assert.equal(response.assets, undefined);
       assert.equal(response.credits.charged, reserved);
-    } else assert.equal(providers, 0);
+    } else assert.equal(providers, model.endsWith("oversized") ? 1 : 0);
   }
 });
 

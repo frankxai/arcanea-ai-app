@@ -85,7 +85,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: MusicNote,
     name: "Music Composition",
-    desc: "Soundtracks and lo-fi for your worlds",
+    desc: "Planned music creation for world soundtracks",
     accent: "var(--arc-brand-arcanean-gold)",
   },
   {
@@ -161,7 +161,7 @@ function PlanCard({
       }`}
     >
       {plan.featured && (
-        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)] text-[var(--arc-cosmic-void)] text-[9px] font-mono font-bold tracking-wider">
+        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)] text-[var(--arc-cosmic-void)] text-xs font-mono font-bold tracking-wider">
           Creator plan
         </span>
       )}
@@ -181,9 +181,9 @@ function PlanCard({
           {plan.tagline}
         </p>
 
-        {!isFree && !live && (
+        {!isFree && (
           <p className="text-sm text-[var(--arc-text-secondary)] mb-3">
-            Planned capabilities; checkout is closed.
+            Planned capabilities{!live && "; checkout is closed"}.
           </p>
         )}
         <ul className="space-y-3 border-t border-[var(--arc-cosmic-border-bright)] pt-6 mb-8">
@@ -426,6 +426,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                   >
                     <span className="text-[var(--arc-text-primary)]">
                       {cost.label}
+                      {!cost.id.startsWith("image.") && " (planned)"}
                     </span>
                     <span className="font-mono text-[var(--arc-text-primary)]">
                       {cost.credits}{" "}
@@ -454,7 +455,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                       size={12}
                       className="text-[var(--arc-brand-arcanean-gold)]"
                     />
-                    <span className="text-[9px] font-mono text-[var(--arc-brand-arcanean-gold)] tracking-wider font-bold">
+                    <span className="text-xs font-mono text-[var(--arc-brand-arcanean-gold)] tracking-wider font-bold">
                       Founding Circle
                     </span>
                   </div>
@@ -554,7 +555,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                           className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-xs flex items-center justify-center gap-2 hover:shadow-[var(--arc-shadow-gold-glow)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] motion-reduce:transition-none disabled:opacity-50"
                         >
                           {status === "loading" ? (
-                            <CircleNotch className="w-4 h-4 animate-spin text-[var(--arc-cosmic-void)]" />
+                            <CircleNotch className="w-4 h-4 animate-spin motion-reduce:animate-none text-[var(--arc-cosmic-void)]" />
                           ) : (
                             <>
                               <Envelope className="w-4 h-4 text-[var(--arc-cosmic-void)]" />
@@ -576,7 +577,8 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                 The creator workspace
               </h2>
               <p className="text-sm text-[var(--arc-text-secondary)] font-body">
-                Every creation surface works with the API keys you already have.
+                Chat and worlds use your keys. Managed images use Arcanea
+                credits.
               </p>
             </div>
 

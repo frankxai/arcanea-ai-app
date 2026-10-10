@@ -68,8 +68,8 @@ export default async function BillingPage({
           <p className="font-semibold">Thank you.</p>
           <p className="text-[var(--arc-text-secondary)] text-xs mt-1">
             Your {params.sku ? `${params.sku} ` : ""}purchase is being
-            confirmed. Credits and plan changes appear here within a minute of
-            the payment clearing.
+            confirmed. Credits and plan changes appear after fulfillment is
+            confirmed. Refresh this page to check the receipt.
           </p>
         </div>
       )}
@@ -136,7 +136,7 @@ export default async function BillingPage({
       {entitlements && (
         <section className="mt-12">
           <h2 className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-4">
-            What your plan includes
+            Planned plan capabilities
           </h2>
           <ul className="grid sm:grid-cols-2 gap-2 text-xs text-[var(--arc-text-primary)]">
             <li>Hosted worlds: {entitlements.hostedWorlds}</li>
@@ -154,7 +154,7 @@ export default async function BillingPage({
 
       <section className="mt-12">
         <h2 className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-4">
-          Credit costs on Arcanea keys
+          Image costs and planned rates
         </h2>
         <ul className="divide-y divide-[var(--arc-cosmic-border-bright)] rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] px-5">
           {ACTION_COSTS.filter((a) => a.credits > 0).map((a) => (
@@ -162,7 +162,10 @@ export default async function BillingPage({
               key={a.id}
               className="flex items-center justify-between py-2.5 text-xs"
             >
-              <span className="text-[var(--arc-text-primary)]">{a.label}</span>
+              <span className="text-[var(--arc-text-primary)]">
+                {a.label}
+                {!a.id.startsWith("image.") && " (planned)"}
+              </span>
               <span className="font-mono text-[var(--arc-text-primary)]">
                 {a.credits}{" "}
                 <span className="text-[var(--arc-text-secondary)]">
@@ -173,8 +176,8 @@ export default async function BillingPage({
           ))}
         </ul>
         <p className="text-[11px] text-[var(--arc-text-secondary)] mt-3">
-          Anything you run on your own API key costs zero credits. Manage keys
-          under{" "}
+          BYOK chat and worlds use your own keys without Arcanea credits. BYOK
+          images are planned. Manage keys under{" "}
           <Link
             href="/settings/providers"
             className="underline underline-offset-2 hover:text-[var(--arc-text-primary)]"

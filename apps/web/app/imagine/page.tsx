@@ -636,7 +636,15 @@ export default function ImaginePage() {
                     <button
                       onClick={() => {
                         setError(null);
-                        handleGenerate(currentPrompt, 4, currentAspectRatio);
+                        handleGenerate(
+                          currentPrompt,
+                          4,
+                          currentAspectRatio,
+                          currentStyleRef.current,
+                          currentModelRef.current,
+                          currentEnhanceRef.current,
+                          currentNegativePromptRef.current,
+                        );
                       }}
                       className="px-3 py-1 text-xs rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
                     >

@@ -160,6 +160,16 @@ export async function POST(req: NextRequest) {
             images: generated.images.slice(0, count),
           };
           if (result.images.length === 0) throw new Error("No images returned");
+          // Reject undeliverable output before staging or charging. Inline bytes
+          // appear once in the response, with headroom for receipt metadata.
+          if (
+            result.images.some(
+              (img) => typeof img.url !== "string" || !img.url,
+            ) ||
+            Buffer.byteLength(JSON.stringify(result), "utf8") > 3 * 1024 * 1024
+          ) {
+            throw new Error("Generation output exceeds the delivery limit");
+          }
           return { result, actualCredits: result.images.length * perImage };
         },
       );
@@ -235,18 +245,6 @@ export async function POST(req: NextRequest) {
       prompt,
       revisedPrompt: result.images[0]?.revisedPrompt,
       aspectRatio,
-      assetUrls: result.images.map((img) => img.url),
-      assets: result.images.map((img, index) => {
-        const legacyImage = images[index];
-        return {
-          url: img.url,
-          prompt: img.revisedPrompt || prompt,
-          revisedPrompt: img.revisedPrompt,
-          mimeType:
-            "mimeType" in legacyImage ? legacyImage.mimeType : undefined,
-          data: "data" in legacyImage ? legacyImage.data : undefined,
-        };
-      }),
       timing: {
         startedAt: startedAt.toISOString(),
         completedAt: completedAt.toISOString(),
