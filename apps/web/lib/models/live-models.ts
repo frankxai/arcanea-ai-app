@@ -94,12 +94,13 @@ export function fromLive(lm: LiveModelSummary): ExplorerModel {
     gateFrequency: null,
     guardian: null,
     curatedRole: `${lm.provider} · not yet reviewed`,
-    worldbuildingSweetSpot:
-      lm.description || "Available via the OpenRouter live catalog.",
+    // Provider descriptions are marketing copy with no dated source, so they
+    // are not rendered on the arena.
+    worldbuildingSweetSpot: "Available via the OpenRouter live catalog.",
     slopResistance: null,
     category: lm.is_free ? "free-tier" : "frontier",
     tags: ["openrouter", lm.modality],
-    description: lm.description,
+    description: "",
   };
 }
 

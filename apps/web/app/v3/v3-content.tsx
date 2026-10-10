@@ -2,7 +2,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
@@ -29,7 +36,10 @@ const HeroChatBox = dynamic(
         <div className="h-14 rounded-2xl bg-white/[0.025] animate-pulse" />
         <div className="flex justify-center gap-2 mt-5">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-10 w-28 rounded-full bg-white/[0.02] animate-pulse" />
+            <div
+              key={i}
+              className="h-10 w-28 rounded-full bg-white/[0.02] animate-pulse"
+            />
           ))}
         </div>
       </div>
@@ -70,7 +80,10 @@ export function V3Loading() {
           <div className="h-14 w-full max-w-2xl mx-auto rounded-2xl bg-white/[0.025] animate-pulse" />
           <div className="flex justify-center gap-2 mt-5">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-10 w-28 rounded-full bg-white/[0.02] animate-pulse" />
+              <div
+                key={i}
+                className="h-10 w-28 rounded-full bg-white/[0.02] animate-pulse"
+              />
             ))}
           </div>
         </div>
@@ -91,6 +104,7 @@ export function V3Loading() {
 function HeroPortal() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const reducedMotion = useReducedMotion();
   const prefersReduced = !isLoaded || !!reducedMotion;
 
@@ -106,166 +120,231 @@ function HeroPortal() {
     setIsLoaded(true);
   }, []);
 
+  // The motion loop is a ~1.6 MB video. Mount it only after the page has
+  // loaded, on md+ screens, when motion is allowed and Save-Data is off, so the
+  // optimized still image stays the LCP element and phones skip the download.
+  // No poster: the next/image still underneath shows until the first frame,
+  // instead of the 2.3 MB source PNG.
+  useEffect(() => {
+    const query = window.matchMedia(
+      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    );
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection;
+    if (!query.matches || connection?.saveData) return;
+    const start = () => setShowVideo(true);
+    if (document.readyState === "complete") {
+      start();
+      return;
+    }
+    window.addEventListener("load", start, { once: true });
+    return () => window.removeEventListener("load", start);
+  }, []);
+
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      ref={containerRef}
-      className="relative flex items-center justify-center overflow-hidden py-14 md:py-20"
-      style={{ minHeight: "calc(92svh - var(--nav-h, 64px))" }}
-    >
-      {/* Background: premium Arcanea production chamber media */}
-      <div className="absolute inset-0 z-0 bg-[var(--arc-cosmic-void)]">
-        <Image
-          src="/brand/arcanea-dashboard-hero-premium.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[50%_42%] opacity-95"
-        />
-        <video
-          aria-hidden="true"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          poster="/brand/arcanea-dashboard-hero-premium.png"
-          className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
-        >
-          <source src="/brand/arcanea-dashboard-hero-premium.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_52%_at_50%_42%,transparent_0%,color-mix(in_srgb,var(--arc-cosmic-void)_24%,transparent)_58%,var(--arc-cosmic-void)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/28 via-[var(--arc-cosmic-void)]/38 to-[var(--arc-cosmic-void)]/92" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)]/82 via-transparent to-[var(--arc-cosmic-void)]/82" />
-        <div className="absolute inset-0 hidden bg-[radial-gradient(ellipse_46%_44%_at_50%_53%,color-mix(in_srgb,var(--arc-cosmic-void)_78%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_52%,transparent)_48%,transparent_74%)] md:block" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_70%_at_50%_52%,color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_58%,transparent)_52%,transparent_82%)] md:hidden" />
-        <div className="absolute left-1/2 top-[12%] h-px w-[min(720px,80vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/38 to-transparent" />
-      </div>
-
-      {/* Fine grid — barely visible texture */}
-      <div
-        className="absolute inset-0 z-[1] opacity-[0.015]"
-        style={{
-          backgroundImage:
-            "linear-gradient(color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      {/* Content */}
-      <m.div
-        className="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-6"
-        style={prefersReduced ? { y: 0, opacity: 1 } : { y: contentY, opacity: contentOpacity }}
+      <section
+        ref={containerRef}
+        className="relative flex items-center justify-center overflow-hidden py-14 md:py-20"
+        style={{ minHeight: "calc(92svh - var(--nav-h, 64px))" }}
       >
-        <div className="flex flex-col items-center text-center">
-          {/* Canonical brand mark */}
-          <m.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-5 md:mb-8"
-          >
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] shadow-[0_14px_60px_color-mix(in_srgb,var(--arc-cosmic-void)_70%,transparent)] backdrop-blur-xl md:h-16 md:w-16">
-              <Image
-                src={navLogo}
-                alt="Arcanea"
-                width={44}
-                height={44}
-                sizes="44px"
-                className="rounded-xl object-cover"
-                priority
+        {/* Background: premium Arcanea production chamber media */}
+        <div className="absolute inset-0 z-0 bg-[var(--arc-cosmic-void)]">
+          <Image
+            src="/brand/arcanea-dashboard-hero-premium.png"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover object-[50%_42%] opacity-95"
+          />
+          {showVideo && (
+            <video
+              aria-hidden="true"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
+            >
+              <source
+                src="/brand/arcanea-dashboard-hero-premium.mp4"
+                type="video/mp4"
               />
-            </div>
-          </m.div>
-
-          {/* Headline */}
-          <m.h1
-            className="text-[clamp(2.25rem,5.1vw,4.45rem)] font-display font-bold tracking-[-0.025em] leading-[1.04] mb-4 md:mb-5 text-white"
-            initial={{ opacity: 0, y: 18 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="block">Build living worlds</span>
-            <span className="block">with AI agents.</span>
-          </m.h1>
-
-          {/* Value prop */}
-          <m.p
-            className="max-w-2xl mx-auto text-base md:text-lg text-white/55 leading-relaxed mb-5 md:mb-9 font-body"
-            initial={{ opacity: 0, y: 16 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.16 }}
-          >
-            Turn one idea into a persistent world graph: lore, characters, rules, media briefs, and agent tasks stay connected across sessions.
-          </m.p>
-
-          {/* Chat box */}
-          <m.div
-            className="w-full mb-5 md:mb-9"
-            initial={{ opacity: 0, y: 16 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.22 }}
-          >
-            <HeroChatBox />
-          </m.div>
-
-          {/* Trust signals */}
-          <m.div
-            className="flex w-full max-w-full flex-nowrap items-center justify-start gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible md:gap-3 [&::-webkit-scrollbar]:hidden"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            {[
-              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
-            ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
-              <div
-                key={label}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5 backdrop-blur-sm transition-colors hover:border-white/[0.15]"
-              >
-                <Icon size={11} weight="duotone" color={color} className="opacity-70" />
-                <span className="text-[11px] font-display font-semibold text-white/55">
-                  {fixed ? (num > 0 ? `${num}${suffix}` : suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
-                </span>
-                <span className="text-[10px] text-white/34 font-body">{label}</span>
-              </div>
-            ))}
-          </m.div>
-
-          <m.div
-            className="mt-4 flex flex-col items-center justify-center gap-2 text-[11px] text-white/35 sm:flex-row md:mt-5 md:gap-3"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.42 }}
-          >
-            <SovereigntyBadge />
-            <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
-            <span className="font-body">BYOK / your IP / no lock-in</span>
-          </m.div>
-
-          <m.div
-            className="mt-6 hidden items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.025] px-3 py-2 backdrop-blur-md md:inline-flex"
-            initial={{ opacity: 0, y: 8 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.48 }}
-          >
-            <Image
-              src="/images/mascot/arcanea-welcoming.png"
-              alt=""
-              width={28}
-              height={28}
-              sizes="28px"
-              className="object-contain"
-            />
-            <span className="text-[11px] text-white/35">Lumina routes the first brief to the right creation agents.</span>
-          </m.div>
+            </video>
+          )}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_52%_at_50%_42%,transparent_0%,color-mix(in_srgb,var(--arc-cosmic-void)_24%,transparent)_58%,var(--arc-cosmic-void)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/28 via-[var(--arc-cosmic-void)]/38 to-[var(--arc-cosmic-void)]/92" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)]/82 via-transparent to-[var(--arc-cosmic-void)]/82" />
+          <div className="absolute inset-0 hidden bg-[radial-gradient(ellipse_46%_44%_at_50%_53%,color-mix(in_srgb,var(--arc-cosmic-void)_78%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_52%,transparent)_48%,transparent_74%)] md:block" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_70%_at_50%_52%,color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_58%,transparent)_52%,transparent_82%)] md:hidden" />
+          <div className="absolute left-1/2 top-[12%] h-px w-[min(720px,80vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/38 to-transparent" />
         </div>
-      </m.div>
 
-      {/* Scroll fade — bottom edge dissolves into below-fold */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent pointer-events-none" />
-    </section>
+        {/* Fine grid — barely visible texture */}
+        <div
+          className="absolute inset-0 z-[1] opacity-[0.015]"
+          style={{
+            backgroundImage:
+              "linear-gradient(color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
+
+        {/* Content */}
+        <m.div
+          className="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-6"
+          style={
+            prefersReduced
+              ? { y: 0, opacity: 1 }
+              : { y: contentY, opacity: contentOpacity }
+          }
+        >
+          <div className="flex flex-col items-center text-center">
+            {/* Canonical brand mark */}
+            <m.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-5 md:mb-8"
+            >
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] shadow-[0_14px_60px_color-mix(in_srgb,var(--arc-cosmic-void)_70%,transparent)] backdrop-blur-xl md:h-16 md:w-16">
+                <Image
+                  src={navLogo}
+                  alt="Arcanea"
+                  width={44}
+                  height={44}
+                  sizes="44px"
+                  className="rounded-xl object-cover"
+                  priority
+                />
+              </div>
+            </m.div>
+
+            {/* Headline */}
+            <m.h1
+              className="text-[clamp(2.25rem,5.1vw,4.45rem)] font-display font-bold tracking-[-0.025em] leading-[1.04] mb-4 md:mb-5 text-white"
+              initial={{ opacity: 0, y: 18 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.65,
+                delay: 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <span className="block">Build living worlds</span>
+              <span className="block">with AI agents.</span>
+            </m.h1>
+
+            {/* Value prop */}
+            <m.p
+              className="max-w-2xl mx-auto text-base md:text-lg text-white/55 leading-relaxed mb-5 md:mb-9 font-body"
+              initial={{ opacity: 0, y: 16 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.16 }}
+            >
+              Turn one idea into a persistent world graph: lore, characters,
+              rules, media briefs, and agent tasks stay connected across
+              sessions.
+            </m.p>
+
+            {/* Chat box */}
+            <m.div
+              className="w-full mb-5 md:mb-9"
+              initial={{ opacity: 0, y: 16 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.22 }}
+            >
+              <HeroChatBox />
+            </m.div>
+
+            {/* Trust signals */}
+            <m.div
+              className="flex w-full max-w-full flex-nowrap items-center justify-start gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible md:gap-3 [&::-webkit-scrollbar]:hidden"
+              initial={{ opacity: 0 }}
+              animate={isLoaded ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              {[
+                {
+                  Icon: ShieldStar,
+                  num: 0,
+                  suffix: "MIT",
+                  label: "open source",
+                  color: "var(--arc-void)",
+                  fixed: true,
+                },
+              ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
+                <div
+                  key={label}
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5 backdrop-blur-sm transition-colors hover:border-white/[0.15]"
+                >
+                  <Icon
+                    size={11}
+                    weight="duotone"
+                    color={color}
+                    className="opacity-70"
+                  />
+                  <span className="text-[11px] font-display font-semibold text-white/55">
+                    {fixed ? (
+                      num > 0 ? (
+                        `${num}${suffix}`
+                      ) : (
+                        suffix || num
+                      )
+                    ) : (
+                      <NumberTicker
+                        value={num}
+                        suffix={suffix}
+                        delay={0.36 + i * 0.08}
+                      />
+                    )}
+                  </span>
+                  <span className="text-[10px] text-white/34 font-body">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </m.div>
+
+            <m.div
+              className="mt-4 flex flex-col items-center justify-center gap-2 text-[11px] text-white/35 sm:flex-row md:mt-5 md:gap-3"
+              initial={{ opacity: 0 }}
+              animate={isLoaded ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.42 }}
+            >
+              <SovereigntyBadge />
+              <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
+              <span className="font-body">BYOK / your IP / no lock-in</span>
+            </m.div>
+
+            <m.div
+              className="mt-6 hidden items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.025] px-3 py-2 backdrop-blur-md md:inline-flex"
+              initial={{ opacity: 0, y: 8 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.48 }}
+            >
+              <Image
+                src="/images/mascot/arcanea-welcoming.png"
+                alt=""
+                width={28}
+                height={28}
+                sizes="28px"
+                className="object-contain"
+              />
+              <span className="text-[11px] text-white/35">
+                Lumina routes the first brief to the right creation agents.
+              </span>
+            </m.div>
+          </div>
+        </m.div>
+
+        {/* Scroll fade — bottom edge dissolves into below-fold */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent pointer-events-none" />
+      </section>
     </LazyMotion>
   );
 }
@@ -286,8 +365,12 @@ export function V3Content({
       {/* Gradient line separator — teal center glow */}
       <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[120px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent), transparent 70%)" }}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[120px] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent), transparent 70%)",
+          }}
         />
       </div>
 
