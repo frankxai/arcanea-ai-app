@@ -30,6 +30,9 @@ async function installCaptureFixture(context) {
           getByteFrequencyData(data) {
             data.fill(8);
           },
+          getByteTimeDomainData(data) {
+            data.fill(142);
+          },
           getFloatTimeDomainData(data) {
             data.fill(0.1);
           },
@@ -57,6 +60,7 @@ async function installCaptureFixture(context) {
       }
       start() {
         this.state = "recording";
+        window.__captureStarts = (window.__captureStarts || 0) + 1;
       }
       stop() {
         if (this.state === "inactive") return;
@@ -278,11 +282,26 @@ async function verifyRoomRecovery(browser, mode) {
     reducedMotion: mode.motion,
   });
   await installCaptureFixture(context);
+  let releaseBriefing;
   try {
     const page = await context.newPage();
     page.setDefaultTimeout(15000);
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
+    await page.route("**/api/voice/briefing", async (route) => {
+      await new Promise((resolve) => {
+        releaseBriefing = resolve;
+      });
+      await route
+        .fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            brief: "Synthetic lighthouse writing session.",
+          }),
+        })
+        .catch(() => {});
+    });
     await page.addInitScript(() =>
       localStorage.setItem("arcanea-voice-groq-key", "test-customer-groq"),
     );
@@ -329,9 +348,17 @@ async function verifyRoomRecovery(browser, mode) {
       200,
     );
     await page
-      .getByRole("button", { name: "Mute microphone (press M)", exact: true })
+      .getByRole("button", {
+        name: "Voice keys connected — open settings",
+        exact: true,
+      })
       .waitFor({ timeout: 30000 });
+    await expect.poll(() => typeof releaseBriefing).toBe("function");
     await page.keyboard.down("Space");
+    await expect
+      .poll(() => page.evaluate(() => window.__captureStarts || 0))
+      .toBe(1);
+    releaseBriefing();
     await page.waitForTimeout(650);
     await page.keyboard.up("Space");
     const alert = page.getByRole("alert", { name: "Voice room", exact: true });
@@ -346,10 +373,12 @@ async function verifyRoomRecovery(browser, mode) {
     assert.deepEqual(errors, []);
     return {
       roomStickySettingsRecovery: true,
+      roomSpaceReleaseSurvivesBriefing: true,
       fullRoomReplyPreserved: true,
       providerRequests: 0,
     };
   } finally {
+    releaseBriefing?.();
     await context.close();
   }
 }

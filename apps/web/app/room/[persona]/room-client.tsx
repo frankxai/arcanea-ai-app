@@ -107,6 +107,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const bargeAboveRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
   const recordingRef = useRef(false);
+  const spaceGestureRef = useRef({ downAt: 0, startedRecording: false });
   const busyRef = useRef(false);
   const stateRef = useRef<RoomState>("idle");
   const audioElRef = useRef<HTMLAudioElement | null>(null);
@@ -839,8 +840,6 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     // Hybrid Space: tap = VAD-auto-stop, hold = push-to-talk. e.repeat guard
     // prevents OS autorepeat from thrashing record start/stop (the root cause
     // of the original "nothing heard" bug).
-    let spaceDownAt = 0;
-    let spaceHeldTriggeredRecord = false;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (
@@ -851,14 +850,15 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       if (e.code === "Space") {
         e.preventDefault();
         if (e.repeat) return;
-        spaceDownAt = performance.now();
+        spaceGestureRef.current.downAt = performance.now();
+        spaceGestureRef.current.startedRecording = false;
         setHasInteracted(true);
         if (!micArmed) return;
         if (!recordingRef.current && !busyRef.current) {
-          spaceHeldTriggeredRecord = true;
+          spaceGestureRef.current.startedRecording = true;
           void startRecording();
         } else {
-          spaceHeldTriggeredRecord = false;
+          spaceGestureRef.current.startedRecording = false;
         }
       } else if (e.key === "Escape") {
         stopSpeaking();
@@ -871,14 +871,18 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
     const onKeyUp = (e: KeyboardEvent) => {
       if (e.code !== "Space") return;
-      const heldMs = performance.now() - spaceDownAt;
-      if (spaceHeldTriggeredRecord && heldMs >= 200 && recordingRef.current) {
+      const heldMs = performance.now() - spaceGestureRef.current.downAt;
+      if (
+        spaceGestureRef.current.startedRecording &&
+        heldMs >= 200 &&
+        recordingRef.current
+      ) {
         if (recorderRef.current && recorderRef.current.state !== "inactive") {
           recorderRef.current.stop();
         }
       }
-      spaceDownAt = 0;
-      spaceHeldTriggeredRecord = false;
+      spaceGestureRef.current.downAt = 0;
+      spaceGestureRef.current.startedRecording = false;
     };
 
     window.addEventListener("keydown", onKeyDown);
