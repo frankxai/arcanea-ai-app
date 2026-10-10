@@ -32,6 +32,19 @@ interface Props {
   readingRef: RefObject<HTMLDivElement | null>;
 }
 
+function chapterSelection(container: HTMLDivElement | null): string | null {
+  const selected = window.getSelection();
+  if (
+    !selected ||
+    !container ||
+    selected.isCollapsed ||
+    !container.contains(selected.anchorNode) ||
+    !container.contains(selected.focusNode)
+  )
+    return null;
+  return normalizePassage(selected.toString());
+}
+
 export function SceneVisualizer(props: Props) {
   const { user } = useAuth();
   return (
@@ -172,17 +185,8 @@ function SceneWorkspace({
 
   useEffect(() => {
     function captureSelection() {
-      const selected = window.getSelection();
-      const container = readingRef.current;
-      if (
-        !selected ||
-        !container ||
-        selected.isCollapsed ||
-        !container.contains(selected.anchorNode) ||
-        !container.contains(selected.focusNode)
-      )
-        return;
-      setSelection(normalizePassage(selected.toString()));
+      const selected = chapterSelection(readingRef.current);
+      if (selected !== null) setSelection(selected);
     }
     document.addEventListener("selectionchange", captureSelection);
     return () =>
@@ -210,7 +214,10 @@ function SceneWorkspace({
       return;
     }
     try {
-      const brief = sceneBrief(selection);
+      // selectionchange can still be queued when a reader activates the action.
+      // Snapshot the chapter selection before hashing or moving focus.
+      const passage = chapterSelection(readingRef.current) ?? selection;
+      const brief = sceneBrief(passage);
       const startOwner = owner;
       const hash = await chapterHash(sourceText);
       if (actor.current !== startOwner) return;
@@ -223,7 +230,7 @@ function SceneWorkspace({
           chapterTitle,
           path: location.pathname,
           chapterHash: hash,
-          passage: selection,
+          passage,
         },
         brief,
         model:

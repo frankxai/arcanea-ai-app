@@ -246,11 +246,14 @@ async function main() {
             const selection = window.getSelection();
             selection.removeAllRanges();
             selection.addRange(range);
-            document.dispatchEvent(new Event("selectionchange"));
+            // Activate in the same task, before selectionchange/React can commit.
+            // Ordinary pointer/touch activation is exercised by selectPassage above.
+            const action = [...document.querySelectorAll("button")].find(
+              (button) => button.textContent.trim() === "Visualize a passage",
+            );
+            if (!action) throw new Error("Reader action is missing");
+            action.click();
           });
-        await page
-          .getByRole("button", { name: "Visualize a passage", exact: true })
-          .click();
         await expect(
           page.getByRole("group", { name: "Replace current scene" }),
         ).toBeVisible();
@@ -386,6 +389,7 @@ async function main() {
             "anonymous admission",
             "unconfigured provider blocks new generation while retaining the brief",
             "edited brief",
+            "passage action snapshots selection before the queued change event",
             "replacement cancellation preserves current scene",
             "reload",
             "interruption",
@@ -397,6 +401,30 @@ async function main() {
             "companion does not cover scene controls",
           ],
         });
+      } catch (error) {
+        const workspace = await page
+          .getByRole("region", { name: "Passage visualization" })
+          .innerText()
+          .catch(() => "Workspace unavailable");
+        await fs.writeFile(
+          `screenshots/reading-scene/failure-${mode.name}.json`,
+          JSON.stringify(
+            {
+              head: process.env.READING_SCENE_HEAD,
+              sourceHashes,
+              mode,
+              error: String(error.message ?? error).slice(0, 5000),
+              workspace: workspace.slice(0, 10000),
+              pageErrors: errors,
+              generationRequests: requests.length,
+              evidence: "Synthetic compiled UI failure; no real customer data",
+            },
+            null,
+            2,
+          ),
+        );
+        receipts.push({ mode: mode.name, passed: false });
+        throw error;
       } finally {
         await context.close();
       }
@@ -420,6 +448,6 @@ async function main() {
   }
 }
 main().catch((e) => {
-  console.error(e);
+  console.error(e.stack ?? e);
   process.exitCode = 1;
 });

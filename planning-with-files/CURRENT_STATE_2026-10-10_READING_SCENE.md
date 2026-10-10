@@ -69,6 +69,12 @@ The first hosted database run38076583339 at67f1841f failed because the test
 adapter added a second slash to PostgREST paths; use the validated URL origin
 as the client base. The failure is retained and does not establish a production
 reader fault. The artifact now explicitly selects the TAP reporter.
+Atfffd9316, all six PostgREST/database cases passed; browser38076777463 failed
+at passage replacement. The action now snapshots the live in-chapter selection
+before hashing/focus, retaining captured state as a fallback after selection
+collapses. The browser regression activates in the same task as highlighting,
+before selectionchange/React commit. Fresh terminal checks remain required;
+the database pass and browser failure are retained separately.
 
 Local implementation evidence: six source/recovery tests and six compiled actual-route
 tests pass; targeted ESLint passes with zero warnings; both browser/review scripts
