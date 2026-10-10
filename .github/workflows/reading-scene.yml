@@ -11,6 +11,13 @@ on:
       - "scripts/tests/reading-scene-save.test.cjs"
       - ".github/workflows/reading-scene.yml"
   workflow_dispatch:
+    inputs:
+      review_budget_usd:
+        description: "Human-approved review budget; leave blank for browser checks only"
+        required: false
+        type: choice
+        options: ["", "1"]
+        default: ""
 concurrency:
   group: reading-scene-${{ github.ref }}
   cancel-in-progress: true
@@ -61,7 +68,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
   independent-review:
-    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/reading-scene-20261010'
+    if: github.event_name == 'workflow_dispatch' && inputs.review_budget_usd == '1' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/reading-scene-20261010'
     needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 7
@@ -77,6 +84,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           READING_SCENE_HEAD: ${{ github.sha }}
+          READING_SCENE_REVIEW_BUDGET_USD: ${{ inputs.review_budget_usd }}
         run: node scripts/review-reading-scene.mjs
       - uses: actions/upload-artifact@v7
         if: always()
