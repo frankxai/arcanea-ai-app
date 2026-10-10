@@ -21,7 +21,6 @@ import {
   Color,
   HighlightExtension,
   Placeholder,
-  CodeBlockLowlight,
   HorizontalRule,
   CharacterCount,
   GlobalDragHandle,
@@ -235,7 +234,7 @@ const suggestionItems = createSuggestionItems([
   },
   {
     title: "Code",
-    description: "Code block with syntax highlighting",
+    description: "Code block",
     icon: commandIcon("</>"),
     searchTerms: ["code", "codeblock", "pre"],
     command: ({
@@ -293,7 +292,7 @@ const suggestionItems = createSuggestionItems([
 // ---------------------------------------------------------------------------
 
 const extensions = [
-  StarterKit.configure({ codeBlock: false }),
+  StarterKit,
   TiptapLink.configure({ openOnClick: false }),
   TiptapImage.configure({ allowBase64: false }),
   TiptapUnderline,
@@ -303,7 +302,6 @@ const extensions = [
   Color,
   HighlightExtension.configure({ multicolor: true }),
   Placeholder.configure({ placeholder: "Type / for commands…" }),
-  CodeBlockLowlight,
   HorizontalRule,
   CharacterCount,
   GlobalDragHandle,
