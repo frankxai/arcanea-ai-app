@@ -181,7 +181,11 @@ test("a real AI SDK client reaches customer-key chat through middleware without 
     fetch: async (input, init) => {
       const headers = new Headers(init?.headers);
       headers.set("x-forwarded-for", `198.51.100.${++requestNumber}`);
-      const req = new NextRequest(String(input), { ...init, headers });
+      const req = new NextRequest(String(input), {
+        ...init,
+        headers,
+        signal: init?.signal ?? undefined,
+      });
       assert.equal(req.nextUrl.pathname, "/api/v1/chat/completions");
       assert.equal((await proxy(req)).headers.get("x-middleware-next"), "1");
       return POST(req);
