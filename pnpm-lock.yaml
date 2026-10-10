@@ -1358,6 +1358,10 @@ importers:
         version: 5.9.3
 
   packages/world-sdk:
+    dependencies:
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
     optionalDependencies:
       '@arcanea/world-engine':
         specifier: workspace:*
