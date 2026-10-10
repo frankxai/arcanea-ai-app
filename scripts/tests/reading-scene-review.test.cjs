@@ -206,12 +206,11 @@ test("blocking findings are retained with a failing verdict", async () => {
     ).review,
     review,
   );
-  assert.equal(
-    JSON.parse(
-      result.writes.get("screenshots/reading-scene-review/receipt.json"),
-    ).medium,
-    1,
+  const receipt = JSON.parse(
+    result.writes.get("screenshots/reading-scene-review/receipt.json"),
   );
+  assert.equal(Object.hasOwn(receipt, "medium"), false);
+  assert.equal(Object.hasOwn(receipt, "verdict"), false);
 });
 
 test("malformed, unbound and truncated provider output cannot earn a source verdict", async () => {

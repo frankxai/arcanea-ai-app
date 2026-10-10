@@ -220,12 +220,9 @@ try {
       {
         ...receipt,
         model,
-        verdict,
-        critical: review.critical.length,
-        high: review.high.length,
-        medium: review.medium.length,
         providerEvidenceSha256: sha(evidence),
-        evidence: "full escaped JSON record in this job log",
+        evidence:
+          "full verdict, findings and usage in the escaped JSON job-log record",
         finalTextSha256: sha(text),
       },
       null,

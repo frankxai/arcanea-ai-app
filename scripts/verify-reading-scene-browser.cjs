@@ -45,11 +45,19 @@ async function selectPassage(page) {
     .locator("article .prose p")
     .first()
     .evaluate((element) => {
+      // The programmatic selection must leave the brief editor, as a reader
+      // does when highlighting chapter prose.
+      if (document.activeElement instanceof HTMLTextAreaElement)
+        document.activeElement.blur();
       const range = document.createRange();
       range.selectNodeContents(element);
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
+      if (selection.toString().trim() !== element.textContent.trim())
+        throw Error(
+          "Fixture must select the rendered chapter text before activation",
+        );
       document.dispatchEvent(new Event("selectionchange"));
     });
   await page
@@ -241,11 +249,17 @@ async function main() {
           .locator("article .prose p")
           .first()
           .evaluate((element) => {
+            if (document.activeElement instanceof HTMLTextAreaElement)
+              document.activeElement.blur();
             const range = document.createRange();
             range.selectNodeContents(element);
             const selection = window.getSelection();
             selection.removeAllRanges();
             selection.addRange(range);
+            if (selection.toString().trim() !== element.textContent.trim())
+              throw Error(
+                "Replacement fixture must select the rendered chapter text",
+              );
             // Activate in the same task, before selectionchange/React can commit.
             // Ordinary pointer/touch activation is exercised by selectPassage above.
             const action = [...document.querySelectorAll("button")].find(

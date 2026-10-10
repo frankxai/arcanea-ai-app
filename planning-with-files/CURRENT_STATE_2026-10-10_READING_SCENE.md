@@ -51,7 +51,8 @@ never emitted; application/test child stdout is suppressed and bounded redacted
 receipts carry diagnostics. The three medium findings came from writing provider
 responses directly into review artifacts. Full validated review/cost evidence now
 uses bounded escaped JSON records in the hosted job log; fixed-path artifact
-receipts bind their hashes, local metadata and verdict/counts. Provider findings
+receipts bind their hashes and local source metadata. Full verdicts/counts stay
+in the bound job-log record. Provider findings
 must satisfy a strict source-path/line/text schema before earning a verdict.
 scripts/tests/reading-scene-review.test.cjs executes the actual entrypoint with
 isolated Git/filesystem/HTTP boundaries: no approval or paid call is simulated
@@ -60,6 +61,19 @@ blocking findings must fail; complete source and retained JSON-log hashes bind
 the valid synthetic verdict. The hosted workflow runs these cases on each change.
 No provider call or independent approval has run. Fresh hosted tests and the
 separate CodeQL finding check must verify this changed revision before release.
+
+Reading38081583662 at54bfe70d passed route/source/review/database checks but
+failed the compiled desktop replacement assertion before real Auth acceptance.
+The retained3453-byte artifact11680627322 reports a passage-length denial with
+the existing brief intact and no generation requests. The fixture now releases
+editor focus and asserts that the actual rendered chapter text is selected
+before both activations, including the same-task queued-selection regression.
+No product code, timeout or retry was changed to mask that failure. Its cause is
+not yet certified; a fresh hosted run must verify the interaction. CodeQL's
+separate check114299899573 succeeded but still reported one medium response-file
+warning on verdict/count fields. Those response values remain in the full
+structured job-log evidence; artifact receipts retain only source metadata and
+cryptographic bindings. No warning was dismissed and no paid review occurred.
 
 Non-goals: no canon or manuscript change, new billing rail or prices, provider
 migration, automatic publication, new orchestrator, historical migration replay,
