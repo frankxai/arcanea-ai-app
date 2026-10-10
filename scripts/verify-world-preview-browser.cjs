@@ -71,7 +71,7 @@ async function main() {
     head: config.head,
     realPasswordLogin: true,
     realPostgrestWrites: true,
-    syntheticGeneration: true,
+    syntheticGeneration: !process.env.WORLD_TEST_API_KEY,
     actualProviderCalls: 0,
     interactions: [],
     passed: false,
@@ -85,7 +85,17 @@ async function main() {
   const page = await context.newPage();
   page.setDefaultTimeout(20000);
   const errors = [];
+  const failedRequests = [];
+  let stage = "login";
   page.on("pageerror", (e) => errors.push(e.message));
+  page.on("requestfailed", (request) => {
+    const url = new URL(request.url());
+    failedRequests.push({
+      origin: url.origin,
+      path: url.pathname,
+      error: request.failure()?.errorText,
+    });
+  });
   const button = (name) => page.getByRole("button", { name, exact: true });
   const key = page.getByLabel("Your Gemini API key", { exact: true });
   const login = async (account) => {
@@ -98,7 +108,7 @@ async function main() {
       .locator("form")
       .getByRole("button", { name: "Sign In", exact: true })
       .click();
-    await page.waitForURL("**/worlds/create?resume=1");
+    await page.waitForURL((url) => url.pathname === "/worlds/create");
     await expect(button("Create world")).toBeVisible();
   };
   const db = createClient(config.supabaseUrl, config.anon, {
@@ -117,19 +127,23 @@ async function main() {
       null,
     );
     await login(config.accounts[0]);
+    stage = "generation-and-edit";
     await expect(key).toHaveValue("");
     const input = page.getByRole("textbox", { name: "Describe your world" });
     await input.fill("A coastal city pays the sea with memories");
     await button("Create world").click();
     await expect(page.getByRole("alert")).toContainText("Gemini");
-    await key.fill("disposable-browser-key");
+    const customerKey =
+      process.env.WORLD_TEST_API_KEY || "disposable-browser-key";
+    await key.fill(customerKey);
     let calls = 0;
     await page.route("**/api/worlds/generate", async (route) => {
       calls++;
-      assert.equal(
-        route.request().headers()["x-google-key"],
-        "disposable-browser-key",
-      );
+      assert.equal(route.request().headers()["x-google-key"], customerKey);
+      if (process.env.WORLD_TEST_API_KEY) {
+        assert.equal(calls, 1, "At most one live app generation; no retry.");
+        return route.continue();
+      }
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -140,9 +154,23 @@ async function main() {
         }),
       });
     });
+    const generationResponse = page.waitForResponse(
+      (response) => response.url().endsWith("/api/worlds/generate"),
+      { timeout: 60000 },
+    );
     await button("Create world").click();
+    const generatedResponse = await generationResponse;
+    assert.equal(generatedResponse.status(), 200);
+    const generatedWorld = (await generatedResponse.json()).world;
+    if (process.env.WORLD_TEST_API_KEY) {
+      evidence.actualProviderCalls = 1;
+      await fs.writeFile(
+        `${config.output}/generated-world.json`,
+        JSON.stringify(generatedWorld, null, 2),
+      );
+    }
     await expect(
-      page.getByRole("heading", { name: fixtureWorld.name, exact: true }),
+      page.getByRole("heading", { name: generatedWorld.name, exact: true }),
     ).toBeVisible();
     assert.equal(calls, 1);
     await button("Edit world draft").click();
@@ -167,6 +195,7 @@ async function main() {
       currentKey,
     );
     const draft = JSON.parse(raw);
+    stage = "private-partial-save";
     assert.equal(draft.world.name, "The remembered harbor");
     await button("Save this world").click();
     await expect(page.getByRole("alert")).toContainText("Saving is incomplete");
@@ -182,7 +211,7 @@ async function main() {
     assert.equal(partial.data.visibility, "private");
     assert.equal(
       (await db.from("world_characters").select("*")).data.length,
-      2,
+      draft.world.characters.length,
     );
     assert.equal((await db.from("world_locations").select("*")).data.length, 0);
     await button("Save this world").click();
@@ -197,9 +226,12 @@ async function main() {
     assert.equal((await db.from("worlds").select("*")).data.length, 1);
     assert.equal(
       (await db.from("world_characters").select("*")).data.length,
-      2,
+      draft.world.characters.length,
     );
-    assert.equal((await db.from("world_locations").select("*")).data.length, 2);
+    assert.equal(
+      (await db.from("world_locations").select("*")).data.length,
+      draft.world.locations.length,
+    );
     assert.equal((await db.from("world_events").select("*")).data.length, 1);
     const source = await db
       .from("world_creations")
@@ -241,10 +273,9 @@ async function main() {
         (k) => k.startsWith("sb-") && k.endsWith("-auth-token"),
       );
       for (const k of keys) localStorage.removeItem(k);
-      // Explicit real Auth sign-out is exercised by the app header when present;
-      // this test otherwise logs in via the actual password form in the same tab.
     });
     await context.clearCookies();
+    stage = "second-account";
     await login(config.accounts[1]);
     await expect(key).toHaveValue("");
     await expect(
@@ -318,10 +349,78 @@ async function main() {
       animations: "disabled",
     });
     assert.deepEqual(errors, []);
+    if (process.env.WORLD_TEST_API_KEY) {
+      // A direct AI Studio-style response is a serious existing alternative.
+      // One sample supports inspecting working material, not superiority claims.
+      const response = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        {
+          method: "POST",
+          headers: {
+            "x-goog-api-key": process.env.WORLD_TEST_API_KEY,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: "user",
+                parts: [
+                  {
+                    text: "Create an original usable world bible for this concept: A coastal city pays the sea with memories. Explain ordinary life, who benefits, who pays and an unresolved story pressure. Include three observable laws with limits and evasion consequences, one social or magical system with scarcity and a failure mode, two or three characters with conflicting obligations and distinct voices, two or three sensory locations with a dispute, and a founding event that causes a present disagreement. Avoid abstract praise, prophecy and ornamental adjective chains. Return readable markdown for a creator to edit.",
+                  },
+                ],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.9,
+              maxOutputTokens: 6000,
+              thinkingConfig: { thinkingBudget: 0, includeThoughts: false },
+            },
+          }),
+          signal: AbortSignal.timeout(45000),
+          redirect: "error",
+        },
+      );
+      evidence.actualProviderCalls++;
+      if (!response.ok)
+        throw Error(
+          `Bounded direct comparison failed (${response.status}); no retry.`,
+        );
+      const result = await response.json();
+      assert.equal(result.candidates?.[0]?.finishReason, "STOP");
+      const text = (result.candidates[0].content?.parts || [])
+        .filter((p) => !p.thought)
+        .map((p) => p.text || "")
+        .join("");
+      assert.ok(text.length > 100);
+      await fs.writeFile(`${config.output}/direct-model-comparison.md`, text);
+      await fs.writeFile(
+        `${config.output}/generation-comparison-receipt.json`,
+        JSON.stringify(
+          {
+            head: config.head,
+            model: result.modelVersion,
+            responseId: result.responseId,
+            usage: result.usageMetadata,
+            maxCalls: 2,
+            maxOutputTokensPerCall: 6000,
+            thinkingBudget: 0,
+            automaticRetries: 0,
+            productionWrites: 0,
+            qualityVerdict:
+              "Pending inspection of both outputs; a single sample cannot establish superiority",
+          },
+          null,
+          2,
+        ),
+      );
+    }
     evidence.interactions = [
       "real password login",
       "missing customer key refuses",
-      "explicit synthetic generation",
+      process.env.WORLD_TEST_API_KEY
+        ? "actual customer-key model generation"
+        : "explicit synthetic generation",
       "applied edit reload",
       "real interrupted partial save",
       "idempotent retry and reopen",
@@ -334,6 +433,19 @@ async function main() {
       "375px reduced-motion no overflow",
     ];
     evidence.passed = true;
+  } catch (error) {
+    evidence.failureStage = stage;
+    evidence.failurePath = new URL(page.url()).pathname;
+    evidence.failedRequests = failedRequests;
+    await page
+      .screenshot({
+        path: `${config.output}/failure.png`,
+        fullPage: true,
+        animations: "disabled",
+        mask: [page.locator('input[type="password"]')],
+      })
+      .catch(() => {});
+    throw error;
   } finally {
     await fs.writeFile(
       `${config.output}/browser-evidence.json`,

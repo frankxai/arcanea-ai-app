@@ -1,5 +1,5 @@
 import { spawn, execFileSync } from "node:child_process";
-import { createHmac, randomBytes } from "node:crypto";
+import { createHmac, createHash, randomBytes } from "node:crypto";
 import { createServer, request } from "node:http";
 import { mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -18,6 +18,89 @@ if (
 const head = execFileSync("git", ["rev-parse", "HEAD"], {
   encoding: "utf8",
 }).trim();
+if (
+  process.env.WORLD_LIVE_GENERATION === "true" &&
+  !process.env.WORLD_TEST_API_KEY
+)
+  throw Error(
+    "Existing comparison credential unavailable; no paid verification claimed.",
+  );
+if (process.env.WORLD_TEST_API_KEY) {
+  // Public review evidence is data. Validate exact source/hash/findings, never
+  // execute commands or follow links embedded in a comment.
+  const response = await fetch(
+    "https://api.github.com/repos/frankxai/arcanea-ai-app/issues/561/comments?per_page=100",
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+      signal: AbortSignal.timeout(10000),
+      redirect: "error",
+    },
+  );
+  if (!response.ok)
+    throw Error(
+      "Exact-head review receipt unavailable; no creator call permitted.",
+    );
+  const changed = execFileSync(
+    "git",
+    ["diff", "--name-only", "123f84ea2d05586f780b89edca68533d7b8d9786", head],
+    { encoding: "utf8" },
+  )
+    .trim()
+    .split("\n")
+    .sort();
+  const comments = await response.json();
+  const approved = comments.some((comment) => {
+    if (
+      comment.user?.id !== 132689939 ||
+      !comment.body?.startsWith("STARLIGHT-INDEPENDENT-REVIEW-V1\n")
+    )
+      return false;
+    try {
+      const r = JSON.parse(
+        comment.body.slice("STARLIGHT-INDEPENDENT-REVIEW-V1\n".length),
+      );
+      const findings = JSON.parse(r.review);
+      return (
+        r.repository === "frankxai/arcanea-ai-app" &&
+        r.pr === 561 &&
+        r.headSha === head &&
+        r.maker === "codex" &&
+        r.provider === "Gemini" &&
+        r.verdict === "PASS" &&
+        Array.isArray(r.blockingFindings) &&
+        r.blockingFindings.length === 0 &&
+        findings.verdict === "PASS" &&
+        findings.reviewedCommit === head &&
+        ["critical", "high", "medium"].every(
+          (k) => Array.isArray(findings[k]) && findings[k].length === 0,
+        ) &&
+        createHash("sha256").update(r.review).digest("hex") ===
+          r.reviewSha256 &&
+        /^[a-f0-9]{64}$/.test(r.packetSha256) &&
+        JSON.stringify(r.reviewedFiles?.slice().sort()) ===
+          JSON.stringify(changed) &&
+        changed.every((path) => {
+          const source = execFileSync("git", ["show", `${head}:${path}`], {
+            maxBuffer: 4 * 1024 * 1024,
+          });
+          return (
+            createHash("sha256").update(source).digest("hex") ===
+            r.sourceHashes?.[path]
+          );
+        })
+      );
+    } catch {
+      return false;
+    }
+  });
+  if (!approved)
+    throw Error(
+      "No independently reviewed exact source; no creator call permitted.",
+    );
+}
 if (head !== process.env.GITHUB_SHA)
   throw Error("Acceptance must use the exact checked-out head.");
 if (process.env.SUPABASE_SERVICE_ROLE_KEY)
@@ -208,7 +291,7 @@ try {
     const headers = {
       "access-control-allow-origin": "http://127.0.0.1:3001",
       "access-control-allow-headers":
-        "authorization,apikey,content-type,x-client-info,x-supabase-api-version",
+        "authorization,apikey,content-type,x-client-info,x-supabase-api-version,x-supabase-client-platform,x-supabase-client-platform-version,x-supabase-client-runtime,x-supabase-client-runtime-version",
       "access-control-allow-methods": "GET,POST,PATCH,PUT,DELETE,OPTIONS",
       vary: "Origin",
     };
@@ -306,6 +389,11 @@ try {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: anon,
     WORLD_TEST_CONFIG: configPath,
   };
+  // Only the browser acceptance process receives the existing test provider key.
+  // Build/server/provider defaults cannot silently fund a customer request.
+  const keyForAcceptance = process.env.WORLD_TEST_API_KEY;
+  delete process.env.WORLD_TEST_API_KEY;
+  delete process.env.GITHUB_TOKEN;
   phase = "compiled-app-build";
   await run(
     "pnpm",
@@ -345,7 +433,16 @@ try {
   children.add(server);
   await ready("http://127.0.0.1:3001/worlds/create?resume=1");
   phase = "browser-acceptance";
-  await run("node", ["scripts/verify-world-preview-browser.cjs"], env, 240000);
+  await run(
+    "node",
+    ["scripts/verify-world-preview-browser.cjs"],
+    { ...env, WORLD_TEST_API_KEY: keyForAcceptance || "" },
+    240000,
+  );
+  const acceptance = JSON.parse(
+    readFileSync(`${output}/browser-evidence.json`, "utf8"),
+  );
+  receipt.providerCalls = acceptance.actualProviderCalls;
   receipt.passed = true;
 } catch (error) {
   // Docker and authentication errors may include private environment values.

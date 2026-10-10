@@ -38,7 +38,7 @@ relevant tables use RLS and worlds/creations reference actual auth.users. An ini
 additional metadata query used an incorrect remembered project identifier and was
 refused; project inventory corrected it before the successful read. No user rows read.
 
-Non-goals/remaining gaps: paid generation usefulness and comparison; portable import
+Non-goals/remaining gaps: portable import
 from foreign PR505; pending unapplied editor buffer recovery; full production RLS;
 public canon promotion; paid concept art; publishing and commerce. The broad issue276
 stays open. MCP public distribution still awaits the existing creative-IP decision.
@@ -72,3 +72,19 @@ and complete receiving tests are required; the old FAIL is not overwritten.
 The compiled browser suite also caught ambiguous textarea label text before its
 first edit. Explicit label/control IDs repair the actual editor accessibility;
 the test continues to require exact human-readable labels rather than weak selectors.
+
+Candidate237512c4df: TypeScript/lint and exact-source independent Gemini review
+passed. Auth startup and normal password authentication through the real Node
+client passed; browser login return timed out. The next fixture captures only
+safe origin/path failure diagnostics, masks password screenshots, accepts the
+creator route with or without its consumed resume flag, and allows the installed
+Supabase client's platform/runtime CORS headers. Browser acceptance remains pending.
+
+Optional manual live generation is off by default. It refuses before generation
+unless PR561 has a founder-authored independent PASS receipt for the exact head,
+matching changed source hashes, review-text hash and zero blocking findings. The
+existing test Gemini key is passed only to the browser acceptance process, never
+build/server defaults. One real app draft and one direct same-concept model answer
+are bounded to6000 output tokens each, thinking0,45seconds and no automatic retry.
+These outputs require inspection for actual usefulness; no superiority or market
+advantage follows from a single comparison. No production identities or data touched.
