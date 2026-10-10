@@ -72,6 +72,24 @@ test("saved worlds survive restoration and reject damaged snapshots without chan
     /duplicate/,
   );
   assert.equal(readFileSync(saved.filePath, "utf8"), before);
+  for (const metadata of [
+    { rank: 7 },
+    { primaryElement: {} },
+    { gatesOpen: "three" },
+  ]) {
+    assert.throws(() =>
+      restoreGraph(
+        "restore-test",
+        [{ ...nodes[0], metadata }, nodes[1]],
+        edges,
+      ),
+    );
+    assert.deepEqual(getGraphNodes("restore-test"), nodes);
+    assert.throws(() =>
+      saveWorldToDisk("my-world", [{ ...nodes[0], metadata }, nodes[1]], edges),
+    );
+    assert.equal(readFileSync(saved.filePath, "utf8"), before);
+  }
   for (const id of ["../escape", "a/b", "a.b", "", "con", "A".repeat(129)]) {
     assert.throws(() => saveWorldToDisk(id, nodes, edges), /session id/);
     assert.throws(() => loadWorldFromDisk(id), /session id/);
@@ -81,6 +99,10 @@ test("saved worlds survive restoration and reject damaged snapshots without chan
     "{",
     JSON.stringify({ ...snapshot, sessionId: "wrong" }),
     JSON.stringify({ ...snapshot, nodes: [{ id: "one" }] }),
+    JSON.stringify({
+      ...snapshot,
+      nodes: [{ ...nodes[0], metadata: { rank: 7 } }, nodes[1]],
+    }),
   ]) {
     writeFileSync(saved.filePath, damage);
     assert.throws(() => loadWorldFromDisk("my-world"), /unreadable or invalid/);

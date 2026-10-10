@@ -73,3 +73,17 @@ Implicit-any checking is enabled; inherited explicit-any sites outside this scop
 remain a separate limitation, so this is not a claim of package-wide type cleanup.
 The full changed and unchanged package source packet has a bounded1.2MiB ceiling
 on this explicitly owned MCP lane; the prior author/hub ceiling stays900KB.
+
+First candidate68e3b626bd72d28d57b0b94daaddbf5732b93dff failed its hosted
+TypeScript/Vercel build because replacing graph metadata any with unknown exposed
+unchecked reserved metadata fields in the inherited intelligence engine. Preserve
+those logs. Node metadata now validates primaryElement/dominantElement/rank as
+strings and gatesOpen as a number; arbitrary other fields and relationship
+metadata retain their existing flexibility. Malformed reserved fields fail before
+replacing saved or live graphs, with explicit corrupt-file retention regressions.
+Fresh exact-source review and CI are required again; the old MCP review cannot
+approve this correction. Hub5326 itself earned a separate Gemini3.1Pro PASS,
+responsed2HKatz7OMua_uMP05SxmAo, all4 source hashes checked; receipt6099458280.
+
+Incoming package guide SHA256d0a643deab98f91049f2b24ea4615288593cb877ad83a9d3fbbdb3c981afe45b.
+Hub238 merged normally16:04:58UTC at aef3ea93f964d02ac3f08ab0b7ec943736ae9862; receiving tree matches its reviewed source.

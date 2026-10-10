@@ -2,7 +2,10 @@
 // Inspired by Qdrant vector patterns and knowledge graphs
 
 import { CreationRef } from "../memory/index.js";
-import { validateCreationGraph } from "./graph-validation.js";
+import {
+  validateCreationGraph,
+  type CreationMetadata,
+} from "./graph-validation.js";
 
 export interface CreationNode {
   id: string;
@@ -11,7 +14,7 @@ export interface CreationNode {
   element?: string;
   gate?: number;
   createdAt: string;
-  metadata: Record<string, unknown>;
+  metadata: CreationMetadata;
 }
 
 export interface CreationEdge {
@@ -83,7 +86,7 @@ export function restoreGraph(
 export function addCreationToGraph(
   sessionId: string,
   creation: CreationRef,
-  metadata: Record<string, unknown> = {},
+  metadata: CreationMetadata = {},
 ): CreationNode {
   const graph = getOrCreateGraph(sessionId);
 

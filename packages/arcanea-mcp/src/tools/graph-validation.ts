@@ -1,6 +1,14 @@
 import { z } from "zod";
 
-const metadata = z.record(z.string(), z.unknown());
+const metadata = z
+  .object({
+    primaryElement: z.string().optional(),
+    dominantElement: z.string().optional(),
+    rank: z.string().optional(),
+    gatesOpen: z.number().optional(),
+  })
+  .catchall(z.unknown());
+export type CreationMetadata = z.infer<typeof metadata>;
 const node = z.object({
   id: z.string().min(1),
   type: z.enum([
@@ -38,7 +46,7 @@ const edge = z.object({
     "same_gate",
   ]),
   strength: z.number().min(0).max(1),
-  metadata: metadata.optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 const graph = z.object({ nodes: z.array(node), edges: z.array(edge) });
 
