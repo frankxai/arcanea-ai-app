@@ -107,6 +107,14 @@ focuses the workspace because the completed brief is disabled.
 New hosted verification is pending; bb482ab2's green checks certify
 only the previous revision. No paid provider review or production release occurred.
 
+Atfc26f60a, Reading38084156841 passes desktop privacy/focus/recovery/export but
+fails the new mobile selection precondition before any generation. Retain
+artifact11681014828 (130998 bytes) and ui-failed-fc26f60a. The fixture now waits
+for the closed panel's Reopen scene control, releases any previously focused
+element before selecting prose, and retains bounded range/focus diagnostics.
+No product code, assertion, retry or timeout was relaxed. Fresh verification is
+required; the cause is not certified as a browser or application defect.
+
 Acceptance: a source-bound passage becomes an editable brief and a real usable
 image; generation shows catalog credits and requires normal authentication;
 uncertain responses retain the request identity; local recovery is scoped to the

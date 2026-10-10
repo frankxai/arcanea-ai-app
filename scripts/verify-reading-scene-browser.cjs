@@ -51,7 +51,7 @@ async function selectPassage(
     .evaluate((element) => {
       // The programmatic selection must leave the brief editor, as a reader
       // does when highlighting chapter prose.
-      if (document.activeElement instanceof HTMLTextAreaElement)
+      if (document.activeElement instanceof HTMLElement)
         document.activeElement.blur();
       const range = document.createRange();
       range.selectNodeContents(element);
@@ -63,7 +63,16 @@ async function selectPassage(
         element.textContent.replace(/\s+/g, " ").trim()
       )
         throw Error(
-          "Fixture must select the rendered chapter text before activation",
+          JSON.stringify({
+            stage:
+              "Fixture must select the rendered chapter text before activation",
+            expected: element.textContent.slice(0, 1400),
+            selected: selection.toString().slice(0, 1400),
+            range: range.toString().slice(0, 1400),
+            activeTag: document.activeElement?.tagName,
+            connected: element.isConnected,
+            userSelect: getComputedStyle(element).userSelect,
+          }),
         );
       document.dispatchEvent(new Event("selectionchange"));
     });
@@ -321,6 +330,9 @@ async function main() {
         await page
           .getByRole("button", { name: "Return to reading", exact: true })
           .click();
+        await expect(
+          page.getByRole("button", { name: "Reopen scene", exact: true }),
+        ).toBeVisible();
         await selectPassage(page, { keyboard: true, replacement: true });
         await page
           .getByRole("button", { name: "Keep current scene", exact: true })
@@ -447,6 +459,9 @@ async function main() {
         await page
           .getByRole("button", { name: "Return to reading", exact: true })
           .click();
+        await expect(
+          page.getByRole("button", { name: "Reopen scene", exact: true }),
+        ).toBeVisible();
         await selectPassage(page, { keyboard: true, replacement: true });
         await page
           .getByRole("button", { name: "Keep current scene", exact: true })
