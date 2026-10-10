@@ -19,9 +19,24 @@ async function main() {
         viewport: { width: mode.width, height: mode.height },
         reducedMotion: mode.motion,
       });
+      let releasePending;
       try {
         const page = await context.newPage();
         page.setDefaultTimeout(15000);
+        await page.addInitScript(() => {
+          const originalFetch = window.fetch;
+          window.__voiceRequestAborts = 0;
+          window.fetch = function (input, init) {
+            if (input === "/api/ai/speak") {
+              init?.signal?.addEventListener(
+                "abort",
+                () => window.__voiceRequestAborts++,
+                { once: true },
+              );
+            }
+            return originalFetch.call(this, input, init);
+          };
+        });
         const voiceAlert = page.getByRole("alert", {
           name: "Voice playback",
           exact: true,
@@ -41,7 +56,9 @@ async function main() {
             body: request.postDataJSON(),
           });
           if (pending) {
-            await new Promise((resolve) => setTimeout(resolve, 350));
+            await new Promise((resolve) => {
+              releasePending = resolve;
+            });
             await route.abort().catch(() => {});
             return;
           }
@@ -104,7 +121,10 @@ async function main() {
         await listen.click();
         await expect(voiceAlert).toHaveCount(0);
         await expect.poll(() => requests.length).toBe(3);
+        assert.equal(typeof releasePending, "function");
         await listen.click();
+        assert.equal(await page.evaluate(() => window.__voiceRequestAborts), 1);
+        releasePending();
         await page.waitForTimeout(500);
         await expect(voiceAlert).toHaveCount(0);
         assert.equal(
@@ -134,6 +154,7 @@ async function main() {
           providerRequests: 0,
         });
       } finally {
+        releasePending?.();
         await context.close();
       }
     }
