@@ -17,6 +17,7 @@ const source = [
   "apps/web/components/lumina/lumina-bubble.tsx",
   "apps/web/components/lumina/companion-chat.tsx",
   "apps/web/components/chat/chat-area.tsx",
+  "apps/web/app/chat/page.tsx",
   "apps/web/lib/chat/error-message.ts",
   "packages/design-system/src/companion.module.css",
   "packages/design-system/package.json",
@@ -452,8 +453,10 @@ async function main() {
       await expect(opener).toBeHidden();
       const fullChatHeading = page.getByRole("heading", { level: 1 });
       await expect(fullChatHeading).toBeVisible();
-      await capturePage(page, `full-chat-${mode.name}`);
+      await fullChatHeading.scrollIntoViewIfNeeded();
+      await expect(fullChatHeading).toBeInViewport();
       await fullChatHeading.click();
+      await capturePage(page, `full-chat-${mode.name}`);
       await page.keyboard.press("?");
       await expect(
         page.getByRole("heading", { name: "Keyboard shortcuts", exact: true }),

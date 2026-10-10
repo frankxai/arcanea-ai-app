@@ -6,6 +6,7 @@ on:
     paths:
       - apps/web/components/lumina/**
       - apps/web/components/chat/chat-area.tsx
+      - apps/web/app/chat/page.tsx
       - apps/web/lib/chat/error-message.ts
       - apps/web/hooks/use-provider.ts
       - apps/web/lib/auth/context.tsx

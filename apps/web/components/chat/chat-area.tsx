@@ -299,7 +299,7 @@ export function ChatArea({
   // -------------------------------------------------------------------------
 
   return (
-    <div className="relative flex-1 flex flex-col min-w-0 overflow-hidden">
+    <div className="relative flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
       {/* Search overlay */}
       {searchOverlay}
 
@@ -309,7 +309,7 @@ export function ChatArea({
         onScroll={handleScroll}
         role="log"
         aria-label="Chat messages"
-        className="relative flex-1 overflow-y-auto"
+        className="relative flex-1 min-h-0 overflow-y-auto"
         style={{
           scrollbarWidth: "thin",
           scrollbarColor:
@@ -320,7 +320,7 @@ export function ChatArea({
           /* ============================================================= */
           /* Empty state — clean, centered, inviting                        */
           /* ============================================================= */
-          <div className="relative flex flex-col items-center justify-center h-full px-4">
+          <div className="relative flex flex-col items-center justify-center min-h-full px-4">
             {/* Subtle aurora gradient behind empty state */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/[0.04] blur-2xl" />
