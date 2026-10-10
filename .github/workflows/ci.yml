@@ -2,6 +2,11 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      review_hub_release:
+        description: Review the pinned public release handover
+        type: boolean
+        default: false
   push:
     branches: [main]
   pull_request:
@@ -313,6 +318,19 @@ jobs:
           pnpm --dir packages/arcanea-mcp test:gateway
           pnpm --dir apps/web test:mcp-world-context
 
+      - name: Verify MCP runtime and installed consumer package
+        run: |
+          pnpm --dir packages/arcanea-mcp test:delivery
+          pnpm --dir packages/arcanea-mcp test:consumer
+      - name: Retain MCP consumer delivery evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: mcp-consumer-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/mcp-consumer/
+          retention-days: 7
+          if-no-files-found: warn
+
       - name: Verify Luminor public-read timeout
         run: pnpm test:luminor-read-timeout
 
@@ -437,9 +455,9 @@ jobs:
   author-independent-review:
     name: Independent author source review
     needs: author-preview
-    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010')
+    if: always() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010')
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7
         with:
@@ -448,6 +466,29 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Read the exact public release handover for independent review
+        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
+        uses: actions/checkout@v7
+        with:
+          repository: frankxai/agentic-ops-hub
+          ref: 5326dc36c78f324ad7c47573d875c7b9689e8ecb
+          path: .review-hub
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Review the exact handover using the existing independent provider
+        if: github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          REVIEW_TARGET: hub-release
+        run: node scripts/review-author-recovery.mjs
+      - name: Retain handover final findings and source receipt
+        if: always() && github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' && inputs.review_hub_release
+        uses: actions/upload-artifact@v7
+        with:
+          name: hub-review-5326dc36c78f-attempt-${{ github.run_attempt }}
+          path: screenshots/hub-review/
+          retention-days: 7
+          if-no-files-found: warn
       - name: Review complete exact source using the existing independent provider
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

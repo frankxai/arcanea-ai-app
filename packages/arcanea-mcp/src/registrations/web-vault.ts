@@ -81,7 +81,7 @@ export function registerWebVaultTools(server: McpServer) {
     "get_arcanea_bridge_status",
     {
       description:
-        "Check whether the Arcanea web bridge is configured and reachable. Use this first to verify env vars before trying the vault tools.",
+        "Check whether the Arcanea web bridge is configured (reads env vars only; it does not contact the server). Use this first before trying the vault tools.",
       inputSchema: {},
     },
     async () => getArcaneaBridgeStatus(),
