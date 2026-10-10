@@ -8,7 +8,7 @@ Base: 2ed6ae8b362689d21075aa983ecc3f438e36bcb6, frankxai/arcanea-ai-app.
 Branch: agent/codex/reading-scene-20261010. Reused clean, handed-off billing worktree;
 the old branch and all other owners' work remain preserved.
 
-Files: components/saga/{chapter-reader.tsx,scene-visualizer.tsx,scene-visualizer.module.css};
+Files: components/saga/{chapter-reader.tsx,scene-visualizer.tsx,scene-workspace-view.tsx,scene-visualizer.module.css};
 lib/reading-scene/{brief.ts,session.ts,**tests**/brief.test.ts,**tests**/session.test.ts};
 app/api/reading-scenes/route.ts; scripts/verify-reading-scene-browser.cjs;
 .github/workflows/reading-scene.yml; this pickup.
@@ -48,7 +48,7 @@ Installed /si, graph-engineering, humanizer and Emil guidance read. Relocated
 design standards resolved under design-agent-standards. Missing config capability
 guides remain unresolved and are not represented as loaded. No config writes.
 
-Status: implementation in progress; no release or acceptance certification yet.
+Status: implementation candidate in draft PR560; no release or creator acceptance certification yet.
 
 Local implementation evidence: six source/recovery tests and six compiled actual-route
 tests pass; targeted ESLint passes with zero warnings; both browser/review scripts
@@ -67,5 +67,30 @@ image responses. It cannot certify real authenticated production generation.
 
 The remote review uses the existing Google credential through a manual, actor/
 branch/head-bound job. Final source hashes and all findings must be retained.
-Native CI lint/type/build, compiled browser evidence, independent review and live
-acceptance are pending. The entire platform objective remains active.
+Native full CI38070644741 and compiled fixture browser38070644789 passed at
+dfda19e887d61c94e2a6a00d96cc1feec670ebb7. The first compiled browser38070232827
+failed when an old anonymous draft masked a private server copy; carryover now
+consumes the anonymous copy only after owner persistence. Same-key interrupted
+generation, canceling replacement, image/source export and private reopen passed
+desktop,375px touch and reduced motion. Manual38070225186 was canceled as
+superseded before review. These failures are retained. Synthetic auth/provider/
+storage evidence does not certify real creator output or hosted account ownership.
+
+Visual refinement at900e08e8dacc57f1ff8e9d9ff43da9fb08213f37 constrains the
+requested widescreen preview, uses creator-facing model labels and reserves room
+for the mobile companion. Fresh verification adds a control-overlap assertion,
+forced colors and source/image-hash companions. Exact current-source gates remain
+pending after incorporating shared main releases558 and559. The review computes
+its actual shared base, reads every complete changed file and context, and binds
+the fixed repository/actor/branch/head. It stays disabled without an explicit
+manual <=US$1 budget, counts tokens before the one paid call and rejects cost
+above that ceiling. Human spend approval is unanswered; no verdict is claimed.
+
+Production creations columns/checks/FK and owner RLS were inspected read-only:
+the current payload fits the live schema and requires an existing owner profile.
+Existing reader/canvas PR454 is preserved; its alternate credit engine and
+unapplied scheduled recovery are not introduced. Reconcile that candidate with
+the canonical book-reader path, existing media531/gallery472 and creator505.
+No actual production account walkthrough, paid image, comparative creator
+value or rights approval is claimed. Handover is hub242 and programme276.
+The entire platform/team/books/community/developer/commercial objective remains active.

@@ -5,9 +5,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const git = (...args) =>
   execFileSync("git", args, { encoding: "utf8", maxBuffer: 4 * 1024 * 1024 });
 const head = git("rev-parse", "HEAD").trim();
-const base = "e98249fd8f84499cacfec864a9d0aef9f1b0396f";
+const base = git("merge-base", "origin/main", head).trim();
 if (
   process.env.READING_SCENE_HEAD !== head ||
+  process.env.GITHUB_REPOSITORY !== "frankxai/arcanea-ai-app" ||
+  base === head ||
   process.env.READING_SCENE_REVIEW_BUDGET_USD !== "1" ||
   !process.env.GEMINI_API_KEY ||
   process.env.GITHUB_ACTOR !== "frankxai" ||
