@@ -16,6 +16,22 @@ const input = {
   requestKey: "key",
   fingerprint: "hash",
 };
+
+test("definite oversized or over-quoted output releases credits and becomes a terminal failure", async () => {
+  for (const outcome of [
+    { result: "x".repeat(33554432), actualCredits: 10 },
+    { result: "image", actualCredits: 11 },
+  ]) {
+    const f = fixture();
+    await assert.rejects(
+      runReservedOperation(f.rpc, input, async () => outcome),
+      OperationFailedError,
+    );
+    assert.equal(f.receipt?.state, "failed");
+    assert.equal(f.receipt?.balance, 100);
+    assert.equal(f.calls.includes("billing_stage_result"), false);
+  }
+});
 function fixture() {
   let receipt: OperationReceipt<string> | undefined;
   let workCalls = 0;

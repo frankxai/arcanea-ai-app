@@ -60,8 +60,8 @@ test("a subscription order grants the plan's monthly credits on create and on cy
   }
 });
 
-test("orders for unknown products or unknown customers grant nothing", () => {
-  assert.deepEqual(
+test("unmapped or inconsistent paid orders remain retryable", () => {
+  assert.throws(() =>
     mapPolarEvent(
       {
         type: "order.paid",
@@ -69,9 +69,8 @@ test("orders for unknown products or unknown customers grant nothing", () => {
       },
       env,
     ),
-    [],
   );
-  assert.deepEqual(
+  assert.throws(() =>
     mapPolarEvent(
       {
         type: "order.paid",
@@ -84,9 +83,8 @@ test("orders for unknown products or unknown customers grant nothing", () => {
       },
       env,
     ),
-    [],
   );
-  assert.deepEqual(
+  assert.throws(() =>
     mapPolarEvent(
       {
         type: "order.paid",
@@ -94,7 +92,6 @@ test("orders for unknown products or unknown customers grant nothing", () => {
       },
       env,
     ),
-    [],
   );
 });
 
@@ -125,7 +122,11 @@ test("subscription lifecycle maps to plan and status", () => {
   };
 
   const active = mapPolarEvent(
-    { type: "subscription.active", data: { ...base, status: "active" } },
+    {
+      type: "subscription.active",
+      timestamp: "2026-10-10T00:00:00Z",
+      data: { ...base, status: "active" },
+    },
     env,
   );
   assert.equal(active.length, 1);
@@ -140,6 +141,7 @@ test("subscription lifecycle maps to plan and status", () => {
   const canceled = mapPolarEvent(
     {
       type: "subscription.canceled",
+      timestamp: "2026-10-10T00:00:00Z",
       data: { ...base, status: "canceled", cancelAtPeriodEnd: true },
     },
     env,
@@ -151,7 +153,11 @@ test("subscription lifecycle maps to plan and status", () => {
   assert.equal(canceled.cancelAtPeriodEnd, true);
 
   const revoked = mapPolarEvent(
-    { type: "subscription.revoked", data: { ...base, status: "canceled" } },
+    {
+      type: "subscription.revoked",
+      timestamp: "2026-10-10T00:00:00Z",
+      data: { ...base, status: "canceled" },
+    },
     env,
   )[0];
   if (revoked.kind !== "setPlan") throw new Error("expected setPlan");
@@ -159,7 +165,11 @@ test("subscription lifecycle maps to plan and status", () => {
   assert.equal(revoked.status, "revoked");
 
   const pastDue = mapPolarEvent(
-    { type: "subscription.past_due", data: { ...base, status: "past_due" } },
+    {
+      type: "subscription.past_due",
+      timestamp: "2026-10-10T00:00:00Z",
+      data: { ...base, status: "past_due" },
+    },
     env,
   )[0];
   if (pastDue.kind !== "setPlan") throw new Error("expected setPlan");
@@ -176,7 +186,7 @@ test("events we do not act on produce no intents", () => {
     mapPolarEvent({ type: "customer.state_changed", data: { id: "c" } }, env),
     [],
   );
-  assert.deepEqual(
+  assert.throws(() =>
     mapPolarEvent(
       {
         type: "subscription.active",
@@ -184,6 +194,41 @@ test("events we do not act on produce no intents", () => {
       },
       env,
     ),
-    [],
+  );
+});
+
+test("prorated orders, refunds and unknown subscription status require reconciliation", () => {
+  assert.throws(() =>
+    mapPolarEvent(
+      {
+        type: "order.paid",
+        data: {
+          id: "o",
+          paid: true,
+          productId: "prod_creator",
+          customer,
+          billingReason: "subscription_update",
+        },
+      },
+      env,
+    ),
+  );
+  assert.throws(() =>
+    mapPolarEvent({ type: "order.refunded", data: { id: "o" } }, env),
+  );
+  assert.throws(() =>
+    mapPolarEvent(
+      {
+        type: "subscription.updated",
+        timestamp: new Date(),
+        data: {
+          id: "s",
+          productId: "prod_creator",
+          customer,
+          status: "future_status",
+        },
+      },
+      env,
+    ),
   );
 });

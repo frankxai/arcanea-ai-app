@@ -151,6 +151,16 @@ export async function runReservedOperation<T>(
   let outcome: { result: T; actualCredits: number };
   try {
     outcome = await work(reference);
+    // Definite invalid output is a refunded failure, not an ambiguous worker crash.
+    if (
+      !Number.isInteger(outcome.actualCredits) ||
+      outcome.actualCredits < 0 ||
+      outcome.actualCredits > input.amount ||
+      outcome.result == null ||
+      Buffer.byteLength(JSON.stringify(outcome.result), "utf8") > 33554432
+    ) {
+      throw new Error("Generation output cannot be committed");
+    }
   } catch {
     try {
       await transition(rpc, "billing_request_release", {

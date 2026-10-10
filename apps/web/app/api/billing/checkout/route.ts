@@ -11,6 +11,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { billingReadiness, isPaidSku } from "@/lib/billing/catalog";
 import { createCheckout, PolarNotConfiguredError } from "@/lib/billing/polar";
+import { requireRecoverySchema, BillingError } from "@/lib/billing/ledger";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
   }
 
   const readiness = billingReadiness();
-  if (!readiness.hasToken) {
+  if (!readiness.live) {
     return NextResponse.json(
       { error: "Checkout is not open yet", reason: "billing_not_configured" },
       { status: 503 },
@@ -53,6 +54,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    await requireRecoverySchema();
     const origin = siteOrigin(request);
     const checkout = await createCheckout({
       sku,
@@ -66,6 +68,12 @@ export async function POST(request: NextRequest) {
       sandbox: readiness.sandbox,
     });
   } catch (error) {
+    if (error instanceof BillingError) {
+      return NextResponse.json(
+        { error: "Checkout is not open yet", reason: "ledger_unavailable" },
+        { status: 503 },
+      );
+    }
     if (error instanceof PolarNotConfiguredError) {
       return NextResponse.json(
         {

@@ -40,6 +40,7 @@ and `supabase/migrations/20261010000001_billing_recovery.sql`.
 ```
 POLAR_ACCESS_TOKEN=polar_oat_…
 POLAR_SERVER=sandbox            # switch to production after step 5
+ARCANEA_BILLING_ENABLED=false  # explicitly enable only for an approved sandbox/release
 POLAR_WEBHOOK_SECRET=whsec_…
 POLAR_PRODUCT_CREATOR=…
 POLAR_PRODUCT_STUDIO=…
@@ -49,8 +50,9 @@ POLAR_PRODUCT_PACK_8000=…
 NEXT_PUBLIC_SITE_URL=https://www.arcanea.ai
 ```
 
-`/pricing` shows purchase buttons only when `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET` and both
-plan product ids are present. Packs appear individually as their ids are added.
+`/pricing` shows purchase buttons only when `ARCANEA_BILLING_ENABLED=true`, the token, webhook
+secret and both plan product ids are present. The checkout API enforces that same gate and verifies
+the committed recovery schema before calling Polar. Packs appear individually as their ids are added.
 
 ## 3. Supabase (project `hcfhyssdzphudaqatxbk`)
 
@@ -65,6 +67,9 @@ disable purchase entry points and use a reviewed corrective migration. Dropping 
 would destroy financial history and requires separate approval.
 
 ## 4. Verify in sandbox
+
+After both migrations and the sandbox configuration are approved, set
+`ARCANEA_BILLING_ENABLED=true` in the sandbox environment only.
 
 1. Sign in with a test account. Visit `/settings/billing`: Plan Spark, 25 credits (welcome grant).
 2. `/pricing` → Buy 500 credits → Polar sandbox checkout → test card 4242… → redirected to
@@ -83,7 +88,7 @@ would destroy financial history and requires separate approval.
 
 ## 5. Go live
 
-Set `POLAR_SERVER=production`, replace the token, secret and product ids with the production
+After explicit release approval, set `POLAR_SERVER=production`, replace the token, secret and product ids with the production
 values, redeploy. Make one real €5 purchase yourself and refund it from Polar. Then announce to the
 Founding Circle list (`waitlists` table) with the 40% discount code created in Polar → Discounts.
 
@@ -92,6 +97,15 @@ Founding Circle list (`waitlists` table) with the 40% discount code created in P
 - Webhook failures return 503 so Polar can retry. The transaction rolls back its inbox receipt
   and every intent together; a failed attempt may therefore leave no `billing_events` row.
   Inspect delivery logs as well as rows with `processed_at is null` or `error is not null`.
+- Unmapped paid orders, prorated subscription orders, refunds, incomplete/unknown statuses and
+  replacement subscription identities are refused with 503 for explicit reconciliation. They
+  never silently mint a full month's credits or receive a success acknowledgement. Paid rollout
+  requires a reviewed refund/proration process; this code does not claim automated support for it.
+  Subscribe to `order.refunded` when configuring that process. Subscription effects compare the
+  signed event timestamp against `polar_event_at`; stale events cannot downgrade the current plan.
+- Definite invalid/oversized generation output is a terminal refunded failure. The output is not
+  delivered; no additional provider work occurs when that failed request is replayed. The 32 MiB
+  receipt cap and private output retention need validation with actual models before paid rollout.
 - Generation retries must keep the original browser session and request key. `result_ready`
   resumes settlement with the stored output; `refund_pending` resumes the refund. Both avoid
   another provider call. Only confirmed completion or refunded failure clears the browser key.

@@ -19,6 +19,17 @@ newest backlog; the auth slices there that are still open are carried in §2.
 
 Full procedure: `docs/ops/BILLING_RUNBOOK_2026-10-05.md`.
 
+### 10 October recovery review update — PR525
+
+Both billing migrations are required, including `20261010000001_billing_recovery.sql`.
+Credentials alone do not open checkout: `ARCANEA_BILLING_ENABLED` defaults false, and the API
+checks the committed recovery schema. Keep paid rollout closed pending entitlement enforcement,
+private-output retention, refund/proration reconciliation and an approved sandbox fulfillment test.
+The recovery slice adds durable request replay, atomic signed webhook processing, staged-result
+settlement and stale subscription-event protection. Its focused tests and disposable PostgreSQL
+transaction/concurrency fixtures must pass on the exact merge head. Review and merge authorization
+does not authorize applying production migrations or moving money.
+
 ## 2. Next engineering slices (agent, in order)
 
 | #   | Slice                                                                                                                                                                                                                        | Acceptance                                                                       | Verify                                         |

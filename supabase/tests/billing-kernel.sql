@@ -21,14 +21,25 @@ begin
   if (r->>'balance')::integer <> 25 then raise exception 'welcome missing'; end if;
   r := public.billing_ensure_account(u,25);
   if (r->>'balance')::integer <> 25 then raise exception 'welcome duplicated'; end if;
+  perform public.billing_ensure_account('00000000-0000-0000-0000-000000000002',0);
+  r := public.billing_ensure_account('00000000-0000-0000-0000-000000000002',25);
+  if (r->>'balance')::integer <> 25 then raise exception 'existing account lost welcome'; end if;
   perform public.billing_grant_credits(u,975,'grant','fixture:fuel');
   r := public.billing_reserve_credits(u,10,'image.standard','fixture:operation','{"fingerprint":"draft-a"}');
   if r->>'state' <> 'running' then raise exception 'not running'; end if;
+  begin
+    perform public.billing_settle_reservation(u,'fixture:operation',6);
+    raise exception 'unstaged settlement accepted';
+  exception when sqlstate '22023' then null; end;
   r := public.billing_reserve_credits(u,10,'image.standard','fixture:operation','{"fingerprint":"draft-a"}');
   if not (r->>'idempotent')::boolean then raise exception 'reserve not idempotent'; end if;
   r := public.billing_reserve_credits(u,10,'image.standard','fixture:operation','{"fingerprint":"draft-b"}');
   if r->>'reason' <> 'request_conflict' then raise exception 'fingerprint conflict missing'; end if;
   perform public.billing_stage_result(u,'fixture:operation',6,'{"images":[{"url":"fixture-image"}]}');
+  begin
+    perform public.billing_release_reservation(u,'fixture:operation');
+    raise exception 'staged output refunded';
+  exception when sqlstate '22023' then null; end;
   r := public.billing_complete_operation(u,'fixture:operation',6,'{"images":[{"url":"fixture-image"}]}');
   if r->>'state' <> 'completed' or (r->>'balance')::integer <> 994 or (r->>'charged')::integer <> 6 then raise exception 'settlement incorrect'; end if;
   perform public.billing_release_reservation(u,'fixture:operation');
@@ -53,9 +64,23 @@ begin
   r := public.billing_apply_event('fixture:delivery','order.paid','{}',jsonb_build_array(intents->0));
   if not (r->>'duplicate')::boolean then raise exception 'webhook retry not idempotent'; end if;
   if (select balance from public.billing_accounts where user_id=u) <> 1494 then raise exception 'purchase duplicated'; end if;
+  begin
+    perform public.billing_apply_event('fixture:empty','order.paid','{}','[]');
+    raise exception 'unfulfilled purchase acknowledged';
+  exception when sqlstate '22023' then null; end;
+  intents := jsonb_build_array(jsonb_build_object('kind','setPlan','userId',u,'plan','studio','status','active',
+    'polarSubscriptionId','fixture:subscription','occurredAt','2026-10-10T00:00:00Z'));
+  perform public.billing_apply_event('fixture:newer','subscription.active','{}',intents);
+  intents := jsonb_build_array(jsonb_build_object('kind','setPlan','userId',u,'plan','spark','status','revoked',
+    'polarSubscriptionId','fixture:subscription','occurredAt','2026-10-09T00:00:00Z'));
+  r := public.billing_apply_event('fixture:older','subscription.revoked','{}',intents);
+  if (select plan from public.billing_accounts where user_id=u) <> 'studio' or (r->>'applied')::integer <> 0 then
+    raise exception 'stale subscription downgraded current plan'; end if;
+  if has_table_privilege('authenticated','public.billing_operations','SELECT') then raise exception 'private result readable'; end if;
   if has_function_privilege('authenticated','public.billing_complete_operation(uuid,text,integer,jsonb)','EXECUTE') or has_function_privilege('anon','public.billing_apply_event(text,text,jsonb,jsonb)','EXECUTE') then raise exception 'RPC privilege leak'; end if;
   if not has_function_privilege('service_role','public.billing_apply_event(text,text,jsonb,jsonb)','EXECUTE') then raise exception 'service role cannot process'; end if;
 end $$;
 -- Set up separate operations for deterministic contention tests.
 select public.billing_reserve_credits('00000000-0000-0000-0000-000000000001',20,'image.standard','race:target');
+select public.billing_stage_result('00000000-0000-0000-0000-000000000001','race:target',10,'{"images":["race"]}');
 select public.billing_reserve_credits('00000000-0000-0000-0000-000000000001',30,'image.standard','race:other');

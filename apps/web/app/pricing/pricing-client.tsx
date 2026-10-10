@@ -3,7 +3,13 @@
 import { FACTS } from "@/lib/facts";
 import Image from "next/image";
 import React, { useState } from "react";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -67,7 +73,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: ImageSquare,
     name: "Image Generation",
-    desc: "Original images in the Arcanean register, on your key or on credits",
+    desc: "Managed images use credits. BYOK images are planned.",
     accent: "var(--arc-void)",
   },
   {
@@ -150,38 +156,43 @@ function PlanCard({
     <div
       className={`relative rounded-3xl border p-6 backdrop-blur-sm flex flex-col justify-between transition-all duration-300 ${
         plan.featured
-          ? "border-[var(--arc-brand-arcanean-gold)]/40 bg-[var(--arc-brand-arcanean-gold)]/[0.02] shadow-[0_8px_30px_rgba(255,215,0,0.04)]"
-          : "border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12]"
+          ? "border-[var(--arc-brand-arcanean-gold)]/40 bg-[var(--arc-brand-arcanean-gold)]/[0.02] shadow-[var(--arc-shadow-elevation-1)]"
+          : "border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] hover:border-[var(--arc-cosmic-border-bright)]"
       }`}
     >
       {plan.featured && (
-        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)] text-black text-[9px] font-mono uppercase font-bold tracking-wider">
-          Most creators
+        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)] text-[var(--arc-cosmic-void)] text-[9px] font-mono font-bold tracking-wider">
+          Creator plan
         </span>
       )}
       <div>
-        <h3 className="font-display text-lg font-bold text-white/90">
+        <h3 className="font-display text-lg font-bold text-[var(--arc-text-primary)]">
           {plan.name}
         </h3>
         <div className="flex items-baseline gap-2 mt-4 mb-2">
-          <span className="text-4xl font-display font-bold text-white">
+          <span className="text-4xl font-display font-bold text-[var(--arc-text-primary)]">
             {formatEuro(plan.priceCents)}
           </span>
-          <span className="text-xs text-white/40 font-mono lowercase">
+          <span className="text-xs text-[var(--arc-text-secondary)] font-mono lowercase">
             {isFree ? "forever" : "per month, VAT included"}
           </span>
         </div>
-        <p className="text-xs text-white/50 leading-relaxed font-body mb-6">
+        <p className="text-xs text-[var(--arc-text-secondary)] leading-relaxed font-body mb-6">
           {plan.tagline}
         </p>
 
-        <ul className="space-y-3 border-t border-white/[0.04] pt-6 mb-8">
+        {!isFree && !live && (
+          <p className="text-sm text-[var(--arc-text-secondary)] mb-3">
+            Planned capabilities; checkout is closed.
+          </p>
+        )}
+        <ul className="space-y-3 border-t border-[var(--arc-cosmic-border-bright)] pt-6 mb-8">
           {plan.features.map((feat) => (
             <li
               key={feat}
-              className="flex items-start gap-2.5 text-xs text-white/70"
+              className="flex items-start gap-2.5 text-xs text-[var(--arc-text-primary)]"
             >
-              <Check className="w-4 h-4 text-white/40 shrink-0 mt-0.5" />
+              <Check className="w-4 h-4 text-[var(--arc-text-secondary)] shrink-0 mt-0.5" />
               <span>{feat}</span>
             </li>
           ))}
@@ -191,7 +202,7 @@ function PlanCard({
       {isFree ? (
         <Link
           href="/auth/signup"
-          className="w-full py-3 rounded-xl border border-white/[0.12] text-xs font-semibold text-center text-white/80 hover:bg-white/[0.04] transition-colors"
+          className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl border border-[var(--arc-cosmic-border-bright)] text-xs font-semibold text-center text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
         >
           Start free
         </Link>
@@ -200,10 +211,10 @@ function PlanCard({
           type="button"
           onClick={() => onBuy(plan.id)}
           disabled={busy}
-          className={`w-full py-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 ${
+          className={`w-full min-h-11 flex items-center justify-center py-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] motion-reduce:transition-none disabled:opacity-50 ${
             plan.featured
-              ? "bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
-              : "border border-white/[0.12] text-white/80 hover:bg-white/[0.04]"
+              ? "bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] hover:shadow-[var(--arc-shadow-gold-glow)]"
+              : "border border-[var(--arc-cosmic-border-bright)] text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)]"
           }`}
         >
           {busy ? (
@@ -215,9 +226,9 @@ function PlanCard({
       ) : (
         <a
           href="#founding-circle"
-          className="w-full py-3 rounded-xl border border-dashed border-white/[0.14] text-xs font-semibold text-center text-white/60 hover:bg-white/[0.04] transition-colors"
+          className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl border border-dashed border-[var(--arc-cosmic-border-bright)] text-xs font-semibold text-center text-[var(--arc-text-secondary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
         >
-          Checkout opens soon. Reserve founding pricing
+          Join the release list
         </a>
       )}
     </div>
@@ -241,22 +252,22 @@ function PackCard({
       className={`rounded-2xl border p-5 flex flex-col gap-3 ${
         pack.popular
           ? "border-[var(--arc-brand-atlantean-teal)]/40 bg-[var(--arc-brand-atlantean-teal)]/[0.03]"
-          : "border-white/[0.06] bg-white/[0.015]"
+          : "border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)]"
       }`}
     >
       <div className="flex items-baseline justify-between">
-        <span className="font-display text-2xl font-bold text-white">
+        <span className="font-display text-2xl font-bold text-[var(--arc-text-primary)]">
           {pack.credits.toLocaleString("en-US")}
         </span>
-        <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">
+        <span className="text-[10px] font-mono text-[var(--arc-text-secondary)] tracking-widest">
           credits
         </span>
       </div>
       <div className="flex items-baseline gap-2">
-        <span className="text-lg font-display font-semibold text-white/90">
+        <span className="text-lg font-display font-semibold text-[var(--arc-text-primary)]">
           {formatEuro(pack.priceCents)}
         </span>
-        <span className="text-[10px] font-mono text-white/40">
+        <span className="text-[10px] font-mono text-[var(--arc-text-secondary)]">
           {perCredit} ct per credit
         </span>
       </div>
@@ -265,7 +276,7 @@ function PackCard({
           type="button"
           onClick={() => onBuy(pack.id)}
           disabled={busy}
-          className="mt-auto py-2.5 rounded-xl border border-white/[0.12] text-xs font-semibold text-white/80 hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+          className="mt-auto min-h-11 py-2.5 rounded-xl border border-[var(--arc-cosmic-border-bright)] text-xs font-semibold text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50"
         >
           {busy ? (
             <CircleNotch className="w-4 h-4 animate-spin mx-auto" />
@@ -274,7 +285,7 @@ function PackCard({
           )}
         </button>
       ) : (
-        <span className="mt-auto py-2.5 rounded-xl border border-dashed border-white/[0.1] text-[11px] text-center text-white/40">
+        <span className="mt-auto min-h-11 py-2.5 rounded-xl border border-dashed border-[var(--arc-cosmic-border-bright)] text-[11px] text-center text-[var(--arc-text-secondary)]">
           Available with checkout
         </span>
       )}
@@ -283,6 +294,7 @@ function PackCard({
 }
 
 export function PricingClient({ billing }: { billing: PricingBillingState }) {
+  const reducedMotion = useReducedMotion();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -322,9 +334,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="relative bg-[var(--arc-cosmic-void)] min-h-screen text-white pb-24">
-        <div className="fixed inset-0 -z-10 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.12),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(167,139,250,0.06),transparent_50%)] pointer-events-none" />
-
+      <div className="relative bg-[var(--arc-cosmic-void)] min-h-screen text-[var(--arc-text-primary)] pb-24">
         <main className="max-w-7xl mx-auto px-6 pt-20">
           <section className="text-center mb-16">
             <div className="flex justify-center mb-6">
@@ -333,7 +343,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                 alt="Arcanea Mascot"
                 width={120}
                 height={120}
-                className="object-contain drop-shadow-[0_0_30px_rgba(127,255,212,0.15)] animate-[mascot-float_3.5s_ease-in-out_infinite]"
+                className="object-contain"
               />
             </div>
 
@@ -342,27 +352,25 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                 size={12}
                 className="text-[var(--arc-brand-atlantean-teal)]"
               />
-              <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest">
+              <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] tracking-widest">
                 {billing.live
                   ? billing.sandbox
                     ? "Checkout in sandbox"
                     : "Checkout open"
-                  : "Founding pricing, checkout opening"}
+                  : "Plans in preparation"}
               </span>
             </div>
 
             <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight mb-4">
               Your keys are free.
-              <span className="block bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent mt-1">
+              <span className="block text-[var(--arc-brand-arcanean-gold)] mt-1">
                 Continuity is what you pay for.
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-white/50 max-w-2xl mx-auto leading-relaxed font-body">
-              Bring your own API keys and build for nothing, forever. A plan
-              keeps the memory of your world alive across sessions and publishes
-              it under your name. Credits buy generation on our keys when you
-              would rather not manage your own.
+            <p className="text-base md:text-lg text-[var(--arc-text-secondary)] max-w-2xl mx-auto leading-relaxed font-body">
+              Use your own keys for chat and worlds, or credits for managed
+              images. Hosted plans are in preparation.
             </p>
           </section>
 
@@ -379,7 +387,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
           </section>
 
           {checkout.state.error && (
-            <p className="flex items-center justify-center gap-2 text-xs text-red-400 mb-10">
+            <p className="flex items-center justify-center gap-2 text-xs text-[var(--arc-fire)] mb-10">
               <Warning className="w-3.5 h-3.5" />
               {checkout.state.error}
             </p>
@@ -390,9 +398,9 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
               <h2 className="text-xl font-display font-semibold mb-1">
                 Credits, when you want our keys
               </h2>
-              <p className="text-xs text-white/45 font-body mb-5">
-                One credit is about one cent of provider cost. Credits never
-                expire. Bring your own key and every action below costs nothing.
+              <p className="text-xs text-[var(--arc-text-secondary)] font-body mb-5">
+                Managed images use credits. The other metered actions and their
+                rates are planned. Credits do not expire.
               </p>
               <div className="grid sm:grid-cols-3 gap-3">
                 {CREDIT_PACKS.map((pack) => (
@@ -406,20 +414,24 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                 ))}
               </div>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-5">
-              <h3 className="text-[10px] font-mono text-white/40 uppercase tracking-widest mb-4">
-                What a credit buys
+            <div className="rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] p-5">
+              <h3 className="text-[10px] font-mono text-[var(--arc-text-secondary)] tracking-widest mb-4">
+                Image costs and planned rates
               </h3>
-              <ul className="divide-y divide-white/[0.05]">
+              <ul className="divide-y divide-[var(--arc-cosmic-border-bright)]">
                 {visibleCosts.map((cost) => (
                   <li
                     key={cost.id}
                     className="flex items-center justify-between py-2.5 text-xs"
                   >
-                    <span className="text-white/70">{cost.label}</span>
-                    <span className="font-mono text-white/90">
+                    <span className="text-[var(--arc-text-primary)]">
+                      {cost.label}
+                    </span>
+                    <span className="font-mono text-[var(--arc-text-primary)]">
                       {cost.credits}{" "}
-                      <span className="text-white/35">/ {cost.unit}</span>
+                      <span className="text-[var(--arc-text-secondary)]">
+                        / {cost.unit}
+                      </span>
                     </span>
                   </li>
                 ))}
@@ -431,7 +443,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
             id="founding-circle"
             className="max-w-3xl mx-auto mb-20 scroll-mt-24"
           >
-            <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0c0d12]/90 to-[#050608]/95 p-8 md:p-12 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-hidden">
+            <div className="relative rounded-3xl border border-[var(--arc-cosmic-border-bright)] bg-gradient-to-br from-[var(--arc-cosmic-deep)] to-[var(--arc-cosmic-void)] p-8 md:p-12 shadow-[var(--arc-shadow-elevation-3)] overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--arc-brand-arcanean-gold)]/5 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--arc-brand-atlantean-teal)]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -442,32 +454,30 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                       size={12}
                       className="text-[var(--arc-brand-arcanean-gold)]"
                     />
-                    <span className="text-[9px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider font-bold">
+                    <span className="text-[9px] font-mono text-[var(--arc-brand-arcanean-gold)] tracking-wider font-bold">
                       Founding Circle
                     </span>
                   </div>
                   <h3 className="text-2xl md:text-3xl font-display font-bold tracking-tight mb-3">
-                    First hundred creators
+                    Follow the release
                   </h3>
-                  <p className="text-xs text-white/50 leading-relaxed font-body mb-4">
-                    The first hundred paying creators keep a permanent 40%
-                    discount on Creator and Studio, a direct line to the
-                    developer, and early access to every new generation surface.
-                    {!billing.live &&
-                      " Leave your email and we open checkout to you first."}
+                  <p className="text-xs text-[var(--arc-text-secondary)] leading-relaxed font-body mb-4">
+                    Leave your email for release updates and confirmed plan
+                    availability. Joining this list does not reserve a purchase
+                    or a discount.
                   </p>
-                  <ul className="space-y-2 text-[11px] text-white/60 font-mono">
+                  <ul className="space-y-2 text-[11px] text-[var(--arc-text-secondary)] font-mono">
                     <li className="flex items-center gap-2">
                       <span className="text-[var(--arc-brand-arcanean-gold)]">
-                        ✦
+                        <Check className="w-4 h-4" aria-hidden="true" />
                       </span>
-                      Permanent lifetime discount
+                      Release updates
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-[var(--arc-brand-arcanean-gold)]">
-                        ✦
+                        <Check className="w-4 h-4" aria-hidden="true" />
                       </span>
-                      Private founder channel
+                      Confirmed pricing and availability
                     </li>
                   </ul>
                 </div>
@@ -476,45 +486,58 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                   <AnimatePresence mode="wait">
                     {status === "success" ? (
                       <m.div
-                        initial={{ opacity: 0, scale: 0.95 }}
+                        initial={
+                          reducedMotion ? false : { opacity: 0, scale: 0.95 }
+                        }
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="rounded-2xl border border-green-500/25 bg-green-500/5 p-6 text-center flex flex-col items-center justify-center gap-3 backdrop-blur-sm"
+                        exit={reducedMotion ? undefined : { opacity: 0 }}
+                        transition={{
+                          duration: reducedMotion ? 0 : 0.2,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/25 bg-[var(--arc-brand-atlantean-teal)]/5 p-6 text-center flex flex-col items-center justify-center gap-3 backdrop-blur-sm"
                       >
-                        <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
-                          <Check className="w-6 h-6 text-green-400" />
+                        <div className="w-12 h-12 rounded-full bg-[var(--arc-brand-atlantean-teal)]/20 flex items-center justify-center border border-[var(--arc-brand-atlantean-teal)]/30">
+                          <Check className="w-6 h-6 text-[var(--arc-brand-atlantean-teal)]" />
                         </div>
                         <h4 className="font-semibold text-sm">
                           You are on the list.
                         </h4>
-                        <p className="text-[11px] text-green-300/70 font-body">
-                          Watch your inbox. Founding pricing is yours when
-                          checkout opens.
+                        <p className="text-[11px] text-[var(--arc-brand-atlantean-teal)]/70 font-body">
+                          We will email you when plans are available.
                         </p>
                       </m.div>
                     ) : (
                       <m.form
                         onSubmit={handleWaitlistSubmit}
-                        initial={{ opacity: 0 }}
+                        initial={reducedMotion ? false : { opacity: 0 }}
                         animate={{ opacity: 1 }}
+                        transition={{
+                          duration: reducedMotion ? 0 : 0.2,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                         className="space-y-3"
                       >
                         <div>
-                          <label className="block text-[10px] font-mono text-white/40 uppercase tracking-widest mb-2">
-                            Reserve founding pricing
+                          <label
+                            htmlFor="release-email"
+                            className="block text-sm font-mono text-[var(--arc-text-secondary)] mb-2"
+                          >
+                            Email for release updates
                           </label>
                           <input
+                            id="release-email"
                             type="email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Your creator email"
-                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-xs focus:outline-none focus:border-[var(--arc-brand-arcanean-gold)]/50 transition-colors text-white placeholder-white/30 font-body"
+                            className="w-full bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border-bright)] rounded-xl p-3 text-xs focus:outline-none focus:border-[var(--arc-brand-arcanean-gold)]/50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] text-[var(--arc-text-primary)] placeholder-[var(--arc-text-secondary)] font-body"
                           />
                         </div>
 
                         {status === "error" && (
-                          <div className="flex gap-2 text-[10px] text-red-400 items-start">
+                          <div className="flex gap-2 text-[10px] text-[var(--arc-fire)] items-start">
                             <Warning className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                             <span>{errorMessage}</span>
                           </div>
@@ -523,14 +546,14 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                         <button
                           type="submit"
                           disabled={status === "loading"}
-                          className="w-full py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all active:scale-[0.98] disabled:opacity-50"
+                          className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-xs flex items-center justify-center gap-2 hover:shadow-[var(--arc-shadow-gold-glow)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] motion-reduce:transition-none disabled:opacity-50"
                         >
                           {status === "loading" ? (
-                            <CircleNotch className="w-4 h-4 animate-spin text-black" />
+                            <CircleNotch className="w-4 h-4 animate-spin text-[var(--arc-cosmic-void)]" />
                           ) : (
                             <>
-                              <Envelope className="w-4 h-4 text-black" />
-                              <span>Reserve my place</span>
+                              <Envelope className="w-4 h-4 text-[var(--arc-cosmic-void)]" />
+                              <span>Join the release list</span>
                             </>
                           )}
                         </button>
@@ -542,12 +565,12 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
             </div>
           </section>
 
-          <section className="pb-20 border-t border-white/[0.04] pt-16">
+          <section className="pb-20 border-t border-[var(--arc-cosmic-border-bright)] pt-16">
             <div className="text-center mb-12">
               <h2 className="text-2xl font-display font-semibold mb-2">
-                Free on your own keys
+                The creator workspace
               </h2>
-              <p className="text-sm text-white/40 font-body">
+              <p className="text-sm text-[var(--arc-text-secondary)] font-body">
                 Every creation surface works with the API keys you already have.
               </p>
             </div>
@@ -556,7 +579,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
               {FREE_CAPABILITIES.map(({ Icon, name, desc, accent }) => (
                 <div
                   key={name}
-                  className="flex gap-3.5 p-5 rounded-2xl bg-white/[0.015] border border-white/[0.05] hover:border-white/[0.1] transition-all hover:bg-white/[0.03]"
+                  className="flex gap-3.5 p-5 rounded-2xl bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border-bright)] hover:border-[var(--arc-cosmic-border-bright)] transition-all hover:bg-[var(--arc-cosmic-surface)]"
                 >
                   <Icon
                     size={20}
@@ -564,10 +587,10 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                     style={{ color: accent, flexShrink: 0, marginTop: 2 }}
                   />
                   <div>
-                    <h3 className="font-semibold text-sm mb-1 text-white/90">
+                    <h3 className="font-semibold text-sm mb-1 text-[var(--arc-text-primary)]">
                       {name}
                     </h3>
-                    <p className="text-white/40 text-xs leading-relaxed font-body">
+                    <p className="text-[var(--arc-text-secondary)] text-xs leading-relaxed font-body">
                       {desc}
                     </p>
                   </div>
@@ -576,12 +599,12 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
             </div>
           </section>
 
-          <section className="py-16 border-t border-white/[0.04]">
+          <section className="py-16 border-t border-[var(--arc-cosmic-border-bright)]">
             <div className="text-center mb-10">
               <h2 className="text-2xl font-display font-semibold mb-2">
                 Open where it matters
               </h2>
-              <p className="text-sm text-white/45 max-w-lg mx-auto font-body">
+              <p className="text-sm text-[var(--arc-text-secondary)] max-w-lg mx-auto font-body">
                 The MCP server, the skills, and the world engine are open
                 source. Your worlds export as Markdown and JSON at any time.
                 Your canon stays yours.
@@ -596,12 +619,12 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
               ].map(({ num, label }) => (
                 <div
                   key={label}
-                  className="text-center p-6 rounded-2xl bg-white/[0.015] border border-white/[0.06]"
+                  className="text-center p-6 rounded-2xl bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border-bright)]"
                 >
                   <div className="text-3xl font-display font-bold text-[var(--arc-brand-atlantean-teal)] mb-1">
                     {num}
                   </div>
-                  <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-1">
+                  <div className="text-xs font-mono text-[var(--arc-text-secondary)] tracking-widest mt-1">
                     {label}
                   </div>
                 </div>
@@ -613,7 +636,7 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                 href="https://github.com/frankxai/arcanea"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-xs font-semibold uppercase tracking-wider text-white/70 hover:bg-white/[0.04] transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[var(--arc-cosmic-border-bright)] text-xs font-semibold tracking-wider text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               >
                 <GitBranch size={14} />
                 <span>Browse the source</span>

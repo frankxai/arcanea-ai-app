@@ -1,5 +1,9 @@
 -- Recovery for the draft billing kernel. Apply after 20261005000001 only.
 -- No production application is implied by checking this migration into Git.
+alter table public.billing_accounts add column if not exists polar_event_at timestamptz;
+alter function public.billing_account_json(uuid) set search_path = '';
+alter function public.billing_ensure_account(uuid,integer) set search_path = '';
+alter function public.billing_set_plan(uuid,text,text,text,text,text,timestamptz,boolean) set search_path = '';
 create table if not exists public.billing_operations (
   reference text primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
@@ -14,6 +18,24 @@ alter table public.billing_operations enable row level security;
 revoke all on public.billing_operations from public, anon, authenticated;
 -- Image results and prompts are private; only trusted RPCs access this table.
 grant all on public.billing_operations to service_role;
+
+-- This function only exists after the recovery migration commits.
+create or replace function public.billing_recovery_ready()
+returns boolean language sql security definer set search_path = '' as $$ select true $$;
+revoke all on function public.billing_recovery_ready() from public,anon,authenticated;
+grant execute on function public.billing_recovery_ready() to service_role;
+
+-- The ledger reference owns welcome idempotency even on an existing account.
+create or replace function public.billing_ensure_account(p_user uuid,p_welcome integer default 0)
+returns jsonb language plpgsql security definer set search_path = '' as $$
+begin
+  insert into public.billing_accounts(user_id) values(p_user) on conflict do nothing;
+  if p_welcome > 0 then
+    perform public.billing_grant_credits(p_user,p_welcome,'grant','welcome:' || p_user::text,
+      jsonb_build_object('reason','welcome'));
+  end if;
+  return public.billing_account_json(p_user);
+end $$;
 
 create or replace function public.billing_operation_json(p_user uuid, p_reference text)
 returns jsonb language sql security definer set search_path = '' as $$
@@ -91,6 +113,10 @@ begin
     return public.billing_operation_json(p_user,p_reference) || jsonb_build_object('ok',true,'idempotent',true);
   end if;
   if p_actual is null or p_actual < 0 or p_actual > v_amount then raise exception 'invalid settlement' using errcode = '22023'; end if;
+  if not exists(select 1 from public.billing_operations where reference=p_reference and user_id=p_user
+    and state='result_ready' and result is not null and charged=p_actual) then
+    raise exception 'cannot settle without staged result' using errcode='22023';
+  end if;
   v_refund := v_amount-p_actual;
   update public.billing_accounts set reserved = reserved-v_amount,balance = balance+v_refund where user_id = p_user
     returning balance,reserved into v_bal,v_res;
@@ -110,6 +136,10 @@ begin
   if not found then raise exception 'unknown reservation' using errcode='P0002'; end if;
   if exists(select 1 from public.credit_ledger where kind in ('settle','release') and reference=p_reference and user_id=p_user) then
     return public.billing_operation_json(p_user,p_reference) || jsonb_build_object('ok',true,'idempotent',true);
+  end if;
+  if not exists(select 1 from public.billing_operations where reference=p_reference and user_id=p_user
+    and state in ('running','refund_pending')) then
+    raise exception 'cannot release staged result' using errcode='22023';
   end if;
   update public.billing_accounts set reserved=reserved-v_amount,balance=balance+v_amount where user_id=p_user
     returning balance,reserved into v_bal,v_res;
@@ -171,10 +201,15 @@ end $$;
 create or replace function public.billing_apply_event(p_id text,p_type text,p_payload jsonb,p_intents jsonb)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v_event public.billing_events; v_intent jsonb; v_count integer := 0;
+  v_user uuid; v_at timestamptz; v_account public.billing_accounts;
 begin
-  if p_id is null or length(p_id)=0 or length(p_id)>200 or jsonb_typeof(p_intents) <> 'array' then
+  if p_id is null or length(p_id)=0 or length(p_id)>200 or p_intents is null or jsonb_typeof(p_intents) <> 'array' then
     raise exception 'invalid event' using errcode='22023';
   end if;
+  if (p_type='order.paid' or p_type like 'subscription.%') and jsonb_array_length(p_intents)=0 then
+    raise exception 'required fulfillment intent missing' using errcode='22023';
+  end if;
+  if p_type='order.refunded' then raise exception 'refund reconciliation required' using errcode='22023'; end if;
   insert into public.billing_events(id,type,payload) values(p_id,p_type,p_payload) on conflict do nothing;
   select * into v_event from public.billing_events where id=p_id for update;
   if v_event.type <> p_type or v_event.payload <> p_payload then raise exception 'event identity conflict' using errcode='22023'; end if;
@@ -184,9 +219,19 @@ begin
       perform public.billing_grant_credits((v_intent->>'userId')::uuid,(v_intent->>'amount')::integer,
         v_intent->>'grantKind',v_intent->>'reference',coalesce(v_intent->'metadata','{}'::jsonb));
     elsif v_intent->>'kind'='setPlan' then
+      v_user := (v_intent->>'userId')::uuid;
+      v_at := (v_intent->>'occurredAt')::timestamptz;
+      if v_at is null then raise exception 'event version missing' using errcode='22023'; end if;
+      insert into public.billing_accounts(user_id) values(v_user) on conflict do nothing;
+      select * into v_account from public.billing_accounts where user_id=v_user for update;
+      if v_account.polar_event_at is not null and v_at <= v_account.polar_event_at then continue; end if;
+      if v_account.polar_subscription_id is not null and v_account.polar_subscription_id <> v_intent->>'polarSubscriptionId' then
+        raise exception 'subscription identity requires reconciliation' using errcode='22023';
+      end if;
       perform public.billing_set_plan((v_intent->>'userId')::uuid,v_intent->>'plan',v_intent->>'status',
         v_intent->>'polarCustomerId',v_intent->>'polarSubscriptionId',v_intent->>'polarProductId',
         (v_intent->>'currentPeriodEnd')::timestamptz,coalesce((v_intent->>'cancelAtPeriodEnd')::boolean,false));
+      update public.billing_accounts set polar_event_at=v_at where user_id=v_user;
     else raise exception 'unknown intent' using errcode='22023'; end if;
     v_count := v_count+1;
   end loop;

@@ -81,7 +81,7 @@ test("polar product mapping round-trips through env and ignores unknown ids", ()
   assert.equal(skuForPolarProduct(null, env), null);
 });
 
-test("billing is live only with token, webhook secret and both paid plans", () => {
+test("billing is live only after explicit release with token, webhook secret and both paid plans", () => {
   assert.equal(billingReadiness({}).live, false);
   const partial = billingReadiness({
     POLAR_ACCESS_TOKEN: "t",
@@ -91,6 +91,7 @@ test("billing is live only with token, webhook secret and both paid plans", () =
   assert.equal(partial.live, false);
   assert.equal(partial.plansReady, false);
   const ready = billingReadiness({
+    ARCANEA_BILLING_ENABLED: "true",
     POLAR_ACCESS_TOKEN: "t",
     POLAR_WEBHOOK_SECRET: "s",
     POLAR_PRODUCT_CREATOR: "a",
@@ -101,4 +102,13 @@ test("billing is live only with token, webhook secret and both paid plans", () =
   assert.equal(ready.live, true);
   assert.deepEqual(ready.packsReady, ["pack-2500"]);
   assert.equal(ready.sandbox, true);
+  assert.equal(
+    billingReadiness({
+      POLAR_ACCESS_TOKEN: "t",
+      POLAR_WEBHOOK_SECRET: "s",
+      POLAR_PRODUCT_CREATOR: "a",
+      POLAR_PRODUCT_STUDIO: "b",
+    }).live,
+    false,
+  );
 });

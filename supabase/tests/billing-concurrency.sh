@@ -14,9 +14,11 @@ done
 [ "$ready" -gt 0 ]
 psql -v ON_ERROR_STOP=1 -c "SELECT billing_settle_reservation('$u','race:target',10);" > /tmp/billing-settle.log &
 a=$!
-psql -v ON_ERROR_STOP=1 -c "SELECT billing_release_reservation('$u','race:target');" > /tmp/billing-release.log &
+psql -v ON_ERROR_STOP=1 -c "SELECT billing_release_reservation('$u','race:target');" > /tmp/billing-release.log 2>&1 &
 b=$!
-wait "$blocker"; wait "$a"; wait "$b"
+wait "$blocker"; wait "$a"
+# Refund either observes the completed terminal or is refused on staged output.
+if ! wait "$b"; then grep -q 'cannot release staged result' /tmp/billing-release.log; fi
 psql -v ON_ERROR_STOP=1 <<'SQL'
 DO $$ BEGIN
   IF (SELECT count(*) FROM credit_ledger WHERE reference='race:target' AND kind IN ('settle','release')) <> 1 THEN RAISE EXCEPTION 'double finalization'; END IF;

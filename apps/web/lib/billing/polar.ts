@@ -116,6 +116,7 @@ export type LedgerIntent =
       polarProductId: string | null;
       currentPeriodEnd: Date | null;
       cancelAtPeriodEnd: boolean;
+      occurredAt: Date;
     };
 
 /**
@@ -146,6 +147,7 @@ export interface PolarSubscriptionLike {
 
 export interface PolarEventLike {
   type: string;
+  timestamp?: Date | string;
   data: PolarOrderLike | PolarSubscriptionLike | Record<string, unknown>;
 }
 
@@ -182,9 +184,9 @@ function mapSubscriptionStatus(status: string | undefined): PlanStatus {
       return "paused";
     case "incomplete":
     case "incomplete_expired":
-      return "none";
+      throw new Error("Incomplete subscription requires reconciliation");
     default:
-      return "none";
+      throw new Error("Unknown subscription status requires reconciliation");
   }
 }
 
@@ -204,12 +206,19 @@ export function mapPolarEvent(
 ): LedgerIntent[] {
   const intents: LedgerIntent[] = [];
 
+  if (event.type === "order.refunded") {
+    throw new Error(
+      "Refund requires credit reconciliation before acknowledgement",
+    );
+  }
+
   if (event.type === "order.paid") {
     const order = event.data as PolarOrderLike;
-    if (order.paid === false) return intents;
+    if (order.paid === false) throw new Error("Paid event is inconsistent");
     const userId = resolveUserId(order);
     const sku = skuForPolarProduct(order.productId, env);
-    if (!userId || !sku) return intents;
+    if (!userId || !sku || !order.id)
+      throw new Error("Paid order cannot be fulfilled yet");
 
     const pack = getPack(sku);
     if (pack) {
@@ -230,6 +239,15 @@ export function mapPolarEvent(
 
     const plan = getPlan(sku);
     if (plan && plan.monthlyCredits > 0) {
+      if (
+        !["subscription_create", "subscription_cycle"].includes(
+          order.billingReason ?? "",
+        )
+      ) {
+        throw new Error(
+          "Prorated or unknown order requires credit reconciliation",
+        );
+      }
       intents.push({
         kind: "grant",
         userId,
@@ -250,14 +268,18 @@ export function mapPolarEvent(
   if (event.type.startsWith("subscription.")) {
     const sub = event.data as PolarSubscriptionLike;
     const userId = resolveUserId(sub);
-    if (!userId) return intents;
+    if (!userId)
+      throw new Error("Subscription customer cannot be resolved yet");
     const sku = skuForPolarProduct(sub.productId, env);
     const plan = sku ? getPlan(sku) : undefined;
-    if (!plan) return intents;
+    if (!plan) throw new Error("Subscription product cannot be resolved yet");
+    const occurredAt = toDate(event.timestamp);
+    if (!occurredAt || !sub.id)
+      throw new Error("Subscription event has no stable version");
 
     const status = mapSubscriptionStatus(sub.status);
     const revoked = event.type === "subscription.revoked";
-    const lostAccess = revoked || status === "none";
+    const lostAccess = revoked;
 
     intents.push({
       kind: "setPlan",
@@ -269,6 +291,7 @@ export function mapPolarEvent(
       polarProductId: sub.productId ?? null,
       currentPeriodEnd: toDate(sub.currentPeriodEnd),
       cancelAtPeriodEnd: Boolean(sub.cancelAtPeriodEnd),
+      occurredAt,
     });
   }
 

@@ -11,7 +11,10 @@ import { enhanceImagePrompt } from "@/lib/imagine/enhance-image-prompt";
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { generateImages } from "@/lib/imagine/generate";
+import {
+  generateImages,
+  OPENROUTER_IMAGE_MODELS,
+} from "@/lib/imagine/generate";
 import { applyStyle } from "@/lib/imagine/styles";
 import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 import { createClient } from "@/lib/supabase/server";
@@ -27,21 +30,11 @@ import {
 
 export const maxDuration = 60;
 
-const PREMIUM_MODEL_HINTS = [
-  "pro-image",
-  "flux.2-max",
-  "gpt-image",
-  "imagen-4",
-];
-
 function imageAction(model: string | undefined): ActionId {
-  if (
-    model &&
-    PREMIUM_MODEL_HINTS.some((hint) => model.toLowerCase().includes(hint))
-  ) {
-    return "image.premium";
-  }
-  return "image.standard";
+  const entry = OPENROUTER_IMAGE_MODELS.find((entry) => entry.id === model);
+  return entry?.tier === "premium" || entry?.tier === "quality"
+    ? "image.premium"
+    : "image.standard";
 }
 
 export async function POST(req: NextRequest) {
@@ -83,6 +76,8 @@ export async function POST(req: NextRequest) {
     }
     if (
       (model != null && typeof model !== "string") ||
+      (model != null &&
+        !OPENROUTER_IMAGE_MODELS.some((entry) => entry.id === model)) ||
       (style != null && typeof style !== "string") ||
       (provider != null &&
         !["grok", "openrouter", "gemini"].includes(provider)) ||
@@ -152,13 +147,19 @@ export async function POST(req: NextRequest) {
             processedPrompt,
             style || "none",
           );
-          const result = await generateImages({
+          const generated = await generateImages({
             prompt: styledPrompt,
             count,
             aspectRatio,
             forceProvider: provider || undefined,
             openrouterModel: model || undefined,
           });
+          // The quoted request count is the maximum billable/deliverable quantity.
+          const result = {
+            ...generated,
+            images: generated.images.slice(0, count),
+          };
+          if (result.images.length === 0) throw new Error("No images returned");
           return { result, actualCredits: result.images.length * perImage };
         },
       );

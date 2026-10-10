@@ -71,7 +71,7 @@ export const PLANS: readonly Plan[] = [
     monthlyCredits: 0,
     tagline: "Bring your own keys. Read everything. Build locally.",
     features: [
-      "Bring Your Own Key for chat, worlds and images",
+      "Bring your own key for chat and worlds; BYOK images are planned",
       "The whole Library of Arcanea, open",
       "Arcanea MCP server and skills, open source",
       "Local Markdown and JSON exports",
@@ -261,6 +261,7 @@ export function billingReadiness(
   env: Record<string, string | undefined> = process.env,
 ) {
   const hasToken = Boolean(env.POLAR_ACCESS_TOKEN?.trim());
+  const enabled = env.ARCANEA_BILLING_ENABLED === "true";
   const hasWebhook = Boolean(env.POLAR_WEBHOOK_SECRET?.trim());
   const plansReady = PLANS.filter((p) => p.polarProductEnv).every((p) =>
     Boolean(env[p.polarProductEnv]?.trim()),
@@ -269,7 +270,8 @@ export function billingReadiness(
     Boolean(env[p.polarProductEnv]?.trim()),
   ).map((p) => p.id);
   return {
-    live: hasToken && hasWebhook && plansReady,
+    live: enabled && hasToken && hasWebhook && plansReady,
+    enabled,
     hasToken,
     hasWebhook,
     plansReady,

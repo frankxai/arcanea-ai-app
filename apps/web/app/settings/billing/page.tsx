@@ -55,8 +55,8 @@ export default async function BillingPage({
   const entitlements = account ? ENTITLEMENTS[account.plan] : null;
 
   return (
-    <main className="mx-auto max-w-3xl px-6 pt-16 pb-24 text-white">
-      <p className="text-[10px] font-mono uppercase tracking-widest text-white/40 mb-2">
+    <main className="mx-auto max-w-3xl px-6 pt-16 pb-24 text-[var(--arc-text-primary)]">
+      <p className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-2">
         Settings
       </p>
       <h1 className="font-display text-3xl font-bold tracking-tight mb-8">
@@ -64,9 +64,9 @@ export default async function BillingPage({
       </h1>
 
       {params.checkout === "success" && (
-        <div className="mb-8 rounded-2xl border border-green-500/25 bg-green-500/5 p-5 text-sm">
+        <div className="mb-8 rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/25 bg-[var(--arc-brand-atlantean-teal)]/5 p-5 text-sm">
           <p className="font-semibold">Thank you.</p>
-          <p className="text-white/60 text-xs mt-1">
+          <p className="text-[var(--arc-text-secondary)] text-xs mt-1">
             Your {params.sku ? `${params.sku} ` : ""}purchase is being
             confirmed. Credits and plan changes appear here within a minute of
             the payment clearing.
@@ -75,7 +75,7 @@ export default async function BillingPage({
       )}
 
       {ledgerError && (
-        <div className="mb-8 rounded-2xl border border-amber-500/25 bg-amber-500/5 p-5 text-xs text-amber-200/80">
+        <div className="mb-8 rounded-2xl border border-[var(--arc-gold-medium)]/25 bg-[var(--arc-gold-medium)]/5 p-5 text-xs text-[var(--arc-gold-medium)]/80">
           {ledgerError}
         </div>
       )}
@@ -135,10 +135,10 @@ export default async function BillingPage({
 
       {entitlements && (
         <section className="mt-12">
-          <h2 className="text-[10px] font-mono uppercase tracking-widest text-white/40 mb-4">
+          <h2 className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-4">
             What your plan includes
           </h2>
-          <ul className="grid sm:grid-cols-2 gap-2 text-xs text-white/70">
+          <ul className="grid sm:grid-cols-2 gap-2 text-xs text-[var(--arc-text-primary)]">
             <li>Hosted worlds: {entitlements.hostedWorlds}</li>
             <li>Published world sites: {entitlements.publishedSites}</li>
             <li>Seats: {entitlements.seats}</li>
@@ -153,28 +153,31 @@ export default async function BillingPage({
       )}
 
       <section className="mt-12">
-        <h2 className="text-[10px] font-mono uppercase tracking-widest text-white/40 mb-4">
+        <h2 className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-4">
           Credit costs on Arcanea keys
         </h2>
-        <ul className="divide-y divide-white/[0.05] rounded-2xl border border-white/[0.06] bg-white/[0.015] px-5">
+        <ul className="divide-y divide-[var(--arc-cosmic-border-bright)] rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] px-5">
           {ACTION_COSTS.filter((a) => a.credits > 0).map((a) => (
             <li
               key={a.id}
               className="flex items-center justify-between py-2.5 text-xs"
             >
-              <span className="text-white/70">{a.label}</span>
-              <span className="font-mono text-white/90">
-                {a.credits} <span className="text-white/35">/ {a.unit}</span>
+              <span className="text-[var(--arc-text-primary)]">{a.label}</span>
+              <span className="font-mono text-[var(--arc-text-primary)]">
+                {a.credits}{" "}
+                <span className="text-[var(--arc-text-secondary)]">
+                  / {a.unit}
+                </span>
               </span>
             </li>
           ))}
         </ul>
-        <p className="text-[11px] text-white/40 mt-3">
+        <p className="text-[11px] text-[var(--arc-text-secondary)] mt-3">
           Anything you run on your own API key costs zero credits. Manage keys
           under{" "}
           <Link
             href="/settings/providers"
-            className="underline underline-offset-2 hover:text-white/70"
+            className="underline underline-offset-2 hover:text-[var(--arc-text-primary)]"
           >
             Providers
           </Link>
@@ -195,12 +198,14 @@ function Stat({
   sub: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-5">
-      <p className="text-[10px] font-mono uppercase tracking-widest text-white/40">
+    <div className="rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] p-5">
+      <p className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)]">
         {label}
       </p>
       <p className="font-display text-2xl font-bold mt-2">{value}</p>
-      <p className="text-[11px] text-white/45 mt-1 capitalize">{sub}</p>
+      <p className="text-[11px] text-[var(--arc-text-secondary)] mt-1 capitalize">
+        {sub}
+      </p>
     </div>
   );
 }
