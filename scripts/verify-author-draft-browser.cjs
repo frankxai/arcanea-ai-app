@@ -334,6 +334,7 @@ async function main() {
       const other = await browser.newContext({ acceptDownloads: true });
       try {
         const page = await other.newPage();
+        if (config.shareUrl) await page.goto(config.shareUrl);
         await login(page, base, config.accounts[1]);
         const response = await other.request.get(`${base}${api}`);
         assert.equal(response.status(), 200);
