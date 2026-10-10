@@ -324,7 +324,9 @@ async function main() {
       ?.getByRole("region", { name: "Passage visualization" })
       .innerText()
       .catch(() => "Unavailable");
-    throw Error(receipt.error);
+    throw Error(
+      "Real Auth browser acceptance failed; inspect its bounded receipt.",
+    );
   } finally {
     // Never record passwords, sessions, JWTs or cookie values in public evidence.
     receipt.pageErrors = pageErrors.map(redact);
@@ -353,7 +355,9 @@ async function main() {
     await browser.close();
   }
 }
-main().catch((error) => {
-  console.error(error.stack || error.message);
+main().catch(() => {
+  console.error(
+    "Real Auth browser acceptance failed; inspect its bounded receipt.",
+  );
   process.exitCode = 1;
 });

@@ -37,6 +37,30 @@ two new compiled-handler tests initially failed; fresh hosted acceptance remains
 required. Failed save responses now reach the bounded browser receipt normally.
 Rationale: https://nextjs.org/docs/app/guides/data-security#allowed-origins-advanced.
 
+At46aefe7197f562ad7e61c0622367eb763399b820, hosted Reading scene38080378312
+passed all six source/recovery tests, nine actual route tests, six PostgREST cases,
+four browser modes and five actual password/SSR-cookie/private-save checks.
+The real Auth receipts and hashes match that source and report complete owned
+cleanup. Native replacement CI38080419679 passed lint, typecheck and build.
+The CodeQL analysis job38080378290 completed successfully, but its separate
+finding check114296333904 failed with one high and three medium findings.
+Do not treat an analysis-job completion as a clean security verdict.
+
+The high finding came from the fixture's add-mask log calls. Credentials are now
+never emitted; application/test child stdout is suppressed and bounded redacted
+receipts carry diagnostics. The three medium findings came from writing provider
+responses directly into review artifacts. Full validated review/cost evidence now
+uses bounded escaped JSON records in the hosted job log; fixed-path artifact
+receipts bind their hashes, local metadata and verdict/counts. Provider findings
+must satisfy a strict source-path/line/text schema before earning a verdict.
+scripts/tests/reading-scene-review.test.cjs executes the actual entrypoint with
+isolated Git/filesystem/HTTP boundaries: no approval or paid call is simulated
+as real. Budget/actor/head denial, excess cost, malformed/truncated output and
+blocking findings must fail; complete source and retained JSON-log hashes bind
+the valid synthetic verdict. The hosted workflow runs these cases on each change.
+No provider call or independent approval has run. Fresh hosted tests and the
+separate CodeQL finding check must verify this changed revision before release.
+
 Non-goals: no canon or manuscript change, new billing rail or prices, provider
 migration, automatic publication, new orchestrator, historical migration replay,
 or replacement of the accepted creator-entry PR505. This is one implementation

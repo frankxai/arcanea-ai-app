@@ -28,8 +28,6 @@ if (!/^\d+-\d+-fixture$/.test(password || ""))
 const output = "screenshots/reading-scene-auth";
 mkdirSync(output, { recursive: true });
 const secret = randomBytes(32).toString("hex");
-const mask = (value) => console.log(`::add-mask::${value}`);
-mask(secret);
 const jwt = (role) => {
   const encode = (v) => Buffer.from(JSON.stringify(v)).toString("base64url");
   const body = `${encode({ alg: "HS256", typ: "JWT" })}.${encode({ role, aud: "authenticated", iss: "supabase", exp: Math.floor(Date.now() / 1000) + 3600 })}`;
@@ -37,8 +35,6 @@ const jwt = (role) => {
 };
 const anon = jwt("anon"),
   admin = jwt("service_role");
-mask(anon);
-mask(admin);
 const redact = (value) =>
   [secret, password, anon, admin]
     .reduce(
@@ -196,7 +192,9 @@ const cleanEnv = Object.fromEntries(
 async function run(command, args, env, timeoutMs) {
   const child = spawn(command, args, {
     env: { ...cleanEnv, ...env },
-    stdio: "inherit",
+    // Application/test output can contain session details on failure. Keep
+    // public diagnostics in the bounded, redacted receipts instead.
+    stdio: "ignore",
     detached: true,
   });
   children.add(child);
@@ -303,7 +301,6 @@ try {
       email: `reading-${i}@example.invalid`,
       password: randomBytes(24).toString("hex"),
     };
-    mask(account.password);
     const response = await fetch("http://127.0.0.1:3802/admin/users", {
       method: "POST",
       headers: {
@@ -382,7 +379,10 @@ try {
   // Keep bounded diagnostics without credentials, SQL account rows or headers.
   receipt.phase = phase;
   receipt.error = redact(error.message).slice(0, 1000);
-  throw Error(receipt.error);
+  console.error(
+    "Real Auth acceptance failed; inspect the bounded runner receipt.",
+  );
+  process.exitCode = 1;
 } finally {
   await finish();
 }

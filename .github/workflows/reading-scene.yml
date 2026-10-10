@@ -59,6 +59,7 @@ jobs:
       - name: Verify actual route and scene recovery
         run: |
           node --test scripts/tests/reading-scene-save.test.cjs
+          node --experimental-vm-modules --test scripts/tests/reading-scene-review.test.cjs
           pnpm exec tsx --test apps/web/lib/reading-scene/__tests__/*.test.ts
       - name: Verify saves and account isolation through PostgREST and Postgres
         env:
