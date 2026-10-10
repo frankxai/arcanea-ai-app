@@ -56,12 +56,7 @@ async function selectPassage(page) {
     .getByRole("button", { name: "Visualize selection", exact: true })
     .click();
   await expect(page.getByLabel("Visual brief", { exact: true })).toBeVisible();
-  assert.equal(
-    await page
-      .getByLabel("Visual brief")
-      .evaluate((e) => document.activeElement === e),
-    true,
-  );
+  await expect(page.getByLabel("Visual brief", { exact: true })).toBeFocused();
   return text.replace(/\s+/g, " ").trim();
 }
 async function main() {

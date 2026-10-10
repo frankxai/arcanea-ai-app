@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 import { useAuth } from "@/lib/auth/context";
 import { OPENROUTER_IMAGE_MODELS } from "@/lib/imagine/generate";
 import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
@@ -56,6 +62,17 @@ function SceneWorkspace({
   const briefRef = useRef<HTMLTextAreaElement | null>(null);
   const workspaceRef = useRef<HTMLElement | null>(null);
   const revision = useRef(0);
+  const focusAfterSelection = useRef(false);
+
+  useLayoutEffect(() => {
+    if (!focusAfterSelection.current || !open || !scene) return;
+    workspaceRef.current?.scrollIntoView({
+      block: "center",
+      behavior: "instant",
+    });
+    briefRef.current?.focus({ preventScroll: true });
+    focusAfterSelection.current = false;
+  }, [open, scene]);
 
   useEffect(() => {
     const loadRevision = ++revision.current;
@@ -202,17 +219,11 @@ function SceneWorkspace({
         setMessage("");
         return;
       }
+      focusAfterSelection.current = true;
       retain(next);
       setOpen(true);
       setMessage("");
       setSelection("");
-      requestAnimationFrame(() => {
-        workspaceRef.current?.scrollIntoView({
-          block: "center",
-          behavior: "instant",
-        });
-        briefRef.current?.focus({ preventScroll: true });
-      });
     } catch (error) {
       setOpen(true);
       setMessage(
@@ -370,11 +381,11 @@ function SceneWorkspace({
       replaceScene={() => {
         if (!replacement || busy || (scene?.requestKey && !scene.result))
           return;
+        focusAfterSelection.current = true;
         retain(replacement);
         setReplacement(null);
         setSelection("");
         setMessage("");
-        requestAnimationFrame(() => briefRef.current?.focus());
       }}
     />
   );
