@@ -122,11 +122,17 @@ async function main() {
         await expect(voiceAlert).toHaveCount(0);
         await expect.poll(() => requests.length).toBe(3);
         assert.equal(typeof releasePending, "function");
-        await listen.click();
+        const stop = page
+          .getByRole("group", { name: "Lumina voice", exact: true })
+          .getByRole("button", { name: "Stop voice playback", exact: true });
+        const stopBox = await stop.boundingBox();
+        assert.ok(stopBox && stopBox.width >= 44 && stopBox.height >= 44);
+        await stop.click();
         assert.equal(await page.evaluate(() => window.__voiceRequestAborts), 1);
         releasePending();
         await page.waitForTimeout(500);
         await expect(voiceAlert).toHaveCount(0);
+        await expect(listen).toBeVisible();
         assert.equal(
           requests.length,
           3,

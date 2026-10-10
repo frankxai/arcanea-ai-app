@@ -193,11 +193,13 @@ const FEATURES = [
 function PersonaCard({
   persona,
   isActive,
+  playbackActive,
   onSelect,
   onPlay,
 }: {
   persona: VoicePersona;
   isActive: boolean;
+  playbackActive: boolean;
   onSelect: () => void;
   onPlay: () => void;
 }) {
@@ -237,7 +239,9 @@ function PersonaCard({
           type="button"
           onClick={onPlay}
           className="min-w-11 min-h-11 rounded-full flex items-center justify-center bg-[var(--arc-cosmic-deep)] hover:bg-[var(--arc-cosmic-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
-          aria-label={`Listen to ${persona.name}`}
+          aria-label={
+            playbackActive ? "Stop voice playback" : `Listen to ${persona.name}`
+          }
         >
           <svg
             width="10"
@@ -246,7 +250,7 @@ function PersonaCard({
             fill="white"
             fillOpacity="0.5"
           >
-            <path d="M0 0L10 6L0 12V0Z" />
+            <path d={playbackActive ? "M0 0H10V12H0Z" : "M0 0L10 6L0 12V0Z"} />
           </svg>
         </button>
       </div>
@@ -518,6 +522,7 @@ export default function VoicePage() {
               key={p.id}
               persona={p}
               isActive={activePersona === p.id}
+              playbackActive={isPlaying}
               onSelect={() => setActivePersona(p.id)}
               onPlay={() => handlePlayDemo(p.id)}
             />
