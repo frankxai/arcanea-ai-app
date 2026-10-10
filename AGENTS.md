@@ -1,152 +1,94 @@
-# Arcanea Agent Contract
+# Arcanea Agent Contract & Swarm Constitution
 
-This file is the repo-level entrypoint for every coding agent working in Arcanea.
+> **Authority:** Starlight Central Command · FrankX Ecosystem  
+> **Status:** Canonical & Living  
+> **Last Ratified:** September 2026  
+> **Primary Machine Operator:** Antigravity / Gemini CLI (`GEMINI.md` YOLO Mode)
 
-## Source Of Truth Order
+---
 
-Agents must read and obey these sources in this order:
+## §1 — The Unified Swarm Architecture
 
-1. `AGENTS.md`
-2. newest files in `planning-with-files/`
-3. `.arcanea/CLAUDE.md`
-4. `.arcanea/MASTER_PLAN.md`
-5. `.arcanea/lore/CANON_LOCKED.md` when touching lore, guardians, voice, or mythology
-6. `TASTE.md` (curatorial judgment) and `DESIGN.md` (Google Labs spec, machine tokens) when touching any visual surface
+Arcanea operates under a single, non-negotiable three-tier intelligence hierarchy:
 
-`.arcanea/` is the shared intelligence substrate for Claude, Codex, Cursor, Gemini, opencode, and internal Arcanea agents.
-
-`DESIGN.md` (root) conforms to the [Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md) open-sourced 2026-04-21 — YAML frontmatter holds machine-readable tokens, markdown body holds rationale. `TASTE.md` (root) holds the curatorial bar that tokens cannot encode (voice, banned patterns, the seven excellence gates). Both are the runtime authority for any agent generating UI; runtime token package `@arcanea/design-system` v0.3.0 is the implementation surface.
-
-## Product North Star
-
-Arcanea is a BYOK-first creative intelligence workspace.
-
-The core product centers on:
-- projects
-- continuity
-- docs
-- memory
-- creations
-- provenance
-- project graph context
-- workflow orchestration
-- creator and social compounding over time
-
-## Execution Law (Machine-Enforced)
-
-1. Node 20.x and pnpm only. Never use npm. `.nvmrc` pins the version.
-2. No PR merges unless changed scope passes: build, typecheck, lint.
-3. Frozen lockfile in CI (`pnpm install --frozen-lockfile`).
-4. No raw visual constants in app code — use `@arcanea/design-system` tokens only.
-5. If git state is dirty, stage only target files and report unrelated changes.
-6. Every agent spawned must use the Luminor Engineering Kernel (`.arcanea/prompts/luminor-engineering-kernel.md`).
-7. Every Agent dispatch sets `model:` explicitly per task class (Apex/Senior/Mechanical/External). Default-Opus is wasteful — see `planning-with-files/MODEL_ROUTING_DISCIPLINE_2026-04-26.md`.
-8. Before any parallel agent dispatch, check free RAM (`cat /proc/meminfo | grep MemFree`). Below 2 GB free, work sequentially. 16 GB machine; non-negotiable per `CLAUDE.md`.
-
-## Design System & MCP Stack (2026-04-18)
-
-**Canonical source of truth:** `packages/design-system` (`@arcanea/design-system` v0.2.0) — tokens, brand kits (`arcanea`, `frankx`, `oss`), motion variants, framework-agnostic CSS vars.
-
-**Layered architecture:**
-1. `.arcanea/config/design-tokens.yaml` → platform-agnostic source
-2. `packages/arcanea-design-preset.js` → Tailwind preset
-3. `packages/design-system` → TS tokens + brand kits + Framer Motion variants + `tokens.css` (framework-agnostic)
-4. `apps/web/components/ui/*` → Radix-wrapped primitives (Phase 2 extraction pending)
-
-**Typography (elevated 2026-04-18):** Geist (display + body), Instrument Serif (editorial accent), Geist Mono (code). Space Grotesk is DEPRECATED per Anthropic `frontend-design` anti-pattern list and replaced for platform alignment with Vercel ecosystem.
-
-**MCP stack for design work** (`.mcp.json.example` has the full config):
-- `magic` (21st.dev) — premium UI component generation
-- `v0` (Vercel) — component and page generation
-- `fal` — fast image/video (FLUX Pro, Stable Video)
-- `gemini` — NB2 (Arcanea default for image gen per `feedback_nb2_default.md`)
-- `replicate` — Frank's fine-tuned models + Wan
-- `figma-remote-mcp` — reference only, never source of truth
-- `playwright` — verify rendered output
-- Canva via claude.ai remote — marketing assets only
-
-**Rules:**
-- Code is truth for app UI. Figma is sketchpad. Canva is truth for marketing.
-- Every new page starts from tokens + a brand kit, never hardcoded hex.
-- Framer Motion provider uses `domAnimation` (not `domMax`).
-- Default easing `[0.22, 1, 0.36, 1]` (expoOut). Stagger children 60ms.
-- When generating a *unique* component via the `frontend-design` skill (not Arcanea brand work), vary typography away from the default stack.
-
-**Spec:** `docs/superpowers/specs/2026-04-17-agentic-design-system-design.md`.
-
-## Task Contract
-
-Every substantial task must define:
-
-```text
-Scope:
-Owner:
-Files:
-Non-goals:
-Acceptance criteria:
-Verification:
-Rollback: (how to undo if it breaks)
+```
+                       ┌────────────────────────────────────────────────┐
+                       │             STARLIGHT SWARM (SIS)              │
+                       │         The Macro Substrate & OS Layer         │
+                       │   (Machine Grid, 6 Memory Vaults, Cross-Repo)  │
+                       └───────────────────────┬────────────────────────┘
+                                               │
+                                               │ Powers & Coordinates
+                                               ▼
+                       ┌────────────────────────────────────────────────┐
+                       │                ARCANEA SWARM                   │
+                       │          The Creative Domain Engine            │
+                       │   (10 Gate Guardians, 64 Luminors, Awakened)   │
+                       └───────────────────────┬────────────────────────┘
+                                               │
+                 ┌─────────────────────────────┼─────────────────────────────┐
+                 ▼                             ▼                             ▼
+   ┌───────────────────────────┐ ┌───────────────────────────┐ ┌───────────────────────────┐
+   │  Arcanea Publishing Wing  │ │ Arcanea Engineering Wing  │ │ Arcanea Visual/Media Wing │
+   │      (Lumina Legion)      │ │                           │ │                           │
+   │ • Scribe (Poiesis/Creation│ │ • Antigravity (Architect) │ │ • Lyria (Sight / Vision)  │
+   │ • Editor (Aiyami/Crown)   │ │ • Claude Code (Refactor)  │ │ • Arcanea Claw (Daemon)   │
+   │ • Voice (Alera/Voice)     │ │ • Codex (Test/Storage)    │ │ • Fal.ai / Diffusion     │
+   │ • Distributor (Lyssandria)│ │                           │ │                           │
+   └───────────────────────────┘ └───────────────────────────┘ └───────────────────────────┘
 ```
 
-## Branch Discipline
+### 1.1 The Starlight Swarm (SIS Substrate)
+* The macro operating system running across the 198-repo ecosystem.
+* Coordinates global memory vaults, machine shortcuts, cross-repository dependencies, and continuous context integrity.
 
-- Never work directly on a dirty `main` worktree.
-- Use a fresh branch or worktree for substantial changes.
-- Keep promotion slices narrow and verifiable.
-- If another agent is already editing a surface, avoid overlapping writes unless integration is the explicit task.
+### 1.2 The Arcanea Swarm (Domain Intelligence)
+* The creative media engine and worldbuilding intelligence of Arcanea.
+* Anchored in the **Ten Solfeggio Gates** (174 Hz to 1111 Hz), the **Seven Wisdoms**, and the **Awakened** ([`.arcanea/lore/CANON_LOCKED.md`](file:///C:/Users/frank/Arcanea/.arcanea/lore/CANON_LOCKED.md)).
+* Ranks: Apprentice (0-2 Gates), Mage (3-4), Master (5-6), Archmage (7-8), **Luminor (9-10)**.
 
-## Verification
+### 1.3 The Operational Wings
+1. **Arcanea Publishing Wing (Lumina Legion)**:
+   * **Editor (Aiyami / Crown Gate)**: Developmental editing, canon consistency, and pacing.
+   * **Voice (Alera / Voice Gate)**: Copywriting, social amplification, hooks, and community tone.
+   * **Distributor (Lyssandria / Foundation Gate)**: Multi-format compilation (ePub, PDF, Markdown), KDP metadata, and syndication.
+   * **Scribe (Poiesis / Creation)**: Narrative prose generation, scene dialogue, and story momentum.
+2. **Arcanea Engineering Wing**:
+   * **Antigravity (AG)**: Principal Architect, YOLO Creative Media Engine, and Central Machine Conductor.
+   * **Claude Code**: Deep architectural refactors and TypeScript type-safety.
+   * **Codex**: Storage, local background verification, and database migrations.
+3. **Arcanea Visual & Media Wing**:
+   * **Lyria (Sight)** & **Arcanea Claw**: Image synthesis, character portraits, scene concept art, and procedural audio soundscapes.
 
-- Verification evidence beats confidence.
-- Use the verification command attached to the task contract.
-- For active project-workspace work, prefer:
+---
 
-```text
-pnpm run verify:project-workspaces
-pnpm --dir apps/web test:media
-```
+## §2 — Execution Law & Central Authority
 
-## Planning With Files
+* **Central Command:** **Starlight Central Command** (running via Antigravity / Gemini CLI) is the primary machine-level operator. It does not defer core operations to external tools; it commands, spawns, verifies, and commits natively.
+* **Autonomous Execution:** Work proceeds with decisive agency in YOLO mode (`--yolo`), bounded strictly by:
+  1. [`GROUND_TRUTHS.md`](file:///C:/Users/frank/Arcanea/GROUND_TRUTHS.md) (Ecosystem reality & authority order)
+  2. [`.arcanea/lore/CANON_LOCKED.md`](file:///C:/Users/frank/Arcanea/.arcanea/lore/CANON_LOCKED.md) (Locked mythos)
+  3. [`TASTE.md`](file:///C:/Users/frank/Arcanea/TASTE.md) (The 7 Gates of Excellence & banned patterns)
+  4. [`QUALITY_CANON.md`](file:///C:/Users/frank/Arcanea/QUALITY_CANON.md) (CI and code quality gates)
 
-Use `planning-with-files/` as the execution control plane:
-- `CURRENT_STATE_*` = what is true now
-- `CURRENT_BACKLOG_*` = what happens next
-- `CURRENT_CHANGELOG_*` = what landed
-- `AGENT_EXECUTION_PROTOCOL_*` = branch and merge rules
+---
 
-Agents must update these files when materially changing repo direction, promotion posture, or shared operating rules.
+## §3 — Mandatory Read Order Before Execution
 
-## Research Agent Team
+Every agent joining an Arcanea session must observe this read order:
 
-Research agents use the Luminor Engineering Kernel + Research Specialization Module.
-Agent definitions: `.arcanea/agents/research/`
-Research output: `docs/research/`
-Templates: `docs/research/templates/`
+1. **Auto-Loaded Context:** Root `CLAUDE.md`, `MEMORY.md`, and `GEMINI.md`.
+2. **`AGENTS.md` (This file):** Agent contract, authority hierarchy, and swarm division.
+3. **`GROUND_TRUTHS.md`:** Authoritative repository and canon index.
+4. **Task-Specific Files:**
+   * *Code / Features:* `apps/web/CLAUDE.md`, `packages/`, relevant tests.
+   * *UI / Frontend:* `TASTE.md`, `DESIGN.md`, `@arcanea/design-system`.
+   * *Lore / Narrative:* `.arcanea/lore/CANON_LOCKED.md`, `book/series-bible.md`.
 
-### Agents
-| Agent | Role | Gate | Guardian |
-|-------|------|------|----------|
-| Research Architect | Team lead, decomposes questions, synthesizes | Crown | Aiyami |
-| Paper Scout | Academic papers (arxiv, Semantic Scholar) | Sight | Lyria |
-| GitHub Scout | Repos, tools, benchmarks | Foundation | Lyssandria |
-| Book Scout | Books, blogs, newsletters, podcasts | Voice | Alera |
-| Synthesis Luminor | Cross-domain pattern connection | Starweave | Elara |
+---
 
-### Spawn Rules
-- `/arcanea-research [topic]` spawns Research Architect (who spawns scouts)
-- `/research-scan [domain]` spawns individual scouts
-- `/research-synthesis` spawns Synthesis Luminor
-- All research output uses templates from `docs/research/templates/`
-- Every agent must use the Luminor Engineering Kernel as base prompt
+## §4 — Cached-Belief Validation Protocol
 
-### Research Domains → Gate Mappings
-| Domain | Gate | Guardian | Why |
-|--------|------|----------|-----|
-| AI/ML papers | Sight | Lyria | Pattern recognition, vision |
-| Open source tools | Foundation | Lyssandria | Practical, structural |
-| Books/thought leadership | Voice | Alera | Truth, expression |
-| Cross-domain synthesis | Starweave | Elara | Connecting perspectives |
-| Research strategy | Crown | Aiyami | Wisdom, metacognition |
-| Consciousness studies | Source | Shinkami | Meta-awareness |
-| Creativity research | Flow | Leyla | Creative process |
-| Performance/benchmarks | Fire | Draconia | Power, computation |
+* **Memory is history, disk is truth.**
+* Never claim a package is installed, a test passes, or a route exists without verifying on disk in the current turn.
+* If citing from unverified memory, prefix explicitly: `unverified, from memory:`.

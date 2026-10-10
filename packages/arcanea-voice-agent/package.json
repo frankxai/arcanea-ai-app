@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/voice-agent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local agent for the Arcanea Voice Dashboard. HTTP + WebSocket on 127.0.0.1:7777. Spawns CLI runtimes, executes workflows, bridges browser ↔ OS.",
   "type": "module",
   "bin": {
