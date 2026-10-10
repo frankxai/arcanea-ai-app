@@ -29,3 +29,25 @@ test("prompt-books first HTML is the landing, not an auth null gate", async () =
   assert.match(page, /<PromptBooksLanding \/>/);
   assert.match(layout, /title: ['"]Your AI Prompt Library['"]/);
 });
+
+test("prompt-books model picker uses neutral labels, not rankings", async () => {
+  const selector = await readFile(
+    path.join(
+      repoRoot,
+      "apps/web/components/prompt-books/context/ModelSelector.tsx",
+    ),
+    "utf8",
+  );
+
+  for (const ranking of [
+    /most capable/i,
+    /fastest/i,
+    /flagship/i,
+    /smartest/i,
+    /most powerful/i,
+    /\bbest\b/i,
+  ]) {
+    assert.doesNotMatch(selector, ranking);
+  }
+  assert.match(selector, /name: ['"]Claude Opus 4\.6['"]/);
+});
