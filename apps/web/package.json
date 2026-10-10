@@ -29,6 +29,7 @@
     "@arcanea/design-system": "workspace:^",
     "@arcanea/orchestrator": "workspace:*",
     "@arcanea/publishing-house": "workspace:^",
+    "@arcanea/schemas": "workspace:*",
     "@arcanea/world-engine": "workspace:^",
     "@starlight/multilingual": "workspace:^",
     "next-intl": "^4.12.0",

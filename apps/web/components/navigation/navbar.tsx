@@ -34,7 +34,7 @@ const navLinks: NavLink[] = [
   {
     href: "/chat",
     label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/voice", "/integrations", "/distribute"],
+    also: ["/imagine", "/studio", "/forge", "/agents", "/agent", "/worlds", "/voice", "/integrations", "/distribute"],
     mega: [
       {
         title: "Create",
@@ -48,6 +48,7 @@ const navLinks: NavLink[] = [
       {
         title: "Agents",
         items: [
+          { href: "/agent", label: "Arcanea Agent", desc: "Desktop app + profile" },
           { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
           { href: "/forge/companion", label: "Forge", desc: "Create your own" },
         ],
@@ -80,6 +81,7 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
+          { href: "/atlas", label: "Multiverse Atlas", desc: "Realms, corridors & dialects" },
           { href: "/library", label: "Library", desc: "200K+ words of wisdom" },
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },

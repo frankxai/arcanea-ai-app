@@ -15,6 +15,7 @@ const footerLinks = {
       { href: "/studio", label: "Studio" },
       { href: "/worlds", label: "Worlds" },
       { href: "/forge", label: "Forge" },
+      { href: "/agent", label: "Arcanea Agent" },
       { href: "/agents", label: "Agents" },
     ],
   },
