@@ -27,6 +27,15 @@ migration, actual generation/credit proof or production profile-trigger proof is
 included. Loopback browser CSP is bypassed without changing deployed headers.
 The runner must stop its own containers, app children and gateway and remove the
 private fixture config. Source-bound hosted terminal evidence is still pending.
+Run38079665266 at4804417c reached real password login and scene save, then the
+compiled browser received403. The first route interception assertion escaped its
+receipt handler; the runner failure and successful cleanup are retained. A local
+regression reproduces same-origin rejection when Next normalizes127.0.0.1 to
+localhost. The origin check now uses the received Host authority with the request
+protocol, rejects malformed authorities and ignores forwarded-host claims. The
+two new compiled-handler tests initially failed; fresh hosted acceptance remains
+required. Failed save responses now reach the bounded browser receipt normally.
+Rationale: https://nextjs.org/docs/app/guides/data-security#allowed-origins-advanced.
 
 Non-goals: no canon or manuscript change, new billing rail or prices, provider
 migration, automatic publication, new orchestrator, historical migration replay,

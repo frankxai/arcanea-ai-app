@@ -47,8 +47,23 @@ function reply(body: Record<string, unknown>, status = 200) {
 /** Private, owner-bound and retry-idempotent; never publishes or uploads publicly. */
 export async function POST(req: NextRequest) {
   const origin = req.headers.get("origin");
-  if (origin && origin !== new URL(req.url).origin)
-    return reply({ error: "Invalid request origin" }, 403);
+  if (origin) {
+    try {
+      const requestUrl = new URL(req.url);
+      const host = req.headers.get("host");
+      // Next can normalize a loopback request URL to localhost. Browser Origin
+      // must bind to the received HTTP authority; forwarded hosts grant nothing.
+      if (host && !/^[A-Za-z0-9.\[\]:-]+$/.test(host))
+        return reply({ error: "Invalid request origin" }, 403);
+      const expectedOrigin = host
+        ? new URL(`${requestUrl.protocol}//${host}`).origin
+        : requestUrl.origin;
+      if (origin !== expectedOrigin)
+        return reply({ error: "Invalid request origin" }, 403);
+    } catch {
+      return reply({ error: "Invalid request origin" }, 403);
+    }
+  }
   try {
     const supabase = await createClient();
     const {

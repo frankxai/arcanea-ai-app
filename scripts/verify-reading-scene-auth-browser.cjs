@@ -185,6 +185,7 @@ async function main() {
     ).toBeVisible();
     assert.equal(generationCalls, 1);
     let lostAck = true;
+    let saveFailure = null;
     const saves = [];
     await page.route("**/api/reading-scenes", async (route) => {
       if (route.request().method() !== "POST") return route.continue();
@@ -192,7 +193,16 @@ async function main() {
       // Commit through the real application/session/database before dropping its
       // acknowledgement. Retry must not create a second private creation.
       const response = await route.fetch();
-      assert.equal(response.status(), 200);
+      if (response.status() !== 200) {
+        saveFailure = {
+          status: response.status(),
+          body: await response
+            .json()
+            .catch(() => ({ error: "Non-JSON save response" })),
+        };
+        await route.fulfill({ response });
+        return;
+      }
       if (lostAck) {
         lostAck = false;
         return route.abort("failed");
@@ -208,6 +218,7 @@ async function main() {
         .getByRole("status")
         .filter({ hasText: "Private save could not be confirmed" }),
     ).toBeVisible();
+    assert.equal(saveFailure, null, JSON.stringify(saveFailure));
     const savedRows = () =>
       owner.client
         .from("creations")

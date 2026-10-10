@@ -153,6 +153,47 @@ function request(body = scene, origin = "https://www.arcanea.ai") {
     body: JSON.stringify(body),
   });
 }
+
+test("same-origin save follows the received host after Next normalizes a loopback URL", async () => {
+  const s = subject();
+  const req = new NextRequest("http://localhost:3001/api/reading-scenes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Host: "127.0.0.1:3001",
+      Origin: "http://127.0.0.1:3001",
+    },
+    body: JSON.stringify(scene),
+  });
+  assert.equal((await s.POST(req)).status, 200);
+  assert.equal(s.calls.length, 1);
+});
+
+test("foreign origins and malformed or forwarded authorities cannot authorize a save", async () => {
+  for (const headers of [
+    {
+      Host: "www.arcanea.ai",
+      Origin: "https://foreign.example",
+      "X-Forwarded-Host": "foreign.example",
+    },
+    {
+      Host: "www.arcanea.ai,foreign.example",
+      Origin: "https://www.arcanea.ai",
+    },
+    { Host: "www.arcanea.ai/path", Origin: "https://www.arcanea.ai" },
+    { Host: "user@www.arcanea.ai", Origin: "https://www.arcanea.ai" },
+    { Host: "www.arcanea.ai", Origin: "http://www.arcanea.ai" },
+  ]) {
+    const s = subject();
+    const req = new NextRequest("https://www.arcanea.ai/api/reading-scenes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...headers },
+      body: JSON.stringify(scene),
+    });
+    assert.equal((await s.POST(req)).status, 403);
+    assert.equal(s.calls.length, 0);
+  }
+});
 function privateResponse(response) {
   assert.equal(response.headers.get("cache-control"), "private, no-store");
 }
