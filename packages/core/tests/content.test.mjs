@@ -401,9 +401,8 @@ describe('generateDesignTokensSection', () => {
   });
 
   it('should include font names', () => {
-    assert.ok(tokens.includes('Cinzel'));
-    assert.ok(tokens.includes('Crimson Pro'));
-    assert.ok(tokens.includes('Inter'));
+    assert.ok(tokens.includes('Geist'));
+    assert.ok(tokens.includes('Instrument Serif'));
     assert.ok(tokens.includes('JetBrains Mono'));
   });
 

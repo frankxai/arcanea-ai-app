@@ -7,14 +7,17 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
+    "test": "node --test tests/*.test.mjs",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
@@ -24,7 +27,9 @@
     "generators"
   ],
   "author": "FrankX",
-  "license": "MIT",
+  "dependencies": {
+    "@arcanea/schemas": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "^20.19.41",
     "typescript": "^5.9.3"

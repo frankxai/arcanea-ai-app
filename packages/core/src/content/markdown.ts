@@ -147,6 +147,7 @@ export function generateDesignTokensSection(): string {
 ### Typography
 - Display: ${FONTS.display.replace(/'/g, '')}
 - Body: ${FONTS.body.replace(/'/g, '')}
+- Editorial: ${FONTS.serif.replace(/'/g, '')}
 - UI: ${FONTS.sans.replace(/'/g, '')}
 - Code: ${FONTS.code.replace(/'/g, '')}
 
