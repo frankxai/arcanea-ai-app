@@ -12,6 +12,9 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { WorldModelSettings } from "@/components/worlds/world-model-settings";
+import { WorldDraftEditor } from "@/components/worlds/world-draft-editor";
+import { WorldArtBrief } from "@/components/worlds/world-art-brief";
 import { createClient } from "@/lib/supabase/client";
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import {
@@ -488,6 +491,18 @@ export default function CreateWorldPage() {
   const generating = useRef(false);
   const [storageNote, setStorageNote] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [ownerId, setOwnerId] = useState<string | null | undefined>(undefined);
+  const currentOwner = useRef<string | null | undefined>(undefined);
+  const operationVersion = useRef(0);
+  const requests = useRef(new Set<AbortController>());
+  const [editingDraft, setEditingDraft] = useState(false);
+  const [legacyConcept, setLegacyConcept] = useState<string | null>(null);
+  const [apiKey, setApiKey] = useState("");
+  const [legacyRaw, setLegacyRaw] = useState<string | null>(null);
+  const [recoveryRaw, setRecoveryRaw] = useState<string | null>(null);
+  const currentDraftKey = `${WORLD_DRAFT_KEY}.${ownerId || "anonymous"}`;
+  const previousDraftKey = `${WORLD_PREVIOUS_DRAFT_KEY}.${ownerId || "anonymous"}`;
+  const conceptKey = `arcanea.world-concept.${ownerId || "anonymous"}`;
   const [saving, setSaving] = useState(false);
   const [refining, setRefining] = useState(false);
   const [pendingConcept, setPendingConcept] = useState<string | null>(null);
@@ -499,26 +514,90 @@ export default function CreateWorldPage() {
 
   useEffect(() => {
     const supabase = createClient();
+    let mounted = true;
+    let authVersion = 0;
+    const applyAccount = (id: string | null) => {
+      if (!mounted) return;
+      if (currentOwner.current !== id) {
+        operationVersion.current += 1;
+        for (const request of requests.current) request.abort();
+        requests.current.clear();
+        generating.current = false;
+        setApiKey("");
+        setResult(null);
+        setHeroImage(null);
+        setPreviousHeroImage(null);
+        setPreviousDraft(null);
+        setPendingConcept(null);
+        setDescription("");
+        setSaving(false);
+        setImageLoading(false);
+        setEditingDraft(false);
+        setLegacyConcept(null);
+        setRefining(false);
+        setPhase("input");
+        setError(null);
+        setStorageNote(null);
+        setLegacyRaw(null);
+        setRecoveryRaw(null);
+      }
+      currentOwner.current = id;
+      setOwnerId(id);
+      setIsAuthenticated(!!id);
+    };
+    const timer = setTimeout(() => {
+      if (authVersion === 0) applyAccount(null);
+    }, 4500);
     supabase.auth
       .getUser()
-      .then(({ data }: { data: { user: User | null } }) =>
-        setIsAuthenticated(!!data?.user),
-      )
-      .catch(() => setIsAuthenticated(false));
+      .then(({ data }: { data: { user: User | null } }) => {
+        if (authVersion === 0) applyAccount(data?.user?.id || null);
+      })
+      .catch(() => {
+        if (authVersion === 0) applyAccount(null);
+      })
+      .finally(() => clearTimeout(timer));
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(
-      (_event: AuthChangeEvent, session: Session | null) =>
-        setIsAuthenticated(!!session?.user),
+      (_event: AuthChangeEvent, session: Session | null) => {
+        authVersion += 1;
+        clearTimeout(timer);
+        applyAccount(session?.user?.id || null);
+      },
     );
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+      subscription.unsubscribe();
+      operationVersion.current += 1;
+      for (const request of requests.current) request.abort();
+      requests.current.clear();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (ownerId === undefined) return;
     const params = new URLSearchParams(window.location.search);
     try {
-      const concept = sessionStorage.getItem("arcanea.world-concept");
-      const stored = readStoredWorldDraft(
-        sessionStorage.getItem(WORLD_DRAFT_KEY),
+      const concept = sessionStorage.getItem(conceptKey);
+      setLegacyConcept(
+        sessionStorage.getItem("arcanea.world-concept") ||
+          (ownerId
+            ? sessionStorage.getItem("arcanea.world-concept.anonymous")
+            : null),
+      );
+      const raw = sessionStorage.getItem(currentDraftKey);
+      const stored = readStoredWorldDraft(raw);
+      if (raw && !stored) setRecoveryRaw(raw);
+      setLegacyRaw(
+        sessionStorage.getItem(WORLD_DRAFT_KEY) ||
+          (ownerId
+            ? sessionStorage.getItem(`${WORLD_DRAFT_KEY}.anonymous`)
+            : null),
       );
       setPreviousDraft(
-        readStoredWorldDraft(sessionStorage.getItem(WORLD_PREVIOUS_DRAFT_KEY)),
+        readStoredWorldDraft(sessionStorage.getItem(previousDraftKey)),
       );
       if (stored) {
         setDescription(stored.description);
@@ -536,8 +615,27 @@ export default function CreateWorldPage() {
         "Browser storage is unavailable. Export your draft before leaving this page.",
       );
     }
-    return () => subscription.unsubscribe();
-  }, []);
+  }, [ownerId, currentDraftKey, previousDraftKey, conceptKey]);
+
+  useEffect(() => {
+    if (ownerId === undefined || phase !== "input" || !description) return;
+    try {
+      sessionStorage.setItem(conceptKey, description);
+    } catch {
+      setStorageNote(
+        "Your concept could not be kept in this tab. Copy it before leaving.",
+      );
+    }
+  }, [ownerId, phase, description, conceptKey]);
+  useEffect(() => {
+    if (!editingDraft) return;
+    const hold = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", hold);
+    return () => window.removeEventListener("beforeunload", hold);
+  }, [editingDraft]);
 
   const rememberDraft = useCallback(
     (data: GenerateResult, concept: string) => {
@@ -550,17 +648,14 @@ export default function CreateWorldPage() {
                 draft_id: result.draft_id,
                 world: result.world,
               }
-            : readStoredWorldDraft(sessionStorage.getItem(WORLD_DRAFT_KEY));
+            : readStoredWorldDraft(sessionStorage.getItem(currentDraftKey));
         if (current && current.draft_id !== data.draft_id) {
           setPreviousDraft(current);
           setPreviousHeroImage(heroImage);
-          sessionStorage.setItem(
-            WORLD_PREVIOUS_DRAFT_KEY,
-            JSON.stringify(current),
-          );
+          sessionStorage.setItem(previousDraftKey, JSON.stringify(current));
         }
         sessionStorage.setItem(
-          WORLD_DRAFT_KEY,
+          currentDraftKey,
           JSON.stringify({
             version: 1,
             description: concept,
@@ -568,7 +663,7 @@ export default function CreateWorldPage() {
             world: data.world,
           }),
         );
-        sessionStorage.removeItem("arcanea.world-concept");
+        sessionStorage.removeItem(conceptKey);
         setStorageNote(
           "Draft kept in this browser tab. Save to your account or export a copy before closing it.",
         );
@@ -578,7 +673,14 @@ export default function CreateWorldPage() {
         );
       }
     },
-    [heroImage, result, description],
+    [
+      heroImage,
+      result,
+      description,
+      currentDraftKey,
+      previousDraftKey,
+      conceptKey,
+    ],
   );
 
   const continueToSignIn = useCallback(
@@ -586,8 +688,7 @@ export default function CreateWorldPage() {
       try {
         // Existing drafts already have their own recovery record. A pending
         // concept is only needed before the first generation.
-        if (concept && !result)
-          sessionStorage.setItem("arcanea.world-concept", concept);
+        if (concept && !result) sessionStorage.setItem(conceptKey, concept);
       } catch {
         setError(
           "Copy your concept before signing in; browser storage is unavailable.",
@@ -596,8 +697,50 @@ export default function CreateWorldPage() {
       }
       router.push("/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1");
     },
-    [result, router],
+    [result, router, conceptKey],
   );
+
+  const requestJson = useCallback(
+    async (
+      url: string,
+      body: unknown,
+      headers: Record<string, string> = {},
+    ) => {
+      const controller = new AbortController();
+      requests.current.add(controller);
+      const version = operationVersion.current;
+      const timer = setTimeout(
+        () => controller.abort(),
+        url.endsWith("generate") ? 50000 : 25000,
+      );
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...headers },
+          body: JSON.stringify(body),
+          signal: controller.signal,
+        });
+        const data = await response.json();
+        if (controller.signal.aborted || version !== operationVersion.current)
+          throw new Error("Request cancelled.");
+        return { response, data };
+      } finally {
+        clearTimeout(timer);
+        requests.current.delete(controller);
+      }
+    },
+    [],
+  );
+  const cancelGeneration = () => {
+    operationVersion.current += 1;
+    for (const request of requests.current) request.abort();
+    requests.current.clear();
+    generating.current = false;
+    setPhase(result ? "result" : "input");
+    setError(
+      "Generation cancelled. Your concept and previous draft are unchanged.",
+    );
+  };
 
   const generateHeroImage = useCallback(
     async (imagePrompt: string, worldName: string) => {
@@ -607,15 +750,16 @@ export default function CreateWorldPage() {
       }
       setImageLoading(true);
       setError(null);
+      const version = operationVersion.current;
       try {
-        const res = await fetch("/api/worlds/generate-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        const { response: res, data } = await requestJson(
+          "/api/worlds/generate-image",
+          {
             type: "world",
             blueprint: { prompt: imagePrompt, name: worldName },
-          }),
-        });
+          },
+        );
+        if (version !== operationVersion.current) return;
 
         if (res.status === 401) {
           setIsAuthenticated(false);
@@ -627,7 +771,6 @@ export default function CreateWorldPage() {
           throw new Error(
             "Concept art could not be generated. Your world draft is unchanged.",
           );
-        const data = await res.json();
         if (data.generated && data.imageData && data.mimeType) {
           setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
         } else {
@@ -636,16 +779,17 @@ export default function CreateWorldPage() {
           );
         }
       } catch (err) {
+        if (version !== operationVersion.current) return;
         setError(
           err instanceof Error
             ? err.message
             : "Concept art is unavailable. Your world draft is unchanged.",
         );
       } finally {
-        setImageLoading(false);
+        if (version === operationVersion.current) setImageLoading(false);
       }
     },
-    [isAuthenticated, continueToSignIn],
+    [isAuthenticated, continueToSignIn, requestJson],
   );
 
   const generate = useCallback(
@@ -662,19 +806,31 @@ export default function CreateWorldPage() {
         continueToSignIn(trimmed);
         return;
       }
+      if (recoveryRaw) {
+        setError(
+          "Download or discard the unreadable recovery copy before creating another draft.",
+        );
+        return;
+      }
+      if (!apiKey.trim()) {
+        setError("Add your Gemini API key to create a draft.");
+        return;
+      }
+      const version = operationVersion.current;
       generating.current = true;
 
       setError(null);
       setPhase("generating");
       try {
-        const res = await fetch("/api/worlds/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description: trimmed, refinement }),
-        });
+        const { response: res, data } = await requestJson(
+          "/api/worlds/generate",
+          { description: trimmed, refinement },
+          { "x-google-key": apiKey.trim() },
+        );
+        if (version !== operationVersion.current) return;
 
         if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
+          const body = data;
           if (res.status === 401) {
             setIsAuthenticated(false);
             throw new Error(
@@ -688,7 +844,6 @@ export default function CreateWorldPage() {
           );
         }
 
-        const data: GenerateResult = await res.json();
         const parsed = saveWorldDraftSchema.safeParse(data);
         if (!parsed.success)
           throw new Error(
@@ -702,17 +857,34 @@ export default function CreateWorldPage() {
         setPendingConcept(null);
         setPhase("result");
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong.");
+        if (version !== operationVersion.current) return;
+        setError(
+          err instanceof Error && err.name === "AbortError"
+            ? "Generation timed out. Your concept and previous draft are unchanged."
+            : err instanceof Error
+              ? err.message
+              : "Generation did not finish.",
+        );
         setPhase(result ? "result" : "input");
       } finally {
-        generating.current = false;
+        if (version === operationVersion.current) generating.current = false;
       }
     },
-    [description, rememberDraft, result, isAuthenticated, continueToSignIn],
+    [
+      description,
+      rememberDraft,
+      result,
+      isAuthenticated,
+      continueToSignIn,
+      apiKey,
+      recoveryRaw,
+      requestJson,
+    ],
   );
 
   const saveWorld = useCallback(async () => {
-    if (!result || saving) return;
+    if (!result || saving || editingDraft || !isAuthenticated) return;
+    const version = operationVersion.current;
     setSaving(true);
     setError(null);
 
@@ -722,16 +894,11 @@ export default function CreateWorldPage() {
         return;
       }
 
-      const res = await fetch("/api/worlds/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          draft_id: result.draft_id,
-          world: result.world,
-        }),
+      const { response: res, data } = await requestJson("/api/worlds/save", {
+        draft_id: result.draft_id,
+        world: result.world,
       });
-
-      const data = await res.json();
+      if (version !== operationVersion.current) return;
       if (res.status === 401) {
         setIsAuthenticated(false);
         throw new Error(
@@ -750,21 +917,30 @@ export default function CreateWorldPage() {
         world: { ...result.world, slug: data.slug },
       });
       try {
-        sessionStorage.removeItem(WORLD_DRAFT_KEY);
+        sessionStorage.removeItem(currentDraftKey);
       } catch {
         /* The saved world remains in the account. */
       }
       router.push(`/worlds/${encodeURIComponent(data.slug)}`);
     } catch (err) {
+      if (version !== operationVersion.current) return;
       setError(
         err instanceof Error
           ? err.message
           : "Saving did not finish. Your draft is still here; try again.",
       );
     } finally {
-      setSaving(false);
+      if (version === operationVersion.current) setSaving(false);
     }
-  }, [result, saving, router]);
+  }, [
+    result,
+    saving,
+    editingDraft,
+    router,
+    isAuthenticated,
+    requestJson,
+    currentDraftKey,
+  ]);
 
   const startRefine = () => {
     setRefining(true);
@@ -776,7 +952,7 @@ export default function CreateWorldPage() {
   };
 
   const exportDraft = () => {
-    if (!result) return;
+    if (!result || editingDraft) return;
     const url = URL.createObjectURL(
       new Blob([JSON.stringify(result.world, null, 2)], {
         type: "application/json",
@@ -790,7 +966,7 @@ export default function CreateWorldPage() {
   };
 
   const reset = () => {
-    if (saving || imageLoading) return false;
+    if (saving || imageLoading || editingDraft) return false;
     if (
       result &&
       !result.saved &&
@@ -808,17 +984,14 @@ export default function CreateWorldPage() {
               draft_id: result.draft_id,
               world: result.world,
             }
-          : readStoredWorldDraft(sessionStorage.getItem(WORLD_DRAFT_KEY));
+          : readStoredWorldDraft(sessionStorage.getItem(currentDraftKey));
       if (current) {
-        sessionStorage.setItem(
-          WORLD_PREVIOUS_DRAFT_KEY,
-          JSON.stringify(current),
-        );
+        sessionStorage.setItem(previousDraftKey, JSON.stringify(current));
         setPreviousDraft(current);
         setPreviousHeroImage(heroImage);
       }
-      sessionStorage.removeItem(WORLD_DRAFT_KEY);
-      sessionStorage.removeItem("arcanea.world-concept");
+      sessionStorage.removeItem(currentDraftKey);
+      sessionStorage.removeItem(conceptKey);
     } catch {
       setError(
         "Export your draft before starting over. A recovery copy could not be stored.",
@@ -877,6 +1050,13 @@ export default function CreateWorldPage() {
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8">
             <Link
               href="/worlds"
+              onClick={(event) => {
+                if (
+                  editingDraft &&
+                  !window.confirm("Leave without applying these draft changes?")
+                )
+                  event.preventDefault();
+              }}
               className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
             >
               <svg
@@ -897,6 +1077,107 @@ export default function CreateWorldPage() {
           </div>
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8 pb-24">
+            <WorldModelSettings
+              apiKey={apiKey}
+              onChange={setApiKey}
+              disabled={
+                phase === "generating" ||
+                saving ||
+                imageLoading ||
+                ownerId === undefined
+              }
+            />
+            {legacyConcept && phase === "input" && !description && (
+              <button
+                className="mb-6 min-h-11 rounded-lg border border-white/20 px-4 py-3"
+                onClick={() => {
+                  setDescription(legacyConcept.slice(0, 500));
+                  setLegacyConcept(null);
+                }}
+              >
+                Restore earlier concept from this tab
+              </button>
+            )}
+            {legacyRaw && !result && !recoveryRaw && (
+              <section
+                aria-label="Legacy draft recovery"
+                className="mb-6 rounded-xl border border-white/20 p-5"
+              >
+                <p className="text-sm text-white/70">
+                  An earlier draft is in this tab. It has no account binding.
+                  Restore it only if it is yours.
+                </p>
+                <button
+                  className="mt-3 min-h-11 rounded-lg border border-white/20 px-4 py-3"
+                  onClick={() => {
+                    const stored = readStoredWorldDraft(legacyRaw);
+                    if (!stored) {
+                      setError(
+                        "This earlier draft could not be read. Keep its recovery copy.",
+                      );
+                      return;
+                    }
+                    if (
+                      !window.confirm(
+                        "Restore this tab's earlier draft to the current account?",
+                      )
+                    )
+                      return;
+                    const restored = draftResult(stored.world, stored.draft_id);
+                    rememberDraft(restored, stored.description);
+                    setResult(restored);
+                    setDescription(stored.description);
+                    setPhase("result");
+                    setLegacyRaw(null);
+                  }}
+                >
+                  Restore legacy draft
+                </button>
+              </section>
+            )}
+            {recoveryRaw && (
+              <section
+                aria-label="Unreadable draft recovery"
+                className="mb-6 rounded-xl border border-white/20 p-5"
+              >
+                <p role="alert">
+                  Your recovery copy could not be read. Keep a raw copy before
+                  discarding it.
+                </p>
+                <button
+                  className="mt-3 min-h-11 rounded-lg border border-white/20 px-4 py-3"
+                  onClick={() => {
+                    const link = document.createElement("a");
+                    const url = URL.createObjectURL(
+                      new Blob([recoveryRaw], { type: "application/json" }),
+                    );
+                    link.href = url;
+                    link.download = "world-recovery.json";
+                    link.click();
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                  }}
+                >
+                  Download raw world recovery
+                </button>
+                <button
+                  className="ml-3 mt-3 min-h-11 rounded-lg border border-white/20 px-4 py-3"
+                  onClick={() => {
+                    if (
+                      !window.confirm("Discard this unreadable recovery copy?")
+                    )
+                      return;
+                    try {
+                      sessionStorage.removeItem(currentDraftKey);
+                      setRecoveryRaw(null);
+                    } catch {
+                      setError("This recovery copy could not be discarded.");
+                    }
+                  }}
+                >
+                  Discard unreadable world recovery
+                </button>
+              </section>
+            )}
             {pendingConcept && (
               <section
                 aria-label="Choose your draft"
@@ -915,7 +1196,7 @@ export default function CreateWorldPage() {
                     onClick={() => {
                       setPendingConcept(null);
                       try {
-                        sessionStorage.removeItem("arcanea.world-concept");
+                        sessionStorage.removeItem(conceptKey);
                       } catch {
                         /* The current draft remains visible. */
                       }
@@ -981,9 +1262,10 @@ export default function CreateWorldPage() {
                   </p>
 
                   <p className="text-sm text-white/70 max-w-lg mb-8">
-                    Sign in to generate with hosted AI. Drafts stay in this tab
-                    until you save privately to your account. Avoid confidential
-                    material.
+                    {isAuthenticated ? "Connect" : "Sign in and connect"} your
+                    own Gemini key. Review and edit the draft, then save it
+                    privately or export a copy. Your concept is sent to Google
+                    for generation.
                   </p>
                   <div className="w-full max-w-2xl mb-6">
                     <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-colors duration-300">
@@ -1008,7 +1290,7 @@ export default function CreateWorldPage() {
                         }}
                         placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
                         rows={3}
-                        className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/60 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
+                        className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/60 resize-none focus:outline-none font-body text-base leading-relaxed"
                       />
                     </div>
                     <div className="flex items-center justify-between mt-2 px-1">
@@ -1066,7 +1348,17 @@ export default function CreateWorldPage() {
               )}
 
               {/* -- Phase: Generating ------------------------------------ */}
-              {phase === "generating" && <GeneratingOverlay key="generating" />}
+              {phase === "generating" && (
+                <div key="generating">
+                  <GeneratingOverlay />
+                  <button
+                    onClick={cancelGeneration}
+                    className="mx-auto block min-h-11 rounded-lg border border-white/20 px-5 py-3"
+                  >
+                    Cancel generation
+                  </button>
+                </div>
+              )}
 
               {/* -- Phase: Result ---------------------------------------- */}
               {phase === "result" && result && (
@@ -1077,6 +1369,19 @@ export default function CreateWorldPage() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
                 >
+                  <WorldDraftEditor
+                    key={result.draft_id}
+                    world={result.world}
+                    disabled={saving || imageLoading}
+                    onEditingChange={setEditingDraft}
+                    onApply={(world) => {
+                      const updated = draftResult(world, result.draft_id);
+                      rememberDraft(updated, description);
+                      setResult(updated);
+                      setError(null);
+                      return true;
+                    }}
+                  />
                   {/* Hero section with image */}
                   <HeroSection world={result.world} heroImage={heroImage} />
 
@@ -1221,32 +1526,23 @@ export default function CreateWorldPage() {
                   <div className="flex flex-wrap justify-center gap-4 my-6">
                     <button
                       onClick={exportDraft}
+                      disabled={editingDraft}
                       className="px-5 py-3 rounded-lg border border-white/20 text-sm"
                     >
                       Export draft
                     </button>
-                    {result.image_prompt && !heroImage && (
-                      <button
-                        disabled={imageLoading}
-                        onClick={() =>
-                          generateHeroImage(
-                            result.image_prompt!,
-                            result.world.name,
-                          )
-                        }
-                        className="px-5 py-3 rounded-lg border border-white/20 text-sm disabled:opacity-50"
-                      >
-                        {imageLoading
-                          ? "Creating concept art…"
-                          : isAuthenticated
-                            ? "Generate concept art"
-                            : "Sign in to create concept art"}
-                      </button>
+                    {result.image_prompt && (
+                      <WorldArtBrief
+                        key={result.draft_id}
+                        brief={result.image_prompt}
+                        disabled={editingDraft || saving || imageLoading}
+                        onError={setError}
+                      />
                     )}
                   </div>
                   <p className="text-xs text-white/70 text-center">
-                    Concept art is a separate generation and is not included in
-                    the saved text draft.
+                    Copy the art brief into your image tool; the complete prompt
+                    is also in the exported draft.
                   </p>
                   {/* CTA */}
                   <m.div
@@ -1265,7 +1561,7 @@ export default function CreateWorldPage() {
                           whileHover={{ scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={saveWorld}
-                          disabled={saving}
+                          disabled={saving || editingDraft}
                           className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow disabled:opacity-50"
                         >
                           {saving ? "Saving..." : "Save this world"}
@@ -1309,7 +1605,7 @@ export default function CreateWorldPage() {
 
                       <button
                         onClick={startRefine}
-                        disabled={saving || imageLoading}
+                        disabled={saving || imageLoading || editingDraft}
                         className="inline-flex items-center gap-2 px-8 py-4 border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)]/60 font-bold rounded-xl hover:bg-[var(--arc-brand-arcanean-gold)]/[0.04] hover:text-[var(--arc-brand-arcanean-gold)]/80 transition-colors"
                       >
                         Refine
@@ -1317,7 +1613,7 @@ export default function CreateWorldPage() {
 
                       <button
                         onClick={reset}
-                        disabled={saving || imageLoading}
+                        disabled={saving || imageLoading || editingDraft}
                         className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/60 font-bold rounded-xl hover:bg-white/[0.04] transition-colors"
                       >
                         Start over
