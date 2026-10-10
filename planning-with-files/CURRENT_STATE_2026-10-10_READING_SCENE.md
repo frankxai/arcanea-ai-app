@@ -75,6 +75,14 @@ warning on verdict/count fields. Those response values remain in the full
 structured job-log evidence; artifact receipts retain only source metadata and
 cryptographic bindings. No warning was dismissed and no paid review occurred.
 
+Atf2fc0070, CodeQL finding check114301549354 reports zero new alerts. Reading
+38082127063 still failed before replacement activation: the new explicit DOM
+selection precondition failed, rather than a product timeout. Retain artifact
+11681170864 and its failure. The fixture now brings chapter prose into view
+before selecting it, as a reader must, and compares normalized rendered text.
+Bounded range/selection/focus diagnostics remain if that precondition fails.
+No app behavior, retry or timeout changed; fresh hosted acceptance is required.
+
 Non-goals: no canon or manuscript change, new billing rail or prices, provider
 migration, automatic publication, new orchestrator, historical migration replay,
 or replacement of the accepted creator-entry PR505. This is one implementation

@@ -36,6 +36,7 @@ const modes = [
   },
 ];
 async function selectPassage(page) {
+  await page.locator("article .prose p").first().scrollIntoViewIfNeeded();
   const text = await page.locator("article .prose p").first().textContent();
   assert.ok(
     text.trim().length >= 12,
@@ -54,7 +55,10 @@ async function selectPassage(page) {
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
-      if (selection.toString().trim() !== element.textContent.trim())
+      if (
+        selection.toString().replace(/\s+/g, " ").trim() !==
+        element.textContent.replace(/\s+/g, " ").trim()
+      )
         throw Error(
           "Fixture must select the rendered chapter text before activation",
         );
@@ -245,6 +249,7 @@ async function main() {
           null,
           "The anonymous brief must be consumed only after account persistence",
         );
+        await page.locator("article .prose p").first().scrollIntoViewIfNeeded();
         await page
           .locator("article .prose p")
           .first()
@@ -256,9 +261,21 @@ async function main() {
             const selection = window.getSelection();
             selection.removeAllRanges();
             selection.addRange(range);
-            if (selection.toString().trim() !== element.textContent.trim())
+            if (
+              selection.toString().replace(/\s+/g, " ").trim() !==
+              element.textContent.replace(/\s+/g, " ").trim()
+            )
               throw Error(
-                "Replacement fixture must select the rendered chapter text",
+                JSON.stringify({
+                  stage:
+                    "Replacement fixture must select the rendered chapter text",
+                  expected: element.textContent.slice(0, 1400),
+                  selected: selection.toString().slice(0, 1400),
+                  range: range.toString().slice(0, 1400),
+                  connected: element.isConnected,
+                  activeTag: document.activeElement?.tagName,
+                  userSelect: getComputedStyle(element).userSelect,
+                }),
               );
             // Activate in the same task, before selectionchange/React can commit.
             // Ordinary pointer/touch activation is exercised by selectPassage above.
