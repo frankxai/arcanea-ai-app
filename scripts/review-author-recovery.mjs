@@ -74,6 +74,9 @@ const headers = {
   "Content-Type": "application/json",
 };
 const origin = "https://generativelanguage.googleapis.com/v1beta/";
+let reviewPhase = "model-discovery";
+let failureHttpStatus;
+let safeFinishReason;
 async function api(path, body, timeout) {
   const response = await fetch(origin + path, {
     headers,
@@ -82,10 +85,12 @@ async function api(path, body, timeout) {
     signal: AbortSignal.timeout(timeout),
     redirect: "error",
   });
-  if (!response.ok)
+  if (!response.ok) {
+    failureHttpStatus = response.status;
     throw Error(
       `Independent provider request failed (HTTP ${response.status}).`,
     );
+  }
   return response.json();
 }
 try {
@@ -109,6 +114,7 @@ try {
   const thinkingConfig = model.name.includes("2.5")
     ? { thinkingBudget: 16384, includeThoughts: false }
     : { thinkingLevel: "HIGH", includeThoughts: false };
+  reviewPhase = "generation";
   const result = await api(
     `${model.name}:generateContent`,
     {
@@ -122,6 +128,20 @@ try {
     300_000,
   );
   const candidate = result.candidates?.[0];
+  if (
+    [
+      "STOP",
+      "MAX_TOKENS",
+      "SAFETY",
+      "RECITATION",
+      "OTHER",
+      "BLOCKLIST",
+      "PROHIBITED_CONTENT",
+      "SPII",
+      "MALFORMED_FUNCTION_CALL",
+    ].includes(candidate?.finishReason)
+  )
+    safeFinishReason = candidate.finishReason;
   if (candidate?.finishReason !== "STOP")
     throw Error("Independent review did not finish completely.");
   const finalText =
@@ -129,7 +149,9 @@ try {
       ?.filter((p) => p.text && !p.thought)
       .map((p) => p.text)
       .join("") || "";
+  reviewPhase = "final-json";
   const review = JSON.parse(finalText);
+  reviewPhase = "source-verdict";
   if (
     review.reviewedCommit !== head ||
     !["PASS", "FAIL"].includes(review.verdict) ||
@@ -138,6 +160,7 @@ try {
     )
   )
     throw Error("Independent review returned an invalid exact-source verdict.");
+  reviewPhase = "receipt";
   writeFileSync(`${output}/review.txt`, finalText);
   writeFileSync(
     `${output}/receipt.json`,
@@ -176,6 +199,14 @@ try {
     process.exitCode = 1;
 } catch {
   // Provider error bodies can contain source or credential fragments.
+  const failure = {
+    head,
+    phase: reviewPhase,
+    httpStatus: failureHttpStatus,
+    finishReason: safeFinishReason,
+  };
+  writeFileSync(`${output}/failure.json`, JSON.stringify(failure, null, 2));
+  console.error(JSON.stringify(failure));
   console.error("Independent source review failed; no approval was earned.");
   process.exitCode = 1;
 }
