@@ -42,6 +42,7 @@ async function installCaptureFixture(context) {
             data.fill(8);
           },
           getByteTimeDomainData(data) {
+            window.__fixtureVadSamples = (window.__fixtureVadSamples || 0) + 1;
             data.fill(142);
           },
           getFloatTimeDomainData(data) {
@@ -391,31 +392,38 @@ async function verifyRoomRecovery(browser, mode) {
       "The lighthouse keeper carefully unfolds the chart, marks the shoals, and returns to the signal room. ".repeat(
         4,
       );
-    const corsHeaders = {
-      "access-control-allow-origin": "*",
-      "access-control-allow-headers": "authorization,content-type",
-      "access-control-allow-methods": "POST,OPTIONS",
-    };
-    await page.route(
-      "https://api.groq.com/openai/v1/audio/transcriptions",
-      (route) =>
-        route.fulfill({
-          status: 200,
-          headers: corsHeaders,
-          contentType: "text/plain",
-          body: "Read my lighthouse scene.",
-        }),
-    );
-    await page.route(
-      "https://api.groq.com/openai/v1/chat/completions",
-      (route) =>
-        route.fulfill({
-          status: 200,
-          headers: corsHeaders,
-          contentType: "application/json",
-          body: JSON.stringify({ choices: [{ message: { content: reply } }] }),
-        }),
-    );
+    let directProviderRequests = 0;
+    await page.route("https://api.groq.com/**", async (route) => {
+      directProviderRequests++;
+      await route.abort();
+    });
+    const transcriptionKeys = [];
+    await page.route("**/api/ai/transcribe", async (route) => {
+      transcriptionKeys.push(route.request().headers()["x-groq-key"]);
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ text: "Read my lighthouse scene." }),
+      });
+    });
+    const chatRequests = [];
+    await page.route("**/api/ai/chat", async (route) => {
+      chatRequests.push(route.request().postDataJSON());
+      await route.fulfill({
+        status: 200,
+        contentType: "text/event-stream",
+        body: [
+          'data: {"type":"start"}',
+          "",
+          "data: " + JSON.stringify({ type: "text-delta", delta: reply }),
+          "",
+          'data: {"type":"finish"}',
+          "",
+          "data: [DONE]",
+          "",
+        ].join("\n"),
+      });
+    });
     const speechRequests = [];
     await page.route("**/api/ai/speak", async (route) => {
       speechRequests.push(route.request().postDataJSON());
@@ -447,8 +455,20 @@ async function verifyRoomRecovery(browser, mode) {
     await expect
       .poll(() => page.evaluate(() => window.__captureStarts || 0))
       .toBe(1);
+    await page.keyboard.press("Escape");
+    await page.keyboard.up("Space");
+    await page.waitForTimeout(150);
+    assert.equal(transcriptionKeys.length, 0);
+    assert.equal(chatRequests.length, 0);
+    await page.keyboard.down("Space");
+    await expect
+      .poll(() => page.evaluate(() => window.__captureStarts || 0))
+      .toBe(2);
     releaseBriefing();
     await page.waitForTimeout(650);
+    await expect
+      .poll(() => page.evaluate(() => window.__fixtureVadSamples || 0))
+      .toBeGreaterThanOrEqual(12);
     await page.keyboard.up("Space");
     const alert = page.getByRole("alert", { name: "Voice room", exact: true });
     await expect(alert).toContainText("Connect OpenAI");
@@ -459,11 +479,29 @@ async function verifyRoomRecovery(browser, mode) {
     ).toHaveAttribute("href", "/settings/providers");
     assert.equal(speechRequests.length, 1);
     assert.equal(speechRequests[0].text, reply.trim());
+    assert.deepEqual(transcriptionKeys, ["test-customer-groq"]);
+    assert.equal(chatRequests.length, 1);
+    assert.equal(chatRequests[0].provider, "groq");
+    assert.equal(chatRequests[0].clientApiKey, "test-customer-groq");
+    assert.equal(chatRequests[0].enabledTools, undefined);
+    assert.equal(directProviderRequests, 0);
+    await page.keyboard.down("Space");
+    await expect
+      .poll(() => page.evaluate(() => window.__captureStarts || 0))
+      .toBe(3);
+    await page.getByRole("link", { name: "← Arcanea", exact: true }).click();
+    await page.keyboard.up("Space");
+    await expect(page).toHaveURL(base + "/");
+    assert.equal(transcriptionKeys.length, 1);
+    assert.equal(chatRequests.length, 1);
+    assert.equal(speechRequests.length, 1);
     assert.deepEqual(errors, []);
     return {
       roomStickySettingsRecovery: true,
       roomSpaceReleaseSurvivesBriefing: true,
       fullRoomReplyPreserved: true,
+      roomUsesCustomerServerRoutes: true,
+      roomEscapeAndUnmountDiscardCapture: true,
       providerRequests: 0,
     };
   } finally {

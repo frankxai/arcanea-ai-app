@@ -28,11 +28,11 @@ export const GATEWAY_MODELS: Record<string, GatewayModel> = {
   'arcanea-deepseek':    { provider: 'deepseek',   modelId: 'deepseek-chat',             label: 'DeepSeek V3' },
   'arcanea-kimi':        { provider: 'moonshot',   modelId: 'kimi-k2.5',                 label: 'Kimi K2.5' },
   'arcanea-qwen':        { provider: 'cerebras',   modelId: 'qwen-3-235b-a22b-instruct-2507', label: 'Qwen 3' },
-  'arcanea-maverick':    { provider: 'groq',       modelId: 'meta-llama/llama-4-maverick-17b-128e-instruct', label: 'Maverick' },
+  'arcanea-maverick':    { provider: 'groq',       modelId: 'openai/gpt-oss-120b', label: 'GPT OSS 120B' },
   'arcanea-mistral':     { provider: 'mistral',    modelId: 'mistral-large-2512',        label: 'Mistral Large' },
   'arcanea-bolt':        { provider: 'cerebras',   modelId: 'llama3.1-8b',               label: 'Bolt (2200 tok/s)' },
   'arcanea-thunder':     { provider: 'cerebras',   modelId: 'llama3.3-70b',              label: 'Thunder (450 tok/s)' },
-  'arcanea-lightning':   { provider: 'groq',       modelId: 'llama-3.1-8b-instant',      label: 'Lightning (750 tok/s)' },
+  'arcanea-lightning':   { provider: 'groq',       modelId: 'openai/gpt-oss-20b', label: 'GPT OSS 20B' },
 };
 
 /** Extended providers — OpenAI-compatible APIs that need a custom base URL */

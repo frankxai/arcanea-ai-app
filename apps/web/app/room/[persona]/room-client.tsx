@@ -8,10 +8,8 @@ import {
   type PresenceState,
 } from "@/components/presence/lumina-presence";
 import {
-  chatWithGroq,
   getStoredKeys,
   speakWithElevenLabs,
-  transcribeWithGroq,
   voiceIdForPersona,
 } from "./browser-voice";
 import { SettingsPanel } from "./settings-panel";
@@ -98,6 +96,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const micCtxRef = useRef<AudioContext | null>(null);
   const micAnalyserRef = useRef<AnalyserNode | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
+  const roomMountedRef = useRef(true);
+  const discardCaptureRef = useRef(false);
   const chunksRef = useRef<Blob[]>([]);
   const vadAboveRef = useRef(0);
   const vadSilentRef = useRef(0);
@@ -126,17 +126,22 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
   // Keep refs in sync
   useEffect(() => {
-    recordingRef.current = recording;
-  }, [recording]);
-  useEffect(() => {
     stateRef.current = state;
   }, [state]);
 
-  // BYOK: detect stored keys on mount
-  useEffect(() => {
-    const k = getStoredKeys();
-    setHasBYOK(Boolean(k.groq || k.eleven));
+  const refreshVoiceKeys = useCallback(() => {
+    try {
+      const keys = voiceCredentialHeaders();
+      setHasBYOK(
+        Boolean(
+          keys["x-groq-key"] || keys["x-openai-key"] || getStoredKeys().eleven,
+        ),
+      );
+    } catch {
+      setHasBYOK(false);
+    }
   }, []);
+  useEffect(refreshVoiceKeys, [refreshVoiceKeys]);
 
   // Day 1 fixes: permission gate + debug + via=clap detection
   // Daemon-launched windows live in a fresh Chromium profile (--user-data-dir
@@ -221,6 +226,10 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           autoGainControl: true,
         },
       });
+      if (!roomMountedRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        return false;
+      }
       micStreamRef.current = stream;
       const Ctx =
         window.AudioContext ||
@@ -383,6 +392,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     }
     abortRef.current?.abort();
     abortRef.current = null;
+    discardCaptureRef.current = true;
     if (recorderRef.current && recorderRef.current.state !== "inactive") {
       try {
         recorderRef.current.stop();
@@ -442,38 +452,26 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
             ? "m4a"
             : "wav";
 
-        // 1 — transcribe
-        let userText: string;
-        if (keys.groq) {
-          userText = (await transcribeWithGroq(blob, keys.groq)).trim();
-        } else {
-          const form = new FormData();
-          form.append("audio", blob, `mic.${ext}`);
-          const r = await fetch("/api/ai/transcribe", {
-            method: "POST",
-            headers: voiceCredentialHeaders(),
-            body: form,
-            signal: ctl.signal,
-          });
-          if (!r.ok) {
-            // Parse structured error so we can surface a Connect-voice CTA on 503/502.
-            const payload = (await r.json().catch(() => null)) as {
-              error?: string;
-              hint?: string;
-              cta?: "byok" | "retry";
-            } | null;
-            const cta = payload?.cta;
-            const msg = payload?.error ?? `transcribe ${r.status}`;
-            const hint = payload?.hint;
-            if (cta === "byok") {
-              showErr({ message: msg, hint, cta: "byok" });
-            } else {
-              showErr({ message: msg, hint });
-            }
-            return;
-          }
-          userText = ((await r.json()) as { text?: string }).text?.trim() ?? "";
+        // Customer audio keys travel only to the same-origin server routes.
+        // Canonical settings take priority over the legacy room key.
+        const audioHeaders = voiceCredentialHeaders();
+        const form = new FormData();
+        form.append("audio", blob, `mic.${ext}`);
+        const r = await fetch("/api/ai/transcribe", {
+          method: "POST",
+          headers: audioHeaders,
+          body: form,
+          signal: ctl.signal,
+        });
+        if (!r.ok) {
+          showErr(await voiceResponseRecovery(r));
+          return;
         }
+        const transcriptPayload = await r.json();
+        const userText =
+          typeof transcriptPayload.text === "string"
+            ? transcriptPayload.text.trim()
+            : "";
         if (!userText) {
           showErr("Nothing heard — try again.");
           return;
@@ -488,14 +486,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         // 2 — chat
         let full: string;
         const systemPrompt = composeSystemPrompt();
-        // Jarvis persona gets server-side live tools (system_status, git_today,
-        // open PRs, repo search, file reads, brand brief). The BYOK Groq path
-        // hits Groq direct and skips them — those users get persona reasoning
-        // only. Inline [OPEN: url] markers handle browser actions on both paths.
-        const enabledTools = persona.id === "jarvis" ? ["jarvis"] : undefined;
-        // Bridge mode wins over both cloud paths when ?via=local is set AND
-        // /api/voice/cognition reports the bridge is configured. SIS voice-
-        // operator owns cognition + dispatch; the room just renders + speaks.
+        // The private bridge retains its own admission. Public room chat uses
+        // the existing customer-key route without unavailable host tools.
         if (useBridge) {
           const cogRes = await fetch("/api/voice/cognition", {
             method: "POST",
@@ -538,18 +530,6 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
             approval_required: cog.approval_required,
             packet_id: cog.packet_id,
           });
-        } else if (keys.groq) {
-          full = await chatWithGroq({
-            messages: nextHistory.map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
-            systemPrompt,
-            apiKey: keys.groq,
-            temperature: persona.temperature,
-            maxTokens: 240,
-          });
-          setReply(full);
         } else {
           const chatRes = await fetch("/api/ai/chat", {
             method: "POST",
@@ -562,49 +542,54 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
               systemPrompt,
               temperature: persona.temperature,
               maxTokens: 240,
-              ...(enabledTools ? { enabledTools } : {}),
+              provider: audioHeaders["x-groq-key"] ? "groq" : "openai",
+              clientApiKey:
+                audioHeaders["x-groq-key"] || audioHeaders["x-openai-key"],
             }),
             signal: ctl.signal,
           });
-          if (!chatRes.ok || !chatRes.body)
-            throw new Error(`chat ${chatRes.status}`);
+          if (!chatRes.ok) {
+            showErr(await voiceResponseRecovery(chatRes));
+            return;
+          }
+          if (!chatRes.body) throw new Error("Voice chat response was empty.");
           const reader = chatRes.body.getReader();
           const decoder = new TextDecoder();
           let acc = "";
-          while (true) {
-            const { value, done } = await reader.read();
-            if (done) break;
-            for (const line of decoder
-              .decode(value, { stream: true })
-              .split(/\r?\n/)) {
-              if (!line) continue;
-              if (line.startsWith("data:")) {
-                const body = line.slice(5).trim();
-                if (!body || body === "[DONE]") continue;
-                try {
-                  const p = JSON.parse(body);
-                  if (
-                    p?.type &&
-                    !["text-delta"].includes(p.type) &&
-                    p?.choices === undefined &&
-                    p?.text === undefined
-                  ) {
-                    continue;
-                  }
-                  const piece =
-                    p?.choices?.[0]?.delta?.content ??
-                    p?.text ??
-                    p?.delta ??
-                    "";
-                  if (typeof piece === "string") acc += piece;
-                } catch {
-                  acc += body;
-                }
-              } else if (!line.startsWith("event:") && !line.startsWith(":")) {
-                acc += line;
+          let pending = "";
+          const readLine = (line: string) => {
+            if (!line.startsWith("data:")) return;
+            const data = line.slice(5).trim();
+            if (!data || data === "[DONE]") return;
+            let part;
+            try {
+              part = JSON.parse(data);
+            } catch {
+              throw new Error("Voice chat response could not be read.");
+            }
+            if (part?.type === "error") {
+              throw new Error("Voice provider request failed. Try again.");
+            }
+            if (part?.type === "text-delta" && typeof part.delta === "string") {
+              acc += part.delta;
+              setReply(acc);
+            }
+          };
+          try {
+            while (true) {
+              const { value, done } = await reader.read();
+              pending += decoder.decode(value, { stream: !done });
+              const lines = pending.split(/\r?\n/);
+              pending = lines.pop() ?? "";
+              for (const line of lines) readLine(line);
+              if (done) {
+                if (pending) readLine(pending);
+                break;
               }
             }
-            setReply(acc);
+          } finally {
+            await reader.cancel().catch(() => {});
+            reader.releaseLock();
           }
           full = acc.trim();
         }
@@ -721,7 +706,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   );
 
   const startRecording = useCallback(async () => {
-    if (busyRef.current || recordingRef.current) return;
+    if (busyRef.current || recordingRef.current || !roomMountedRef.current)
+      return;
     try {
       if (!micStreamRef.current) {
         const ok = await primeMic();
@@ -737,6 +723,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           await micCtxRef.current.resume();
         } catch {}
       }
+      if (!roomMountedRef.current) return;
 
       const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
         ? "audio/webm;codecs=opus"
@@ -755,6 +742,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         if (e.data.size) chunksRef.current.push(e.data);
       };
       rec.onstop = () => {
+        recordingRef.current = false;
+        if (!roomMountedRef.current || discardCaptureRef.current) {
+          chunksRef.current = [];
+          if (roomMountedRef.current) setRecording(false);
+          return;
+        }
         setRecording(false);
         cancelAnimationFrame(vadRafRef.current);
         const blob = new Blob(chunksRef.current, { type: mime });
@@ -785,6 +778,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       hasSpokenRef.current = false;
       vadAboveRef.current = 0;
       vadSilentRef.current = 0;
+      discardCaptureRef.current = false;
+      recordingRef.current = true;
       rec.start(80);
       setRecording(true);
       setState("listening");
@@ -792,6 +787,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       setReply("");
       vadRafRef.current = requestAnimationFrame(runVad);
     } catch {
+      recordingRef.current = false;
+      setRecording(false);
       showErr("Microphone blocked — grant permission in the browser.");
     }
   }, [converse, runVad, showErr, primeMic]);
@@ -894,7 +891,15 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   }, [startRecording, stopSpeaking, micArmed, toggleMicArmed]);
 
   useEffect(() => {
+    roomMountedRef.current = true;
     return () => {
+      roomMountedRef.current = false;
+      discardCaptureRef.current = true;
+      cancelAnimationFrame(vadRafRef.current);
+      cancelAnimationFrame(bargeRafRef.current);
+      if (recorderRef.current?.state === "recording")
+        recorderRef.current.stop();
+      audioElRef.current?.pause();
       micStreamRef.current?.getTracks().forEach((t) => t.stop());
       micCtxRef.current?.close().catch(() => {});
       abortRef.current?.abort();
@@ -1318,10 +1323,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       <SettingsPanel
         open={settingsOpen}
         onOpenChange={setSettingsOpen}
-        onKeysChanged={() => {
-          const k = getStoredKeys();
-          setHasBYOK(Boolean(k.groq || k.eleven));
-        }}
+        onKeysChanged={refreshVoiceKeys}
       />
 
       {/* Error — sticky with action when cta exists, transient otherwise */}
