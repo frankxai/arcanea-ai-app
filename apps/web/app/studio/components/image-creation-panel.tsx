@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
-import Image from 'next/image';
+import { requestImages } from "@/lib/imagine/request";
+import Image from "next/image";
 
 import { useState, useCallback } from "react";
 import { Sparkle, Eye, Copy, Download } from "@/lib/phosphor-icons";
@@ -48,10 +49,10 @@ export function ImageCreationPanel({
     const fullPrompt = `${prompt.trim()}, ${style.toLowerCase()} style`;
 
     try {
-      const res = await fetch("/api/imagine/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: fullPrompt, count: 4, aspectRatio }),
+      const res = await requestImages({
+        prompt: fullPrompt,
+        count: 4,
+        aspectRatio,
       });
 
       if (!res.ok) {
@@ -61,17 +62,31 @@ export function ImageCreationPanel({
 
       const data = await res.json();
       const images: GeneratedImageData[] = (data.images || []).map(
-        (img: { url?: string; data?: string; mimeType?: string; prompt?: string }, i: number) => ({
+        (
+          img: {
+            url?: string;
+            data?: string;
+            mimeType?: string;
+            prompt?: string;
+          },
+          i: number,
+        ) => ({
           id: `studio_img_${Date.now()}_${i}`,
-          url: img.url || (img.data ? `data:${img.mimeType || "image/png"};base64,${img.data}` : ""),
+          url:
+            img.url ||
+            (img.data
+              ? `data:${img.mimeType || "image/png"};base64,${img.data}`
+              : ""),
           prompt: img.prompt || fullPrompt,
-        })
+        }),
       );
 
       setGeneratedImages(images);
       if (images.length > 0) setSelectedImage(images[0].id);
     } catch (err) {
-      setImageError(err instanceof Error ? err.message : "Image generation failed");
+      setImageError(
+        err instanceof Error ? err.message : "Image generation failed",
+      );
     } finally {
       setIsGenerating(false);
     }
@@ -93,7 +108,11 @@ export function ImageCreationPanel({
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && prompt.trim()) {
+            if (
+              e.key === "Enter" &&
+              (e.metaKey || e.ctrlKey) &&
+              prompt.trim()
+            ) {
               e.preventDefault();
               handleGenerate();
             }
@@ -153,7 +172,11 @@ in the style of epic fantasy concept art."
           >
             {isGenerating ? (
               <>
-                <Sparkle size={16} className="animate-spin" style={{ animationDuration: "2s" }} />
+                <Sparkle
+                  size={16}
+                  className="animate-spin"
+                  style={{ animationDuration: "2s" }}
+                />
                 Generating...
               </>
             ) : (
@@ -161,9 +184,7 @@ in the style of epic fantasy concept art."
             )}
           </button>
 
-          {imageError && (
-            <p className="text-xs text-red-400">{imageError}</p>
-          )}
+          {imageError && <p className="text-xs text-red-400">{imageError}</p>}
         </div>
       </div>
 
@@ -171,7 +192,9 @@ in the style of epic fantasy concept art."
       <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Eye size={14} className="text-red-400" />
-          <span className="text-xs font-semibold text-text-primary">Generated</span>
+          <span className="text-xs font-semibold text-text-primary">
+            Generated
+          </span>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3">
@@ -193,12 +216,18 @@ in the style of epic fantasy concept art."
                     src={activeImage.url}
                     alt={activeImage.prompt}
                     className="w-full aspect-square object-cover"
-                   />
+                  />
                   <div className="absolute bottom-0 inset-x-0 p-2 bg-gradient-to-t from-black/80 to-transparent flex items-center gap-2">
-                    <button className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors" title="Copy">
+                    <button
+                      className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                      title="Copy"
+                    >
                       <Copy size={12} className="text-white" />
                     </button>
-                    <button className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors" title="Download">
+                    <button
+                      className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                      title="Download"
+                    >
                       <Download size={12} className="text-white" />
                     </button>
                   </div>
@@ -220,7 +249,7 @@ in the style of epic fantasy concept art."
                       src={img.url}
                       alt={img.prompt}
                       className="w-full aspect-square object-cover"
-                     />
+                    />
                   </button>
                 ))}
               </div>
