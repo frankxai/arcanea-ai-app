@@ -192,3 +192,29 @@ scoped historical source was explicitly read at
 `fed3c56c8166ef4457cf164b36d5524e569b7224`. That read restores guidance for this
 session, not accepted policy or a runtime enforcement mechanism. Queen/SIS,
 memory/graph/canvas, commerce, publication and the full programme remain open.
+
+At follow-up `47ac623f09f6850845f9ec5b7a867b9fb0a2a5c0`, CI38162432267
+passes install/lint/typecheck/build. Reading38162432370 passes compiled reading,
+isolated database and actual password-login/private-scene fixture stages. The
+compiled Companion job38162432329 also passes. Its independent source job fails
+correctly: the model omits input-bar, tokens.css and the SDK context test while
+claiming an unsupplied chat-layout file. Its apparent pass is unvalidated and
+cannot approve anything. All 42 complete inputs, raw response and failed receipt
+are retained; that single attempt reports 243894 prompt tokens, 2183 completion
+tokens and cost0. No retry of that unchanged review is made.
+
+The current review protocol supersedes the earlier single-call budget: three
+sequential zero-price module calls maximum per matching event, with fresh live
+price/source checks before each call and immediate stop on any defect or invalid
+response. Experience, account/transport and verification each have explicitly
+assigned changed paths and shared complete context. Every changed path has one
+accountable module; the aggregate must cover the entire original source manifest.
+The prior 42-file manifest maps to 26/20/31 complete files and 8/3/11 changed paths
+respectively. The model must give verifiable, quoted audit observations from
+distinct supplied files as well as exact coverage; copied placeholders or invented
+paths cannot pass. Eight actual no-network regressions pass, including complete
+module union, unavailable/private context and pre-inference scan/price refusal.
+Fresh hosted module results are still required. Application source is unchanged
+by this protocol refinement, but the new candidate requires fresh revision-bound
+checks. No customer, paid provider, production migration or whole-product success
+is established by these fixtures.

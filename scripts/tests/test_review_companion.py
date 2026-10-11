@@ -56,6 +56,11 @@ class ReviewAdmission(unittest.TestCase):
     def valid_review(self):
         return {"head": HEAD, "base": BASE, "manifestSha256": "manifest",
                 "coveredFiles": ["a.ts", "context.ts"], "verdict": "pass", "findings": [],
+                "observations": [
+                    {"path": "a.ts", "line": 1, "quote": "// guard", "behavior": "Guard annotation"},
+                    {"path": "a.ts", "line": 2, "quote": "return false;", "behavior": "False result"},
+                    {"path": "context.ts", "line": 1, "quote": "Context", "behavior": "Context value"},
+                ],
                 "acceptanceGaps": ["Static only"], "limitations": ["No runtime execution"]}
 
     def test_incomplete_fabricated_and_misbound_review_is_rejected(self):
@@ -66,6 +71,7 @@ class ReviewAdmission(unittest.TestCase):
             {"coveredFiles": ["a.ts"]},
             {"coveredFiles": ["a.ts", "context.ts", "a.ts"]},
             {"verdict": "APPROVE"}, {"limitations": None},
+            {"observations": []},
         ):
             with self.subTest(changes=changes), self.assertRaises(REVIEW.Denied):
                 REVIEW.validate({**self.valid_review(), **changes}, HEAD, BASE, "manifest", content)
@@ -87,18 +93,40 @@ class ReviewAdmission(unittest.TestCase):
                "GITHUB_ACTOR": "frankxai"}
         content = {KERNEL: "Engineering kernel", "a.ts": "return false;"}
         args = [str(SCRIPT), "--head", HEAD, "--base", BASE, "--pull-request", "591"]
+        primary = {name: {"a.ts"} for name in ("experience", "account-transport", "verification")}
+        planned = {name: content for name in primary}
         for code, model in ((1, self.model()),
                             (0, {**self.model(), "pricing": {"prompt": "1", "completion": "0"}}),
                             (0, {**self.model(), "context_length": 1000})):
             with patch.dict(REVIEW.os.environ, env, clear=True), patch.object(REVIEW.sys, "argv", args), \
                  patch.object(REVIEW, "public_pin"), \
                  patch.object(REVIEW, "sources", return_value=(["a.ts"], content, {KERNEL: "k", "a.ts": "a"}, "diff")), \
+                 patch.object(REVIEW, "modules", return_value=(primary, planned)), \
+                 patch.object(REVIEW, "git", return_value=b"Fixture delta"), \
                  patch.object(REVIEW.subprocess, "run", return_value=Mock(returncode=code)), \
                  patch.object(REVIEW, "network", return_value=json.dumps({"data": [model]}).encode()) as network:
                 with self.assertRaises(REVIEW.Denied):
                     REVIEW.main()
                 self.assertEqual(network.call_count, 0 if code else 1)
                 self.assertTrue(all(call.args[0].endswith("/models") for call in network.call_args_list))
+
+    def test_modules_cover_every_changed_and_context_file_without_hiding_source(self):
+        changed = ["apps/web/components/lumina/companion-chat.tsx",
+                   "apps/web/components/lumina/lumina-bubble.tsx", "apps/web/app/chat/page.tsx",
+                   "apps/web/components/chat/chat-welcome.tsx", "apps/web/components/chat/chat-overlays.tsx",
+                   "packages/design-system/src/companion.module.css",
+                   "apps/web/hooks/use-conversation.ts", "scripts/review-companion.py"]
+        content = {path: "Complete source" for path in set(changed) | set(REVIEW.CONTEXTS)}
+        primary, planned = REVIEW.modules(changed, content)
+        self.assertEqual(set().union(*primary.values()), set(changed))
+        self.assertEqual(sum(len(x) for x in primary.values()), len(changed))
+        self.assertEqual(set().union(*(set(x) for x in planned.values())), set(content))
+        self.assertTrue(all(set(primary[name]) <= set(planned[name]) for name in primary))
+        for data, paths in (({**content, "unassigned-context.ts": "Unseen"}, changed),
+                            (content, [*changed, "unowned.txt"]),
+                            ({path: value for path, value in content.items() if path != KERNEL}, changed)):
+            with self.assertRaises(REVIEW.Denied):
+                REVIEW.modules(paths, data)
 
     def test_unadmitted_actor_does_not_access_public_or_provider_network(self):
         with patch.dict(REVIEW.os.environ, {"GITHUB_ACTIONS": "true", "GITHUB_ACTOR": "other"}, clear=True), \
