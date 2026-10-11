@@ -16,10 +16,22 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs"
   },
-  "keywords": ["arcanea", "world", "standard", "manifest", "provenance", "worldbuilding"],
+  "keywords": [
+    "arcanea",
+    "world",
+    "standard",
+    "manifest",
+    "provenance",
+    "worldbuilding"
+  ],
   "author": "FrankX",
   "license": "MIT",
-  "engines": { "node": ">=18.0.0" },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
   "optionalDependencies": {
     "@arcanea/world-engine": "workspace:*"
   }

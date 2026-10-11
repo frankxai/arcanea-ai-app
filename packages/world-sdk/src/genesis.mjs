@@ -4,7 +4,11 @@
 import { createHash } from "node:crypto";
 import { slugify } from "./manifest.mjs";
 
-const STOP = new Set("a an the of in on at to and or but is are was were where when which that this with as by for from into your you".split(" "));
+const STOP = new Set(
+  "a an the of in on at to and or but is are was were where when which that this with as by for from into your you".split(
+    " ",
+  ),
+);
 const MOOD_HINTS = [
   [/\b(star|space|galaxy|orbit|cyber|android|mech|quantum|neon)\b/i, "sci-fi"],
   [/\b(blood|haunt|ghost|rot|plague|nightmare|cursed|dread)\b/i, "horror"],
@@ -29,11 +33,15 @@ function mulberry32(a) {
 }
 
 function keywords(sentence) {
-  return [...new Set(sentence.toLowerCase().match(/[a-z]+/g) || [])].filter((w) => w.length > 3 && !STOP.has(w));
+  return [...new Set(sentence.toLowerCase().match(/[a-z]+/g) || [])].filter(
+    (w) => w.length > 3 && !STOP.has(w),
+  );
 }
 
 function paletteFromSeed(s) {
-  const d = createHash("sha256").update("palette:" + s).digest();
+  const d = createHash("sha256")
+    .update("palette:" + s)
+    .digest();
   const hex = (i) => "#" + d.slice(i, i + 3).toString("hex");
   return [hex(0), hex(3), hex(6), hex(9)];
 }
@@ -63,8 +71,16 @@ export function genesisOffline(sentence, { idSeed } = {}) {
   ];
 
   const characterSeeds = [
-    { name: titleCase(anchor) + (rng() > 0.5 ? "a" : "us"), role: "keeper", trait: kw[2] || "watchful" },
-    { name: titleCase(second) + (rng() > 0.5 ? "el" : "ir"), role: "wanderer", trait: kw[3] || "restless" },
+    {
+      name: titleCase(anchor) + (rng() > 0.5 ? "a" : "us"),
+      role: "keeper",
+      trait: kw[2] || "watchful",
+    },
+    {
+      name: titleCase(second) + (rng() > 0.5 ? "el" : "ir"),
+      role: "wanderer",
+      trait: kw[3] || "restless",
+    },
   ];
 
   return {
@@ -75,20 +91,49 @@ export function genesisOffline(sentence, { idSeed } = {}) {
     premise: `In ${name}, ${sentence}. Those who live here have learned to shape their fate around it.`,
     laws,
     mood,
-    visualDna: { palette: paletteFromSeed(sentence), style: `${mood} · ${kw.slice(0, 3).join(", ")}`, motifs: kw.slice(0, 4) },
-    theme: { audio: "", prompt: `${mood} ambient evoking ${kw.slice(0, 3).join(", ")}` },
+    visualDna: {
+      palette: paletteFromSeed(sentence),
+      style: `${mood} · ${kw.slice(0, 3).join(", ")}`,
+      motifs: kw.slice(0, 4),
+    },
+    theme: {
+      audio: "",
+      prompt: `${mood} ambient evoking ${kw.slice(0, 3).join(", ")}`,
+    },
     characters: characterSeeds.map((c) => ({
       name: c.name,
       role: c.role,
       persona: `${c.name} is ${c.trait}, a ${c.role} of ${name}.`,
       backstory: `Shaped by the world's first law, ${c.name} carries the memory of how ${anchor} came to be.`,
     })),
-    locations: [{ name: `The ${titleCase(anchor)} Reach`, description: `The heart of ${name}, where ${kw[0] || "everything"} began.` }],
+    locations: [
+      {
+        name: `The ${titleCase(anchor)} Reach`,
+        description: `The heart of ${name}, where ${kw[0] || "everything"} began.`,
+      },
+    ],
     agents: [
-      { id: "lore-keeper", harness: "claude", role: "Maintain canon consistency and deepen lore." },
-      { id: "cartographer", harness: "gemini", role: "Generate locations and the world map." },
-      { id: "visual-canon", harness: "grok", role: "Seed portraits, covers, short lore scenes with native Imagine (visualDna + refs for coherence)." },
-      { id: "composer", harness: "any", role: "Produce the world's soundtrack.", skill: "suno-prompt-architect" },
+      {
+        id: "lore-keeper",
+        harness: "claude",
+        role: "Maintain canon consistency and deepen lore.",
+      },
+      {
+        id: "cartographer",
+        harness: "gemini",
+        role: "Generate locations and the world map.",
+      },
+      {
+        id: "visual-canon",
+        harness: "grok",
+        role: "Seed portraits, covers, short lore scenes with native Imagine (visualDna + refs for coherence).",
+      },
+      {
+        id: "composer",
+        harness: "any",
+        role: "Produce the world's soundtrack.",
+        skill: "suno-prompt-architect",
+      },
     ],
   };
 }
@@ -105,7 +150,22 @@ export async function genesis(sentence, opts = {}) {
     const enriched = await opts.llm(
       `Return JSON matching an Arcanea WorldSpec (name, premise, laws[3], mood, visualDna{palette[],style,motifs[]}, characters[{name,role,persona,backstory}]) for the world seed: "${sentence}".`,
     );
-    return { ...base, ...enriched, idSeed: base.idSeed, genesisPrompt: sentence, slug: slugify(enriched?.name || base.name) };
+    const creative = {};
+    for (const key of [
+      "name",
+      "tagline",
+      "premise",
+      "laws",
+      "mood",
+      "visualDna",
+      "characters",
+      "locations",
+    ]) {
+      if (enriched?.[key] != null) creative[key] = enriched[key];
+    }
+    if (typeof enriched?.theme?.prompt === "string")
+      creative.theme = { ...base.theme, prompt: enriched.theme.prompt };
+    return { ...base, ...creative, slug: slugify(creative.name || base.name) };
   } catch {
     return base; // never let a flaky model block creation
   }

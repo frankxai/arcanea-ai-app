@@ -385,7 +385,9 @@ jobs:
           pnpm --dir apps/web exec tsx --test lib/saga/__tests__/series-entry.test.ts
 
       - name: Run package tests
-        run: pnpm test:quick
+        run: |
+          pnpm test:quick
+          node --test packages/world-sdk/tests/*.test.mjs
 
       - name: Verify model routing and native CLI adapters
         timeout-minutes: 2
