@@ -169,3 +169,11 @@ scoped pass are retained; it does not prove Next or production acceptance.
 Primary reference: [React's streaming HTML protocol](https://react.dev/reference/react-dom/server/renderToReadableStream).
 
 Final-source review and the revised hosted browser gate are still pending.
+
+Before final verification, accepted base advances again to
+`5328fbc92e2c621946af5b941cf4b01d96bc53b1` through peer PR582's dry-by-default
+narrative-evaluation tooling. The five disjoint incoming files equal accepted
+main. All 24 reader/review-context sources remain byte-identical during integration.
+The current four-file delta is renewed against this base because branch protection
+requires up-to-date source. No narrative experiment, paid inference or funding
+authorization is performed by this reader slice.
