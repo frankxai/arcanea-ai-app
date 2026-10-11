@@ -98,7 +98,7 @@ async function main() {
     await target.waitForURL((url) => url.pathname === chapter);
     await expect(
       target.getByRole("button", { name: "Visualize a passage", exact: true }),
-    ).toBeVisible();
+    ).toBeEnabled();
   }
   try {
     for (const actor of [owner, other]) {
@@ -331,13 +331,17 @@ async function main() {
     for (const action of ["Generate scene", "Save private creation"]) {
       const switchingContext = await makeContext();
       const switchingPage = await switchingContext.newPage();
+      page = switchingPage;
       switchingPage.setDefaultTimeout(20000);
       await login(switchingPage, owner.account);
-      await switchingPage
-        .getByRole("button", { name: "Reopen scene", exact: true })
-        .click();
+      await expect(
+        switchingPage.getByRole("button", {
+          name: "Reopen scene",
+          exact: true,
+        }),
+      ).toBeVisible();
       const selectedProse = switchingPage.locator("article .prose p").first();
-      await selectScenePassage(selectedProse);
+      assert.equal((await selectScenePassage(selectedProse)).collapsed, false);
       await switchingPage
         .getByRole("button", { name: "Visualize selection", exact: true })
         .click();

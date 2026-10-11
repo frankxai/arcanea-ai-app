@@ -448,3 +448,21 @@ and the save quote itself includes it. The native old-handler and late-epoch
 regressions exercise those guards. These findings do not justify replacing captured
 epoch identity with a fresh token. Raw output remains preserved, and this review
 does not approve later fixture corrections or prove live privacy/provider behavior.
+
+Run38146492110 at `9c9bc58d9882a9ca758533122c9126071887eca9` passed the initial
+interactive selection, real password login, anonymous draft adoption, private save,
+lost-acknowledgement retry, fresh-tab restore and foreign/anonymous denial. Its
+artifact11705252418 and runner cleanup receipt are retained. The new account-switch
+fixture then failed before switching: it opened the existing saved scene and waited
+for `Visualize selection`, which the actual view intentionally renders only while
+the workspace is closed. This was a fixture precondition error, not a demonstrated
+failure of those five completed checks or proof of the account-boundary assertion.
+
+The fixture now waits for the recovered scene without opening it, selects the
+chapter in the closed workspace, and uses the existing replacement confirmation to
+prepare the connected action. Login waits for the enabled scene control, and failure
+diagnostics follow the active switching tab. The real SDK listener, password login,
+connected/enabled click witness and zero-POST/write assertions remain unchanged.
+Current-source hosted execution and exact-revision independent review are pending.
+Local browser admission is HOLD: 5,994 MB free versus 8,192 MB required and 27 task
+runtimes. No local browser, server, container or additional agent was started.
