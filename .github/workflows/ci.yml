@@ -670,7 +670,9 @@ jobs:
 
   project-document-preview:
     name: Authenticated project document acceptance
-    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/project-document-recovery-20261011'
+    # Independent review intentionally runs after skipped author/world jobs.
+    # Avoid their inherited success() skip, while still requiring every direct gate.
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/project-document-recovery-20261011' && needs.install.result == 'success' && needs.lint.result == 'success' && needs.typecheck.result == 'success' && needs.author-independent-review.result == 'success'
     needs: [install, lint, typecheck, author-independent-review]
     runs-on: ubuntu-latest
     timeout-minutes: 25

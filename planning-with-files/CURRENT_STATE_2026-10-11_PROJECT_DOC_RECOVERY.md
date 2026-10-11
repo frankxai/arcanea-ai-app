@@ -172,3 +172,29 @@ project helper files are read through immutable Git; hosted checkout remains the
 full-workspace authority. Fresh source review, actual SQL/browser execution, image
 upload ownership, customer usefulness, protected merge and production acceptance
 remain open. Existing private-storage cost approval is unanswered. Full goal ACTIVE.
+
+## Exact78a7017b results and workflow correction
+
+Actual hosted Lint and TypeScript pass at78a7017b53ec8ebc4568c891f8a45d5fbf8cfaae.
+The PostgreSQL step executes both fresh and original-first expanded migration
+fixtures successfully, including actual two-connection races and atomic rollback.
+Retained completed job114495502342 log SHA256
+7955b2add9ca4206e53feb03cf2de3543c2f2549216b674cb5d90637f6afaaf8.
+Independent Gemini3.1 Pro review passes; all35 complete-source hashes match Git.
+These are source/database results, not authenticated browser or production proof.
+
+The browser job is actually SKIPPED despite its four direct prerequisites passing:
+default success() inherits skipped author/world ancestors from independent review.
+The current correction explicitly uses always(), !cancelled() and all four direct
+success results. CI Status already denies skipped browser acceptance. The failed
+workflow attempt remains preserved; no skipped test is counted as acceptance.
+Observe38148018167 until terminal before a fresh corrected dispatch.
+
+Accepted main advanced to22aa23ba106d1b9affa0adcacbcfa73e99f6e59e through ownerPR586.
+The merge is conflict-free and all six incoming narrative-evidence paths match that
+main byte-for-byte. Root instructions are unchanged, no deeper guide governs those
+paths, and the lease explicitly admits them for integration. The reviewer base now
+pins that accepted main. Production metadata is READY atdpl_Fd46HhRg7bhiNR6YvsbG9CaqQ5YX
+on22aa23b; no document/private source is deployed by this task. Current production
+catalog still shows all four document/project tables absent. Fresh exact checks and
+authenticated acceptance must bind the integrated follow-up before release.
