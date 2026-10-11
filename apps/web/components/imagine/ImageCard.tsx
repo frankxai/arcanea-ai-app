@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import { useState, useCallback, useEffect } from "react";
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import {
   getFavorites,
   readCloudFavorite,
@@ -59,6 +59,7 @@ export function ImageCard({
   isAnimating,
   videoUrl,
 }: ImageCardProps) {
+  const reduceMotion = useReducedMotion();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -255,9 +256,12 @@ export function ImageCard({
   return (
     <>
       <m.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, delay: index * 0.08 }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.4,
+          delay: reduceMotion ? 0 : index * 0.08,
+        }}
         className="group relative rounded-sm sm:rounded-2xl overflow-hidden cursor-pointer"
         onClick={() => setIsExpanded(true)}
       >
@@ -282,7 +286,7 @@ export function ImageCard({
             unoptimized
             width={1024}
             height={1024}
-            className={`w-full ${ASPECT_CLASSES[aspectRatio] || "aspect-square"} object-cover transition-transform duration-500 group-hover:scale-105`}
+            className={`w-full ${ASPECT_CLASSES[aspectRatio] || "aspect-square"} object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none`}
             loading="lazy"
           />
         )}
@@ -320,15 +324,15 @@ export function ImageCard({
         </button>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <div className="relative bg-[var(--arc-cosmic-surface)] opacity-100 pointer-events-none sm:absolute sm:inset-0 sm:bg-transparent sm:bg-gradient-to-t sm:from-black/80 sm:via-black/20 sm:to-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 sm:transition-opacity sm:duration-200 motion-reduce:transition-none">
           {/* Top-right actions */}
-          <div className="absolute top-3 right-3 flex gap-1.5 pointer-events-auto">
+          <div className="relative flex flex-wrap gap-1 p-2 pointer-events-auto sm:absolute sm:top-3 sm:right-3 sm:gap-1.5 sm:p-0">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleCopyPrompt();
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               title={copied ? "Copied!" : "Copy prompt"}
             >
               {copied ? (
@@ -365,7 +369,7 @@ export function ImageCard({
                 e.stopPropagation();
                 handleDownload();
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               title="Download"
             >
               <svg
@@ -385,7 +389,7 @@ export function ImageCard({
             </button>
             <button
               onClick={handleShare}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               title={shared ? "Link copied!" : "Share"}
             >
               {shared ? (
@@ -423,19 +427,22 @@ export function ImageCard({
           </div>
 
           {/* Bottom info */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 pointer-events-auto">
+          <div className="relative p-2 pt-0 pointer-events-auto sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:p-4">
             <p className="text-xs text-white/70 line-clamp-2 font-body leading-relaxed">
               {prompt}
             </p>
-            <div className="flex items-center gap-1.5 mt-2">
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
               {onVary && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onVary(prompt);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    window.scrollTo({
+                      top: 0,
+                      behavior: reduceMotion ? "auto" : "smooth",
+                    });
                   }}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--arc-brand-atlantean-teal)]/80 text-white hover:bg-[var(--arc-brand-atlantean-teal)] transition-all backdrop-blur-sm flex items-center gap-1.5"
+                  className="inline-flex min-h-11 min-w-11 items-center gap-1.5 rounded-lg border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] px-3 text-xs font-medium text-[var(--arc-text-primary)] transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                 >
                   <svg
                     width="12"
@@ -463,7 +470,7 @@ export function ImageCard({
                     onAnimate(id, src);
                   }}
                   disabled={isAnimating}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/80 text-white hover:bg-violet-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+                  className="min-h-11 min-w-11 rounded-lg border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] px-3 text-xs font-medium text-[var(--arc-text-primary)] transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                 >
                   {isAnimating ? (
                     <span className="flex items-center gap-1.5">
@@ -509,9 +516,9 @@ export function ImageCard({
           onClick={() => setIsExpanded(false)}
         >
           <m.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: reduceMotion ? 0 : 0.3 }}
             className="relative max-w-5xl max-h-[90vh] w-full"
             onClick={(e) => e.stopPropagation()}
           >

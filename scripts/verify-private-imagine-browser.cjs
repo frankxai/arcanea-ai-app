@@ -76,7 +76,18 @@ async function main() {
       const page = await context.newPage();
       let phase = "guest-denial";
       const result = { mode: mode.name, passed: false, pageErrors: 0 };
-      page.on("pageerror", () => result.pageErrors++);
+      result.pageErrorDetails = [];
+      page.on("pageerror", (error) => {
+        result.pageErrors++;
+        result.pageErrorDetails.push({
+          phase,
+          name: error.name,
+          message: String(error.message)
+            .replace(/https?:\/\/[^\s)]+/g, "[url]")
+            .replace(/\b[A-Za-z0-9_-]{16,}\b/g, "[redacted]")
+            .slice(0, 240),
+        });
+      });
       const capture = async (kind) => {
         const file = `${config.output}/${mode.name}-${kind}.png`;
         await page.screenshot({
@@ -503,15 +514,25 @@ async function main() {
           .first();
         await expect(animate).toBeEnabled();
         await animate.focus();
-        assert.ok(
-          await animate.evaluate((node) => {
-            for (let current = node; current; current = current.parentElement)
-              if (Number(getComputedStyle(current).opacity) < 0.99)
-                return false;
-            return true;
-          }),
-          "Keyboard-focused animation control must be visible",
-        );
+        await expect
+          .poll(
+            () =>
+              animate.evaluate((node) => {
+                for (
+                  let current = node;
+                  current;
+                  current = current.parentElement
+                )
+                  if (Number(getComputedStyle(current).opacity) < 0.99)
+                    return false;
+                return true;
+              }),
+            {
+              message:
+                "Keyboard-focused animation control must be visible after entry motion completes",
+            },
+          )
+          .toBe(true);
         const animateBounds = await animate.boundingBox();
         assert.ok(
           animateBounds.width >= 44 && animateBounds.height >= 44,

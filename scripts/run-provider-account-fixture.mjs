@@ -561,11 +561,14 @@ try {
   receipt.passed = true;
 } catch {
   receipt.failurePhase = phase;
-  receipt.failure =
-    "The isolated provider settings acceptance did not complete.";
+  receipt.failure = privateImagine
+    ? "The isolated private Imagine acceptance did not complete."
+    : "The isolated provider settings acceptance did not complete.";
   process.exitCode = 1;
   console.error(
-    "Provider settings fixture failed; inspect safe retained evidence.",
+    privateImagine
+      ? "Private Imagine fixture failed; inspect safe retained evidence."
+      : "Provider settings fixture failed; inspect safe retained evidence.",
   );
 } finally {
   for (const child of children) {
