@@ -376,7 +376,7 @@ test("deferred audio errors are sanitized before leaving the handler stream", as
 test("browser voice reads existing settings and excludes unrelated secrets", () => {
   const storage = {
     getItem: (name: string) =>
-      name === "arcanea-provider-keys"
+      name === "arcanea-provider-keys:v2:user%3Avoice-test"
         ? JSON.stringify({
             openai: "sk-test-key",
             groq: "test-customer-groq",
@@ -385,25 +385,28 @@ test("browser voice reads existing settings and excludes unrelated secrets", () 
           })
         : null,
   };
-  assert.deepEqual(voiceCredentialHeaders(storage), {
+  assert.deepEqual(voiceCredentialHeaders("user:voice-test", storage), {
     "x-groq-key": "test-customer-groq",
     "x-openai-key": "sk-test-key",
   });
-  assert.deepEqual(voiceCredentialHeaders({ getItem: () => null }), {});
+  assert.deepEqual(
+    voiceCredentialHeaders("user:voice-test", { getItem: () => null }),
+    {},
+  );
 });
 
-test("legacy room Groq key is retained without overriding provider settings", () => {
+test("unassigned legacy room Groq key is preserved but not used", () => {
   assert.deepEqual(
-    voiceCredentialHeaders({
+    voiceCredentialHeaders("user:voice-test", {
       getItem: (name) =>
         name === "arcanea-voice-groq-key" ? "test-room-groq" : null,
     }),
-    { "x-groq-key": "test-room-groq" },
+    {},
   );
   assert.deepEqual(
-    voiceCredentialHeaders({
+    voiceCredentialHeaders("user:voice-test", {
       getItem: (name) =>
-        name === "arcanea-provider-keys"
+        name === "arcanea-provider-keys:v2:user%3Avoice-test"
           ? JSON.stringify({ groq: "test-customer-groq" })
           : "test-room-groq",
     }),
@@ -414,7 +417,7 @@ test("legacy room Groq key is retained without overriding provider settings", ()
 test("malformed or blocked browser key storage fails without exposing its content", () => {
   assert.throws(
     () =>
-      voiceCredentialHeaders({
+      voiceCredentialHeaders("user:voice-test", {
         getItem: () => {
           throw new Error("private-storage-fixture");
         },
@@ -426,9 +429,9 @@ test("malformed or blocked browser key storage fails without exposing its conten
   );
   assert.throws(
     () =>
-      voiceCredentialHeaders({
+      voiceCredentialHeaders("user:voice-test", {
         getItem: (name) =>
-          name === "arcanea-provider-keys"
+          name === "arcanea-provider-keys:v2:user%3Avoice-test"
             ? JSON.stringify({ openai: "bad\ncredential" })
             : null,
       }),

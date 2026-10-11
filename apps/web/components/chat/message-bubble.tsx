@@ -29,6 +29,7 @@ import {
   voiceCredentialHeaders,
   voiceResponseMessage,
 } from "@/lib/voice/customer-credentials";
+import { useAuth } from "@/lib/auth/context";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -232,6 +233,8 @@ export const MessageBubble = React.memo(function MessageBubble({
   onLoadBranch,
   luminorId,
 }: MessageBubbleProps) {
+  const { credentialScope } = useAuth();
+  const credentialToken = credentialScope.get();
   const [isEditing, setIsEditing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showCopyToast, setShowCopyToast] = useState(false);
@@ -306,7 +309,15 @@ export const MessageBubble = React.memo(function MessageBubble({
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [credentialToken]);
+  useEffect(() => {
+    speechAbortRef.current = null;
+    speechUrlRef.current = null;
+    setSpeakingAudio(null);
+    setIsPlaying(false);
+    setAudioProgress(0);
+    setVoiceError(null);
+  }, [credentialToken]);
 
   const text = getMessageText(message);
 
@@ -385,6 +396,7 @@ export const MessageBubble = React.memo(function MessageBubble({
 
   // TTS handler — supports persona-based voices, speed control, progress tracking
   const handleSpeak = useCallback(async () => {
+    if (!credentialScope.isCurrent(credentialToken)) return;
     if (speechAbortRef.current) {
       speechAbortRef.current?.abort();
       speechAbortRef.current = null;
@@ -411,7 +423,7 @@ export const MessageBubble = React.memo(function MessageBubble({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...voiceCredentialHeaders(),
+          ...voiceCredentialHeaders(credentialToken.actor),
         },
         signal: controller.signal,
         body: JSON.stringify({
@@ -424,7 +436,11 @@ export const MessageBubble = React.memo(function MessageBubble({
       if (!res.ok) throw new Error(await voiceResponseMessage(res));
 
       const blob = await res.blob();
-      if (controller.signal.aborted) return;
+      if (
+        controller.signal.aborted ||
+        !credentialScope.isCurrent(credentialToken)
+      )
+        return;
       const url = URL.createObjectURL(blob);
       speechUrlRef.current = url;
       const audio = new Audio(url);
@@ -448,7 +464,11 @@ export const MessageBubble = React.memo(function MessageBubble({
         progressRef.current = requestAnimationFrame(updateProgress);
       };
       audio.onended = () => {
-        if (controller.signal.aborted) return;
+        if (
+          controller.signal.aborted ||
+          !credentialScope.isCurrent(credentialToken)
+        )
+          return;
         speechAbortRef.current = null;
         setIsPlaying(false);
         setAudioProgress(0);
@@ -459,7 +479,11 @@ export const MessageBubble = React.memo(function MessageBubble({
         speechUrlRef.current = null;
       };
       audio.onerror = () => {
-        if (controller.signal.aborted) return;
+        if (
+          controller.signal.aborted ||
+          !credentialScope.isCurrent(credentialToken)
+        )
+          return;
         speechAbortRef.current = null;
         setVoiceError("Voice audio could not be played. Try again.");
         setIsPlaying(false);
@@ -473,7 +497,11 @@ export const MessageBubble = React.memo(function MessageBubble({
 
       await audio.play();
     } catch (error) {
-      if (controller.signal.aborted) return;
+      if (
+        controller.signal.aborted ||
+        !credentialScope.isCurrent(credentialToken)
+      )
+        return;
       speechAbortRef.current = null;
       setVoiceError(
         error instanceof Error
@@ -487,7 +515,7 @@ export const MessageBubble = React.memo(function MessageBubble({
       setSpeakingAudio(null);
       audioRef.current = null;
     }
-  }, [text, voicePersona, playbackSpeed]);
+  }, [text, voicePersona, playbackSpeed, credentialScope, credentialToken]);
 
   // Save edit handler
   const handleSaveEdit = useCallback(

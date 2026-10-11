@@ -171,7 +171,7 @@ async function verifyChatRecovery(browser, mode) {
     );
     await page.addInitScript(() => {
       localStorage.setItem(
-        "arcanea-provider-keys",
+        "arcanea-provider-keys:v2:guest",
         JSON.stringify({ groq: "test-customer-groq" }),
       );
       localStorage.setItem(
@@ -407,7 +407,10 @@ async function verifyRoomRecovery(browser, mode) {
         .catch(() => {});
     });
     await page.addInitScript(() =>
-      localStorage.setItem("arcanea-voice-groq-key", "test-customer-groq"),
+      localStorage.setItem(
+        "arcanea-provider-keys:v2:guest",
+        JSON.stringify({ groq: "test-customer-groq" }),
+      ),
     );
     const reply =
       "The lighthouse keeper carefully unfolds the chart, marks the shoals, and returns to the signal room. ".repeat(
@@ -660,7 +663,7 @@ async function main() {
         });
         await page.evaluate(() =>
           localStorage.setItem(
-            "arcanea-provider-keys",
+            "arcanea-provider-keys:v2:guest",
             JSON.stringify({
               groq: "test-customer-groq",
               openai: "sk-test-key",
