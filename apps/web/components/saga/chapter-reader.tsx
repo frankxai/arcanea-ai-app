@@ -6,6 +6,7 @@ import Link from "next/link";
 import ChatMarkdown from "@/components/chat/chat-markdown";
 import { useRouter } from "next/navigation";
 import { ReadingToolbar } from "./reading-toolbar";
+import styles from "./reading-toolbar.module.css";
 import { SceneVisualizer } from "./scene-visualizer";
 import { getReaderContent } from "@/lib/content/reader-presentation";
 
@@ -121,21 +122,6 @@ function getThemeStyles(theme: ReadingTheme) {
   }
 }
 
-function getFontSizeClass(size: FontSize): string {
-  switch (size) {
-    case 14:
-      return "text-sm";
-    case 18:
-      return "text-lg";
-    case 22:
-      return "text-xl";
-    case 26:
-      return "text-2xl";
-    case 30:
-      return "text-3xl";
-  }
-}
-
 function getLineHeightClass(lh: LineHeight): string {
   switch (lh) {
     case "compact":
@@ -198,7 +184,24 @@ interface ReaderPrefs {
 function loadPrefs(): ReaderPrefs {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as ReaderPrefs;
+    if (raw) {
+      const parsed: unknown = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        const prefs = parsed as Record<string, unknown>;
+        return {
+          theme: THEME_CYCLE.includes(prefs.theme as ReadingTheme)
+            ? (prefs.theme as ReadingTheme)
+            : "dark",
+          fontSize: FONT_SIZES.includes(prefs.fontSize as FontSize)
+            ? (prefs.fontSize as FontSize)
+            : 18,
+          fontFamily: prefs.fontFamily === "sans" ? "sans" : "serif",
+          lineHeight: LINE_HEIGHT_CYCLE.includes(prefs.lineHeight as LineHeight)
+            ? (prefs.lineHeight as LineHeight)
+            : "normal",
+        };
+      }
+    }
   } catch {
     /* ignore */
   }
@@ -510,7 +513,6 @@ export function ChapterReader({
   /* ---------------------------------------------------------------- */
 
   const s = getThemeStyles(theme);
-  const fontSizeClass = getFontSizeClass(fontSize);
   const lineHeightClass = getLineHeightClass(lineHeight);
   const fontFamilyClass = fontFamily === "serif" ? "font-serif" : "font-sans";
   const wordsRead = Math.round((progress / 100) * wordCount);
@@ -523,7 +525,7 @@ export function ChapterReader({
 
   return (
     <div
-      className={`min-h-screen ${s.bg} ${s.text} transition-colors duration-300`}
+      className={`${styles.surface} min-h-screen ${s.bg} ${s.text}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleTap}
@@ -577,7 +579,8 @@ export function ChapterReader({
         <article className="flex-1 px-6 py-10 min-w-0">
           <div
             ref={readingRef}
-            className={`${s.prose} ${fontSizeClass} ${lineHeightClass} ${fontFamilyClass}`}
+            className={`${styles.reading} ${s.prose} ${lineHeightClass} ${fontFamilyClass}`}
+            style={{ fontSize }}
           >
             <ChatMarkdown content={readingContent} />
           </div>

@@ -109,6 +109,225 @@ async function readChapter(page, href, text) {
   return { ...layout, title, openingHeadings };
 }
 
+async function verifyReadingControls(page, mode) {
+  const group = page.getByRole("group", {
+    name: "Reading controls",
+    exact: true,
+  });
+  const theme = group.getByRole("button", {
+    name: "Cycle reading theme",
+    exact: true,
+  });
+  await theme.focus();
+  await expect(theme).toBeFocused();
+  await expect(group).toBeVisible();
+  const bounds = await group.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    return {
+      left: box.left,
+      right: box.right,
+      top: box.top,
+      bottom: box.bottom,
+      viewportWidth: innerWidth,
+      viewportHeight: innerHeight,
+      controls: [...element.querySelectorAll("button,a")].map((control) => {
+        const r = control.getBoundingClientRect();
+        return {
+          name: control.getAttribute("aria-label"),
+          left: r.left,
+          right: r.right,
+          top: r.top,
+          bottom: r.bottom,
+          width: r.width,
+          height: r.height,
+        };
+      }),
+    };
+  });
+  assert.ok(
+    bounds.left >= 0 && bounds.right <= bounds.viewportWidth,
+    "Reading controls fit the viewport",
+  );
+  for (const control of bounds.controls) {
+    assert.ok(
+      control.width >= 44 && control.height >= 44,
+      `Touch target: ${control.name}`,
+    );
+    assert.ok(
+      control.left >= bounds.left &&
+        control.right <= bounds.right &&
+        control.top >= bounds.top &&
+        control.bottom <= bounds.bottom,
+      `Unclipped control: ${control.name}`,
+    );
+  }
+  if (mode.hasTouch) {
+    assert.ok(
+      bounds.bottom <= bounds.viewportHeight - 80,
+      "Reading controls reserve the assistant height, inset and a visible gap",
+    );
+  }
+  const companion = page.getByRole("button", {
+    name: "Open Arcanea companion",
+    exact: true,
+  });
+  await expect(companion).toBeVisible();
+  const companionBounds = await companion.boundingBox();
+  assert.ok(companionBounds);
+  assert.ok(
+    bounds.right <= companionBounds.x ||
+      bounds.left >= companionBounds.x + companionBounds.width ||
+      bounds.bottom <= companionBounds.y ||
+      bounds.top >= companionBounds.y + companionBounds.height,
+    "Reading controls do not overlap the actual companion button",
+  );
+  const paragraph = page.getByRole("article").locator("p").first();
+  const increase = group.getByRole("button", {
+    name: "Increase font size",
+    exact: true,
+  });
+  if (mode.hasTouch) await increase.tap();
+  else await increase.press("Enter");
+  await expect
+    .poll(() => paragraph.evaluate((p) => getComputedStyle(p).fontSize))
+    .toBe("22px");
+  await expect(group.locator('[aria-label="Font size"]')).toHaveText("22");
+  await page.reload();
+  await readChapter(page, entries[0].href, entries[0].text);
+  await expect
+    .poll(() => paragraph.evaluate((p) => getComputedStyle(p).fontSize))
+    .toBe("22px");
+  const decrease = group.getByRole("button", {
+    name: "Decrease font size",
+    exact: true,
+  });
+  if (mode.hasTouch) await decrease.tap();
+  else {
+    await decrease.focus();
+    await decrease.press("Enter");
+  }
+  await expect
+    .poll(() => paragraph.evaluate((p) => getComputedStyle(p).fontSize))
+    .toBe("18px");
+  const spacing = group.getByRole("button", {
+    name: "Line spacing: normal",
+    exact: true,
+  });
+  if (mode.hasTouch) await spacing.tap();
+  else {
+    await spacing.focus();
+    await spacing.press("Enter");
+  }
+  await expect(
+    group.getByRole("button", { name: "Line spacing: relaxed", exact: true }),
+  ).toBeVisible();
+  // React's accessible label can update before the browser recalculates style.
+  // Wait on the actual prose, with the same expected value and default timeout.
+  await expect
+    .poll(() =>
+      paragraph.evaluate((p) =>
+        Number.parseFloat(getComputedStyle(p).lineHeight),
+      ),
+    )
+    .toBe(36);
+  const lineHeight = await paragraph.evaluate((p) =>
+    Number.parseFloat(getComputedStyle(p).lineHeight),
+  );
+  assert.equal(lineHeight, 36, "Relaxed line height reaches the actual prose");
+  await theme.focus();
+  const themeStyles = [];
+  for (const expected of ["light", "sepia", "cosmic", "dark"]) {
+    if (mode.hasTouch) await theme.tap();
+    else await theme.press("Enter");
+    await expect(theme).toHaveAttribute("title", `Theme: ${expected}`);
+    const readingColors = () =>
+      paragraph.evaluate((p) => {
+        const style = getComputedStyle(p);
+        const reader = p.closest("article").parentElement.parentElement;
+        const readerStyle = getComputedStyle(reader);
+        return {
+          prose: style.color,
+          reader: readerStyle.color,
+          transitionProperty: readerStyle.transitionProperty,
+          transitionDuration: readerStyle.transitionDuration,
+        };
+      });
+    await expect
+      .poll(async () => {
+        const colors = await readingColors();
+        return colors.prose === colors.reader;
+      })
+      .toBe(true);
+    const colors = await readingColors();
+    // The global reduced-motion rule sets a tiny duration even when no property
+    // can transition. CSS transition-property:none means no transitions occur.
+    assert.ok(
+      colors.transitionProperty === "none" ||
+        colors.transitionDuration
+          .split(",")
+          .every((duration) => Number.parseFloat(duration) === 0),
+      "Reading theme preference switches do not animate",
+    );
+    assert.equal(
+      colors.prose,
+      colors.reader,
+      "The prose inherits its selected reading theme",
+    );
+    themeStyles.push({ theme: expected, ...colors });
+  }
+  await page.evaluate(() =>
+    localStorage.setItem(
+      "arcanea-reader-prefs",
+      JSON.stringify({
+        theme: "unsupported",
+        fontSize: 9000,
+        fontFamily: "other",
+        lineHeight: "unsupported",
+      }),
+    ),
+  );
+  await page.reload();
+  await readChapter(page, entries[0].href, entries[0].text);
+  await expect(theme).toHaveAttribute("title", "Theme: dark");
+  await expect
+    .poll(() => paragraph.evaluate((p) => getComputedStyle(p).fontSize))
+    .toBe("18px");
+  await expect(
+    group.getByRole("button", { name: "Line spacing: normal", exact: true }),
+  ).toBeVisible();
+  await theme.focus();
+  await page.evaluate(() => window.scrollBy(0, 300));
+  await expect(theme).toBeFocused();
+  await expect
+    .poll(() =>
+      theme.evaluate((button) => {
+        let opacity = 1;
+        for (let el = button; el; el = el.parentElement)
+          opacity *= Number(getComputedStyle(el).opacity);
+        return opacity;
+      }),
+    )
+    .toBe(1);
+  await theme.press("Tab");
+  await expect(decrease).toBeFocused();
+  await expect(group).toBeVisible();
+  const capture = `${mode.name}-reading-controls.png`;
+  await page.screenshot({ path: `${output}/${capture}` });
+  return {
+    bounds,
+    companionBounds,
+    preferenceReload: true,
+    invalidPreferencesRecovered: true,
+    fontSize: true,
+    lineHeight,
+    themes: true,
+    themeStyles,
+    focusSurvivesScroll: true,
+    capture,
+    passed: true,
+  };
+}
+
 async function recoverMissingChapter(page, href, mode, capture) {
   const response = await page.goto(base + href);
   const status = response?.status() ?? null;
@@ -160,6 +379,8 @@ async function recoverMissingChapter(page, href, mode, capture) {
   try {
     for (const file of [
       "apps/web/components/saga/chapter-reader.tsx",
+      "apps/web/components/saga/reading-toolbar.tsx",
+      "apps/web/components/saga/reading-toolbar.module.css",
       "apps/web/lib/content/reader-presentation.ts",
       "apps/web/components/chat/chat-markdown.tsx",
       "apps/web/app/books/[bookId]/[chapterId]/page.tsx",
@@ -168,6 +389,8 @@ async function recoverMissingChapter(page, href, mode, capture) {
       "apps/web/lib/content/book-visibility.ts",
       "apps/web/app/globals.css",
       "apps/web/components/navigation/navbar.tsx",
+      "apps/web/components/lumina/lumina-bubble.tsx",
+      "packages/design-system/src/companion.module.css",
       "packages/design-system/src/tokens.css",
       "apps/web/next.config.js",
       "apps/web/app/books/books-data.ts",
@@ -383,6 +606,9 @@ async function recoverMissingChapter(page, href, mode, capture) {
           record.featured.push({ href: hrefs[index], passed: true });
         }
         await page.goto(base + entries[0].href);
+        await readChapter(page, entries[0].href, entries[0].text);
+        record.controls = await verifyReadingControls(page, mode);
+        record.screenshots.push(record.controls.capture);
         const next = page
           .locator('nav a[href="/books/forge-of-ruin/the-forty-seven-names"]')
           .first();
