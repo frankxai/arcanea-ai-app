@@ -5,13 +5,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node ≥20](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org/)
 
-**The Arcanea Orchestrator.** A headless brain that routes, plans, swarms, and learns across `claude`, `opencode`, `codex`, and `gemini`. Reads the canonical `@arcanea/router-spec` to pick the right model for each task, respects your subscription economics, and dispatches to the right sub-CLI without you thinking about it.
+The Arcanea Orchestrator routes declared tasks through `claude`, `opencode`, `codex`, and `gemini` using `@arcanea/router-spec`. You can pin a model or select a surface and tier preference. The supported native CLI receives the selected identifier and preserves its own approval policy.
 
 Use this when you want intelligence. Use [`arcanea-code`](https://github.com/frankxai/arcanea-code) (the forthcoming OpenCode fork) when you want a rich TUI on top of it.
 
 ## Why
 
-You have Claude Max (unlimited inside Claude Code via `claude -p`), OpenCode Zen (free tier), plus optional BYOK keys for OpenAI Codex and Gemini. Picking the right one for each task by hand is noise. This does it for you — preference-aware, auth-aware, sub-economics-preserving.
+Use your installed and authenticated CLIs with their existing subscriptions or API keys. The router checks catalog tiers, context requirements and recorded installation state. Provider access, subscription limits, current prices and spending controls remain with the native runtime and account.
 
 ## Install
 
@@ -27,6 +27,10 @@ After install, two bin names are available:
 - `arco` — short alias
 
 ## Use
+
+Display-only surfaces retain their catalog candidates; `run` refuses dispatch even with a pin. `explain` uses the same preference, runtime filtering and adaptive ordering as an unpinned `run`, and marks only an executable candidate as selected.
+
+The retired `gemini-3-pro` pin is refused. Google's [model reference](https://ai.google.dev/gemini-api/docs/models) and [deprecation record](https://ai.google.dev/gemini-api/docs/deprecations) identify `gemini-3.1-pro-preview` as the replacement. Gemini Pro routes now use that explicit native ID. This is a catalog repair, not a creative benchmark result or verified account access. Other catalog entries remain historical snapshots.
 
 ```bash
 # Detect which CLIs are installed + infer auth tier (sub/byok/free)
