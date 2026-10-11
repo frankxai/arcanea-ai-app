@@ -496,7 +496,10 @@ export default function CreateWorldPage() {
   const operationVersion = useRef(0);
   const requests = useRef(new Set<AbortController>());
   const [editingDraft, setEditingDraft] = useState(false);
-  const [draftHasChanges, setDraftHasChanges] = useState(false);
+  const draftChanges = useRef(false);
+  const reportDraftChanges = useCallback((dirty: boolean) => {
+    draftChanges.current = dirty;
+  }, []);
   const [legacyConcept, setLegacyConcept] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [legacyRaw, setLegacyRaw] = useState<string | null>(null);
@@ -534,7 +537,7 @@ export default function CreateWorldPage() {
         setSaving(false);
         setImageLoading(false);
         setEditingDraft(false);
-        setDraftHasChanges(false);
+        reportDraftChanges(false);
         setLegacyConcept(null);
         setRefining(false);
         setPhase("input");
@@ -630,14 +633,14 @@ export default function CreateWorldPage() {
     }
   }, [ownerId, phase, description, conceptKey]);
   useEffect(() => {
-    if (!draftHasChanges) return;
     const hold = (event: BeforeUnloadEvent) => {
+      if (!draftChanges.current) return;
       event.preventDefault();
       event.returnValue = "";
     };
     window.addEventListener("beforeunload", hold);
     return () => window.removeEventListener("beforeunload", hold);
-  }, [draftHasChanges]);
+  }, []);
 
   const rememberDraft = useCallback(
     (data: GenerateResult, concept: string) => {
@@ -1062,7 +1065,7 @@ export default function CreateWorldPage() {
               aria-label="Back to worlds"
               onClick={(event) => {
                 if (
-                  draftHasChanges &&
+                  draftChanges.current &&
                   !window.confirm("Leave without applying these draft changes?")
                 )
                   event.preventDefault();
@@ -1389,7 +1392,7 @@ export default function CreateWorldPage() {
                     world={result.world}
                     disabled={saving || imageLoading}
                     onEditingChange={setEditingDraft}
-                    onDirtyChange={setDraftHasChanges}
+                    onDirtyChange={reportDraftChanges}
                     onApply={(world) => {
                       const updated = draftResult(world, result.draft_id);
                       rememberDraft(updated, description);

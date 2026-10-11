@@ -104,6 +104,15 @@ const draft = {
       const readStorage = (key) =>
         page.evaluate((key) => sessionStorage.getItem(key), key);
       const reloadWithoutWarning = async (label) => {
+        assert.equal(
+          await page.evaluate(() => {
+            const event = new Event("beforeunload", { cancelable: true });
+            window.dispatchEvent(event);
+            return event.defaultPrevented;
+          }),
+          false,
+          `${mode.name}: ${label}; unload guard is already clean`,
+        );
         let warned = false;
         let resolution;
         const resolveUnexpected = (dialog) => {

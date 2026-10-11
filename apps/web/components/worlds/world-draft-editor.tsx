@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { worldDraftSchema, type WorldDraft } from "@/lib/worlds/draft";
 
 function replace<T>(items: T[], index: number, patch: Partial<T>): T[] {
@@ -84,11 +91,11 @@ export function WorldDraftEditor({
     if (error) errorMessage.current?.focus();
   }, [error]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     onDirtyChange(hasChanges);
   }, [hasChanges, onDirtyChange]);
 
-  useEffect(() => () => onDirtyChange(false), [onDirtyChange]);
+  useLayoutEffect(() => () => onDirtyChange(false), [onDirtyChange]);
 
   if (!editing) {
     return (
@@ -374,6 +381,7 @@ export function WorldDraftEditor({
                       return;
                     }
                     if (onApply(parsed.data)) {
+                      onDirtyChange(false);
                       setEditing(null);
                       onEditingChange(false);
                     }
@@ -392,6 +400,7 @@ export function WorldDraftEditor({
                       )
                     )
                       return;
+                    onDirtyChange(false);
                     setEditing(null);
                     setError(null);
                     onEditingChange(false);

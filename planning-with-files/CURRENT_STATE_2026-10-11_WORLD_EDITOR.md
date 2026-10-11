@@ -148,6 +148,23 @@ The latest browser-qa preflight remains HOLD: 4063 MB free against
 evidence only; the application source remains unchanged from the static PASS.
 Fresh hosted execution and exact-revision review are still required.
 
+The c181173 static review passed and used 0.0002 plan credits, bringing observed
+mission v0 usage to 0.0036 with zero on-demand. Its actual hosted run38117590844
+again passed frozen install, lint, typecheck and the compiled application build.
+The strengthened cancellation test retained the original document and invalid
+field, then reproduced an unload warning immediately after confirmed Cancel.
+The prior passive-effect relay allowed dirty-state cleanup to lag the closed
+editor. The parent now keeps one listener reading a synchronous dirty ref; a
+stable callback updates that ref; the editor's committed buffer owns its visible
+dirty state, without an unused parent state or another parent render. The editor
+reports committed dirty/reversed state and unmount cleanup in layout effects,
+and explicitly clears it in successful Apply/confirmed Cancel handlers. Account
+reset uses the same callback. Warning-free reload checks now also verify the
+guard is already clear through a cancellable event before actual navigation.
+This is an application correction; the earlier static PASS does not approve its
+new bytes. The retained failed run is not a passing recovery result. Fresh
+hosted browser proof, exact-source review and original captures remain required.
+
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.
