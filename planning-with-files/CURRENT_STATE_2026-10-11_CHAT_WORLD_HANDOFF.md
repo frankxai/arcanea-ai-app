@@ -337,3 +337,67 @@ CIStatus114599175421. The root layout is added as a complete browser review
 context and capture source binding because it defines the content landmark.
 The new aggregate has 57 complete files; historical 56-file evidence remains
 unchanged. Public-source dispatch still requires current exact-revision admission.
+
+## Four-mode proof and accepted-main integration
+
+At 1a8c257d79b8835b283ea5a1f68e4703bd618f70, CI38183106330 is terminal
+SUCCESS: TypeScript114599780868, Lint114599780798, Build114600279146 and
+CIStatus114600969332 pass. Compiled114599660071 in Companion38183106339
+also passes. Artifact11718398116 is downloaded and inspected: all42 actual Git
+source hashes and all20 PNG sidecars match the pinned revision and pixels.
+All eight new world-handoff/editor captures were individually viewed. Desktop,
+mobile, reduced-motion and forced-color runs each prove two explicit generation
+attempts, restored uncertainty consent, complete source/draft downloads, restored
+completion, accepted editor transfer and preservation of newer applied edits.
+Changed notice controls have44px height and no recorded horizontal overflow.
+No page error or cleanup failure is recorded. These are intercepted provider and
+synthetic-auth checks: zero real provider calls and zero production writes.
+
+The editor captures expose section headings under the fixed navigation, alongside
+the previously recorded nested-main defect. Both require owner-side correction
+and fresh visual/accessibility acceptance. Clear handoff controls and a passing
+fixture do not establish that the full creator interface meets the premium bar.
+The occupied creator page remains read-only in this checkout.
+
+Independent114600528851 is terminal FAILURE. Retained artifact11718975771
+contains one world-client response: finish_reason=length, no tool calls, empty
+final content,118714 prompt tokens and24000 completion tokens. Reported cost
+and its three upstream cost fields are exactly zero. The reported25583 reasoning
+tokens exceed completion_tokens; retain that provider inconsistency without
+rewriting usage. No independent verdict was earned and remaining modules were
+not dispatched. The source/privacy/citation/coverage gate correctly refused it.
+
+Accepted main8936b1400844f1b48e93bc679e1d0af3e74f9e7e includes reader PR600
+and source-linked scene SDK PR601. Normal mergea7b7926df191bf79336a26892e0e7cd91ae36de8
+preserves all18 incoming Git blobs exactly. Native ownership and staged-secret
+gates passed; no other owner's checkout or accepted source was changed. The
+remaining world diff stays within its original13 paths. Large-scope admission
+and later13-path restoration each hit the helper's8-second routing deadline;
+the failed attempts made no claim change. An18-path integration-only claim
+passed before merging. Current native claim is the three explicit review/test/
+state refinement paths under the same owner, with original application and
+integration ownership receipts retained. No gate was bypassed or edited.
+
+The one world-client request now has an explicit36000-token output limit and
+360-second deadline after the observed completion exhaustion. Other modules
+retain24000/240. Deep reasoning stays enabled and excluded from returned text;
+no fallback or automatic retry is added. Live zero-price, structured-output,
+context and completion limits must admit the actual per-request budget before
+dispatch. The same model catalog reports a460800 completion ceiling. Thirteen
+no-network admission tests pass, including the larger context reserve and refusal
+of truncated responses. Current primary explanation of combined reasoning/output
+budgets: https://openrouter.ai/docs/guides/best-practices/reasoning-tokens.
+This adjustment is prepared; hosted completion and useful review remain unproven.
+
+Complete reading-toolbar TSX/CSS are included with the accepted chapter reader
+in the browser review module; the aggregate has59 complete source files. No
+source is shortened, no changed-path responsibility is dropped, and the remaining
+three modules retain their original output/deadline bounds. Renew all checks at
+the resulting public commit and current main base before promotion.
+
+Current PP review-lite remains HOLD:4708MB free versus6144MB required,27 task
+runtimes. Disk reading was86212984832 bytes free, above both hard floors. No
+new local build, model, server, browser or agent was started. Real Google output,
+private authenticated save/reopen, customer usefulness, production verification
+and the full platform/Queen/memory/canvas/commerce/community/publishing/client
+programme remain open. Goal01a1269f remains ACTIVE; both application PRs stay draft.

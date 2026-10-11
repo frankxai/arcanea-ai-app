@@ -26,6 +26,8 @@ OWNED_PULL_REQUESTS = {BRANCH: 597, WORLD_BRANCH: 602}
 MODEL = "dots-studio/dots-3-note-preview:free"
 GATEWAY = "https://api.kilo.ai/api/gateway"
 MAX_OUTPUT = 24000
+WORLD_CLIENT_OUTPUT = 36000
+WORLD_CLIENT_DEADLINE = 360
 MODULE_NAMES = ("experience", "composer", "account-transport", "companion-browser", "reading-browser", "review-protocol")
 CONTEXTS = (
     "AGENTS.md", "TASTE.md", "DESIGN.md",
@@ -59,6 +61,8 @@ WORLD_PATHS = frozenset({
 })
 WORLD_CONTEXTS = tuple(sorted(set(CONTEXTS) | WORLD_PATHS | {
     "apps/web/app/layout.tsx",
+    "apps/web/components/saga/reading-toolbar.tsx",
+    "apps/web/components/saga/reading-toolbar.module.css",
     "apps/web/app/chat/page.tsx", "apps/web/hooks/use-conversation.ts",
     "apps/web/components/lumina/companion-chat.tsx", "apps/web/components/lumina/lumina-bubble.tsx",
     "apps/web/components/chat/chat-area.tsx", "apps/web/components/chat/chat-overlays.tsx",
@@ -166,8 +170,10 @@ def sources(head, base, contexts=None):
     return changed, content, hashes, delta
 
 
-def zero_price(model, request_bytes):
+def zero_price(model, request_bytes, max_output=MAX_OUTPUT):
     require(model.get("id") == MODEL, "Explicit review model unavailable")
+    require(type(max_output) is int and max_output in {MAX_OUTPUT, WORLD_CLIENT_OUTPUT},
+            "Unadmitted review output budget")
     parameters = model.get("supported_parameters")
     require(isinstance(parameters, list)
             and {"response_format", "structured_outputs"} <= set(parameters),
@@ -179,8 +185,11 @@ def zero_price(model, request_bytes):
                     for value in pricing.values()), "Nonzero model price refused")
     except (InvalidOperation, ValueError):
         raise Denied("Invalid model pricing") from None
+    completion_limit = model.get("top_provider", {}).get("max_completion_tokens")
+    require(type(completion_limit) is int and completion_limit >= max_output,
+            "Review output exceeds verified completion limit")
     window = model.get("context_length")
-    require(type(window) is int and request_bytes + 1024 + MAX_OUTPUT <= window,
+    require(type(window) is int and request_bytes + 1024 + max_output <= window,
             "Complete encoded source exceeds verified context")
 
 
@@ -301,6 +310,9 @@ def modules(changed, content, branch=BRANCH):
                 "scripts/tests/chat-world-handoff.test.cjs"},
             "world-browser": common | identity | handoff | creator | {
                 "apps/web/app/layout.tsx",
+                "apps/web/components/saga/chapter-reader.tsx",
+                "apps/web/components/saga/reading-toolbar.tsx",
+                "apps/web/components/saga/reading-toolbar.module.css",
                 "apps/web/app/chat/page.tsx", "apps/web/components/chat/chat-area.tsx",
                 "apps/web/components/chat/agent-header.tsx", "packages/design-system/src/tokens.css",
                 "packages/design-system/src/companion.module.css"},
@@ -418,7 +430,8 @@ def request_for(name, head, base, manifest, content, hashes, delta):
     request = {"model": MODEL, "messages": [
         {"role": "system", "content": content[".arcanea/prompts/luminor-engineering-kernel.md"] + "\n\n" + instructions},
         {"role": "user", "content": f"<untrusted-delta>\n{delta}\n</untrusted-delta>\n{numbered}{footer}"},
-    ], "tools": [], "temperature": 0, "max_tokens": MAX_OUTPUT,
+    ], "tools": [], "temperature": 0,
+        "max_tokens": WORLD_CLIENT_OUTPUT if name == "world-client" else MAX_OUTPUT,
         "response_format": response_schema(head, base, manifest, content),
         "reasoning": {"enabled": True, "exclude": True}}
     return json.dumps(request, ensure_ascii=False).encode("utf-8")
@@ -429,6 +442,7 @@ def parse_response(result):
     choices = result.get("choices")
     require(isinstance(choices, list) and len(choices) == 1, "Ambiguous review response")
     choice = choices[0]
+    require(choice.get("finish_reason") != "length", "Review exhausted output limit before final JSON")
     require(choice.get("finish_reason") == "stop" and not choice["message"].get("tool_calls"),
             "Incomplete or tool-bearing review")
     text = choice["message"].get("content")
@@ -475,7 +489,7 @@ def main():
     matches = [m for m in json.loads(catalog_bytes)["data"] if m.get("id") == MODEL]
     require(len(matches) == 1, "Explicit review model unavailable or ambiguous")
     for encoded in packets.values():
-        zero_price(matches[0], len(encoded))
+        zero_price(matches[0], len(encoded), json.loads(encoded)["max_tokens"])
     root = Path(git("rev-parse", "--show-toplevel").decode().strip()).resolve()
     out = (root / "screenshots/companion-review").resolve()
     require(out.is_relative_to(root) and ".git" not in out.parts, "Evidence path refused")
@@ -502,23 +516,26 @@ def main():
         covered = set()
         for name, module_content in planned.items():
             encoded = packets[name]
+            output_limit = json.loads(encoded)["max_tokens"]
+            request_timeout = WORLD_CLIENT_DEADLINE if name == "world-client" else 240
             # Recheck live prices immediately before each independent dispatch.
             current_catalog = network(f"{GATEWAY}/models")
             current = [m for m in json.loads(current_catalog)["data"] if m.get("id") == MODEL]
             require(len(current) == 1, "Explicit review model unavailable or ambiguous")
-            zero_price(current[0], len(encoded))
+            zero_price(current[0], len(encoded), output_limit)
             public_pin(args.head, args.base, args.pull_request)
             module = {
                 "name": name, "manifestSha256": module_manifests[name],
                 "sourceHashes": module_hashes[name], "changedFiles": sorted(primary[name]),
                 "requestSha256": sha(encoded), "requestBytes": len(encoded),
+                "outputTokenLimit": output_limit, "requestTimeoutSeconds": request_timeout,
                 "catalogModel": current[0], "catalogSha256": sha(current_catalog),
                 "state": "dispatched", "dispatchedAt": stamp(), "independentVerdict": None,
             }
             receipt["modules"].append(module)
             receipt.update(state="dispatched", providerCalls=receipt["providerCalls"] + 1)
             save_receipt()
-            raw = network(f"{GATEWAY}/chat/completions", encoded, timeout=240)
+            raw = network(f"{GATEWAY}/chat/completions", encoded, timeout=request_timeout)
             (out / f"{name}-response.json").write_bytes(raw)
             result = json.loads(raw)
             module.update(actualModel=result.get("model"), responseSha256=sha(raw), usage=result.get("usage"))

@@ -18,6 +18,7 @@ KERNEL = ".arcanea/prompts/luminor-engineering-kernel.md"
 class ReviewAdmission(unittest.TestCase):
     def model(self):
         return {"id": REVIEW.MODEL, "pricing": {"prompt": "0", "completion": "0"},
+                "top_provider": {"max_completion_tokens": 460_800},
                 "context_length": 512_000, "supported_parameters": ["response_format", "structured_outputs"]}
 
     def test_only_explicit_zero_price_model_fits_complete_request(self):
@@ -30,6 +31,8 @@ class ReviewAdmission(unittest.TestCase):
             {"pricing": {"prompt": "Infinity", "completion": "0"}},
             {"pricing": {"prompt": "0"}},
             {"context_length": 1000},
+            {"top_provider": {}},
+            {"top_provider": {"max_completion_tokens": 1000}},
             {"supported_parameters": []},
             {"supported_parameters": ["response_format"]},
         ):
@@ -121,6 +124,11 @@ class ReviewAdmission(unittest.TestCase):
             self.assertTrue({"apps/web/app/worlds/create/page.tsx", "apps/web/lib/chat/world-handoff.ts",
                              "apps/web/lib/worlds/draft.ts", "apps/web/lib/auth/context.tsx"} <= set(planned[name]))
         self.assertIn("apps/web/app/layout.tsx", planned["world-browser"])
+        reader = {"apps/web/components/saga/chapter-reader.tsx",
+                  "apps/web/components/saga/reading-toolbar.tsx",
+                  "apps/web/components/saga/reading-toolbar.module.css"}
+        self.assertTrue(reader <= set(planned["world-browser"]))
+        self.assertFalse(reader & set(planned["world-review"]))
         for path in required:
             incomplete = {key: value for key, value in content.items() if key != path}
             with self.subTest(path=path), self.assertRaises(REVIEW.Denied):
@@ -177,7 +185,27 @@ class ReviewAdmission(unittest.TestCase):
         self.assertFalse(finding["additionalProperties"])
         self.assertEqual(set(schema["properties"]["coveredFiles"]["items"]["enum"]), set(content))
         self.assertEqual(request["tools"], [])
+        self.assertEqual(request["max_tokens"], REVIEW.MAX_OUTPUT)
         self.assertNotIn("Replace ALL", request["messages"][0]["content"])
+
+    def test_world_client_completion_reserve_cannot_exceed_model_or_context(self):
+        content = {KERNEL: "Accepted kernel", "a.ts": "return false;"}
+        request = json.loads(REVIEW.request_for("world-client", HEAD, BASE, "c" * 64,
+                                               content, {path: "hash" for path in content}, "Changed a.ts"))
+        limit = request["max_tokens"]
+        self.assertEqual(limit, 36_000)
+        self.assertEqual(request["reasoning"], {"enabled": True, "exclude": True})
+        REVIEW.zero_price(self.model(), 1000, limit)
+        fits_original = {**self.model(), "context_length": 1000 + 1024 + REVIEW.MAX_OUTPUT}
+        REVIEW.zero_price(fits_original, 1000)
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.zero_price(fits_original, 1000, limit)
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.zero_price({**self.model(), "top_provider": {"max_completion_tokens": REVIEW.MAX_OUTPUT}},
+                              1000, limit)
+        for unadmitted in (True, 0, 500_000):
+            with self.subTest(limit=unadmitted), self.assertRaises(REVIEW.Denied):
+                REVIEW.zero_price(self.model(), 1000, unadmitted)
 
     def test_actual_orchestration_denies_scan_price_and_context_before_generation(self):
         env = {"GITHUB_ACTIONS": "true", "GITHUB_REPOSITORY": REVIEW.REPOSITORY,
@@ -242,6 +270,11 @@ class ReviewAdmission(unittest.TestCase):
                 REVIEW.parse_response(invalid)
         with self.assertRaises(REVIEW.Denied):
             REVIEW.parse_response({**valid, "model": "different/model"})
+        exhausted = {"model": REVIEW.MODEL, "choices": [{"finish_reason": "length",
+                     "message": {"content": None}}],
+                     "usage": {"completion_tokens": 24_000, "cost": 0}}
+        with self.assertRaisesRegex(REVIEW.Denied, "exhausted output limit"):
+            REVIEW.parse_response(exhausted)
 
     def test_unadmitted_actor_does_not_access_public_or_provider_network(self):
         with patch.dict(REVIEW.os.environ, {"GITHUB_ACTIONS": "true", "GITHUB_ACTOR": "other"}, clear=True), \
