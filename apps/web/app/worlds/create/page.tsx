@@ -497,9 +497,19 @@ export default function CreateWorldPage() {
   const requests = useRef(new Set<AbortController>());
   const [editingDraft, setEditingDraft] = useState(false);
   const draftChanges = useRef(false);
-  const reportDraftChanges = useCallback((dirty: boolean) => {
-    draftChanges.current = dirty;
+  const holdDraftUnload = useCallback((event: BeforeUnloadEvent) => {
+    if (!draftChanges.current) return;
+    event.preventDefault();
+    event.returnValue = "";
   }, []);
+  const reportDraftChanges = useCallback(
+    (dirty: boolean) => {
+      draftChanges.current = dirty;
+      if (dirty) window.addEventListener("beforeunload", holdDraftUnload);
+      else window.removeEventListener("beforeunload", holdDraftUnload);
+    },
+    [holdDraftUnload],
+  );
   const [legacyConcept, setLegacyConcept] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [legacyRaw, setLegacyRaw] = useState<string | null>(null);
@@ -632,15 +642,10 @@ export default function CreateWorldPage() {
       );
     }
   }, [ownerId, phase, description, conceptKey]);
-  useEffect(() => {
-    const hold = (event: BeforeUnloadEvent) => {
-      if (!draftChanges.current) return;
-      event.preventDefault();
-      event.returnValue = "";
-    };
-    window.addEventListener("beforeunload", hold);
-    return () => window.removeEventListener("beforeunload", hold);
-  }, []);
+  useEffect(
+    () => () => window.removeEventListener("beforeunload", holdDraftUnload),
+    [holdDraftUnload],
+  );
 
   const rememberDraft = useCallback(
     (data: GenerateResult, concept: string) => {

@@ -56,7 +56,7 @@ must apply or download work before leaving. No guarantee of full tab-loss recove
 is made. Existing applied-draft recovery remains authoritative.
 
 The existing parent owns the single beforeunload listener and the explicit Worlds
-back-link confirmation. The editor reports dirty state through a stable setter,
+back-link confirmation. The editor reports committed dirty state through a stable callback,
 clears it on unmount and resets it in the existing account-reset lifecycle;
 open-editor state still blocks saving, export and regeneration. No second unload
 listener is introduced. The parent's existing large file is not rewritten.
@@ -164,6 +164,18 @@ guard is already clear through a cancellable event before actual navigation.
 This is an application correction; the earlier static PASS does not approve its
 new bytes. The retained failed run is not a passing recovery result. Fresh
 hosted browser proof, exact-source review and original captures remain required.
+
+Independent static review of 5ee4872 found no concrete dirty-state/data-loss
+blocker, with two P3 findings: the mounted listener's possible Firefox bfcache
+cost and an earlier lifecycle description that no longer matched that candidate.
+Its observed usage was 0.0003 plan credits, bringing mission v0 units to 0.0039.
+The latest callback synchronously attaches the single stable handler only when
+dirty and removes it on reversal, Apply, Cancel, unmount or account reset. A
+parent cleanup effect also removes that same handler. This retains immediate
+navigation safety while avoiding an always-attached listener for clean work.
+The current description now names the stable report callback. No Firefox
+runtime/cache or typing-performance measurement is claimed. The previous
+5ee4872 run remains separate evidence; changed source needs fresh review and CI.
 
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
