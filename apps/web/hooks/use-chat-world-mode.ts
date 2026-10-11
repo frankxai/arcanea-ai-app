@@ -1,112 +1,132 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-/**
- * useChatWorldMode — Detects ?mode=world and provides world-building context
- *
- * When the chat loads with ?mode=world, returns a world-building system prompt
- * and mode indicator. The chat page uses this to guide the AI into a structured
- * world-creation conversation, then offers a "Create This World" action.
- */
+import {
+  useMemo,
+  useEffect,
+  useCallback,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/lib/auth/context";
+import { readProviderPreferences } from "@/lib/ai/provider-preferences";
+import { validateCustomerKey } from "@/lib/gateway/credential-policy.mjs";
+import { createWorldHandoffSession } from "@/lib/chat/world-handoff";
 
-import { useState, useCallback, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+const WORLD_BUILDER_PROMPT = [
+  "You are a world-building assistant for Arcanea.",
+  "Help the creator develop their own setting, its rules, cultures, characters and founding events.",
+  "Keep each response focused on one area and distinguish your suggestions from the creator's decisions.",
+  "Preserve their names and defining constraints. Do not insert official Arcanea mythology into an unrelated world.",
+  "When enough material exists, suggest preparing a world draft using the button below.",
+  "That action uses the creator's Google quota and opens an editable draft; it does not save or publish a world.",
+  "Speak naturally. Do not generate JSON or claim that a world has been saved.",
+].join("\n");
 
-const WORLD_BUILDER_PROMPT = `You are a world-building assistant for Arcanea, a creative multiverse platform.
-
-Help the user design a fantasy world step by step. Ask about:
-1. **Core concept** — What makes this world unique? What is the central premise?
-2. **Elements & magic** — What forces of nature or magic exist? How do they work?
-3. **Factions & cultures** — Who inhabits this world? What groups compete or collaborate?
-4. **Key characters** — Who are the most important figures? Heroes, villains, legends?
-5. **Founding events** — What shaped this world? Wars, discoveries, cataclysms?
-
-Keep each response focused on ONE area. Be encouraging and creative.
-After 3-4 exchanges, summarize the world concept in a structured format and tell the user:
-"Your world is taking shape! When you're ready, click **Create This World** to bring it to life."
-
-Do NOT generate JSON. Speak naturally and collaboratively.`;
-
-export interface WorldModeState {
-  /** Whether the chat is in world-builder mode */
-  isWorldMode: boolean;
-  /** System prompt to inject when in world mode */
-  worldPrompt: string;
-  /** Whether the user has sent enough messages to offer world creation */
-  canCreateWorld: boolean;
-  /** Whether world creation is in progress */
-  isCreating: boolean;
-  /** Error from world creation attempt */
-  createError: string | null;
-  /** Slug of the created world (for navigation) */
-  createdSlug: string | null;
-  /** Trigger world creation from conversation messages */
-  createWorld: (messages: Array<{ role: string; content: string }>) => Promise<void>;
-  /** Update the user message count (called by the chat page) */
-  updateCount: (count: number) => void;
-}
-
-export function useChatWorldMode(): WorldModeState {
+export function useChatWorldMode() {
   const searchParams = useSearchParams();
-  const isWorldMode = searchParams.get('mode') === 'world';
-  const [isCreating, setIsCreating] = useState(false);
-  const [createError, setCreateError] = useState<string | null>(null);
-  const [createdSlug, setCreatedSlug] = useState<string | null>(null);
+  const router = useRouter();
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
   const [messageCount, setMessageCount] = useState(0);
-  const countRef = useRef(0);
-
-  // Track user message count for "ready to create" threshold
-  const updateCount = useCallback((count: number) => {
-    if (count !== countRef.current) {
-      countRef.current = count;
-      setMessageCount(count);
-    }
-  }, []);
-
-  const canCreateWorld = isWorldMode && messageCount >= 2;
-
+  const [downloadError, setDownloadError] = useState<{
+    token: typeof token;
+    message: string;
+  } | null>(null);
+  const isWorldMode = searchParams.get("mode") === "world";
+  const session = useMemo(
+    () =>
+      createWorldHandoffSession({
+        actor: token.actor?.startsWith("user:") ? token.actor.slice(5) : null,
+        isCurrent: () => credentialScope.isCurrent(token),
+        storage: () => window.sessionStorage,
+        customerKey: () => {
+          if (!credentialScope.isCurrent(token)) return "";
+          const key = readProviderPreferences(window.localStorage, token.actor)
+            .keys.google;
+          return key ? validateCustomerKey(key) : "";
+        },
+        fetch: (url, options) => fetch(url, options),
+      }),
+    [credentialScope, token],
+  );
+  const snapshot = useSyncExternalStore(
+    session.subscribe,
+    session.snapshot,
+    session.snapshot,
+  );
+  useEffect(() => {
+    if (isWorldMode) session.restore();
+    return () => session.cancel();
+  }, [session, isWorldMode]);
   const createWorld = useCallback(
     async (messages: Array<{ role: string; content: string }>) => {
-      setIsCreating(true);
-      setCreateError(null);
-      try {
-        // Build a description from the full conversation
-        const description = messages
-          .map((m) => `${m.role === 'user' ? 'Creator' : 'AI'}: ${m.content}`)
-          .join('\n\n');
-
-        const res = await fetch('/api/worlds/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            description: `Based on this world-building conversation, create a world:\n\n${description}`,
-          }),
-        });
-
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({ error: 'Request failed' }));
-          throw new Error(data.error || 'Failed to create world');
-        }
-
-        const world = await res.json();
-        setCreatedSlug(world.slug || world.id);
-      } catch (err) {
-        setCreateError(err instanceof Error ? err.message : 'World creation failed');
-      } finally {
-        setIsCreating(false);
-      }
+      setDownloadError(null);
+      await session.generate(messages);
     },
-    [],
+    [session],
   );
-
+  const exportDraft = useCallback(() => {
+    let url: string | null = null;
+    try {
+      const text = session.exportText();
+      if (!text || !credentialScope.isCurrent(token)) return;
+      url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = (snapshot.draft?.world.slug || "world") + "-draft.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setDownloadError(null);
+    } catch {
+      if (credentialScope.isCurrent(token))
+        setDownloadError({
+          token,
+          message:
+            "The download did not start. Your draft is still here; retry download or transfer.",
+        });
+    } finally {
+      if (url) {
+        const captured = url;
+        setTimeout(() => URL.revokeObjectURL(captured), 1000);
+      }
+    }
+  }, [session, credentialScope, token, snapshot.draft]);
   return {
+    ...snapshot,
     isWorldMode,
     worldPrompt: WORLD_BUILDER_PROMPT,
-    canCreateWorld,
-    isCreating,
-    createError,
-    createdSlug,
+    canCreateWorld: isWorldMode && messageCount >= 2,
+    createdSlug: null,
+    createError:
+      downloadError?.token === token ? downloadError.message : snapshot.error,
+    updateCount: useCallback((count: number) => setMessageCount(count), []),
     createWorld,
-    updateCount,
+    exportDraft,
+    openDraft: () => {
+      if (session.transfer()) router.push("/worlds/create?resume=1");
+    },
+    retryTransfer: session.transfer,
+    cancelGeneration: session.cancel,
+    startAnotherDraft: () => {
+      if (
+        !credentialScope.isCurrent(token) ||
+        !window.confirm(
+          "Start another world draft? Finish or export and clear the working draft in the world creator first. Its original source will remain in this tab.",
+        )
+      )
+        return false;
+      return session.startAnotherDraft();
+    },
+    allowAnotherAttempt: () => {
+      if (
+        credentialScope.isCurrent(token) &&
+        window.confirm(
+          "Google may already have used quota for the earlier request. Allow a new attempt that could use quota again?",
+        )
+      )
+        session.allowAnotherAttempt();
+    },
   };
 }
