@@ -8,11 +8,15 @@ on:
       - apps/web/app/chat/page.tsx
       - apps/web/hooks/use-conversation.ts
       - apps/web/components/chat/chat-input-bar.tsx
+      - apps/web/hooks/use-chat-sessions.ts
+      - apps/web/lib/chat/**
+      - apps/web/app/projects/**
       - apps/web/lib/chat/entry-draft.ts
       - apps/web/lib/auth/context.tsx
       - packages/design-system/**
       - scripts/verify-entry-handoff-browser.cjs
       - scripts/tests/entry-draft.test.cjs
+      - scripts/tests/chat-account-stores.test.cjs
       - .github/workflows/entry-handoff.yml
       - planning-with-files/CURRENT_STATE_2026-10-11_ENTRY_HANDOFF.md
   workflow_dispatch:
@@ -49,7 +53,7 @@ jobs:
       - name: Install frozen dependencies
         run: pnpm install --frozen-lockfile
       - name: Verify one-use drafts and denial recovery
-        run: node --test scripts/tests/entry-draft.test.cjs
+        run: node --test scripts/tests/entry-draft.test.cjs scripts/tests/chat-account-stores.test.cjs
       - name: Build the actual web application
         run: pnpm turbo run build --filter=@arcanea/web
       - name: Install hosted browser

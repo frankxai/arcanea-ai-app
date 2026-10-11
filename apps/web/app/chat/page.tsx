@@ -122,7 +122,7 @@ function AccountChatPage({
 }) {
   const { user, isLoading: authLoading } = useAuth();
   const draftOwner = user?.id ?? null;
-  const chatSessions = useChatSessions();
+  const chatSessions = useChatSessions(draftOwner, !authLoading);
   const conversation = useConversation({
     activeProject: chatSessions.activeProject,
   });
@@ -229,8 +229,10 @@ function AccountChatPage({
   const entryConsumed = useRef<string | null>(null);
   useEffect(() => {
     if (authLoading) return;
-    const draftId = searchParams.get("draft");
-    const prompt = searchParams.get("prompt");
+    // A new account session must not replay an entry from cached route props.
+    const currentParams = new URLSearchParams(window.location.search);
+    const draftId = currentParams.get("draft");
+    const prompt = currentParams.get("prompt");
     const entry = draftId
       ? `draft:${draftId}`
       : prompt !== null

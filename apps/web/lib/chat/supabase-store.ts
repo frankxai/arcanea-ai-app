@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { createClient } from '@/lib/supabase/client';
-import type { ChatMessage, ChatSession } from '@/lib/chat/local-store';
+import { createClient } from "@/lib/supabase/client";
+import type { ChatMessage, ChatSession } from "@/lib/chat/local-store";
 
 export interface CloudSession {
   id: string;
@@ -15,30 +15,31 @@ export interface CloudSession {
   updated_at: string;
 }
 
-function normalizeCloudMessage(message: Record<string, unknown>): ChatMessage | null {
-  if (typeof message.id !== 'string') return null;
-  if (message.role !== 'user' && message.role !== 'assistant') return null;
+function normalizeCloudMessage(
+  message: Record<string, unknown>,
+): ChatMessage | null {
+  if (typeof message.id !== "string") return null;
+  if (message.role !== "user" && message.role !== "assistant") return null;
 
   const normalized: ChatMessage = {
     id: message.id,
     role: message.role,
-    content: typeof message.content === 'string' ? message.content : '',
+    content: typeof message.content === "string" ? message.content : "",
   };
 
-  if (typeof message.createdAt === 'string') {
+  if (typeof message.createdAt === "string") {
     normalized.createdAt = message.createdAt;
   }
 
   if (Array.isArray(message.parts)) {
     normalized.parts = message.parts
-      .filter((part): part is { type: string; text?: string } =>
-        typeof part === 'object' &&
-        part !== null &&
-        typeof (part as { type?: unknown }).type === 'string' &&
-        (
-          (part as { text?: unknown }).text === undefined ||
-          typeof (part as { text?: unknown }).text === 'string'
-        )
+      .filter(
+        (part): part is { type: string; text?: string } =>
+          typeof part === "object" &&
+          part !== null &&
+          typeof (part as { type?: unknown }).type === "string" &&
+          ((part as { text?: unknown }).text === undefined ||
+            typeof (part as { text?: unknown }).text === "string"),
       )
       .map((part) => ({
         type: part.type,
@@ -53,33 +54,41 @@ function normalizeCloudMessage(message: Record<string, unknown>): ChatMessage | 
  * Save a chat session to Supabase (upsert).
  * Silently fails if not authenticated or table doesn't exist.
  */
-export async function saveSessionToCloud(session: {
-  id: string;
-  title: string;
-  messages: Record<string, unknown>[];
-  luminorId: string | null;
-  modelId: string | null;
-  projectId?: string | null;
-}): Promise<boolean> {
+export async function saveSessionToCloud(
+  session: {
+    id: string;
+    title: string;
+    messages: Record<string, unknown>[];
+    luminorId: string | null;
+    modelId: string | null;
+    projectId?: string | null;
+  },
+  expectedOwner?: string | null,
+): Promise<boolean> {
+  if (expectedOwner === null) return false;
   try {
     const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return false;
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user || (expectedOwner !== undefined && user.id !== expectedOwner))
+      return false;
 
-    const { error } = await supabase
-      .from('chat_sessions')
-      .upsert({
+    const { error } = await supabase.from("chat_sessions").upsert(
+      {
         id: session.id,
         user_id: user.id,
         title: session.title,
-        luminor_id: session.luminorId || 'lumina',
+        luminor_id: session.luminorId || "lumina",
         updated_at: new Date().toISOString(),
-      } as any, { onConflict: 'id' });
+      } as any,
+      { onConflict: "id" },
+    );
 
     if (error) {
       // Table might not exist yet — silently fail
-      if (error.code === '42P01') return false; // relation does not exist
-      console.warn('[cloud-sync] Save failed:', error.message);
+      if (error.code === "42P01") return false; // relation does not exist
+      console.warn("[cloud-sync] Save failed:", error.message);
       return false;
     }
     return true;
@@ -91,17 +100,23 @@ export async function saveSessionToCloud(session: {
 /**
  * Load all chat sessions from Supabase for the current user.
  */
-export async function loadCloudSessions(): Promise<CloudSession[]> {
+export async function loadCloudSessions(
+  expectedOwner?: string | null,
+): Promise<CloudSession[]> {
+  if (expectedOwner === null) return [];
   try {
     const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return [];
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user || (expectedOwner !== undefined && user.id !== expectedOwner))
+      return [];
 
     const { data, error } = await supabase
-      .from('chat_sessions')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('updated_at', { ascending: false })
+      .from("chat_sessions")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("updated_at", { ascending: false })
       .limit(50);
 
     if (error || !data) return [];
@@ -114,10 +129,23 @@ export async function loadCloudSessions(): Promise<CloudSession[]> {
 /**
  * Delete a chat session from Supabase.
  */
-export async function deleteCloudSession(sessionId: string): Promise<boolean> {
+export async function deleteCloudSession(
+  sessionId: string,
+  expectedOwner?: string | null,
+): Promise<boolean> {
+  if (expectedOwner === null) return false;
   try {
     const supabase = createClient();
-    const { error } = await supabase.from('chat_sessions').delete().eq('id', sessionId);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user || (expectedOwner !== undefined && user.id !== expectedOwner))
+      return false;
+    const { error } = await supabase
+      .from("chat_sessions")
+      .delete()
+      .eq("id", sessionId)
+      .eq("user_id", user.id);
     return !error;
   } catch {
     return false;
@@ -127,13 +155,24 @@ export async function deleteCloudSession(sessionId: string): Promise<boolean> {
 /**
  * Rename a chat session in Supabase.
  */
-export async function renameCloudSession(sessionId: string, title: string): Promise<boolean> {
+export async function renameCloudSession(
+  sessionId: string,
+  title: string,
+  expectedOwner?: string | null,
+): Promise<boolean> {
+  if (expectedOwner === null) return false;
   try {
     const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user || (expectedOwner !== undefined && user.id !== expectedOwner))
+      return false;
     const { error } = await supabase
-      .from('chat_sessions')
+      .from("chat_sessions")
       .update({ title, updated_at: new Date().toISOString() })
-      .eq('id', sessionId);
+      .eq("id", sessionId)
+      .eq("user_id", user.id);
     return !error;
   } catch {
     return false;
@@ -146,8 +185,8 @@ export async function renameCloudSession(sessionId: string, title: string): Prom
 export function cloudSessionToLocalSession(cloud: CloudSession): ChatSession {
   return {
     id: cloud.id,
-    title: cloud.title || 'Untitled',
-    messages: cloud.messages
+    title: cloud.title || "Untitled",
+    messages: (Array.isArray(cloud.messages) ? cloud.messages : [])
       .map(normalizeCloudMessage)
       .filter((message): message is ChatMessage => message !== null),
     luminorId: cloud.luminor_id,

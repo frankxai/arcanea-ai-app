@@ -19,6 +19,13 @@ const sources = [
   "apps/web/hooks/use-conversation.ts",
   "apps/web/components/chat/chat-input-bar.tsx",
   "apps/web/lib/chat/entry-draft.ts",
+  "apps/web/hooks/use-chat-sessions.ts",
+  "apps/web/lib/chat/local-store.ts",
+  "apps/web/lib/chat/project-store.ts",
+  "apps/web/lib/chat/supabase-store.ts",
+  "apps/web/app/projects/[id]/open-project-chat-button.tsx",
+  "apps/web/app/projects/[id]/project-session-panel.tsx",
+  "scripts/tests/chat-account-stores.test.cjs",
   "packages/design-system/src/entry-handoff.module.css",
   "packages/design-system/package.json",
   "scripts/tests/entry-draft.test.cjs",
@@ -276,6 +283,26 @@ async function main() {
       });
       await expect(entryInput).toBeEnabled();
       await entryInput.fill(privateText);
+      await page.evaluate(() => {
+        localStorage.setItem(
+          "arcanea_chat_sessions",
+          JSON.stringify([
+            {
+              id: "unattributed-legacy",
+              title: "Unattributed legacy title",
+              messages: [
+                {
+                  id: "legacy-message",
+                  role: "user",
+                  content: "Unattributed legacy text",
+                },
+              ],
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
+        );
+      });
       await composeEnter(entryInput);
       assert.equal(new URL(page.url()).pathname, "/");
       assert.equal(posts, 0);
@@ -340,6 +367,9 @@ async function main() {
         assert.notEqual(paint.border, "none");
       }
       await capture(page, input, `chat-prefill-${mode.name}`);
+      await expect(page.locator("body")).not.toContainText(
+        "Unattributed legacy title",
+      );
       await composeEnter(input);
       assert.equal(posts, 0, "Chat composition Enter never sends");
       await expect(input).toHaveValue(privateText);
@@ -375,11 +405,33 @@ async function main() {
       );
       holdStream = false;
       await capture(page, input, `chat-stopped-${mode.name}`);
+      await expect
+        .poll(() =>
+          page.evaluate(
+            () =>
+              localStorage
+                .getItem("arcanea_chat_sessions:v2:guest")
+                ?.includes("Edited map draft") ?? false,
+          ),
+        )
+        .toBe(true);
       await input.fill("Previous account draft");
       await identityChange(page);
       await expect(input).toHaveValue("");
       await expect(log).not.toContainText("Interrupted map remains.");
       await expect(log).not.toContainText("The map warmed in Mara's hands.");
+      await expect(page.locator("body")).not.toContainText("Edited map draft");
+      await expect(page.locator("body")).not.toContainText(
+        "Unattributed legacy title",
+      );
+      assert.ok(
+        await page.evaluate(() =>
+          localStorage
+            .getItem("arcanea_chat_sessions")
+            ?.includes("Unattributed legacy title"),
+        ),
+        "Unassigned legacy cache is preserved",
+      );
       assert.equal(posts, 2, "Account change does not send");
       // Seed a public synthetic account-A record; this is a browser UI denial check, not real tenant proof.
       await page.evaluate(
@@ -418,6 +470,10 @@ async function main() {
         .click();
       await expect(input).toHaveValue("");
       await identityChange(page, "00000000-0000-4000-8000-000000000093");
+      await expect(
+        page.getByRole("button", { name: "Retry draft", exact: true }),
+      ).toBeVisible();
+      await expect(input).toHaveValue("");
       await page
         .getByRole("button", { name: "Retry draft", exact: true })
         .click();
@@ -494,6 +550,8 @@ async function main() {
         explicitSyntheticPosts: posts,
         accountComposerCleared: true,
         accountSessionCleared: true,
+        accountHistorySeparated: true,
+        unattributedLegacyPreserved: true,
         wrongAccountDenied: true,
         rightAccountRetryRecovered: true,
         legacyAutoPrefillOnly: true,

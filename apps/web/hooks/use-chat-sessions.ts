@@ -1,48 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { analytics } from '@/lib/analytics/events';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { analytics } from "@/lib/analytics/events";
 import {
-  assignSessionToProject,
-  deleteChatSession,
-  getActiveChatSessionId,
-  listChatSessions,
-  loadChatSession,
-  mergeChatSessions,
-  newSessionId,
-  renameChatSession,
-  saveChatSession,
-  searchSessions,
-  setActiveChatSessionId,
-  togglePinSession,
+  createChatSessionStore,
   type ChatMessage,
   type ChatSession,
   type ChatSessionSummary,
-} from '@/lib/chat/local-store';
+} from "@/lib/chat/local-store";
 import {
-  createChatProject,
-  assignCloudSessionToProject,
-  deleteProjectFromCloud,
-  deleteChatProject,
-  getActiveChatProjectId,
-  listChatProjects,
-  loadChatProject,
-  renameChatProject,
-  saveProjectToCloud,
-  setActiveChatProject,
-  syncProjectsFromCloud,
+  createChatProjectStore,
   type ChatProject,
-} from '@/lib/chat/project-store';
+} from "@/lib/chat/project-store";
 import {
   cloudSessionToLocalSession,
   deleteCloudSession,
   loadCloudSessions,
   renameCloudSession,
   saveSessionToCloud,
-} from '@/lib/chat/supabase-store';
+} from "@/lib/chat/supabase-store";
 
-const SIDEBAR_KEY = 'arcanea-sidebar-expanded';
+const SIDEBAR_KEY = "arcanea-sidebar-expanded";
 const MOBILE_BREAKPOINT = 768;
 
 function getInitialExpanded(): boolean {
@@ -50,7 +29,7 @@ function getInitialExpanded(): boolean {
 }
 
 function persistExpanded(value: boolean): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   try {
     localStorage.setItem(SIDEBAR_KEY, String(value));
@@ -76,7 +55,11 @@ export interface UseChatSessionsReturn {
   loadSession: (id: string) => ChatSession | null;
   saveMessages: (
     messages: ChatMessage[],
-    opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null },
+    opts?: {
+      luminorId?: string | null;
+      modelId?: string | null;
+      projectId?: string | null;
+    },
   ) => void;
   newSession: () => string;
   deleteSession: (id: string) => void;
@@ -89,43 +72,61 @@ export interface UseChatSessionsReturn {
   refreshSessions: () => Promise<void>;
 }
 
-export function useChatSessions(): UseChatSessionsReturn {
-  const [activeSessionId, setActiveSessionId] = useState<string>(() => getActiveChatSessionId() ?? newSessionId());
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(() => getActiveChatProjectId());
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(() => getInitialExpanded());
-  const [searchQuery, setSearchQuery] = useState('');
+export function useChatSessions(
+  owner: string | null,
+  enabled = true,
+): UseChatSessionsReturn {
+  const stores = useMemo(
+    () => ({
+      ...createChatSessionStore(owner),
+      ...createChatProjectStore(owner),
+    }),
+    [owner],
+  );
+  const [activeSessionId, setActiveSessionId] = useState<string>(
+    () => stores.getActiveChatSessionId() ?? stores.newSessionId(),
+  );
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(() =>
+    stores.getActiveChatProjectId(),
+  );
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(() =>
+    getInitialExpanded(),
+  );
+  const [searchQuery, setSearchQuery] = useState("");
   const [isHydrating, setIsHydrating] = useState(true);
   const [refreshTick, setRefreshTick] = useState(0);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const syncCloudSessions = useCallback(async () => {
-    const cloudSessions = await loadCloudSessions();
+    if (!enabled) return;
+    const cloudSessions = await loadCloudSessions(owner);
     if (cloudSessions.length === 0) return;
 
-    mergeChatSessions(cloudSessions.map(cloudSessionToLocalSession));
-  }, []);
+    stores.mergeChatSessions(cloudSessions.map(cloudSessionToLocalSession));
+  }, [stores, owner, enabled]);
 
   const refreshSessions = useCallback(async () => {
     setRefreshTick((tick) => tick + 1);
-  }, []);
+  }, [stores, owner, enabled]);
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem(SIDEBAR_KEY);
       if (stored !== null) {
-        setIsSidebarExpanded(stored === 'true');
+        setIsSidebarExpanded(stored === "true");
       }
     } catch {
       // ignore localStorage failures
     }
-  }, []);
+  }, [stores, owner, enabled]);
 
   useEffect(() => {
     let cancelled = false;
 
     async function hydrate() {
+      if (!enabled) return;
       await syncCloudSessions();
-      await syncProjectsFromCloud();
+      await stores.syncProjectsFromCloud();
       if (!cancelled) {
         setRefreshTick((tick) => tick + 1);
         setIsHydrating(false);
@@ -137,156 +138,210 @@ export function useChatSessions(): UseChatSessionsReturn {
     return () => {
       cancelled = true;
     };
-  }, [refreshSessions, syncCloudSessions]);
+  }, [refreshSessions, syncCloudSessions, stores, owner, enabled]);
 
   useEffect(() => {
     function handleFocus() {
+      if (!enabled) return;
       void syncCloudSessions()
         .then(async () => {
-          await syncProjectsFromCloud();
+          await stores.syncProjectsFromCloud();
           setRefreshTick((tick) => tick + 1);
         })
         .catch(() => {});
     }
 
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
-  }, [refreshSessions, syncCloudSessions]);
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [refreshSessions, syncCloudSessions, stores, owner, enabled]);
 
   useEffect(() => {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, []);
+  }, [stores, owner, enabled]);
 
-  const setActiveSession = useCallback((sessionId: string) => {
-    setActiveSessionId(sessionId);
-    setActiveChatSessionId(sessionId);
-  }, []);
+  const setActiveSession = useCallback(
+    (sessionId: string) => {
+      if (!enabled) return;
+      setActiveSessionId(sessionId);
+      stores.setActiveChatSessionId(sessionId);
+    },
+    [stores, owner, enabled],
+  );
 
-  const setProject = useCallback((projectId: string | null) => {
-    setActiveProjectId(projectId);
-    setActiveChatProject(projectId);
-    analytics.projectSelected(projectId);
-    refreshSessions();
-  }, [refreshSessions]);
-
-  const loadSession = useCallback((id: string): ChatSession | null => {
-    const session = loadChatSession(id);
-    if (session) {
-      setActiveSessionId(id);
-      setActiveChatSessionId(id);
-      setActiveProjectId(session.projectId ?? null);
-      setActiveChatProject(session.projectId ?? null);
-    }
-    return session;
-  }, []);
-
-  const saveMessages = useCallback((
-    messages: ChatMessage[],
-    opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null },
-  ) => {
-    if (messages.length === 0) return;
-
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-
-    debounceRef.current = setTimeout(() => {
-      const resolvedProjectId = opts?.projectId ?? loadChatSession(activeSessionId)?.projectId ?? activeProjectId;
-
-      saveChatSession(activeSessionId, messages, {
-        ...opts,
-        projectId: resolvedProjectId,
-      });
+  const setProject = useCallback(
+    (projectId: string | null) => {
+      if (!enabled) return;
+      setActiveProjectId(projectId);
+      stores.setActiveChatProject(projectId);
+      analytics.projectSelected(projectId);
       refreshSessions();
+    },
+    [refreshSessions, stores, owner, enabled],
+  );
 
-      void saveSessionToCloud({
-        id: activeSessionId,
-        title: loadChatSession(activeSessionId)?.title || 'New Chat',
-        messages: messages as unknown as Record<string, unknown>[],
-        luminorId: opts?.luminorId ?? null,
-        modelId: opts?.modelId ?? null,
-        projectId: resolvedProjectId,
-      });
-    }, 600);
-  }, [activeProjectId, activeSessionId, refreshSessions]);
+  const loadSession = useCallback(
+    (id: string): ChatSession | null => {
+      if (!enabled) return null;
+      const session = stores.loadChatSession(id);
+      if (session) {
+        setActiveSessionId(id);
+        stores.setActiveChatSessionId(id);
+        setActiveProjectId(session.projectId ?? null);
+        stores.setActiveChatProject(session.projectId ?? null);
+      }
+      return session;
+    },
+    [stores, owner, enabled],
+  );
+
+  const saveMessages = useCallback(
+    (
+      messages: ChatMessage[],
+      opts?: {
+        luminorId?: string | null;
+        modelId?: string | null;
+        projectId?: string | null;
+      },
+    ) => {
+      if (!enabled || messages.length === 0) return;
+
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+
+      debounceRef.current = setTimeout(() => {
+        const resolvedProjectId =
+          opts?.projectId ??
+          stores.loadChatSession(activeSessionId)?.projectId ??
+          activeProjectId;
+
+        stores.saveChatSession(activeSessionId, messages, {
+          ...opts,
+          projectId: resolvedProjectId,
+        });
+        refreshSessions();
+
+        void saveSessionToCloud(
+          {
+            id: activeSessionId,
+            title: stores.loadChatSession(activeSessionId)?.title || "New Chat",
+            messages: messages as unknown as Record<string, unknown>[],
+            luminorId: opts?.luminorId ?? null,
+            modelId: opts?.modelId ?? null,
+            projectId: resolvedProjectId,
+          },
+          owner,
+        );
+      }, 600);
+    },
+    [activeProjectId, activeSessionId, refreshSessions, stores, owner, enabled],
+  );
 
   const newSession = useCallback(() => {
-    const id = newSessionId();
+    const id = stores.newSessionId();
     setActiveSessionId(id);
-    setActiveChatSessionId(id);
+    if (enabled) stores.setActiveChatSessionId(id);
     return id;
-  }, []);
+  }, [stores, owner, enabled]);
 
-  const deleteSession = useCallback((id: string) => {
-    deleteChatSession(id);
-    void deleteCloudSession(id);
+  const deleteSession = useCallback(
+    (id: string) => {
+      if (!enabled) return;
+      stores.deleteChatSession(id);
+      void deleteCloudSession(id, owner);
 
-    if (id === activeSessionId) {
-      const nextSessionId = newSessionId();
-      setActiveSessionId(nextSessionId);
-      setActiveChatSessionId(nextSessionId);
-    }
+      if (id === activeSessionId) {
+        const nextSessionId = stores.newSessionId();
+        setActiveSessionId(nextSessionId);
+        stores.setActiveChatSessionId(nextSessionId);
+      }
 
-    refreshSessions();
-  }, [activeSessionId, refreshSessions]);
-
-  const renameSession = useCallback((id: string, title: string) => {
-    const trimmed = title.trim();
-    if (!trimmed) return;
-
-    renameChatSession(id, trimmed);
-    void renameCloudSession(id, trimmed);
-    refreshSessions();
-  }, [refreshSessions]);
-
-  const togglePin = useCallback((id: string) => {
-    togglePinSession(id);
-    refreshSessions();
-  }, [refreshSessions]);
-
-  const createProjectHandler = useCallback((title: string) => {
-    const project = createChatProject({ title });
-    if (project) {
-      setActiveProjectId(project.id);
-      analytics.projectCreated(project.id);
-      void saveProjectToCloud(project);
       refreshSessions();
-    }
-    return project;
-  }, [refreshSessions]);
+    },
+    [activeSessionId, refreshSessions, stores, owner, enabled],
+  );
 
-  const renameProjectHandler = useCallback((id: string, title: string) => {
-    const trimmed = title.trim();
-    if (!trimmed) return;
-    renameChatProject(id, trimmed);
-    const project = loadChatProject(id);
-    if (project) {
-      void saveProjectToCloud(project);
-    }
-    refreshSessions();
-  }, [refreshSessions]);
+  const renameSession = useCallback(
+    (id: string, title: string) => {
+      if (!enabled) return;
+      const trimmed = title.trim();
+      if (!trimmed) return;
 
-  const deleteProjectHandler = useCallback((id: string) => {
-    deleteChatProject(id);
-    void deleteProjectFromCloud(id);
-    if (activeProjectId === id) {
-      setActiveProjectId(null);
-    }
-    refreshSessions();
-  }, [activeProjectId, refreshSessions]);
+      stores.renameChatSession(id, trimmed);
+      void renameCloudSession(id, trimmed, owner);
+      refreshSessions();
+    },
+    [refreshSessions, stores, owner, enabled],
+  );
 
-  const assignSessionProject = useCallback((sessionId: string, projectId: string | null) => {
-    assignSessionToProject(sessionId, projectId);
-    analytics.projectSessionLinked(projectId, sessionId);
-    void assignCloudSessionToProject(sessionId, projectId);
+  const togglePin = useCallback(
+    (id: string) => {
+      if (!enabled) return;
+      stores.togglePinSession(id);
+      refreshSessions();
+    },
+    [refreshSessions, stores, owner, enabled],
+  );
 
-    if (sessionId === activeSessionId) {
-      setActiveProjectId(projectId);
-      setActiveChatProject(projectId);
-    }
+  const createProjectHandler = useCallback(
+    (title: string) => {
+      if (!enabled) return null;
+      const project = stores.createChatProject({ title });
+      if (project) {
+        setActiveProjectId(project.id);
+        analytics.projectCreated(project.id);
+        void stores.saveProjectToCloud(project);
+        refreshSessions();
+      }
+      return project;
+    },
+    [refreshSessions, stores, owner, enabled],
+  );
 
-    refreshSessions();
-  }, [activeSessionId, refreshSessions]);
+  const renameProjectHandler = useCallback(
+    (id: string, title: string) => {
+      if (!enabled) return;
+      const trimmed = title.trim();
+      if (!trimmed) return;
+      stores.renameChatProject(id, trimmed);
+      const project = stores.loadChatProject(id);
+      if (project) {
+        void stores.saveProjectToCloud(project);
+      }
+      refreshSessions();
+    },
+    [refreshSessions, stores, owner, enabled],
+  );
+
+  const deleteProjectHandler = useCallback(
+    (id: string) => {
+      if (!enabled) return;
+      stores.deleteChatProject(id);
+      void stores.deleteProjectFromCloud(id);
+      if (activeProjectId === id) {
+        setActiveProjectId(null);
+      }
+      refreshSessions();
+    },
+    [activeProjectId, refreshSessions, stores, owner, enabled],
+  );
+
+  const assignSessionProject = useCallback(
+    (sessionId: string, projectId: string | null) => {
+      if (!enabled) return;
+      stores.assignSessionToProject(sessionId, projectId);
+      analytics.projectSessionLinked(projectId, sessionId);
+      void stores.assignCloudSessionToProject(sessionId, projectId);
+
+      if (sessionId === activeSessionId) {
+        setActiveProjectId(projectId);
+        stores.setActiveChatProject(projectId);
+      }
+
+      refreshSessions();
+    },
+    [activeSessionId, refreshSessions, stores, owner, enabled],
+  );
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarExpanded((prev) => {
@@ -294,29 +349,33 @@ export function useChatSessions(): UseChatSessionsReturn {
       persistExpanded(next);
       return next;
     });
-  }, []);
+  }, [stores, owner, enabled]);
 
   const allSessions = useMemo<ChatSessionSummary[]>(() => {
     void refreshTick;
+    if (!enabled) return [];
     return searchQuery.trim()
-      ? searchSessions(searchQuery)
-      : listChatSessions();
-  }, [refreshTick, searchQuery]);
+      ? stores.searchSessions(searchQuery)
+      : stores.listChatSessions();
+  }, [refreshTick, searchQuery, stores, owner, enabled]);
 
   const stableSessions = useMemo<ChatSessionSummary[]>(() => {
     return activeProjectId
       ? allSessions.filter((session) => session.projectId === activeProjectId)
       : allSessions;
-  }, [activeProjectId, allSessions]);
+  }, [activeProjectId, allSessions, stores, owner, enabled]);
 
   const stableProjects = useMemo<ChatProject[]>(() => {
     void refreshTick;
-    return listChatProjects();
-  }, [refreshTick]);
+    return enabled ? stores.listChatProjects() : [];
+  }, [refreshTick, stores, owner, enabled]);
 
   const activeProject = useMemo(
-    () => (activeProjectId ? loadChatProject(activeProjectId) : null),
-    [activeProjectId, refreshTick],
+    () =>
+      enabled && activeProjectId
+        ? stores.loadChatProject(activeProjectId)
+        : null,
+    [activeProjectId, refreshTick, stores, enabled],
   );
 
   return {
