@@ -13,6 +13,13 @@ import {
 import { generateVideo, resumeVideo } from "@/lib/imagine/video";
 import { checkpointVideoJob, readVideoJob } from "@/lib/imagine/video-jobs";
 import {
+  boundedJson,
+  privateAssetHandle,
+  resolveAnimationSource,
+  PrivateAssetError,
+} from "@/lib/imagine/private-assets";
+import { readOwnedPrivateImage } from "@/lib/imagine/private-assets-server";
+import {
   isHttpsImageUrl,
   MAX_ANIMATION_PROMPT_LENGTH,
 } from "@/lib/imagine/video-admission";
@@ -25,28 +32,7 @@ const respond = (body: unknown, status = 200) =>
   });
 
 export async function POST(req: NextRequest) {
-  const body = await req.json().catch(() => null);
-  if (
-    !body ||
-    typeof body !== "object" ||
-    Array.isArray(body) ||
-    !isHttpsImageUrl(body.imageUrl) ||
-    (body.prompt != null && typeof body.prompt !== "string") ||
-    (body.prompt?.length ?? 0) > MAX_ANIMATION_PROMPT_LENGTH ||
-    typeof body.requestKey !== "string" ||
-    !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(
-      body.requestKey,
-    )
-  )
-    return respond(
-      {
-        error:
-          "Provide an https image URL, a bounded prompt and a stable request key.",
-      },
-      400,
-    );
-  const { imageUrl, requestKey } = body;
-  const prompt = body.prompt ?? "";
+  let requestKey: string | undefined;
   try {
     const supabase = await createClient();
     const {
@@ -58,6 +44,51 @@ export async function POST(req: NextRequest) {
         { error: "Sign in to animate images.", reason: "unauthenticated" },
         401,
       );
+    const body = (await boundedJson(req, 8192)) as Record<
+      string,
+      unknown
+    > | null;
+    if (
+      !body ||
+      typeof body !== "object" ||
+      Array.isArray(body) ||
+      typeof body.imageUrl !== "string" ||
+      (!isHttpsImageUrl(body.imageUrl) && !privateAssetHandle(body.imageUrl)) ||
+      (body.prompt != null && typeof body.prompt !== "string") ||
+      (typeof body.prompt === "string" &&
+        body.prompt.length > MAX_ANIMATION_PROMPT_LENGTH) ||
+      typeof body.requestKey !== "string" ||
+      !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(
+        body.requestKey,
+      )
+    )
+      return respond(
+        {
+          error:
+            "Provide an account image or HTTPS image URL, a bounded prompt and a stable request key.",
+        },
+        400,
+      );
+    const imageUrl = body.imageUrl;
+    requestKey = body.requestKey;
+    const prompt = typeof body.prompt === "string" ? body.prompt : "";
+    if (
+      (body.ownerId !== undefined && body.ownerId !== user.id) ||
+      (privateAssetHandle(imageUrl) && body.ownerId !== user.id)
+    )
+      return respond(
+        {
+          error: "Your account changed. Retry from the current account.",
+          reason: "account_changed",
+        },
+        409,
+      );
+    // Verify owner and actual private bytes before touching the credit ledger.
+    const supplierSource = await resolveAnimationSource(
+      imageUrl,
+      user.id,
+      (id) => readOwnedPrivateImage(supabase, user.id, id),
+    );
     const amount = costFor("video.clip", 1);
     const fingerprint = createHash("sha256")
       .update(JSON.stringify({ imageUrl, prompt, action: "video.clip" }))
@@ -71,7 +102,7 @@ export async function POST(req: NextRequest) {
         amount,
       },
       async (reference) => ({
-        result: await generateVideo(imageUrl, prompt, reference, (job) =>
+        result: await generateVideo(supplierSource, prompt, reference, (job) =>
           checkpointVideoJob(user.id, reference, job),
         ),
         actualCredits: amount,
@@ -91,6 +122,11 @@ export async function POST(req: NextRequest) {
       requestKey,
     });
   } catch (error) {
+    if (error instanceof PrivateAssetError)
+      return respond(
+        { error: error.message, reason: "image_unavailable" },
+        error.status,
+      );
     if (error instanceof InsufficientCreditsError)
       return respond(
         {

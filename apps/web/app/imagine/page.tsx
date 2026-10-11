@@ -13,6 +13,7 @@ import { FavoritesPanel } from "@/components/imagine/FavoritesPanel";
 import {
   getFavorites,
   loadFavoritePage,
+  addFavorite,
   type FavoriteCursor,
   type FavoriteImage,
 } from "@/lib/imagine-favorites";
@@ -107,6 +108,7 @@ interface GeneratedImage {
   prompt: string;
   data?: string;
   mimeType?: string;
+  videoUrl?: string;
 }
 
 interface GenerationRow {
@@ -529,35 +531,31 @@ function ImaginePageContent() {
       try {
         let urlForAnimation = imageUrl;
         if (imageUrl.startsWith("data:")) {
-          const [header, data] = imageUrl.split(",");
-          const mimeType = header.match(/data:(.*?);/)?.[1] || "image/png";
-          const saveRes = await fetch("/api/imagine/save", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              imageData: data,
-              mimeType,
-              prompt: "animation source",
-            }),
-          });
+          const image = rows
+            .flatMap((row) => row.images)
+            .find((image) => image.id === imageId);
+          if (!image)
+            throw Error(
+              "This image is no longer available. Reopen it before animating.",
+            );
+          const authority = { scope: credentialScope, token };
+          const saved = await addFavorite(
+            { ...image, url: imageUrl },
+            authority,
+          );
           if (!credentialScope.isCurrent(token)) return;
-          if (saveRes.ok) {
-            const saveData = await saveRes.json();
-            if (!credentialScope.isCurrent(token)) return;
-            if (saveData.url) {
-              urlForAnimation = saveData.url;
-              setRows((rows) =>
-                rows.map((row) => ({
-                  ...row,
-                  images: row.images.map((image) =>
-                    image.id === imageId
-                      ? { ...image, url: saveData.url }
-                      : image,
-                  ),
-                })),
-              );
-            }
-          }
+          urlForAnimation = saved.blobUrl;
+          setRows((previous) =>
+            previous.map((row) => ({
+              ...row,
+              images: row.images.map((current) =>
+                current.id === imageId
+                  ? { ...current, url: saved.blobUrl }
+                  : current,
+              ),
+            })),
+          );
+          void refreshFavorites(null, false, saved.cacheWarning ?? null);
         }
         const res = await requestAnimation(
           { imageUrl: urlForAnimation },
@@ -583,14 +581,15 @@ function ImaginePageContent() {
         if (!credentialScope.isCurrent(token)) return;
         setError(err instanceof Error ? err.message : "Animation failed");
       } finally {
-        setAnimatingIds((prev) => {
-          const next = new Set(prev);
-          next.delete(imageId);
-          return next;
-        });
+        if (credentialScope.isCurrent(token))
+          setAnimatingIds((prev) => {
+            const next = new Set(prev);
+            next.delete(imageId);
+            return next;
+          });
       }
     },
-    [],
+    [credentialScope, rows, refreshFavorites],
   );
 
   // Vary: pre-fill prompt
@@ -888,6 +887,7 @@ function ImaginePageContent() {
                           void refreshFavorites(null, false, warning ?? null)
                         }
                         isAnimating={animatingIds.has(img.id)}
+                        videoUrl={img.videoUrl}
                       />
                     </div>
                   )),

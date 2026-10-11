@@ -13,6 +13,7 @@ import {
 import { costFor } from "../catalog";
 import { z } from "zod";
 import * as legacyCredits from "../../types/credits";
+import * as privateAssets from "../../imagine/private-assets";
 function load(
   path: string,
   imports: Record<string, unknown>,
@@ -165,6 +166,12 @@ test("animation validates requests, denies missing accounts and credit, and maps
           typeof url === "string" && url.startsWith("https:"),
         MAX_ANIMATION_PROMPT_LENGTH: 1000,
       },
+      "@/lib/imagine/private-assets": privateAssets,
+      "@/lib/imagine/private-assets-server": {
+        readOwnedPrivateImage: async () => {
+          throw Error("Unexpected private read");
+        },
+      },
     });
     const response = await route.POST(
       new Request("https://www.arcanea.ai/api/imagine/animate", {
@@ -186,6 +193,137 @@ test("animation validates requests, denies missing accounts and credit, and maps
     assert.equal(response.status, status, scenario);
     assert.equal(providers, scenario === "complete" ? 1 : 0, scenario);
     assert.equal(response.headers.get("cache-control"), "private, no-store");
+  }
+});
+
+test("actual animation route checks private ownership and bytes before credit reservation", async () => {
+  const owner = "11111111-1111-4111-8111-111111111111";
+  const assetId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+  const handle = `/api/imagine/assets/${assetId}.png`;
+  for (const scenario of [
+    "owner",
+    "guest",
+    "changed-account",
+    "foreign",
+    "missing",
+    "wrong-extension",
+    "corrupt",
+  ]) {
+    const events: string[] = [];
+    const bytes = Buffer.from("fixture pixels");
+    const { createHash } = await import("node:crypto");
+    const route = load("../../../app/api/imagine/animate/route.ts", {
+      "node:crypto": { createHash },
+      "next/server": { NextResponse: Response },
+      "@/lib/supabase/server": {
+        createClient: async () => ({
+          auth: {
+            getUser: async () => ({
+              data: { user: scenario === "guest" ? null : { id: owner } },
+              error: null,
+            }),
+          },
+        }),
+      },
+      "@/lib/imagine/private-assets": privateAssets,
+      "@/lib/imagine/private-assets-server": {
+        readOwnedPrivateImage: async (
+          _client: unknown,
+          actor: string,
+          id: string,
+        ) => {
+          events.push("private-read");
+          assert.equal(actor, owner);
+          assert.equal(id, assetId);
+          if (scenario === "missing")
+            throw new privateAssets.PrivateAssetError(404, "Image not found.");
+          return {
+            asset: {
+              id: assetId,
+              user_id: scenario === "foreign" ? "foreign" : owner,
+              status: "ready",
+              byte_size: bytes.length,
+              mime_type: "image/png",
+              sha256: createHash("sha256").update(bytes).digest("hex"),
+            },
+            bytes: scenario === "corrupt" ? Buffer.from("corrupt") : bytes,
+          };
+        },
+      },
+      "@/lib/billing/catalog": { costFor },
+      "@/lib/billing/ledger": {
+        BillingError,
+        InsufficientCreditsError,
+        OperationPendingError,
+        OperationConflictError,
+        OperationFailedError,
+        withReservation: async (
+          _input: unknown,
+          work: (
+            id: string,
+          ) => Promise<{ result: unknown; actualCredits: number }>,
+        ) => {
+          events.push("reservation");
+          const result = await work("fixture-operation");
+          return {
+            ...result,
+            charged: result.actualCredits,
+            account: { balance: 10 },
+          };
+        },
+      },
+      "@/lib/imagine/video": {
+        generateVideo: async (source: string) => {
+          events.push("provider");
+          assert.equal(
+            source,
+            `data:image/png;base64,${bytes.toString("base64")}`,
+          );
+          return { videoUrl: "https://vidgen.x.ai/fixture.mp4" };
+        },
+      },
+      "@/lib/imagine/video-jobs": {
+        checkpointVideoJob: async () => {},
+        readVideoJob: async () => null,
+      },
+      "@/lib/imagine/video-admission": {
+        isHttpsImageUrl: (value: unknown) =>
+          typeof value === "string" && value.startsWith("https://"),
+        MAX_ANIMATION_PROMPT_LENGTH: 1000,
+      },
+    });
+    const response = await route.POST(
+      new Request("https://fixture.invalid/api/imagine/animate", {
+        method: "POST",
+        body: JSON.stringify({
+          imageUrl:
+            scenario === "wrong-extension"
+              ? handle.replace(/png$/, "webp")
+              : handle,
+          ownerId: scenario === "changed-account" ? "foreign" : owner,
+          requestKey: "12345678-1234-4234-8234-123456789abc",
+        }),
+      }),
+    );
+    const expected = {
+      owner: 200,
+      guest: 401,
+      "changed-account": 409,
+      foreign: 404,
+      missing: 404,
+      "wrong-extension": 404,
+      corrupt: 503,
+    }[scenario];
+    assert.equal(response.status, expected, scenario);
+    assert.deepEqual(
+      events,
+      scenario === "owner"
+        ? ["private-read", "reservation", "provider"]
+        : scenario === "guest" || scenario === "changed-account"
+          ? []
+          : ["private-read"],
+      scenario,
+    );
   }
 });
 test("anonymous and zero-credit image denial call neither enhancer nor image provider", async () => {

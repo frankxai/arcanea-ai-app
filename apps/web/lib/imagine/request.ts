@@ -83,7 +83,13 @@ async function requestGeneration(
   const response = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...input, requestKey: key }),
+    // Preserve the pre-existing fingerprint/key slots; bind the transport to the
+    // captured account without minting a second identity for an uncertain job.
+    body: JSON.stringify({
+      ...input,
+      requestKey: key,
+      ...(kind === "video" ? { ownerId: authority.token.actor!.slice(5) } : {}),
+    }),
   });
   const receipt = await response
     .clone()

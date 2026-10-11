@@ -470,6 +470,8 @@ export function ImageCard({
                       <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       Animating
                     </span>
+                  ) : src.startsWith("data:") ? (
+                    "Save and animate"
                   ) : (
                     "Animate"
                   )}

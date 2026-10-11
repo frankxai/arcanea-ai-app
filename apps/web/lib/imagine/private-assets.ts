@@ -49,7 +49,7 @@ export async function boundedJson(
   const tooLarge =
     limit === MAX_IMAGE_JSON_BYTES
       ? "Saved images must be at most 3 MiB."
-      : "The favorite change request is too large.";
+      : "The request is too large.";
   const declared = request.headers.get("content-length");
   if (declared && (!/^\d+$/.test(declared) || Number(declared) > limit))
     throw new PrivateAssetError(413, tooLarge);
@@ -179,6 +179,51 @@ export interface RetainedImage {
 export interface PrivateAssetRepository {
   reserve(claim: ImageClaim): Promise<RetainedImage>;
   complete(claim: ImageClaim): Promise<RetainedImage>;
+}
+/** Resolve only an owned, immutable private frame. No public upload or signed URL. */
+export async function resolveAnimationSource(
+  source: string,
+  ownerId: string,
+  read: (id: string) => Promise<{ asset: RetainedImage; bytes: Buffer }>,
+): Promise<string> {
+  const handle = privateAssetHandle(source);
+  if (handle) {
+    const { asset, bytes } = await read(handle.id);
+    if (
+      asset.id !== handle.id ||
+      asset.user_id !== ownerId ||
+      asset.status !== "ready" ||
+      IMAGE_TYPES[asset.mime_type] !== handle.extension
+    )
+      throw new PrivateAssetError(404, "Image not found.");
+    if (
+      bytes.length < 1 ||
+      bytes.length > MAX_RETAINED_IMAGE_BYTES ||
+      bytes.length !== asset.byte_size ||
+      createHash("sha256").update(bytes).digest("hex") !== asset.sha256
+    )
+      throw new PrivateAssetError(
+        503,
+        "Private image bytes are unavailable. No animation was started.",
+      );
+    return `data:${asset.mime_type};base64,${bytes.toString("base64")}`;
+  }
+  try {
+    const url = new URL(source);
+    if (
+      source.length <= 2048 &&
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password
+    )
+      return source;
+  } catch {
+    /* Invalid sources never reach a supplier or credit reservation. */
+  }
+  throw new PrivateAssetError(
+    400,
+    "Use an account image or a valid HTTPS image URL.",
+  );
 }
 export async function validateImageBytes(claim: ImageClaim): Promise<void> {
   try {
