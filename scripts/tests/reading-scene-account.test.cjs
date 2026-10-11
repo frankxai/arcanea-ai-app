@@ -260,6 +260,10 @@ test("a current account can retain and save its scene", async () => {
   await w.view.save();
   assert.equal(w.requests.length, 1);
   assert.equal(w.requests[0].url, "/api/reading-scenes");
+  assert.equal(
+    JSON.parse(w.requests[0].options.body).expectedActor,
+    w.scene.owner,
+  );
   assert.equal(w.writes.length, 2);
 });
 
@@ -333,6 +337,7 @@ test("reentrant connected generation/save actions admit one operation before Rea
     const first = w.view[action]();
     const second = w.view[action]();
     const request = JSON.parse(w.requests[0].options.body);
+    assert.equal(request.expectedActor, w.scene.owner);
     w.release({
       ok: true,
       json: async () =>

@@ -1,3 +1,19 @@
+const assert = require("node:assert/strict");
+
+function sceneRedactor(config) {
+  // Keep fixture passwords, session JWTs and anonymous keys out of receipts.
+  return (value) =>
+    [config.anon, ...config.accounts.map((account) => account.password)]
+      .reduce(
+        (text, credential) => text.split(credential).join("[redacted]"),
+        String(value),
+      )
+      .replace(
+        /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,
+        "[redacted-jwt]",
+      );
+}
+
 async function installSceneAccountBoundary(context, secondId) {
   await context.addInitScript(
     ({ secondId }) => {
@@ -10,6 +26,8 @@ async function installSceneAccountBoundary(context, secondId) {
         clickObserved: false,
         synchronousRecoveryWrites: 0,
         insideBoundary: false,
+        holdNotification: false,
+        heldNotifications: [],
       };
       const nativeSet = Storage.prototype.setItem;
       Storage.prototype.setItem = function (name, value) {
@@ -34,6 +52,19 @@ async function installSceneAccountBoundary(context, secondId) {
           if (!wrapped) {
             wrapped = (event) => {
               const state = window.__readingSceneAccountBoundary;
+              if (
+                state.holdNotification &&
+                event.data?.session?.user?.id === secondId
+              ) {
+                // Delay only this fixture tab's actual SDK notification; the
+                // second tab's real login cookie has already been delivered.
+                state.heldNotifications.push(() =>
+                  typeof listener === "function"
+                    ? listener.call(this, event)
+                    : listener.handleEvent(event),
+                );
+                return;
+              }
               const oldButton =
                 state.armed &&
                 event.data?.event === "SIGNED_IN" &&
@@ -131,9 +162,132 @@ async function selectScenePassage(prose) {
   });
 }
 
+async function verifyCookieActorBoundary({
+  makeContext,
+  login,
+  accounts,
+  base,
+  chapter,
+  png,
+  expect,
+  clients,
+  onPage,
+}) {
+  const checks = [];
+  for (const action of ["Generate scene", "Save private creation"]) {
+    const context = await makeContext();
+    const page = await context.newPage();
+    onPage(page);
+    page.setDefaultTimeout(20000);
+    await login(page, accounts[0]);
+    await expect(
+      page.getByRole("button", { name: "Reopen scene", exact: true }),
+    ).toBeVisible();
+    assert.equal(
+      (await selectScenePassage(page.locator("article .prose p").first()))
+        .collapsed,
+      false,
+    );
+    await page
+      .getByRole("button", { name: "Visualize selection", exact: true })
+      .click();
+    await page
+      .getByRole("button", {
+        name: "Replace with selected passage",
+        exact: true,
+      })
+      .click();
+    if (action === "Save private creation") {
+      await page.route("**/api/imagine/generate", async (route) => {
+        const request = route.request().postDataJSON();
+        await route.fulfill({
+          json: {
+            generationId: `gen_${request.requestKey}`,
+            status: "completed",
+            provider: "openrouter",
+            model: request.model,
+            images: [{ data: png, mimeType: "image/png" }],
+          },
+        });
+      });
+      await page
+        .getByRole("button", { name: "Generate scene", exact: true })
+        .click();
+      await expect(
+        page.getByRole("img", { name: /Personal visual interpretation/ }),
+      ).toBeVisible();
+      await page.unroute("**/api/imagine/generate");
+    }
+    await expect(
+      page.getByRole("button", { name: action, exact: true }),
+    ).toBeEnabled();
+    await page.evaluate(() => {
+      window.__readingSceneAccountBoundary.holdNotification = true;
+    });
+    const loginPage = await context.newPage();
+    await context.clearCookies();
+    await page.evaluate(() => {
+      for (const name of Object.keys(localStorage))
+        if (/^sb-.*-auth-token$/.test(name)) localStorage.removeItem(name);
+    });
+    await login(loginPage, accounts[1]);
+    await page.waitForFunction(
+      () => window.__readingSceneAccountBoundary.heldNotifications.length > 0,
+    );
+    // A still displays its unsaved scene, while actual SSR Auth now reads B.
+    const privateRead = await context.request.get(
+      `${base}/api/reading-scenes?path=${encodeURIComponent(chapter)}`,
+    );
+    assert.equal(privateRead.status(), 200);
+    assert.equal((await privateRead.json()).scene, null);
+    const endpoint =
+      action === "Generate scene"
+        ? "/api/imagine/generate"
+        : "/api/reading-scenes";
+    const pending = page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname === endpoint &&
+        response.request().method() === "POST",
+    );
+    await page.getByRole("button", { name: action, exact: true }).click();
+    const response = await pending;
+    const request = response.request().postDataJSON();
+    assert.equal(request.expectedActor, accounts[0].id);
+    assert.equal(response.status(), 403);
+    assert.equal((await response.json()).reason, "account_changed");
+    for (const client of clients) {
+      const rows = await client
+        .from("creations")
+        .select("id")
+        .eq("id", request.requestKey);
+      assert.equal(rows.error, null);
+      assert.deepEqual(rows.data, []);
+    }
+    await page.evaluate(() => {
+      const state = window.__readingSceneAccountBoundary;
+      state.holdNotification = false;
+      for (const notify of state.heldNotifications.splice(0)) void notify();
+    });
+    await expect(
+      page.getByRole("button", { name: "Reopen scene", exact: true }),
+    ).toHaveCount(0);
+    checks.push({
+      action,
+      status: response.status(),
+      oldActorAsserted: true,
+      notificationDelayed: true,
+      privateRows: 0,
+    });
+    await context.close();
+  }
+  return checks;
+}
+
 module.exports = {
   installSceneAccountBoundary,
   readSceneDiagnostics,
   observeSceneConsole,
   selectScenePassage,
+  verifyCookieActorBoundary,
+  sceneRedactor,
 };

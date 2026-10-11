@@ -119,6 +119,7 @@ function route(actor) {
 }
 function scene(chapter = "one") {
   return {
+    expectedActor: alice,
     requestKey: randomUUID(),
     source: {
       bookId: "fixture-book",
@@ -206,7 +207,11 @@ test("concurrent real route saves and lost acknowledgement retries produce one p
     save({ ...s, brief: "A different visual composition." }),
   );
   assert.equal(changed.status, 409);
-  assert.equal((await route(bob).POST(save(s))).status, 409);
+  assert.equal((await route(bob).POST(save(s))).status, 403);
+  assert.equal(
+    (await route(bob).POST(save({ ...s, expectedActor: bob }))).status,
+    409,
+  );
 });
 
 test("database denies private reads, forged ownership, owner transfer and foreign changes", async () => {
@@ -283,7 +288,7 @@ test("JSON chapter filtering and latest private draft reopening use the actual q
 });
 
 test("missing owner profile fails as unavailable rather than acknowledging a lost save", async () => {
-  const s = scene("missing-profile");
+  const s = { ...scene("missing-profile"), expectedActor: noProfile };
   const response = await route(noProfile).POST(save(s));
   assert.equal(response.status, 503);
   privateResponse(response);

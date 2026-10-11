@@ -12,9 +12,11 @@ on:
       - "packages/design-system/package.json"
       - "apps/web/lib/reading-scene/**"
       - "apps/web/app/api/reading-scenes/**"
+      - "apps/web/app/api/imagine/generate/route.ts"
       - "scripts/*reading-scene*"
       - "scripts/tests/reading-scene-save.test.cjs"
       - "scripts/tests/reading-scene-account.test.cjs"
+      - "scripts/tests/reading-scene-actor.test.cjs"
       - "scripts/tests/reading-scene-postgrest.test.cjs"
       - "scripts/tests/provider-fixture-private-config.test.cjs"
       - "scripts/fixtures/reading-scene-postgrest.sql"
@@ -68,6 +70,7 @@ jobs:
           PRIVATE_CONFIGURATION_RUNNER=scripts/run-reading-scene-auth-fixture.mjs node --test scripts/tests/provider-fixture-private-config.test.cjs
           node --test scripts/tests/reading-scene-save.test.cjs
           node --test scripts/tests/reading-scene-account.test.cjs
+          node --test scripts/tests/reading-scene-actor.test.cjs
           node --experimental-vm-modules --test scripts/tests/reading-scene-review.test.cjs
           pnpm exec tsx --test apps/web/lib/reading-scene/__tests__/*.test.ts
       - name: Verify saves and account isolation through PostgREST and Postgres

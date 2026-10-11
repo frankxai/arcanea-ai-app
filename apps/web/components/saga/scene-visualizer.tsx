@@ -333,6 +333,7 @@ function SceneWorkspace({
         headers: { "Content-Type": "application/json" },
         signal: abort.signal,
         body: JSON.stringify({
+          expectedActor: startOwner,
           prompt: next.brief,
           requestKey: next.requestKey,
           count: 1,
@@ -406,6 +407,7 @@ function SceneWorkspace({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          expectedActor: startOwner,
           requestKey: scene.requestKey,
           source: scene.source,
           brief: scene.brief,

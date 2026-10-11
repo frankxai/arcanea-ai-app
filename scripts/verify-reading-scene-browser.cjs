@@ -168,6 +168,7 @@ async function main() {
           });
         }
         const body = route.request().postDataJSON();
+        assert.equal(body.expectedActor, owner);
         assert.equal(body.source.path, chapter);
         assert.ok(body.source.chapterHash.match(/^[a-f0-9]{64}$/));
         saved = {
@@ -192,6 +193,7 @@ async function main() {
       });
       await context.route("**/api/imagine/generate", async (route) => {
         const body = route.request().postDataJSON();
+        assert.equal(body.expectedActor, owner);
         requests.push(body);
         if (interrupt) {
           interrupt = false;

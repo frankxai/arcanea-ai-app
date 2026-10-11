@@ -13,6 +13,7 @@ const { createHash, randomUUID } = require("node:crypto");
 
 const actor = "00000000-0000-4000-8000-000000000001";
 const scene = {
+  expectedActor: actor,
   requestKey: randomUUID(),
   source: {
     bookId: "book1",
@@ -200,6 +201,26 @@ test("foreign origins and malformed or forwarded authorities cannot authorize a 
     assert.equal(s.calls.length, 0);
   }
 });
+
+test("a scene from A cannot be saved under B when the shared cookie changes before the SDK notification", async () => {
+  const s = subject({ id: "00000000-0000-4000-8000-000000000002" });
+  const response = await s.POST(request({ ...scene, expectedActor: actor }));
+  assert.equal(response.status, 403);
+  assert.equal((await response.json()).reason, "account_changed");
+  assert.equal(s.calls.length, 0);
+  privateResponse(response);
+});
+
+test("private scene saves require a valid actor assertion without granting it ownership", async () => {
+  for (const expectedActor of [undefined, null, "", "not-an-account"]) {
+    const s = subject();
+    assert.equal(
+      (await s.POST(request({ ...scene, expectedActor }))).status,
+      400,
+    );
+    assert.equal(s.calls.length, 0);
+  }
+});
 function privateResponse(response) {
   assert.equal(response.headers.get("cache-control"), "private, no-store");
 }
@@ -310,7 +331,18 @@ test("lost save acknowledgement retries the same row, while changed content and 
     409,
   );
   s.setUser({ id: "00000000-0000-4000-8000-000000000002" });
-  assert.equal((await s.POST(request())).status, 409);
+  assert.equal((await s.POST(request())).status, 403);
+  assert.equal(
+    (
+      await s.POST(
+        request({
+          ...scene,
+          expectedActor: "00000000-0000-4000-8000-000000000002",
+        }),
+      )
+    ).status,
+    409,
+  );
 });
 test("scene reopening is bound to the account and chapter, with private/no-store responses", async () => {
   const s = subject();

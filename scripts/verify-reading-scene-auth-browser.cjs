@@ -6,11 +6,11 @@ const {
   readSceneDiagnostics,
   observeSceneConsole,
   selectScenePassage,
+  verifyCookieActorBoundary,
+  sceneRedactor,
 } = require("./reading-scene-account-boundary.cjs");
-const {
-  chromium,
-  expect,
-} = require("../apps/web/node_modules/@playwright/test");
+const playwright = require("../apps/web/node_modules/@playwright/test");
+const { chromium, expect } = playwright;
 const {
   createClient,
 } = require("../apps/web/node_modules/@supabase/supabase-js");
@@ -29,16 +29,7 @@ async function main() {
   assert.equal(config.accounts.length, 2);
   assert.ok(config.accounts.every((a) => a.email.endsWith("@example.invalid")));
   const output = config.output;
-  const redact = (value) =>
-    [config.anon, ...config.accounts.map((a) => a.password)]
-      .reduce(
-        (text, credential) => text.split(credential).join("[redacted]"),
-        String(value),
-      )
-      .replace(
-        /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,
-        "[redacted-jwt]",
-      );
+  const redact = sceneRedactor(config);
   const receipt = {
     head: config.head,
     auth: "real password login and Auth-validated SSR cookies in disposable GoTrue",
@@ -315,7 +306,7 @@ async function main() {
       `${config.base}/api/reading-scenes`,
       { data: saves[0] },
     );
-    assert.equal(stolenRetry.status(), 409);
+    assert.equal(stolenRetry.status(), 403);
     const anonContext = await makeContext();
     const denied = await anonContext.request.post(
       `${config.base}/api/reading-scenes`,
@@ -390,8 +381,7 @@ async function main() {
         window.__readingSceneAccountBoundary.armed = true;
       }, action);
       const loginPage = await switchingContext.newPage();
-      // Clear only this disposable fixture's owned cookies and SDK persistence.
-      // Actual password login below supplies B's cookie and broadcasts its session.
+      // Clear owned fixture credentials; password login delivers B's real session.
       await switchingContext.clearCookies();
       await switchingPage.evaluate(() => {
         for (const name of Object.keys(localStorage))
@@ -445,6 +435,18 @@ async function main() {
     receipt.checks.push(
       "Real cross-tab password sign-in rejects old connected generate/save clicks at the SDK boundary; zero scene POSTs or synchronous recovery writes",
     );
+    stage = "changed-cookie-before-sdk-notification";
+    receipt.cookieBoundary = await verifyCookieActorBoundary({
+      makeContext,
+      login,
+      accounts: config.accounts,
+      base: config.base,
+      chapter,
+      png,
+      expect,
+      clients: [owner.client, other.client],
+      onPage: (active) => (page = active),
+    });
     assert.deepEqual(pageErrors, []);
     receipt.passed = true;
   } catch (error) {

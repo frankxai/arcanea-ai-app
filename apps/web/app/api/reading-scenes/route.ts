@@ -38,6 +38,7 @@ const sceneSchema = z.object({
     mimeType: z.enum(["image/png", "image/jpeg", "image/webp"]),
   }),
 });
+const saveSchema = sceneSchema.extend({ expectedActor: z.string().uuid() });
 
 function reply(body: Record<string, unknown>, status = 200) {
   return NextResponse.json(body, {
@@ -142,9 +143,19 @@ export async function POST(req: NextRequest) {
     } catch {
       return reply({ error: "Invalid scene data" }, 400);
     }
-    const parsed = sceneSchema.safeParse(body);
+    const parsed = saveSchema.safeParse(body);
     if (!parsed.success) return reply({ error: "Invalid scene data" }, 400);
-    const scene = parsed.data;
+    const { expectedActor, ...scene } = parsed.data;
+    // Shared cookies can change before another tab's SDK receives its notification.
+    // The assertion grants no authority; the authenticated user still owns the row.
+    if (expectedActor !== user.id)
+      return reply(
+        {
+          error: "Your account changed. Reload before saving this scene.",
+          reason: "account_changed",
+        },
+        403,
+      );
     const bytes = Buffer.from(scene.image.data, "base64");
     const validRaster =
       scene.image.mimeType === "image/png"

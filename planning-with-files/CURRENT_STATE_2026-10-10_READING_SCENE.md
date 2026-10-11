@@ -490,3 +490,39 @@ to exact accepted bytes; their foreign source owner/worktree remain intact. The
 reader/account and all other accepted main paths are preserved. Fresh integrated
 source CI, security, Auth/visual evidence, review and preview remain required before
 protected promotion; the full founder programme remains open.
+
+At `cfcfa2d114cc7a382034fa515906017bb7b65f16`, hosted Reading38147843793 passed
+again and Vercel preview `dpl_CALYPd7fhgu2P5QJDXm8129ZiYnW` is READY. Editing the
+PR description canceled the first CI by its existing `edited` concurrency trigger;
+replacement38147964739 is the actual handle. No canceled check is claimed as a pass.
+The full Lightning review returned raw pass with five findings; four already quote
+the actor checks they allege are absent, while a render guard cannot retroactively
+hide old DOM before React commits. Actual source and SDK witnesses are retained.
+A separate full Ultra review returned raw WARN with five advisories: rejected short
+PNG input/CPU, bounded raster buffer allocation, the recoverable 65-second deadline,
+preserving visible output after storage failure, and data-URL image download. It
+does not establish a new bypass; resource/real-provider/browser limits remain open.
+
+A lead review then reproduced a different account race in both actual handlers:
+when B's cookie arrives before A's SDK notification, A's unsaved scene can reach a
+B-authenticated request. Before correction, a save asserting A and generation
+asserting A both returned200 under B; malformed generation assertions also reached
+the synthetic ledger/provider. The three failing checks and subsequent results
+are retained. This is actual route source with synthetic Auth/ledger seams, not a
+customer incident or production write.
+
+Scene requests now assert their captured account. Private saves require a UUID
+assertion matching Auth; generation rejects any supplied invalid/mismatched actor
+before computing costs or reserving credits. The generation assertion is optional
+for existing callers, so this does not certify clients that omit it. Authentication
+still determines every database/ledger owner. The private assertion is excluded
+from persisted provenance/fingerprints, preserving prior scene recovery and retries.
+No tariff, rail, key, migration or actual credit/provider operation is changed.
+
+The native claim admits63 paths, adding the generation handler and its focused
+test; the foreign image-request helper/source lane remains untouched. The hosted
+fixture additionally delays only A's real SDK notification after real B password
+login, then exercises actual generate/save requests:403, A asserted, zero private
+rows under either actor, then resume the actual SDK notification. Native ledger
+seams verify zero reservations/provider calls for mismatches. Current-source hosted
+execution and exact-revision independent review remain required before release.
