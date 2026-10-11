@@ -89,7 +89,7 @@ export function consumeEntryDraft(
 
 export function entryDraftRecovery(reason: Failure): string {
   if (reason === "account")
-    return "This draft belongs to another account. Switch back to that account in this tab, then reopen the draft link.";
+    return "This draft belongs to another account. Switch back to that account in this tab, then choose Retry draft.";
   if (reason === "expired")
     return "This draft expired. Return home to prepare it again, or write a new message here.";
   if (reason === "storage")

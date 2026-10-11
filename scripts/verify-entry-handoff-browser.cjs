@@ -78,7 +78,7 @@ async function composeEnter(input) {
     isComposing: false,
   });
 }
-async function identityChange(page) {
+async function identityChange(page, owner = newAccount) {
   await page.evaluate((id) => {
     const channel = new BroadcastChannel("sb-placeholder-auth-token");
     channel.postMessage({
@@ -92,7 +92,7 @@ async function identityChange(page) {
       },
     });
     channel.close();
-  }, newAccount);
+  }, owner);
 }
 async function main() {
   const target = new URL(base);
@@ -299,18 +299,22 @@ async function main() {
       assert.equal(posts, 1, "Account change does not send");
       // Seed a public synthetic account-A record; this is a browser UI denial check, not real tenant proof.
       await page.evaluate(
-        ({ key, id }) =>
+        ({ key, id, owner }) =>
           sessionStorage.setItem(
             key,
             JSON.stringify({
               version: 1,
               id,
-              owner: "account-a",
+              owner,
               text: "Synthetic account-A scene",
               expiresAt: Date.now() + 600000,
             }),
           ),
-        { key: draftKey, id: draftId },
+        {
+          key: draftKey,
+          id: draftId,
+          owner: "00000000-0000-4000-8000-000000000093",
+        },
       );
       await page.goto(`${base}/chat?draft=${draftId}&keep=1#entry`);
       await expect(
@@ -325,6 +329,20 @@ async function main() {
       assert.equal(new URL(page.url()).searchParams.get("keep"), "1");
       assert.equal(new URL(page.url()).hash, "#entry");
       assert.equal(posts, 1);
+      await page
+        .getByRole("button", { name: "Retry draft", exact: true })
+        .click();
+      await expect(input).toHaveValue("");
+      await identityChange(page, "00000000-0000-4000-8000-000000000093");
+      await page
+        .getByRole("button", { name: "Retry draft", exact: true })
+        .click();
+      await expect(input).toHaveValue("Synthetic account-A scene");
+      assert.equal(
+        await page.evaluate((key) => sessionStorage.getItem(key), draftKey),
+        null,
+      );
+      assert.equal(posts, 1, "Account recovery prefills without sending");
       checkPrivateUrls = false; // Old public URL compatibility is tested separately from the new typed-draft path.
       await page.goto(
         `${base}/chat?prompt=Legacy%20public%20scene&auto=1&keep=2`,
@@ -388,6 +406,7 @@ async function main() {
         explicitSyntheticPosts: posts,
         accountComposerCleared: true,
         wrongAccountDenied: true,
+        rightAccountRetryRecovered: true,
         legacyAutoPrefillOnly: true,
         storageRecoveryPreserved: true,
         pageErrors: errors.length,

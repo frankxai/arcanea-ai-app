@@ -126,6 +126,30 @@ export default function ChatPage() {
     [draftOwner],
   );
   const [entryNotice, setEntryNotice] = useState("");
+  const [entryRetryId, setEntryRetryId] = useState<string | null>(null);
+  const openEntryDraft = useCallback(
+    (id: string) => {
+      try {
+        const result = consumeEntryDraft(window.sessionStorage, id, draftOwner);
+        if (result.ok) {
+          setPendingInput(result.text);
+          setEntryNotice("");
+          setEntryRetryId(null);
+        } else {
+          setEntryNotice(entryDraftRecovery(result.reason));
+          setEntryRetryId(
+            result.reason === "account" || result.reason === "storage"
+              ? id
+              : null,
+          );
+        }
+      } catch {
+        setEntryNotice(entryDraftRecovery("storage"));
+        setEntryRetryId(id);
+      }
+    },
+    [draftOwner, setPendingInput],
+  );
   const [showAgentPicker, setShowAgentPicker] = useState(false);
   const [activeAgent, setActiveAgent] = useState<{
     type: "auto" | "luminor";
@@ -181,18 +205,9 @@ export default function ChatPage() {
     if (entry && entryConsumed.current !== entry) {
       entryConsumed.current = entry;
       setEntryNotice("");
+      setEntryRetryId(null);
       if (draftId) {
-        try {
-          const result = consumeEntryDraft(
-            window.sessionStorage,
-            draftId,
-            draftOwner,
-          );
-          if (result.ok) setPendingInput(result.text);
-          else setEntryNotice(entryDraftRecovery(result.reason));
-        } catch {
-          setEntryNotice(entryDraftRecovery("storage"));
-        }
+        openEntryDraft(draftId);
       } else if (prompt?.trim()) {
         if (prompt.trim().length <= ENTRY_DRAFT_MAX_CHARS)
           setPendingInput(prompt.trim());
@@ -214,7 +229,7 @@ export default function ChatPage() {
         nextUrl + window.location.hash,
       );
     }
-  }, [searchParams, authLoading, draftOwner, setPendingInput]);
+  }, [searchParams, authLoading, openEntryDraft, setPendingInput]);
 
   // World character -> activate as Luminor when loaded
   const worldCharApplied = useRef(false);
@@ -589,7 +604,22 @@ export default function ChatPage() {
             <p>{entryNotice}</p>
             <div className={entryStyles.recovery}>
               <Link href="/">Return home</Link>
-              <button type="button" onClick={() => setEntryNotice("")}>
+              {entryRetryId && (
+                <button
+                  type="button"
+                  disabled={authLoading}
+                  onClick={() => openEntryDraft(entryRetryId)}
+                >
+                  Retry draft
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setEntryNotice("");
+                  setEntryRetryId(null);
+                }}
+              >
                 Dismiss
               </button>
             </div>
