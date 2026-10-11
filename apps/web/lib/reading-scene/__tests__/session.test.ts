@@ -94,6 +94,31 @@ test("generation admission refuses silent storage loss", () => {
   );
 });
 
+test("a completed recovery requires the request that generated its image", () => {
+  const invalid = {
+    ...scene,
+    requestKey: null,
+    result: {
+      generationId: "gen_null",
+      status: "completed",
+      provider: "openrouter",
+      model: scene.model,
+      images: [{ data: "aGVsbG8=", mimeType: "image/png" }],
+    },
+  };
+  assert.equal(
+    restoreScene(JSON.stringify(invalid), scene.owner, scene.source.path),
+    null,
+  );
+  const draft = { ...scene, requestKey: null };
+  assert.equal(
+    restoreScene(JSON.stringify(draft), scene.owner, scene.source.path)
+      ?.requestKey,
+    null,
+    "An ungenerated draft remains recoverable",
+  );
+});
+
 test("generated and restored results omit runtime billing and image metadata", () => {
   const result = {
     generationId: `gen_${scene.requestKey}`,

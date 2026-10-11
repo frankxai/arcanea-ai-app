@@ -96,7 +96,8 @@ export function restoreScene(
       (s.requestKey !== null && !/^[a-f0-9-]{36}$/i.test(s.requestKey)) ||
       (s.creationId !== null && !/^[a-f0-9-]{36}$/i.test(s.creationId)) ||
       (s.result !== null &&
-        (s.result.status !== "completed" ||
+        (s.requestKey === null ||
+          s.result.status !== "completed" ||
           typeof s.result.model !== "string" ||
           !["grok", "openrouter", "gemini"].includes(s.result.provider) ||
           s.result.generationId !== `gen_${s.requestKey}` ||

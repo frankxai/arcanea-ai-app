@@ -17,6 +17,7 @@ const {
   NextResponse,
 } = require("../../apps/web/node_modules/next/server");
 const { z } = require("../../apps/web/node_modules/zod");
+const sharp = require("../../apps/web/node_modules/sharp");
 const supabaseRequire = createRequire(
   require.resolve("../../apps/web/node_modules/@supabase/supabase-js"),
 );
@@ -76,12 +77,14 @@ function route(actor) {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2022,
+      esModuleInterop: true,
     },
   }).outputText;
   const module = { exports: {} };
   const imports = {
     "next/server": { NextResponse },
     zod: { z },
+    sharp,
     "node:crypto": { createHash },
     "@/lib/rate-limit/rate-limiter": {
       checkRateLimit: () => ({ allowed: true }),
@@ -128,7 +131,10 @@ function scene(chapter = "one") {
     brief: "Illustrate the silver bowl floating in the river.",
     model: "fixture/model",
     provider: "openrouter",
-    image: { data: "iVBORw0KGgo=", mimeType: "image/png" },
+    image: {
+      data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWP4////fwAJ+wP9CNHoHgAAAABJRU5ErkJggg==",
+      mimeType: "image/png",
+    },
   };
 }
 function save(s) {

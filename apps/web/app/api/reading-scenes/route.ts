@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createHash } from "node:crypto";
+import sharp from "sharp";
 import { createClient } from "@/lib/supabase/server";
 import { checkRateLimit } from "@/lib/rate-limit/rate-limiter";
 
 export const maxDuration = 30;
 
 const MAX_BYTES = 3 * 1024 * 1024;
+const MAX_IMAGE_PIXELS = 16_777_216;
 const sourceSchema = z.object({
   bookId: z
     .string()
@@ -42,6 +44,35 @@ function reply(body: Record<string, unknown>, status = 200) {
     status,
     headers: { "Cache-Control": "private, no-store" },
   });
+}
+
+async function decodableRaster(
+  bytes: Buffer,
+  mimeType: string,
+): Promise<boolean> {
+  try {
+    const image = sharp(bytes, {
+      failOn: "warning",
+      limitInputPixels: MAX_IMAGE_PIXELS,
+      limitInputChannels: 4,
+    });
+    const metadata = await image.metadata();
+    const expectedFormat = mimeType.slice("image/".length);
+    if (
+      metadata.format !== expectedFormat ||
+      !metadata.width ||
+      !metadata.height ||
+      metadata.width * metadata.height > MAX_IMAGE_PIXELS ||
+      (metadata.pages ?? 1) !== 1
+    )
+      return false;
+    // Metadata and a file signature do not prove that compressed pixels decode.
+    // Decode every pixel within the input bound before retaining the original.
+    await image.raw().toBuffer();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /** Private, owner-bound and retry-idempotent; never publishes or uploads publicly. */
@@ -124,8 +155,11 @@ export async function POST(req: NextRequest) {
           ? bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255
           : bytes.toString("ascii", 0, 4) === "RIFF" &&
             bytes.toString("ascii", 8, 12) === "WEBP";
-    if (!validRaster)
-      return reply({ error: "Provide a supported raster image" }, 400);
+    if (!validRaster || !(await decodableRaster(bytes, scene.image.mimeType)))
+      return reply(
+        { error: "Provide a complete, supported raster image" },
+        400,
+      );
     const fingerprint = createHash("sha256")
       .update(JSON.stringify(scene))
       .digest("hex");

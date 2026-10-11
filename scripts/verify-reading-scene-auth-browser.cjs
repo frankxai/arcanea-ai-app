@@ -2,6 +2,9 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
 const { createHash } = require("node:crypto");
 const {
+  installSceneAccountBoundary,
+} = require("./reading-scene-account-boundary.cjs");
+const {
   chromium,
   expect,
 } = require("../apps/web/node_modules/@playwright/test");
@@ -10,7 +13,7 @@ const {
 } = require("../apps/web/node_modules/@supabase/supabase-js");
 const chapter = "/books/forge-of-ruin/the-forty-seven-names";
 const png =
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jUxoAAAAASUVORK5CYII=";
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWP4////fwAJ+wP9CNHoHgAAAABJRU5ErkJggg==";
 
 async function main() {
   assert.equal(process.env.GITHUB_ACTIONS, "true");
@@ -70,6 +73,7 @@ async function main() {
       acceptDownloads: true,
     });
     contexts.push(context);
+    await installSceneAccountBoundary(context, config.accounts[1].id);
     return context;
   };
   async function login(target, account, viaLink = false) {
@@ -314,6 +318,128 @@ async function main() {
     assert.equal((await savedRows()).data.length, 1);
     receipt.checks.push(
       "Second real account cannot read/reopen/claim the saved request; anonymous POST is denied",
+    );
+    stage = "connected-scene-actions-at-real-sdk-account-boundary";
+    receipt.accountBoundary = [];
+    for (const action of ["Generate scene", "Save private creation"]) {
+      const switchingContext = await makeContext();
+      const switchingPage = await switchingContext.newPage();
+      switchingPage.setDefaultTimeout(20000);
+      await login(switchingPage, owner.account);
+      await switchingPage
+        .getByRole("button", { name: "Reopen scene", exact: true })
+        .click();
+      const selectedProse = switchingPage.locator("article .prose p").first();
+      await selectedProse.evaluate((element) => {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        const selected = getSelection();
+        selected.removeAllRanges();
+        selected.addRange(range);
+        document.dispatchEvent(new Event("selectionchange"));
+      });
+      await switchingPage
+        .getByRole("button", { name: "Visualize selection", exact: true })
+        .click();
+      await switchingPage
+        .getByRole("button", {
+          name: "Replace with selected passage",
+          exact: true,
+        })
+        .click();
+      await switchingPage.route("**/api/imagine/generate", async (route) => {
+        const request = route.request().postDataJSON();
+        await route.fulfill({
+          json: {
+            generationId: `gen_${request.requestKey}`,
+            status: "completed",
+            provider: "openrouter",
+            model: request.model,
+            images: [{ data: png, mimeType: "image/png" }],
+          },
+        });
+      });
+      if (action === "Save private creation") {
+        await switchingPage
+          .getByRole("button", { name: "Generate scene", exact: true })
+          .click();
+        await expect(
+          switchingPage.getByRole("img", {
+            name: /Personal visual interpretation/,
+          }),
+        ).toBeVisible();
+      }
+      await expect(
+        switchingPage.getByRole("button", { name: action, exact: true }),
+      ).toBeEnabled();
+      const boundaryPosts = [];
+      switchingPage.on("request", (request) => {
+        const path = new URL(request.url()).pathname;
+        if (
+          request.method() === "POST" &&
+          ["/api/imagine/generate", "/api/reading-scenes"].includes(path)
+        )
+          boundaryPosts.push(path);
+      });
+      await switchingPage.evaluate((label) => {
+        window.__readingSceneAccountBoundary.label = label;
+        window.__readingSceneAccountBoundary.armed = true;
+      }, action);
+      const loginPage = await switchingContext.newPage();
+      // Clear only this disposable fixture's owned cookies and SDK persistence.
+      // Actual password login below supplies B's cookie and broadcasts its session.
+      await switchingContext.clearCookies();
+      await switchingPage.evaluate(() => {
+        for (const name of Object.keys(localStorage))
+          if (/^sb-.*-auth-token$/.test(name)) localStorage.removeItem(name);
+      });
+      await login(loginPage, other.account);
+      await switchingPage.waitForFunction(
+        () => window.__readingSceneAccountBoundary.attempts === 1,
+      );
+      await expect(
+        switchingPage.getByRole("button", {
+          name: "Reopen scene",
+          exact: true,
+        }),
+      ).toHaveCount(0);
+      const witness = await switchingPage.evaluate(() => {
+        const {
+          attempts,
+          connected,
+          enabled,
+          clickObserved,
+          synchronousRecoveryWrites,
+        } = window.__readingSceneAccountBoundary;
+        return {
+          attempts,
+          connected,
+          enabled,
+          clickObserved,
+          synchronousRecoveryWrites,
+        };
+      });
+      assert.deepEqual(witness, {
+        attempts: 1,
+        connected: true,
+        enabled: true,
+        clickObserved: true,
+        synchronousRecoveryWrites: 0,
+      });
+      assert.deepEqual(
+        boundaryPosts,
+        [],
+        "A's old connected action cannot use B's session",
+      );
+      receipt.accountBoundary.push({
+        action,
+        ...witness,
+        postRequests: boundaryPosts.length,
+      });
+      await switchingContext.close();
+    }
+    receipt.checks.push(
+      "Real cross-tab password sign-in rejects old connected generate/save clicks at the SDK boundary; zero scene POSTs or synchronous recovery writes",
     );
     assert.deepEqual(pageErrors, []);
     receipt.passed = true;

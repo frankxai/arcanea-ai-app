@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -8,6 +9,7 @@ import {
   type RefObject,
 } from "react";
 import { useAuth } from "@/lib/auth/context";
+import { providerActor } from "@/lib/ai/provider-preferences";
 import { OPENROUTER_IMAGE_MODELS } from "@/lib/imagine/generate";
 import {
   chapterHash,
@@ -47,10 +49,10 @@ function chapterSelection(container: HTMLDivElement | null): string | null {
 }
 
 export function SceneVisualizer(props: Props) {
-  const { user } = useAuth();
+  const { user, credentialScope } = useAuth();
   return (
     <SceneWorkspace
-      key={`${user?.id ?? "anonymous"}:${props.bookId}:${props.chapterTitle}`}
+      key={`${user?.id ?? "anonymous"}:${credentialScope.get().revision}:${props.bookId}:${props.chapterTitle}`}
       {...props}
     />
   );
@@ -63,7 +65,14 @@ function SceneWorkspace({
   sourceText,
   readingRef,
 }: Props) {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, credentialScope } = useAuth();
+  const credentialToken = credentialScope.get();
+  const isCurrentActor = useCallback(
+    () =>
+      credentialScope.isCurrent(credentialToken) &&
+      credentialToken.actor === providerActor(user?.id, isLoading),
+    [credentialScope, credentialToken, user?.id, isLoading],
+  );
   const owner = user?.id ?? "anonymous";
   const [scene, setScene] = useState<SceneSession | null>(null);
   const [open, setOpen] = useState(false);
@@ -104,12 +113,13 @@ function SceneWorkspace({
   }, [open, replacement]);
 
   useEffect(() => {
+    if (!isCurrentActor()) return;
     const loadRevision = ++revision.current;
     const loadAbort = new AbortController();
     actor.current = owner;
     void (async () => {
       await Promise.resolve();
-      if (loadAbort.signal.aborted) return;
+      if (loadAbort.signal.aborted || !isCurrentActor()) return;
       let hasLocalScene = false;
       try {
         const saved = restoreScene(
@@ -155,7 +165,12 @@ function SceneWorkspace({
         )
           .then(async (response) => {
             const body = await response.json();
-            if (loadAbort.signal.aborted || actor.current !== owner) return;
+            if (
+              loadAbort.signal.aborted ||
+              actor.current !== owner ||
+              !isCurrentActor()
+            )
+              return;
             const configured = body.imageGeneration?.providerConfigured;
             setProviderState(
               configured === true
@@ -184,7 +199,11 @@ function SceneWorkspace({
             }
           })
           .catch(() => {
-            if (!loadAbort.signal.aborted && actor.current === owner)
+            if (
+              !loadAbort.signal.aborted &&
+              actor.current === owner &&
+              isCurrentActor()
+            )
               setProviderState("unknown");
           });
       }
@@ -194,19 +213,21 @@ function SceneWorkspace({
       loadAbort.abort();
       controller.current?.abort();
     };
-  }, [owner, bookId, chapterTitle]);
+  }, [owner, bookId, chapterTitle, isCurrentActor]);
 
   useEffect(() => {
     function captureSelection() {
+      if (!isCurrentActor()) return;
       const selected = chapterSelection(readingRef.current);
       if (selected !== null) setSelection(selected);
     }
     document.addEventListener("selectionchange", captureSelection);
     return () =>
       document.removeEventListener("selectionchange", captureSelection);
-  }, [readingRef]);
+  }, [readingRef, isCurrentActor]);
 
   function retain(next: SceneSession) {
+    if (!isCurrentActor()) return false;
     revision.current++;
     setScene(next);
     try {
@@ -221,6 +242,7 @@ function SceneWorkspace({
   }
 
   async function selectPassage() {
+    if (!isCurrentActor()) return;
     if (busy || (scene?.requestKey && !scene.result)) {
       setOpen(true);
       setMessage("Recover the pending request before starting another scene.");
@@ -233,7 +255,7 @@ function SceneWorkspace({
       const brief = sceneBrief(passage);
       const startOwner = owner;
       const hash = await chapterHash(sourceText);
-      if (actor.current !== startOwner) return;
+      if (actor.current !== startOwner || !isCurrentActor()) return;
       const next: SceneSession = {
         schema: "arcanea.reading-scene.v1",
         owner,
@@ -265,6 +287,7 @@ function SceneWorkspace({
       setMessage("");
       setSelection("");
     } catch (error) {
+      if (!isCurrentActor()) return;
       setOpen(true);
       setMessage(
         error instanceof Error ? error.message : "Select a passage first.",
@@ -273,7 +296,15 @@ function SceneWorkspace({
   }
 
   async function generate() {
-    if (!scene || busy || replacement || !user || isLoading) return;
+    if (
+      !scene ||
+      busy ||
+      replacement ||
+      !user ||
+      isLoading ||
+      !isCurrentActor()
+    )
+      return;
     if (providerState !== "configured" && !scene.requestKey) return;
     const next = {
       ...scene,
@@ -306,7 +337,7 @@ function SceneWorkspace({
         }),
       });
       const body = await response.json();
-      if (actor.current !== startOwner) return;
+      if (actor.current !== startOwner || !isCurrentActor()) return;
       if (!response.ok) {
         // Only a definite provider failure releases the identity for a new attempt.
         if (body.reason === "generation_failed")
@@ -326,7 +357,7 @@ function SceneWorkspace({
         body.status !== "completed" ||
         body.generationId !== `gen_${next.requestKey}` ||
         !Array.isArray(body.images) ||
-        !body.images.length ||
+        body.images.length !== 1 ||
         !imageSource(body.images[0])
       )
         throw new Error("Invalid generation response");
@@ -334,18 +365,25 @@ function SceneWorkspace({
       if (retain({ ...next, result }))
         setMessage("Scene created. Save privately or download a copy.");
     } catch {
-      if (actor.current === startOwner)
+      if (actor.current === startOwner && isCurrentActor())
         setMessage(
           "The response was interrupted. Recover this request to retrieve its result without starting another charge.",
         );
     } finally {
       clearTimeout(deadline);
-      if (actor.current === startOwner) setBusy(false);
+      if (actor.current === startOwner && isCurrentActor()) setBusy(false);
     }
   }
 
   async function save() {
-    if (!scene?.result || !user || busy || !scene.requestKey) return;
+    if (
+      !scene?.result ||
+      !user ||
+      busy ||
+      !scene.requestKey ||
+      !isCurrentActor()
+    )
+      return;
     const startOwner = owner;
     setBusy(true);
     setMessage("Saving privately…");
@@ -364,7 +402,7 @@ function SceneWorkspace({
         signal: AbortSignal.timeout(20_000),
       });
       const body = await response.json();
-      if (actor.current !== startOwner) return;
+      if (actor.current !== startOwner || !isCurrentActor()) return;
       if (
         !response.ok ||
         typeof body.creationId !== "string" ||
@@ -376,17 +414,17 @@ function SceneWorkspace({
         "Saved to your private creations. The source passage and generation details are included.",
       );
     } catch {
-      if (actor.current === startOwner)
+      if (actor.current === startOwner && isCurrentActor())
         setMessage(
           "Private save could not be confirmed. Retry the same save or download a copy.",
         );
     } finally {
-      if (actor.current === startOwner) setBusy(false);
+      if (actor.current === startOwner && isCurrentActor()) setBusy(false);
     }
   }
 
   function download() {
-    if (!scene) return;
+    if (!scene || !isCurrentActor()) return;
     const url = URL.createObjectURL(
       new Blob([JSON.stringify(exportScene(scene), null, 2)], {
         type: "application/json",
@@ -423,6 +461,7 @@ function SceneWorkspace({
       retain={retain}
       replacement={replacement}
       keepScene={() => {
+        if (!isCurrentActor()) return;
         focusAfterSelection.current = true;
         setReplacement(null);
       }}
@@ -430,7 +469,7 @@ function SceneWorkspace({
         if (!replacement || busy || (scene?.requestKey && !scene.result))
           return;
         focusAfterSelection.current = true;
-        retain(replacement);
+        if (!retain(replacement)) return;
         setReplacement(null);
         setSelection("");
         setMessage("");

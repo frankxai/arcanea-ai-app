@@ -9,7 +9,7 @@ const base = process.env.READING_SCENE_BASE || "http://127.0.0.1:3001";
 const chapter = "/books/forge-of-ruin/the-forty-seven-names";
 const owner = "00000000-0000-4000-8000-000000000001";
 const png =
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jUxoAAAAASUVORK5CYII=";
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWP4////fwAJ+wP9CNHoHgAAAABJRU5ErkJggg==";
 const modes = [
   {
     name: "desktop",

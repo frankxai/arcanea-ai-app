@@ -331,3 +331,61 @@ claimed for that source. Fresh integrated-source review and runtime checks remai
 pending. Handover268 is accepted as `c92c7151`; its complete tree equals reviewed
 `9cc45cb5` and both receiving CI and estate checks pass. Programme276 and the full
 founder platform/creator/community/revenue goal remain open.
+
+## Review corrections and SDK account boundary, 11 October
+
+The integrated candidate `bc832fc7885262cdb6ae621991f119437ee39fdf` is draft PR584.
+Its frozen-install hosted build, types, lint, Reading scene workflow, isolated real
+password/private-recovery checks and Vercel preview passed. Draft-only skipped
+checks, including CodeQL, are not passes. Those results approve that source only.
+
+The complete 40-source independent zero-price NVIDIA review returned raw WARN
+with five findings. Two defects were reproduced before correction: an eight-byte
+PNG header was accepted into a creation, and completed recovery accepted
+`requestKey: null` with `generationId: gen_null`. A separate lead review reproduced
+old scene actions sending/persisting after the SDK changed actor before React
+cleanup, late A-to-B-to-A callbacks writing recovery state, and a queued stale load.
+Keep those failures and the raw WARN; no independent PASS is claimed for bc832.
+
+Corrections reuse existing mechanisms: the already-declared Sharp 0.35.5 dependency
+fully decodes original raster pixels with warning, channel and 16,777,216-pixel
+bounds before database insertion; completed recovery requires a request; scene
+actions use the accepted Auth credential scope synchronously and reject old epochs.
+The workspace key includes the epoch, and load, selection, retention, export and
+asynchronous callbacks check scope. Generation accepts exactly one image.
+The previous browser pixel fixture itself failed real decoding and is replaced
+with a complete synthetic one-pixel PNG. This proves fixture integrity, not AI art
+quality. The original PNG/JPEG/WebP bytes remain intact after a valid save.
+
+Five actual-component/account tests, nine briefing/recovery tests and thirteen
+actual-route/real-codec tests pass locally. The route tests used the existing
+billing worktree's installed Next/Zod/Sharp modules through an in-memory loader;
+this is not a frozen install of this worktree. The hosted workflow runs the tests
+normally after its frozen install. A new browser helper preserves the actual SDK
+BroadcastChannel listener and inserts a connected enabled scene click immediately
+after it; real disposable password login supplies the second session. Hosted
+execution of this new boundary check is pending, not established by native mocks.
+
+The other three independent findings are reconciled as follows: the Origin
+comparison deliberately ignores forwarded authorities and tests malformed/mixed
+authorities; an unverified custom TLS-proxy configuration is not a demonstrated
+bypass. Chapter state is keyed by owner/book/chapter and selection snapshots retain
+the chapter-only browser selection through button activation. URL-only results can
+be downloaded but cannot be privately saved by this bytes-only endpoint; arbitrary
+remote fetching is not added. Future private asset ingestion remains separate work.
+
+Read-only production catalog inspection confirms the deployed public client points
+to Arcanea's backend and existing creations columns support this slice. Four actual
+owner RLS policies were inspected; no customer rows, production writes, migrations
+or accounts were used. Inherited anon/authenticated TRUNCATE/REFERENCES/TRIGGER
+grants require permissions-owner review; they were not changed. Public client
+binding and catalog metadata do not prove customer save/recovery or model value.
+
+Scope now also owns `scripts/tests/reading-scene-account.test.cjs` and
+`scripts/reading-scene-account-boundary.cjs`; the native lane explicitly contains
+55 paths, including previous accepted provider/reader ownership. All other owners'
+work is preserved. Fresh exact-source CI, independent review, browser/visual checks
+and deployment/source binding are required before promotion. The whole founder
+goal and programme276 remain open; real provider quality/cost, premium commerce,
+canvas/memory, Queen runtime, academies, publishing/community and developer access
+are not completed by this correction.

@@ -8,6 +8,7 @@ const {
   NextResponse,
 } = require("../../apps/web/node_modules/next/server");
 const { z } = require("../../apps/web/node_modules/zod");
+const sharp = require("../../apps/web/node_modules/sharp");
 const { createHash, randomUUID } = require("node:crypto");
 
 const actor = "00000000-0000-4000-8000-000000000001";
@@ -24,7 +25,10 @@ const scene = {
   brief: "Illustrate the silver bowl in the river.",
   model: "provider/model",
   provider: "openrouter",
-  image: { data: "iVBORw0KGgo=", mimeType: "image/png" },
+  image: {
+    data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWP4////fwAJ+wP9CNHoHgAAAABJRU5ErkJggg==",
+    mimeType: "image/png",
+  },
 };
 
 function subject(user = { id: actor }, fail = false, providerKey = "") {
@@ -120,12 +124,14 @@ function subject(user = { id: actor }, fail = false, providerKey = "") {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2022,
+      esModuleInterop: true,
     },
   }).outputText;
   const module = { exports: {} };
   const requireMock = (name) => {
     if (name === "next/server") return { NextResponse };
     if (name === "zod") return { z };
+    if (name === "sharp") return sharp;
     if (name === "node:crypto") return { createHash };
     if (name === "@/lib/rate-limit/rate-limiter")
       return { checkRateLimit: () => ({ allowed: true }) };
@@ -197,6 +203,70 @@ test("foreign origins and malformed or forwarded authorities cannot authorize a 
 function privateResponse(response) {
   assert.equal(response.headers.get("cache-control"), "private, no-store");
 }
+
+test("incomplete and corrupt raster bytes are rejected before a database write", async () => {
+  for (const image of [
+    { data: "iVBORw0KGgo=", mimeType: "image/png" },
+    {
+      data: Buffer.from([255, 216, 255]).toString("base64"),
+      mimeType: "image/jpeg",
+    },
+    {
+      data: Buffer.from("RIFF0000WEBP").toString("base64"),
+      mimeType: "image/webp",
+    },
+    {
+      data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jUxoAAAAASUVORK5CYII=",
+      mimeType: "image/png",
+    },
+  ]) {
+    const s = subject();
+    const response = await s.POST(request({ ...scene, image }));
+    assert.equal(response.status, 400);
+    assert.equal(s.calls.length, 0);
+    privateResponse(response);
+  }
+});
+
+test("the decoded format must agree with the declared raster MIME type", async () => {
+  const s = subject();
+  const response = await s.POST(
+    request({ ...scene, image: { ...scene.image, mimeType: "image/jpeg" } }),
+  );
+  assert.equal(response.status, 400);
+  assert.equal(s.calls.length, 0);
+});
+
+test("oversized decoded dimensions are rejected without retaining the image", async () => {
+  const bytes = Buffer.from(scene.image.data, "base64");
+  bytes.writeUInt32BE(65535, 16);
+  bytes.writeUInt32BE(65535, 20);
+  bytes.writeUInt32BE(require("node:zlib").crc32(bytes.subarray(12, 29)), 29);
+  const s = subject();
+  const response = await s.POST(
+    request({
+      ...scene,
+      image: { ...scene.image, data: bytes.toString("base64") },
+    }),
+  );
+  assert.equal(response.status, 400);
+  assert.equal(s.calls.length, 0);
+});
+
+test("complete PNG, JPEG and WebP pixels save with their original bytes", async () => {
+  for (const format of ["png", "jpeg", "webp"]) {
+    const bytes = await sharp(Buffer.from(scene.image.data, "base64"))
+      .toFormat(format)
+      .toBuffer();
+    const s = subject();
+    const image = {
+      data: bytes.toString("base64"),
+      mimeType: `image/${format}`,
+    };
+    assert.equal((await s.POST(request({ ...scene, image }))).status, 200);
+    assert.equal(s.calls[0].content.image.data, image.data);
+  }
+});
 
 test("anonymous and cross-origin scene saves are denied before writing", async () => {
   const s = subject(null);
