@@ -555,3 +555,92 @@ guards remain intact. The identical original image now saves; oversized JSON sti
 fails before database writes. Sixteen route/codec tests, four generation-actor tests,
 eight component tests and nine brief/session tests pass in their recorded native
 scope. Fresh changed-source release evidence and independent review remain required.
+
+## Scene feature released: source and bounded production evidence, 2026-10-11
+
+Task contract: Scope: record the completed engineering release and its actual
+acceptance limits. Owner: codex-provider-account-20261011. Files: this existing
+state record only. Non-goals: no new application, price, key, migration, provider
+charge, premium publication or whole-programme completion. Acceptance: immutable
+source/check/deployment references and truthful environment boundaries.
+Verification: source hashes, receiving CI/security, canonical alias metadata,
+bounded anonymous HTTP observations and independent document review. Rollback:
+revert only this evidence append; product rollback is a separate narrow feature
+revert preserving accepted reader/account/narrative code and private user data.
+
+Product584 is MERGED at `a00d10b6cfd11558af57c516d4b4545c88cab03f` (15:36:21 UTC).
+Its complete Git tree `c00fe6cbe7f7350694aec197bfee073d0c714ecc` equals reviewed
+`b1110afda986b7d4ae1182098872c8814605d7d6`; all46 frozen source/context hashes
+match. Replacement pre-merge CI38151207359 passed every required check. Receiving
+main CI38151973112, CodeQL38151973103 and estate38151972991 passed. Existing
+platform/dependency security debt remains; skipped acceptance jobs are not passes.
+
+The exact candidate's Reading38149697868/artifact11706362867 passed. Immutable
+Git source hashes were recomputed from all three receipts (7,7,13). Real isolated
+password/SSR cookies, anonymous draft adoption, private save, one-row lost-ack retry,
+fresh-tab restore and foreign/anonymous denial passed. Both actual connected old
+SDK actions produced zero scene POSTs/recovery writes. Both real cookie-before-SDK
+cases received403 with A asserted and zero private rows; fixture cleanup removed
+its allocated config with errors[]. Generation was a synthetic complete pixel;
+no production account, real provider call or actual credit settlement was used.
+
+All37 focused native checks passed in their recorded scope:16 real-codec/private
+handler,4 generation-actor,8 component/account and9 brief/recovery. Hosted checks
+use a frozen install; native actual-route tests reused already-installed billing
+worktree dependencies through the documented in-memory loader. All four compiled
+UI modes passed; current desktop/mobile frames were inspected. The downloaded
+portable JSON preserves source/image bytes and excludes private billing/account
+metadata. The separate image-download link was not independently downloaded.
+
+Current full46-source Lightning review returned raw pass with5 P2 findings at
+reported USD0. Separate-provider10-source Poolside returned raw WARN with5 findings
+at USD0. Every finding and prior failed attempt is retained. Lead reconciliation
+rejects inventing a second Auth/database principal, accepting null or mismatched
+completed request identities, or overwriting unknown paid operations. The second
+review itself confirms UUID validation, anonymous/server guards and intentional
+readiness/provenance boundaries. Fresh generation is blocked when readiness is
+unknown; same-key recovery remains available. Existing callers omitting the optional
+generation actor assertion remain an explicit inherited scope. The earlier real
+raster-size mismatch was reproduced and fixed before the reviewed candidate.
+Reconciliation: https://github.com/frankxai/arcanea-ai-app/pull/584#issuecomment-6110570245.
+
+Production `dpl_2T3aMyJRrgcaAiYSkApjxPfe7kDS` is READY at accepteda00. The
+arcanea.ai,www.arcanea.ai,app.arcanea.ai aliases bound to it before and after the
+HTTP observations. Ten checks passed: five real chapter initialHTML200 responses
+with expected prose and the initial passage control, missing-chapter200/noindex
+without an article, and four anonymous API401 denials. The security proxy stops
+anonymous API requests before handler validation; this does not certify an
+authenticated production origin check. The production HTML does not prove browser
+hydration or a complete JavaScript-disabled journey. Missing pages remain streamed
+200/noindex rather than a guaranteed404. Production CSP lacks strict-dynamic; this
+release does not qualify or change that inherited policy.
+
+A grouped production error/fatal query for the deployment's latest10-minute window
+returned no groups. This limited query does not establish comprehensive monitoring,
+absence of all errors or customer success. Two earlier HTTP receipts are retained:
+one expected the selection-only button before selection, and one expected the
+handler's403 before the production proxy's anonymous401. The verifier now follows
+the actual initial control and proxy order; no application guard was weakened.
+
+Private evidence remains under the existing arcanea-reading-scene-20261010 record:
+reading-scene-b1110afd-release-reconciliation-20261011.json;
+reading-scene-a00d10b6-accepted-source-20261011.json;
+scene-production-a00-before-http-binding-20261011.json;
+scene-production-http-a00d10b6-20261011T154440442938Z.json;
+scene-production-a00-after-http-binding-20261011.json. Runtime credentials and
+private user data are excluded. Machine browser admission remains HOLD (6361MB
+free/8192 required,27 runtimes); no new agent, local browser/server/container,
+install or build was started. Owned small verification/review processes are terminal.
+
+Full programme276 remains ACTIVE. Real provider output/quality/cost and credit
+settlement, authenticated production save/reopen, remote-URL private asset ingestion,
+customer acceptance, paid image adapters and premium economics remain open.
+Then continue chat562/entry567, persistent Queen/memory284 and project graph/canvas,
+media531/532, credits/commerce525/568/529/511, developer517, publishing277/280,
+academy/community, adoption, shops, mobile/desktop and IP/licensing. Team/source
+566 is accepted documentation, not a verified running Queen. Human-gated billing,
+spend, migrations, permissions, legal/IP, premium publication and external campaigns
+remain gated. Next safe implementation: integrate the held chat/companion with the
+accepted SDK credential lifetime, reproduce stale account/key sends before changes,
+and renew its exact-source hosted/browser review. No frontier-model or YC advantage
+is inferred from these engineering checks.

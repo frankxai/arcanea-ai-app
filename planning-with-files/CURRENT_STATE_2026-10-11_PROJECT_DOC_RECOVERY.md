@@ -321,3 +321,25 @@ byte-preserved incoming paths. The other28 remain identical to accepted a00 main
 The shared fixture-test conflict resolution remains separately recorded. Fresh
 exact-revision review, reader CI and document CI/runtime gates must pass before
 landing. Production migrations, customer acceptance and money remain unchanged.
+
+## Accepted reader release-record integration
+
+Exact25c33401 passes trusted manual38153894420, ready PR CI38154542385,
+CodeQL38154542312 and reader38153898138.37 actual Git-byte independent review
+hashes and14 service hashes are verified. All three document modes pass seven
+checks each, nine real password logins, zero page errors/supplier posts, six
+inspected renders with companions and successful private-config cleanup.
+
+Before protected merge, accepted main advanced to026a5a4ffddc67827ab0c94f0ea9368e00eb9b16
+through owner587's one-file append to the existing reader release record.
+That exact incoming file is preserved. No application, dependency, schema or
+instruction source changed in that accepted main update. The reviewer base is
+pinned to026; bounded30-file/900KB admission stays unchanged. Auto-merge is disabled
+while this new combined revision awaits its own exact review and hosted gates.
+No release gate is waived or retried due only to observation timeout.
+
+Production still lacks the four project/document tables and both document
+functions. Reviewed migration bytes remain6950d9d46b9d04cc93968f6257a16c4c05b87459b14c0657326713c65da0ab07,
+unapplied. A separate rollback-only production role proof is prepared, not executed;
+it creates no customer identity and cannot establish signed-in customer acceptance.
+The full objective and private storage/billing/creator/client/harness gates stay open.
