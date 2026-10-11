@@ -241,3 +241,42 @@ No account/provider request or outbound mutation occurred; the browser closed.
 This proves locator fidelity only, not the SDK follow-up or authenticated settings.
 Fresh browser-qa admission at07:14 was BOUNDED, 9,988 MB free /8,192 required,
 CPU35 percent. No localhost server, dependency install or additional agent was used.
+
+## Isolated protected settings acceptance
+
+Source 3a22e0ae passes full hosted run38120918429, including compiled public-chat
+account assertions in desktop, mobile and reduced motion. Its final full review
+timed out and its partial Cohere response was malformed; final independent
+approval remains open. Hub255 and programme276 retain the exact results.
+
+The next acceptance job reuses the existing disposable PostgreSQL/GoTrue/PostgREST
+projection pattern instead of repurposing the restricted author preview. It
+creates two temporary accounts, uses the actual login UI and unchanged server
+middleware, and checks account-specific provider saves/reloads, cross-tab conflict
+denial, interrupted storage recovery and a stale form submission immediately after
+the actual cross-tab auth subscriber runs. The timing hook does not synthesize a
+session; the other tab signs in through GoTrue. Fixture cookie clearing prepares
+the account switch and does not certify the product sign-out UI.
+
+Scope: Finish isolated two-account protected-settings acceptance for this repair.
+Owner: codex-provider-account-20261011.
+Files: scripts/run-provider-account-fixture.mjs,
+scripts/verify-provider-settings-browser.cjs, .github/workflows/ci.yml and this
+existing pickup; prior SDK fix paths remain in the same candidate.
+Non-goals: Hosted Supabase/project changes, production data or migrations,
+author fixture scope, live provider calls, pricing, canon or permissions.
+Acceptance criteria: Exact-source compiled settings pass with nine real isolated
+password logins across three modes, both actors' independent save/reload/return,
+cross-tab and same-turn stale-save denial, storage failure/retry and zero AI POSTs.
+Verification: Native syntax/format and hosted provider-account-preview; retain
+safe source/image hashes and masked screenshots. Fresh exact-source independent
+review is still required. Production/provider/customer evidence remains separate.
+Rollback: Revert only this fixture/job wiring; preserve the account and SDK fixes.
+
+The runner is restricted to this owned hosted branch, exact GITHUB_SHA and Frank's
+actor. It refuses inherited Supabase/provider credentials, binds services to
+loopback, creates random ephemeral tokens and removes its own containers/network
+and private configuration. No local containers, build or browser started under
+the latest review-lite RAM HOLD (4,681 MB free /6,144 required). Ordinary source
+editing and small checks remain permitted. The new fixture is implemented but
+has not yet earned hosted or independent acceptance.
