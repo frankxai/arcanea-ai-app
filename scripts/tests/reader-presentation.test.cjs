@@ -46,6 +46,11 @@ function loadTs(relative, dependencies) {
     if (Object.hasOwn(dependencies, name)) return dependencies[name];
     if (name === "@/lib/content/reader-presentation")
       return loadTs("apps/web/lib/content/reader-presentation.ts", {});
+    if (name === "./reading-toolbar.module.css")
+      return {
+        __esModule: true,
+        default: new Proxy({}, { get: (_, name) => String(name) }),
+      };
     if (name === "react" || name === "react/jsx-runtime")
       return appRequire(name);
     throw Error(`Unadmitted component import: ${name}`);
@@ -338,4 +343,81 @@ test("four actual public entry manuscripts render one opening chapter title and 
     assert.ok(content.endsWith(display), id);
     assert.ok(display.length > 500, id);
   }
+});
+
+const { ReadingToolbar } = loadTs(
+  "apps/web/components/saga/reading-toolbar.tsx",
+  {},
+);
+function renderToolbar(overrides = {}) {
+  const noop = () => {};
+  return renderToStaticMarkup(
+    React.createElement(ReadingToolbar, {
+      theme: "dark",
+      fontSize: 18,
+      fontFamily: "serif",
+      lineHeight: "normal",
+      isBookmarked: false,
+      reactionCount: 0,
+      showToc: false,
+      hasToc: true,
+      toolbarVisible: true,
+      bookId: "clocktower",
+      prev: null,
+      next: { id: "stairway", title: "The stairway" },
+      onThemeCycle: noop,
+      onFontSizeUp: noop,
+      onFontSizeDown: noop,
+      onFontFamilyToggle: noop,
+      onLineHeightCycle: noop,
+      onBookmarkToggle: noop,
+      onTocToggle: noop,
+      ...overrides,
+    }),
+  );
+}
+test("actual reading controls retain accessible actions and correct chapter boundaries", () => {
+  const html = renderToolbar();
+  assert.match(html, /role="group" aria-label="Reading controls"/);
+  assert.match(html, /aria-label="No previous chapter"[^>]*tabindex="-1"/);
+  assert.match(html, /href="\/books\/clocktower\/stairway"/);
+  for (const label of [
+    "Cycle reading theme",
+    "Increase font size",
+    "Decrease font size",
+    "Font: serif",
+    "Line spacing: normal",
+    "Bookmark chapter",
+    "Toggle table of contents",
+  ]) {
+    assert.ok(html.includes(`aria-label="${label}"`));
+  }
+  assert.match(
+    renderToolbar({ fontSize: 14 }),
+    /disabled=""[^>]*aria-label="Decrease font size"/,
+  );
+  assert.match(
+    renderToolbar({ fontSize: 30 }),
+    /disabled=""[^>]*aria-label="Increase font size"/,
+  );
+  assert.ok(
+    !renderToolbar({ hasToc: false }).includes(
+      'aria-label="Toggle table of contents"',
+    ),
+  );
+});
+test("actual toolbar exposes selected states without inventing previous navigation", () => {
+  assert.match(
+    renderToolbar({ isBookmarked: true }),
+    /aria-pressed="true"[^>]*aria-label="Remove bookmark"/,
+  );
+  assert.match(
+    renderToolbar({ showToc: true }),
+    /aria-expanded="true"[^>]*aria-label="Toggle table of contents"/,
+  );
+  assert.match(
+    renderToolbar({ toolbarVisible: false }),
+    /data-visible="false"/,
+  );
+  assert.match(renderToolbar({ theme: "light" }), /data-light="true"/);
 });
