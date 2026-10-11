@@ -501,6 +501,8 @@ async function main() {
       await expect(
         page.getByRole("heading", { name: "Keyboard shortcuts", exact: true }),
       ).toBeVisible();
+      await expect(shortcutsDialog).toBeInViewport();
+      await closeShortcuts.click({ trial: true });
       await capturePage(page, `shortcuts-${mode.name}`);
       await page.keyboard.press("Escape");
       await expect(shortcutsDialog).toBeHidden();
