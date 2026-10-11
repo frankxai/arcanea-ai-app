@@ -127,6 +127,8 @@ async function main() {
   try {
     for (const mode of modes) {
       const context = await browser.newContext({
+        // Accepted disposable HTTP loopback rail; production CSP is unchanged.
+        bypassCSP: true,
         viewport: mode.viewport,
         reducedMotion: mode.reducedMotion,
         acceptDownloads: true,
@@ -223,6 +225,7 @@ async function main() {
         download.catch(() => {});
         await page.getByTitle("Download image", { exact: true }).click();
         const artifact = await download;
+        assert.match(artifact.suggestedFilename(), /\.webp$/);
         const stream = await artifact.createReadStream();
         const chunks = [];
         for await (const chunk of stream) chunks.push(chunk);
@@ -336,7 +339,7 @@ async function main() {
     }
     // Real authenticated Data API denial plus a depleted second actor at the app boundary.
     let phase = "second-account-isolation";
-    const context = await browser.newContext();
+    const context = await browser.newContext({ bypassCSP: true });
     const page = await context.newPage();
     try {
       await login(page, config.accounts[1]);
@@ -408,6 +411,7 @@ async function main() {
           head: config.head,
           passed: rows.length === 7 && rows.every((row) => row.passed),
           rows,
+          csp: "Disposable HTTP loopback fixture bypasses browser CSP; production HTTPS CSP is unchanged and is not certified",
           paidProviderCalls: 0,
           providerRequestsAttempted: 0,
           fixtureSupplier: await state(),

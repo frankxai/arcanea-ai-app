@@ -201,17 +201,26 @@ export default function ImageForgePage() {
     if (!selectedImage) return;
     try {
       const response = await fetch(selectedImage.url);
+      if (!response.ok) throw new Error("Image download failed");
       const blob = await response.blob();
+      const extensions: Record<string, string> = {
+        "image/png": "png",
+        "image/jpeg": "jpg",
+        "image/webp": "webp",
+      };
+      const extension = extensions[blob.type.toLowerCase().split(";")[0]];
+      if (!extension) throw new Error("Unsupported image download format");
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `arcanea-${selectedImage.id}.png`;
+      a.download = `arcanea-${selectedImage.id}.${extension}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Download failed:", error);
+      setError("The image could not be downloaded. Try again from this image.");
     }
   };
 
@@ -380,13 +389,14 @@ export default function ImageForgePage() {
                 <div className="relative border border-white/[0.08] bg-black/40 rounded-3xl overflow-hidden aspect-[16/10] group">
                   <Image
                     src={selectedImage.url}
+                    unoptimized
                     alt={selectedImage.prompt}
                     fill
                     sizes="(max-width: 1200px) 100vw, 1200px"
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350 flex flex-col justify-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 transition-opacity duration-350 motion-reduce:transition-none flex flex-col justify-end p-6">
                     <div className="flex items-end justify-between gap-4">
                       <div className="max-w-2xl">
                         <span className="text-[10px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider">
@@ -439,6 +449,7 @@ export default function ImageForgePage() {
                         >
                           <Image
                             src={img.url}
+                            unoptimized
                             alt={img.prompt}
                             fill
                             sizes="96px"

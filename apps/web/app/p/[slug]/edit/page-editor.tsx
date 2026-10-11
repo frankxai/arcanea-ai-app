@@ -333,6 +333,7 @@ export function PageEditor({
               <div className="relative h-44 overflow-hidden rounded-xl border border-white/[0.06]">
                 <Image
                   src={coverImageUrl}
+                  unoptimized
                   alt="Cover"
                   fill
                   sizes="760px"

@@ -34,7 +34,7 @@ const authResponseReview =
 const base = hubReleaseReview
   ? hubBase
   : generationReview
-    ? "3b8120b424fb6f42f1aa62b82870bbb4b5c113de"
+    ? "0661416b66c2674eb63a84a9597ca1163eb2d378"
     : worldCreatorReview
       ? "123f84ea2d05586f780b89edca68533d7b8d9786"
       : reviewRailReview
@@ -157,6 +157,9 @@ if (worldCreatorReview) {
 }
 if (generationReview) {
   contexts = [
+    "apps/web/lib/auth/context.tsx",
+    "apps/web/lib/ai/provider-preferences.ts",
+    "apps/web/components/chat/message-bubble.tsx",
     "apps/web/lib/billing/catalog.ts",
     "apps/web/lib/billing/ledger.ts",
     "apps/web/lib/billing/operations.ts",

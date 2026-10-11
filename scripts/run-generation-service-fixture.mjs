@@ -64,6 +64,7 @@ const receipt = {
   head,
   backend: "disposable Supabase Auth/PostgREST/PostgreSQL",
   productionWrites: 0,
+  csp: "Disposable loopback browser exception only; production HTTPS CSP is unchanged and is not certified",
   providerCalls: 0,
   providerRequestsAttempted: 0,
   scope:
@@ -71,6 +72,21 @@ const receipt = {
   passed: false,
 };
 let phase = "container-admission";
+const acceptanceStarted = Date.now();
+// Controlled phase names and the public source revision are safe diagnostics.
+// Provider responses, child logs, private config and credentials stay private.
+const heartbeat = setInterval(() => {
+  console.log(
+    JSON.stringify({
+      fixture: "generation",
+      head,
+      phase,
+      elapsedSeconds: Math.floor((Date.now() - acceptanceStarted) / 1000),
+    }),
+  );
+}, 30000);
+heartbeat.unref();
+
 const docker = (args) =>
   execFileSync("docker", args, {
     encoding: "utf8",
@@ -582,6 +598,7 @@ try {
   );
   process.exitCode = 1;
 } finally {
+  clearInterval(heartbeat);
   for (const child of children) {
     try {
       process.kill(-child.pid, "SIGKILL");
