@@ -466,3 +466,27 @@ connected/enabled click witness and zero-POST/write assertions remain unchanged.
 Current-source hosted execution and exact-revision independent review are pending.
 Local browser admission is HOLD: 5,994 MB free versus 8,192 MB required and 27 task
 runtimes. No local browser, server, container or additional agent was started.
+
+The correction `7bb28eacd8d08aae9080191d5bfc58e20cad6112` passed hosted Reading
+scene38147144301 and application CI38147144286. Artifact11704794512 binds all
+six real Auth checks to that source. Both actual cross-tab SDK witnesses clicked
+an old connected, enabled generate/save button once, with zero scene POSTs and
+zero synchronous recovery writes. The runner removed its allocated private config
+with no errors. All four compiled UI modes also passed; desktop/mobile frames were
+retained for visual inspection. Generation is a complete synthetic pixel, not
+evidence of real provider quality, pricing, credit settlement or customer success.
+
+The full 45-source zero-price Lightning review at7bb returned raw `pass` with one
+P2 finding, 237,860 tokens and cost0. The alleged missing selection guard already
+exists at entry and after asynchronous hashing. The native stale-epoch tests cover
+that denial; no missing guard is added. Raw findings and all prior attempts remain
+preserved. Vercel's7bb preview failed with `git_info_fail` before any application
+build result; fresh preview evidence is required.
+
+Accepted main advanced to `22aa23ba106d1b9affa0adcacbcfa73e99f6e59e` through
+narrative-evidence586. Its six new non-application files are ingested unchanged in
+this integration. The native claim now admits61 paths, with those six restricted
+to exact accepted bytes; their foreign source owner/worktree remain intact. The
+reader/account and all other accepted main paths are preserved. Fresh integrated
+source CI, security, Auth/visual evidence, review and preview remain required before
+protected promotion; the full founder programme remains open.
