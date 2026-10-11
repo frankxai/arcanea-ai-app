@@ -5,11 +5,13 @@ import { loadConfig } from "../config.js";
 import { resolveRunnableCandidates } from "./run.js";
 
 interface Options {
-  surface: string;
+  surface?: string;
 }
 
 export function explainCommand(taskId: string, opts: Options): void {
   const spec = loadSpec();
+  const config = loadConfig();
+  const surfaceId = opts.surface ?? config.defaultSurface ?? "claude-arcanea";
 
   if (!spec.tasks[taskId]) {
     console.error(kleur.red(`Unknown task: ${taskId}`));
@@ -20,28 +22,22 @@ export function explainCommand(taskId: string, opts: Options): void {
     );
     process.exit(1);
   }
-  if (!spec.surfaces[opts.surface]) {
-    console.error(kleur.red(`Unknown surface: ${opts.surface}`));
+  if (!spec.surfaces[surfaceId]) {
+    console.error(kleur.red(`Unknown surface: ${surfaceId}`));
     process.exit(1);
   }
 
   const task = spec.tasks[taskId];
-  const surface = spec.surfaces[opts.surface];
-  const config = loadConfig();
-  const catalogCandidates = resolveTask(taskId, opts.surface, spec);
-  const runnable = resolveRunnableCandidates(
-    taskId,
-    opts.surface,
-    spec,
-    config,
-  );
+  const surface = spec.surfaces[surfaceId];
+  const catalogCandidates = resolveTask(taskId, surfaceId, spec);
+  const runnable = resolveRunnableCandidates(taskId, surfaceId, spec, config);
   const candidates = [...new Set([...runnable, ...catalogCandidates])];
 
   console.log();
   console.log(kleur.bold(`  Task: ${kleur.cyan(taskId)}`));
   console.log(`  ${kleur.dim(task.description)}`);
   console.log();
-  console.log(kleur.bold(`  Surface: ${kleur.cyan(opts.surface)}`));
+  console.log(kleur.bold(`  Surface: ${kleur.cyan(surfaceId)}`));
   console.log(`  ${kleur.dim(surface.description)}`);
   console.log(`  Prefer tier: ${kleur.yellow(surface.prefer)}`);
   console.log();

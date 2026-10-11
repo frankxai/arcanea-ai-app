@@ -28,6 +28,9 @@ import {
 import { MentionPopup, type MentionItem } from "./mention-popup";
 import { VoiceWaveform } from "./voice-waveform";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
+import { useAuth } from "@/lib/auth/context";
+import type { createCredentialScope } from "@/lib/ai/provider-preferences";
+type CredentialScope = ReturnType<typeof createCredentialScope>;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -461,7 +464,20 @@ function ToolsPopover({
 // Main component
 // ---------------------------------------------------------------------------
 
-export function ChatInputBar({
+export function ChatInputBar(props: ChatInputBarProps) {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  return (
+    <ChatInputBarSession
+      key={token.revision}
+      {...props}
+      credentialScope={credentialScope}
+      credentialToken={token}
+    />
+  );
+}
+
+function ChatInputBarSession({
   onSend,
   onModelChange,
   currentModel,
@@ -472,7 +488,12 @@ export function ChatInputBar({
   externalMessage,
   onExternalMessageConsumed,
   textareaRef: externalTextareaRef,
-}: ChatInputBarProps) {
+  credentialScope,
+  credentialToken,
+}: ChatInputBarProps & {
+  credentialScope: CredentialScope;
+  credentialToken: ReturnType<CredentialScope["get"]>;
+}) {
   const [message, setMessage] = useState("");
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -801,6 +822,10 @@ export function ChatInputBar({
   }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
+    if (!credentialScope.isCurrent(credentialToken)) {
+      showValidationToast("Wait for your current account before recording.");
+      return;
+    }
     if (voiceOperationRef.current) return;
     setVoiceRecovery(null);
     if (
@@ -813,7 +838,10 @@ export function ChatInputBar({
     voiceOperationRef.current = true;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      if (!voiceMountedRef.current) {
+      if (
+        !voiceMountedRef.current ||
+        !credentialScope.isCurrent(credentialToken)
+      ) {
         stream.getTracks().forEach((track) => track.stop());
         voiceOperationRef.current = false;
         return;
@@ -838,7 +866,10 @@ export function ChatInputBar({
 
       mediaRecorder.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
-        if (!voiceMountedRef.current) {
+        if (
+          !voiceMountedRef.current ||
+          !credentialScope.isCurrent(credentialToken)
+        ) {
           voiceOperationRef.current = false;
           return;
         }
@@ -860,7 +891,7 @@ export function ChatInputBar({
           formData.append("audio", blob, `recording.${ext}`);
           const res = await fetch("/api/ai/transcribe", {
             method: "POST",
-            headers: voiceCredentialHeaders(),
+            headers: voiceCredentialHeaders(credentialToken.actor),
             signal: controller.signal,
             body: formData,
           });
@@ -881,7 +912,12 @@ export function ChatInputBar({
           voiceOperationRef.current = false;
           if (voiceMountedRef.current) setIsTranscribing(false);
         }
-        if (controller.signal.aborted || !voiceMountedRef.current) return;
+        if (
+          controller.signal.aborted ||
+          !voiceMountedRef.current ||
+          !credentialScope.isCurrent(credentialToken)
+        )
+          return;
         if (!spoken) spoken = spokenRef.current.trim();
 
         const originalDraft = voiceBaseRef.current;

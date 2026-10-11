@@ -140,6 +140,15 @@ plus models.yaml. No lease was removed, rewritten directly or taken from a peer.
 
 ## Full objective: evidence still needed
 
+Final GitHub review at a4d2f3d3 found two remaining diagnostics gaps missed by
+the independent PASS: learn still selected display/unsupported routes and
+explain ignored the saved default surface. Four new compiled-CLI regressions
+reproduced all four failures before source correction. Learn now shares runnable
+eligibility for its baseline and labels its adaptive simulation as a preview;
+explain and learn resolve explicit/saved/default surfaces just like run. No
+review at the previous head approves this correction. Required current checks
+and exact-source independent review remain mandatory before normal merge.
+
 Integration receipt: GitHub now records initial PR569 as merged at04:42:24UTC,
 receiving main233013ca5c73745b456c0f924392d2001fee846e. Its complete package
 trees equal the reviewed initial3376708 source. The correction atbbcb6375
@@ -170,3 +179,21 @@ preserved; the follow-up is reviewed and checked separately before normal merge.
 The active founder goal remains intact. Advance independent authorized work when
 one gate waits; do not substitute unit tests for creator acceptance or close the
 programme based on this lane.
+
+## Diagnostic repair verification and integration
+
+PR570 was normally merged on GitHub at 05:15:21 UTC into
+`a131c1e9dfa2a2e6b8d93e1be4bd32c43794afc1`. Its two complete package trees equal
+the prior reviewed `a4d2f3d3cdbf34a4e8eea9b0805bb97999715edb` source. That merge
+does not contain the later learn/default-surface repair described above.
+
+Both package compilers passed with the repair. The full local selection ran
+90 cases: 89 passed and one failed because the new learn assertion omitted the
+existing numbered output (`→ 1. model`). The actual saved Gemini route was
+correct. After correcting the assertion, the isolated compiled-CLI case passed.
+The full 90-case selection has not been rerun locally after that assertion edit.
+Renewed PP admission returned HOLD with 3352 MB free against 5120 MB required;
+heavy local work stays stopped. The reader integration adds both package builds,
+spec validation and the entire routing selection to the required hosted CI job.
+Exact-source independent review and hosted verification remain pending for this
+new diagnostic repair; earlier PASS verdicts do not approve it.

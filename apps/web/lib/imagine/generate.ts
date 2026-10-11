@@ -1,406 +1,428 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-/**
- * Core image generation logic — shared between the /api/imagine/generate
- * route and the chat tool-calling pipeline.
- *
- * Provider priority:
- *   1. Grok (xAI) — direct API, fast, great quality
- *   2. OpenRouter — routes to best available image model
- *   3. Gemini (Google) — direct API fallback
- *
- * Credit checking is NOT handled here — callers are responsible.
- */
+import { OperationPendingError } from "../billing/operations";
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-export type ImageProvider = 'grok' | 'openrouter' | 'gemini';
-
+export type ImageProvider = "grok" | "openrouter" | "gemini";
 export interface ImageGenerationResult {
-  images: Array<{
-    url: string;
-    revisedPrompt?: string;
-  }>;
+  images: Array<{ url: string; revisedPrompt?: string }>;
   provider: ImageProvider;
   model: string;
 }
-
 export interface ImageGenerationOptions {
   prompt: string;
   aspectRatio?: string;
   count?: number;
-  /** Force a specific provider (bypasses fallback chain) */
   forceProvider?: ImageProvider;
-  /** OpenRouter model override (default: best available) */
   openrouterModel?: string;
 }
-
-// ---------------------------------------------------------------------------
-// OpenRouter image model catalog — best models, updated March 2026
-// ---------------------------------------------------------------------------
+/** Only the admitted route supplies a durable operation and checkpoint. */
+export interface ImageRuntime {
+  reference: string;
+  checkpoint: (job: ImageJob) => Promise<void>;
+  transport?: typeof fetch;
+  now?: () => number;
+  sleep?: (ms: number) => Promise<void>;
+  budgetMs?: number;
+}
+export type ImageJob = {
+  provider: "grok";
+  requestId: string;
+  model: "grok-imagine-image-2.0";
+  count: number;
+};
+const GROK_MODEL = "grok-imagine-image-2.0";
+const GEMINI_MODEL = "gemini-3.1-flash-image";
+const RATIOS = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3", "21:9"];
+const pause = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
+const record = (value: unknown): Record<string, unknown> =>
+  value !== null && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+const items = (value: unknown): unknown[] =>
+  Array.isArray(value) ? value : [];
 
 export const OPENROUTER_IMAGE_MODELS = [
   {
-    id: 'google/gemini-3-pro-image-preview',
-    name: 'Gemini 3 Pro Image',
-    label: 'Nano Banana Pro',
-    tier: 'premium' as const,
-    provider: 'Google',
+    id: "google/gemini-3-pro-image-preview",
+    name: "Gemini 3 Pro Image",
+    label: "Nano Banana Pro",
+    tier: "premium" as const,
+    provider: "Google",
   },
   {
-    id: 'google/gemini-3.1-flash-image-preview',
-    name: 'Gemini 3.1 Flash Image',
-    label: 'Nano Banana 2',
-    tier: 'fast' as const,
-    provider: 'Google',
+    id: "google/gemini-3.1-flash-image-preview",
+    name: "Gemini 3.1 Flash Image",
+    label: "Nano Banana 2",
+    tier: "fast" as const,
+    provider: "Google",
   },
   {
-    id: 'black-forest-labs/flux.2-max',
-    name: 'FLUX.2 Max',
-    label: 'FLUX.2 Max',
-    tier: 'premium' as const,
-    provider: 'Black Forest Labs',
+    id: "black-forest-labs/flux.2-max",
+    name: "FLUX.2 Max",
+    label: "FLUX.2 Max",
+    tier: "premium" as const,
+    provider: "Black Forest Labs",
   },
   {
-    id: 'black-forest-labs/flux.2-pro',
-    name: 'FLUX.2 Pro',
-    label: 'FLUX.2 Pro',
-    tier: 'quality' as const,
-    provider: 'Black Forest Labs',
+    id: "black-forest-labs/flux.2-pro",
+    name: "FLUX.2 Pro",
+    label: "FLUX.2 Pro",
+    tier: "quality" as const,
+    provider: "Black Forest Labs",
   },
   {
-    id: 'black-forest-labs/flux.2-flex',
-    name: 'FLUX.2 Flex',
-    label: 'FLUX.2 Flex',
-    tier: 'fast' as const,
-    provider: 'Black Forest Labs',
+    id: "black-forest-labs/flux.2-flex",
+    name: "FLUX.2 Flex",
+    label: "FLUX.2 Flex",
+    tier: "fast" as const,
+    provider: "Black Forest Labs",
   },
   {
-    id: 'black-forest-labs/flux.2-klein-4b',
-    name: 'FLUX.2 Klein',
-    label: 'FLUX.2 Klein',
-    tier: 'fast' as const,
-    provider: 'Black Forest Labs',
+    id: "black-forest-labs/flux.2-klein-4b",
+    name: "FLUX.2 Klein",
+    label: "FLUX.2 Klein",
+    tier: "fast" as const,
+    provider: "Black Forest Labs",
   },
   {
-    id: 'openai/gpt-5-image',
-    name: 'GPT-5 Image',
-    label: 'GPT-5 Image',
-    tier: 'premium' as const,
-    provider: 'OpenAI',
+    id: "openai/gpt-5-image",
+    name: "GPT-5 Image",
+    label: "GPT-5 Image",
+    tier: "premium" as const,
+    provider: "OpenAI",
   },
   {
-    id: 'openai/gpt-5-image-mini',
-    name: 'GPT-5 Image Mini',
-    label: 'GPT-5 Image Mini',
-    tier: 'fast' as const,
-    provider: 'OpenAI',
+    id: "openai/gpt-5-image-mini",
+    name: "GPT-5 Image Mini",
+    label: "GPT-5 Image Mini",
+    tier: "fast" as const,
+    provider: "OpenAI",
   },
   {
-    id: 'google/gemini-2.5-flash-image-preview',
-    name: 'Gemini 2.5 Flash Image',
-    label: 'Nano Banana',
-    tier: 'fast' as const,
-    provider: 'Google',
+    id: "google/gemini-2.5-flash-image-preview",
+    name: "Gemini 2.5 Flash Image",
+    label: "Nano Banana",
+    tier: "fast" as const,
+    provider: "Google",
   },
 ] as const;
 
 /** Default OpenRouter model — best balance of quality, speed, cost */
-const DEFAULT_OPENROUTER_MODEL = 'google/gemini-3.1-flash-image-preview';
+const DEFAULT_OPENROUTER_MODEL = "google/gemini-3.1-flash-image-preview";
 
-// ---------------------------------------------------------------------------
-// Aspect ratio → pixel size mapping (for Grok direct API)
-// ---------------------------------------------------------------------------
-
-const ASPECT_RATIOS: Record<string, string> = {
-  '1:1': '1024x1024',
-  '16:9': '1792x1024',
-  '9:16': '1024x1792',
-  '4:3': '1024x768',
-  '3:4': '768x1024',
-  '3:2': '1536x1024',
-  '2:3': '1024x1536',
-};
-
-// ---------------------------------------------------------------------------
-// Provider 1: Grok (xAI) — direct API
-// ---------------------------------------------------------------------------
-
-interface GrokImageResponse {
-  data: Array<{ url: string; revised_prompt?: string }>;
-}
-
-async function generateWithGrok(
-  prompt: string,
-  count: number,
-  aspectRatio: string,
-): Promise<ImageGenerationResult> {
-  const apiKey = process.env.XAI_API_KEY;
-  if (!apiKey) throw new Error('NO_XAI_KEY');
-
-  const size = ASPECT_RATIOS[aspectRatio] || '1024x1024';
-  const n = Math.min(count, 10);
-
-  const res = await fetch('https://api.x.ai/v1/images/generations', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: 'grok-2-image',
-      prompt,
-      n,
-      size,
-      response_format: 'url',
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    const msg =
-      (err as { error?: { message?: string } })?.error?.message ||
-      `Grok API error ${res.status}`;
-    throw new Error(msg);
-  }
-
-  const data = (await res.json()) as GrokImageResponse;
-
+/** A response and its body share one deadline; redirects never receive credentials. */
+function channel(runtime: ImageRuntime) {
+  const now = runtime.now ?? Date.now;
+  const deadline =
+    now() + Math.min(Math.max(runtime.budgetMs ?? 45_000, 1), 45_000);
+  const pending = () => new OperationPendingError(runtime.reference);
   return {
-    images: data.data.map((img) => ({
-      url: img.url,
-      revisedPrompt: img.revised_prompt || undefined,
-    })),
-    provider: 'grok',
-    model: 'grok-2-image',
-  };
-}
-
-// ---------------------------------------------------------------------------
-// Provider 2: OpenRouter — chat/completions with modalities: ["image"]
-// Routes to Gemini 3 Pro, Flux, GPT-5 Image, etc.
-// ---------------------------------------------------------------------------
-
-interface OpenRouterChoice {
-  message: {
-    content?: string | null;
-    images?: Array<{ image_url: { url: string } }>;
-  };
-}
-
-interface OpenRouterImageResponse {
-  choices: OpenRouterChoice[];
-  model?: string;
-}
-
-async function generateWithOpenRouter(
-  prompt: string,
-  count: number,
-  aspectRatio: string,
-  modelId?: string,
-): Promise<ImageGenerationResult> {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey) throw new Error('NO_OPENROUTER_KEY');
-
-  const model = modelId || DEFAULT_OPENROUTER_MODEL;
-  const isFlux = model.includes('flux');
-  const n = Math.min(count, isFlux ? 1 : 4);
-
-  // OpenRouter uses chat/completions with modalities for image gen
-  const images: Array<{ url: string; revisedPrompt?: string }> = [];
-
-  const generateOne = async (variation: string) => {
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-        'HTTP-Referer': 'https://arcanea.ai',
-        'X-Title': 'Arcanea',
-      },
-      body: JSON.stringify({
-        model,
-        messages: [{ role: 'user', content: variation }],
-        modalities: isFlux ? ['image'] : ['image', 'text'],
-        image_config: {
-          aspect_ratio: aspectRatio,
-        },
-      }),
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      const msg =
-        (err as { error?: { message?: string } })?.error?.message ||
-        `OpenRouter API error ${res.status}`;
-      throw new Error(msg);
-    }
-
-    const data = (await res.json()) as OpenRouterImageResponse;
-    const choice = data.choices?.[0];
-    if (!choice) return;
-
-    // Images can come as inline data URLs in content or in images array
-    if (choice.message.images?.length) {
-      for (const img of choice.message.images) {
-        images.push({
-          url: img.image_url.url,
-          revisedPrompt: variation,
-        });
-      }
-    } else if (choice.message.content) {
-      // Some models return base64 data URLs inline in content
-      const dataUrlMatch = choice.message.content.match(
-        /data:image\/[^;]+;base64,[A-Za-z0-9+/=]+/g,
+    now,
+    deadline,
+    pending,
+    sleep: runtime.sleep ?? pause,
+    async request(
+      url: string,
+      key: string,
+      body?: Record<string, unknown>,
+      google = false,
+    ) {
+      const remaining = deadline - now();
+      if (remaining <= 0) throw pending();
+      const controller = new AbortController();
+      const timer = setTimeout(
+        () => controller.abort(),
+        Math.min(remaining, 15_000),
       );
-      if (dataUrlMatch) {
-        for (const dataUrl of dataUrlMatch) {
-          images.push({ url: dataUrl, revisedPrompt: variation });
+      try {
+        const response = await (runtime.transport ?? fetch)(url, {
+          method: body ? "POST" : "GET",
+          headers: {
+            "Content-Type": "application/json",
+            ...(google
+              ? { "x-goog-api-key": key }
+              : { Authorization: `Bearer ${key}` }),
+          },
+          body: body ? JSON.stringify(body) : undefined,
+          redirect: "error",
+          signal: controller.signal,
+        });
+        // A rejection before job acceptance is definite. A gateway/timeout is not.
+        if (!response.ok) {
+          if (body && [400, 401, 403, 404, 422, 429].includes(response.status))
+            throw new ProviderRejectedError(response.status);
+          throw pending();
         }
+        const reader = response.body?.getReader();
+        if (!reader) throw pending();
+        const chunks: Uint8Array[] = [];
+        let bytes = 0;
+        for (;;) {
+          const part = await reader.read();
+          if (part.done) break;
+          bytes += part.value.byteLength;
+          if (bytes > 32 * 1024 * 1024) {
+            await reader.cancel();
+            throw pending();
+          }
+          chunks.push(part.value);
+        }
+        return record(JSON.parse(Buffer.concat(chunks).toString("utf8")));
+      } catch (error) {
+        if (error instanceof ProviderRejectedError) throw error;
+        throw pending();
+      } finally {
+        clearTimeout(timer);
       }
-    }
-  };
-
-  // Generate multiple variations in parallel
-  const promises = Array.from({ length: n }, (_, i) => {
-    const variation =
-      n > 1
-        ? `${prompt} (variation ${i + 1}, unique composition and style)`
-        : prompt;
-    return generateOne(variation).catch(() => {});
-  });
-
-  await Promise.all(promises);
-
-  if (images.length === 0) {
-    throw new Error('OpenRouter returned no images. Try a different prompt or model.');
-  }
-
-  return {
-    images,
-    provider: 'openrouter',
-    model,
-  };
-}
-
-// ---------------------------------------------------------------------------
-// Provider 3: Gemini (Google) — direct API fallback
-// ---------------------------------------------------------------------------
-
-async function generateWithGemini(
-  prompt: string,
-  count: number,
-): Promise<ImageGenerationResult> {
-  const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error('NO_GEMINI_KEY');
-
-  const { GoogleGenerativeAI } = await import('@google/generative-ai');
-  const genAI = new GoogleGenerativeAI(apiKey);
-
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash-exp',
-    generationConfig: {
-      // @ts-expect-error -- Gemini image gen uses responseModalities
-      responseModalities: ['TEXT', 'IMAGE'],
     },
-  });
+  };
+}
+class ProviderRejectedError extends Error {
+  constructor(status: number) {
+    super(`Image provider rejected the request (${status})`);
+  }
+}
+type Channel = ReturnType<typeof channel>;
 
-  const promises = Array.from({ length: Math.min(count, 4) }, async (_, i) => {
-    const variation =
-      count > 1
-        ? `${prompt} (variation ${i + 1}, unique composition and style)`
-        : prompt;
-
-    try {
-      const result = await model.generateContent(variation);
-      const parts = result.response.candidates?.[0]?.content?.parts || [];
-      const images: Array<{ url: string; revisedPrompt?: string }> = [];
-
-      for (const part of parts) {
-        if (part.inlineData) {
-          images.push({
-            url: `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`,
-            revisedPrompt: variation,
-          });
-        }
-      }
-      return images;
-    } catch {
-      return [];
-    }
-  });
-
-  const results = (await Promise.all(promises)).flat();
-
+function imageUrl(value: unknown, pending: () => Error): string {
+  if (typeof value !== "string") throw pending();
+  const inline = value.match(
+    /^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/]*={0,2})$/,
+  );
+  if (inline && inline[2].length > 0 && inline[2].length % 4 === 0)
+    return value;
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" && !url.username && !url.password)
+      return value;
+  } catch {
+    /* A malformed success is an unknown paid outcome. */
+  }
+  throw pending();
+}
+function result(
+  images: unknown[],
+  provider: ImageProvider,
+  model: string,
+  wire: Channel,
+): ImageGenerationResult {
+  if (!images.length) throw wire.pending();
   return {
-    images: results,
-    provider: 'gemini',
-    model: 'gemini-2.0-flash-exp',
+    provider,
+    model,
+    images: images.map((entry) => {
+      const value = record(entry);
+      return {
+        url: imageUrl(value.url, wire.pending),
+        ...(typeof value.revised_prompt === "string"
+          ? { revisedPrompt: value.revised_prompt }
+          : {}),
+      };
+    }),
   };
 }
 
-// ---------------------------------------------------------------------------
-// Public API — Grok → OpenRouter → Gemini fallback chain
-// ---------------------------------------------------------------------------
+/** Resume a saved job with GET only. Never trust a stored URL or choose another provider. */
+export async function resumeImages(
+  value: unknown,
+  runtime: ImageRuntime,
+): Promise<ImageGenerationResult> {
+  const wire = channel(runtime);
+  const job = record(value);
+  if (
+    job.provider !== "grok" ||
+    job.model !== GROK_MODEL ||
+    typeof job.requestId !== "string" ||
+    !/^[A-Za-z0-9_-]{1,200}$/.test(job.requestId) ||
+    !Number.isInteger(job.count) ||
+    Number(job.count) < 1 ||
+    Number(job.count) > 4
+  )
+    throw wire.pending();
+  const key = process.env.XAI_API_KEY;
+  if (!key) throw wire.pending();
+  while (wire.now() < wire.deadline) {
+    const data = await wire.request(
+      `https://api.x.ai/v1/images/${job.requestId}`,
+      key,
+    );
+    if (data.status === "failed")
+      throw new Error("Image generation failed at the provider");
+    if (data.status === "done") {
+      const images = items(data.data);
+      if (images.length > Number(job.count)) throw wire.pending();
+      return result(images, "grok", GROK_MODEL, wire);
+    }
+    if (data.status !== "pending") throw wire.pending();
+    await wire.sleep(Math.min(2000, Math.max(0, wire.deadline - wire.now())));
+  }
+  throw wire.pending();
+}
 
-/**
- * Generate images using the best available provider.
- *
- * Fallback chain:
- *   1. Grok (xAI) — fastest, direct API
- *   2. OpenRouter — access to Gemini 3 Pro, Flux, GPT-5 Image
- *   3. Gemini (Google direct) — last resort
- *
- * @throws {Error} If no image provider is configured or generation fails.
- */
+/** Select once before paid work. Loss of an acknowledgement preserves admission. */
 export async function generateImages(
   options: ImageGenerationOptions,
+  runtime?: ImageRuntime,
 ): Promise<ImageGenerationResult> {
-  const { prompt, aspectRatio = '1:1', count = 1, forceProvider, openrouterModel } = options;
-
-  // If a specific provider is forced, use only that one
-  if (forceProvider === 'grok') return generateWithGrok(prompt, count, aspectRatio);
-  if (forceProvider === 'openrouter') return generateWithOpenRouter(prompt, count, aspectRatio, openrouterModel);
-  if (forceProvider === 'gemini') return generateWithGemini(prompt, count);
-
-  // --- Fallback chain: OpenRouter → Grok → Gemini (any error = try next) ---
-  const errors: string[] = [];
-
-  if (process.env.OPENROUTER_API_KEY) {
+  if (!runtime?.reference || !runtime.checkpoint)
+    throw new Error("Durable image admission is required");
+  const {
+    prompt,
+    aspectRatio = "1:1",
+    count = 1,
+    forceProvider,
+    openrouterModel,
+  } = options;
+  if (
+    !prompt.trim() ||
+    !Number.isInteger(count) ||
+    count < 1 ||
+    count > 4 ||
+    !RATIOS.includes(aspectRatio) ||
+    (forceProvider !== undefined &&
+      !["grok", "openrouter", "gemini"].includes(forceProvider)) ||
+    (openrouterModel !== undefined &&
+      !OPENROUTER_IMAGE_MODELS.some((entry) => entry.id === openrouterModel))
+  )
+    throw new Error("Invalid image generation settings");
+  const provider =
+    forceProvider ??
+    (process.env.OPENROUTER_API_KEY
+      ? "openrouter"
+      : process.env.XAI_API_KEY
+        ? "grok"
+        : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY
+          ? "gemini"
+          : null);
+  const key =
+    provider === "openrouter"
+      ? process.env.OPENROUTER_API_KEY
+      : provider === "grok"
+        ? process.env.XAI_API_KEY
+        : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+  if (!provider || !key)
+    throw new Error(
+      "No image generation API configured for the selected provider",
+    );
+  const wire = channel(runtime);
+  if (provider === "grok") {
+    const accepted = await wire.request(
+      "https://api.x.ai/v1/images/generations",
+      key,
+      {
+        model: GROK_MODEL,
+        prompt,
+        n: count,
+        aspect_ratio: aspectRatio,
+        response_format: "url",
+        deferred: true,
+      },
+    );
+    if (
+      typeof accepted.request_id !== "string" ||
+      !/^[A-Za-z0-9_-]{1,200}$/.test(accepted.request_id)
+    )
+      throw wire.pending();
+    const job: ImageJob = {
+      provider: "grok",
+      requestId: accepted.request_id,
+      model: GROK_MODEL,
+      count,
+    };
     try {
-      return await generateWithOpenRouter(prompt, count, aspectRatio, openrouterModel);
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : 'unknown';
-      console.warn('[imagine] OpenRouter failed:', msg);
-      errors.push(`OpenRouter: ${msg}`);
+      await runtime.checkpoint(job);
+    } catch {
+      throw wire.pending();
     }
+    // Submission consumed part of the route's budget; recovery receives only the remainder.
+    const remaining = wire.deadline - wire.now();
+    if (remaining <= 0) throw wire.pending();
+    return resumeImages(job, { ...runtime, budgetMs: remaining });
   }
-
-  if (process.env.XAI_API_KEY) {
-    try {
-      return await generateWithGrok(prompt, count, aspectRatio);
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : 'unknown';
-      console.warn('[imagine] Grok failed:', msg);
-      errors.push(`Grok: ${msg}`);
+  const model =
+    provider === "gemini"
+      ? GEMINI_MODEL
+      : (openrouterModel ?? DEFAULT_OPENROUTER_MODEL);
+  const submissions = Array.from({ length: count }, async (_, index) => {
+    const variation =
+      count > 1
+        ? `${prompt} (variation ${index + 1}, unique composition and style)`
+        : prompt;
+    if (provider === "openrouter") {
+      const data = await wire.request(
+        "https://openrouter.ai/api/v1/chat/completions",
+        key,
+        {
+          model,
+          messages: [{ role: "user", content: variation }],
+          modalities: model.includes("flux") ? ["image"] : ["image", "text"],
+          image_config: { aspect_ratio: aspectRatio },
+          provider: { allow_fallbacks: false },
+        },
+      );
+      if (data.error) throw wire.pending();
+      const choice = record(items(data.choices)[0]);
+      const message = record(choice.message);
+      if (message.refusal || choice.finish_reason === "content_filter")
+        throw new Error("The image provider declined this prompt");
+      let urls = items(message.images).map(
+        (image) => record(record(image).image_url).url,
+      );
+      if (!urls.length && typeof message.content === "string")
+        urls =
+          message.content.match(
+            /data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}/g,
+          ) ?? [];
+      if (urls.length !== 1) throw wire.pending();
+      return result(
+        urls.map((url) => ({ url })),
+        provider,
+        model,
+        wire,
+      ).images;
     }
-  }
-
-  if (process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY) {
-    try {
-      const result = await generateWithGemini(prompt, count);
-      if (result.images.length > 0) return result;
-      errors.push('Gemini: no images returned');
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : 'unknown';
-      console.warn('[imagine] Gemini failed:', msg);
-      errors.push(`Gemini: ${msg}`);
-    }
-  }
-
-  if (errors.length === 0) {
-    throw new Error('No image generation API configured. Set OPENROUTER_API_KEY, XAI_API_KEY, or GEMINI_API_KEY.');
-  }
-  throw new Error(`All image providers failed. ${errors.join(' | ')}`);
+    const data = await wire.request(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
+      key,
+      {
+        contents: [{ parts: [{ text: variation }] }],
+        generationConfig: {
+          responseModalities: ["TEXT", "IMAGE"],
+          imageConfig: { aspectRatio },
+        },
+      },
+      true,
+    );
+    const feedback = record(data.promptFeedback);
+    const candidate = record(items(data.candidates)[0]);
+    if (
+      feedback.blockReason ||
+      ["SAFETY", "IMAGE_SAFETY", "PROHIBITED_CONTENT"].includes(
+        String(candidate.finishReason),
+      )
+    )
+      throw new Error("The image provider declined this prompt");
+    const images = items(record(candidate.content).parts).flatMap((part) => {
+      const inline = record(record(part).inlineData);
+      return inline.data
+        ? [{ url: `data:${inline.mimeType};base64,${inline.data}` }]
+        : [];
+    });
+    if (images.length !== 1) throw wire.pending();
+    return result(images, provider, model, wire).images;
+  });
+  const settled = await Promise.allSettled(submissions);
+  if (
+    settled.some(
+      (outcome) =>
+        outcome.status === "rejected" &&
+        outcome.reason instanceof OperationPendingError,
+    )
+  )
+    throw wire.pending();
+  const images = settled.flatMap((outcome) =>
+    outcome.status === "fulfilled" ? outcome.value : [],
+  );
+  if (!images.length)
+    throw new Error("Image generation was rejected by the provider");
+  return { images, provider, model };
 }

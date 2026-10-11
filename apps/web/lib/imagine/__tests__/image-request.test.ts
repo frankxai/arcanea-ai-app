@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { requestImages, requestAnimation } from "../request";
+import {
+  requestImages,
+  requestAnimation,
+  generatedImageSource,
+} from "../request";
 
 test("lost transport response retains the same request key; confirmed success starts a new operation", async () => {
   const slots = new Map<string, string>();
@@ -98,6 +102,59 @@ test("pending video recovery retains its key and is separate from image generati
     assert.ok([...slots.keys()].every((key) => !key.includes("private.test")));
   } finally {
     globalThis.fetch = oldFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+
+test("canonical receipt decodes external and inline image sources without fabricated fallback output", () => {
+  assert.equal(
+    generatedImageSource({ url: "https://images.test/generated.png" }),
+    "https://images.test/generated.png",
+  );
+  assert.equal(
+    generatedImageSource({ data: "aGVsbG8=", mimeType: "image/png" }),
+    "data:image/png;base64,aGVsbG8=",
+  );
+  for (const value of [
+    { url: "javascript:alert(1)" },
+    { url: "https://user:password@images.test/image.png" },
+    { data: "aGVsbG8=", mimeType: "image/svg+xml" },
+    {},
+    null,
+  ])
+    assert.equal(generatedImageSource(value), null);
+});
+
+test("an unrenderable success receipt retains the same operation key on retry", async () => {
+  const slots = new Map<string, string>();
+  const keys: string[] = [];
+  const originalFetch = globalThis.fetch;
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (slot: string) => slots.get(slot) ?? null,
+      setItem: (slot: string, key: string) => slots.set(slot, key),
+      removeItem: (slot: string) => slots.delete(slot),
+    },
+  });
+  globalThis.fetch = async (_url, options) => {
+    const { requestKey } = JSON.parse(String(options?.body));
+    keys.push(requestKey);
+    return Response.json({ generationId: `gen_${requestKey}`, images: [{}] });
+  };
+  try {
+    await requestImages({ prompt: "Retained request", count: 1 });
+    await requestImages({ prompt: "Retained request", count: 1 });
+    assert.equal(keys[0], keys[1]);
+    assert.equal(slots.size, 1);
+  } finally {
+    globalThis.fetch = originalFetch;
     if (descriptor)
       Object.defineProperty(globalThis, "sessionStorage", descriptor);
     else Reflect.deleteProperty(globalThis, "sessionStorage");
