@@ -9,11 +9,20 @@
  * follow-up parsing, and conversation lifecycle.
  */
 
-import { useState, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useId,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type FileUIPart, type UIMessage } from "ai";
-import { useModelSelection } from "./use-provider";
+import { useModelSelection, readProviderFromStorage } from "./use-provider";
+import { useAuth } from "@/lib/auth/context";
+import { readProviderPreferences } from "@/lib/ai/provider-preferences";
 import { getFocusModeById } from "@/components/chat/focus-modes";
 import { classifyIntent } from "@/lib/ai/router";
 import { resolveSwarm, type SwarmResult } from "@/lib/ai/guardian-swarm";
@@ -242,6 +251,9 @@ interface UseConversationOptions {
 export function useConversation(
   options?: UseConversationOptions,
 ): ConversationState {
+  const { credentialScope } = useAuth();
+  const credentialToken = credentialScope.get();
+  const conversationIdentity = useId();
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get("prompt");
   const autoSendInitialPrompt = searchParams.get("auto") === "1";
@@ -406,8 +418,15 @@ export function useConversation(
     return new DefaultChatTransport({
       api: "/api/ai/chat",
       headers: { "Content-Type": "application/json" },
+      fetch: (url, init) => {
+        if (!credentialScope.isCurrent(credentialToken))
+          throw new Error(
+            "Your account changed. Retry from the current account.",
+          );
+        return fetch(url, init);
+      },
     });
-  }, []);
+  }, [credentialScope, credentialToken]);
 
   const {
     messages,
@@ -415,9 +434,12 @@ export function useConversation(
     error,
     sendMessage: sendSdkMessage,
     setMessages,
+    stop,
   } = useChat({
+    id: `${conversationIdentity}:${credentialToken.revision}`,
     transport,
     onError: (err) => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
       // The AI SDK wraps HTTP errors. The server returns plain text for 4xx/5xx.
       // err.message often contains the response body for non-200 responses.
       let msg = err.message || "";
@@ -436,25 +458,42 @@ export function useConversation(
     },
   });
 
+  useEffect(() => {
+    setMessages([]);
+    setInput("");
+    setChatError(null);
+    setBranches(new Map());
+    setSwarmResult(null);
+    setBeamPrompt(null);
+    setEditingMessageId(null);
+    setCopiedId(null);
+    return () => {
+      void stop();
+    };
+  }, [credentialToken, setMessages, stop]);
+
   const buildRequestBody = useCallback(() => {
+    if (!credentialScope.isCurrent(credentialToken))
+      throw new Error("Wait for your current account before sending.");
+    const currentProvider = readProviderFromStorage(credentialToken.actor);
     const currentEnabledTools = Array.from(enabledTools).sort();
 
     // Resolve BYOK search key from localStorage (tavily > brave)
     let searchApiKey: string | undefined;
     try {
-      const keysRaw = localStorage.getItem("arcanea-provider-keys");
-      if (keysRaw) {
-        const keys = JSON.parse(keysRaw) as Record<string, string>;
-        searchApiKey = keys.tavily || keys.brave || undefined;
-      }
+      const { keys } = readProviderPreferences(
+        localStorage,
+        credentialToken.actor,
+      );
+      searchApiKey = keys.tavily || keys.brave || undefined;
     } catch {
       // Ignore parse errors
     }
 
     return {
-      provider,
-      clientApiKey,
-      gatewayModel: modelId,
+      provider: currentProvider.provider,
+      clientApiKey: currentProvider.clientApiKey,
+      gatewayModel: currentProvider.modelId || "arcanea-auto",
       focusHint,
       ...(options?.activeProject
         ? {
@@ -480,15 +519,26 @@ export function useConversation(
     activeLuminor,
     enabledTools,
     options?.activeProject,
+    credentialScope,
+    credentialToken,
   ]);
 
   const sendMessage = useCallback(
     (opts: { text: string; files?: FileUIPart[] }) => {
       // Clear any previous error when the user sends a new message
       setChatError(null);
-      sendSdkMessage(opts, { body: buildRequestBody() });
+      try {
+        void sendSdkMessage(opts, { body: buildRequestBody() }).catch(() => {
+          if (credentialScope.isCurrent(credentialToken))
+            setChatError(
+              "Request failed. Retry or check Settings → Providers.",
+            );
+        });
+      } catch {
+        setChatError("Wait for your current account before sending.");
+      }
     },
-    [sendSdkMessage, buildRequestBody],
+    [sendSdkMessage, buildRequestBody, credentialScope, credentialToken],
   );
 
   // ---------------------------------------------------------------------------
@@ -594,6 +644,7 @@ export function useConversation(
   useEffect(() => {
     if (
       initialPrompt &&
+      credentialScope.isCurrent(credentialToken) &&
       !initialPromptSentRef.current &&
       messages.length === 0
     ) {
@@ -604,7 +655,14 @@ export function useConversation(
         setInput((current) => current || initialPrompt);
       }
     }
-  }, [initialPrompt, autoSendInitialPrompt, messages.length, sendMessage]);
+  }, [
+    initialPrompt,
+    autoSendInitialPrompt,
+    messages.length,
+    sendMessage,
+    credentialScope,
+    credentialToken,
+  ]);
 
   // ---------------------------------------------------------------------------
   // Cmd+K command palette

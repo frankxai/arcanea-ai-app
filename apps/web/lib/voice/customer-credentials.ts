@@ -1,10 +1,15 @@
-import { readProviderPreferences } from "@/lib/ai/provider-preferences";
+import {
+  readProviderPreferences,
+  type ProviderActor,
+} from "@/lib/ai/provider-preferences";
 import { validateCustomerKey } from "@/lib/gateway/credential-policy.mjs";
 
 /** Read existing settings at request time; send only the two audio providers. */
 export function voiceCredentialHeaders(
+  actor: ProviderActor,
   storage?: Pick<Storage, "getItem">,
 ): Record<string, string> {
+  if (!actor) return {};
   let store: Pick<Storage, "getItem"> | undefined;
   try {
     store =
@@ -15,9 +20,9 @@ export function voiceCredentialHeaders(
   }
   if (!store) return {};
   try {
-    const { keys } = readProviderPreferences(store);
+    const { keys } = readProviderPreferences(store, actor);
     const headers: Record<string, string> = {};
-    const groq = keys.groq || store.getItem("arcanea-voice-groq-key");
+    const groq = keys.groq;
     if (groq) headers["x-groq-key"] = validateCustomerKey(groq);
     if (keys.openai) headers["x-openai-key"] = validateCustomerKey(keys.openai);
     return headers;
