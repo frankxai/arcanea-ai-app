@@ -118,3 +118,18 @@ The enabled staged secret scanner blocked the first commit on generic-api-key
 in the synthetic key assertion. The fixture uses short, unmistakable dummy
 values now; no exclusion, allow comment or hook bypass was added. The redacted
 finding is retained privately. A clean scanner run is still required.
+
+At public candidate `68becdf21be8794276cc4d484a5e5738d1f66148` (#591), hosted
+frozen install and TypeScript passed. Companion38159959317 built successfully,
+then failed because its old shared provider storage write was correctly ignored
+by the accepted account fence. The fixture now executes the actual checked-in
+providerStorageNames helper and supplies guest-scoped keys/provider/model. Its
+request body, no automatic sends, identity abort and recovery assertions remain.
+CI38159959285 lint failed on the extracted welcome mount effect under the actual
+zero-warning contract. The welcome now uses a stable hydration snapshot with the
+same server/initial-client fallback, following React's documented server snapshot
+contract (https://react.dev/reference/react/useSyncExternalStore). Fresh scoped
+lint reports nine files, zero errors and zero warnings; fresh hosted checks remain
+required. The earlier failed attempts are retained. No timeout or safety assertion
+was relaxed. Local review admission is HOLD after free RAM crossed the floor;
+no new local browser, reviewer, install or worker is started.

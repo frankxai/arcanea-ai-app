@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import type { ActiveLuminor } from "@/hooks/use-conversation";
 import { LUMINORS } from "@/lib/luminors/config";
 import {
@@ -85,6 +85,10 @@ type ChatWelcomeProps = {
   onContinueLastSession: (() => void) | null;
 };
 
+const subscribeToHydration = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
+
 export function ChatWelcome({
   activeLuminor,
   onSetInput,
@@ -95,14 +99,15 @@ export function ChatWelcome({
   lastSessionTitle,
   onContinueLastSession,
 }: ChatWelcomeProps) {
-  const [emptyGreeting, setEmptyGreeting] = useState("What are you creating?");
-  const [emptySubtitle, setEmptySubtitle] = useState(SUBTITLES[0]);
-  const [hasMounted, setHasMounted] = useState(false);
-  useEffect(() => {
-    setHasMounted(true);
-    setEmptyGreeting(getTimeGreeting());
-    setEmptySubtitle(getSubtitle());
-  }, []);
+  const hasMounted = useSyncExternalStore(
+    subscribeToHydration,
+    clientSnapshot,
+    serverSnapshot,
+  );
+  const emptyGreeting = hasMounted
+    ? getTimeGreeting()
+    : "What are you creating?";
+  const emptySubtitle = hasMounted ? getSubtitle() : SUBTITLES[0];
   return (
     <div className="relative flex flex-col items-center justify-center min-h-full px-4">
       {/* Subtle aurora gradient behind empty state */}

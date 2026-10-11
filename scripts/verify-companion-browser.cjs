@@ -3,6 +3,8 @@ const fs = require("node:fs/promises");
 const http = require("node:http");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const vm = require("node:vm");
+const ts = require("typescript");
 const { execFileSync } = require("node:child_process");
 const {
   chromium,
@@ -89,6 +91,27 @@ async function main() {
         digest(await fs.readFile(path.join(repo, file))),
       ]),
     ),
+  );
+  const preferences = {};
+  vm.runInNewContext(
+    ts.transpileModule(
+      await fs.readFile(
+        path.join(repo, "apps/web/lib/ai/provider-preferences.ts"),
+        "utf8",
+      ),
+      {
+        compilerOptions: {
+          module: ts.ModuleKind.CommonJS,
+          target: ts.ScriptTarget.ES2022,
+        },
+      },
+    ).outputText,
+    { exports: preferences },
+  );
+  const guestStorageNames = preferences.providerStorageNames("guest");
+  assert.ok(
+    guestStorageNames,
+    "Use the actual application's account storage contract.",
   );
   const receipt = {
     head,
@@ -336,14 +359,15 @@ async function main() {
         }),
       ).toHaveAttribute("href", "/settings/providers");
       assert.equal(requests, 0);
-      await page.evaluate((key) => {
-        localStorage.setItem(
-          "arcanea-provider-keys",
-          JSON.stringify({ google: key }),
-        );
-        localStorage.setItem("arcanea-active-model", "arcanea-gemini-flash");
-        window.dispatchEvent(new Event("arcanea-model-change"));
-      }, fakeKey);
+      await page.evaluate(
+        ({ key, names }) => {
+          localStorage.setItem(names.keys, JSON.stringify({ google: key }));
+          localStorage.setItem(names.provider, "google");
+          localStorage.setItem(names.model, "arcanea-gemini-flash");
+          window.dispatchEvent(new Event("arcanea-model-change"));
+        },
+        { key: fakeKey, names: guestStorageNames },
+      );
       await expect(panel).toContainText("Gemini Flash");
       await input.dispatchEvent("keydown", {
         key: "Enter",
