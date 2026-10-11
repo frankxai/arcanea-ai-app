@@ -140,6 +140,20 @@ plus models.yaml. No lease was removed, rewritten directly or taken from a peer.
 
 ## Full objective: evidence still needed
 
+Integration receipt: GitHub now records initial PR569 as merged at04:42:24UTC,
+receiving main233013ca5c73745b456c0f924392d2001fee846e. Its complete package
+trees equal the reviewed initial3376708 source. The correction atbbcb6375
+received a second zero-price NVIDIA PASS (61,292 input/695 output tokens; no
+findings). That review is retained against its actual head, not transferred to
+a later integration head.
+
+A proposed branch transition was refused by the existing checkout lease, so
+the writer returned to the admitted branch. No lease was bypassed or deleted.
+Merging current main produced seven conflicts because the initial PR had been
+squashed. After verifying main's scoped tree equals3376708 exactly, those seven
+paths were resolved to the reviewed correction atbbcb6375. All code source is
+preserved; the follow-up is reviewed and checked separately before normal merge.
+
 | Required outcome                                      | Owning record and evidence                                                                                                | Current disposition                                                                                     |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Accepted Arcanea release and coherent universe        | 276/277/280; selected full manuscript, approved canon delta, rights and human release receipt                             | Selection/acceptance not verified by this lane; cannot infer from excerpts                              |
