@@ -6,6 +6,7 @@ import {
   successResponse,
 } from "@/lib/api-utils";
 import { createClient } from "@/lib/supabase/server";
+import { isAuthSessionMissingError } from "@supabase/supabase-js";
 import {
   DocumentSaveError,
   readDocumentOperation,
@@ -21,13 +22,13 @@ type AuthContext = {
 };
 
 async function getDocAuthContext(): Promise<AuthContext> {
-  const supabase = await createClient();
+  const supabase = await projectDocRouteDeps.createClient();
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
 
-  if (error) {
+  if (error && !isAuthSessionMissingError(error)) {
     throw error;
   }
 
@@ -40,6 +41,7 @@ async function getDocAuthContext(): Promise<AuthContext> {
 }
 
 export const projectDocRouteDeps = {
+  createClient,
   getDocAuthContext,
 };
 

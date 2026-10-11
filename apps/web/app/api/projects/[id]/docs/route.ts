@@ -6,6 +6,31 @@ import {
   successResponse,
 } from "@/lib/api-utils";
 import { createClient } from "@/lib/supabase/server";
+import { z } from "zod";
+import { isAuthSessionMissingError } from "@supabase/supabase-js";
+import { DocumentSaveError, readDocumentJson } from "@/lib/docs/save";
+
+const creationSchema = z
+  .object({
+    title: z.string().max(500).default("Untitled"),
+    doc_type: z
+      .enum([
+        "note",
+        "brief",
+        "outline",
+        "lore",
+        "research",
+        "prompt_book",
+        "spec",
+        "journal",
+      ])
+      .default("note"),
+    status: z
+      .enum(["draft", "active", "archived", "published"])
+      .default("draft"),
+    icon: z.string().max(100).nullable().optional(),
+  })
+  .strict();
 
 type AuthContext = {
   supabase: Awaited<ReturnType<typeof createClient>>;
@@ -16,13 +41,13 @@ type AuthContext = {
 };
 
 async function getDocsAuthContext(): Promise<AuthContext> {
-  const supabase = await createClient();
+  const supabase = await projectDocsRouteDeps.createClient();
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
 
-  if (error) {
+  if (error && !isAuthSessionMissingError(error)) {
     throw error;
   }
 
@@ -35,6 +60,7 @@ async function getDocsAuthContext(): Promise<AuthContext> {
 }
 
 export const projectDocsRouteDeps = {
+  createClient,
   getDocsAuthContext,
 };
 
@@ -98,22 +124,24 @@ export async function POST(
       return errorResponse("UNAUTHORIZED", "Authentication required", 401);
     }
 
-    const body = await request.json().catch(() => null);
-    if (!body) {
-      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
-    }
-
-    const {
-      title = "Untitled",
-      doc_type = "note",
-      icon,
-      status = "draft",
-    } = body as {
-      title?: string;
-      doc_type?: string;
-      icon?: string;
-      status?: string;
-    };
+    const body = creationSchema.safeParse(await readDocumentJson(request));
+    if (!body.success)
+      return errorResponse("INVALID_INPUT", "Invalid document metadata", 400);
+    const parent = await db
+      .from("chat_projects")
+      .select("id")
+      .eq("id", projectId)
+      .eq("user_id", user.id)
+      .single();
+    if (parent.error && parent.error.code !== "PGRST116")
+      return errorResponse(
+        "DATABASE_ERROR",
+        "The project could not be verified. Retry creating the document.",
+        503,
+      );
+    if (!parent.data)
+      return errorResponse("NOT_FOUND", "Project not found", 404);
+    const { title, doc_type, icon, status } = body.data;
 
     const { data: doc, error: docError } = await db
       .from("project_docs")
@@ -130,11 +158,17 @@ export async function POST(
       .single();
 
     if (docError) {
-      return errorResponse("INTERNAL_ERROR", docError.message, 500);
+      return errorResponse(
+        "DATABASE_ERROR",
+        "Document creation was not confirmed. Retry after checking your documents.",
+        503,
+      );
     }
 
     return successResponse({ doc }, 201);
   } catch (err) {
+    if (err instanceof DocumentSaveError)
+      return errorResponse("INVALID_INPUT", err.message, err.status);
     return handleApiError(err);
   }
 }

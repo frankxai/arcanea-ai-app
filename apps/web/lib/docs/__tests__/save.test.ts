@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { NextRequest } from "next/server";
 import {
+  GET as getDocument,
   PATCH,
   projectDocRouteDeps,
 } from "@/app/api/projects/[id]/docs/[docId]/route";
@@ -11,12 +12,19 @@ import {
   readDocumentOperation,
   verifiedDocumentReceipt,
   documentSaveLimit,
+  readDocumentJson,
 } from "@/lib/docs/save";
 import {
   createDocumentDraft,
   readDocumentBackup,
   documentBackupKey,
 } from "@/lib/docs/client";
+import {
+  GET as getDocuments,
+  POST,
+  projectDocsRouteDeps,
+} from "@/app/api/projects/[id]/docs/route";
+import { createClient as createSdkClient } from "@supabase/supabase-js";
 
 const project = "10000000-0000-4000-8000-000000000001";
 const doc = "20000000-0000-4000-8000-000000000002";
@@ -30,6 +38,153 @@ const body = {
   content_text: "Retained creator draft",
   word_count: 3,
 };
+
+test("actual Supabase missing-session auth yields guest denial without a database request", async () => {
+  const previousCollection = projectDocsRouteDeps.createClient;
+  const previousDocument = projectDocRouteDeps.createClient;
+  let networkRequests = 0;
+  const sdk = createSdkClient(
+    "http://fixture.invalid",
+    "nonsecret-fixture-anon",
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+      global: {
+        fetch: async () => {
+          networkRequests++;
+          throw Error("Unexpected fixture network request");
+        },
+      },
+    },
+  );
+  try {
+    projectDocsRouteDeps.createClient = async () => sdk as never;
+    projectDocRouteDeps.createClient = async () => sdk as never;
+    const params = { params: Promise.resolve({ id: project, docId: doc }) };
+    const collection = await getDocuments(
+      new NextRequest("http://fixture.invalid"),
+      params,
+    );
+    const document = await getDocument(
+      new NextRequest("http://fixture.invalid"),
+      params,
+    );
+    assert.equal(collection.status, 401);
+    assert.equal(document.status, 401);
+    assert.equal(networkRequests, 0);
+  } finally {
+    projectDocsRouteDeps.createClient = previousCollection;
+    projectDocRouteDeps.createClient = previousDocument;
+  }
+});
+
+test("document creation denies an unavailable or foreign project before inserting", async () => {
+  const original = projectDocsRouteDeps.getDocsAuthContext;
+  let inserts = 0;
+  const filters: Array<[string, unknown]> = [];
+  try {
+    projectDocsRouteDeps.getDocsAuthContext = async () => ({
+      supabase: {} as never,
+      user: { id: owner },
+      db: {
+        from(table: string) {
+          return {
+            select() {
+              return this;
+            },
+            eq(key: string, value: unknown) {
+              filters.push([key, value]);
+              return this;
+            },
+            insert() {
+              inserts++;
+              return this;
+            },
+            async single() {
+              return {
+                data: table === "chat_projects" ? null : { id: doc },
+                error: null,
+              };
+            },
+          };
+        },
+      },
+    });
+    const response = await POST(
+      new NextRequest(
+        "http://fixture.invalid/api/projects/" + project + "/docs",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: "Private note" }),
+        },
+      ),
+      { params: Promise.resolve({ id: project }) },
+    );
+    assert.equal(response.status, 404);
+    assert.equal(inserts, 0);
+    assert.deepEqual(filters, [
+      ["id", project],
+      ["user_id", owner],
+    ]);
+  } finally {
+    projectDocsRouteDeps.getDocsAuthContext = original;
+  }
+});
+
+test("a stalled incoming document stream is cancelled at its deadline", async () => {
+  let cancelled = false;
+  const request = new Request("http://fixture.invalid", {
+    method: "POST",
+    body: new ReadableStream<Uint8Array>({
+      cancel() {
+        cancelled = true;
+      },
+    }),
+    duplex: "half",
+  } as RequestInit);
+  await assert.rejects(
+    readDocumentJson(request, 20),
+    (error) =>
+      error instanceof Error && "status" in error && error.status === 408,
+  );
+  assert.equal(cancelled, true);
+});
+
+test("invalid creation metadata is rejected before reading any project or inserting", async () => {
+  const original = projectDocsRouteDeps.getDocsAuthContext;
+  try {
+    projectDocsRouteDeps.getDocsAuthContext = async () => ({
+      supabase: {} as never,
+      user: { id: owner },
+      db: {
+        from() {
+          throw Error("must not query");
+        },
+      },
+    });
+    for (const patch of [
+      { title: "x".repeat(501) },
+      { title: null },
+      { doc_type: "unsafe" },
+      { user_id: owner },
+    ]) {
+      const response = await POST(
+        new NextRequest("http://fixture.invalid", {
+          method: "POST",
+          body: JSON.stringify(patch),
+        }),
+        { params: Promise.resolve({ id: project }) },
+      );
+      assert.equal(response.status, 400);
+    }
+  } finally {
+    projectDocsRouteDeps.getDocsAuthContext = original;
+  }
+});
 
 test("reload replays a persisted uncertain operation without minting another identity", async () => {
   const pending = parseDocumentOperation(body);

@@ -1,6 +1,6 @@
 # Project document recovery
 
-Status: local implementation in progress; no release or production migration.
+Status: draft PR585; authenticated acceptance candidate in preparation, no release or production document migration.
 
 Scope: retain a creator's project document and its history through conflicting edits,
 failed history writes, lost acknowledgements and account changes.
@@ -126,3 +126,49 @@ owned branch with accepted-base pin e07d568, complete changed source and relevan
 context, unchanged30-file/900KB limits and the existing trusted manual workflow.
 It is not a review PASS. Hosted gates and review must bind the resulting revision;
 authenticated compiled browser/customer acceptance remains open.
+
+## Fresh foundation and authenticated acceptance candidate
+
+The earlier94f62b6f candidate completed manual CI38145112813 and normal PR
+CI38145077073 successfully. Independent Gemini3.1 Pro review passed at that exact
+commit; all27 source hashes match Git. That review does not approve the changes
+below. Production catalog inspection found chat_projects and all three document
+tables absent, so the original document-only repair could not run there.
+
+The unreleased migration now creates the original canonical project/document table
+shapes when absent, without installing unrelated graph tables or replacing shared
+trigger helpers. A private trigger namespace supplies missing timestamp helpers.
+The creation route and restrictive INSERT policy require an actual owned project;
+the save RPC locks that project before the document. Existing content/history remain.
+Fresh and original-first PostgreSQL variants are authored but not yet executed on
+this candidate. No production document DDL or customer document writes occurred.
+
+The foreign/unavailable-parent creation regression returned201 before correction,
+then passed with404. A real installed-Supabase missing-session regression returned
+500 in both routes before correction, then passed with401 and zero network requests.
+Only the SDK's missing-session classification is accepted as a guest; other auth
+errors still fail closed. Incoming streams have a ten-second deadline and metadata
+bounds. All23 native recovery cases, six API contracts and three actual private
+configuration ownership cases pass. Changed-source lint and syntax checks pass.
+
+Editor load-generation invalidation protects explicit reopen from old callbacks.
+Native Back saves before departure and preserves a failed draft in place. Ctrl/Meta+S
+flushes the single writer. Recovery controls use a real form with explicit button
+types so keyboard submission and the pre-cleanup auth race can be tested.
+
+The new hosted runner reuses the accepted disposable GoTrue/PostgREST bootstrap,
+applies this actual document migration and creates two fixture-only accounts. It
+admits only this owned trusted manual branch and accepts no hosted credentials.
+Desktop/mobile/reduced-motion browser cases exercise actual owner save/reopen,
+rich-JSON export, lost acknowledgements, same-operation replay before newer edits,
+two-tab conflict preservation, unreadable original export, storage failure/native
+Back,44px targets/focus, and actual A/B/A auth with a connected stale React form and
+held old-account response. It has not run yet. The manual CI status requires browser
+acceptance and independent review to succeed; skipped jobs cannot earn acceptance.
+
+Local build preflight is HOLD at7755/8192MB free/required and27 task runtimes. No
+new local build, browser, container, server or agent was started. Sparse local
+project helper files are read through immutable Git; hosted checkout remains the
+full-workspace authority. Fresh source review, actual SQL/browser execution, image
+upload ownership, customer usefulness, protected merge and production acceptance
+remain open. Existing private-storage cost approval is unanswered. Full goal ACTIVE.

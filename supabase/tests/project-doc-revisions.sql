@@ -7,21 +7,32 @@
 \quit 2
 \endif
 do $$ begin
-  if to_regnamespace('auth') is not null or to_regclass('public.project_docs') is not null then
+  if to_regnamespace('auth') is not null or to_regclass('public.project_docs') is not null or to_regclass('public.chat_projects') is not null or to_regnamespace('arcanea_project_documents') is not null then
     raise exception 'Document fixture requires empty disposable PostgreSQL';
   end if;
 end $$;
 begin;
 create role anon;
 create role authenticated;
+create role service_role nologin bypassrls;
 create schema auth;
 create table auth.users(id uuid primary key);
 create function auth.uid() returns uuid language sql stable as $$
  select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid
 $$;
 grant usage on schema auth to anon,authenticated;
+\if :{?original_first}
+\else
+\set original_first 1
+\endif
+\if :original_first
 \ir ../migrations/20260402000001_project_docs.sql
+\else
+\ir ../migrations/20261011131128_project_doc_revisions.sql
+\endif
+\if :original_first
 grant select,insert,update,delete on public.project_docs,public.project_doc_content,public.project_doc_versions to anon,authenticated;
+\endif
 insert into auth.users values
  ('40000000-0000-4000-8000-000000000004'),
  ('50000000-0000-4000-8000-000000000005');
@@ -30,11 +41,18 @@ insert into public.project_docs(id,workspace_id,project_id,user_id,title) values
  ('20000000-0000-4000-8000-000000000003','10000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001','40000000-0000-4000-8000-000000000004','Race'),
  ('20000000-0000-4000-8000-000000000005','10000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001','50000000-0000-4000-8000-000000000005','Foreign');
 insert into public.project_doc_content(doc_id,content_text) values
- ('20000000-0000-4000-8000-000000000002','Retained legacy content');
+ ('20000000-0000-4000-8000-000000000002','Retained legacy content') on conflict(doc_id) do update set content_text=excluded.content_text;
 insert into public.project_doc_versions(doc_id,version_number,content_text) values
  ('20000000-0000-4000-8000-000000000002',5,'First old revision'),
  ('20000000-0000-4000-8000-000000000002',5,'Second old revision');
+\if :original_first
 \ir ../migrations/20261011131128_project_doc_revisions.sql
+\else
+update public.project_docs set save_revision=5 where id='20000000-0000-4000-8000-000000000002';
+\endif
+insert into public.chat_projects(id,user_id,title) values
+ ('10000000-0000-4000-8000-000000000001','40000000-0000-4000-8000-000000000004','Owner project'),
+ ('10000000-0000-4000-8000-000000000002','50000000-0000-4000-8000-000000000005','Foreign project');
 create extension dblink;
 create function public.document_fixture_race(p_operation uuid) returns text language plpgsql as $$
 begin
@@ -81,6 +99,11 @@ do $$ declare r jsonb; before_count bigint; begin
   begin
     insert into public.project_doc_versions(doc_id,version_number,content_text) values('20000000-0000-4000-8000-000000000002',7,'Forged history');
     raise exception 'Direct history insert remained enabled';
+  exception when insufficient_privilege then null; end;
+  begin
+    insert into public.project_docs(workspace_id,project_id,user_id,title)
+      values('10000000-0000-4000-8000-000000000002','10000000-0000-4000-8000-000000000002',auth.uid(),'Foreign project insertion');
+    raise exception 'Foreign project accepted a document';
   exception when insufficient_privilege then null; end;
 end $$;
 -- New document creation still works, with content initialized atomically.
@@ -142,10 +165,14 @@ select dblink_disconnect('doc_two');
 -- Remove only objects created in this initially empty disposable service.
 begin;
 drop function public.document_fixture_race(uuid),public.save_project_document(uuid,uuid,bigint,uuid,jsonb);
-drop table public.project_doc_versions,public.project_doc_content,public.project_docs;
-drop function public.initialize_project_doc_content(),public.set_updated_at();
+drop table public.project_doc_versions,public.project_doc_content,public.project_docs,public.chat_projects;
+drop function public.initialize_project_doc_content();
+\if :original_first
+drop function public.set_updated_at();
+\endif
+drop schema arcanea_project_documents cascade;
 drop schema auth cascade;
-drop role anon,authenticated;
+drop role anon,authenticated,service_role;
 drop extension dblink;
 commit;
 \echo 'PASS: owner/parent isolation, atomic history rollback, operation replay, retained legacy history and actual two-connection CAS race'

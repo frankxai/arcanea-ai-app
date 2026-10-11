@@ -139,14 +139,27 @@ export function parseDocumentOperation(body: unknown): DocumentOperation {
     patch,
   };
 }
-export async function readDocumentOperation(request: Request) {
+export async function readDocumentJson(
+  request: Request,
+  timeoutMs = 10_000,
+): Promise<unknown> {
   const reader = request.body?.getReader();
   if (!reader) throw new DocumentSaveError("Missing document save.");
   const chunks: Uint8Array[] = [];
   let size = 0;
+  let expired = false;
+  const deadline = setTimeout(() => {
+    expired = true;
+    void reader.cancel().catch(() => {});
+  }, timeoutMs);
   try {
     for (;;) {
       const next = await reader.read();
+      if (expired)
+        throw new DocumentSaveError(
+          "Document request timed out. Retry or download your draft.",
+          408,
+        );
       if (next.done) break;
       size += next.value.byteLength;
       if (size > documentSaveLimit) {
@@ -164,15 +177,19 @@ export async function readDocumentOperation(request: Request) {
       bytes.set(chunk, offset);
       offset += chunk.byteLength;
     }
-    return parseDocumentOperation(
-      JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes)),
-    );
+    return JSON.parse(
+      new TextDecoder("utf-8", { fatal: true }).decode(bytes),
+    ) as unknown;
   } catch (error) {
     if (error instanceof DocumentSaveError) throw error;
     throw new DocumentSaveError("Invalid document save.");
   } finally {
+    clearTimeout(deadline);
     reader.releaseLock();
   }
+}
+export async function readDocumentOperation(request: Request) {
+  return parseDocumentOperation(await readDocumentJson(request));
 }
 export function verifiedDocumentReceipt(
   value: unknown,

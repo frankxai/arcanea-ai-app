@@ -8,7 +8,10 @@ const ts = require("typescript");
 const { execFileSync } = require("node:child_process");
 
 const repo = path.resolve(__dirname, "../..");
-const file = "scripts/run-provider-account-fixture.mjs";
+const file =
+  process.env.PROJECT_DOCUMENT_CONFIG_FIXTURE === "true"
+    ? "scripts/run-project-document-service-fixture.mjs"
+    : "scripts/run-provider-account-fixture.mjs";
 const ref = process.env.PROVIDER_FIXTURE_SOURCE_REF;
 if (ref && !/^[0-9a-f]{40}$/.test(ref))
   throw Error("Use an immutable fixture source.");

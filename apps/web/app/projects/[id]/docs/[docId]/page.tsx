@@ -41,6 +41,8 @@ type Loaded = {
   initial: DocumentPatch;
   recovered: boolean;
   unreadableBackup: string | null;
+  current: () => boolean;
+  invalidate: () => void;
 };
 
 export default function DocEditorPage() {
@@ -213,6 +215,11 @@ function DocumentWorkspace() {
           initial: recovery?.value ?? initial,
           recovered: !!recovery,
           unreadableBackup,
+          current: () => mounted && current(),
+          invalidate: () => {
+            mounted = false;
+            abort.abort();
+          },
         });
         setMessage(
           recovery
@@ -276,14 +283,14 @@ function DocumentWorkspace() {
     <MountedEditor
       key={epoch}
       loaded={loaded}
-      current={current}
+      current={loaded.current}
       message={message}
       setMessage={setMessage}
       saveError={saveError}
       setSaveError={setSaveError}
       deleting={deleting}
       reopen={() => {
-        if (!current()) return;
+        if (!loaded.current()) return;
         if (
           (loaded.draft.snapshot().dirty || loaded.unreadableBackup !== null) &&
           !window.confirm(
@@ -299,6 +306,7 @@ function DocumentWorkspace() {
           );
           return;
         }
+        loaded.invalidate();
         setLoading(true);
         setLoaded(null);
         setEpoch((x) => x + 1);
@@ -419,6 +427,48 @@ function MountedEditor({
     await flush();
   }, [flush]);
   useEffect(() => {
+    const documentUrl = window.location.href;
+    const originalHistory = { ...window.history.state };
+    let guarded =
+      window.history.state?.arcaneaDocumentDraftGuard === documentUrl;
+    const guardBack = () => {
+      if (!guarded && current() && draft.snapshot().dirty) {
+        window.history.pushState(
+          { ...originalHistory, arcaneaDocumentDraftGuard: documentUrl },
+          "",
+          documentUrl,
+        );
+        guarded = true;
+      }
+    };
+    const unsubscribe = draft.subscribe(guardBack);
+    guardBack();
+    const back = (event: PopStateEvent) => {
+      if (!guarded) return;
+      event.stopImmediatePropagation();
+      if (!draft.snapshot().dirty) {
+        guarded = false;
+        window.history.back();
+        return;
+      }
+      window.history.pushState(
+        { ...originalHistory, arcaneaDocumentDraftGuard: documentUrl },
+        "",
+        documentUrl,
+      );
+      void (async () => {
+        await flush();
+        if (!current() || draft.snapshot().dirty) return;
+        guarded = false;
+        window.history.go(-2);
+      })();
+    };
+    const shortcut = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        void flush();
+      }
+    };
     const unload = (event: BeforeUnloadEvent) => {
       if (draft.snapshot().dirty) {
         event.preventDefault();
@@ -443,12 +493,17 @@ function MountedEditor({
       }
     };
     window.addEventListener("beforeunload", unload);
+    window.addEventListener("popstate", back, true);
+    window.addEventListener("keydown", shortcut);
     document.addEventListener("click", navigation, true);
     return () => {
       window.removeEventListener("beforeunload", unload);
+      window.removeEventListener("popstate", back, true);
+      window.removeEventListener("keydown", shortcut);
+      unsubscribe();
       document.removeEventListener("click", navigation, true);
     };
-  }, [draft]);
+  }, [draft, current, flush]);
   function download() {
     if (!current()) return;
     const latest = draft.snapshot().value ?? loaded.initial;
@@ -556,30 +611,41 @@ function MountedEditor({
               {message ??
                 "Browser backup is unavailable. Download your draft before leaving."}
             </p>
-            <div className="flex flex-wrap gap-2">
+            <form
+              className="flex flex-wrap gap-2"
+              onSubmit={(event) => {
+                event.preventDefault();
+                void flush();
+              }}
+            >
               <button
+                type="submit"
                 className={control}
                 disabled={snapshot.saving || deleting}
-                onClick={() => void flush()}
               >
                 Retry saving
               </button>
-              <button className={control} onClick={download}>
+              <button type="button" className={control} onClick={download}>
                 Download draft
               </button>
               {loaded.unreadableBackup !== null && (
-                <button className={control} onClick={downloadOriginalBackup}>
+                <button
+                  type="button"
+                  className={control}
+                  onClick={downloadOriginalBackup}
+                >
                   Download original recovery copy
                 </button>
               )}
               <button
+                type="button"
                 className={control}
                 disabled={snapshot.saving || deleting}
                 onClick={reopen}
               >
                 Reopen saved version
               </button>
-            </div>
+            </form>
           </section>
         )}
         <label className="sr-only" htmlFor="document-title">

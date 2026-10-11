@@ -141,6 +141,9 @@ async function main() {
               select() {
                 return this;
               },
+              eq() {
+                return this;
+              },
               single() {
                 if (table === "project_docs") {
                   return Promise.resolve({
@@ -148,7 +151,10 @@ async function main() {
                     error: null,
                   });
                 }
-                return Promise.resolve({ data: null, error: null });
+                return Promise.resolve({
+                  data: { id: "project_1" },
+                  error: null,
+                });
               },
             };
           },
