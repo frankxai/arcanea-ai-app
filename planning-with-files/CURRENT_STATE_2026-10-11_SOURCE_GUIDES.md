@@ -110,3 +110,33 @@ formatted and the repeat passed. A small source check passed all eleven local
 links, unchanged instruction hashes, frozen branch identities and unchanged
 product files/lockfile. The prior verifier receipt remains retained separately;
 these checks do not claim independent review or current-source hosted acceptance.
+
+## Independent review and traceability refinement
+
+Source `76e2b2d7` passed native CI 38108752576: build, types, lint and CI Status.
+Author/customer/independent author jobs were skipped; CodeQL was skipped for docs.
+The source-bound Vercel preview was CANCELED, despite the GitHub Vercel success
+context. No READY preview for this source is claimed.
+
+Renewed review-lite admission permitted one bounded workload: 6484 MB free,
+6144 MB required, 4436 MB projected, 78% CPU and no new parallel agents.
+A tool-free anonymous zero-priced public-source review followed. Cohere omitted
+eight context files and labelled explicit proposals as defects; its PASS was
+rejected. NVIDIA Ultra covered all thirteen supplied files, returned WARN with
+five findings and reported zero cost. Neither result proves runtime/customer use.
+
+Accepted the missing evidence reference for the six SIS component checks. The
+team guide now links the existing public summary; the retained private receipt
+confirms package 8.5.1, six component checks, no installation and no dispatch.
+The guide also names 284's pending reconciliation between its Temporal contract
+and the later reported Vercel/Cloudflare guidance. No runtime was selected here.
+
+Other review findings were reconciled against source: engines >=24 is a minimum
+compatibility range, not pnpm choosing Node; .nvmrc selects major 24. MCP source
+1.0.0 versus npm 0.7.0 is explicitly distinguished, and release version changes
+belong to 517. All six schema-source paths were verified as actual Git blobs/trees
+at 76e2b2d7. The formatter side effect is recorded and subsequent checks use the
+existing direct binary. These checks do not grant customer or commercial approval.
+
+The traceability refinement changes the source again. Exact-current review and
+hosted checks must cover that new revision before documentation adoption.

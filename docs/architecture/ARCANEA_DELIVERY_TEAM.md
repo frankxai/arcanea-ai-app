@@ -39,7 +39,8 @@ The lead records the dependency, accountable seat, artifact, reviewer and next
 bounded action on the existing issue. Research should answer a decision in this
 chain, such as continuity, provider quality or audience fit. Maintenance repairs
 active creator failures within their route's lane. Durable-memory work on 284
-supports these missions through the existing SIS/Queen/Temporal authorities.
+supports these missions through the existing SIS/Queen authorities and the
+reviewed runtime decision described below.
 
 ## Accountable seats and specialists
 
@@ -112,12 +113,20 @@ for aggregation, and a different actor for review. Refuse unknown authorization,
 missing evidence, exhausted budgets or unapproved publication. Dollar ceilings
 must bind actual provider usage; graph cost units do not establish that control.
 
-The private routing candidate passed six checks against integrity-verified
-published `@starlight-intelligence/system` 8.5.1: graph compilation, required
+The private routing candidate passed six bounded component checks on 10 October,
+recorded in [programme 276's verification summary](https://github.com/frankxai/arcanea-ai-app/issues/276#issuecomment-6101122593).
+They used integrity-verified published `@starlight-intelligence/system` 8.5.1:
+graph compilation, required
 write-back/distinct reviewer, turn/cost/action brakes, deterministic code reduction,
 source/export integrity and supplied RAM/storage/effort/gist denials. No package
 was installed or mission dispatched. Payload schemas, durable execution, dollar
 enforcement and all nine mission acceptance results remain pending with 284.
+
+Before implementing 284, reconcile its Temporal contract with the later
+[reported Vercel/Cloudflare workflow guidance](https://github.com/frankxai/arcanea-ai-app/issues/276#issuecomment-5952149833).
+The owner records an explicit retain, migrate or defer decision for each process.
+Those references identify a pending runtime decision; they grant no authority to
+install a replacement scheduler or infer that an Arcanea worker is already live.
 
 Working context belongs to the session; durable checkpoints belong to the existing
 execution runtime. Events belong to private append-only operational records.
