@@ -165,7 +165,7 @@ export function WorldDraftEditor({
         Work through your world, then apply the changes. Saving and exporting
         use the applied draft. No model request is needed.
       </p>
-      <fieldset disabled={disabled} className="mt-6">
+      <fieldset disabled={disabled} className="mt-6 min-w-0">
         <div className="grid gap-8 lg:grid-cols-[10rem_minmax(0,1fr)]">
           <nav
             aria-label="World draft sections"

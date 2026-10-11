@@ -10,7 +10,8 @@ Owning work: existing programme #276, creator outcome #191 and release #427.
 
 Files: apps/web/components/worlds/world-draft-editor.tsx,
 apps/web/app/worlds/create/page.tsx (dirty-state relay, existing leave warning and
-restore/refine guards), scripts/verify-world-draft-browser.cjs and this record.
+restore/refine guards), apps/web/components/navigation/footer.tsx (narrow newsletter
+reflow), scripts/verify-world-draft-browser.cjs and this record.
 
 User job: revise the complete world, including its later characters and locations,
 without searching a single long form or silently discarding unfinished fields.
@@ -176,6 +177,29 @@ navigation safety while avoiding an always-attached listener for clean work.
 The current description now names the stable report callback. No Firefox
 runtime/cache or typing-performance measurement is claimed. The previous
 5ee4872 run remains separate evidence; changed source needs fresh review and CI.
+
+The 19c1278 exact-source independent static review passed with no concrete
+findings in the bounded scope; no runtime or image review was claimed. The
+superseded 5ee4872 hosted run38118201120 passed install, lint, typecheck and the
+compiled build, then completed the world recovery cases in desktop, 375px,
+reduced-motion desktop and tablet modes. It failed the added 320px whole-page
+overflow assertion before opening the editor. Eight original captures from
+artifact11694083991 were recovered with validated provenance; the phone and
+desktop editor originals were inspected. This is partial browser evidence,
+with the failed narrow case retained as a release blocker.
+
+The shared footer email input retained its intrinsic minimum width in a flex
+row; it can now shrink while the Subscribe button remains intact. Both controls
+have 44px targets. The editor fieldset also allows its grid and full-width
+textareas to shrink below their intrinsic minimum. The whole-page overflow
+assertion is unchanged; failure now records offending bounds and an original
+diagnostic capture. Newsletter control bounds are checked in all five modes;
+the test never submits the live form. This extends the owned slice by the named
+footer file solely for reflow. Its existing subscription behavior is unchanged.
+The latest build preflight remains HOLD at8097 MB free against8192 required;
+no local build/browser or additional worker was started. These new application
+bytes still need fresh hosted CI, original 320px/editor captures and independent
+exact-revision review.
 
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior

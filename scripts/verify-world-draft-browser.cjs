@@ -190,14 +190,58 @@ const draft = {
       await expect(
         page.getByText(draft.world.systems[0].rules, { exact: true }),
       ).toBeVisible();
+      const reflow = await page.evaluate(() => ({
+        width: document.documentElement.clientWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+        outside: Array.from(document.querySelectorAll("body *"))
+          .filter((element) => {
+            const box = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return (
+              box.width > 0 &&
+              style.visibility !== "hidden" &&
+              style.display !== "none" &&
+              box.right > innerWidth + 1
+            );
+          })
+          .slice(0, 12)
+          .map((element) => ({
+            tag: element.tagName,
+            name:
+              element.getAttribute("aria-label") ||
+              element.getAttribute("name"),
+            right: element.getBoundingClientRect().right,
+          })),
+      }));
+      if (reflow.scrollWidth > reflow.width + 1) {
+        console.error(JSON.stringify({ mode: mode.name, reflow }));
+        await page.screenshot({
+          path: `${output}/${mode.name}-overflow.png`,
+          fullPage: true,
+        });
+      }
       assert.ok(
-        await page.evaluate(
-          () =>
-            document.documentElement.scrollWidth <=
-            document.documentElement.clientWidth + 1,
-        ),
+        reflow.scrollWidth <= reflow.width + 1,
         `${mode.name}: horizontal overflow`,
       );
+      for (const control of [
+        page.getByRole("textbox", {
+          name: "Email address for newsletter",
+          exact: true,
+        }),
+        page
+          .getByRole("contentinfo")
+          .getByRole("button", { name: "Subscribe", exact: true }),
+      ]) {
+        const bounds = await control.boundingBox();
+        assert.ok(
+          bounds &&
+            bounds.height >= 44 &&
+            bounds.x >= 0 &&
+            bounds.x + bounds.width <= mode.width + 1,
+          `${mode.name}: newsletter controls fit the viewport with 44px targets`,
+        );
+      }
       const downloadPromise = page.waitForEvent("download");
       await button("Export draft").click();
       const download = await downloadPromise;
