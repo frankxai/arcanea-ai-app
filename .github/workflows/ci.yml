@@ -181,6 +181,9 @@ jobs:
       - name: Verify disposable generation provider isolation
         run: node --test scripts/tests/generation-fixture.test.mjs
 
+      - name: Verify Luminor image handoff without inference or spending
+        run: pnpm exec tsx --tsconfig apps/web/tsconfig.json --test apps/web/lib/luminors/tools/__tests__/image.test.ts
+
       - name: Verify auth recovery and creator economics
         run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs scripts/tests/provider-routing.test.mjs scripts/tests/provider-preferences.test.mjs scripts/tests/notification-channel.test.mjs
 
@@ -191,7 +194,9 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
 
       - name: Verify customer voice credentials, privacy and recovery
-        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
+        run: |
+          pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
+          node --test scripts/tests/provider-chat-instance.test.cjs
 
       - name: Verify author credentials and exact draft acknowledgements
         run: |
@@ -614,7 +619,9 @@ jobs:
   generation-preview:
     name: Authenticated generation acceptance
     if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/generation-admission-20261011'
-    needs: [install, build]
+    # This fixture compiles its own app with disposable Auth. Collect its evidence
+    # even if a separate gallery suite fails; CI Status still requires both.
+    needs: [install, lint, typecheck]
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:

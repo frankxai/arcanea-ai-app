@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
+import { useAuth } from "@/lib/auth/context";
 import { requestImages } from "@/lib/imagine/request";
 import Image from "next/image";
 
@@ -20,6 +21,14 @@ export function ImageCreationPanel({
   generatedImages,
   setGeneratedImages,
 }: ImageCreationPanelProps) {
+  const { credentialScope } = useAuth();
+  const currentToken = credentialScope.get();
+  const [editorOwner, setEditorOwner] = useState<typeof currentToken | null>(
+    currentToken.actor?.startsWith("user:") ? currentToken : null,
+  );
+  if (!editorOwner && currentToken.actor?.startsWith("user:"))
+    setEditorOwner(currentToken);
+
   const [style, setStyle] = useState("Fantasy Art");
   const [aspectRatio, setAspectRatio] = useState("1:1");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -43,17 +52,21 @@ export function ImageCreationPanel({
   const handleGenerate = useCallback(async () => {
     if (!prompt.trim() || isGenerating) return;
 
+    const token = credentialScope.get();
     setIsGenerating(true);
     setImageError(null);
 
     const fullPrompt = `${prompt.trim()}, ${style.toLowerCase()} style`;
 
     try {
-      const res = await requestImages({
-        prompt: fullPrompt,
-        count: 4,
-        aspectRatio,
-      });
+      const res = await requestImages(
+        {
+          prompt: fullPrompt,
+          count: 4,
+          aspectRatio,
+        },
+        { scope: credentialScope, token },
+      );
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -61,6 +74,7 @@ export function ImageCreationPanel({
       }
 
       const data = await res.json();
+      if (!credentialScope.isCurrent(token)) return;
       const images: GeneratedImageData[] = (data.images || []).map(
         (
           img: {
@@ -84,13 +98,29 @@ export function ImageCreationPanel({
       setGeneratedImages(images);
       if (images.length > 0) setSelectedImage(images[0].id);
     } catch (err) {
+      if (!credentialScope.isCurrent(token)) return;
       setImageError(
         err instanceof Error ? err.message : "Image generation failed",
       );
     } finally {
-      setIsGenerating(false);
+      if (credentialScope.isCurrent(token)) setIsGenerating(false);
     }
-  }, [prompt, style, aspectRatio, isGenerating, setGeneratedImages]);
+  }, [
+    credentialScope,
+    prompt,
+    style,
+    aspectRatio,
+    isGenerating,
+    setGeneratedImages,
+  ]);
+
+  if (editorOwner && !credentialScope.isCurrent(editorOwner))
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Your account changed. Reload this page to continue with the current
+        account.
+      </p>
+    );
 
   const activeImage = generatedImages.find((img) => img.id === selectedImage);
 

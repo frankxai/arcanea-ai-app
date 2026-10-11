@@ -64,6 +64,7 @@ const receipt = {
   head,
   backend: "disposable Supabase Auth/PostgREST/PostgreSQL",
   productionWrites: 0,
+  csp: "Authenticated HTTP loopback journeys bypass CSP; a separate no-bypass browser case checks production headers against deterministic imgen.x.ai media. Actual supplier CORS is not certified",
   providerCalls: 0,
   providerRequestsAttempted: 0,
   scope:
@@ -71,6 +72,21 @@ const receipt = {
   passed: false,
 };
 let phase = "container-admission";
+const acceptanceStarted = Date.now();
+// Controlled phase names and the public source revision are safe diagnostics.
+// Provider responses, child logs, private config and credentials stay private.
+const heartbeat = setInterval(() => {
+  console.log(
+    JSON.stringify({
+      fixture: "generation",
+      head,
+      phase,
+      elapsedSeconds: Math.floor((Date.now() - acceptanceStarted) / 1000),
+    }),
+  );
+}, 30000);
+heartbeat.unref();
+
 const docker = (args) =>
   execFileSync("docker", args, {
     encoding: "utf8",
@@ -361,7 +377,7 @@ try {
           JSON.stringify({
             status: "done",
             data: Array.from({ length: job.n }, (_, index) => ({
-              url: `https://generation-fixture.invalid/${id}-${index}.webp`,
+              url: `https://imgen.x.ai/fixture-${id}-${index}.webp`,
             })),
           }),
         );
@@ -582,6 +598,11 @@ try {
   );
   process.exitCode = 1;
 } finally {
+  receipt.fixtureSupplier = {
+    submissions: supplier.submissions,
+    polls: supplier.polls,
+  };
+  clearInterval(heartbeat);
   for (const child of children) {
     try {
       process.kill(-child.pid, "SIGKILL");
