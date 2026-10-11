@@ -226,6 +226,25 @@ as a pointer click. This is a narrow application correction, with unchanged
 heading margin, measured-header threshold and bounded test. Fresh full-fixture
 five-mode CI and exact-source review are still required; no release is claimed.
 
+The ba2803a branch-source run 38122221070 passed all five modes, and its ten
+original captures have validated provenance. The combined-source PR #579 run
+38123462180 still failed mobile clearance at 54.75px beneath the 74px navbar;
+a separate accepted-main Chat provider fixture timed out. Tested merge 91293059
+matches published head f3f9e12. Its inspected original failure is retained.
+All 53 accepted-main incoming files and the original five owned blobs were
+verified unchanged during ordinary branch integration. Preserve the separate
+account-owner PR #578 and its release gates; this slice adds no auth/provider edits.
+
+Hosted trusted-keyboard diagnostics on the exact preview showed stable 111.75px
+clearance after a pause, but rapid entry gave 90.75px/93.75px endpoints. Both
+rapid trials stayed clear; neither reproduces CI or proves its cause. The named
+sessions were closed. Editor entry, cancel return and error focus previously
+used default native scrolling under the page's smooth-scroll CSS. These now
+share the section helper's preventScroll focus and explicit instant alignment.
+This removes those competing default focus scrolls without timers, global CSS
+mutations, margin inflation or weakened assertions. It is a reasoned correction,
+with fresh exact-source review and complete runtime proof still required.
+
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.

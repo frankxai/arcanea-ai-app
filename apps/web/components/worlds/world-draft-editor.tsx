@@ -10,6 +10,12 @@ import {
 } from "react";
 import { worldDraftSchema, type WorldDraft } from "@/lib/worlds/draft";
 
+function focusEditorElement(element: HTMLElement | null) {
+  // Keep native smooth focus scrolling from competing with section navigation.
+  element?.focus({ preventScroll: true });
+  element?.scrollIntoView({ behavior: "instant", block: "start" });
+}
+
 function replace<T>(items: T[], index: number, patch: Partial<T>): T[] {
   return items.map((item, i) => (i === index ? { ...item, ...patch } : item));
 }
@@ -79,16 +85,16 @@ export function WorldDraftEditor({
 
   useEffect(() => {
     if (editorOpen) {
-      document.getElementById(editorId + "-World-name")?.focus();
+      focusEditorElement(document.getElementById(editorId + "-World-name"));
       wasEditing.current = true;
     } else if (wasEditing.current) {
-      editButton.current?.focus();
+      focusEditorElement(editButton.current);
       wasEditing.current = false;
     }
   }, [editorOpen, editorId]);
 
   useEffect(() => {
-    if (error) errorMessage.current?.focus();
+    if (error) focusEditorElement(errorMessage.current);
   }, [error]);
 
   useLayoutEffect(() => {
@@ -157,8 +163,7 @@ export function WorldDraftEditor({
 
   function focusSection(id: string) {
     const heading = document.getElementById(editorId + "-" + id);
-    heading?.focus({ preventScroll: true });
-    heading?.scrollIntoView({ behavior: "instant", block: "start" });
+    focusEditorElement(heading);
   }
 
   return (
@@ -383,7 +388,7 @@ export function WorldDraftEditor({
                       setError(
                         "Give each item a name and keep this draft within the field limits.",
                       );
-                      errorMessage.current?.focus();
+                      focusEditorElement(errorMessage.current);
                       return;
                     }
                     if (onApply(parsed.data)) {
@@ -442,7 +447,7 @@ export function WorldDraftEditor({
                       setError(
                         "The working copy could not be downloaded. Your edits remain on this page.",
                       );
-                      errorMessage.current?.focus();
+                      focusEditorElement(errorMessage.current);
                     } finally {
                       if (url) URL.revokeObjectURL(url);
                     }
