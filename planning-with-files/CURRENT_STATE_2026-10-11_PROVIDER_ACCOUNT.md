@@ -143,3 +143,11 @@ and a pending chat abort on account switch. Three existing desktop/mobile/reduce
 motion modes will run these assertions. This verifier is newly authored and
 requires hosted execution before any pass claim. It is neither a real GoTrue login
 nor a database ownership, cross-device persistence or provider-quality test.
+
+The first expanded hosted run38116393712 at84147abc passes TypeScript/lint and
+compiles the app, but fails its new settings fixture because it asks for the Google
+field while the selected guest provider is OpenRouter. The verifier now selects
+the provider before checking its field and expects only the selected account's
+field to exist. After saving clears the old model choice, it chooses Flash through
+the actual chat picker. This is a test correction; fresh hosted execution remains
+required and the failing run is retained.

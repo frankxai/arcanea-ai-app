@@ -721,6 +721,9 @@ async function verifyAccountCredentials(browser, mode) {
     });
     const google = page.getByLabel("Google Gemini API key", { exact: true });
     const openai = page.getByLabel("OpenAI API key", { exact: true });
+    await page
+      .getByLabel("Chat provider", { exact: true })
+      .selectOption("google");
     await expect(google).toHaveValue("");
     await event("fixture-account-a");
     await expect(google).toHaveValue("fixture-account-a-key");
@@ -735,7 +738,7 @@ async function verifyAccountCredentials(browser, mode) {
     });
     await event("fixture-account-b");
     await expect(openai).toHaveValue("fixture-account-b-key");
-    await expect(google).toHaveValue("");
+    await expect(google).toHaveCount(0);
     assert.equal(
       await page.evaluate(
         () =>
@@ -769,6 +772,12 @@ async function verifyAccountCredentials(browser, mode) {
       "fixture-account-b-key",
     );
     await event(null);
+    await expect(
+      page.getByLabel("OpenRouter API key", { exact: true }),
+    ).toHaveValue("fixture-guest-key");
+    await page
+      .getByLabel("Chat provider", { exact: true })
+      .selectOption("google");
     await expect(google).toHaveValue("");
     assert.equal(
       await page.evaluate(
@@ -784,6 +793,12 @@ async function verifyAccountCredentials(browser, mode) {
     });
     await expect(input).toBeVisible();
     await event("fixture-account-a");
+    // Saving a provider clears its old model choice; choose one through chat.
+    await page
+      .getByRole("button", { name: "Model: Auto", exact: true })
+      .click();
+    await page.getByPlaceholder("Search models...").fill("Flash");
+    await page.getByRole("option", { name: /Flash/ }).click();
     await expect(
       page.getByRole("button", { name: "Model: Flash", exact: true }),
     ).toBeVisible();
