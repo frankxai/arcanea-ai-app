@@ -97,8 +97,8 @@ test("resolution excludes unknown, deprecated and duplicate candidates", () => {
   ]);
 });
 
-test("a display-only surface is not an execution route", () => {
-  assert.deepEqual(resolveTask("code.debug", "web.models-page"), []);
+test("a display-only surface retains catalog candidates", () => {
+  assert.ok(resolveTask("code.debug", "web.models-page").length > 0);
 });
 
 test("exhausted candidates do not resurrect an invalid fallback", () => {

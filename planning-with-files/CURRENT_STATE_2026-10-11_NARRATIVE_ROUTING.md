@@ -104,6 +104,40 @@ instruction hashes verified. Lease `ops-36af7fc0dbcaa75d05ca` is private machine
 state. Re-run the ownership gate before commit; do not disable it or secret hooks.
 This hook governs commits, not every file edit or product runtime action.
 
+## Review correction at the routing candidate
+
+Initial candidate `3376708c9f16aea1687ec430495aaa2428904590` is preserved in
+[PR569](https://github.com/frankxai/arcanea-ai-app/pull/569). Its hosted
+CI38111634801 passes build, types, lint and CI Status; CodeQL38111634807 passes
+actual analysis. Earlier draft CI38111617380 was cancelled by the ready transition
+and retained with its failed aggregate. The two package/review workflows were
+found manually disabled on GitHub; no workflow setting was altered.
+
+A tool-free anonymous NVIDIA Ultra review covered all eleven changed files and
+eight complete source contexts at that exact head, returned PASS with no findings
+and reported US$0. Its public-source manifest is
+`f2058c4a92bd7115ee7688243ed2645dd647f19818e4ac586c598eee75202d35`.
+GitHub's separate code review then found three supported defects that this PASS
+missed: unsupported explain selections, lost display-surface resolution and the
+retired Gemini Pro identifier. The initial PASS cannot approve the correction.
+
+Five new regression cases failed before correction. Execution and explain now
+share preference/runtime/adaptive selection. Catalog display retains eligible
+candidates, while execution refuses display-only surfaces even with a model pin.
+Retired Gemini pins are rejected with the replacement named; Gemini Pro routes
+use the native `gemini-3.1-pro-preview` identifier. Google's model and deprecation
+references were read on11 October; actual account access and prose remain
+untested. This changes that route's catalog default, without claiming a model
+quality promotion or refreshing every other historical model entry.
+
+Renewed two-package build admission is BOUNDED:7757MB free,5120MB required,
+CPU61%, one workload and no new parallel agents. Both compilers and all86 selected
+tests pass; the tests keep config/history and no-op runtime execution isolated.
+All source must be frozen and reviewed again at the new head before normal merge.
+The claim extension initially refused without `--adopt`; the existing same-owner
+lease was then refreshed through the supported CLI with the full original scope
+plus models.yaml. No lease was removed, rewritten directly or taken from a peer.
+
 ## Full objective: evidence still needed
 
 | Required outcome                                      | Owning record and evidence                                                                                                | Current disposition                                                                                     |
