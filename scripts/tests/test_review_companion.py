@@ -185,6 +185,11 @@ class ReviewAdmission(unittest.TestCase):
         self.assertIn("apps/web/components/saga/chapter-reader.tsx", planned["companion-browser"])
         self.assertIn("apps/web/app/api/ai/chat/route.ts", planned["companion-browser"])
         self.assertIn("apps/web/lib/luminors/config.ts", planned["experience"])
+        for workflow in (".github/workflows/companion.yml", ".github/workflows/ci.yml"):
+            self.assertIn(workflow, planned["review-protocol"])
+            with self.subTest(missing_workflow=workflow), self.assertRaises(REVIEW.Denied):
+                REVIEW.modules(changed, {path: value for path, value in content.items()
+                                         if path != workflow})
         with self.assertRaises(REVIEW.Denied):
             REVIEW.modules(changed, {path: value for path, value in content.items()
                                      if path != "apps/web/lib/luminors/config.ts"})

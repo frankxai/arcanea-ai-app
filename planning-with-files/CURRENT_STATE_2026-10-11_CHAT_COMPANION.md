@@ -545,3 +545,19 @@ events remain; job permissions, caller/branch/actor gates, privacy, source pinni
 checks, zero-price admission and maximum-call bounds are unchanged. The Companion
 workflow is explicitly added to the remaining eight-file ownership scope and
 complete review delta. Fresh source-triggered hosted validation remains required.
+
+The edited-event change above is rejected during integration review and restored
+to exact accepted workflow bytes. CI documents that this event is also the only
+PR event for base retargeting; removing it can retain a head-only green check from
+another base. Avoiding duplicate metadata runs cannot bypass that requirement.
+Any future optimization must distinguish metadata from base changes while
+preserving the prior exact-base verdict and active handle. Both actual Companion
+and CI workflows are now mandatory complete review-protocol context, with denial
+regressions when either is missing. The temporary source and its evidence stay
+retained; no release approval is inferred from its passing browser check.
+
+At dd611802, compiled job 114573899127 passes the new four-mode assertions.
+Independent 114573898937 fails and remains unaccepted. Initial CI 38174508864
+is terminal cancelled after the PR metadata edit; replacement CI 38174626858 is
+observed live. It is not restarted by this lane. Current source/base and published
+draft scope require another exact-revision check after the trigger correction.

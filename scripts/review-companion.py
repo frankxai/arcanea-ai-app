@@ -55,6 +55,7 @@ CONTEXTS = (
     "packages/design-system/src/tokens.css",
     "scripts/tests/provider-chat-instance.test.cjs",
     ".github/workflows/reading-scene.yml",
+    ".github/workflows/companion.yml", ".github/workflows/ci.yml",
 )
 
 
@@ -303,7 +304,8 @@ def modules(changed, content):
             "apps/web/components/saga/chapter-reader.tsx", "apps/web/components/saga/scene-workspace-view.tsx",
             "apps/web/components/worlds/WorldsOnboarding.tsx", ".github/workflows/reading-scene.yml",
             "packages/design-system/src/tokens.css"},
-        "review-protocol": common | {"apps/web/package.json", ".github/workflows/reading-scene.yml"},
+        "review-protocol": common | {"apps/web/package.json", ".github/workflows/reading-scene.yml",
+                                     ".github/workflows/companion.yml", ".github/workflows/ci.yml"},
     }
     require(set().union(*extra.values()) <= set(content), "Required module context is missing")
     primary = {name: paths for name, paths in primary.items() if paths}
