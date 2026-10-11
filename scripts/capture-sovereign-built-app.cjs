@@ -112,8 +112,11 @@ const typographyReport = async (page) => {
     });
   };
   const hideSpecimenChrome = async (page) => {
+    await page
+      .getByRole("button", { name: "Open Arcanea companion", exact: true })
+      .waitFor({ state: "visible" });
     const hidden = await page.evaluate(() =>
-      ["nav.fixed", '[aria-label="Open Arcanea assistant"]'].map((selector) => {
+      ["nav.fixed", '[aria-label="Open Arcanea companion"]'].map((selector) => {
         const elements = [...document.querySelectorAll(selector)];
         for (const element of elements)
           element.style.setProperty("display", "none", "important");

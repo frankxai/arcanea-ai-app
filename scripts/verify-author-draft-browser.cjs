@@ -327,7 +327,7 @@ async function main() {
           const a = await status.boundingBox();
           const b = await page
             .getByRole("button", {
-              name: "Open Arcanea assistant",
+              name: "Open Arcanea companion",
               exact: true,
             })
             .boundingBox();

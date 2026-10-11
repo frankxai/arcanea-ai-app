@@ -26,7 +26,8 @@
       "types": "./dist/primitives/index.d.ts",
       "default": "./dist/primitives/index.js"
     },
-    "./tokens.css": "./src/tokens.css"
+    "./tokens.css": "./src/tokens.css",
+    "./companion.module.css": "./src/companion.module.css"
   },
   "scripts": {
     "build": "tsc",

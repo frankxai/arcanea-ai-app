@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import { FACTS } from '@/lib/facts';
-import Image from 'next/image';
+"use client";
+import { FACTS } from "@/lib/facts";
+import Image from "next/image";
+import * as Dialog from "@radix-ui/react-dialog";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { MessageBubble } from '@/components/chat/message-bubble';
-import type { ActiveLuminor } from '@/hooks/use-conversation';
-import type { SwarmResult } from '@/lib/ai/guardian-swarm';
-import { getLuminor, LUMINORS, type LuminorConfig } from '@/lib/luminors/config';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { MessageBubble } from "@/components/chat/message-bubble";
+import type { ActiveLuminor } from "@/hooks/use-conversation";
+import type { SwarmResult } from "@/lib/ai/guardian-swarm";
+import {
+  getLuminor,
+  LUMINORS,
+  type LuminorConfig,
+} from "@/lib/luminors/config";
 import {
   PhArrowDown,
   PhArrowClockwise,
@@ -20,23 +25,46 @@ import {
   PhUser,
   PhFeather,
   PhGlobe,
-} from '@/lib/phosphor-icons';
-import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
+} from "@/lib/phosphor-icons";
+import {
+  ArcaneanMarkGlow,
+  ArcaneanMarkSmall,
+} from "@/components/brand/arcanea-mark";
 
 // ---------------------------------------------------------------------------
 // Constants (ported from page.tsx)
 // ---------------------------------------------------------------------------
 
-const ACCENT = 'var(--arc-brand-atlantean-teal)';
+const ACCENT = "var(--arc-brand-atlantean-teal)";
 
 /** 3 featured Luminors for quick-select in empty state — one per creative domain */
-const FEATURED_LUMINOR_IDS = ['storyteller', 'composer', 'systems-architect'] as const;
+const FEATURED_LUMINOR_IDS = [
+  "storyteller",
+  "composer",
+  "systems-architect",
+] as const;
 
 const CREATIVE_STARTERS = [
-  { icon: PhMagicWand, text: 'Design a magic system', hint: 'Elements, costs, limits, factions' },
-  { icon: PhUser, text: 'Create a character', hint: 'Name, backstory, portrait, motivation' },
-  { icon: PhFeather, text: 'Write an opening scene', hint: 'Hook, conflict, voice — page one' },
-  { icon: PhGlobe, text: 'Build a world', hint: 'One sentence to a full universe' },
+  {
+    icon: PhMagicWand,
+    text: "Design a magic system",
+    hint: "Elements, costs, limits, factions",
+  },
+  {
+    icon: PhUser,
+    text: "Create a character",
+    hint: "Name, backstory, portrait, motivation",
+  },
+  {
+    icon: PhFeather,
+    text: "Write an opening scene",
+    hint: "Hook, conflict, voice — page one",
+  },
+  {
+    icon: PhGlobe,
+    text: "Build a world",
+    hint: "One sentence to a full universe",
+  },
 ];
 
 const SUBTITLES = [
@@ -49,8 +77,9 @@ const SUBTITLES = [
 ];
 
 function getSubtitle(): string {
-  if (typeof window === 'undefined') return SUBTITLES[0];
-  const idx = (new Date().getHours() * 7 + new Date().getDate()) % SUBTITLES.length;
+  if (typeof window === "undefined") return SUBTITLES[0];
+  const idx =
+    (new Date().getHours() * 7 + new Date().getDate()) % SUBTITLES.length;
   return SUBTITLES[idx];
 }
 
@@ -63,58 +92,33 @@ function getTimeSuggestions(): string[] {
 // ---------------------------------------------------------------------------
 
 function getTimeGreeting(): string {
-  if (typeof window === 'undefined') return 'What are you creating?';
+  if (typeof window === "undefined") return "What are you creating?";
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return 'Good morning \u2014 what are you building?';
-  if (hour >= 12 && hour < 17) return 'What are you creating?';
-  if (hour >= 17 && hour < 21) return 'What are you creating tonight?';
-  return 'What are you creating tonight?';
+  if (hour >= 5 && hour < 12)
+    return "Good morning \u2014 what are you building?";
+  if (hour >= 12 && hour < 17) return "What are you creating?";
+  if (hour >= 17 && hour < 21) return "What are you creating tonight?";
+  return "What are you creating tonight?";
 }
 
 // ---------------------------------------------------------------------------
 // Error message helper — maps raw errors to user-friendly messages
 // ---------------------------------------------------------------------------
 
-export function getErrorMessage(error: string | Error): { title: string; action: string } {
-  const msg = typeof error === 'string' ? error : error.message;
-
-  // No API key configured (server returns 503 with "No API key" text)
-  if (msg.includes('No API key') || msg.includes('503')) {
-    return {
-      title: 'No AI key configured',
-      action: 'Add your own AI key in Settings to get started, or ask the admin to configure server keys.',
-    };
-  }
-  if (msg.includes('API key') || msg.includes('Invalid') || msg.includes('401') || msg.includes('403')) {
-    return { title: 'Invalid API key', action: 'Check your key in Settings \u2192 Providers and make sure it is correct.' };
-  }
-  if (msg.includes('rate') || msg.includes('429')) {
-    return { title: 'Creating too fast', action: "You\u2019re creating too fast. Take a breath and try again in a moment." };
-  }
-  if (msg.includes('network') || msg.includes('fetch') || msg.includes('Failed to fetch')) {
-    return { title: 'Connection lost', action: 'Check your internet and try again.' };
-  }
-  if (msg.includes('token') || msg.includes('length') || msg.includes('too long')) {
-    return { title: 'Message too long', action: 'Try a shorter message or start a new chat.' };
-  }
-  if (msg.includes('timeout') || msg.includes('ETIMEDOUT')) {
-    return { title: 'Request timed out', action: 'Try again \u2014 the server may be busy.' };
-  }
-  return { title: 'Something went wrong', action: 'Try again or start a new conversation.' };
-}
+export { getErrorMessage } from "@/lib/chat/error-message";
 
 // ---------------------------------------------------------------------------
 // Keyboard shortcuts config
 // ---------------------------------------------------------------------------
 
 const KEYBOARD_SHORTCUTS = [
-  ['Enter', 'Send message'],
-  ['Shift + Enter', 'New line'],
-  ['Cmd/Ctrl + N', 'New chat'],
-  ['Cmd/Ctrl + Shift + S', 'Toggle sidebar'],
-  ['Cmd/Ctrl + F', 'Search messages'],
-  ['?', 'Show shortcuts'],
-  ['Esc', 'Close dialog'],
+  ["Enter", "Send message"],
+  ["Shift + Enter", "New line"],
+  ["Cmd/Ctrl + N", "New chat"],
+  ["Cmd/Ctrl + Shift + S", "Toggle sidebar"],
+  ["Cmd/Ctrl + F", "Search messages"],
+  ["?", "Show shortcuts"],
+  ["Esc", "Close dialog"],
 ] as const;
 
 // ---------------------------------------------------------------------------
@@ -124,7 +128,7 @@ const KEYBOARD_SHORTCUTS = [
 /** Minimal message shape — matches AI SDK UIMessage */
 interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content?: string;
   parts?: Array<Record<string, unknown> & { type: string; text?: string }>;
   createdAt?: Date | string;
@@ -239,30 +243,35 @@ export function ChatArea({
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
-  const [emptyGreeting, setEmptyGreeting] = useState('What are you creating?');
+  const [emptyGreeting, setEmptyGreeting] = useState("What are you creating?");
   const [emptySubtitle, setEmptySubtitle] = useState(SUBTITLES[0]);
   const [hasMounted, setHasMounted] = useState(false);
 
   // -------------------------------------------------------------------------
+  const shortcutsReturnFocusRef = useRef<HTMLElement | null>(null);
+
   // Keyboard shortcuts overlay toggle
   // -------------------------------------------------------------------------
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (
-        e.key === '?' &&
+        e.key === "?" &&
         !e.ctrlKey &&
         !e.metaKey &&
-        document.activeElement?.tagName !== 'TEXTAREA' &&
-        document.activeElement?.tagName !== 'INPUT'
+        document.activeElement?.tagName !== "TEXTAREA" &&
+        document.activeElement?.tagName !== "INPUT"
       ) {
+        if (!showShortcuts)
+          shortcutsReturnFocusRef.current =
+            document.activeElement as HTMLElement;
         setShowShortcuts((v) => !v);
       }
-      if (e.key === 'Escape') setShowShortcuts(false);
+      if (e.key === "Escape") setShowShortcuts(false);
     };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, []);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [showShortcuts]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -273,7 +282,7 @@ export function ChatArea({
   // Auto-scroll on new content
   useEffect(() => {
     if (autoScroll && bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, autoScroll]);
 
@@ -287,7 +296,7 @@ export function ChatArea({
   }, []);
 
   const scrollToBottom = useCallback(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     setAutoScroll(true);
   }, []);
 
@@ -296,7 +305,7 @@ export function ChatArea({
   // -------------------------------------------------------------------------
 
   return (
-    <div className="relative flex-1 flex flex-col min-w-0 overflow-hidden">
+    <div className="relative flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
       {/* Search overlay */}
       {searchOverlay}
 
@@ -306,17 +315,18 @@ export function ChatArea({
         onScroll={handleScroll}
         role="log"
         aria-label="Chat messages"
-        className="relative flex-1 overflow-y-auto"
+        className="relative flex-1 min-h-0 overflow-y-auto"
         style={{
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'color-mix(in srgb, var(--arc-text-primary) 8%, transparent) transparent',
+          scrollbarWidth: "thin",
+          scrollbarColor:
+            "color-mix(in srgb, var(--arc-text-primary) 8%, transparent) transparent",
         }}
       >
         {isEmpty ? (
           /* ============================================================= */
           /* Empty state — clean, centered, inviting                        */
           /* ============================================================= */
-          <div className="relative flex flex-col items-center justify-center h-full px-4">
+          <div className="relative flex flex-col items-center justify-center min-h-full px-4">
             {/* Subtle aurora gradient behind empty state */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/[0.04] blur-2xl" />
@@ -325,7 +335,7 @@ export function ChatArea({
 
             <div className="relative max-w-[480px] w-full text-center">
               {/* Arcanea mascot — primary, floating */}
-              <div className="mb-4 mx-auto animate-empty-fade-in flex justify-center">
+              <div className="mb-4 mx-auto flex justify-center">
                 <Image
                   src="/images/mascot/arcanea-primary.png"
                   alt="Arcanea"
@@ -333,17 +343,17 @@ export function ChatArea({
                   height={140}
                   priority
                   sizes="140px"
-                  className="object-contain drop-shadow-[0_0_30px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_22%,transparent)] animate-[mascot-float_3s_ease-in-out_infinite]"
-                 />
+                  className="object-contain drop-shadow-[0_0_30px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_22%,transparent)]"
+                />
               </div>
 
-              {/* Time-aware greeting — gradient text */}
-              <h1 className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight animate-empty-fade-in bg-gradient-to-r from-white via-white/95 to-[var(--arc-brand-atlantean-teal)]/80 bg-clip-text text-transparent" style={{ animationDelay: '60ms' }}>
+              {/* Time-aware greeting */}
+              <h1 className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight text-[var(--arc-text-primary)]">
                 {activeLuminor ? activeLuminor.name : emptyGreeting}
               </h1>
 
               {/* Rotating subtitle */}
-              <p className="text-sm text-white/30 mb-8 animate-empty-fade-in font-light" style={{ animationDelay: '100ms' }}>
+              <p className="text-sm text-[var(--arc-text-secondary)] mb-8">
                 {emptySubtitle}
               </p>
 
@@ -353,7 +363,7 @@ export function ChatArea({
                 role="list"
                 aria-label="Creative starters"
               >
-                {CREATIVE_STARTERS.map((starter, i) => (
+                {CREATIVE_STARTERS.map((starter) => (
                   <button
                     key={starter.text}
                     type="button"
@@ -362,21 +372,18 @@ export function ChatArea({
                       onFocusInput();
                     }}
                     className="relative flex flex-col items-start gap-1.5 px-4 py-3.5 rounded-xl text-left bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.07] backdrop-blur-sm hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:bg-gradient-to-br hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent hover:shadow-[0_0_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_18%,transparent)] transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
-                    style={{
-                      animation: `fadeInUp 400ms cubic-bezier(0.22, 1, 0.36, 1) ${150 + i * 60}ms both`,
-                    }}
                   >
                     <div className="flex items-center gap-2">
                       <starter.icon
-                        className="w-4 h-4 text-white/25 group-hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors duration-300"
+                        className="w-4 h-4 text-[var(--arc-text-secondary)] group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors duration-300"
                         weight="duotone"
                         aria-hidden="true"
                       />
-                      <span className="text-[13px] text-white/60 group-hover:text-white/85 transition-colors duration-300 font-medium">
+                      <span className="text-[13px] text-[var(--arc-text-primary)] transition-colors duration-300 font-medium">
                         {starter.text}
                       </span>
                     </div>
-                    <span className="text-[11px] text-white/25 group-hover:text-white/40 transition-colors duration-300 leading-snug pl-6">
+                    <span className="text-[11px] text-[var(--arc-text-secondary)] transition-colors duration-300 leading-snug pl-6">
                       {starter.hint}
                     </span>
                   </button>
@@ -385,20 +392,28 @@ export function ChatArea({
 
               {/* Luminor quick-select — 3 featured personalities */}
               {!activeLuminor && (
-                <div className="flex items-center justify-center gap-2 mb-4 animate-empty-fade-in" style={{ animationDelay: '300ms' }}>
-                  <span className="text-[10px] text-white/20 mr-1">Talk to</span>
+                <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+                  <span className="text-[10px] text-[var(--arc-text-secondary)] mr-1">
+                    Talk to
+                  </span>
                   {FEATURED_LUMINOR_IDS.map((lid) => {
                     const l = LUMINORS[lid];
                     if (!l) return null;
                     return (
                       <button
                         key={lid}
-                        onClick={() => onSelectLuminor(l as unknown as ActiveLuminor)}
+                        onClick={() =>
+                          onSelectLuminor(l as unknown as ActiveLuminor)
+                        }
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-200 group"
                         title={`${l.loreName} — ${l.specialty}`}
                       >
-                        <span className="text-sm" aria-hidden="true">{l.avatar}</span>
-                        <span className="text-[11px] text-white/40 group-hover:text-white/70 transition-colors">{l.loreName}</span>
+                        <span className="text-sm" aria-hidden="true">
+                          {l.avatar}
+                        </span>
+                        <span className="text-[11px] text-[var(--arc-text-secondary)] group-hover:text-[var(--arc-text-primary)] transition-colors">
+                          {l.loreName}
+                        </span>
                       </button>
                     );
                   })}
@@ -406,39 +421,48 @@ export function ChatArea({
               )}
 
               {/* Capabilities hint — tools users don't know exist */}
-              <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/20 animate-empty-fade-in" style={{ animationDelay: '350ms' }}>
-                <span className="flex items-center gap-1"><PhImageSquare className="w-3 h-3" /> Images</span>
+              <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-[var(--arc-text-secondary)]">
+                <span className="flex items-center gap-1">
+                  <PhImageSquare className="w-3 h-3" /> Images
+                </span>
                 <span className="text-white/10">·</span>
-                <span className="flex items-center gap-1"><PhMagnifyingGlass className="w-3 h-3" /> Web search</span>
+                <span className="flex items-center gap-1">
+                  <PhMagnifyingGlass className="w-3 h-3" /> Web search
+                </span>
                 <span className="text-white/10">·</span>
-                <span className="flex items-center gap-1"><PhBrain className="w-3 h-3" /> Deep thinking</span>
+                <span className="flex items-center gap-1">
+                  <PhBrain className="w-3 h-3" /> Deep thinking
+                </span>
                 <span className="text-white/10">·</span>
-                <span className="flex items-center gap-1"><PhMicrophone className="w-3 h-3" /> Voice</span>
+                <span className="flex items-center gap-1">
+                  <PhMicrophone className="w-3 h-3" /> Voice
+                </span>
               </div>
 
               {/* Continue last session — subtle, not prominent */}
               {hasMounted && lastSessionTitle && onContinueLastSession && (
                 <button
                   onClick={onContinueLastSession}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs text-white/35 hover:text-white/60 border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-200 mx-auto animate-empty-fade-in"
-                  style={{ animationDelay: '450ms' }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-200 mx-auto"
                 >
                   <PhArrowClockwise className="w-3 h-3 shrink-0" />
-                  <span className="truncate max-w-[200px]">Continue: {lastSessionTitle}</span>
+                  <span className="truncate max-w-[200px]">
+                    Continue: {lastSessionTitle}
+                  </span>
                 </button>
               )}
 
               {/* BYOK — the sovereignty surface, not a whisper (TASTE.md Gate 7) */}
               {hasMounted && !clientApiKey && !serverHasKeys && (
-                <div
-                  className="mt-6 w-full max-w-md rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.07] to-transparent px-5 py-4 text-left animate-empty-fade-in"
-                  style={{ animationDelay: '500ms' }}
-                >
+                <div className="mt-6 w-full max-w-md rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.07] to-transparent px-5 py-4 text-left">
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
-                      <p className="text-[13px] font-medium text-white/85">Bring your own key</p>
-                      <p className="mt-0.5 text-[11px] leading-relaxed text-white/40">
-                        Claude, Gemini, GPT, or 300+ models via OpenRouter. Your key stays in this browser.
+                      <p className="text-[13px] font-medium text-[var(--arc-text-primary)]">
+                        Bring your own key
+                      </p>
+                      <p className="mt-0.5 text-[11px] leading-relaxed text-[var(--arc-text-secondary)]">
+                        Claude, Gemini, GPT, or 300+ models via OpenRouter. Your
+                        key stays in this browser.
                       </p>
                     </div>
                     <Link
@@ -456,7 +480,10 @@ export function ChatArea({
           /* ============================================================= */
           /* Messages list                                                  */
           /* ============================================================= */
-          <div className="max-w-[720px] mx-auto w-full px-4 py-6" aria-live="polite">
+          <div
+            className="max-w-[720px] mx-auto w-full px-4 py-6"
+            aria-live="polite"
+          >
             {messages.map((msg, idx) => {
               const isLastMsg = msg.id === lastMsg?.id;
               const msgIsLast = idx === messages.length - 1;
@@ -466,7 +493,7 @@ export function ChatArea({
                 isLastMsg &&
                 !activeLuminor &&
                 swarmResult &&
-                swarmResult.coordinationMode !== 'convergence' &&
+                swarmResult.coordinationMode !== "convergence" &&
                 swarmResult.activeLuminors.length > 0
                   ? swarmResult.activeLuminors.slice(0, 3)
                   : undefined;
@@ -475,7 +502,11 @@ export function ChatArea({
                 <div
                   key={msg.id}
                   role="article"
-                  aria-label={msg.role === 'user' ? 'Your message' : `Message from ${activeLuminor?.name || 'Arcanea'}`}
+                  aria-label={
+                    msg.role === "user"
+                      ? "Your message"
+                      : `Message from ${activeLuminor?.name || "Arcanea"}`
+                  }
                   className="animate-msg-slide-in"
                 >
                   <MessageBubble
@@ -502,12 +533,24 @@ export function ChatArea({
                     onFocusInput={onFocusInput}
                     autoSave={isLastMsg ? autoSave : undefined}
                     swarmLuminors={swarmLuminors}
-                    onSelectLuminor={swarmLuminors ? (id) => {
-                      const cfg = getLuminor(id);
-                      if (cfg) onSelectLuminor(cfg as ActiveLuminor);
-                    } : undefined}
-                    branches={branches.has(msg.id) ? (branches.get(msg.id) as unknown[]) : undefined}
-                    onLoadBranch={branches.has(msg.id) ? (branchIndex) => onLoadBranch(msg.id, branchIndex) : undefined}
+                    onSelectLuminor={
+                      swarmLuminors
+                        ? (id) => {
+                            const cfg = getLuminor(id);
+                            if (cfg) onSelectLuminor(cfg as ActiveLuminor);
+                          }
+                        : undefined
+                    }
+                    branches={
+                      branches.has(msg.id)
+                        ? (branches.get(msg.id) as unknown[])
+                        : undefined
+                    }
+                    onLoadBranch={
+                      branches.has(msg.id)
+                        ? (branchIndex) => onLoadBranch(msg.id, branchIndex)
+                        : undefined
+                    }
                   />
                 </div>
               );
@@ -515,7 +558,11 @@ export function ChatArea({
 
             {/* Thinking indicator */}
             {isThinking && (
-              <div className="mb-6" role="status" aria-label="Arcanea is composing a response">
+              <div
+                className="mb-6"
+                role="status"
+                aria-label="Arcanea is composing a response"
+              >
                 <div className="flex gap-3">
                   {activeLuminor?.avatar ? (
                     <div
@@ -537,30 +584,44 @@ export function ChatArea({
                         className="text-xs font-medium"
                         style={{ color: activeLuminor?.color || ACCENT }}
                       >
-                        {activeLuminor?.name || 'Arcanea'}
+                        {activeLuminor?.name || "Arcanea"}
                       </span>
-                      <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
+                      <span className="text-[10px] text-white/20 font-mono">
+                        {providerLabel}
+                      </span>
                     </div>
                     {runtimeSummary && (
                       <div className="mb-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-white/35">
                         {runtimeSummary}
                       </div>
                     )}
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.04] via-white/[0.02] to-[var(--arc-brand-cosmic-blue)]/[0.03] border border-[var(--arc-brand-atlantean-teal)]/[0.08] shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_10%,transparent)]" aria-live="assertive">
+                    <div
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.04] via-white/[0.02] to-[var(--arc-brand-cosmic-blue)]/[0.03] border border-[var(--arc-brand-atlantean-teal)]/[0.08] shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_10%,transparent)]"
+                      aria-live="assertive"
+                    >
                       <div className="relative w-5 h-5">
                         <div className="absolute inset-0 rounded-full border-2 border-[var(--arc-brand-atlantean-teal)]/20" />
                         <div
                           className="absolute inset-0 rounded-full border-2 border-[var(--arc-brand-atlantean-teal)] border-t-transparent animate-spin"
-                          style={{ animationDuration: '0.8s' }}
+                          style={{ animationDuration: "0.8s" }}
                         />
                         <div className="absolute inset-[3px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 animate-pulse" />
                       </div>
                       <span className="text-xs text-white/40 font-medium flex items-center gap-1">
                         Composing
                         <span className="flex gap-0.5">
-                          <span className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" style={{ animationDelay: '0ms' }} />
-                          <span className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" style={{ animationDelay: '150ms' }} />
-                          <span className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" style={{ animationDelay: '300ms' }} />
+                          <span
+                            className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse"
+                            style={{ animationDelay: "0ms" }}
+                          />
+                          <span
+                            className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse"
+                            style={{ animationDelay: "150ms" }}
+                          />
+                          <span
+                            className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse"
+                            style={{ animationDelay: "300ms" }}
+                          />
                         </span>
                       </span>
                     </div>
@@ -591,35 +652,43 @@ export function ChatArea({
       {children}
 
       {/* Keyboard shortcuts overlay */}
-      {showShortcuts && (
-        <div
-          className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50 flex items-center justify-center"
-          onClick={() => setShowShortcuts(false)}
-        >
-          <div
-            className="bg-gradient-to-b from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm w-full mx-4 shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"
-            onClick={(e) => e.stopPropagation()}
-            style={{ animation: 'fadeInUp 200ms cubic-bezier(0.22, 1, 0.36, 1)' }}
-          >
-            <h2 className="text-sm font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent mb-4">
-              Keyboard Shortcuts
-            </h2>
-            <div className="space-y-2 text-xs">
-              {KEYBOARD_SHORTCUTS.map(([key, desc]) => (
-                <div key={key} className="flex items-center justify-between">
-                  <span className="text-white/40">{desc}</span>
-                  <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-white/60 font-mono text-[10px] border border-white/[0.08]">
-                    {key}
-                  </kbd>
-                </div>
-              ))}
-            </div>
-            <p className="text-[10px] text-white/20 mt-4 text-center">
-              Press ? or Esc to close
-            </p>
-          </div>
-        </div>
-      )}
+      <Dialog.Root open={showShortcuts} onOpenChange={setShowShortcuts}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50 flex items-center justify-center">
+            <Dialog.Content
+              className="bg-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm w-full mx-4 max-h-full overflow-y-auto shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"
+              onCloseAutoFocus={(event) => {
+                event.preventDefault();
+                if (shortcutsReturnFocusRef.current?.isConnected)
+                  shortcutsReturnFocusRef.current.focus();
+                else onFocusInput();
+              }}
+            >
+              <Dialog.Title className="text-sm font-semibold text-[var(--arc-text-primary)] mb-4">
+                Keyboard shortcuts
+              </Dialog.Title>
+              <div className="space-y-2 text-xs">
+                {KEYBOARD_SHORTCUTS.map(([key, desc]) => (
+                  <div key={key} className="flex items-center justify-between">
+                    <span className="text-[var(--arc-text-secondary)]">
+                      {desc}
+                    </span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[var(--arc-text-primary)] font-mono text-[10px] border border-white/[0.08]">
+                      {key}
+                    </kbd>
+                  </div>
+                ))}
+              </div>
+              <Dialog.Description className="text-xs text-[var(--arc-text-secondary)] mt-4 text-center">
+                Press ? or Esc to close
+              </Dialog.Description>
+              <Dialog.Close className="mt-4 min-h-11 w-full rounded-lg border border-white/[0.15] px-4 py-3 text-sm text-[var(--arc-text-primary)] hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]">
+                Close
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Overlay>
+        </Dialog.Portal>
+      </Dialog.Root>
     </div>
   );
 }
