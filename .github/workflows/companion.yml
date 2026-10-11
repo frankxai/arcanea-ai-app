@@ -106,6 +106,7 @@ jobs:
 
   independent-source-review:
     name: Independent public-source review
+    needs: companion
     # These two owned PRs already expose their source publicly. No repository or
     # provider secrets are available; forks, different PRs and other lanes are denied.
     if: github.event_name == 'pull_request' && github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && github.event.pull_request.head.repo.full_name == github.repository && ((github.head_ref == 'agent/codex/provider-account-20261011' && github.event.pull_request.number == 597) || (github.head_ref == 'agent/codex/chat-world-handoff-20261011' && github.event.pull_request.number == 602))

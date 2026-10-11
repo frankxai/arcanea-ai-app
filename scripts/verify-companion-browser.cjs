@@ -25,6 +25,7 @@ const source = [
   "apps/web/components/chat/chat-input-bar.tsx",
   "apps/web/components/chat/agent-header.tsx",
   "apps/web/app/chat/page.tsx",
+  "apps/web/app/layout.tsx",
   "apps/web/lib/chat/error-message.ts",
   "packages/design-system/src/companion.module.css",
   "packages/design-system/src/tokens.css",
@@ -499,7 +500,7 @@ async function main() {
     await open.focus();
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(/\/worlds\/create\?resume=1$/);
-    await expect(page.getByRole("main")).toBeVisible();
+    await expect(page.locator("#main-content")).toBeVisible();
     await authenticateCreator();
     const edit = page.getByRole("button", {
       name: "Edit world draft",

@@ -303,3 +303,37 @@ browser 368,855 and review 464,643. Each fits the unchanged 512,000 bound with
 the committed source, current catalog and scanned hosted dispatch must still be
 verified. No provider call was made by the sizing check. Earlier one-packet
 admission is superseded by this complete partition; the actual refusal remains.
+
+## Nested landmark and retained review timeout
+
+At faed3d4372f278bc7f5ff5840d04086d928cf630, compiled114597846347 is
+terminal FAILURE on the ambiguous creator main landmark. The actual DOM contains
+both root #main-content and the creator's nested main. The fixture targets the
+existing root content landmark, also used by the root skip link. Creator session,
+editor and all other assertions remain. The nested main is an accessibility defect
+still to fix in the occupied creator-page lane: ops-f58e03ef6eff135b49a5,
+owner codex:01a123df-58c6-72f3-b86c-65083426cf65. That page was inspected through
+its Git source and remains read-only here; the broader quality requirement stays
+open rather than being hidden by the scoped assertion.
+
+Independent114597846169 is terminal TimeoutError after dispatch. The actual
+hosted failure is retained, without an earned verdict. Complete-source catalog
+preflight at exact faed passes all four requests with current zero pricing and
+512,000 context: 434,401, 291,065, 368,855 and 465,961 encoded bytes; 56 complete
+sources and all 13 changed paths are accounted for. This proves admission only,
+not reviewer quality, completion or stronger independent acceptance. No timeout
+increase, automatic retry, paid model call or permission bypass was introduced.
+
+Read-only current catalog discovery finds only the existing DOTS model meeting
+the admitted zero-price, structured-output and at-least-512,000 context criteria.
+No automatic alternative is selected. The independent job now depends on the
+compiled recovery job, preserving all review triggers and denial gates while
+avoiding inference on a candidate whose browser proof has already failed.
+Compiled success still cannot substitute for an independent verdict. Local
+capacity remains held; no agent fanout, local reviewer or full build was started.
+
+CI38182499505 at faed is terminal SUCCESS, including Build114598489836 and
+CIStatus114599175421. The root layout is added as a complete browser review
+context and capture source binding because it defines the content landmark.
+The new aggregate has 57 complete files; historical 56-file evidence remains
+unchanged. Public-source dispatch still requires current exact-revision admission.

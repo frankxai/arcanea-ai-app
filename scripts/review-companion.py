@@ -58,6 +58,7 @@ WORLD_PATHS = frozenset({
     "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md",
 })
 WORLD_CONTEXTS = tuple(sorted(set(CONTEXTS) | WORLD_PATHS | {
+    "apps/web/app/layout.tsx",
     "apps/web/app/chat/page.tsx", "apps/web/hooks/use-conversation.ts",
     "apps/web/components/lumina/companion-chat.tsx", "apps/web/components/lumina/lumina-bubble.tsx",
     "apps/web/components/chat/chat-area.tsx", "apps/web/components/chat/chat-overlays.tsx",
@@ -299,6 +300,7 @@ def modules(changed, content, branch=BRANCH):
                 "apps/web/hooks/use-provider.ts",
                 "scripts/tests/chat-world-handoff.test.cjs"},
             "world-browser": common | identity | handoff | creator | {
+                "apps/web/app/layout.tsx",
                 "apps/web/app/chat/page.tsx", "apps/web/components/chat/chat-area.tsx",
                 "apps/web/components/chat/agent-header.tsx", "packages/design-system/src/tokens.css",
                 "packages/design-system/src/companion.module.css"},

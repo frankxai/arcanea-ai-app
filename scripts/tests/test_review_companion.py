@@ -120,6 +120,7 @@ class ReviewAdmission(unittest.TestCase):
         for name in ("world-client", "world-browser"):
             self.assertTrue({"apps/web/app/worlds/create/page.tsx", "apps/web/lib/chat/world-handoff.ts",
                              "apps/web/lib/worlds/draft.ts", "apps/web/lib/auth/context.tsx"} <= set(planned[name]))
+        self.assertIn("apps/web/app/layout.tsx", planned["world-browser"])
         for path in required:
             incomplete = {key: value for key, value in content.items() if key != path}
             with self.subTest(path=path), self.assertRaises(REVIEW.Denied):
