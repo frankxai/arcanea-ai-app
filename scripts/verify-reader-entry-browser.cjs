@@ -87,7 +87,7 @@ async function readChapter(page, href, text) {
           ),
         ) === normalizeTitle(title),
     ),
-    "The chapter header must not repeat before the prose",
+    `The chapter header must not repeat before the prose: ${href}, ${title}`,
   );
   const layout = await article.evaluate((element) => {
     const rect = element.getBoundingClientRect();
@@ -170,6 +170,11 @@ async function recoverMissingChapter(page, href, mode, capture) {
       "apps/web/components/navigation/navbar.tsx",
       "packages/design-system/src/tokens.css",
       "apps/web/next.config.js",
+      "apps/web/app/books/books-data.ts",
+      "book/chapters/book1/01-the-storm-that-remembered.md",
+      "book/chapters/book1/04-the-triennium.md",
+      "book/chapters/book1/10-the-foundation-opens.md",
+      "book/song-of-van-linh/chapters/02-the-frequency-of-starlings.md",
       "book/forge-of-ruin/chapters/00-prologue.md",
       "book/heart-of-pyrathis/chapters/01-the-cold-season.md",
       "book/tides-of-silence/chapters/01-the-gyres-hymn.md",

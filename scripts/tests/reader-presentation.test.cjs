@@ -238,6 +238,64 @@ test("numbered chapter headings match the existing loader conventions only", () 
   assert.equal(getReaderContent(source, bookTitle, title), source);
 });
 
+test("legacy book and series headings are kept before an exact numbered chapter title", () => {
+  const prefix =
+    "# The Gate of Foundation\n\n## Book One of the Arcanea Saga\n\n---\n\n";
+  const source = prefix + "# Chapter One: The missing bell\n\n" + prose;
+  assert.equal(getReaderContent(source, bookTitle, title), prefix + prose);
+  for (const interruption of [
+    "A dedication.\n\n",
+    "```md\n# a heading\n```\n\n",
+    "> A quotation.\n\n",
+    "### A section\n\n",
+  ]) {
+    const content =
+      prefix + interruption + "# Chapter One: The missing bell\n\n" + prose;
+    assert.equal(getReaderContent(content, bookTitle, title), content);
+  }
+});
+
+test("actual featured legacy chapters preserve their book/series and original scene source", async () => {
+  const matter = appRequire("gray-matter");
+  const { chapterTitleFromMarkdown } = loadTs(
+    "apps/web/lib/saga/chapter-files.ts",
+    { "gray-matter": matter },
+  );
+  for (const filename of [
+    "01-the-storm-that-remembered.md",
+    "04-the-triennium.md",
+    "10-the-foundation-opens.md",
+  ]) {
+    const markdown = execFileSync(
+      "git",
+      ["show", `HEAD:book/chapters/book1/${filename}`],
+      { cwd: repo, encoding: "utf8" },
+    );
+    const title = chapterTitleFromMarkdown(markdown, filename);
+    const content = matter(markdown).content;
+    const rendered = await renderReader(content, {
+      bookTitle: "The Three Academies",
+      title,
+    });
+    assert.equal(
+      rendered.headings.filter(
+        (h) => h.text.replace(/^Chapter\s+\w+:\s+/, "") === title,
+      ).length,
+      1,
+      filename,
+    );
+    assert.ok(
+      rendered.headings.some((h) => h.text === "The Gate of Foundation"),
+      filename,
+    );
+    assert.ok(
+      rendered.headings.some((h) => h.text === "Book One of the Arcanea Saga"),
+      filename,
+    );
+    assert.equal(rendered.sceneSource, content, filename);
+  }
+});
+
 test("four actual public entry manuscripts render one opening chapter title and preserve scene source", async () => {
   const matter = appRequire("gray-matter");
   const { chapterTitleFromMarkdown } = loadTs(

@@ -16,24 +16,27 @@ export function getReaderContent(
     [bookTitle, chapterTitle].map(normalizeTitle).filter(Boolean),
   );
   const consumed = new Set<string>();
-  let end = 0;
+  let keptFrom = 0;
+  let prefix = "";
+  let omittedHeading = false;
+  let otherHeading = false;
   for (const line of content.matchAll(/[^\r\n]*(?:\r\n|\n|\r|$)/g)) {
     if (!line[0]) break;
     const text = line[0].replace(/[\r\n]+$/, "");
     const next = (line.index ?? 0) + line[0].length;
     if (/^[ \t]*$/.test(text)) {
-      if (consumed.size) end = next;
+      if (omittedHeading) keptFrom = next;
       continue;
     }
-    // Separators are part of the opening title block only after a match.
+    // Preserve separators around unmatched book/series headings.
     if (
-      consumed.size &&
       /^ {0,3}(?:(?:\*[ \t]*){3,}|(?:-[ \t]*){3,}|(?:_[ \t]*){3,})$/.test(text)
     ) {
-      end = next;
+      if (omittedHeading) keptFrom = next;
+      else if (!otherHeading) break;
       continue;
     }
-    // Stop at prose, code, quotes, an unrelated heading, or a repeated title.
+    // Stop at prose, code, quotes, or a repeated title.
     // H3 and deeper headings are meaningful sections, even if names match.
     const heading = text.match(/^ {0,3}#{1,2}[ \t]+(.+?)[ \t]*$/);
     if (!heading) break;
@@ -48,9 +51,23 @@ export function getReaderContent(
       normalizeTitle(chapterName) === normalizeTitle(chapterTitle)
         ? normalizeTitle(chapterTitle)
         : headingTitle;
-    if (!titles.has(title) || consumed.has(title)) break;
+    if (!titles.has(title)) {
+      // Some accepted manuscripts have a different legacy book/series heading.
+      // Preserve it, but permit an explicit numbered chapter title below it.
+      otherHeading = true;
+      omittedHeading = false;
+      continue;
+    }
+    if (consumed.has(title)) break;
+    const numberedChapter =
+      chapterName !== heading[1] &&
+      normalizeTitle(chapterName) === normalizeTitle(chapterTitle);
+    if (otherHeading && !numberedChapter) break;
+    const kept = content.slice(keptFrom, line.index ?? 0);
+    if (prefix || kept.trim()) prefix += kept;
     consumed.add(title);
-    end = next;
+    keptFrom = next;
+    omittedHeading = true;
   }
-  return consumed.size ? content.slice(end) : content;
+  return consumed.size ? prefix + content.slice(keptFrom) : content;
 }
