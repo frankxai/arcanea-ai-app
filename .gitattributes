@@ -1,0 +1,41 @@
+# Git line ending normalization across Windows workstation and Linux CI
+* text=auto eol=lf
+
+# Windows scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Code and configuration
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.sql text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+
+# Binary media assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.mp4 binary
+*.mp3 binary
+*.wasm binary
