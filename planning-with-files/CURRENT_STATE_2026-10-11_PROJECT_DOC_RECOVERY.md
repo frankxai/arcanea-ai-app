@@ -1,6 +1,6 @@
 # Project document recovery
 
-Status: draft PR585; authenticated acceptance candidate in preparation, no release or production document migration.
+Status: draft PR585; real hosted SQL and source gates pass. Mobile authenticated recovery passes at fb14788f; desktop/reduced-motion login test ambiguity is corrected locally. Back/Forward acceptance is newly added and unproven. No release or production document migration.
 
 Scope: retain a creator's project document and its history through conflicting edits,
 failed history writes, lost acknowledgements and account changes.
@@ -225,3 +225,24 @@ than inheriting a prior download click's pointer focus. The assertion and all
 zero-error/account/recovery gates remain. This is diagnostic/test refinement;
 login or product navigation fixes are not claimed. Current failures still need
 actual diagnosis, correction and fresh exact-review/hosted acceptance.
+
+## Hosted browser diagnosis at fb14788f7b0dc498e72ee51cc66de9cf415252b0
+
+Manual run38149986966 executed the actual compiled browser fixture. Mobile passes
+all six recovery/isolation checks, three real password logins, zero page errors and
+zero supplier posts. Desktop/reduced-motion fail before authentication at the
+submit-password substep. The actual render and UserNav source show two exact
+Sign In buttons (desktop navigation and password form); the fixture used an
+unscoped strict button locator. The corrected fixture submits the one form owning
+the Email input. No product login behavior, timeout, authentication, assertion or
+account boundary is weakened or bypassed. The previous failure remains retained.
+
+The current fixture also checks real document-list navigation, native Back, Forward
+and return to the saved document, with exact cloud text retained. Existing native
+Back protection alone did not certify Forward; this expanded case is unproven until
+its actual hosted result. Source review for fb14788f is PASS from Gemini3.1Pro with
+35 actual Git-byte hashes verified. Build completion is observed separately.
+
+Fixture cleanup removed its private configuration with no failures. This is isolated
+Auth/PostgreSQL acceptance, not production or customer usefulness. The full objective
+remains active; the private-storage cost decision remains unanswered.

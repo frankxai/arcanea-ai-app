@@ -240,7 +240,14 @@ async function main() {
           .getByLabel("Password", { exact: true })
           .fill(account.password);
         result.loginStep = "submit-password";
-        await tab.getByRole("button", { name: "Sign In", exact: true }).click();
+        // The desktop header also opens an auth modal. Submit this password form.
+        const form = tab.locator("form").filter({
+          has: tab.getByLabel("Email", { exact: true }),
+        });
+        await expect(form).toHaveCount(1);
+        await form
+          .getByRole("button", { name: "Sign In", exact: true })
+          .click();
         result.loginStep = "wait-destination";
         await tab.waitForURL((url) => url.pathname === "/settings/providers");
         result.loginStep = "verify-account-settings";
@@ -533,6 +540,22 @@ async function main() {
         result.checks.push(
           "storage-memory-export-native-back-touch-focus-no-overflow",
         );
+
+        stage = "saved-document-back-forward";
+        const listPath = `/projects/${project.id}/docs`;
+        await page
+          .getByRole("link", { name: "Documents", exact: true })
+          .click();
+        await page.waitForURL((url) => url.pathname === listPath);
+        await page.evaluate(() => history.back());
+        await expect(title).toHaveValue("Saved in the other tab");
+        await expect(editor).toHaveText(memory.content_text);
+        await page.evaluate(() => history.forward());
+        await page.waitForURL((url) => url.pathname === listPath);
+        await page.evaluate(() => history.back());
+        await expect(title).toHaveValue("Saved in the other tab");
+        await expect(editor).toHaveText(memory.content_text);
+        result.checks.push("saved-document-back-forward-retains-cloud-content");
 
         stage = "late-old-account-response-and-stale-form";
         blockWrites = true;
