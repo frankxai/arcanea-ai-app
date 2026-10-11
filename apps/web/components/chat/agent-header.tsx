@@ -101,6 +101,7 @@ export function AgentHeader({
               collisionPadding={16}
               className={styles.modelMenu}
               aria-label="Choose a model"
+              aria-labelledby={undefined}
             >
               <DropdownMenu.RadioGroup
                 value={currentModel}

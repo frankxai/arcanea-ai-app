@@ -356,3 +356,27 @@ model inventory and disclosure source. No file, quote validation, output reserve
 or context bound is weakened to fit. Maximum six anonymous zero-price calls,
 240 seconds per call and 30 minutes per hosted job; no automatic retry or fallback.
 This supersedes the five-module contract for the refined candidate.
+
+At c61ad5cd4bdf316b98ba95e810d438b9e61e6e4c, all six packets pass local
+payload scanning and live zero-price/support/context admission with 46 complete
+source/context files and 24 changed paths. Lint and typecheck pass on the hosted
+candidate. The compiled browser reaches the new contrast assertions but fails
+to find the model menu by its specified accessible name. Actual installed Radix
+source supplies aria-labelledby from the trigger before spreading content props;
+that attribute overrides aria-label in accessible-name computation. The content
+now explicitly clears the inherited labelled-by attribute, preserving its intended
+Choose a model label. The fixture keeps the same name and recovery assertions.
+
+An external GitHub action advanced this branch to 7be4522688a67bad42ec12b58d4c6e7999e0e7b0,
+merging accepted auth main eeba317030e2b4b268d77f756c400e39ac917db9. The
+local owned branch fast-forwards to that published descendant and preserves the
+accepted auth Git object exactly; integration-only auth ownership is released.
+The c61 CI/Reading/independent handles are terminal cancelled, not still running.
+Their retained review receipt records one dispatched call with no result/verdict;
+no cost or quality result is inferred. The later 7be Companion run38169354969
+is terminal failed, with compiled114558542389 and independent114558542538 both
+failed. Consume its separate artifacts without relaunching that unchanged source.
+PR591 was externally marked ready and is restored to draft while browser acceptance
+fails and the separate paid review approval remains pending. This preserves the
+actual source merge; no high-risk promotion or funded review is authorized by
+readiness alone. Fresh checks are required for the name repair.
