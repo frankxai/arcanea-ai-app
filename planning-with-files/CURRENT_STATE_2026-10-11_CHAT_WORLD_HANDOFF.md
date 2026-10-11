@@ -197,3 +197,17 @@ without the invalid type assertions. No new portrait, asset or brand identity is
 introduced. The verifier checks that the path is absent and binds both helper and
 configuration source. This refinement has 38 combined native checks; compiled
 coverage needs a fresh actual run before acceptance.
+
+The next compiled114591039911 at db974437 is terminal FAILURE at a fixture
+expectation that empty-composer Send should be enabled. Actual source uses
+disabled={!canSend}; the retained, inspected desktop image confirms two creator
+messages, the visible prepared-world CTA and the corrected glyph. The assertion
+now waits for Send to return disabled after streaming, matching the real empty
+composer. All quota/reload/source/editor assertions remain. Four captures and
+the failure receipt are retained; browser/server cleanup passed and no page
+exception was recorded. Hosted TypeScript114591201641 and Lint114591201648 pass.
+
+Updating the reviewable PR description caused GitHub's existing edited-event gate
+to replace initial db runs38180133050/38180133072 with38180214158/38180214167.
+The earlier pair is terminal cancelled, not an observation timeout or a manual
+restart. The same source revision is retained. No workflow trigger is removed.

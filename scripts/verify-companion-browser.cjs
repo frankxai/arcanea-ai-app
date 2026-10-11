@@ -400,7 +400,7 @@ async function main() {
       .click();
     await expect(
       page.getByRole("button", { name: "Send message", exact: true }),
-    ).toBeEnabled();
+    ).toBeDisabled();
     await expect(
       page.getByText("/images/luminors/default.webp", { exact: true }),
     ).toHaveCount(0);
