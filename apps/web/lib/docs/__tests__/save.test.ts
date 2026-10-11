@@ -12,6 +12,11 @@ import {
   verifiedDocumentReceipt,
   documentSaveLimit,
 } from "@/lib/docs/save";
+import {
+  createDocumentDraft,
+  readDocumentBackup,
+  documentBackupKey,
+} from "@/lib/docs/client";
 
 const project = "10000000-0000-4000-8000-000000000001";
 const doc = "20000000-0000-4000-8000-000000000002";
@@ -25,6 +30,317 @@ const body = {
   content_text: "Retained creator draft",
   word_count: 3,
 };
+
+test("reload replays a persisted uncertain operation without minting another identity", async () => {
+  const pending = parseDocumentOperation(body);
+  const sent: unknown[] = [];
+  const writer = createDocumentWriter(
+    { user: owner, project, doc },
+    6,
+    async (op) => {
+      sent.push(op);
+      return {
+        user_id: owner,
+        project_id: project,
+        doc_id: doc,
+        operation_id: operation,
+        revision: 6,
+      };
+    },
+    () => {
+      throw Error("must replay");
+    },
+    pending,
+  );
+  await writer.save(pending.patch);
+  assert.deepEqual(sent, [pending]);
+  assert.equal(writer.revision(), 6);
+});
+
+test("a mounted document keeps the latest edit through failed acknowledgement and reload", async () => {
+  const scope = { user: owner, project, doc };
+  const values = new Map<string, string>();
+  const storage = {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      values.set(key, value);
+    },
+    removeItem: (key: string) => {
+      values.delete(key);
+    },
+  };
+  const initial = { title: "World notes", content_text: "old" };
+  const draft = createDocumentDraft(
+    scope,
+    5,
+    initial,
+    async () => {
+      throw Error("lost acknowledgement");
+    },
+    storage,
+    () => true,
+  );
+  draft.edit({ ...initial, content_text: "first edit" });
+  await assert.rejects(draft.flush());
+  draft.edit({ ...initial, content_text: "latest edit" });
+  const backup = readDocumentBackup(storage, scope)!;
+  assert.equal(backup.value.content_text, "latest edit");
+  assert.equal(backup.pending?.patch.content_text, "first edit");
+  const sent: string[] = [];
+  const reopened = createDocumentDraft(
+    scope,
+    6,
+    initial,
+    async (op) => {
+      sent.push(op.operation_id);
+      return {
+        user_id: owner,
+        project_id: project,
+        doc_id: doc,
+        operation_id: op.operation_id,
+        revision: op.expected_revision + 1,
+      };
+    },
+    storage,
+    () => true,
+    backup,
+  );
+  await reopened.flush();
+  assert.equal(sent[0], backup.pending?.operation_id);
+  assert.notEqual(sent[0], sent[1]);
+  assert.equal(reopened.snapshot().dirty, false);
+  assert.equal(storage.getItem(documentBackupKey(scope)), null);
+});
+
+test("account changes deny sending and foreign recovery copies are not admitted", async () => {
+  const scope = { user: owner, project, doc };
+  let calls = 0;
+  const storage = {
+    getItem: () =>
+      JSON.stringify({
+        version: 1,
+        scope: { ...scope, user: "other" },
+        revision: 5,
+        value: { title: "foreign" },
+      }),
+    setItem: () => {},
+    removeItem: () => {},
+  };
+  assert.equal(readDocumentBackup(storage, scope), null);
+  const draft = createDocumentDraft(
+    scope,
+    5,
+    { title: "mine" },
+    async () => {
+      calls++;
+    },
+    storage,
+    () => false,
+  );
+  draft.edit({ title: "kept locally" });
+  await assert.rejects(draft.flush(), /account changed/i);
+  assert.equal(calls, 0);
+  assert.equal(draft.snapshot().dirty, true);
+});
+
+test("an edit made during an in-flight save stays dirty until its own acknowledgement", async () => {
+  const scope = { user: owner, project, doc };
+  const memory = new Map<string, string>();
+  const storage = {
+    getItem: (key: string) => memory.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      memory.set(key, value);
+    },
+    removeItem: (key: string) => {
+      memory.delete(key);
+    },
+  };
+  let acknowledge!: () => void;
+  let entered!: () => void;
+  const begun = new Promise<void>((resolve) => {
+    entered = resolve;
+  });
+  const held = new Promise<void>((resolve) => {
+    acknowledge = resolve;
+  });
+  let calls = 0;
+  const draft = createDocumentDraft(
+    scope,
+    5,
+    { title: "initial" },
+    async (op) => {
+      if (++calls === 1) {
+        entered();
+        await held;
+      }
+      return {
+        user_id: owner,
+        project_id: project,
+        doc_id: doc,
+        operation_id: op.operation_id,
+        revision: op.expected_revision + 1,
+      };
+    },
+    storage,
+    () => true,
+  );
+  draft.edit({ title: "first" });
+  const saving = draft.flush();
+  await begun;
+  draft.edit({ title: "latest" });
+  assert.equal(draft.snapshot().dirty, true);
+  assert.equal(readDocumentBackup(storage, scope)?.value.title, "latest");
+  acknowledge();
+  await saving;
+  assert.equal(calls, 2);
+  assert.equal(draft.revision(), 7);
+  assert.equal(draft.snapshot().dirty, false);
+});
+
+test("browser storage failure is visible while an editable draft can still save", async () => {
+  const scope = { user: owner, project, doc };
+  const storage = {
+    getItem: () => null,
+    setItem: () => {
+      throw Error("quota");
+    },
+    removeItem: () => {
+      throw Error("unavailable");
+    },
+  };
+  const draft = createDocumentDraft(
+    scope,
+    5,
+    { title: "initial" },
+    async (op) => ({
+      user_id: owner,
+      project_id: project,
+      doc_id: doc,
+      operation_id: op.operation_id,
+      revision: op.expected_revision + 1,
+    }),
+    storage,
+    () => true,
+  );
+  draft.edit({ title: "recover by download" });
+  assert.equal(draft.backupAvailable(), false);
+  assert.equal(draft.snapshot().value?.title, "recover by download");
+  await draft.flush();
+  assert.equal(draft.revision(), 6);
+  assert.equal(draft.snapshot().dirty, false);
+  assert.equal(draft.backupAvailable(), false);
+});
+
+test("account change during a held receipt keeps the original draft unconfirmed", async () => {
+  const scope = { user: owner, project, doc };
+  let current = true;
+  const storage = {
+    getItem: () => null,
+    setItem: () => {},
+    removeItem: () => {},
+  };
+  const draft = createDocumentDraft(
+    scope,
+    5,
+    { title: "initial" },
+    async (op) => {
+      current = false;
+      return {
+        user_id: owner,
+        project_id: project,
+        doc_id: doc,
+        operation_id: op.operation_id,
+        revision: op.expected_revision + 1,
+      };
+    },
+    storage,
+    () => current,
+  );
+  draft.edit({ title: "private A draft" });
+  await assert.rejects(draft.flush(), /account changed/i);
+  assert.equal(draft.revision(), 5);
+  assert.equal(draft.snapshot().dirty, true);
+  assert.equal(draft.pending()?.patch.title, "private A draft");
+});
+
+test("an old operation receipt cannot lower a newer acknowledged revision", async () => {
+  const pending = parseDocumentOperation(body);
+  const writer = createDocumentWriter(
+    { user: owner, project, doc },
+    7,
+    async () => ({
+      user_id: owner,
+      project_id: project,
+      doc_id: doc,
+      operation_id: operation,
+      revision: 6,
+    }),
+    undefined,
+    pending,
+  );
+  await assert.rejects(writer.save(pending.patch), /saved document changed/i);
+  assert.equal(writer.revision(), 7);
+  assert.equal(writer.pending()?.operation_id, operation);
+});
+
+test("opening a saved document does not erase an existing unreadable recovery copy", () => {
+  const scope = { user: owner, project, doc };
+  const raw = "{ damaged recovery bytes";
+  const storage = {
+    getItem: () => raw,
+    setItem: () => {
+      throw Error("must not write while opening");
+    },
+    removeItem: () => {
+      throw Error("must not erase while opening");
+    },
+  };
+  assert.equal(readDocumentBackup(storage, scope), null);
+  const draft = createDocumentDraft(
+    scope,
+    5,
+    { title: "saved document" },
+    async () => {},
+    storage,
+    () => true,
+  );
+  assert.equal(draft.snapshot().dirty, false);
+  assert.equal(storage.getItem(), raw);
+});
+
+test("recovery rejects future formats, foreign parents, invalid revisions and swapped pending actors", () => {
+  const scope = { user: owner, project, doc };
+  const valid = {
+    version: 1,
+    scope,
+    revision: 5,
+    value: { title: "retained" },
+    pending: parseDocumentOperation(body),
+  };
+  for (const change of [
+    { version: 2 },
+    { scope: { ...scope, project: "other" } },
+    { revision: -1 },
+    {
+      pending: {
+        ...valid.pending,
+        expected_actor: "50000000-0000-4000-8000-000000000005",
+      },
+    },
+    { pending: { ...valid.pending, expected_revision: 4 } },
+  ])
+    assert.equal(
+      readDocumentBackup(
+        {
+          getItem: () => JSON.stringify({ ...valid, ...change }),
+          setItem: () => {},
+          removeItem: () => {},
+        },
+        scope,
+      ),
+      null,
+    );
+});
 function request(value: unknown = body) {
   return new NextRequest(
     "http://fixture.invalid/api/projects/" + project + "/docs/" + doc,

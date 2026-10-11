@@ -46,8 +46,12 @@ system installation, database credential retrieval or CLI database call occurred
 
 ## Verification and release limits
 
-Actual small native checks pass: ten save/receipt/recovery cases and all six existing
-docs API contracts. Changed-source ESLint, formatter and whitespace checks pass.
+Actual small native checks pass: nineteen save/receipt/recovery cases and all six
+existing docs API contracts. Three new reload/account recovery cases failed before
+the client correction and passed afterward. Selected real-source/import TypeScript
+compilation has zero diagnostics, with the actual installed node/three type roots.
+This is not a full workspace typecheck. Changed-source ESLint, formatter and
+whitespace checks pass without new warning suppressions.
 These checks use controlled database responses; they do not establish SQL rollback,
 real authentication, browser behavior or customer usefulness.
 
@@ -57,10 +61,20 @@ operation replay, atomic creation and forced history-error rollback. It refuses 
 database with an existing auth schema before DDL. CI wiring exists locally; this
 test has not run.
 
-The current editor page still sends the old revisionless contract. Do not push this
-checkpoint as a ready product, merge it, apply its SQL to production or claim that
-project editing is repaired. Complete the caller, immediate draft backup, recovery,
-conflict preservation, exact acknowledgement handling and export first.
+The editor now sends the revision/actor/operation contract through the existing
+createDraftSession single writer. Every edit immediately updates an account/project/
+document-scoped recovery copy. Its uncertain operation survives reload and is replayed
+before a newer edit. Scoped GET and save receipts are verified; account-epoch changes
+reject late results. Storage failure stays visible while the editable draft can still
+save or download. Invalid/future/foreign recovery envelopes are not admitted; an
+unreadable original copy is protected from writes/removal and has an explicit raw
+download. The editor offers retry, full structured draft export and a confirmed reopen
+of the saved version. It guards page unload and link navigation with dirty drafts,
+checks deletion acknowledgement and uses token-based, 44px recovery controls.
+
+These are locally implemented behaviors, not rendered or live acceptance. Do not
+merge, apply this SQL to production, or claim complete project-document recovery
+until real SQL, authenticated browser, full workspace and independent review gates pass.
 
 Acceptance: native and actual SQL tests; authenticated compiled desktop/mobile and
 reduced-motion save/reopen/export and account-switch cases; interruption recovery;
@@ -68,22 +82,27 @@ exact-revision independent source review; build/types/lint/security; protected m
 source-bound production verification. Compare actual usable output and repair effort
 against an existing editor workflow before a paid workspace claim.
 
-Next action: wire the existing editor to the retained operation/revision writer and
-account-scoped draft recovery. Reuse createDraftSession for one mounted writer.
-Then obtain real hosted SQL/browser evidence and independent review.
+Next action: obtain real hosted SQL and full workspace checks on the draft PR,
+then exact-source independent review and authenticated compiled browser acceptance.
+Test actual reload, held acknowledgement, storage failure, unreadable backup export,
+conflict download/reopen, metadata concurrency, account switch and mobile focus.
+Browser back/forward and the rich editor image-upload ownership path still need
+explicit investigation; link/unload guards do not prove those behaviors.
 
 ## Design preparation
 
 Emil design engineering, TASTE.md and DESIGN.md were read for the existing surface.
-No visual change has been applied yet. Root DESIGN.md contains historical guidance
+The editor recovery controls have now been applied locally, with canonical CSS
+variables verified against packages/design-system/src/tokens.css and its actual
+globals.css import. Rendered acceptance remains open. Root DESIGN.md contains historical guidance
 that conflicts with TASTE.md and Frank's current Higgsfield ban; the current ban and
 root contract govern. No visual generation or new design suppression occurred.
 
-| Existing behavior                  | Proposed behavior                                      | Why                                         |
-| ---------------------------------- | ------------------------------------------------------ | ------------------------------------------- |
-| Saved follows HTTP status alone    | Saved follows an owner/operation/revision receipt      | An unconfirmed edit must remain recoverable |
-| Save failed has no recovery action | Retry, preserve conflicting draft, reopen and download | Let a creator recover without losing text   |
-| Small controls                     | Token-based 44px controls with visible focus           | Keyboard and mobile recovery must work      |
+| Existing behavior                    | Proposed behavior                                      | Why                                         |
+| ------------------------------------ | ------------------------------------------------------ | ------------------------------------------- |
+| Saved followed HTTP status alone     | Saved follows an owner/operation/revision receipt      | An unconfirmed edit must remain recoverable |
+| Save failure lacked recovery actions | Retry, preserve conflicting draft, reopen and download | Let a creator recover without losing text   |
+| Small controls                       | Token-based 44px controls with visible focus           | Keyboard and mobile recovery must work      |
 
 Rollback: before release, preserve this branch and correct it. After a future release,
 disable edits if the contract cannot be met; retain all history, content and recovery

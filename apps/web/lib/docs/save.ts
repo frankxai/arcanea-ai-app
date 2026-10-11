@@ -203,6 +203,7 @@ export function createDocumentWriter(
   initialRevision: number,
   send: (operation: DocumentOperation) => Promise<unknown>,
   newId: () => string = () => crypto.randomUUID(),
+  restoredPending?: DocumentOperation,
 ) {
   if (
     !Number.isSafeInteger(initialRevision) ||
@@ -213,7 +214,22 @@ export function createDocumentWriter(
       "Reopen a supported saved revision before editing.",
     );
   let revision = initialRevision;
-  let pending: DocumentOperation | undefined;
+  let pending = restoredPending
+    ? parseDocumentOperation({
+        expected_actor: restoredPending.expected_actor,
+        operation_id: restoredPending.operation_id,
+        expected_revision: restoredPending.expected_revision,
+        ...restoredPending.patch,
+      })
+    : undefined;
+  if (
+    pending &&
+    (pending.expected_actor !== scope.user ||
+      pending.expected_revision > initialRevision)
+  )
+    throw new DocumentSaveError(
+      "Recovery copy does not match this account or revision.",
+    );
   let draining: Promise<void> | undefined;
   async function commit(operation: DocumentOperation) {
     const receipt = verifiedDocumentReceipt(
@@ -221,6 +237,13 @@ export function createDocumentWriter(
       scope,
       operation,
     );
+    // A replay can acknowledge an older edit after another tab has saved.
+    // Keep the pending operation until the creator resolves that conflict.
+    if (receipt.revision < revision)
+      throw new DocumentSaveError(
+        "The saved document changed. Download your draft and reopen it.",
+        409,
+      );
     revision = receipt.revision;
     pending = undefined;
   }
