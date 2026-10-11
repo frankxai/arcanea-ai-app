@@ -573,6 +573,7 @@ async function verifyAccountCredentials(browser, mode) {
     reducedMotion: mode.motion,
   });
   let releasePending;
+  let page;
   try {
     // Real compiled Supabase subscribers receive synthetic cross-tab events.
     // No credentials, login, database writes or provider execution are real.
@@ -599,7 +600,7 @@ async function verifyAccountCredentials(browser, mode) {
             "user:fixture-account-a",
             { google: "fixture-account-a-key" },
             "google",
-            "arcanea-auto",
+            "arcanea-gemini-pro",
           ],
           [
             "user:fixture-account-b",
@@ -634,7 +635,7 @@ async function verifyAccountCredentials(browser, mode) {
         return nativeFetch.call(this, input, init);
       };
     });
-    const page = await context.newPage();
+    page = await context.newPage();
     page.setDefaultTimeout(15000);
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
@@ -717,15 +718,16 @@ async function verifyAccountCredentials(browser, mode) {
     });
     await expect(input).toBeVisible();
     await event("fixture-account-a");
-    // Saving a provider clears its old model choice; choose one through chat.
-    await page
-      .getByRole("button", { name: "Model: Auto", exact: true })
-      .click();
-    await page.getByPlaceholder("Search models...").fill("Flash");
-    await page.getByRole("option", { name: /Flash/ }).click();
-    await expect(
-      page.getByRole("button", { name: "Model: Flash", exact: true }),
-    ).toBeVisible();
+    // AgentHeader renders this picker; CompactModelPicker is currently unused.
+    const modelButton = (label) =>
+      page.getByRole("button").filter({
+        has: page.getByText(label, { exact: true }),
+      });
+    // Distinct initial models wait for the actual account-specific state.
+    await expect(modelButton("Gemini Pro")).toBeVisible();
+    await modelButton("Gemini Pro").click();
+    await modelButton("Flash").click();
+    await expect(modelButton("Flash")).toBeVisible();
     await input.fill("Same-account draft fixture");
     await event("fixture-account-a", "TOKEN_REFRESHED");
     await expect(input).toHaveValue("Same-account draft fixture");
@@ -738,9 +740,7 @@ async function verifyAccountCredentials(browser, mode) {
     assert.equal(posts[0].clientApiKey, "fixture-account-a-key");
     assert.equal(posts[0].gatewayModel, "arcanea-gemini-flash");
     await event("fixture-account-b");
-    await expect(
-      page.getByRole("button", { name: "Model: GPT-5", exact: true }),
-    ).toBeVisible();
+    await expect(modelButton("GPT-5")).toBeVisible();
     await expect
       .poll(() => page.evaluate(() => window.__accountChatAborts))
       .toBe(1);
@@ -758,13 +758,9 @@ async function verifyAccountCredentials(browser, mode) {
     assert.equal(posts[1].clientApiKey, "fixture-account-b-key");
     assert.equal(posts[1].gatewayModel, "arcanea-gpt5");
     await event("fixture-account-a");
-    await expect(
-      page.getByRole("button", { name: "Model: Flash", exact: true }),
-    ).toBeVisible();
+    await expect(modelButton("Flash")).toBeVisible();
     await event(null);
-    await expect(
-      page.getByRole("button", { name: "Model: Auto", exact: true }),
-    ).toBeVisible();
+    await expect(modelButton("Auto")).toBeVisible();
     await input.fill("Guest fixture request");
     await page
       .getByRole("button", { name: "Send message", exact: true })
@@ -792,6 +788,30 @@ async function verifyAccountCredentials(browser, mode) {
       realLogin: false,
       providerRequests: 0,
     };
+  } catch (error) {
+    if (page) {
+      await fs.mkdir("screenshots", { recursive: true });
+      await fs
+        .writeFile(
+          `screenshots/account-credentials-${mode.name}-failure.json`,
+          JSON.stringify(
+            {
+              sourceCommit: process.env.GITHUB_SHA || null,
+              mode: mode.name,
+              url: page.url(),
+              error: error.message,
+              snapshot: await page.locator("body").ariaSnapshot(),
+              syntheticAuthEvents: true,
+              realLogin: false,
+              providerRequests: 0,
+            },
+            null,
+            2,
+          ),
+        )
+        .catch(() => {});
+    }
+    throw error;
   } finally {
     releasePending?.();
     await context.close();

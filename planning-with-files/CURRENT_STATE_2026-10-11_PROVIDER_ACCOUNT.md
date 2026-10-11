@@ -175,3 +175,37 @@ Authenticated settings UI, including same-turn stale save, remains an explicit
 release requirement. The existing author fixture is source-bound to another
 isolated preview; its account configuration cannot be silently repurposed. A
 secure configuration-location question is pending while independent work proceeds.
+
+## Promotion and follow-up
+
+Frank merged PR576 at `0661416b66c2674eb63a84a9597ca1163eb2d378` while the
+later SDK fix `ec63769aaee38df41a0e06ef5223b68da56cf289` was still outside that
+PR's accepted head. Production deployment `dpl_DrRY9DDU4YHQDQoB34E9XYRFbqZA`
+reports READY for the merge source; canonical HTTP and authenticated settings
+acceptance have not been established. The SDK regression also reproduces on
+that exact merged source: a late A error invokes B's callback before passive
+cleanup. The explicit-instance fix passes the same regression. This is actual
+installed SDK/application source with synthetic React scheduling and transport.
+
+The follow-up integrates accepted main into the existing owned feature branch,
+preserving incoming generation574 and routing changes. Only the conversation
+hook, SDK regression, existing native CI step, browser verifier and this pickup
+are intended to differ from accepted main. Native ownership/security checks
+remain enabled. The newer branch-name claim was refused because the active
+claim belongs to the existing branch; that branch and claim are retained.
+
+Hosted run [38118469758](https://github.com/frankxai/arcanea-ai-app/actions/runs/38118469758)
+at ec63769 passes TypeScript, Lint and app compilation, then fails the account
+fixture because it targets the unused CompactModelPicker. The verifier now uses
+AgentHeader's rendered buttons and distinct initial account models to await the
+actual account state. Failed account runs retain an aria snapshot. Fresh hosted
+execution is required. The authenticated settings fixture failures on 84147 and
+4c991 remain recorded; public chat does not prove protected settings saves.
+
+Independent review at 4c991: the eleven-source core review returned WARN with
+nine findings requiring lead reconciliation; the chat review returned malformed
+JSON and supplies no valid verdict. Earlier Lightning review truncated. These
+are partial attempts, not release approval. Fresh review-lite admission at
+06:40 UTC returned HOLD, 4,348 MB available / 6,144 MB required; no further
+reviewer, browser or additional agent was started. Complete exact-revision
+review and authorized two-account settings verification remain release gates.
