@@ -18,6 +18,7 @@ same tree. Node 24 and pinned pnpm 11.28.4 govern this work, as Frank confirmed.
 Files:
 
 - `apps/web/components/saga/chapter-reader.tsx`
+- `apps/web/app/books/[bookId]/[chapterId]/page.tsx`
 - `apps/web/app/books/[bookId]/[chapterId]/not-found.tsx`
 - `scripts/verify-reader-entry-browser.cjs`
 - this current-state record
@@ -37,7 +38,8 @@ Acceptance criteria:
 - Missing chapters show a readable explanation and a working books link with
   application bundles blocked and with hydration enabled. Unknown books disclose
   no chapter prose.
-  Existing `notFound()` visibility checks and noindex behavior remain intact.
+  Existing fail-closed visibility checks remain intact. Missing-page metadata
+  explicitly prevents indexing; generic recovery exposes no private book details.
 - Existing desktop, touch, reduced-motion, featured entry, next/previous, reload,
   and browser-back journeys continue to pass without runtime errors.
 - Required build, types, lint, exact-source independent review and inspected
@@ -47,14 +49,14 @@ Acceptance criteria:
 Verification: the existing CI Build executes
 `node scripts/verify-reader-entry-browser.cjs` on ready PRs and main. Retain its
 built/source commits, run and attempt, layouts, screenshots and failed receipts.
-Run local syntax/format checks using existing dependencies. Review the four-file
+Run local syntax/format checks using existing dependencies. Review the five-file
 delta plus the existing renderer, route, visibility policy, tokens and CI context.
 No paid inference is needed. Local build preflight returned HOLD: 4,230 MB RAM
 free versus 8,192 MB required, 27 task runtimes. Use hosted CI; start no local
 build, browser, server or additional agent. Ordinary edits and small checks remain
 permitted under the machine contract.
 
-Rollback: revert only this four-file repair through the normal reviewed path,
+Rollback: revert only this five-file repair through the normal reviewed path,
 preserving manuscripts, canon, other owners' edits and accepted account recovery.
 
 ## Reproduction and implementation decision
@@ -177,3 +179,25 @@ main. All 24 reader/review-context sources remain byte-identical during integrat
 The current four-file delta is renewed against this base because branch protection
 requires up-to-date source. No narrative experiment, paid inference or funding
 authorization is performed by this reader slice.
+
+## Direct server recovery after the first blocked-bundle run
+
+At headaa68ceac, actual CI38135057231 confirms all four desktop chapters have
+visible, opaque source prose with Next bundles blocked. Artifact11700987302 binds
+the browser to built mergee5ba28085279569cfce8f0475ecee86b66c8ed87 and records
+all denied chunk paths. The run then fails on the missing-address heading; mobile
+and hydrated modes are not executed. No promotion occurred. The inspected desktop
+frame shows real prose instead of the previous loading screen.
+
+The async `notFound()` control flow does not show the local boundary with the app
+bundle denied. Return the same generic recovery component directly when chapter
+loading denies the address; set `robots.index: false` in missing metadata. This
+human reading route returns an unavailable document with HTTP200, matching the
+already permitted streamed status; it is not a new HTTP404 guarantee. Keep dynamic
+rendering and the source visibility gate. Reject inherited object properties before
+book lookup so prototype-shaped unknown addresses also receive generic recovery.
+
+The verifier follows that prototype-shaped address on both initial-document modes
+and captures a missing page before assertions, retaining a useful failure frame.
+The final delta again has five files. Renew exact-source review and hosted proof;
+the previous24-source static PASS does not establish this new recovery behavior.

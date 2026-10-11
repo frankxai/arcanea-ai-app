@@ -85,6 +85,7 @@ async function readChapter(page, href, text) {
 async function recoverMissingChapter(page, href, mode, capture) {
   const response = await page.goto(base + href);
   const status = response?.status() ?? null;
+  if (capture) await page.screenshot({ path: `${output}/${capture}` });
   // Next may have sent a streamed 200 before its notFound boundary renders.
   assert.ok(status === 404 || status === 200, "Missing chapter response");
   await expect(page.getByRole("article")).toHaveCount(0);
@@ -208,6 +209,7 @@ async function recoverMissingChapter(page, href, mode, capture) {
         for (const href of [
           "/books/forge-of-ruin/not-a-real-chapter",
           "/books/not-a-real-book/not-a-real-chapter",
+          "/books/__proto__/not-a-real-chapter",
         ]) {
           const capture = `${mode.name}-initial-missing-${record.recovery.length}.png`;
           record.screenshots.push(capture);
