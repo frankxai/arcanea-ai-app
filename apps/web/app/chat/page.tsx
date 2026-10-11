@@ -102,10 +102,24 @@ import entryStyles from "@arcanea/design-system/entry-handoff.module.css";
 
 export default function ChatPage() {
   const { user } = useAuth();
-  return <AccountChatPage key={user?.id ?? "guest"} />;
+  // Only the opaque reference survives an account change; message content does not.
+  const [retainedEntryId, setRetainedEntryId] = useState<string | null>(null);
+  return (
+    <AccountChatPage
+      key={user?.id ?? "guest"}
+      retainedEntryId={retainedEntryId}
+      onRetainEntryId={setRetainedEntryId}
+    />
+  );
 }
 
-function AccountChatPage() {
+function AccountChatPage({
+  retainedEntryId,
+  onRetainEntryId,
+}: {
+  retainedEntryId: string | null;
+  onRetainEntryId: (id: string | null) => void;
+}) {
   const { user, isLoading: authLoading } = useAuth();
   const draftOwner = user?.id ?? null;
   const chatSessions = useChatSessions();
@@ -136,8 +150,14 @@ function AccountChatPage() {
     },
     [draftOwner],
   );
-  const [entryNotice, setEntryNotice] = useState("");
-  const [entryRetryId, setEntryRetryId] = useState<string | null>(null);
+  const [entryNotice, setEntryNotice] = useState(
+    retainedEntryId
+      ? "A previous draft is available. Choose Retry draft to open it for this account."
+      : "",
+  );
+  const [entryRetryId, setEntryRetryId] = useState<string | null>(
+    retainedEntryId,
+  );
   const openEntryDraft = useCallback(
     (id: string) => {
       try {
@@ -146,9 +166,15 @@ function AccountChatPage() {
           setPendingInput(result.text);
           setEntryNotice("");
           setEntryRetryId(null);
+          onRetainEntryId(null);
         } else {
           setEntryNotice(entryDraftRecovery(result.reason));
           setEntryRetryId(
+            result.reason === "account" || result.reason === "storage"
+              ? id
+              : null,
+          );
+          onRetainEntryId(
             result.reason === "account" || result.reason === "storage"
               ? id
               : null,
@@ -157,9 +183,10 @@ function AccountChatPage() {
       } catch {
         setEntryNotice(entryDraftRecovery("storage"));
         setEntryRetryId(id);
+        onRetainEntryId(id);
       }
     },
-    [draftOwner, setPendingInput],
+    [draftOwner, setPendingInput, onRetainEntryId],
   );
   const [showAgentPicker, setShowAgentPicker] = useState(false);
   const [activeAgent, setActiveAgent] = useState<{
@@ -217,6 +244,7 @@ function AccountChatPage() {
       entryConsumed.current = entry;
       setEntryNotice("");
       setEntryRetryId(null);
+      onRetainEntryId(null);
       if (draftId) {
         openEntryDraft(draftId);
       } else if (prompt?.trim()) {
@@ -240,7 +268,13 @@ function AccountChatPage() {
         nextUrl + window.location.hash,
       );
     }
-  }, [searchParams, authLoading, openEntryDraft, setPendingInput]);
+  }, [
+    searchParams,
+    authLoading,
+    openEntryDraft,
+    setPendingInput,
+    onRetainEntryId,
+  ]);
 
   // World character -> activate as Luminor when loaded
   const worldCharApplied = useRef(false);
@@ -629,6 +663,7 @@ function AccountChatPage() {
                 onClick={() => {
                   setEntryNotice("");
                   setEntryRetryId(null);
+                  onRetainEntryId(null);
                 }}
               >
                 Dismiss
