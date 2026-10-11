@@ -142,6 +142,7 @@ class ReviewAdmission(unittest.TestCase):
                    "apps/web/components/lumina/lumina-bubble.tsx", "apps/web/app/chat/page.tsx",
                    "apps/web/components/chat/chat-welcome.tsx", "apps/web/components/chat/chat-overlays.tsx",
                    "apps/web/components/chat/chat-area.tsx",
+                   "apps/web/components/chat/chat-input-bar.tsx", "apps/web/components/chat/agent-header.tsx",
                    "packages/design-system/src/companion.module.css",
                    "apps/web/hooks/use-conversation.ts", "scripts/review-companion.py",
                    "scripts/verify-companion-browser.cjs", "scripts/verify-reading-scene-browser.cjs"]
@@ -153,6 +154,10 @@ class ReviewAdmission(unittest.TestCase):
         self.assertTrue(all(set(primary[name]) <= set(planned[name]) for name in primary))
         self.assertEqual(tuple(planned), REVIEW.MODULE_NAMES)
         self.assertEqual(primary["reading-browser"], {"scripts/verify-reading-scene-browser.cjs"})
+        self.assertEqual(primary["composer"], {"apps/web/components/chat/chat-input-bar.tsx",
+                                             "apps/web/components/chat/agent-header.tsx",
+                                             "packages/design-system/src/companion.module.css"})
+        self.assertIn("apps/web/components/chat/model-selector.tsx", planned["composer"])
         self.assertIn("apps/web/components/saga/chapter-reader.tsx", planned["reading-browser"])
         for data, paths in (({**content, "unassigned-context.ts": "Unseen"}, changed),
                             (content, [*changed, "unowned.txt"]),

@@ -24,7 +24,7 @@ BRANCH = "agent/codex/provider-account-20261011"
 MODEL = "dots-studio/dots-3-note-preview:free"
 GATEWAY = "https://api.kilo.ai/api/gateway"
 MAX_OUTPUT = 24000
-MODULE_NAMES = ("experience", "account-transport", "companion-browser", "reading-browser", "review-protocol")
+MODULE_NAMES = ("experience", "composer", "account-transport", "companion-browser", "reading-browser", "review-protocol")
 CONTEXTS = (
     "AGENTS.md", "TASTE.md", "DESIGN.md",
     ".arcanea/prompts/luminor-engineering-kernel.md",
@@ -33,6 +33,9 @@ CONTEXTS = (
     "apps/web/lib/auth/context.tsx", "apps/web/lib/supabase/client.ts",
     "apps/web/app/api/ai/chat/route.ts",
     "apps/web/components/chat/chat-input-bar.tsx",
+    "apps/web/components/chat/focus-modes.tsx",
+    "apps/web/components/chat/model-selector.tsx",
+    "apps/web/components/chat/ai-disclosure.tsx",
     "apps/web/components/chat/command-palette.tsx",
     "apps/web/components/command-palette.tsx",
     "apps/web/components/worlds/WorldsOnboarding.tsx",
@@ -239,8 +242,13 @@ def modules(changed, content):
                       "scripts/tests/chat-error-message.test.cjs"}
     companion_browser = {"scripts/verify-companion-browser.cjs", "scripts/verify-author-draft-browser.cjs",
                          "scripts/capture-sovereign-built-app.cjs"}
+    composer = {"apps/web/components/chat/chat-input-bar.tsx",
+                "apps/web/components/chat/agent-header.tsx",
+                "packages/design-system/src/companion.module.css"}
     for path in changed:
-        if path.startswith(("apps/web/components/", "apps/web/app/chat/")) or path.endswith("companion.module.css"):
+        if path in composer:
+            primary["composer"].add(path)
+        elif path.startswith(("apps/web/components/", "apps/web/app/chat/")):
             primary["experience"].add(path)
         elif (path.startswith(("apps/web/hooks/", "apps/web/lib/"))
               or path == "packages/design-system/package.json" or path in native_account):
@@ -259,11 +267,17 @@ def modules(changed, content):
     interaction = {"apps/web/app/chat/page.tsx", "apps/web/app/chat/layout.tsx",
                    "apps/web/components/lumina/companion-chat.tsx",
                    "apps/web/components/lumina/lumina-bubble.tsx",
-                   "apps/web/hooks/use-conversation.ts", "apps/web/components/chat/chat-input-bar.tsx"}
+                   "apps/web/hooks/use-conversation.ts", "apps/web/components/chat/chat-input-bar.tsx",
+                   "apps/web/components/chat/agent-header.tsx"}
     extra = {
         "experience": common | identity | interaction | {
             "packages/design-system/src/tokens.css", "apps/web/components/chat/command-palette.tsx",
-            "apps/web/components/command-palette.tsx", "apps/web/components/worlds/WorldsOnboarding.tsx"},
+            "apps/web/components/command-palette.tsx", "apps/web/components/worlds/WorldsOnboarding.tsx",
+            "packages/design-system/src/companion.module.css"},
+        "composer": common | identity | interaction | {
+            "packages/design-system/src/tokens.css", "packages/design-system/src/companion.module.css",
+            "apps/web/components/chat/focus-modes.tsx", "apps/web/components/chat/model-selector.tsx",
+            "apps/web/components/chat/ai-disclosure.tsx"},
         "account-transport": common | identity | interaction | {
             "apps/web/app/api/ai/chat/route.ts", "scripts/tests/provider-chat-instance.test.cjs",
             "packages/design-system/src/tokens.css"},
@@ -392,7 +406,7 @@ def main():
         "model": MODEL, "credentialUse": "none", "tools": [], "providerCalls": 0,
         "maximumProviderCalls": len(MODULE_NAMES), "independentVerdict": None, "modules": [],
         "privacy": "Already-public Git source only; provider may retain inputs and outputs",
-        "scope": "Five complete modules; lead reconciliation and runtime/customer evidence required",
+        "scope": "Six complete modules; lead reconciliation and runtime/customer evidence required",
         "state": "prepared-scanned-zero-price",
     }
 

@@ -344,3 +344,15 @@ changed-whitespace regressions are denied. The independent prompt specifies this
 literal format and requires evidence before inventing an SDK cleanup API.
 Fresh compiled browser checks, typecheck, lint, build, design inspection and valid
 independent review remain pending. No production promotion is made.
+
+Local complete-packet preflight at 873acd6cde4b1434ec6e66807f362fe53b171a26
+denies the experience module's 508167 encoded bytes against the unchanged
+512000 context bound including its 24000 output reserve. No inference occurs.
+The failure receipt is retained. The complete-source review is now six sequential
+modules: experience, composer, account/transport, companion-browser,
+reading-browser and review-protocol. Every changed path still belongs to exactly
+one module; shared complete context is retained. Composer adds complete focus-mode,
+model inventory and disclosure source. No file, quote validation, output reserve
+or context bound is weakened to fit. Maximum six anonymous zero-price calls,
+240 seconds per call and 30 minutes per hosted job; no automatic retry or fallback.
+This supersedes the five-module contract for the refined candidate.
