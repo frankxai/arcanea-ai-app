@@ -246,3 +246,23 @@ its actual hosted result. Source review for fb14788f is PASS from Gemini3.1Pro w
 Fixture cleanup removed its private configuration with no failures. This is isolated
 Auth/PostgreSQL acceptance, not production or customer usefulness. The full objective
 remains active; the private-storage cost decision remains unanswered.
+
+## Clean Forward regression and local correction
+
+The actual popstate handler was executed in a Node VM with controlled browser
+history. A clean Forward destination outside the document incorrectly stopped the
+router and invoked history.back (actual1/1, expected0/0). This is actual source logic
+with controlled history, not browser acceptance. A five-line correction allows the
+router to handle a clean destination outside the document while retaining the
+duplicate-sentinel Back skip and dirty-failure draft protection. Those three actual
+handler cases pass locally; changed-page ESLint passes with no suppression.
+
+Hosted run38150886810 remains live on9fcdc305 with the old handler and added real
+Back/Forward case. Preserve that original runtime result before promoting the local
+fix. The next fixture gives Back, Forward and return their own failure stages, with
+the same URL and cloud-content assertions. Nothing is merged or applied to production.
+
+Fresh branch metadata confirms ready PR562 and560 are BEHIND and explicitly held
+for exact independent review and real creator/provider/private-storage acceptance.
+Green structural checks alone do not clear those owners' release gates. The current
+source, complete-source reviews, failed runtime attempts and records remain separate.

@@ -445,6 +445,11 @@ function MountedEditor({
     guardBack();
     const back = (event: PopStateEvent) => {
       if (!guarded) return;
+      // A clean Forward to another route belongs to the router, not our sentinel.
+      if (!draft.snapshot().dirty && window.location.href !== documentUrl) {
+        guarded = false;
+        return;
+      }
       event.stopImmediatePropagation();
       if (!draft.snapshot().dirty) {
         guarded = false;

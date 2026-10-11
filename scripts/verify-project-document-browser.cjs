@@ -547,11 +547,14 @@ async function main() {
           .getByRole("link", { name: "Documents", exact: true })
           .click();
         await page.waitForURL((url) => url.pathname === listPath);
+        stage = "saved-native-back";
         await page.evaluate(() => history.back());
         await expect(title).toHaveValue("Saved in the other tab");
         await expect(editor).toHaveText(memory.content_text);
+        stage = "saved-native-forward";
         await page.evaluate(() => history.forward());
         await page.waitForURL((url) => url.pathname === listPath);
+        stage = "saved-native-return";
         await page.evaluate(() => history.back());
         await expect(title).toHaveValue("Saved in the other tab");
         await expect(editor).toHaveText(memory.content_text);
