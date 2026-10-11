@@ -221,6 +221,15 @@ async function verifyReadingControls(page, mode) {
   await expect(
     group.getByRole("button", { name: "Line spacing: relaxed", exact: true }),
   ).toBeVisible();
+  // React's accessible label can update before the browser recalculates style.
+  // Wait on the actual prose, with the same expected value and default timeout.
+  await expect
+    .poll(() =>
+      paragraph.evaluate((p) =>
+        Number.parseFloat(getComputedStyle(p).lineHeight),
+      ),
+    )
+    .toBe(36);
   const lineHeight = await paragraph.evaluate((p) =>
     Number.parseFloat(getComputedStyle(p).lineHeight),
   );
