@@ -201,6 +201,19 @@ no local build/browser or additional worker was started. These new application
 bytes still need fresh hosted CI, original 320px/editor captures and independent
 exact-revision review.
 
+The a8d9d96 exact-source static review passed. Hosted run38119556741 passed
+install, lint, typecheck and the compiled build, then failed the mobile heading
+clearance assertion; it remains a failed release gate. A source-bound READY
+preview probe measured World details at111.75px, navbar bottom74px, focused and
+unobscured, with375/375px document width. The same open editor reflowed at320px.
+The isolated hosted browser was closed. Its CLI boundary cannot measure the same
+JavaScript task as the failed assertion, so transient smooth scrolling remains
+an inference. The test now polls for at most two seconds and requires settled
+scrolling plus the original focus, header, viewport and hit-test conditions.
+Failure records final positions and a diagnostic capture. No geometry threshold
+or application behavior changed. Full five-mode CI remains required; this probe
+does not prove the recovery suite or physical-device acceptance.
+
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.

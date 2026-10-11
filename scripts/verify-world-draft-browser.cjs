@@ -290,7 +290,7 @@ const draft = {
         await link.focus();
         await link.press("Enter");
         const target = await link.getAttribute("href");
-        const position = await page.evaluate((id) => {
+        const measurePosition = (id) => {
           const heading = document.getElementById(id);
           const box = heading.getBoundingClientRect();
           const header = document.querySelector("nav.fixed");
@@ -306,8 +306,44 @@ const draft = {
             hasHeader: header !== null,
             headerBottom: header?.getBoundingClientRect().bottom ?? 0,
             unobscured: point === heading || heading.contains(point),
+            scrollY,
           };
-        }, target.slice(1));
+        };
+        // Focusing the outline link can begin the page's native smooth scroll.
+        // Require the same clearance and hit-test after scrolling has settled;
+        // a transient position is neither a pass nor proof of a layout defect.
+        let position;
+        let previousScrollY;
+        let settled = false;
+        for (let attempt = 0; attempt < 20; attempt += 1) {
+          position = await page.evaluate(measurePosition, target.slice(1));
+          const clearsHeader =
+            position.focused &&
+            position.hasHeader &&
+            position.top >= position.headerBottom &&
+            position.bottom <= position.height &&
+            position.unobscured;
+          if (clearsHeader && previousScrollY === position.scrollY) {
+            settled = true;
+            break;
+          }
+          previousScrollY = position.scrollY;
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        if (
+          !position.focused ||
+          !position.hasHeader ||
+          position.top < position.headerBottom ||
+          position.bottom > position.height ||
+          !position.unobscured ||
+          !settled
+        ) {
+          console.error(`${mode.name}: ${name} final position`, position);
+          await page.screenshot({
+            path: resolve(output, `${mode.name}-heading-clearance.png`),
+            fullPage: true,
+          });
+        }
         assert.ok(
           position.hasHeader,
           `${mode.name}: fixed navbar exists before checking clearance`,
@@ -316,6 +352,7 @@ const draft = {
           position.focused,
           `${mode.name}: ${name} receives keyboard focus`,
         );
+        assert.ok(settled, `${mode.name}: ${name} settles within two seconds`);
         assert.ok(
           position.top >= position.headerBottom &&
             position.bottom <= position.height &&
