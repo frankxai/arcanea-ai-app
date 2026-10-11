@@ -33,7 +33,7 @@ const sceneSchema = z.object({
     data: z
       .string()
       .min(4)
-      .max(2_900_000)
+      .max(4_000_000)
       .regex(/^[A-Za-z0-9+/]+={0,2}$/),
     mimeType: z.enum(["image/png", "image/jpeg", "image/webp"]),
   }),

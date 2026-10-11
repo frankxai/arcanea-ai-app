@@ -289,6 +289,23 @@ test("complete PNG, JPEG and WebP pixels save with their original bytes", async 
   }
 });
 
+test("a previewable raster inside the JSON request bound can be saved above the old field limit", async () => {
+  const raw = require("node:crypto").randomBytes(736 * 752 * 4);
+  const bytes = await sharp(raw, {
+    raw: { width: 736, height: 752, channels: 4 },
+  })
+    .png()
+    .toBuffer();
+  const data = bytes.toString("base64");
+  const payload = { ...scene, image: { data, mimeType: "image/png" } };
+  assert.ok(data.length > 2_900_000 && data.length <= 4_000_000);
+  assert.ok(Buffer.byteLength(JSON.stringify(payload)) < 3 * 1024 * 1024);
+  const s = subject();
+  assert.equal((await s.POST(request(payload))).status, 200);
+  assert.equal(s.calls.length, 1);
+  assert.equal(s.calls[0].content.image.data, data);
+});
+
 test("anonymous and cross-origin scene saves are denied before writing", async () => {
   const s = subject(null);
   const response = await s.POST(request());

@@ -526,3 +526,32 @@ login, then exercises actual generate/save requests:403, A asserted, zero privat
 rows under either actor, then resume the actual SDK notification. Native ledger
 seams verify zero reservations/provider calls for mismatches. Current-source hosted
 execution and exact-revision independent review remain required before release.
+
+At `056700c050ddf351894960313c6a63d191a5f64a`, Reading38149052869 and application
+CI38149052841 passed. Artifact11705667983 binds both delayed real-cookie cases to
+that source: B's cookie is active, A's SDK notification is held, both actual scene
+actions assert A and receive403, and neither actor has a resulting private row.
+Both old connected SDK-action witnesses also passed with zero POSTs/recovery writes.
+The allocated private config was removed with errors[] and no page errors occurred.
+Vercel `dpl_LkBLpzo1kwhaYBcnSD1d3tV3RBKA` is READY at056. These results do not
+establish real provider/credit settlement, customer acceptance or a production save.
+
+The complete 46-source Ultra review returned raw WARN with five findings,250307
+tokens,cost0. Rejected eight-byte PNGs still require and fail full decoding; completed
+null-request recovery is explicitly rejected; selection is read synchronously before
+hashing and the browser exercises the queued-event case. Optional generation actor
+protection for other callers remains an explicit limitation. A separate10-source
+Poolside review returned raw WARN/four findings,76390 tokens,reported cost0; the
+destructured UUID is compared to Auth, anonymous/loading generation already has
+entry guards, and the authenticated provider-readiness boolean contains no key.
+Neither review is relabeled as a clean PASS and every raw response is retained.
+
+Ultra's image-field limit concern was valid: a complete roughly2.95-million-character
+PNG inside the3 MiB total JSON bound was previewable yet rejected400 solely by the
+2.9-million-character save field limit. The new real-codec regression failed first.
+The field now matches the existing4-million-character preview validator, while the
+streamed3 MiB request limit, full decoding, pixel/channel limits and private owner
+guards remain intact. The identical original image now saves; oversized JSON still
+fails before database writes. Sixteen route/codec tests, four generation-actor tests,
+eight component tests and nine brief/session tests pass in their recorded native
+scope. Fresh changed-source release evidence and independent review remain required.
