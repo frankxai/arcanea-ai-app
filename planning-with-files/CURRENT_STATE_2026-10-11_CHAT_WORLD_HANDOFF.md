@@ -272,3 +272,34 @@ unowned changed paths are denied. Workflow triggers retain all prior events and
 add the actual world sources so future repairs receive compiled verification.
 This is an implemented admission candidate, not an earned independent verdict or
 permission to skip stronger review, runtime/customer proof or release approval.
+
+## Complete review partition and editor capture correction
+
+At 65ce23d7fab48029be2e1314e716b6f9944ecdcb, independent114596255926
+correctly refused before inference: the complete 56-file packet was 1,021,431
+encoded bytes, exceeding the verified 512,000 context bound including output
+reserve. The actual hosted log confirms the denial; local read-only sizing and
+catalog checks agree, with zero provider calls. No price, context or coverage
+condition is lowered. The same complete source is now partitioned into client,
+server/transport, browser and review-protocol responsibilities. Complete actor,
+handoff, draft and creator boundary files are shared where needed; every changed
+file has one accountable module and every complete context file is included in
+the aggregate. Twelve no-network boundary/coverage tests pass.
+
+Compiled114596256209 reached the revised desktop editor and retained the newer
+world name, then failed because the capture helper classified the new editor
+capture as a companion dialog. The retained five-capture artifact's failed image
+was inspected and shows Tide Ledger revised in the actual editor. The capture
+helper now selects the named editor region. All generation counts, reload,
+consent, downloads, account, editing and four-mode assertions remain; later modes
+and overall browser acceptance are still pending. Browser/server cleanup passed,
+with no recorded page exceptions, real provider call or production write.
+
+CI38181968835 at the same 65ce source is terminal SUCCESS, including
+Build114596867449 and CIStatus114597582433. Current uncommitted sizing retains
+all 56 complete files across four modules: client 434,401 bytes, server 291,065,
+browser 368,855 and review 464,643. Each fits the unchanged 512,000 bound with
+24,000 output plus 1,024 reserve. Those sizes are local preparation evidence;
+the committed source, current catalog and scanned hosted dispatch must still be
+verified. No provider call was made by the sizing check. Earlier one-packet
+admission is superseded by this complete partition; the actual refusal remains.

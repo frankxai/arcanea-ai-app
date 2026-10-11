@@ -269,9 +269,52 @@ def modules(changed, content, branch=BRANCH):
                 "World review contains source outside its owned contract")
         require(set(content) == set(WORLD_CONTEXTS) | set(changed),
                 "Complete world caller or review context is missing or unassigned")
-        # One complete packet preserves cross-boundary recovery and actor call sites.
-        # The same scanner, live price/context limit and response validator apply.
-        return {"world-handoff": set(changed)}, {"world-handoff": dict(content)}
+        client = {"apps/web/components/chat/chat-notices.tsx", "apps/web/hooks/use-chat-world-mode.ts",
+                  "apps/web/lib/chat/world-handoff.ts", "apps/web/lib/chat/world-character-mode.ts",
+                  "scripts/tests/chat-world-handoff.test.cjs"}
+        server = {"apps/web/app/api/worlds/generate/route.ts", "apps/web/lib/worlds/generation.ts",
+                  "scripts/test-world-generation.cjs"}
+        browser = {"scripts/verify-companion-browser.cjs"}
+        primary = {"world-client": set(changed) & client, "world-server": set(changed) & server,
+                   "world-browser": set(changed) & browser,
+                   "world-review": set(changed) - client - server - browser}
+        common = {"AGENTS.md", "TASTE.md", "DESIGN.md", ".arcanea/prompts/luminor-engineering-kernel.md"}
+        identity = {"apps/web/lib/auth/context.tsx", "apps/web/lib/ai/provider-preferences.ts",
+                    "apps/web/lib/supabase/client.ts", "apps/web/lib/gateway/credential-policy.mjs",
+                    "apps/web/package.json"}
+        handoff = {"apps/web/components/chat/chat-notices.tsx", "apps/web/hooks/use-chat-world-mode.ts",
+                   "apps/web/lib/chat/world-handoff.ts", "apps/web/lib/chat/world-character-mode.ts",
+                   "apps/web/lib/worlds/draft.ts", "apps/web/lib/worlds/generation.ts",
+                   "apps/web/app/api/worlds/generate/route.ts"}
+        creator = {"apps/web/app/worlds/create/page.tsx", "apps/web/components/worlds/world-draft-editor.tsx",
+                   "apps/web/components/worlds/world-model-settings.tsx", "apps/web/components/worlds/world-art-brief.tsx"}
+        extra = {
+            "world-client": common | identity | handoff | creator | {
+                "apps/web/app/chat/page.tsx", "apps/web/lib/luminors/config.ts",
+                "apps/web/components/chat/agent-header.tsx", "apps/web/components/chat/chat-area.tsx",
+                "packages/design-system/src/tokens.css"},
+            "world-server": common | identity | handoff | {
+                "apps/web/lib/supabase/server.ts", "apps/web/lib/async-deadline.ts",
+                "apps/web/app/api/ai/chat/route.ts", "apps/web/hooks/use-conversation.ts",
+                "apps/web/hooks/use-provider.ts",
+                "scripts/tests/chat-world-handoff.test.cjs"},
+            "world-browser": common | identity | handoff | creator | {
+                "apps/web/app/chat/page.tsx", "apps/web/components/chat/chat-area.tsx",
+                "apps/web/components/chat/agent-header.tsx", "packages/design-system/src/tokens.css",
+                "packages/design-system/src/companion.module.css"},
+            "world-review": common | {".github/workflows/ci.yml", ".github/workflows/companion.yml",
+                                      "apps/web/package.json"},
+        }
+        # Whole unchanged context remains in the protocol audit; caller groups
+        # share complete boundary files. Nothing is shortened to fit the model.
+        assigned = set().union(*extra.values(), *primary.values())
+        extra["world-review"].update(set(content) - assigned)
+        require(all(primary.values()), "World review module has no changed source")
+        planned = {name: {path: content[path] for path in sorted(paths | extra[name])}
+                   for name, paths in primary.items()}
+        require(set().union(*(set(x) for x in planned.values())) == set(content),
+                "World review omits complete source context")
+        return primary, planned
     primary = {name: set() for name in MODULE_NAMES}
     native_account = {"scripts/tests/companion-chat-instance.test.cjs", "scripts/tests/chat-stop-control.test.cjs",
                       "scripts/tests/chat-error-message.test.cjs"}

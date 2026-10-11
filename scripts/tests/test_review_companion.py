@@ -106,14 +106,20 @@ class ReviewAdmission(unittest.TestCase):
         content = {path: "Complete source" for path in set(changed) | set(contexts)}
         branch = "agent/codex/chat-world-handoff-20261011"
         primary, planned = REVIEW.modules(changed, content, branch=branch)
-        self.assertEqual(primary, {"world-handoff": set(changed)})
-        self.assertEqual(set(planned["world-handoff"]), set(content))
+        self.assertEqual(set(primary), {"world-client", "world-server", "world-browser", "world-review"})
+        self.assertEqual(set().union(*primary.values()), set(changed))
+        self.assertEqual(sum(len(paths) for paths in primary.values()), len(changed))
+        self.assertEqual(set().union(*(set(paths) for paths in planned.values())), set(content))
+        self.assertTrue(all(primary[name] <= set(planned[name]) for name in primary))
         required = {"apps/web/app/worlds/create/page.tsx",
                     "apps/web/components/worlds/world-draft-editor.tsx",
                     "apps/web/lib/worlds/draft.ts", "apps/web/app/chat/page.tsx",
                     "apps/web/lib/auth/context.tsx", "apps/web/lib/ai/provider-preferences.ts",
                     ".github/workflows/ci.yml", ".github/workflows/companion.yml"}
-        self.assertTrue(required <= set(planned["world-handoff"]))
+        self.assertTrue(required <= set().union(*(set(paths) for paths in planned.values())))
+        for name in ("world-client", "world-browser"):
+            self.assertTrue({"apps/web/app/worlds/create/page.tsx", "apps/web/lib/chat/world-handoff.ts",
+                             "apps/web/lib/worlds/draft.ts", "apps/web/lib/auth/context.tsx"} <= set(planned[name]))
         for path in required:
             incomplete = {key: value for key, value in content.items() if key != path}
             with self.subTest(path=path), self.assertRaises(REVIEW.Denied):

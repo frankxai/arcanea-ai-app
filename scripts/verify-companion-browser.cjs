@@ -226,14 +226,16 @@ async function main() {
   const capturePage = async (page, name) => {
     const surface = name.startsWith("world-handoff-")
       ? page.getByRole("region", { name: "Prepared world draft", exact: true })
-      : name.startsWith("full-chat-")
-        ? page.getByRole("log", { name: "Chat messages", exact: true })
-        : page.getByRole("dialog", {
-            name: name.startsWith("shortcuts-")
-              ? "Keyboard shortcuts"
-              : "Arcanea companion",
-            exact: true,
-          });
+      : name.startsWith("world-editor-")
+        ? page.getByRole("region", { name: "Edit world draft", exact: true })
+        : name.startsWith("full-chat-")
+          ? page.getByRole("log", { name: "Chat messages", exact: true })
+          : page.getByRole("dialog", {
+              name: name.startsWith("shortcuts-")
+                ? "Keyboard shortcuts"
+                : "Arcanea companion",
+              exact: true,
+            });
     await expect(surface).toBeVisible();
     await expect
       .poll(() =>
