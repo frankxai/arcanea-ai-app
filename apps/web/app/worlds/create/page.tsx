@@ -496,6 +496,20 @@ export default function CreateWorldPage() {
   const operationVersion = useRef(0);
   const requests = useRef(new Set<AbortController>());
   const [editingDraft, setEditingDraft] = useState(false);
+  const draftChanges = useRef(false);
+  const holdDraftUnload = useCallback((event: BeforeUnloadEvent) => {
+    if (!draftChanges.current) return;
+    event.preventDefault();
+    event.returnValue = "";
+  }, []);
+  const reportDraftChanges = useCallback(
+    (dirty: boolean) => {
+      draftChanges.current = dirty;
+      if (dirty) window.addEventListener("beforeunload", holdDraftUnload);
+      else window.removeEventListener("beforeunload", holdDraftUnload);
+    },
+    [holdDraftUnload],
+  );
   const [legacyConcept, setLegacyConcept] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [legacyRaw, setLegacyRaw] = useState<string | null>(null);
@@ -533,6 +547,7 @@ export default function CreateWorldPage() {
         setSaving(false);
         setImageLoading(false);
         setEditingDraft(false);
+        reportDraftChanges(false);
         setLegacyConcept(null);
         setRefining(false);
         setPhase("input");
@@ -627,15 +642,10 @@ export default function CreateWorldPage() {
       );
     }
   }, [ownerId, phase, description, conceptKey]);
-  useEffect(() => {
-    if (!editingDraft) return;
-    const hold = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "";
-    };
-    window.addEventListener("beforeunload", hold);
-    return () => window.removeEventListener("beforeunload", hold);
-  }, [editingDraft]);
+  useEffect(
+    () => () => window.removeEventListener("beforeunload", holdDraftUnload),
+    [holdDraftUnload],
+  );
 
   const rememberDraft = useCallback(
     (data: GenerateResult, concept: string) => {
@@ -947,6 +957,7 @@ export default function CreateWorldPage() {
   };
 
   const handleRefine = (suffix: string) => {
+    if (saving || imageLoading || editingDraft) return;
     setRefining(false);
     generate(description, suffix);
   };
@@ -1010,7 +1021,13 @@ export default function CreateWorldPage() {
   };
 
   const restorePrevious = () => {
-    if (!previousDraft || saving || imageLoading || phase === "generating")
+    if (
+      !previousDraft ||
+      saving ||
+      imageLoading ||
+      editingDraft ||
+      phase === "generating"
+    )
       return;
     const restored = draftResult(previousDraft.world, previousDraft.draft_id);
     const restoredImage = previousHeroImage;
@@ -1050,9 +1067,10 @@ export default function CreateWorldPage() {
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8">
             <Link
               href="/worlds"
+              aria-label="Back to worlds"
               onClick={(event) => {
                 if (
-                  editingDraft &&
+                  draftChanges.current &&
                   !window.confirm("Leave without applying these draft changes?")
                 )
                   event.preventDefault();
@@ -1219,7 +1237,12 @@ export default function CreateWorldPage() {
             {previousDraft && previousDraft.draft_id !== result?.draft_id && (
               <button
                 onClick={restorePrevious}
-                disabled={saving || imageLoading || phase === "generating"}
+                disabled={
+                  saving ||
+                  imageLoading ||
+                  editingDraft ||
+                  phase === "generating"
+                }
                 className="mb-6 rounded-lg border border-white/20 px-4 py-3 text-sm disabled:opacity-50"
               >
                 Restore previous draft
@@ -1374,6 +1397,7 @@ export default function CreateWorldPage() {
                     world={result.world}
                     disabled={saving || imageLoading}
                     onEditingChange={setEditingDraft}
+                    onDirtyChange={reportDraftChanges}
                     onApply={(world) => {
                       const updated = draftResult(world, result.draft_id);
                       rememberDraft(updated, description);
@@ -1638,6 +1662,9 @@ export default function CreateWorldPage() {
                               <button
                                 key={suffix}
                                 onClick={() => handleRefine(suffix)}
+                                disabled={
+                                  saving || imageLoading || editingDraft
+                                }
                                 className="px-4 py-2 rounded-full text-[13px] text-[var(--arc-brand-arcanean-gold)]/50 hover:text-[var(--arc-brand-arcanean-gold)]/80 bg-[var(--arc-brand-arcanean-gold)]/[0.03] hover:bg-[var(--arc-brand-arcanean-gold)]/[0.08] border border-[var(--arc-brand-arcanean-gold)]/10 hover:border-[var(--arc-brand-arcanean-gold)]/30 transition-colors duration-300"
                               >
                                 {suffix}

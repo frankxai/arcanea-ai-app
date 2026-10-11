@@ -155,12 +155,12 @@ export function Footer() {
                   placeholder="your@email.com"
                   required
                   aria-label="Email address for newsletter"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
+                  className="min-w-0 min-h-11 flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
+                  className="min-h-11 shrink-0 px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
                 >
                   {submitting ? "..." : "Subscribe"}
                 </button>
