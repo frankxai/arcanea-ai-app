@@ -5,6 +5,7 @@ const {
   installSceneAccountBoundary,
   readSceneDiagnostics,
   observeSceneConsole,
+  selectScenePassage,
 } = require("./reading-scene-account-boundary.cjs");
 const {
   chromium,
@@ -129,17 +130,17 @@ async function main() {
     page.setDefaultTimeout(20000);
     page.on("pageerror", (error) => pageErrors.push(error.message));
     await page.goto(config.base + chapter);
+    const passageAction = page.getByRole("button", {
+      name: "Visualize a passage",
+      exact: true,
+    });
+    receipt.actionInitiallyReady = await passageAction.isEnabled();
+    await expect(passageAction).toBeEnabled();
     const prose = page.locator("article .prose p").first();
     const passage = (await prose.textContent()).replace(/\s+/g, " ").trim();
     assert.ok(passage.length >= 12 && passage.length <= 1200);
-    await prose.evaluate((element) => {
-      const range = document.createRange();
-      range.selectNodeContents(element);
-      const selected = getSelection();
-      selected.removeAllRanges();
-      selected.addRange(range);
-      document.dispatchEvent(new Event("selectionchange"));
-    });
+    receipt.selectionBeforeClick = await selectScenePassage(prose);
+    assert.equal(receipt.selectionBeforeClick.collapsed, false);
     await page
       .getByRole("button", { name: "Visualize selection", exact: true })
       .click();
@@ -336,14 +337,7 @@ async function main() {
         .getByRole("button", { name: "Reopen scene", exact: true })
         .click();
       const selectedProse = switchingPage.locator("article .prose p").first();
-      await selectedProse.evaluate((element) => {
-        const range = document.createRange();
-        range.selectNodeContents(element);
-        const selected = getSelection();
-        selected.removeAllRanges();
-        selected.addRange(range);
-        document.dispatchEvent(new Event("selectionchange"));
-      });
+      await selectScenePassage(selectedProse);
       await switchingPage
         .getByRole("button", { name: "Visualize selection", exact: true })
         .click();

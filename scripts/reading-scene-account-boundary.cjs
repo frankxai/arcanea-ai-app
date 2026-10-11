@@ -116,8 +116,24 @@ function observeSceneConsole(context, onError) {
   );
 }
 
+async function selectScenePassage(prose) {
+  return prose.evaluate((element) => {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    const selected = getSelection();
+    selected.removeAllRanges();
+    selected.addRange(range);
+    document.dispatchEvent(new Event("selectionchange"));
+    return {
+      collapsed: selected.isCollapsed,
+      length: selected.toString().length,
+    };
+  });
+}
+
 module.exports = {
   installSceneAccountBoundary,
   readSceneDiagnostics,
   observeSceneConsole,
+  selectScenePassage,
 };

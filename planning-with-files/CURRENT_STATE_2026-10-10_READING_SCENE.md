@@ -430,3 +430,21 @@ brief/recovery tests pass afterward. The prior thirteen actual-route/codec tests
 cover unchanged ingestion source. Current-source hosted Auth, CI, security,
 visual checks and fresh independent review remain pending. No production release,
 real provider result, tariff, customer proof or full-goal completion is claimed.
+
+Run38145754453 at `7816ce637e2e5d1796ebccb363f3e224c319bd1b` retained the same
+anonymous precondition failure as artifact11705026487. Diagnostics show a collapsed
+zero-length selection outside the prose; the action was enabled by the failure
+snapshot and no Auth initialization error was recorded. The fixture previously
+selected initial HTML without waiting for the scene control to become interactive.
+It now waits for the enabled control, records readiness and the actual noncollapsed
+selection before activation, and keeps every real password/private-recovery/RLS
+and connected-account-boundary assertion. This tests the supported interactive
+journey; it does not certify preservation of selections made before hydration.
+
+The current 45-source review at 7816 returned raw `pass` with three P2 findings,
+236,352 tokens and reported zero cost. Each says an actor check is missing; the
+actual entry guard already precedes the quoted branch in selection and generation,
+and the save quote itself includes it. The native old-handler and late-epoch
+regressions exercise those guards. These findings do not justify replacing captured
+epoch identity with a fresh token. Raw output remains preserved, and this review
+does not approve later fixture corrections or prove live privacy/provider behavior.
