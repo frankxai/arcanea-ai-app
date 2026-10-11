@@ -112,6 +112,25 @@ test("completed retry replays the actual artifact without a second provider call
   assert.equal(b.result, a.result);
   assert.equal(f.workCalls, 1);
 });
+test("unknown provider outcome preserves admission and cannot start a second paid job", async () => {
+  const f = fixture();
+  let calls = 0;
+  const work = async () => {
+    calls++;
+    throw new OperationPendingError("user-a:key");
+  };
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, work),
+    OperationPendingError,
+  );
+  assert.equal(f.receipt?.state, "running");
+  assert.equal(f.calls.includes("billing_request_release"), false);
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, work),
+    OperationPendingError,
+  );
+  assert.equal(calls, 1);
+});
 test("uncertain admission never invokes work, and retry does not reserve again", async () => {
   const f = fixture();
   f.committedFailures.add("billing_reserve_credits");
@@ -124,6 +143,30 @@ test("uncertain admission never invokes work, and retry does not reserve again",
     OperationPendingError,
   );
   assert.equal(f.workCalls, 0);
+});
+test("a checkpointed provider job recovers its result without resubmission and then replays", async () => {
+  const f = fixture();
+  let starts = 0,
+    recoveries = 0;
+  const work = async () => {
+    starts++;
+    throw new OperationPendingError("user-a:key");
+  };
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, work),
+    OperationPendingError,
+  );
+  const recover = async () => {
+    recoveries++;
+    return { result: "recovered-video", actualCredits: input.amount };
+  };
+  const a = await runReservedOperation(f.rpc, input, work, recover);
+  const b = await runReservedOperation(f.rpc, input, work, recover);
+  assert.equal(a.result, "recovered-video");
+  assert.equal(b.result, a.result);
+  assert.equal(starts, 1);
+  assert.equal(recoveries, 1);
+  assert.equal(f.receipt?.state, "completed");
 });
 test("competing retry observes running state and invokes no additional work", async () => {
   const f = fixture();

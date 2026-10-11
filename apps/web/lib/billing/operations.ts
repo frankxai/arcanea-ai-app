@@ -73,6 +73,9 @@ export async function runReservedOperation<T>(
   rpc: BillingRpc,
   input: OperationInput,
   work: (reference: string) => Promise<{ result: T; actualCredits: number }>,
+  recover?: (
+    reference: string,
+  ) => Promise<{ result: T; actualCredits: number }>,
 ) {
   const reference = `${input.userId}:${input.requestKey}`;
   let receipt: OperationReceipt<T>;
@@ -147,10 +150,14 @@ export async function runReservedOperation<T>(
     }
     throw new OperationFailedError();
   }
-  if (receipt.idempotent) throw new OperationPendingError(reference);
+  if (receipt.idempotent && !recover)
+    throw new OperationPendingError(reference);
   let outcome: { result: T; actualCredits: number };
   try {
-    outcome = await work(reference);
+    // Recovery may inspect an existing provider job, never submit another one.
+    outcome = receipt.idempotent
+      ? await recover!(reference)
+      : await work(reference);
     // Definite invalid output is a refunded failure, not an ambiguous worker crash.
     if (
       !Number.isInteger(outcome.actualCredits) ||
@@ -161,7 +168,11 @@ export async function runReservedOperation<T>(
     ) {
       throw new Error("Generation output cannot be committed");
     }
-  } catch {
+  } catch (error) {
+    // The provider may have accepted paid work before its response was lost.
+    // Preserve admission; neither refunding nor starting another job is safe.
+    if (error instanceof OperationPendingError)
+      throw new OperationPendingError(reference);
     try {
       await transition(rpc, "billing_request_release", {
         p_user: input.userId,

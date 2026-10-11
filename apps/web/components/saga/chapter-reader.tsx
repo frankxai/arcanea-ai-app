@@ -3,16 +3,10 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import ChatMarkdown from "@/components/chat/chat-markdown";
 import { useRouter } from "next/navigation";
 import { ReadingToolbar } from "./reading-toolbar";
-
-const ChatMarkdown = dynamic(() => import("@/components/chat/chat-markdown"), {
-  ssr: false,
-  loading: () => (
-    <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />
-  ),
-});
+import { SceneVisualizer } from "./scene-visualizer";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
@@ -255,6 +249,7 @@ export function ChapterReader({
   const [showToc, setShowToc] = useState(false);
   const [activeHeading, setActiveHeading] = useState("");
   const tocHeadings = useMemo(() => extractHeadings(content), [content]);
+  const readingRef = useRef<HTMLDivElement | null>(null);
 
   // Notes (existing functionality preserved)
   const [showNotes, setShowNotes] = useState(false);
@@ -388,6 +383,7 @@ export function ChapterReader({
 
   const handleTouchEnd = useCallback(
     (e: React.TouchEvent) => {
+      if (window.getSelection()?.toString().trim()) return;
       const dx = e.changedTouches[0].clientX - touchStartX.current;
       const dy = e.changedTouches[0].clientY - touchStartY.current;
 
@@ -402,6 +398,7 @@ export function ChapterReader({
 
   const handleTap = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (window.getSelection()?.toString().trim()) return;
       // Only process clicks directly on the overlay div, not bubbled events from interactive elements
       if ((e.target as HTMLElement).closest("a,button,textarea,input")) return;
       const x = e.clientX;
@@ -571,10 +568,18 @@ export function ChapterReader({
       <div className="max-w-[680px] mx-auto flex gap-0">
         <article className="flex-1 px-6 py-10 min-w-0">
           <div
+            ref={readingRef}
             className={`${s.prose} ${fontSizeClass} ${lineHeightClass} ${fontFamilyClass}`}
           >
             <ChatMarkdown content={content} />
           </div>
+          <SceneVisualizer
+            bookId={bookId}
+            bookTitle={bookTitle}
+            chapterTitle={title}
+            sourceText={content}
+            readingRef={readingRef}
+          />
         </article>
       </div>
 

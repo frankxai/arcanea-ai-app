@@ -5,13 +5,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node ≥20](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org/)
 
-**The Arcanea Orchestrator.** A headless brain that routes, plans, swarms, and learns across `claude`, `opencode`, `codex`, and `gemini`. Reads the canonical `@arcanea/router-spec` to pick the right model for each task, respects your subscription economics, and dispatches to the right sub-CLI without you thinking about it.
+The Arcanea Orchestrator routes declared tasks through `claude`, `opencode`, `codex`, and `gemini` using `@arcanea/router-spec`. You can pin a model or select a surface and tier preference. The supported native CLI receives the selected identifier and preserves its own approval policy.
 
 Use this when you want intelligence. Use [`arcanea-code`](https://github.com/frankxai/arcanea-code) (the forthcoming OpenCode fork) when you want a rich TUI on top of it.
 
 ## Why
 
-You have Claude Max (unlimited inside Claude Code via `claude -p`), OpenCode Zen (free tier), plus optional BYOK keys for OpenAI Codex and Gemini. Picking the right one for each task by hand is noise. This does it for you — preference-aware, auth-aware, sub-economics-preserving.
+Use your installed and authenticated CLIs with their existing subscriptions or API keys. The router checks catalog tiers, context requirements and recorded installation state. Provider access, subscription limits, current prices and spending controls remain with the native runtime and account.
 
 ## Install
 
@@ -22,10 +22,15 @@ pnpm add -g @arcanea/orchestrator
 ```
 
 After install, two bin names are available:
+
 - `arcanea-orchestrator` — canonical
 - `arco` — short alias
 
 ## Use
+
+Display-only surfaces retain their catalog candidates; `run` refuses dispatch even with a pin. `explain` uses the same preference, runtime filtering and adaptive ordering as an unpinned `run`, and marks only an executable candidate as selected.
+
+The retired `gemini-3-pro` pin is refused. Google's [model reference](https://ai.google.dev/gemini-api/docs/models) and [deprecation record](https://ai.google.dev/gemini-api/docs/deprecations) identify `gemini-3.1-pro-preview` as the replacement. Gemini Pro routes now use that explicit native ID. This is a catalog repair, not a creative benchmark result or verified account access. Other catalog entries remain historical snapshots.
 
 ```bash
 # Detect which CLIs are installed + infer auth tier (sub/byok/free)
@@ -75,35 +80,45 @@ arco plan "build a landing page"
 2. Orchestrator reads `@arcanea/router-spec/models.yaml`.
 3. Looks up the surface (defaults to `claude-arcanea` — Claude Code with Max sub).
 4. Re-ranks candidates by your tier preference from `~/.arcanea/config.yaml`.
-5. Filters out runtimes not installed on your machine.
-6. Picks the first valid model. Maps to runtime (`claude -p`, `opencode run -p`, `codex exec`, `gemini -p`).
+5. Filters unknown/deprecated models, insufficient context, disallowed tiers, unsupported providers and runtimes recorded as not installed. An exhausted chain stops.
+6. Picks the first eligible model. Maps to runtime (`claude -p`, `opencode run`, `codex exec --model`, `gemini --model --prompt`). OpenCode receives the `opencode/` model namespace and a positional prompt.
 7. Execs it, streams stdout back to you.
+
+An explicit `--surface` overrides the saved default. `--model` pins a declared
+model subject to the same surface/task eligibility checks; it does not fall back
+when unavailable. Display-only surfaces cannot dispatch. Gemini dispatch keeps
+the user's native approval policy and does not add YOLO or custom sync flags.
+Catalog tiers and `doctor` records are local routing hints, not proof of provider
+availability, credentials, paid entitlement or an enforced spending cap. The
+catalog remains a dated snapshot; verify model access before a live run.
+`--no-history` disables operational history writes for that run. Dry runs never
+dispatch a native model process or append a history event.
 
 ## What it is / is not
 
-| Is | Is not |
-|---|---|
-| Routing brain (headless) | A TUI or chat app |
-| Preference + auth aware | A replacement for any CLI |
-| Sub-economics optimizer | A model host or proxy |
-| Composable in pipelines | A SaaS product |
-| Spec-driven (editable YAML) | Hard-coded decisions |
+| Is                          | Is not                    |
+| --------------------------- | ------------------------- |
+| Routing brain (headless)    | A TUI or chat app         |
+| Preference + auth aware     | A replacement for any CLI |
+| Sub-economics optimizer     | A model host or proxy     |
+| Composable in pipelines     | A SaaS product            |
+| Spec-driven (editable YAML) | Hard-coded decisions      |
 
 If you want a rich TUI daily driver, see **[arcanea-code](https://github.com/frankxai/arcanea-code)** (OpenCode fork, separate product).
 
 ## Roadmap (incremental, all additive)
 
-| Phase | Capability | Status |
-|---|---|---|
-| 0 | Router Spec | ✅ shipped (`@arcanea/router-spec`) |
-| 1 | Dispatcher CLI (doctor/config/run/explain/list) | ✅ shipped |
-| 2 | Overlay manifests across 4 overlay repos | ✅ shipped |
-| 3 | Real swarm via Composio `ao batch-spawn` | ✅ wired |
-| 4 | `/ops/agents` live web dashboard | ✅ shipped (`apps/web/app/ops/agents`) |
-| 5 | **Planner** — `orchestrator plan "build a site"` decomposes to N tasks | ✅ v1.1.0 |
-| 6 | **Reasoning bank** — logs every run, aggregates stats per task→model | ✅ v1.1.0 |
-| 7 | **Agent inventory** — orchestrator picks not just model but specific overlay agent | next |
-| 8 | **Adaptive routing** — history-weighted candidate re-ranking | next |
+| Phase | Capability                                                                         | Status                                 |
+| ----- | ---------------------------------------------------------------------------------- | -------------------------------------- |
+| 0     | Router Spec                                                                        | ✅ shipped (`@arcanea/router-spec`)    |
+| 1     | Dispatcher CLI (doctor/config/run/explain/list)                                    | ✅ shipped                             |
+| 2     | Overlay manifests across 4 overlay repos                                           | ✅ shipped                             |
+| 3     | Real swarm via Composio `ao batch-spawn`                                           | ✅ wired                               |
+| 4     | `/ops/agents` live web dashboard                                                   | ✅ shipped (`apps/web/app/ops/agents`) |
+| 5     | **Planner** — `orchestrator plan "build a site"` decomposes to N tasks             | ✅ v1.1.0                              |
+| 6     | **Reasoning bank** — logs every run, aggregates stats per task→model               | ✅ v1.1.0                              |
+| 7     | **Agent inventory** — orchestrator picks not just model but specific overlay agent | next                                   |
+| 8     | **Adaptive routing** — history-weighted candidate re-ranking                       | next                                   |
 
 ## Legal / disclaimer
 
