@@ -133,3 +133,27 @@ reused the same SHA across attempts. Names now include the run attempt, and JSON
 records the run ID/attempt as well as built/source commits. This preserves failed
 attempts while making receipt retrieval unambiguous. The first ready run at
 6d5ce085 is retained; its earlier review cannot approve this later verifier delta.
+
+Downloaded browser artifact 11693377823 from run38115249523 binds actual built
+`c8a1dc77916dbb4abeef0b11e7ceb14d17f1976e` to source `6d5ce085`. GitHub confirms
+its parents are main a131c1e9 and that source. JSON passes all three modes, four
+catalog and six featured journeys per mode, navigation/reload/back recovery and
+no runtime errors. Six captures were retained; the lead inspected desktop/mobile
+catalog and reader images. Reader captures show prose at the navigated scroll
+position, so they do not establish first-page framing or a full visual/editorial
+approval. The complete superseded CI run was cancelled after its browser step
+passed; that is distinct from a successful overall current-head run.
+
+The latest NVIDIA response again used PASS with an unsupported P1 about :visible.
+Actual source, its exact-one assertion and the passed browser receipt reject that
+claim. The normalized chronicle href already lacks numbering, and series book
+titles intentionally use manuscript-level headings; those suggestions would
+misapply chapter rules to book metadata. Its supported API chapter-title finding
+was reproduced by two failing assertions. Only API chapter titles now share the
+reader parser; document and book title behavior and numbered API slugs stay
+unchanged. The seven isolated series cases are checked again after this repair.
+
+The first after-repair run passed all seven functional cases but failed cleanup
+with Windows EBUSY on its owned temporary fixture. The existing containment check
+is retained; native rm now permits three bounded 100 ms retries for transient
+busy errors. This failure is retained separately from chapter correctness.

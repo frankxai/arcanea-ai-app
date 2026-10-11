@@ -86,7 +86,12 @@ after(async () => {
   process.chdir(originalCwd);
   if (fixtureRoot) {
     assert.ok(resolve(fixtureRoot).startsWith(`${resolve(tmpdir())}${sep}`));
-    await rm(fixtureRoot, { recursive: true, force: true });
+    await rm(fixtureRoot, {
+      recursive: true,
+      force: true,
+      maxRetries: 3,
+      retryDelay: 100,
+    });
   }
 });
 
@@ -147,6 +152,10 @@ test("main saga chapter counts exclude support files and frontmatter", async () 
   // API chapter slugs retain their existing numbering; HTML entry IDs are a
   // separate contract. This repair must not break existing saga API clients.
   assert.ok(book.chapters.some((chapter) => chapter.slug === "01-arrival"));
+  assert.equal(
+    book.chapters.find((chapter) => chapter.slug === "01-arrival")?.title,
+    "Metadata is not body text",
+  );
 });
 
 test("chapter loading rejects support files while retaining existing API slugs", async () => {
@@ -156,4 +165,5 @@ test("chapter loading rejects support files while retaining existing API slugs",
   const chapter = await loader.getSagaChapter("book1", "01-arrival");
   assert.ok(chapter);
   assert.equal(chapter.wordCount, 2);
+  assert.equal(chapter.title, "Metadata is not body text");
 });

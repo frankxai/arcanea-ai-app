@@ -13,6 +13,7 @@ import { join } from "path";
 import { getBookRoot } from "../content/book-path";
 import {
   chapterIdFromFilename,
+  chapterTitleFromMarkdown,
   countChapterWords,
   isChapterMarkdown,
 } from "./chapter-files";
@@ -216,7 +217,7 @@ async function loadBookMeta(bookId: string): Promise<SagaBook | null> {
       id: `${bookId}/${filenameToSlug(filename)}`,
       bookId,
       number: extractChapterNumber(filename),
-      title: extractTitle(raw, filename),
+      title: chapterTitleFromMarkdown(raw, chapterIdFromFilename(filename)),
       slug: filenameToSlug(filename),
       wordCount: wc,
       content: "", // omit full content in list view
@@ -276,7 +277,7 @@ export async function getSagaChapter(
     id: `${bookId}/${chapterSlug}`,
     bookId,
     number: extractChapterNumber(filename),
-    title: extractTitle(raw, filename),
+    title: chapterTitleFromMarkdown(raw, chapterIdFromFilename(filename)),
     slug: chapterSlug,
     wordCount: countChapterWords(raw),
     content: raw,
