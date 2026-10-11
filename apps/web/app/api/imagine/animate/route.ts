@@ -1,265 +1,131 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { costFor } from "@/lib/billing/catalog";
 import {
-  admissionFromSpend,
+  BillingError,
+  InsufficientCreditsError,
+  OperationPendingError,
+  OperationConflictError,
+  OperationFailedError,
+  withReservation,
+} from "@/lib/billing/ledger";
+import { generateVideo, resumeVideo } from "@/lib/imagine/video";
+import { checkpointVideoJob, readVideoJob } from "@/lib/imagine/video-jobs";
+import {
   isHttpsImageUrl,
   MAX_ANIMATION_PROMPT_LENGTH,
-  trustedSpendOrigin,
-  type VideoAdmission,
 } from "@/lib/imagine/video-admission";
 
 export const maxDuration = 120;
-
-// Grok Imagine Video: async pattern — POST to start, GET to poll
-// Model: grok-imagine-video, same XAI_API_KEY as image gen
-
-const POLL_INTERVAL = 3000; // 3s between polls
-const MAX_POLLS = 35; // ~105s max wait
-
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-interface VideoStatus {
-  status: "pending" | "done" | "expired" | "error";
-  video?: { url: string; duration?: number };
-  error?: string;
-}
-
-async function animateWithGrok(
-  imageUrl: string,
-  prompt: string,
-): Promise<{ videoUrl: string; provider: string }> {
-  const apiKey = process.env.XAI_API_KEY;
-  if (!apiKey) throw new Error("NO_XAI_KEY");
-
-  // Step 1: Start video generation
-  const startRes = await fetch("https://api.x.ai/v1/videos/generations", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: "grok-imagine-video",
-      prompt:
-        prompt ||
-        "Cinematic camera movement, slow dolly in, atmospheric lighting, subtle motion",
-      image_url: imageUrl,
-      duration: 5,
-      aspect_ratio: "1:1",
-      resolution: "720p",
-    }),
+const respond = (body: unknown, status = 200) =>
+  NextResponse.json(body, {
+    status,
+    headers: { "Cache-Control": "private, no-store" },
   });
 
-  if (!startRes.ok) {
-    const err = await startRes.json().catch(() => ({}));
-    throw new Error(
-      (err as { error?: { message?: string } })?.error?.message ||
-        `Grok Video API error ${startRes.status}`,
-    );
-  }
-
-  const { request_id } = (await startRes.json()) as { request_id: string };
-
-  if (!request_id) {
-    throw new Error("No request_id returned from Grok Video API");
-  }
-
-  // Step 2: Poll for completion
-  for (let i = 0; i < MAX_POLLS; i++) {
-    await sleep(POLL_INTERVAL);
-
-    const pollRes = await fetch(`https://api.x.ai/v1/videos/${request_id}`, {
-      headers: { Authorization: `Bearer ${apiKey}` },
-    });
-
-    if (!pollRes.ok) continue;
-
-    const status = (await pollRes.json()) as VideoStatus;
-
-    if (status.status === "done" && status.video?.url) {
-      return { videoUrl: status.video.url, provider: "grok-video" };
-    }
-
-    if (status.status === "expired" || status.status === "error") {
-      throw new Error(status.error || "Video generation failed or expired");
-    }
-  }
-
-  throw new Error("Video generation timed out — try again");
-}
-
-async function animateWithFal(
-  imageUrl: string,
-  prompt: string,
-): Promise<{ videoUrl: string; provider: string }> {
-  const { fal } = await import("@fal-ai/client");
-  fal.config({ credentials: process.env.FAL_KEY! });
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result = await (fal as any).subscribe(
-    "fal-ai/kling-video/v1/standard/image-to-video",
-    {
-      input: {
-        prompt:
-          prompt ||
-          "Cinematic camera movement, slow dolly in, atmospheric lighting",
-        image_url: imageUrl,
-        duration: "5",
-        aspect_ratio: "1:1",
-      },
-      logs: true,
-    },
-  );
-
-  const videoUrl = (result.data as { video?: { url?: string } })?.video?.url;
-  if (!videoUrl) throw new Error("fal.ai returned no video");
-  return { videoUrl, provider: "fal-ai" };
-}
-
-/**
- * Paid video work needs a signed-in user and an explicit successful credit
- * spend. Anything else is refused before any provider is called.
- */
-async function admitVideo(req: NextRequest): Promise<VideoAdmission> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    return { allowed: false, status: 401, error: "Sign in to animate images" };
-  }
-
-  // Never send the caller's cookies to a host taken from request headers alone.
-  const spendOrigin = trustedSpendOrigin(req.nextUrl.origin, process.env);
-  if (!spendOrigin) {
-    return {
-      allowed: false,
-      status: 503,
-      error: "Credit admission is unavailable",
-    };
-  }
-
-  let spendRes: Response;
-  try {
-    spendRes = await fetch(new URL("/api/credits/spend", spendOrigin), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        cookie: req.headers.get("cookie") ?? "",
-      },
-      body: JSON.stringify({ creationType: "video" }),
-    });
-  } catch {
-    return {
-      allowed: false,
-      status: 503,
-      error: "Credit admission is unavailable",
-    };
-  }
-  return admissionFromSpend(
-    spendRes.status,
-    await spendRes.json().catch(() => null),
-  );
-}
-
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json().catch(() => null);
-    const imageUrl: unknown = body?.imageUrl;
-    const prompt = typeof body?.prompt === "string" ? body.prompt : "";
-
-    if (
-      !isHttpsImageUrl(imageUrl) ||
-      prompt.length > MAX_ANIMATION_PROMPT_LENGTH
-    ) {
-      return NextResponse.json(
-        {
-          error: `Provide an https image URL and a prompt of up to ${MAX_ANIMATION_PROMPT_LENGTH} characters`,
-        },
-        { status: 400 },
-      );
-    }
-
-    // Admission precedes every paid provider call below (Grok, fal.ai, Gemini).
-    const admission = await admitVideo(req);
-    if (!admission.allowed) {
-      return NextResponse.json(
-        { error: admission.error },
-        { status: admission.status },
-      );
-    }
-
-    // Priority 1: Grok Imagine Video (same API key as image gen)
-    try {
-      const result = await animateWithGrok(imageUrl, prompt);
-      return NextResponse.json(result);
-    } catch (grokErr) {
-      const msg = grokErr instanceof Error ? grokErr.message : "";
-      if (msg !== "NO_XAI_KEY") {
-        // Real Grok error — still try fallbacks
-        console.error("Grok Video error:", msg);
-      }
-    }
-
-    // Priority 2: fal.ai Kling Video
-    if (process.env.FAL_KEY) {
-      try {
-        const result = await animateWithFal(imageUrl, prompt);
-        return NextResponse.json(result);
-      } catch (falErr) {
-        console.error(
-          "fal.ai error:",
-          falErr instanceof Error ? falErr.message : falErr,
-        );
-      }
-    }
-
-    // Priority 3: Gemini re-imagine (not true video)
-    const geminiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-    if (geminiKey) {
-      const { GoogleGenerativeAI } = await import("@google/generative-ai");
-      const genAI = new GoogleGenerativeAI(geminiKey);
-
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash-exp",
-        generationConfig: {
-          // @ts-expect-error -- Gemini image gen uses responseModalities
-          responseModalities: ["TEXT", "IMAGE"],
-        },
-      });
-
-      const motionPrompt = `Based on this image, create a dramatically different angle or moment of the same scene: ${prompt || "cinematic dramatic lighting, dynamic composition, motion blur"}. Make it feel like the next frame in an epic sequence.`;
-      const result = await model.generateContent(motionPrompt);
-      const parts = result.response.candidates?.[0]?.content?.parts || [];
-
-      for (const part of parts) {
-        if (part.inlineData) {
-          return NextResponse.json({
-            reimaginedImage: {
-              data: part.inlineData.data,
-              mimeType: part.inlineData.mimeType || "image/png",
-            },
-            provider: "gemini-reimagine",
-          });
-        }
-      }
-    }
-
-    return NextResponse.json(
+  const body = await req.json().catch(() => null);
+  if (
+    !body ||
+    typeof body !== "object" ||
+    Array.isArray(body) ||
+    !isHttpsImageUrl(body.imageUrl) ||
+    (body.prompt != null && typeof body.prompt !== "string") ||
+    (body.prompt?.length ?? 0) > MAX_ANIMATION_PROMPT_LENGTH ||
+    typeof body.requestKey !== "string" ||
+    !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(
+      body.requestKey,
+    )
+  )
+    return respond(
       {
         error:
-          "No video/animation API configured. Set XAI_API_KEY (recommended), FAL_KEY, or GEMINI_API_KEY.",
+          "Provide an https image URL, a bounded prompt and a stable request key.",
       },
-      { status: 503 },
+      400,
     );
+  const { imageUrl, requestKey } = body;
+  const prompt = body.prompt ?? "";
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    if (error || !user)
+      return respond(
+        { error: "Sign in to animate images.", reason: "unauthenticated" },
+        401,
+      );
+    const amount = costFor("video.clip", 1);
+    const fingerprint = createHash("sha256")
+      .update(JSON.stringify({ imageUrl, prompt, action: "video.clip" }))
+      .digest("hex");
+    const outcome = await withReservation(
+      {
+        userId: user.id,
+        requestKey,
+        fingerprint,
+        action: "video.clip",
+        amount,
+      },
+      async (reference) => ({
+        result: await generateVideo(imageUrl, prompt, reference, (job) =>
+          checkpointVideoJob(user.id, reference, job),
+        ),
+        actualCredits: amount,
+      }),
+      async (reference) => ({
+        result: await resumeVideo(
+          await readVideoJob(user.id, reference),
+          reference,
+        ),
+        actualCredits: amount,
+      }),
+    );
+    return respond({
+      ...outcome.result,
+      charged: outcome.charged,
+      balance: outcome.account.balance,
+      requestKey,
+    });
   } catch (error) {
-    console.error("Animate API error:", error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Animation failed" },
-      { status: 500 },
+    if (error instanceof InsufficientCreditsError)
+      return respond(
+        {
+          error: "Not enough credits for a video clip.",
+          reason: "insufficient_credits",
+          required: error.required,
+          balance: error.balance,
+        },
+        402,
+      );
+    if (error instanceof OperationPendingError)
+      return respond(
+        { error: error.message, reason: "operation_pending", requestKey },
+        409,
+      );
+    if (error instanceof OperationConflictError)
+      return respond(
+        { error: error.message, reason: "request_conflict", requestKey },
+        409,
+      );
+    if (error instanceof OperationFailedError)
+      return respond(
+        { error: error.message, reason: "generation_failed", requestKey },
+        502,
+      );
+    return respond(
+      {
+        error:
+          error instanceof BillingError
+            ? "Credit admission is unavailable. Retry this request safely."
+            : "Animation is unavailable. Retry this request safely.",
+        reason: "admission_unavailable",
+        requestKey,
+      },
+      503,
     );
   }
 }

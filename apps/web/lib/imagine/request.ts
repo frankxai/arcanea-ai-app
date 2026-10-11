@@ -2,6 +2,20 @@
 export async function requestImages(
   input: Record<string, unknown>,
 ): Promise<Response> {
+  return requestGeneration("image", "/api/imagine/generate", input);
+}
+
+export async function requestAnimation(
+  input: Record<string, unknown>,
+): Promise<Response> {
+  return requestGeneration("video", "/api/imagine/animate", input);
+}
+
+async function requestGeneration(
+  kind: "image" | "video",
+  endpoint: string,
+  input: Record<string, unknown>,
+): Promise<Response> {
   const body = JSON.stringify(input);
   const digest = await crypto.subtle.digest(
     "SHA-256",
@@ -10,7 +24,7 @@ export async function requestImages(
   const fingerprint = Array.from(new Uint8Array(digest), (b) =>
     b.toString(16).padStart(2, "0"),
   ).join("");
-  const slot = `arcanea:image-request:${fingerprint}`;
+  const slot = `arcanea:${kind}-request:${fingerprint}`;
   let key: string | null = null;
   try {
     key = sessionStorage.getItem(slot);
@@ -29,18 +43,27 @@ export async function requestImages(
       "Enable browser session storage to preserve generation retries.",
     );
   }
-  const response = await fetch("/api/imagine/generate", {
+  const response = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ...input, requestKey: key }),
   });
-  const failure = response.ok
-    ? null
-    : ((await response
-        .clone()
-        .json()
-        .catch(() => null)) as { reason?: string } | null);
-  if (response.ok || failure?.reason === "generation_failed") {
+  const receipt = await response
+    .clone()
+    .json()
+    .catch(() => null);
+  const confirmed =
+    response.ok &&
+    (kind === "video"
+      ? receipt?.requestKey === key &&
+        typeof receipt.videoUrl === "string" &&
+        receipt.videoUrl.startsWith("https://") &&
+        Number.isInteger(receipt.charged) &&
+        receipt.charged >= 0
+      : receipt?.generationId === `gen_${key}` &&
+        Array.isArray(receipt.images) &&
+        receipt.images.length > 0);
+  if (confirmed || receipt?.reason === "generation_failed") {
     try {
       if (sessionStorage.getItem(slot) === key) sessionStorage.removeItem(slot);
     } catch {

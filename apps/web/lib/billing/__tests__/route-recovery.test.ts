@@ -11,7 +11,13 @@ import {
   OperationFailedError,
 } from "../operations";
 import { costFor } from "../catalog";
-function load(path: string, imports: Record<string, unknown>) {
+import { z } from "zod";
+import * as legacyCredits from "../../types/credits";
+function load(
+  path: string,
+  imports: Record<string, unknown>,
+  context: Record<string, unknown> = {},
+) {
   const source = readFileSync(new URL(path, import.meta.url), "utf8");
   const js = transpileModule(source, {
     compilerOptions: {
@@ -31,10 +37,155 @@ function load(path: string, imports: Record<string, unknown>) {
     URL,
     Buffer,
     process: { env: { POLAR_WEBHOOK_SECRET: "test-only" } },
-    console: { error() {} },
+    console: { error() {}, warn() {} },
+    crypto: globalThis.crypto,
+    ...context,
   });
   return exports;
 }
+test("a failed legacy balance read must never grant provider admission", async () => {
+  const route = load("../../../app/api/credits/spend/route.ts", {
+    "next/server": { NextResponse: Response },
+    zod: { z },
+    "@/lib/types/credits": legacyCredits,
+    "@/lib/supabase/server": {
+      createClient: async () => ({
+        auth: { getUser: async () => ({ data: { user: { id: "u" } } }) },
+      }),
+      createAdminClient: () => ({
+        from() {
+          throw Error("database is unavailable");
+        },
+      }),
+    },
+  });
+  const response = await route.POST(
+    new Request("https://www.arcanea.ai/api/credits/spend", {
+      method: "POST",
+      body: JSON.stringify({ creationType: "video" }),
+    }),
+  );
+  assert.ok(
+    response.status >= 400,
+    "Database failure must not report successful debit",
+  );
+  assert.notEqual((await response.json()).success, true);
+});
+test("legacy image endpoint delegates to the same governed handler without forwarding cookies elsewhere", async () => {
+  const incoming = new Request(
+    "https://untrusted.invalid/api/ai/generate-image",
+    { method: "POST", body: "{}" },
+  );
+  const route = load("../../../app/api/ai/generate-image/route.ts", {
+    "next/server": { NextResponse: Response },
+    "../../imagine/generate/route": {
+      POST: async (request: Request) => {
+        assert.equal(request, incoming);
+        return Response.json({ reason: "unauthenticated" }, { status: 401 });
+      },
+    },
+  });
+  assert.equal((await route.POST(incoming)).status, 401);
+});
+test("animation validates requests, denies missing accounts and credit, and maps pending recovery without provider work", async () => {
+  for (const scenario of [
+    "malformed",
+    "anonymous",
+    "depleted",
+    "pending",
+    "conflict",
+    "complete",
+  ]) {
+    let providers = 0;
+    const requestKey = "00000000-0000-0000-0000-000000000001";
+    const route = load("../../../app/api/imagine/animate/route.ts", {
+      "node:crypto": {
+        createHash: () => ({ update: () => ({ digest: () => "hash" }) }),
+      },
+      "next/server": { NextResponse: Response },
+      "@/lib/supabase/server": {
+        createClient: async () => ({
+          auth: {
+            getUser: async () => ({
+              error: null,
+              data: {
+                user: scenario === "anonymous" ? null : { id: "user-a" },
+              },
+            }),
+          },
+        }),
+      },
+      "@/lib/billing/catalog": { costFor },
+      "@/lib/billing/ledger": {
+        BillingError,
+        InsufficientCreditsError,
+        OperationPendingError,
+        OperationConflictError,
+        OperationFailedError,
+        withReservation: async (
+          input: { amount: number; action: string; userId: string },
+          work: (
+            reference: string,
+          ) => Promise<{ result: unknown; actualCredits: number }>,
+        ) => {
+          assert.equal(input.amount, costFor("video.clip", 1));
+          assert.equal(input.action, "video.clip");
+          assert.equal(input.userId, "user-a");
+          if (scenario === "depleted")
+            throw new InsufficientCreditsError(input.amount, 0);
+          if (scenario === "pending")
+            throw new OperationPendingError("user-a:" + requestKey);
+          if (scenario === "conflict") throw new OperationConflictError();
+          const outcome = await work("user-a:" + requestKey);
+          return {
+            result: outcome.result,
+            charged: outcome.actualCredits,
+            account: { balance: 10 },
+          };
+        },
+      },
+      "@/lib/imagine/video-jobs": {
+        checkpointVideoJob: async () => {},
+        readVideoJob: async () => null,
+      },
+      "@/lib/imagine/video": {
+        videoProvider: () => "grok-video",
+        generateVideo: async () => {
+          providers++;
+          return {
+            videoUrl: "https://vidgen.x.ai/result.mp4",
+            provider: "grok-video",
+          };
+        },
+      },
+      "@/lib/imagine/video-admission": {
+        isHttpsImageUrl: (url: unknown) =>
+          typeof url === "string" && url.startsWith("https:"),
+        MAX_ANIMATION_PROMPT_LENGTH: 1000,
+      },
+    });
+    const response = await route.POST(
+      new Request("https://www.arcanea.ai/api/imagine/animate", {
+        method: "POST",
+        body: JSON.stringify({
+          imageUrl: "https://images.test/frame.png",
+          ...(scenario === "malformed" ? {} : { requestKey }),
+        }),
+      }),
+    );
+    const status = {
+      malformed: 400,
+      anonymous: 401,
+      depleted: 402,
+      pending: 409,
+      conflict: 409,
+      complete: 200,
+    }[scenario];
+    assert.equal(response.status, status, scenario);
+    assert.equal(providers, scenario === "complete" ? 1 : 0, scenario);
+    assert.equal(response.headers.get("cache-control"), "private, no-store");
+  }
+});
 test("anonymous and zero-credit image denial call neither enhancer nor image provider", async () => {
   for (const signedIn of [false, true]) {
     let enhancements = 0,

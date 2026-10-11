@@ -94,7 +94,10 @@ export async function applyEvent(
 export async function withReservation<T>(
   input: OperationInput,
   work: (reference: string) => Promise<{ result: T; actualCredits: number }>,
+  recover?: (
+    reference: string,
+  ) => Promise<{ result: T; actualCredits: number }>,
 ) {
   await getAccount(input.userId);
-  return runReservedOperation<T>(call, input, work);
+  return runReservedOperation<T>(call, input, work, recover);
 }
