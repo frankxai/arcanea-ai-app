@@ -155,6 +155,12 @@ export function WorldDraftEditor({
     { id: "actions", title: "Apply or cancel", visible: true },
   ].filter((section) => section.visible);
 
+  function focusSection(id: string) {
+    const heading = document.getElementById(editorId + "-" + id);
+    heading?.focus({ preventScroll: true });
+    heading?.scrollIntoView({ behavior: "instant", block: "start" });
+  }
+
   return (
     <section
       aria-label="Edit world draft"
@@ -178,14 +184,14 @@ export function WorldDraftEditor({
                     href={"#" + editorId + "-" + section.id}
                     onClick={(event) => {
                       event.preventDefault();
-                      const heading = document.getElementById(
-                        editorId + "-" + section.id,
-                      );
-                      heading?.focus({ preventScroll: true });
-                      heading?.scrollIntoView({
-                        behavior: "instant",
-                        block: "start",
-                      });
+                      focusSection(section.id);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key !== "Enter") return;
+                      // Keep keyboard activation in the same explicit focus /
+                      // instant-scroll operation as a pointer click.
+                      event.preventDefault();
+                      focusSection(section.id);
                     }}
                     className="inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]"
                   >

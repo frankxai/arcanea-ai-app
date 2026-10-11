@@ -214,6 +214,18 @@ Failure records final positions and a diagnostic capture. No geometry threshold
 or application behavior changed. Full five-mode CI remains required; this probe
 does not prove the recovery suite or physical-device acceptance.
 
+The timing-only 1e1afdc run38121100835 still failed: the focused mobile heading
+settled at69.75px beneath the74px navbar, with center hit-testing true. Its
+original failure capture was inspected and the gate remains failed. A second
+hosted probe used the complete current/previous/concept fixture and observed
+loaded fonts, no heading/ancestor transform and a real-keyboard endpoint88.75px.
+Synchronous DOM focus/click landed consistently at111.75px. These different
+endpoints do not prove the cause. Enter now prevents the anchor's synthesized
+activation and directly performs the same shared focus/instant-scroll operation
+as a pointer click. This is a narrow application correction, with unchanged
+heading margin, measured-header threshold and bounded test. Fresh full-fixture
+five-mode CI and exact-source review are still required; no release is claimed.
+
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.
