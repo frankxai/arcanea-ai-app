@@ -83,6 +83,8 @@ async function main() {
           window.__providerSettingsFixture = {
             armed: false,
             staleSubmitAttempts: 0,
+            staleFormConnected: false,
+            staleReactSubmitHandled: false,
           };
           const NativeChannel = window.BroadcastChannel;
           // Preserve the actual GoTrue listener. Only insert a submit at the race boundary.
@@ -113,8 +115,22 @@ async function main() {
                       : listener.handleEvent(event);
                   if (oldForm) {
                     state.armed = false;
+                    state.staleFormConnected =
+                      oldForm.isConnected &&
+                      oldForm.querySelector("#provider-key-google")?.value ===
+                        "fixture-must-not-save-after-switch";
+                    let submission;
+                    oldForm.addEventListener(
+                      "submit",
+                      (event) => {
+                        submission = event;
+                      },
+                      { once: true },
+                    );
                     state.staleSubmitAttempts++;
                     oldForm.requestSubmit();
+                    state.staleReactSubmitHandled =
+                      submission?.defaultPrevented === true;
                   }
                   return returned;
                 };
@@ -216,7 +232,9 @@ async function main() {
         await key(page).fill("fixture-unsaved-a-key");
         await key(second).fill("fixture-provider-a-new-key");
         await save(second).click();
-        await expect(page.getByRole("alert")).toHaveText(
+        await expect(
+          page.locator("form:has(#active-provider)").getByRole("alert"),
+        ).toHaveText(
           "Settings changed in another tab. Reload saved settings before saving.",
         );
         await save(page).click();
@@ -245,7 +263,9 @@ async function main() {
           };
         });
         await save(page).click();
-        await expect(page.getByRole("alert")).toHaveText(
+        await expect(
+          page.locator("form:has(#active-provider)").getByRole("alert"),
+        ).toHaveText(
           "Your browser could not save these settings. Allow site storage and try again.",
         );
         assert.equal(
@@ -275,6 +295,13 @@ async function main() {
           () => window.__providerSettingsFixture.staleSubmitAttempts,
         );
         assert.equal(result.staleSubmitAttempts, 1);
+        const staleWitness = await page.evaluate(() => ({
+          connected: window.__providerSettingsFixture.staleFormConnected,
+          handled: window.__providerSettingsFixture.staleReactSubmitHandled,
+        }));
+        assert.deepEqual(staleWitness, { connected: true, handled: true });
+        result.staleConnectedFormObserved = true;
+        result.staleReactSubmitHandled = true;
         assert.equal(
           (await stored(config.accounts[0].id)).keys.google,
           "fixture-provider-a-recovered-key",
@@ -338,8 +365,26 @@ async function main() {
           fullPage: true,
           mask: [page.locator("input")],
         });
-      } catch {
+      } catch (cause) {
         result.failureStage = stage;
+        // Preserve the failing assertion's location without exposing its values.
+        result.failureLine =
+          Number(
+            cause.stack?.match(
+              /verify-provider-settings-browser\.cjs:(\d+):\d+/,
+            )?.[1],
+          ) || null;
+        if (page) {
+          result.alertCount = await page
+            .getByRole("alert")
+            .count()
+            .catch(() => null);
+          result.settingsAlertCount = await page
+            .locator("form:has(#active-provider)")
+            .getByRole("alert")
+            .count()
+            .catch(() => null);
+        }
         if (page)
           await page
             .screenshot({

@@ -280,3 +280,29 @@ and private configuration. No local containers, build or browser started under
 the latest review-lite RAM HOLD (4,681 MB free /6,144 required). Ordinary source
 editing and small checks remain permitted. The new fixture is implemented but
 has not yet earned hosted or independent acceptance.
+
+At5b33f521, ordinary PR run38123102700 passes all required CI jobs while the
+restricted provider job is skipped; manual run38123099974 is running, with its
+isolated login job dependent on build. The independent full28-source review returned WARN. Its
+skipped-needs allegation conflicts with ci-status's always() and the observed PR
+success; its branch-gate complaint opposes the deliberate admission boundary;
+its memo-cursor claim ignores the reset on every render; its transport note
+explicitly describes correct behavior. The raw WARN is retained.
+
+The stale-form finding misstates capture order and cannot pass with oldForm=null
+because the test requires exactly one attempt. It nevertheless prompted a useful
+stronger witness: assert that the old Google form remains connected with its
+unsaved A key, and that its actual React submit handler prevents the native
+submit after auth subscribers run. Both observations are now required along with
+unchanged A storage and empty B storage. Fresh hosted and exact-source review
+must cover this refinement; no isolated or production pass is inferred.
+
+Manual run38123099974 ends with the required settings job failing at cross-tab
+conflict. Its source-bound receipt confirms one actual password login and the
+first account's save/reload before that stage, zero AI POSTs, zero page errors,
+and complete owned-container/private-config cleanup. The masked capture shows
+the expected conflict message. The fixture's global alert selector also matches
+Next.js's route announcer; assertions now select the settings form's own alert.
+Safe diagnostics retain an assertion line and role counts without raw exception
+text or credential values. The failed run is preserved and the guard remains
+blocking until a corrected exact-source run passes.
