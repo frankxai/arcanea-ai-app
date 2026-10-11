@@ -86,6 +86,8 @@ async function readChapter(page, href, text) {
     builtCommit: execFileSync("git", ["rev-parse", "HEAD"]).toString().trim(),
     reviewedSourceCommit:
       event.pull_request?.head?.sha || process.env.GITHUB_SHA || null,
+    runId: process.env.GITHUB_RUN_ID || null,
+    runAttempt: process.env.GITHUB_RUN_ATTEMPT || null,
     browser: null,
     modes: [],
     passed: false,

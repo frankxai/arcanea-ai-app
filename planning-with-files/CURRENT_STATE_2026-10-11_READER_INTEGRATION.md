@@ -127,3 +127,9 @@ Browser steps/artifact upload follow the existing ready-PR/main condition; packa
 builds and required CI remain enabled on drafts. A skipped draft browser step
 cannot approve the rendered reader. Old reviews and runs are retained, and this
 new source needs independent review plus a real ready-PR browser run.
+
+The next GitHub review found rerun identity ambiguity: reader artifact names
+reused the same SHA across attempts. Names now include the run attempt, and JSON
+records the run ID/attempt as well as built/source commits. This preserves failed
+attempts while making receipt retrieval unambiguous. The first ready run at
+6d5ce085 is retained; its earlier review cannot approve this later verifier delta.

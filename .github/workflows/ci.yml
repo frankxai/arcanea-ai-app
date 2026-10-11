@@ -412,7 +412,7 @@ jobs:
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
         uses: actions/upload-artifact@v7
         with:
-          name: reader-entry-${{ github.sha }}
+          name: reader-entry-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/reader-entry/
           retention-days: 7
           if-no-files-found: warn
