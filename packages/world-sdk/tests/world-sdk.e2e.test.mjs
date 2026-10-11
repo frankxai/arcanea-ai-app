@@ -3,6 +3,9 @@ import assert from "node:assert/strict";
 import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+import { fileURLToPath } from "node:url";
 
 import { createWorld } from "../src/scaffold.mjs";
 import { readWorld } from "../src/fs-world.mjs";
@@ -12,7 +15,8 @@ import { buildIndex } from "../src/index-build.mjs";
 import { handlePush, verifySignature } from "../src/webhook.mjs";
 import { assignmentsFor, addCharacter } from "../src/harness.mjs";
 import { claimWorldProof, mockChain } from "../src/proof.mjs";
-import { recordMemory, listMemories, distillOffline, evolve, evolveCharacter } from "../src/evolution.mjs";
+import { recordMemory, listMemories, distillOffline } from "../src/evolution.mjs";
+import { evolve, evolveCharacter } from "../src/index.mjs";
 
 const SENTENCE = "a drowned city where memory is currency";
 const NOW = "2026-06-07T00:00:00.000Z";
@@ -135,23 +139,77 @@ test("recordMemory writes to .arcanea/memories (never affects public content has
   assert.ok(d.includes("tide-gate") || d.includes("mother"), "distill produces salient summary");
 });
 
-test("evolveCharacter updates char + appends public canonLevel-2 lore (hash moves; lived-in canon grows)", async () => {
+async function worldSnapshot(dir) {
+  const world = await readWorld(dir);
+  return {
+    files: world.files
+      .map((file) => ({ path: file.path, bytes: file.bytes.toString("hex") }))
+      .sort((a, b) => a.path.localeCompare(b.path)),
+    publicHash: contentHash(world.files, world.manifest),
+    publicIndex: buildIndex(world),
+  };
+}
+
+test("exported evolution helpers refuse memory-to-canon promotion and preserve the world", async (t) => {
   const dir = await tmp();
+  t.after(() => fs.rm(dir, { recursive: true, force: true }));
   await createWorld(dir, SENTENCE, opts);
-  // pick first actual char file created by genesis/scaffold
   const w0 = await readWorld(dir);
   const firstChar = w0.files.find((f) => f.path.startsWith("characters/"));
-  const slug = firstChar ? firstChar.path.split("/")[1].replace(/\.md$/, "") : "wanderer";
-  await recordMemory(dir, { characterId: slug, content: "She opened the tide-gate and the drowned answered.", salience: 0.95 });
-  await recordMemory(dir, { characterId: slug, content: "Memory became currency; she refused the sale.", salience: 0.9 });
-  const { character, lore } = await evolveCharacter(dir, slug, { summary: "The gate changed her. She carries the voices now." });
-  assert.ok(character.startsWith("characters/"));
-  assert.ok(lore.startsWith("canon/"));
-  const w1 = await readWorld(dir);
-  const charFile = w1.files.find((f) => f.path === character);
-  assert.ok(charFile && charFile.bytes.toString().includes("Evolution"), "char has Evolution section");
-  const loreFile = w1.files.find((f) => f.path === lore);
-  assert.ok(loreFile && loreFile.bytes.toString().includes("Earned by everyone"), "public lore level-2 added");
-  const { valid } = validateManifest(w1.manifest);
-  assert.ok(valid);
+  assert.ok(firstChar, "fixture includes a real character");
+  const slug = firstChar.path.split("/")[1].replace(/\.md$/, "");
+  await recordMemory(dir, { characterId: slug, content: "A private choice that has not been approved as canon.", ts: NOW });
+  const before = await worldSnapshot(dir);
+  const memories = await listMemories(dir);
+  for (const promote of [evolveCharacter, evolve]) {
+    for (const options of [{}, { summary: "Publish this.", approved: true, canonApproval: { approved: true } }]) {
+      await assert.rejects(promote(dir, slug, options), {
+        code: "ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED",
+      });
+      assert.deepEqual(await worldSnapshot(dir), before, "all world and memory bytes, public hash and index stay unchanged");
+      assert.deepEqual(await listMemories(dir), memories);
+    }
+  }
+});
+
+test("evolution refuses before accessing paths or caller-supplied approval options", async (t) => {
+  const parent = await tmp();
+  t.after(() => fs.rm(parent, { recursive: true, force: true }));
+  const absent = path.join(parent, "missing-world");
+  const poisonedOptions = new Proxy({}, {
+    get() { throw new Error("caller options must not be read"); },
+  });
+  for (const promote of [evolveCharacter, evolve]) {
+    await assert.rejects(promote(absent, "../../escape", poisonedOptions), {
+      code: "ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED",
+    });
+    await assert.rejects(promote(null, undefined, null), {
+      code: "ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED",
+    });
+  }
+  assert.deepEqual(await fs.readdir(parent), [], "no missing world or escaped file is created");
+});
+
+test("actual evolve CLI exits with an actionable refusal and preserves private memory", async (t) => {
+  const dir = await tmp();
+  t.after(() => fs.rm(dir, { recursive: true, force: true }));
+  await createWorld(dir, SENTENCE, opts);
+  await recordMemory(dir, { characterId: "sister-lethe", content: "This memory remains private.", ts: NOW });
+  const before = await worldSnapshot(dir);
+  const cli = fileURLToPath(new URL("../bin/cli.mjs", import.meta.url));
+  await assert.rejects(
+    promisify(execFile)(process.execPath, [cli, "evolve", "sister-lethe", dir], {
+      timeout: 5000,
+      maxBuffer: 8192,
+    }),
+    (error) => {
+      assert.equal(error.code, 1);
+      assert.equal(error.stdout, "");
+      assert.match(error.stderr, /ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED/);
+      assert.match(error.stderr, /scene/);
+      assert.doesNotMatch(error.stderr, /new canon:/);
+      return true;
+    },
+  );
+  assert.deepEqual(await worldSnapshot(dir), before);
 });

@@ -90,11 +90,11 @@ switch (cmd) {
     const slug = rest[0];
     if (!slug) die("usage: arcanea-world evolve <character-slug> [dir]");
     const dir = rest[1] || ".";
-    const { character, lore, summary, world } = await evolve(dir, slug);
-    console.log(`🌱 ${world.name} evolved`);
-    console.log(`   ${character} updated`);
-    console.log(`   new canon: ${lore}`);
-    console.log(`   ${summary.slice(0, 140)}…`);
+    try {
+      await evolve(dir, slug);
+    } catch (error) {
+      die(`${error.code || "ERR_ARCANEA_EVOLUTION"}: ${error.message}`);
+    }
     break;
   }
   case "memories": {

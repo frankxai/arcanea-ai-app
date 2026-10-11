@@ -19,7 +19,7 @@ Spec: `arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md` · Schema: `arcanea-ecosys
 | `index-build` | world → world-graph nodes + embed-ready chunks (repo → index, one way)                                                                           |
 | `webhook`     | framework-agnostic push handler with HMAC verify                                                                                                 |
 | `proof`       | invisible wallet + mint adapters; `claimWorldProof` appends `provenance[]`                                                                       |
-| `evolution`   | recordMemory (to .arcanea/memories, hash-safe) → distillOffline → evolveCharacter (char + canonLevel-2 lore); lived-in worlds grow canon visibly |
+| `evolution`   | private memories in .arcanea/memories and deterministic summaries; legacy canon-promotion entry points reject |
 
 ## CLI
 
@@ -34,7 +34,7 @@ node bin/cli.mjs claim <dir>
 ## The whole chain in code
 
 ```js
-import { createWorld, readWorld, buildIndex } from "@arcanea/world-sdk";
+import { createWorld, readWorld, buildIndex, remember } from "@arcanea/world-sdk";
 import { claimWorldProof, mockChain } from "@arcanea/world-sdk/proof";
 
 const { manifest } = await createWorld(
@@ -47,10 +47,17 @@ await remember("./my-world", "She opened the tide-gate for a dying diver.", {
   characterId: "sister-lethe",
   salience: 0.9,
 });
-await evolve("./my-world", "sister-lethe"); // char evolves + public level-2 lore added; hash moves
 ```
 
 Swap `mockChain()` for a real Solana (Metaplex/Helius) or EVM (thirdweb) adapter — same interface.
+
+The legacy `evolveCharacter(...)` and `evolve(...)` exports remain callable but
+always reject with `ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED` before accessing the
+filesystem or caller options. `arcanea-world evolve <character-slug> [dir]` exits
+with status 1 and the same code. This intentionally removes their character and
+public-lore writes. A caller-supplied approval flag cannot enable them. Use the
+scene workflow below to retain private revisions and export them for review.
+This SDK does not implement the separate human canon-promotion workflow.
 
 ## Test
 
@@ -62,7 +69,7 @@ node --test tests/*.test.mjs
 
 Memory records now use distinct UUID filenames with exclusive creation. Two
 events with the same timestamp remain separate; their recorded timestamps are
-preserved. This does not change the existing evolution/canon-promotion helpers.
+preserved. Recording or summarizing memories does not approve them as canon.
 
 Use the existing World SDK to carry a selected world and character into your
 writing harness, retain revisions and export a scene with its captured sources.
@@ -138,5 +145,6 @@ supported world folders. Symlinks/junctions in source and draft paths are refuse
 The immutable publication step requires filesystem hard-link support. This is a
 local creator workflow, not tenant authorization, encryption or signed approval.
 Its hashes establish byte identity and parent relationships, not literary quality
-or whether a source claim is true. Existing `evolve`/canon-writing helpers remain
-outside this scene workflow and the broader safety work in issue #283 stays open.
+or whether a source claim is true. The legacy `evolve` helpers are blocked;
+general world writers, signed human promotion and the broader safety work in
+issue #283 remain open.
