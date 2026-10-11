@@ -103,3 +103,27 @@ Full manuscript editorial/canon/rights review, human release receipt, source
 hashes, web/EPUB/print proof, customer delivery and commercial gates remain open.
 The selected source is frozen for review, not silently rewritten or published.
 This reader repair does not close the founder's full creative/community goal.
+
+## Current review reconciliation
+
+At `4180918b204e154cce6227e9e0208874ba6b7303`, NVIDIA returned a PASS label
+with four findings including a P1. Its claimed hidden match contradicts the
+`:visible` selector and exact-one assertion; CI's earlier failure used the old
+selector. Flat files inside an explicit chapters directory match all three
+existing series and are tested. Permitted prologue separators do not identify
+a malformed source file. Those findings do not justify source changes.
+
+The title finding is supported: the actual Heart of Pyrathis overview parser
+returned `THE HEART OF PYRATHIS` for the chapter `The Cold Season`. Reproduction
+failed before repair. The list, reader and previous/next links now share one
+frontmatter/multilingual-heading contract. Ten chapter-policy assertions pass,
+including two actual manuscripts and title fallback/invalid metadata cases.
+
+GitHub independently found two verifier defects: setup errors omitted evidence,
+and draft browser steps violated existing CI cost policy. Both synthetic setup
+failure cases reproduced the missing receipt before correction and are checked
+again after it. Readiness/launch now use the evidence-writing failure path.
+Browser steps/artifact upload follow the existing ready-PR/main condition; package
+builds and required CI remain enabled on drafts. A skipped draft browser step
+cannot approve the rendered reader. Old reviews and runs are retained, and this
+new source needs independent review plus a real ready-PR browser run.

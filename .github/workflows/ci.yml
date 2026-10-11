@@ -395,6 +395,7 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test lib/shop/__tests__/checkout.test.ts
 
       - name: Verify reader catalog and featured chapter journeys
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
         timeout-minutes: 5
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
@@ -408,7 +409,7 @@ jobs:
           node scripts/verify-reader-entry-browser.cjs
 
       - name: Upload reader journey evidence
-        if: always()
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
         uses: actions/upload-artifact@v7
         with:
           name: reader-entry-${{ github.sha }}

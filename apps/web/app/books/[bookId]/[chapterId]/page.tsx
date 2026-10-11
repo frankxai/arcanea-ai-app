@@ -8,6 +8,7 @@ import { ChapterReader } from "@/components/saga/chapter-reader";
 import { getBookRoot } from "@/lib/content/book-path";
 import {
   chapterIdFromFilename,
+  chapterTitleFromMarkdown,
   countChapterWords,
   isChapterMarkdown,
 } from "@/lib/saga/chapter-files";
@@ -149,29 +150,6 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
   }
 }
 
-function extractTitle(content: string, fallbackId: string): string {
-  // Most specific: ## Chapter / Kapitel / Capítulo with explicit prefix (multilingual)
-  const h2WithPrefix = content.match(
-    /^##\s+(?:Chapter\s+\w+:\s+|Kapitel\s+\d+:\s+|Capítulo\s+\d+:\s+)(.+)$/m,
-  );
-  if (h2WithPrefix) return h2WithPrefix[1].trim();
-
-  // Next: # Chapter X: pattern (single-hash chapter heading)
-  const h1Chapter = content.match(/^#\s+Chapter\s+\w+:\s+(.+)$/m);
-  if (h1Chapter) return h1Chapter[1].trim();
-
-  // Next: any ## heading (chapter section header without explicit prefix)
-  const h2 = content.match(/^##\s+(.+)$/m);
-  if (h2) return h2[1].trim();
-
-  // Fallback: # heading (often the book title, weakest signal)
-  const h1 = content.match(/^#\s+(.+)$/m);
-  if (h1) return h1[1].trim();
-
-  // Final fallback: humanize the slug
-  return fallbackId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
 async function loadChapter(bookId: string, chapterId: string) {
   const bookMeta = BOOK_META[bookId];
   if (!bookMeta) return null;
@@ -182,8 +160,8 @@ async function loadChapter(bookId: string, chapterId: string) {
   if (!match) return null;
 
   const raw = await readFile(join(bookMeta.dir, match.filename), "utf-8");
-  const { data: fm, content: body } = matter(raw);
-  const title = (fm.title as string)?.trim() || extractTitle(body, match.id);
+  const { content: body } = matter(raw);
+  const title = chapterTitleFromMarkdown(raw, match.id);
   const words = countChapterWords(raw);
   const readTime = Math.max(1, Math.ceil(words / 250));
 
@@ -196,20 +174,16 @@ async function loadChapter(bookId: string, chapterId: string) {
 
   if (prev) {
     const prevRaw = await readFile(join(bookMeta.dir, prev.filename), "utf-8");
-    const { data: prevFm, content: prevBody } = matter(prevRaw);
     prevNav = {
       id: prev.id,
-      title:
-        (prevFm.title as string)?.trim() || extractTitle(prevBody, prev.id),
+      title: chapterTitleFromMarkdown(prevRaw, prev.id),
     };
   }
   if (next) {
     const nextRaw = await readFile(join(bookMeta.dir, next.filename), "utf-8");
-    const { data: nextFm, content: nextBody } = matter(nextRaw);
     nextNav = {
       id: next.id,
-      title:
-        (nextFm.title as string)?.trim() || extractTitle(nextBody, next.id),
+      title: chapterTitleFromMarkdown(nextRaw, next.id),
     };
   }
 

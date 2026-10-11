@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { getBookRoot } from "@/lib/content/book-path";
 import {
   chapterIdFromFilename,
+  chapterTitleFromMarkdown,
   countChapterWords,
   isChapterMarkdown,
 } from "@/lib/saga/chapter-files";
@@ -253,16 +254,6 @@ interface ChapterInfo {
   readTime: number;
 }
 
-function extractTitle(content: string, fallbackId: string): string {
-  const chapterHeading = content.match(/^#\s+Chapter\s+\w+:\s+(.+)$/m);
-  if (chapterHeading) return chapterHeading[1].trim();
-
-  const heading = content.match(/^#\s+(.+)$/m);
-  if (heading) return heading[1].trim();
-
-  return fallbackId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
 async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
   try {
     const files = await readdir(bookDir);
@@ -278,7 +269,7 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
       chapters.push({
         id,
         number: i + 1,
-        title: extractTitle(raw, id),
+        title: chapterTitleFromMarkdown(raw, id),
         wordCount: words,
         readTime: Math.max(1, Math.ceil(words / 250)),
       });

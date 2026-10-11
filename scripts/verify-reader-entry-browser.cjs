@@ -93,20 +93,21 @@ async function readChapter(page, href, text) {
     scope:
       "Built Next app, real existing public manuscripts; functional rendered journey, not visual approval, production, full accessibility or reader completion.",
   };
-  let ready = false;
-  for (let attempt = 0; attempt < 30; attempt++) {
-    try {
-      ready = (
-        await fetch(base + "/books", { signal: AbortSignal.timeout(4000) })
-      ).ok;
-    } catch {}
-    if (ready) break;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  }
-  assert.ok(ready, "Built app did not become ready");
-  const browser = await chromium.launch();
-  evidence.browser = browser.version();
+  let browser;
   try {
+    let ready = false;
+    for (let attempt = 0; attempt < 30; attempt++) {
+      try {
+        ready = (
+          await fetch(base + "/books", { signal: AbortSignal.timeout(4000) })
+        ).ok;
+      } catch {}
+      if (ready) break;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    assert.ok(ready, "Built app did not become ready");
+    browser = await chromium.launch();
+    evidence.browser = browser.version();
     for (const mode of modes) {
       const context = await browser.newContext({
         viewport: mode.viewport,
@@ -235,7 +236,7 @@ async function readChapter(page, href, text) {
       JSON.stringify(evidence, null, 2),
     );
     console.log(JSON.stringify(evidence));
-    await browser.close();
+    if (browser) await browser.close();
   }
 })().catch((error) => {
   console.error(error);

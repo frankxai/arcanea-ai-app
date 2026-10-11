@@ -1,6 +1,8 @@
 import { strict as assert } from "node:assert";
+import { readFileSync } from "node:fs";
 import {
   chapterIdFromFilename,
+  chapterTitleFromMarkdown,
   countChapterWords,
   isChapterMarkdown,
 } from "../chapter-files";
@@ -21,6 +23,84 @@ function test(name: string, fn: () => void) {
 }
 
 function main() {
+  test("real chapter titles take precedence over the manuscript heading", () => {
+    const raw = readFileSync(
+      new URL(
+        "../../../../../book/heart-of-pyrathis/chapters/01-the-cold-season.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+    assert.equal(
+      chapterTitleFromMarkdown(raw, "the-cold-season"),
+      "The Cold Season",
+    );
+    const prologue = readFileSync(
+      new URL(
+        "../../../../../book/forge-of-ruin/chapters/00-prologue.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+    assert.equal(
+      chapterTitleFromMarkdown(prologue, "prologue"),
+      "Prologue: The Chronicle of Erivar Skaldson, Final Entry",
+    );
+  });
+
+  test("chapter titles recognize English, German and Spanish prefixes", () => {
+    for (const heading of [
+      "## Chapter Two: Arrival",
+      "## Kapitel 2: Arrival",
+      "## Capítulo 2: Arrival",
+      "# Chapter Two: Arrival",
+    ]) {
+      assert.equal(
+        chapterTitleFromMarkdown("# The Book\n\n" + heading, "chapter-2"),
+        "Arrival",
+      );
+    }
+  });
+
+  test("frontmatter titles take precedence and invalid title types are ignored", () => {
+    assert.equal(
+      chapterTitleFromMarkdown(
+        "---\ntitle: '  Arrival  '\n---\n## Chapter One: Wrong",
+        "fallback",
+      ),
+      "Arrival",
+    );
+    assert.equal(
+      chapterTitleFromMarkdown(
+        "---\ntitle: 7\n---\n## Chapter One: Arrival",
+        "fallback",
+      ),
+      "Arrival",
+    );
+    assert.equal(
+      chapterTitleFromMarkdown(
+        "---\ntitle: ' '\n---\n## Chapter One: Arrival",
+        "fallback",
+      ),
+      "Arrival",
+    );
+  });
+
+  test("chapter title fallback retains plain headings and humanizes a slug", () => {
+    assert.equal(
+      chapterTitleFromMarkdown("## The Crossing", "fallback"),
+      "The Crossing",
+    );
+    assert.equal(
+      chapterTitleFromMarkdown("# The Crossing", "fallback"),
+      "The Crossing",
+    );
+    assert.equal(
+      chapterTitleFromMarkdown("Plain prose", "the-crossing"),
+      "The Crossing",
+    );
+  });
+
   test("HTML IDs strip leading numbers while preserving names and case", () => {
     assert.equal(chapterIdFromFilename("01-subject-7.md"), "subject-7");
     assert.equal(chapterIdFromFilename("00-prologue.md"), "prologue");
