@@ -586,21 +586,6 @@ async function verifyAccountCredentials(browser, mode) {
           if (/^sb-.*-auth-token$/.test(name))
             window.__authChannelNames.push(name);
         }
-        addEventListener(type, listener, options) {
-          if (type !== "message" || !/^sb-.*-auth-token$/.test(this.name))
-            return super.addEventListener(type, listener, options);
-          return super.addEventListener(
-            type,
-            (event) => {
-              listener.call(this, event);
-              // Submit the old form in the same turn as the auth subscriber,
-              // before React has replaced that account's controls.
-              window.__afterFixtureAuthEvent?.();
-              window.__afterFixtureAuthEvent = undefined;
-            },
-            options,
-          );
-        }
       };
       if (!localStorage.getItem("fixture-account-credentials-seeded")) {
         for (const [actor, keys, provider, model] of [
@@ -614,7 +599,7 @@ async function verifyAccountCredentials(browser, mode) {
             "user:fixture-account-a",
             { google: "fixture-account-a-key" },
             "google",
-            "arcanea-gemini-flash",
+            "arcanea-auto",
           ],
           [
             "user:fixture-account-b",
@@ -719,71 +704,10 @@ async function verifyAccountCredentials(browser, mode) {
     await page.goto(base + "/settings/providers", {
       waitUntil: "domcontentloaded",
     });
-    const google = page.getByLabel("Google Gemini API key", { exact: true });
-    const openai = page.getByLabel("OpenAI API key", { exact: true });
-    await page
-      .getByLabel("Chat provider", { exact: true })
-      .selectOption("google");
-    await expect(google).toHaveValue("");
-    await event("fixture-account-a");
-    await expect(google).toHaveValue("fixture-account-a-key");
-    await google.fill("fixture-unsaved-account-a");
-    await event("fixture-account-a", "TOKEN_REFRESHED");
-    await expect(google).toHaveValue("fixture-unsaved-account-a");
-    await page.evaluate(() => {
-      const form = document
-        .querySelector("#provider-key-google")
-        .closest("form");
-      window.__afterFixtureAuthEvent = () => form.requestSubmit();
-    });
-    await event("fixture-account-b");
-    await expect(openai).toHaveValue("fixture-account-b-key");
-    await expect(google).toHaveCount(0);
-    assert.equal(
-      await page.evaluate(
-        () =>
-          JSON.parse(
-            localStorage.getItem(
-              "arcanea-provider-keys:v2:user%3Afixture-account-a",
-            ),
-          ).google,
-      ),
-      "fixture-account-a-key",
-      "The previous account's form must not save after its auth event",
-    );
-    await event("fixture-account-a");
-    await expect(google).toHaveValue("fixture-account-a-key");
-    await google.fill("fixture-account-a-saved");
-    await page
-      .getByRole("button", { name: "Save connection", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText(
-      "Saved for this account",
-    );
-    assert.equal(
-      await page.evaluate(
-        () =>
-          JSON.parse(
-            localStorage.getItem(
-              "arcanea-provider-keys:v2:user%3Afixture-account-b",
-            ),
-          ).openai,
-      ),
-      "fixture-account-b-key",
-    );
-    await event(null);
-    await expect(
-      page.getByLabel("OpenRouter API key", { exact: true }),
-    ).toHaveValue("fixture-guest-key");
-    await page
-      .getByLabel("Chat provider", { exact: true })
-      .selectOption("google");
-    await expect(google).toHaveValue("");
-    assert.equal(
-      await page.evaluate(
-        () => JSON.parse(localStorage.getItem("arcanea-provider-keys")).google,
-      ),
-      "fixture-unassigned-key",
+    // A browser-only session event cannot authorize a protected server route.
+    // Keep that denial; authenticated settings need the approved real fixture.
+    await expect(page).toHaveURL(
+      /\/auth\/login\?next=%2Fsettings%2Fproviders$/,
     );
 
     await page.goto(base + "/chat", { waitUntil: "domcontentloaded" });
@@ -802,13 +726,16 @@ async function verifyAccountCredentials(browser, mode) {
     await expect(
       page.getByRole("button", { name: "Model: Flash", exact: true }),
     ).toBeVisible();
+    await input.fill("Same-account draft fixture");
+    await event("fixture-account-a", "TOKEN_REFRESHED");
+    await expect(input).toHaveValue("Same-account draft fixture");
     pending = true;
     await input.fill("Account A private fixture request");
     await page
       .getByRole("button", { name: "Send message", exact: true })
       .click();
     await expect.poll(() => posts.length).toBe(1);
-    assert.equal(posts[0].clientApiKey, "fixture-account-a-saved");
+    assert.equal(posts[0].clientApiKey, "fixture-account-a-key");
     assert.equal(posts[0].gatewayModel, "arcanea-gemini-flash");
     await event("fixture-account-b");
     await expect(
@@ -830,12 +757,34 @@ async function verifyAccountCredentials(browser, mode) {
     await expect.poll(() => posts.length).toBe(2);
     assert.equal(posts[1].clientApiKey, "fixture-account-b-key");
     assert.equal(posts[1].gatewayModel, "arcanea-gpt5");
+    await event("fixture-account-a");
+    await expect(
+      page.getByRole("button", { name: "Model: Flash", exact: true }),
+    ).toBeVisible();
+    await event(null);
+    await expect(
+      page.getByRole("button", { name: "Model: Auto", exact: true }),
+    ).toBeVisible();
+    await input.fill("Guest fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(3);
+    assert.equal(posts[2].clientApiKey, "fixture-guest-key");
+    assert.equal(posts[2].provider, "openrouter");
+    assert.equal(
+      await page.evaluate(
+        () => JSON.parse(localStorage.getItem("arcanea-provider-keys")).google,
+      ),
+      "fixture-unassigned-key",
+    );
     assert.deepEqual(errors, []);
     return {
       accountCredentialIsolation: true,
       sameActorRefreshKeepsDraft: true,
-      staleSettingsSaveDenied: true,
-      accountReturnReadsSavedKeys: true,
+      guestSettingsServerDenied: true,
+      authenticatedSettingsUiChecked: false,
+      accountReturnRestoresModel: true,
       legacyCredentialsPreservedUnused: true,
       accountSwitchCancelsChat: true,
       accountChatCredentialSelection: true,

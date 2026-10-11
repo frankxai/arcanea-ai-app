@@ -151,3 +151,27 @@ the provider before checking its field and expects only the selected account's
 field to exist. After saving clears the old model choice, it chooses Flash through
 the actual chat picker. This is a test correction; fresh hosted execution remains
 required and the failing run is retained.
+
+## SDK callback isolation
+
+Inspection of the installed AI SDK found that id-based recreation changes the
+Chat instance but forwards earlier instance callbacks through the hook's latest
+options ref. A native reproduction with actual SDK Chat/hook source and the
+application's callback delivers a pending A error to B after render but before
+passive cleanup. The hook now gives each actor revision an explicit memoized Chat
+instance, keeping transport and callbacks bound to that actor. The native CI
+regression executes that application configuration against the installed SDK;
+React scheduling and transport remain synthetic. It verifies same-actor instance
+retention, old-actor error denial and current-actor error visibility. Hosted full
+verification and independent review must cover this new source.
+
+Run38117065473 at4c9910b3 again passes types/lint and compiles, but settings
+assertions time out because server middleware redirects this unauthenticated
+offline fixture to login. The retained earlier aria snapshot confirms the same
+gate; selecting a provider alone did not resolve the first failure. The compiled
+verifier now preserves and checks that server denial, then exercises public chat
+guest/A/B credentials, picker persistence, same-actor refresh and pending abort.
+Authenticated settings UI, including same-turn stale save, remains an explicit
+release requirement. The existing author fixture is source-bound to another
+isolated preview; its account configuration cannot be silently repurposed. A
+secure configuration-location question is pending while independent work proceeds.
