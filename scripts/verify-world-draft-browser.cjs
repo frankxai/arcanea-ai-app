@@ -254,6 +254,13 @@ const draft = {
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
       );
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await page.locator('a[href="/worlds"]').last().click();
+      await expect(editor).toBeVisible();
+      await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
+        "",
+      );
+      assert.match(page.url(), /\/worlds\/create/);
       let reloadWarning = false;
       const keepWorking = async (dialog) => {
         assert.equal(dialog.type(), "beforeunload");

@@ -496,6 +496,7 @@ export default function CreateWorldPage() {
   const operationVersion = useRef(0);
   const requests = useRef(new Set<AbortController>());
   const [editingDraft, setEditingDraft] = useState(false);
+  const [draftHasChanges, setDraftHasChanges] = useState(false);
   const [legacyConcept, setLegacyConcept] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [legacyRaw, setLegacyRaw] = useState<string | null>(null);
@@ -628,14 +629,14 @@ export default function CreateWorldPage() {
     }
   }, [ownerId, phase, description, conceptKey]);
   useEffect(() => {
-    if (!editingDraft) return;
+    if (!draftHasChanges) return;
     const hold = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       event.returnValue = "";
     };
     window.addEventListener("beforeunload", hold);
     return () => window.removeEventListener("beforeunload", hold);
-  }, [editingDraft]);
+  }, [draftHasChanges]);
 
   const rememberDraft = useCallback(
     (data: GenerateResult, concept: string) => {
@@ -1052,7 +1053,7 @@ export default function CreateWorldPage() {
               href="/worlds"
               onClick={(event) => {
                 if (
-                  editingDraft &&
+                  draftHasChanges &&
                   !window.confirm("Leave without applying these draft changes?")
                 )
                   event.preventDefault();
@@ -1374,6 +1375,7 @@ export default function CreateWorldPage() {
                     world={result.world}
                     disabled={saving || imageLoading}
                     onEditingChange={setEditingDraft}
+                    onDirtyChange={setDraftHasChanges}
                     onApply={(world) => {
                       const updated = draftResult(world, result.draft_id);
                       rememberDraft(updated, description);

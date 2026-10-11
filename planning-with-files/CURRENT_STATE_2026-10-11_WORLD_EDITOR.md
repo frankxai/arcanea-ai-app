@@ -9,7 +9,8 @@ Base: `a131c1e9dfa2a2e6b8d93e1be4bd32c43794afc1`.
 Owning work: existing programme #276, creator outcome #191 and release #427.
 
 Files: apps/web/components/worlds/world-draft-editor.tsx,
-scripts/verify-world-draft-browser.cjs and this record.
+apps/web/app/worlds/create/page.tsx (dirty-state relay and existing leave warning
+only), scripts/verify-world-draft-browser.cjs and this record.
 
 User job: revise the complete world, including its later characters and locations,
 without searching a single long form or silently discarding unfinished fields.
@@ -54,6 +55,11 @@ closure, and may not fire for app switching or client-side routing. A creator
 must apply or download work before leaving. No guarantee of full tab-loss recovery
 is made. Existing applied-draft recovery remains authoritative.
 
+The existing parent owns the single beforeunload listener and the explicit Worlds
+back-link confirmation. The editor reports dirty state through a stable setter;
+open-editor state still blocks saving, export and regeneration. No second unload
+listener is introduced. The parent's existing large file is not rewritten.
+
 ## Acceptance and verification
 
 The authored compiled browser suite covers 320/375/768/1440px and reduced motion:
@@ -72,7 +78,11 @@ CI path, without starting another server or weakening required checks. Source
 formatting and small targeted checks are allowed. Independent exact-head review,
 fresh original editor captures and source-bound preview/production inspection
 remain required before qualifying promotion. A test is authored, not passed,
-until its actual result is inspected. Under the mission's explicit hosted-CI
+until its actual result is inspected. Initial candidate 2907e21 was superseded
+after finding the parent's existing open-editor unload guard. Its owned run
+38116090708 was cancelled during installation; it provides no passed result.
+The corrected revision must exercise clean/reversed warning removal through the
+existing parent. Under the mission's explicit hosted-CI
 instruction, publish only this owned candidate branch to run the existing gates
 before opening the required draft PR. The local build preflight at 05:49 UTC was
 HOLD: 3769 MB free against 8192 MB required. No local server, dependency install

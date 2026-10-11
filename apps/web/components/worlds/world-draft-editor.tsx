@@ -38,11 +38,13 @@ export function WorldDraftEditor({
   disabled,
   onApply,
   onEditingChange,
+  onDirtyChange,
 }: {
   world: WorldDraft;
   disabled: boolean;
   onApply: (world: WorldDraft) => boolean;
   onEditingChange: (editing: boolean) => void;
+  onDirtyChange: (dirty: boolean) => void;
 }) {
   const [editing, setEditing] = useState<WorldDraft | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -69,14 +71,8 @@ export function WorldDraftEditor({
   }, [error]);
 
   useEffect(() => {
-    if (!hasChanges) return;
-    const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "";
-    };
-    window.addEventListener("beforeunload", warnBeforeLeaving);
-    return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
-  }, [hasChanges]);
+    onDirtyChange(hasChanges);
+  }, [hasChanges, onDirtyChange]);
 
   if (!editing) {
     return (
