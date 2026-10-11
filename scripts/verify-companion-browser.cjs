@@ -253,7 +253,13 @@ async function main() {
       });
       await expect(opener).toBeVisible({ timeout: 15000 });
       await page.keyboard.press("Control+k");
-      await expect(page.getByRole("combobox")).toBeVisible();
+      const commandPalette = page.getByRole("dialog", {
+        name: "Command Palette",
+        exact: true,
+      });
+      await expect(commandPalette).toBeVisible();
+      await expect(commandPalette.getByRole("combobox")).toHaveCount(1);
+      await expect(commandPalette.getByRole("combobox")).toBeVisible();
       await expect(
         page.getByRole("dialog", { name: "Arcanea companion" }),
       ).toBeHidden();
