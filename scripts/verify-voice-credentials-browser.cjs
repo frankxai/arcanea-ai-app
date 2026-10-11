@@ -730,7 +730,7 @@ async function verifyAccountCredentials(browser, mode) {
     // AgentHeader renders this picker; CompactModelPicker is currently unused.
     const modelButton = (label) =>
       page.getByRole("button").filter({
-        has: page.getByText(label, { exact: true }),
+        has: page.locator("span").filter({ hasText: new RegExp(`^${label}$`) }),
       });
     // Distinct initial models wait for the actual account-specific state.
     await expect(modelButton("Gemini Pro")).toBeVisible();

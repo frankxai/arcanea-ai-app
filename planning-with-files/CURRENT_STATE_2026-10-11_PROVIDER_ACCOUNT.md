@@ -225,3 +225,19 @@ unchanged source hashes. Its WARN remains recorded. Review-lite was freshly
 BOUNDED at 06:52 UTC, 10,307 MB available / 6,144 required, before the single
 coherent review workload. The changed verifier still requires fresh exact-source
 review and hosted execution; real authenticated settings remain unverified.
+
+E267's complete twenty-one-source static review also returned PASS with no findings
+and cost0. Its full run38119990806 passed types, lint and compilation, reached
+the final guest-model check after account key/model/abort assertions, then failed
+because the broad Auto text locator also matched the focus-mode Auto control.
+The locator now requires the model label span, preserving both controls and the
+exact assertions. Fresh compiled execution and source-bound review are required.
+
+A read-only public control probe reproduced the old Auto locator's two matches
+and the corrected locator's single model match on desktop1440 and mobile375.
+It executes each actual verifier locator, checks Flash selection and preserves
+focus Auto. AgentHeader's source hash equals the mapped production0661416 source.
+No account/provider request or outbound mutation occurred; the browser closed.
+This proves locator fidelity only, not the SDK follow-up or authenticated settings.
+Fresh browser-qa admission at07:14 was BOUNDED, 9,988 MB free /8,192 required,
+CPU35 percent. No localhost server, dependency install or additional agent was used.
