@@ -149,3 +149,31 @@ Machine admission at 2026-10-11T21:55:34Z returned HOLD for review-lite: 4,936 M
 free versus 6,144 MB required. No new agent, full local build, install, model,
 server or browser worker was started. Ordinary edits and small tests proceeded;
 hosted build/type/lint and visual verification remain the next release gates.
+
+## Compiled browser coverage candidate
+
+Draft PR602 first candidate bb3f8f685769cf48e8345a737854aa99abaa09b6 has hosted
+Build, Lint and TypeScript passed, a successful Vercel preview and the existing
+four-mode compiled companion check passed. CI38178859871 is terminal SUCCESS,
+including Build114587678753 and CIStatus114588443056. Companion38178859864 is
+terminal SUCCESS. Its independent review was skipped because the accepted review
+lane permits only the earlier PR597 branch. A skipped review is not acceptance
+and no branch admission is bypassed.
+
+The existing browser verifier is extended in a separately admitted ninth path.
+It exercises the actual compiled world-mode hook and controls at desktop, mobile,
+reduced-motion and forced-color settings. Intercepted generation and synthetic
+Supabase auth events are used; app API writes and real providers remain blocked.
+The scenario covers source longer than 500 characters, unknown result, reload
+without a second dispatch, explicit retry consent, complete source and draft
+downloads, completed-draft reload, accepted editor transfer and preservation of
+newer applied edits. The actual source manifest includes the world hook, controller,
+schemas, handler, creator and editor. Each new capture gets the existing revision/
+source/pixel sidecar. These new runtime assertions are prepared, not yet executed.
+
+During that scenario preparation, recovered conversation export was made available
+even without a surviving chat view. Consent retains that source, and an explicitly
+confirmed new attempt can reuse it. A new native regression passes alongside the
+existing cases: 37 combined checks. No credentials or account IDs enter portable
+conversation/download artifacts. The pending source still belongs to the signed-in
+account in this tab; no cloud or cross-device promise is added.

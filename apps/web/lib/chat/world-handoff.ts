@@ -30,6 +30,7 @@ const recoverySchema = z.discriminatedUnion("status", [
       version: z.literal(1),
       actor: z.string().uuid(),
       status: z.literal("idle"),
+      source: worldConversationSchema.optional(),
     })
     .strict(),
   z
@@ -60,6 +61,7 @@ interface Snapshot {
   transferred: boolean;
   uncertain: boolean;
   error: string | null;
+  source: z.infer<typeof worldConversationSchema> | null;
 }
 interface Ports {
   actor: string | null;
@@ -84,6 +86,7 @@ export function createWorldHandoffSession(ports: Ports) {
     transferred: false,
     uncertain: false,
     error: null,
+    source: null,
   });
   const listeners = new Set<() => void>();
   let controller: AbortController | null = null;
@@ -152,7 +155,13 @@ export function createWorldHandoffSession(ports: Ports) {
       recoveryRaw = raw;
       hydrated = true;
       if (record?.status === "pending")
-        publish({ uncertain: true, error: uncertainty });
+        publish({
+          uncertain: true,
+          error: uncertainty,
+          source: freeze(record.request.conversation ?? null),
+        });
+      if (record?.status === "idle" && record.source)
+        publish({ source: freeze(record.source) });
       if (record?.status === "ready")
         publish({ draft: freeze(record.draft), error: null });
     } catch {
@@ -232,7 +241,18 @@ export function createWorldHandoffSession(ports: Ports) {
     transfer,
     exportText() {
       current();
-      return snapshot.draft ? JSON.stringify(snapshot.draft, null, 2) : null;
+      return snapshot.draft
+        ? JSON.stringify(snapshot.draft, null, 2)
+        : snapshot.source
+          ? JSON.stringify(
+              {
+                version: 1,
+                source: { kind: "world-chat", conversation: snapshot.source },
+              },
+              null,
+              2,
+            )
+          : null;
     },
     allowAnotherAttempt() {
       if (snapshot.isCreating || snapshot.draft) return;
@@ -242,7 +262,16 @@ export function createWorldHandoffSession(ports: Ports) {
         if (record && record.status !== "pending" && record.status !== "idle")
           throw new Error("A completed draft is available.");
         recoveryRaw = raw;
-        writeRecovery({ version: 1, actor, status: "idle" });
+        const source =
+          record?.status === "pending"
+            ? record.request.conversation
+            : record?.source;
+        writeRecovery({
+          version: 1,
+          actor,
+          status: "idle",
+          ...(source ? { source } : {}),
+        });
         hydrated = true;
         publish({ uncertain: false, error: null });
       } catch {
@@ -273,6 +302,7 @@ export function createWorldHandoffSession(ports: Ports) {
           transferred: false,
           uncertain: false,
           error: null,
+          source: null,
         });
         return true;
       } catch {
@@ -300,7 +330,8 @@ export function createWorldHandoffSession(ports: Ports) {
           transfer();
           return;
         }
-        const conversation = messages.filter((message) =>
+        const selected = messages.length ? messages : (snapshot.source ?? []);
+        const conversation = selected.filter((message) =>
           message.content.trim(),
         );
         const first = conversation.find((message) => message.role === "user");
@@ -331,7 +362,11 @@ export function createWorldHandoffSession(ports: Ports) {
         active = new AbortController();
         controller = active;
         timer = setTimeout(() => active?.abort(), 55000);
-        publish({ isCreating: true, error: null });
+        publish({
+          isCreating: true,
+          error: null,
+          source: freeze(parsed.data.conversation ?? null),
+        });
         dispatched = true;
         const response = await ports.fetch("/api/worlds/generate", {
           method: "POST",
@@ -344,7 +379,12 @@ export function createWorldHandoffSession(ports: Ports) {
         if (!response.ok) {
           await response.body?.cancel().catch(() => {});
           if ([400, 401, 402, 403, 409, 413].includes(response.status)) {
-            writeRecovery({ version: 1, actor, status: "idle" });
+            writeRecovery({
+              version: 1,
+              actor,
+              status: "idle",
+              source: parsed.data.conversation,
+            });
             dispatched = false;
             throw new Error(
               response.status === 409

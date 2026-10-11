@@ -206,6 +206,11 @@ test("reload after an unknown outcome cannot silently infer again", async () => 
   await reloaded.generate(conversation);
   assert.equal(calls, 1);
   assert.equal(reloaded.snapshot().uncertain, true);
+  assert.deepEqual(
+    JSON.parse(reloaded.exportText()).source.conversation,
+    conversation,
+  );
+  assert.equal(reloaded.exportText().includes(owner), false);
 });
 test("reload recovers a completed draft when its editor transfer failed", async () => {
   const f = fixture();
@@ -226,6 +231,28 @@ test("reload recovers a completed draft when its editor transfer failed", async 
     JSON.parse(reloaded.exportText()).source.conversation,
     conversation,
   );
+});
+test("a confirmed retry can reuse recovered source without a surviving chat view", async () => {
+  const bodies = [];
+  const f = fixture({
+    fetch: async (_url, options) => {
+      bodies.push(JSON.parse(options.body));
+      if (bodies.length === 1) throw new Error("Lost response");
+      return Response.json(output());
+    },
+  });
+  await f.session.generate(conversation);
+  const reloaded = load(
+    "apps/web/lib/chat/world-handoff.ts",
+  ).createWorldHandoffSession(f.ports);
+  reloaded.restore();
+  await reloaded.generate([]);
+  assert.equal(bodies.length, 1);
+  reloaded.allowAnotherAttempt();
+  await reloaded.generate([]);
+  assert.equal(bodies.length, 2);
+  assert.deepEqual(bodies[1].conversation, bodies[0].conversation);
+  assert.equal(reloaded.snapshot().draft.draft_id, draftId);
 });
 test("unavailable durable storage refuses before inference", async () => {
   const f = fixture();
@@ -270,6 +297,10 @@ test("reload retains explicit retry consent and refuses malformed or foreign rec
   const afterConsent = factory(f.ports);
   afterConsent.restore();
   assert.equal(afterConsent.snapshot().uncertain, false);
+  assert.deepEqual(
+    JSON.parse(afterConsent.exportText()).source.conversation,
+    conversation,
+  );
   for (const raw of [
     "unreadable",
     JSON.stringify({

@@ -148,6 +148,13 @@ export function ChatNotices({
                   Prepare an editable draft from this conversation using your
                   Gemini key and Google quota. Saving stays a separate action.
                 </p>
+                {worldMode.source && conversation.messages.length === 0 && (
+                  <p className="mt-1 text-sm text-[var(--arc-text-secondary)]">
+                    Your previous source conversation was recovered in this tab.
+                    Download it before preparing another draft from that
+                    context.
+                  </p>
+                )}
               </div>
               <button
                 disabled={worldMode.isCreating || worldMode.uncertain}
@@ -204,6 +211,14 @@ export function ChatNotices({
                   className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 text-sm focus-visible:outline focus-visible:outline-2"
                 >
                   Allow another attempt
+                </button>
+              )}
+              {worldMode.source && !worldMode.draft && (
+                <button
+                  onClick={worldMode.exportDraft}
+                  className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 text-sm focus-visible:outline focus-visible:outline-2"
+                >
+                  Download source conversation
                 </button>
               )}
             </div>

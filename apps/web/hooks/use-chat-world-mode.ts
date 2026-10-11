@@ -74,7 +74,9 @@ export function useChatWorldMode() {
       url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
       const link = document.createElement("a");
       link.href = url;
-      link.download = (snapshot.draft?.world.slug || "world") + "-draft.json";
+      link.download = snapshot.draft
+        ? snapshot.draft.world.slug + "-draft.json"
+        : "world-conversation.json";
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -84,7 +86,7 @@ export function useChatWorldMode() {
         setDownloadError({
           token,
           message:
-            "The download did not start. Your draft is still here; retry download or transfer.",
+            "The download did not start. Keep this tab open and retry download or transfer.",
         });
     } finally {
       if (url) {
@@ -97,7 +99,8 @@ export function useChatWorldMode() {
     ...snapshot,
     isWorldMode,
     worldPrompt: WORLD_BUILDER_PROMPT,
-    canCreateWorld: isWorldMode && messageCount >= 2,
+    canCreateWorld:
+      isWorldMode && (messageCount >= 2 || !!snapshot.source?.length),
     createdSlug: null,
     createError:
       downloadError?.token === token ? downloadError.message : snapshot.error,

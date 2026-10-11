@@ -47,6 +47,14 @@ const source = [
   "apps/web/components/worlds/WorldsOnboarding.tsx",
   "apps/web/package.json",
   "apps/web/app/chat/layout.tsx",
+  "apps/web/hooks/use-chat-world-mode.ts",
+  "apps/web/lib/chat/world-handoff.ts",
+  "apps/web/lib/worlds/draft.ts",
+  "apps/web/lib/worlds/generation.ts",
+  "apps/web/app/api/worlds/generate/route.ts",
+  "apps/web/app/worlds/create/page.tsx",
+  "apps/web/components/worlds/world-draft-editor.tsx",
+  "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md",
 ];
 const modes = [
   {
@@ -214,14 +222,16 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
-    const surface = name.startsWith("full-chat-")
-      ? page.getByRole("log", { name: "Chat messages", exact: true })
-      : page.getByRole("dialog", {
-          name: name.startsWith("shortcuts-")
-            ? "Keyboard shortcuts"
-            : "Arcanea companion",
-          exact: true,
-        });
+    const surface = name.startsWith("world-handoff-")
+      ? page.getByRole("region", { name: "Prepared world draft", exact: true })
+      : name.startsWith("full-chat-")
+        ? page.getByRole("log", { name: "Chat messages", exact: true })
+        : page.getByRole("dialog", {
+            name: name.startsWith("shortcuts-")
+              ? "Keyboard shortcuts"
+              : "Arcanea companion",
+            exact: true,
+          });
     await expect(surface).toBeVisible();
     await expect
       .poll(() =>
@@ -282,6 +292,225 @@ async function main() {
       `${JSON.stringify(capture, null, 2)}\n`,
     );
     receipt.captures.push(capture);
+  };
+  const exerciseWorldHandoff = async (page, context, mode) => {
+    const actor = "00000000-0000-4000-8000-000000000091";
+    const draftId = "897b0f55-bb7b-4c52-866e-61ebf78646c7";
+    const names = preferences.providerStorageNames(`user:${actor}`);
+    const authenticate = async () => {
+      await page.evaluate(
+        ({ actor, names, key }) => {
+          localStorage.setItem(names.keys, JSON.stringify({ google: key }));
+          localStorage.setItem(names.provider, "google");
+          localStorage.setItem(names.model, "arcanea-gemini-flash");
+          const channel = new BroadcastChannel("sb-placeholder-auth-token");
+          channel.postMessage({
+            event: "SIGNED_IN",
+            session: {
+              user: {
+                id: actor,
+                email: "world-fixture@example.invalid",
+                user_metadata: {},
+              },
+              access_token: "fixture-not-a-credential",
+              token_type: "bearer",
+              refresh_token: "fixture-not-a-credential",
+              expires_at: Math.floor(Date.now() / 1000) + 3600,
+            },
+          });
+          channel.close();
+          window.dispatchEvent(new Event("arcanea-model-change"));
+        },
+        { actor, names, key: fakeKey },
+      );
+    };
+    const world = {
+      name: "Tide Ledger",
+      slug: "tide-ledger",
+      tagline: "Every tide collects a debt.",
+      description:
+        "A coastal city must repay the sea with memories. Mara refuses to surrender her daughter's name.",
+      laws: [1, 2, 3].map((i) => ({
+        name: `Debt ${i}`,
+        description: "Every seawall costs a shared memory.",
+      })),
+      systems: [
+        {
+          name: "The ledger",
+          type: "Ritual",
+          rules: "Debts are counted at low tide.",
+        },
+      ],
+      characters: [
+        { name: "Mara", backstory: "She refuses to forget her daughter." },
+        { name: "Ivo", backstory: "He collects the city's debts." },
+      ],
+      locations: [
+        { name: "Dry stair", description: "A staircase appears at low tide." },
+        { name: "Salt archive", description: "Memories are kept in jars." },
+      ],
+      first_event: {
+        title: "First bargain",
+        description: "The city survived by forgetting its founder.",
+      },
+    };
+    let attempts = 0;
+    let loseResponse = true;
+    let selectedSource;
+    await context.route("**/api/worlds/generate", async (route) => {
+      assert.equal(new URL(route.request().url()).origin, target.origin);
+      assert.equal(route.request().method(), "POST");
+      assert.equal(route.request().headers()["x-google-key"], fakeKey);
+      const body = route.request().postDataJSON();
+      assert.equal(body.expected_actor, actor);
+      assert.equal(body.description.length, 500);
+      assert.ok(body.conversation[0].content.length > 500);
+      if (selectedSource) assert.deepEqual(body.conversation, selectedSource);
+      else selectedSource = body.conversation;
+      attempts++;
+      if (loseResponse) return route.abort("failed");
+      return route.fulfill({
+        status: 200,
+        json: { draft_id: draftId, world, saved: false, actor_id: actor },
+      });
+    });
+    await page.goto(`${base}/chat?mode=world`);
+    const input = page.getByLabel("Message input", { exact: true });
+    await expect(input).toBeVisible();
+    await authenticate();
+    const concept =
+      "A coastal city pays the sea with memories. " +
+      "Keep this founding rule. ".repeat(30) +
+      "Mara refuses to surrender her daughter's name.";
+    await input.fill(concept);
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect(
+      page.getByRole("log", { name: "Chat messages", exact: true }),
+    ).toContainText("A door opens beneath the tide.");
+    const prepare = page.getByRole("button", {
+      name: "Prepare world draft",
+      exact: true,
+    });
+    await expect(prepare).toBeEnabled();
+    await prepare.click();
+    await expect(page.getByRole("alert")).toContainText(
+      "may have used Google quota",
+    );
+    assert.equal(attempts, 1);
+    await expect(prepare).toBeDisabled();
+    await page.reload();
+    await expect(input).toBeVisible();
+    await authenticate();
+    const allow = page.getByRole("button", {
+      name: "Allow another attempt",
+      exact: true,
+    });
+    await expect(allow).toBeVisible();
+    await expect(prepare).toBeDisabled();
+    assert.equal(attempts, 1, "Reload cannot generate again");
+    const sourceDownload = page.waitForEvent("download");
+    await page
+      .getByRole("button", {
+        name: "Download source conversation",
+        exact: true,
+      })
+      .click();
+    const sourceFile = await sourceDownload;
+    const recoveredSource = JSON.parse(
+      await fs.readFile(await sourceFile.path(), "utf8"),
+    );
+    assert.deepEqual(recoveredSource.source.conversation, selectedSource);
+    assert.equal(JSON.stringify(recoveredSource).includes(actor), false);
+    assert.equal(JSON.stringify(recoveredSource).includes(fakeKey), false);
+    page.once("dialog", (dialog) => dialog.accept());
+    await allow.click();
+    await expect(prepare).toBeEnabled();
+    loseResponse = false;
+    await prepare.focus();
+    await page.keyboard.press("Enter");
+    const ready = page.getByRole("region", {
+      name: "Prepared world draft",
+      exact: true,
+    });
+    await expect(ready).toContainText("Tide Ledger · Unsaved draft");
+    assert.equal(attempts, 2);
+    const geometry = await ready.evaluate((element) => ({
+      overflow: element.scrollWidth > element.clientWidth,
+      controls: [...element.querySelectorAll("button")].map((button) => ({
+        label: button.textContent.trim(),
+        height: button.getBoundingClientRect().height,
+      })),
+    }));
+    assert.equal(geometry.overflow, false);
+    assert.ok(geometry.controls.every((control) => control.height >= 44));
+    await capturePage(page, `world-handoff-${mode.name}`);
+    const draftDownload = page.waitForEvent("download");
+    await ready
+      .getByRole("button", { name: "Download world draft", exact: true })
+      .click();
+    const draftFile = await draftDownload;
+    const downloaded = JSON.parse(
+      await fs.readFile(await draftFile.path(), "utf8"),
+    );
+    assert.equal(downloaded.draft_id, draftId);
+    assert.deepEqual(downloaded.source.conversation, selectedSource);
+    await page.reload();
+    await expect(input).toBeVisible();
+    await authenticate();
+    await expect(ready).toBeVisible();
+    assert.equal(attempts, 2);
+    const open = ready.getByRole("button", {
+      name: "Edit world draft",
+      exact: true,
+    });
+    await open.focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/worlds\/create\?resume=1$/);
+    await expect(page.getByRole("main")).toBeVisible();
+    await authenticate();
+    const edit = page.getByRole("button", {
+      name: "Edit world draft",
+      exact: true,
+    });
+    await edit.click();
+    await page
+      .getByLabel("World name", { exact: true })
+      .fill("Tide Ledger revised");
+    await page
+      .getByRole("button", { name: "Apply draft changes", exact: true })
+      .click();
+    await page.goto(`${base}/chat?mode=world`);
+    await expect(input).toBeVisible();
+    await authenticate();
+    await expect(ready).toBeVisible();
+    await open.click();
+    await expect(page).toHaveURL(/\/worlds\/create\?resume=1$/);
+    await authenticate();
+    await edit.click();
+    await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
+      "Tide Ledger revised",
+    );
+    assert.equal(
+      attempts,
+      2,
+      "Reload, transfer, export and edits never infer again",
+    );
+    await context.unroute("**/api/worlds/generate");
+    return {
+      attempts,
+      unknownConsentRestored: true,
+      sourceDownloadVerified: true,
+      fullDraftDownloadVerified: true,
+      completedReloadVerified: true,
+      editorTransferVerified: true,
+      newerEditsPreserved: true,
+      geometry,
+      syntheticAuthOnly: true,
+      realProviderCalls: 0,
+      productionWrites: 0,
+    };
   };
   let browser;
   let activePage;
@@ -685,6 +914,8 @@ async function main() {
       await page.keyboard.press("Escape");
       await expect(shortcutsDialog).toBeHidden();
       await expect(starterButtons.first()).toBeFocused();
+      streamMode = "complete";
+      const worldHandoff = await exerciseWorldHandoff(page, context, mode);
       await page.goto(base);
       await expect(opener).toBeHidden();
       assert.deepEqual(pageErrors, []);
@@ -708,6 +939,7 @@ async function main() {
         fullChatHeadingVisible: true,
         shortcutsHeadingVisible: true,
         shortcutsFocusContainedAndRestored: true,
+        worldHandoff,
         startersImmediatelyReadable: true,
         geometry,
         pageErrors,
