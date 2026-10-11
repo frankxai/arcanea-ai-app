@@ -22,6 +22,7 @@ async function main() {
   assert.equal(config.head, process.env.GITHUB_SHA);
   assert.equal(config.base, "http://localhost:3001");
   assert.equal(config.supabaseUrl, "http://127.0.0.1:54321");
+  assert.equal(config.output, "screenshots/generation-service");
   assert.ok(
     config.accounts.every((account) =>
       account.email.endsWith("@example.invalid"),
@@ -62,6 +63,68 @@ async function main() {
     assert.equal(values.length, 1);
     return values[0];
   }
+  const asyncFailures = [];
+  let evidenceWrites = Promise.resolve();
+  function persist(passed = false, fixtureSupplier = null) {
+    const evidence = JSON.stringify(
+      {
+        head: config.head,
+        passed:
+          passed &&
+          rows.length === 9 &&
+          rows.every((row) => row.passed) &&
+          !asyncFailures.length,
+        rows,
+        asyncFailures,
+        csp: "Authenticated HTTP loopback journeys bypass CSP. Separate no-bypass production-media-csp case tests real headers with intercepted imgen.x.ai fixture bytes; actual supplier CORS is not certified",
+        paidProviderCalls: 0,
+        providerRequestsAttempted: 0,
+        fixtureSupplier,
+      },
+      null,
+      2,
+    );
+    const path = `${config.output}/browser-evidence.json`;
+    evidenceWrites = evidenceWrites.then(async () => {
+      await fs.writeFile(path + ".tmp", evidence);
+      await fs.rename(path + ".tmp", path);
+    });
+    return evidenceWrites;
+  }
+  async function record(row) {
+    rows.push(row);
+    await persist();
+  }
+  const onUnhandled = (error) => {
+    // Keep async failures blocking without emitting exception bodies or secrets.
+    const names = ["TimeoutError", "TargetClosedError", "AssertionError"];
+    const kind = names.includes(error?.name) ? error.name : "Other";
+    const match =
+      typeof error?.stack === "string" &&
+      /verify-generation-preview-browser\.cjs:(\d+):/.exec(error.stack);
+    asyncFailures.push({ kind, scriptLine: match ? Number(match[1]) : null });
+    void persist().catch(() => {});
+  };
+  process.on("unhandledRejection", onUnhandled);
+  const closingContexts = new WeakSet();
+  async function closeContext(context) {
+    closingContexts.add(context);
+    await context.close();
+  }
+  async function serveImage(route, context, headers) {
+    try {
+      await route.fulfill({
+        status: 200,
+        contentType: "image/webp",
+        body: image,
+        headers,
+      });
+    } catch (error) {
+      // Only teardown races are ignored; unexpected route errors still fail.
+      if (!closingContexts.has(context)) throw error;
+    }
+  }
+  await persist();
   async function capture(page, name, kind) {
     const file = `${config.output}/${name}.png`;
     await page.screenshot({
@@ -132,19 +195,13 @@ async function main() {
       const allowed = "https://imgen.x.ai/fixture-csp.webp";
       const blocked = "https://generation-fixture.invalid/fixture-csp.webp";
       await policyContext.route(allowed, (route) =>
-        route.fulfill({
-          status: 200,
-          contentType: "image/webp",
-          body: image,
-          headers: { "access-control-allow-origin": config.base },
+        serveImage(route, policyContext, {
+          "access-control-allow-origin": config.base,
         }),
       );
       await policyContext.route(blocked, (route) =>
-        route.fulfill({
-          status: 200,
-          contentType: "image/webp",
-          body: image,
-          headers: { "access-control-allow-origin": config.base },
+        serveImage(route, policyContext, {
+          "access-control-allow-origin": config.base,
         }),
       );
       const page = await policyContext.newPage();
@@ -193,7 +250,7 @@ async function main() {
       );
       assert.equal(result.blockedImage, false);
       assert.equal(result.blockedFetch, true);
-      rows.push({
+      await record({
         scope: "production-media-csp",
         passed: true,
         bypassCSP: false,
@@ -204,13 +261,13 @@ async function main() {
         sourceSha256: imageHash,
       });
     } catch {
-      rows.push({
+      await record({
         scope: "production-media-csp",
         passed: false,
         bypassCSP: false,
       });
     } finally {
-      await policyContext.close();
+      await closeContext(policyContext);
     }
     for (const mode of modes) {
       const context = await browser.newContext({
@@ -222,15 +279,13 @@ async function main() {
       });
       let refuseExport = false;
       await context.route("https://imgen.x.ai/fixture-**", (route) =>
-        route.fulfill({
-          status: 200,
-          contentType: "image/webp",
-          body: image,
-          headers:
-            refuseExport && route.request().resourceType() === "fetch"
-              ? {}
-              : { "access-control-allow-origin": config.base },
-        }),
+        serveImage(
+          route,
+          context,
+          refuseExport && route.request().resourceType() === "fetch"
+            ? {}
+            : { "access-control-allow-origin": config.base },
+        ),
       );
       const page = await context.newPage();
       let authenticated = false;
@@ -262,6 +317,7 @@ async function main() {
             new URL(r.url()).pathname === "/api/imagine/generate" &&
             r.request().method() === "POST",
         );
+        pending.catch(() => {});
         await page.getByRole("button", { name: /^Forge/ }).click();
         const first = await pending;
         assert.equal(first.status(), 409);
@@ -280,6 +336,7 @@ async function main() {
             new URL(r.url()).pathname === "/api/imagine/generate" &&
             r.request().method() === "POST",
         );
+        pending.catch(() => {});
         await page.getByRole("button", { name: /^Forge/ }).click();
         const resumed = await pending;
         assert.equal(resumed.status(), 200);
@@ -311,7 +368,9 @@ async function main() {
           )
           .toBe(true);
         phase = "image-download";
-        await rendered.hover();
+        // Hover the visible image container: its transparent action overlay is
+        // a descendant, so targeting the underlying img fails hit testing.
+        await rendered.locator("..").hover();
         const download = page.waitForEvent("download");
         download.catch(() => {});
         await page.getByTitle("Download image", { exact: true }).click();
@@ -349,7 +408,7 @@ async function main() {
           "Horizontal page overflow",
         );
         await capture(page, `${mode.name}-studio`, "rendered image client");
-        rows.push({
+        await record({
           mode: mode.name,
           scope: "studio",
           passed: true,
@@ -362,7 +421,7 @@ async function main() {
           corsRefusalManualExport: true,
         });
       } catch {
-        rows.push({
+        await record({
           mode: mode.name,
           scope: "studio",
           passed: false,
@@ -386,6 +445,7 @@ async function main() {
             new URL(r.url()).pathname === "/api/imagine/generate" &&
             r.request().method() === "POST",
         );
+        pending.catch(() => {});
         await page
           .getByRole("button", { name: /^(Generate cover|Regenerate)$/ })
           .click();
@@ -410,6 +470,7 @@ async function main() {
             new URL(r.url()).pathname === "/api/pages/generation-fixture-0" &&
             r.request().method() === "PATCH",
         );
+        saving.catch(() => {});
         await page.getByRole("button", { name: "Save", exact: true }).click();
         assert.equal((await saving).status(), 200);
         await page.goto(`${config.base}/p/generation-fixture-0/edit`);
@@ -425,14 +486,14 @@ async function main() {
         assert.equal(values[0].cover_image_url, receipt.images[0].url);
         assert.equal(values[0].owner_id, config.accounts[0].id);
         await capture(page, `${mode.name}-cover`, "persisted cover client");
-        rows.push({
+        await record({
           mode: mode.name,
           scope: "page-cover",
           passed: true,
           savedAndReopened: true,
         });
       } catch {
-        rows.push({
+        await record({
           mode: mode.name,
           scope: "page-cover",
           passed: false,
@@ -444,7 +505,7 @@ async function main() {
           "failed persisted-cover acceptance",
         ).catch(() => {});
       }
-      await context.close();
+      await closeContext(context);
     }
     // A real GoTrue account switch, not synthetic browser identity, admits the
     // middleware-protected settings page and proves browser-local key isolation.
@@ -502,7 +563,7 @@ async function main() {
         "fixture-settings-account-a-key",
         "fixture-settings-account-b-key",
       ]);
-      rows.push({
+      await record({
         scope: "real-auth-provider-settings",
         passed: true,
         mode: "desktop",
@@ -513,13 +574,13 @@ async function main() {
         actualProviderVerification: false,
       });
     } catch {
-      rows.push({
+      await record({
         scope: "real-auth-provider-settings",
         passed: false,
         failurePhase: settingsPhase,
       });
     } finally {
-      await settingsContext.close();
+      await closeContext(settingsContext);
     }
     // Real authenticated Data API denial plus a depleted second actor at the app boundary.
     let phase = "second-account-isolation";
@@ -569,7 +630,7 @@ async function main() {
       );
       assert.equal(denied.status(), 402);
       assert.equal((await state()).submissions, before.submissions);
-      rows.push({
+      await record({
         scope: "account-isolation",
         passed: true,
         privateOperationDenied: true,
@@ -578,33 +639,30 @@ async function main() {
         depletedNoProvider: true,
       });
     } catch {
-      rows.push({
+      await record({
         scope: "account-isolation",
         passed: false,
         failurePhase: phase,
       });
     } finally {
-      await context.close();
+      await closeContext(context);
     }
   } finally {
+    const supplier = await state().catch(() => null);
+    if (!supplier)
+      asyncFailures.push({ kind: "FixtureStateUnavailable", scriptLine: null });
+    const passed =
+      rows.length === 9 &&
+      rows.every((row) => row.passed) &&
+      !asyncFailures.length;
+    // Save completed/failed rows before closing contexts or exiting the child.
+    await persist(passed, supplier);
+    for (const context of browser.contexts()) closingContexts.add(context);
     await browser.close();
-    await fs.writeFile(
-      `${config.output}/browser-evidence.json`,
-      JSON.stringify(
-        {
-          head: config.head,
-          passed: rows.length === 9 && rows.every((row) => row.passed),
-          rows,
-          csp: "Authenticated HTTP loopback journeys bypass CSP. Separate no-bypass production-media-csp case tests real headers with intercepted imgen.x.ai fixture bytes; actual supplier CORS is not certified",
-          paidProviderCalls: 0,
-          providerRequestsAttempted: 0,
-          fixtureSupplier: await state(),
-        },
-        null,
-        2,
-      ),
-    );
+    process.removeListener("unhandledRejection", onUnhandled);
+    await evidenceWrites;
   }
+  assert.equal(asyncFailures.length, 0, "Unexpected fixture async failures");
   assert.equal(rows.length, 9);
   assert.ok(
     rows.every((row) => row.passed),

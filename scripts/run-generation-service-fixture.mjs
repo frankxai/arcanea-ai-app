@@ -598,6 +598,10 @@ try {
   );
   process.exitCode = 1;
 } finally {
+  receipt.fixtureSupplier = {
+    submissions: supplier.submissions,
+    polls: supplier.polls,
+  };
   clearInterval(heartbeat);
   for (const child of children) {
     try {

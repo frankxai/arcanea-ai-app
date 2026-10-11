@@ -136,3 +136,86 @@ test("Browser verifier resolves the app-owned dependency and refuses local execu
   assert.match(result.stderr, /Disposable generation client acceptance failed/);
   assert.doesNotMatch(result.stderr, /MODULE_NOT_FOUND|Cannot find module/);
 });
+
+async function receiptHelpers() {
+  const verifier = readFileSync(
+    new URL("../verify-generation-preview-browser.cjs", import.meta.url),
+    "utf8",
+  );
+  const start = verifier.indexOf("  const asyncFailures = [];");
+  const end = verifier.indexOf("  async function capture(", start);
+  assert.ok(start >= 0 && end > start);
+  const files = new Map();
+  const rows = [];
+  const events = [];
+  const helpers = await runInNewContext(
+    `(async () => { ${verifier.slice(start, end)}; return { record, persist, onUnhandled, closeContext, serveImage }; })()`,
+    {
+      rows,
+      config: {
+        head: "fixture-head",
+        output: "screenshots/generation-service",
+      },
+      image: new Uint8Array([1, 2, 3]),
+      fs: {
+        writeFile: async (path, body) => files.set(path, body),
+        rename: async (from, to) => {
+          assert.ok(files.has(from));
+          files.set(to, files.get(from));
+          files.delete(from);
+        },
+      },
+      process: { on: (name) => events.push(name) },
+    },
+  );
+  return {
+    helpers,
+    rows,
+    events,
+    evidence: () =>
+      JSON.parse(
+        files.get("screenshots/generation-service/browser-evidence.json"),
+      ),
+  };
+}
+
+test("actual browser receipt helpers checkpoint rows atomically and async errors remain blocking without secret output", async () => {
+  const { helpers, events, evidence } = await receiptHelpers();
+  assert.deepEqual(events, ["unhandledRejection"]);
+  await helpers.record({ scope: "first-real-check", passed: true });
+  assert.equal(evidence().passed, false);
+  assert.equal(evidence().rows.length, 1);
+  for (let i = 1; i < 9; i++)
+    await helpers.record({ scope: `check-${i}`, passed: true });
+  await helpers.persist(true);
+  assert.equal(evidence().passed, true);
+  const failure = new Error("PRIVATE-CREDENTIAL-SENTINEL");
+  failure.stack =
+    "Error: PRIVATE-CREDENTIAL-SENTINEL\n at verify-generation-preview-browser.cjs:123:9";
+  helpers.onUnhandled(failure);
+  await helpers.persist(true);
+  const result = evidence();
+  assert.equal(result.passed, false);
+  assert.deepEqual(result.asyncFailures, [{ kind: "Other", scriptLine: 123 }]);
+  assert.equal(result.rows.length, 9);
+  assert.ok(!JSON.stringify(result).includes("PRIVATE-CREDENTIAL-SENTINEL"));
+});
+
+test("actual fixture image handler ignores only owned context teardown races", async () => {
+  const { helpers } = await receiptHelpers();
+  let closed = false;
+  const context = {
+    close: async () => {
+      closed = true;
+    },
+  };
+  const route = {
+    fulfill: async () => {
+      throw Error("route failed");
+    },
+  };
+  await assert.rejects(helpers.serveImage(route, context, {}), /route failed/);
+  await helpers.closeContext(context);
+  assert.equal(closed, true);
+  await helpers.serveImage(route, context, {});
+});

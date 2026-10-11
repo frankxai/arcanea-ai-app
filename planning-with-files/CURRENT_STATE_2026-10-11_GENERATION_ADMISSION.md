@@ -173,3 +173,38 @@ Private retained assets, verified quotas, customer export, cancellation recovery
 production schema/provider availability and offer economics still gate paid beta.
 All current screenshots are deterministic existing-asset fixtures with companion
 provenance; no real paid image has been generated. The broad estate goal stays active.
+
+## Receipt durability after first rendered desktop run
+
+Full hosted38120773036 at363ce5781bd fails Build's unchanged inherited guest settings
+assertion and generation acceptance. Install/Types/Lint pass. Gemini3.1Pro source
+PASS has32 verified exact Git source hashes, packet and final-response agreement,
+zero blocking findings. Raw response-final approvalEarned:false is deliberately
+written before verdict validation; validated receipt/review remains static evidence.
+Actual financial SQL/recovery/concurrency assertions pass. The generation artifact
+contains a desktop Studio failure capture showing the real image rendered and a
+cover capture after save/reopen assertions, but no final browser-evidence.json.
+This incomplete result is not a nine-case browser PASS.
+
+The verifier previously targeted the underlying img for hover even though the
+transparent action overlay covers it. It now targets the visible container, whose
+descendants receive ordinary pointer interaction. Every pre-click waiter has a
+rejection handler so a failed click cannot terminate the child through a second
+unhandled promise. Image fulfillment ignores only races while its owned context
+is explicitly closing; unexpected failures remain blocking. These are bounded
+fixture repairs; the app source remains byte-identical to reviewed363ce5781bd.
+
+Each completed/failed row now writes a serialized atomic browser receipt immediately.
+Unexpected async failures retain only an allowlisted error kind and script line,
+never exception text, credentials or URLs. They force the receipt and final gate to
+fail even if every ordinary row passed. Final receipt is saved before browser
+cleanup; parent receipt preserves supplier counters on every exit. Native tests
+execute these actual helper bodies, checking incomplete rows, blocking sanitized
+async errors and strict open-context versus closing-context fulfillment. Fresh
+exact-head review and hosted execution remain required. The missing-receipt cause
+has not been fully isolated; retained diagnostics must resolve it before release.
+
+Two363 rendered capture companions were verified and logged in the existing global
+visual ledger, zero paid inference and failed overall acceptance. The neutral2px
+blockquote border in doc-editor remains under its earlier narrow false-positive
+exception; no additional design suppression or unrelated editor change was added.
