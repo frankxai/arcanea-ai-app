@@ -15,13 +15,38 @@ import {
   exportSceneDraft,
 } from "../src/scene-drafts.mjs";
 import { buildManifest } from "../src/manifest.mjs";
-import { readWorld } from "../src/fs-world.mjs";
+import { readWorld, parseFrontmatter } from "../src/fs-world.mjs";
 import { contentHash } from "../src/contenthash.mjs";
 import { buildIndex } from "../src/index-build.mjs";
 import { recordMemory, listMemories } from "../src/evolution.mjs";
 
 const exec = promisify(execFile);
 const cli = fileURLToPath(new URL("../bin/cli.mjs", import.meta.url));
+
+test("frontmatter preserves fields and bounds malicious whitespace parsing", async () => {
+  assert.deepEqual(
+    parseFrontmatter(
+      "---\nname:   'Mara'\nvisibility:\tprivate\nempty:\nnot a field\n0:\u2028value\n---\nbody",
+    ),
+    {
+      data: { name: "Mara", visibility: "private", empty: "", 0: "value" },
+      body: "body",
+    },
+  );
+  assert.deepEqual(parseFrontmatter("no frontmatter"), {
+    data: {},
+    body: "no frontmatter",
+  });
+  const modulePath = new URL("../src/fs-world.mjs", import.meta.url).href;
+  const code = `import {parseFrontmatter} from ${JSON.stringify(modulePath)};
+    const text = "---\\n0:" + "\\t".repeat(200000) + "a\\u2028x\\n---\\nbody";
+    const result = parseFrontmatter(text);
+    if (Object.keys(result.data).length || result.body !== "body") process.exit(2);`;
+  await exec(process.execPath, ["--input-type=module", "-e", code], {
+    timeout: 2000,
+    maxBuffer: 1000,
+  });
+});
 
 async function fixture(t) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), "arcanea-scenes-"));

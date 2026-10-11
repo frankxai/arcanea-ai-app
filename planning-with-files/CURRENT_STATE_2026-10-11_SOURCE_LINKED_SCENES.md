@@ -13,7 +13,8 @@ Owned files: packages/world-sdk/src/scene-drafts.mjs,
 packages/world-sdk/bin/scene-cli.mjs, packages/world-sdk/bin/cli.mjs,
 packages/world-sdk/src/index.mjs, packages/world-sdk/index.d.ts,
 packages/world-sdk/tests/scene-drafts.test.mjs, packages/world-sdk/README.md,
-.github/workflows/world-scenes.yml, packages/world-sdk/src/evolution.mjs and this record. Foreign world-editor,
+.github/workflows/world-scenes.yml, packages/world-sdk/src/evolution.mjs,
+packages/world-sdk/src/fs-world.mjs and this record. Foreign world-editor,
 chat-world handoff and library scopes remain untouched.
 
 Creator job: take explicitly selected world and character documents into the
@@ -74,7 +75,7 @@ semantic canon validator, calibrated judge, competitor comparison or production
 creator outcome is proved. Day-one library correction #515 remains with its
 foreign owner. ARC-REL-001 remains Dragonborne; publication approval is pending.
 
-Rollback: revert this ten-file slice via a reviewed PR. Preserve creator draft
+Rollback: revert this eleven-file slice via a reviewed PR. Preserve creator draft
 directories and exports; no live data migration or canon change is introduced.
 Never delete incomplete export directories or accepted revisions as cleanup.
 
@@ -99,3 +100,18 @@ Its empty-capture complaint contradicts the deliberate revision-zero state;
 the hypothetical UUID collision already refuses via wx. Its proposed rename
 replacement could overwrite an accepted revision. These lead findings do not
 substitute for a fresh, valid independent review of the corrected candidate.
+
+The ready-event application CI at 746ac64e passed build, lint and TypeScript,
+and both hosted scene jobs passed 19 cases. CodeQL's workflow completed, but its
+separate Advanced Security check failed on one high-severity regex slowdown in
+the inherited frontmatter parser (fs-world.mjs line 15). That revision was not
+merged. A real 200,000-tab malformed frontmatter case timed out after two seconds
+in a session-owned child process. Splitting the key at the first colon and then
+trimming the value removes the overlapping regex repetition. The regression now
+passes; 91 representative legacy field/Unicode cases match the old semantics.
+The local Windows suite has 20 passes, zero failures or skips. This extends the
+owned scope to fs-world.mjs; unrelated path/evolution helpers remain unchanged.
+Fresh exact-source independent review, CodeQL alert resolution and all required
+candidate/receiving checks remain necessary. Earlier malformed Poolside and
+truncated Cohere reviews are retained without accepted verdicts; the valid
+Nemotron review at 746ac64e cannot approve this subsequent parser change.

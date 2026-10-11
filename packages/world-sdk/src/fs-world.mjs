@@ -12,8 +12,14 @@ export function parseFrontmatter(text) {
   if (!m) return { data: {}, body: text };
   const data = {};
   for (const line of m[1].split("\n")) {
-    const kv = /^([A-Za-z0-9_]+):\s*(.*)$/.exec(line.trim());
-    if (kv) data[kv[1]] = kv[2].replace(/^["']|["']$/g, "");
+    const trimmed = line.trim();
+    const colon = trimmed.indexOf(":");
+    const key = trimmed.slice(0, colon);
+    if (colon < 1 || !/^[A-Za-z0-9_]+$/.test(key)) continue;
+    // Split once: overlapping whitespace/value regexes can backtrack quadratically.
+    const value = trimmed.slice(colon + 1).trimStart();
+    if (/[\r\u2028\u2029]/.test(value)) continue;
+    data[key] = value.replace(/^["']|["']$/g, "");
   }
   return { data, body: text.slice(m[0].length) };
 }
@@ -59,7 +65,11 @@ export async function readWorld(dir) {
 
 export async function writeManifest(dir, manifest) {
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, MANIFEST_FILE), JSON.stringify(manifest, null, 2) + "\n", "utf8");
+  await fs.writeFile(
+    path.join(dir, MANIFEST_FILE),
+    JSON.stringify(manifest, null, 2) + "\n",
+    "utf8",
+  );
 }
 
 /** Write a set of files (relative paths) under dir, creating folders as needed. */
