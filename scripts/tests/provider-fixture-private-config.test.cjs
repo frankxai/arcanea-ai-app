@@ -10,11 +10,14 @@ const { execFileSync } = require("node:child_process");
 const repo = path.resolve(__dirname, "../..");
 const file =
   process.env.PRIVATE_CONFIGURATION_RUNNER ??
-  "scripts/run-provider-account-fixture.mjs";
+  (process.env.PROJECT_DOCUMENT_CONFIG_FIXTURE === "true"
+    ? "scripts/run-project-document-service-fixture.mjs"
+    : "scripts/run-provider-account-fixture.mjs");
 if (
   ![
     "scripts/run-provider-account-fixture.mjs",
     "scripts/run-reading-scene-auth-fixture.mjs",
+    "scripts/run-project-document-service-fixture.mjs",
   ].includes(file)
 )
   throw Error("Use an admitted fixture runner.");

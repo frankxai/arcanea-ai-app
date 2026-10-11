@@ -114,6 +114,9 @@ jobs:
           done
           timeout 300s node scripts/verify-reading-scene-browser.cjs
       - name: Verify real password login, session cookies and private scene recovery
+        # Match the unchanged runner's owned-lane admission. Other PRs retain
+        # route, PostgreSQL and compiled-browser checks above.
+        if: github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && contains(fromJSON('["agent/codex/reading-scene-20261010","agent/codex/provider-account-20261011","main"]'), github.head_ref || github.ref_name)
         env:
           READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
           READING_SCENE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
