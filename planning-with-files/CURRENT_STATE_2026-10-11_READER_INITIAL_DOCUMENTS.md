@@ -1,4 +1,4 @@
-# Read public chapters before JavaScript loads
+# Read public chapters before application hydration
 
 Scope: repair the initial reading document and missing-chapter recovery using the
 accepted reader. The user's job is to open an existing public book, read its prose
@@ -18,7 +18,6 @@ same tree. Node 24 and pinned pnpm 11.28.4 govern this work, as Frank confirmed.
 Files:
 
 - `apps/web/components/saga/chapter-reader.tsx`
-- `apps/web/app/books/[bookId]/[chapterId]/page.tsx`
 - `apps/web/app/books/[bookId]/[chapterId]/not-found.tsx`
 - `scripts/verify-reader-entry-browser.cjs`
 - this current-state record
@@ -30,11 +29,14 @@ and chat reservations and their branches remain preserved.
 
 Acceptance criteria:
 
-- Four existing public chapters contain their actual prose with site JavaScript
-  disabled on desktop and 375px mobile; each article has over 500 visible text
-  characters, its expected source phrase, and fits the viewport.
+- Four existing public chapters contain their actual prose while every Next
+  application JavaScript bundle is blocked on desktop and 375px mobile. Each
+  article has over 500 visible text characters, its expected source phrase,
+  opaque content and fits the viewport. React's inline streaming script remains
+  enabled; full JavaScript-disabled reading remains an open limitation.
 - Missing chapters show a readable explanation and a working books link with
-  JavaScript disabled and enabled. Unknown books disclose no chapter prose.
+  application bundles blocked and with hydration enabled. Unknown books disclose
+  no chapter prose.
   Existing `notFound()` visibility checks and noindex behavior remain intact.
 - Existing desktop, touch, reduced-motion, featured entry, next/previous, reload,
   and browser-back journeys continue to pass without runtime errors.
@@ -45,14 +47,14 @@ Acceptance criteria:
 Verification: the existing CI Build executes
 `node scripts/verify-reader-entry-browser.cjs` on ready PRs and main. Retain its
 built/source commits, run and attempt, layouts, screenshots and failed receipts.
-Run local syntax/format checks using existing dependencies. Review the five-file
+Run local syntax/format checks using existing dependencies. Review the four-file
 delta plus the existing renderer, route, visibility policy, tokens and CI context.
 No paid inference is needed. Local build preflight returned HOLD: 4,230 MB RAM
 free versus 8,192 MB required, 27 task runtimes. Use hosted CI; start no local
 build, browser, server or additional agent. Ordinary edits and small checks remain
 permitted under the machine contract.
 
-Rollback: revert only this five-file repair through the normal reviewed path,
+Rollback: revert only this four-file repair through the normal reviewed path,
 preserving manuscripts, canon, other owners' edits and accepted account recovery.
 
 ## Reproduction and implementation decision
@@ -124,7 +126,7 @@ This confirms the Markdown renders on the server; first-request static generatio
 alone still leaves its content dependent on the inline streaming script. No
 promotion occurred. Earlier source reasoning did not establish visible reading.
 
-The repair now enumerates all known public chapter paths at build time using the
+At source661ce591, the repair enumerates all known public chapter paths at build time using the
 existing `BOOK_META`, fail-closed `isBookPublic()` and `getChapterFiles()` policy.
 This is a larger build-time alternative justified by the real visibility failure.
 Unknown paths retain runtime `notFound()` recovery and its visibility gate; no
@@ -135,6 +137,35 @@ Before the next source freeze, accepted main advances to
 `46b77c58d5dd4bf1423fd8e45e7d1591ac016e82` through peer PR579. Its five world-editor,
 footer and verification files are integrated without conflicts; every incoming
 blob equals accepted main. Renewed review uses this accepted base and still has
-only the same five reader delta paths. The runtime remains checked-in Node24 and
+only the same five reader delta paths at that revision. The runtime remains checked-in Node24 and
 pinned pnpm11.28.4, as explicitly selected by Frank. Main integration preserves
 the peer's work and does not establish acceptance of this reader repair.
+
+## Acceptance correction after the third hosted failure
+
+CI38133606832 at source661ce591 builds 121 public chapter paths, but its first
+JavaScript-disabled chapter still has 8,722 text characters beneath a hidden
+streaming boundary. Artifact11699844620 binds the failed browser to built merge
+1688019e21a875696b4729db47335950c0789387. No promotion occurred. All three failed
+no-script receipts remain evidence; the later acceptance must not label them
+successful or claim full no-script reading.
+
+React's documented streaming protocol sends an inline reveal script before the
+application loads or hydrates. The consequential repair is readable server prose
+when the application's JavaScript cannot load. The revised verifier denies every
+`/_next/static/*.js` request, records actual denied requests, asserts visible real
+prose and opacity, and follows native recovery links. The inline reveal script
+remains enabled. Existing fully hydrated controls still need their separate
+desktop/mobile/reduced-motion checks. This explicitly narrows the earlier
+no-script acceptance; complete JavaScript-disabled support remains open.
+
+The chapter page is restored byte-for-byte to accepted main46b77. Failed static
+mode and build-time enumeration add no value to this repair. The final delta has
+four files; no loading boundary, global proxy, framework internals or auth policy
+is changed. The source-extracted immutable-Git path probe counted 121 paths in
+20 public books and no duplicates. Its two failed native harness attempts and
+scoped pass are retained; it does not prove Next or production acceptance.
+
+Primary reference: [React's streaming HTML protocol](https://react.dev/reference/react-dom/server/renderToReadableStream).
+
+Final-source review and the revised hosted browser gate are still pending.

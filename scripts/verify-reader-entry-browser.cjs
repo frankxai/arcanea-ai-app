@@ -66,6 +66,10 @@ async function readChapter(page, href, text) {
   return article.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     const style = getComputedStyle(element);
+    let effectiveOpacity = 1;
+    for (let ancestor = element; ancestor; ancestor = ancestor.parentElement) {
+      effectiveOpacity *= Number(getComputedStyle(ancestor).opacity);
+    }
     return {
       width: rect.width,
       left: rect.left,
@@ -73,6 +77,7 @@ async function readChapter(page, href, text) {
       viewportWidth: innerWidth,
       fontSize: style.fontSize,
       textCharacters: element.innerText.length,
+      effectiveOpacity,
     };
   });
 }
@@ -139,21 +144,31 @@ async function recoverMissingChapter(page, href, mode, capture) {
     evidence.browser = browser.version();
     for (const mode of modes.slice(0, 2)) {
       const context = await browser.newContext({
-        javaScriptEnabled: false,
+        javaScriptEnabled: true,
         viewport: mode.viewport,
         hasTouch: mode.hasTouch,
         isMobile: mode.isMobile || false,
       });
       const record = {
         mode: mode.name,
-        javaScriptEnabled: false,
+        javaScriptEnabled: true,
+        appBundlesBlocked: true,
+        blockedAppScripts: [],
+        errors: [],
         entries: [],
         recovery: [],
         screenshots: [],
       };
       evidence.initialDocuments.push(record);
+      // React's inline streaming script reveals server HTML before hydration.
+      // Deny every Next bundle so client rendering cannot produce the prose.
+      await context.route(/\/_next\/static\/.*\.js(?:\?.*)?$/, (route) => {
+        record.blockedAppScripts.push(new URL(route.request().url()).pathname);
+        return route.abort("blockedbyclient");
+      });
       try {
         const page = await context.newPage();
+        page.on("pageerror", (error) => record.errors.push(error.message));
         page.setDefaultTimeout(15000);
         for (const entry of entries) {
           const chapter = { href: entry.href, passed: false };
@@ -176,9 +191,17 @@ async function recoverMissingChapter(page, href, mode, capture) {
           }
           chapter.layout = await readChapter(page, entry.href, entry.text);
           assert.ok(
+            record.blockedAppScripts.length > 0,
+            "App bundles were denied",
+          );
+          assert.ok(
+            chapter.layout.effectiveOpacity > 0.99,
+            "Chapter prose is opaque",
+          );
+          assert.ok(
             chapter.layout.left >= -1 &&
               chapter.layout.right <= chapter.layout.viewportWidth + 1,
-            "Initial chapter article fits viewport",
+            "Pre-hydration chapter article fits viewport",
           );
           chapter.passed = true;
         }
@@ -192,6 +215,11 @@ async function recoverMissingChapter(page, href, mode, capture) {
             await recoverMissingChapter(page, href, mode, capture),
           );
         }
+        assert.deepEqual(
+          record.errors,
+          [],
+          "Pre-hydration reading has no page errors",
+        );
       } finally {
         await context.close();
       }
