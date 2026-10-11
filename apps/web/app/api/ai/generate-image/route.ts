@@ -6,7 +6,9 @@ export const maxDuration = 60;
 
 /** Compatibility path shares authentication, catalog and operation ledger. */
 export async function POST(request: NextRequest) {
-  return generate(request);
+  const response = await generate(request);
+  response.headers.set("Cache-Control", "private, no-store");
+  return response;
 }
 
 export async function GET() {

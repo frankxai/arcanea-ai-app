@@ -120,7 +120,11 @@ test("one accepted Grok submission polls to a real video without another paid PO
     { videoUrl: "https://vidgen.x.ai/result.mp4", provider: "grok-video" },
   );
   assert.equal(requests.filter((r) => r.startsWith("POST")).length, 1);
-  assert.ok(requests.every((r) => r.includes("https://api.x.ai/")));
+  assert.ok(
+    requests.every(
+      (r) => new URL(r.slice(r.indexOf(" ") + 1)).origin === "https://api.x.ai",
+    ),
+  );
 });
 test("lost, ambiguous and malformed submission responses cannot launch a fallback", async () => {
   for (const kind of ["lost", "server-error", "malformed", "redirect"]) {

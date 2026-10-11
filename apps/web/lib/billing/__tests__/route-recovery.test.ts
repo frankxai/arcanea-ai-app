@@ -85,7 +85,9 @@ test("legacy image endpoint delegates to the same governed handler without forwa
       },
     },
   });
-  assert.equal((await route.POST(incoming)).status, 401);
+  const response = await route.POST(incoming);
+  assert.equal(response.status, 401);
+  assert.equal(response.headers.get("Cache-Control"), "private, no-store");
 });
 test("animation validates requests, denies missing accounts and credit, and maps pending recovery without provider work", async () => {
   for (const scenario of [
