@@ -17,14 +17,13 @@
 #   3. Run `pnpm --filter @arcanea/router-spec build` (syncs to web + CLIs).
 #   4. /models page + blog auto-regenerate on next build.
 
-version: 1.0.0
-lastUpdated: 2026-04-17
+version: 1.0.1
+lastUpdated: 2026-06-19
 maintainer: frankxai
 
 # ─── Model catalog ──────────────────────────────────────────────────────────
 
 models:
-
   # ── Frontier (paid / sub) ─────────────────────────────────────────────────
 
   claude-opus-4-7:
@@ -32,7 +31,7 @@ models:
     family: claude
     context: 1000000
     sweBench: 80.3
-    tier: sub            # Claude Max $200/mo covers unlimited in Claude Code
+    tier: sub # Claude Max $200/mo covers unlimited in Claude Code
     byokPrice: { input: 15, output: 75 }
     strengths: [orchestration, extended-thinking, long-context, agentic]
     aliases: ["opus-4.7", "opus-4-7", "claude-opus-4-7[1m]"]
@@ -120,7 +119,7 @@ models:
     family: nemotron
     upstream: nvidia/nemotron-3-super
     context: 1000000
-    sweBench: 85.6   # PinchBench (not SWE-Bench)
+    sweBench: 85.6 # PinchBench (not SWE-Bench)
     tier: free
     strengths: [throughput, rapid-agent-tasks, 5x-speed]
 
@@ -144,7 +143,7 @@ models:
 
   big-pickle:
     provider: opencode-zen
-    family: glm      # stealth rebrand of GLM-4.6
+    family: glm # stealth rebrand of GLM-4.6
     upstream: zhipu/glm-4.6
     context: 200000
     sweBench: 70.0
@@ -159,6 +158,30 @@ models:
     tier: free
     strengths: [very-fast, lightweight, quick-transforms]
 
+  grok-4:
+    provider: xai
+    family: grok
+    context: 128000
+    tier: byok
+    strengths: [fast, shell-automation, real-time-reasoning]
+    aliases: [grok-2, grok-beta]
+
+  grok-4.3:
+    provider: xai
+    family: grok
+    context: 128000
+    tier: byok
+    strengths: [creative-reasoning, worldbuilding, fast-turns]
+    aliases: [grok-4-3, grok4.3]
+
+  grok-build:
+    provider: xai
+    family: grok
+    context: 128000
+    tier: byok
+    strengths: [image-gen, video-gen, creative-media, build-cli]
+    aliases: [grok-build-cli, grok-imagine]
+
 # ─── Task-class routing ─────────────────────────────────────────────────────
 #
 # Each class declares a prioritized candidate list. First match wins in the
@@ -166,7 +189,6 @@ models:
 # unavailable or over quota.
 
 tasks:
-
   # ── Orchestration & planning ──────────────────────────────────────────────
 
   orchestrate:
@@ -261,6 +283,18 @@ tasks:
     fallback: [kimi-k2.5-free]
     rationale: Drafting tolerates imperfection — favor speed.
 
+  media.image:
+    description: Book covers, PFPs, faction art, marketing visuals
+    primary: [grok-build]
+    fallback: [grok-4.3, grok-4]
+    rationale: Grok Build CLI is the default creative image lane for Arcanea desktop.
+
+  media.video:
+    description: Short-form promos, motion cards, social clips
+    primary: [grok-build]
+    fallback: [grok-4.3]
+    rationale: Grok Build handles video generation in the desktop creative stack.
+
   # ── Fast utility ──────────────────────────────────────────────────────────
 
   nav.fast:
@@ -280,7 +314,6 @@ tasks:
 # How each Arcanea surface consumes this spec.
 
 surfaces:
-
   claude-arcanea:
     description: Claude Code overlay. Opus 4.7 is always available via Max sub.
     prefer: sub
@@ -288,7 +321,7 @@ surfaces:
     taskOverrides:
       # In Claude Code, default to Opus for everything not explicitly downgraded,
       # because the sub amortizes.
-      code.implement: [claude-sonnet-4-6, claude-opus-4-7]   # Sonnet for speed, Opus fallback
+      code.implement: [claude-sonnet-4-6, claude-opus-4-7] # Sonnet for speed, Opus fallback
       transform.bulk: [claude-haiku-4-5]
 
   oh-my-arcanea:
@@ -319,6 +352,7 @@ surfaces:
     prefer: byok
     authContext: [byok]
     taskOverrides:
+      research.quick: [gpt-5]
       code.review: [gpt-5]
       code.debug: [gpt-5]
 
@@ -335,6 +369,36 @@ surfaces:
     prefer: display-only
     authContext: []
 
+  grok-sis:
+    description: Grok CLI overlay for Starlight Intelligence System. xAI BYOK / OAuth.
+    prefer: byok
+    authContext: [byok]
+    taskOverrides:
+      research.quick: [grok-4, gpt-5]
+      code.debug: [grok-4]
+      nav.fast: [grok-4]
+
+  grok-arcanea:
+    description: Grok CLI overlay. xAI reasoning lane for quick tasks + shell automation.
+    prefer: byok
+    authContext: [byok]
+    taskOverrides:
+      research.quick: [grok-4]
+      nav.fast: [grok-4]
+
+  arcanea-desktop:
+    description: Arcanea Agent desktop (Hermes fork + arcanea-agent profile). Grok-first creative flows.
+    prefer: byok
+    authContext: [byok, sub]
+    taskOverrides:
+      research.quick: [grok-4.3, grok-4]
+      creative.draft: [grok-4.3, claude-sonnet-4-6]
+      world.canon: [claude-opus-4-7, grok-4.3]
+      world.character: [claude-opus-4-7, grok-4.3]
+      media.image: [grok-build]
+      media.video: [grok-build]
+      code.implement: [grok-build, grok-4.3]
+
 # ─── Delegation topology ────────────────────────────────────────────────────
 #
 # When Claude Code (Opus 4.7) delegates to external CLIs via Bash, which
@@ -343,12 +407,12 @@ surfaces:
 delegation:
   codex-cli:
     binary: codex
-    useFor: [code.review, code.debug]        # second opinion
+    useFor: [code.review, code.debug] # second opinion
     rationale: OpenAI's Codex provides independent perspective on complex code.
 
   gemini-cli:
     binary: gemini
-    useFor: [research.deep, world.expand]   # multimodal + long context
+    useFor: [research.deep, world.expand] # multimodal + long context
     rationale: Gemini's 2M context + grounding suits long research.
 
   opencode:
@@ -361,3 +425,8 @@ delegation:
     port: 4200
     useFor: [multi-session-coordination]
     rationale: Composio AO spawns tmux sessions + git worktrees with dashboard.
+
+  grok-cli:
+    binary: grok
+    useFor: [research.quick, nav.fast]
+    rationale: Grok CLI for fast status checks and shell automation via -p headless mode.
