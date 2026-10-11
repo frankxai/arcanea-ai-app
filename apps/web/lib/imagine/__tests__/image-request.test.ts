@@ -1,10 +1,18 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
-  requestImages,
-  requestAnimation,
+  requestImages as actualRequestImages,
+  requestAnimation as actualRequestAnimation,
   generatedImageSource,
+  generatedImageBlob,
 } from "../request";
+import { createCredentialScope } from "../../ai/provider-preferences";
+const testScope = createCredentialScope();
+testScope.set("user:native-fixture");
+const requestImages = (input: Record<string, unknown>) =>
+  actualRequestImages(input, { scope: testScope, token: testScope.get() });
+const requestAnimation = (input: Record<string, unknown>) =>
+  actualRequestAnimation(input, { scope: testScope, token: testScope.get() });
 
 test("lost transport response retains the same request key; confirmed success starts a new operation", async () => {
   const slots = new Map<string, string>();
@@ -153,6 +161,253 @@ test("an unrenderable success receipt retains the same operation key on retry", 
     await requestImages({ prompt: "Retained request", count: 1 });
     assert.equal(keys[0], keys[1]);
     assert.equal(slots.size, 1);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+
+test("inline PNG/JPEG/WEBP exports decode locally without fetch or connect-src data permission", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => {
+    throw Error("Inline export must not fetch");
+  };
+  try {
+    for (const type of ["image/png", "image/jpeg", "image/webp"]) {
+      const blob = await generatedImageBlob(`data:${type};base64,aGVsbG8=`);
+      assert.equal(blob.type, type);
+      assert.equal(await blob.text(), "hello");
+    }
+    for (const source of [
+      "data:image/svg+xml;base64,aGVsbG8=",
+      "http://images.test/result.png",
+      "https://secret@images.test/result.png",
+      "data:image/png;base64,a",
+    ]) {
+      await assert.rejects(generatedImageBlob(source));
+    }
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("CDN export checks status, format, stream bounds and uses no cookies or referrer", async () => {
+  const original = globalThis.fetch;
+  let cancelled = false;
+  try {
+    globalThis.fetch = async (_url, options) => {
+      assert.equal(options?.credentials, "omit");
+      assert.equal(options?.redirect, "error");
+      assert.equal(options?.referrerPolicy, "no-referrer");
+      assert.ok(options?.signal instanceof AbortSignal);
+      return new Response("fixture bytes", {
+        headers: { "content-type": "image/webp" },
+      });
+    };
+    const blob = await generatedImageBlob("https://imgen.x.ai/fixture.webp");
+    assert.equal(blob.type, "image/webp");
+    assert.equal(await blob.text(), "fixture bytes");
+    for (const response of [
+      new Response("not an image", {
+        headers: { "content-type": "text/html" },
+      }),
+      new Response("", { status: 403 }),
+      new Response("", { headers: { "content-type": "image/png" } }),
+    ]) {
+      globalThis.fetch = async () => response;
+      await assert.rejects(
+        generatedImageBlob("https://imgen.x.ai/fixture.webp"),
+      );
+    }
+    globalThis.fetch = async () =>
+      new Response(
+        new ReadableStream({
+          pull(controller) {
+            controller.enqueue(new Uint8Array(9 * 1024 * 1024));
+          },
+          cancel() {
+            cancelled = true;
+          },
+        }),
+        { headers: { "content-type": "image/png" } },
+      );
+    await assert.rejects(
+      generatedImageBlob("https://imgen.x.ai/fixture.webp"),
+      /too large/,
+    );
+    assert.equal(cancelled, true);
+    globalThis.fetch = async () => {
+      throw new TypeError("CORS refused");
+    };
+    await assert.rejects(
+      generatedImageBlob("https://imgen.x.ai/fixture.webp"),
+      /CORS/,
+    );
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("old account completion preserves the next account's pending key and rejects A-B-A stale responses", async () => {
+  const slots = new Map<string, string>();
+  const originalFetch = globalThis.fetch;
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (key: string) => slots.get(key) ?? null,
+      setItem: (key: string, value: string) => slots.set(key, value),
+      removeItem: (key: string) => slots.delete(key),
+    },
+  });
+  const scope = createCredentialScope();
+  scope.set("user:account-a");
+  const tokenA = scope.get();
+  let completeA: (response: Response) => void = () => {};
+  const keys: string[] = [];
+  globalThis.fetch = async (_url, options) => {
+    const body = JSON.parse(String(options?.body));
+    keys.push(body.requestKey);
+    if (keys.length === 1)
+      return new Promise<Response>((resolve) => {
+        completeA = resolve;
+      });
+    return Response.json({ reason: "operation_pending" }, { status: 409 });
+  };
+  try {
+    const a = actualRequestImages(
+      { prompt: "Shared input" },
+      { scope, token: tokenA },
+    );
+    const handledA = assert.rejects(a, /account changed/);
+    while (!keys.length) await new Promise((resolve) => setTimeout(resolve, 1));
+    scope.set("user:account-b");
+    await actualRequestImages(
+      { prompt: "Shared input" },
+      { scope, token: scope.get() },
+    );
+    assert.notEqual(keys[0], keys[1]);
+    scope.set("user:account-a");
+    completeA(
+      Response.json({
+        generationId: `gen_${keys[0]}`,
+        images: [{ url: "https://imgen.x.ai/fixture.webp" }],
+      }),
+    );
+    await handledA;
+    assert.equal(slots.size, 2);
+    scope.set("user:account-b");
+    await actualRequestImages(
+      { prompt: "Shared input" },
+      { scope, token: scope.get() },
+    );
+    assert.equal(keys[1], keys[2]);
+    scope.set(null);
+    await assert.rejects(
+      actualRequestImages(
+        { prompt: "No actor" },
+        { scope, token: scope.get() },
+      ),
+      /account changed/,
+    );
+    assert.equal(keys.length, 3);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+
+test("legacy pending keys are preserved and adopted without duplicating an existing actor operation", async () => {
+  const slots = new Map<string, string>();
+  const input = { prompt: "Legacy retry" };
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(JSON.stringify(input)),
+  );
+  const fingerprint = Array.from(new Uint8Array(digest), (b) =>
+    b.toString(16).padStart(2, "0"),
+  ).join("");
+  const legacy = `arcanea:image-request:${fingerprint}`;
+  slots.set(legacy, "retained-legacy-key");
+  const oldFetch = globalThis.fetch;
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (key: string) => slots.get(key) ?? null,
+      setItem: (key: string, value: string) => slots.set(key, value),
+      removeItem: (key: string) => slots.delete(key),
+    },
+  });
+  globalThis.fetch = async (_url, options) => {
+    assert.equal(
+      JSON.parse(String(options?.body)).requestKey,
+      "retained-legacy-key",
+    );
+    return Response.json({ reason: "operation_pending" }, { status: 409 });
+  };
+  try {
+    await requestImages(input);
+    assert.equal(slots.size, 3);
+    assert.equal(slots.get(legacy), "retained-legacy-key");
+  } finally {
+    globalThis.fetch = oldFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+
+test("confirmed legacy adoption starts a fresh next request while the unassigned legacy record stays preserved", async () => {
+  const slots = new Map<string, string>();
+  const input = { prompt: "Resolved legacy" };
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(JSON.stringify(input)),
+  );
+  const fingerprint = Array.from(new Uint8Array(digest), (b) =>
+    b.toString(16).padStart(2, "0"),
+  ).join("");
+  const legacy = `arcanea:image-request:${fingerprint}`;
+  slots.set(legacy, "old-operation");
+  const originalFetch = globalThis.fetch;
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (key: string) => slots.get(key) ?? null,
+      setItem: (key: string, value: string) => slots.set(key, value),
+      removeItem: (key: string) => slots.delete(key),
+    },
+  });
+  const keys: string[] = [];
+  globalThis.fetch = async (_url, options) => {
+    const key = JSON.parse(String(options?.body)).requestKey;
+    keys.push(key);
+    return Response.json({
+      generationId: `gen_${key}`,
+      images: [{ url: "https://imgen.x.ai/fixture.webp" }],
+    });
+  };
+  try {
+    await requestImages(input);
+    await requestImages(input);
+    assert.equal(keys[0], "old-operation");
+    assert.notEqual(keys[0], keys[1]);
+    assert.equal(slots.get(legacy), "old-operation");
   } finally {
     globalThis.fetch = originalFetch;
     if (descriptor)

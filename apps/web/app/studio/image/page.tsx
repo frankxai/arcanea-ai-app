@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { requestImages, generatedImageSource } from "@/lib/imagine/request";
+import { costFor } from "@/lib/billing/catalog";
+import {
+  requestImages,
+  generatedImageSource,
+  generatedImageBlob,
+} from "@/lib/imagine/request";
 import {
   ArrowLeft,
   Sparkle,
@@ -113,6 +119,19 @@ interface GeneratedImage {
 }
 
 export default function ImageForgePage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  if (token.actor === null)
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Loading your workspace…
+      </p>
+    );
+  return <ImageForgePageContent key={`${token.actor}:${token.revision}`} />;
+}
+
+function ImageForgePageContent() {
+  const { credentialScope } = useAuth();
   const [prompt, setPrompt] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("fantasy");
   const [selectedRatio, setSelectedRatio] = useState("1:1");
@@ -136,17 +155,22 @@ export default function ImageForgePage() {
 
   const handleGenerate = async () => {
     if (!prompt.trim() || isGenerating) return;
+    const token = credentialScope.get();
     setIsGenerating(true);
     setError(null);
     setGenerationLogs(["Requesting image generation…"]);
     try {
-      const response = await requestImages({
-        prompt: prompt.trim(),
-        style: selectedStyle,
-        aspectRatio: selectedRatio,
-        count: imageCount,
-      });
+      const response = await requestImages(
+        {
+          prompt: prompt.trim(),
+          style: selectedStyle,
+          aspectRatio: selectedRatio,
+          count: imageCount,
+        },
+        { scope: credentialScope, token },
+      );
       const data = await response.json();
+      if (!credentialScope.isCurrent(token)) return;
       if (!response.ok)
         throw new Error(
           typeof data.error === "string"
@@ -178,6 +202,7 @@ export default function ImageForgePage() {
       setSelectedImage(newImages[0]);
       setGenerationLogs(["Images returned by the generation service."]);
     } catch (error) {
+      if (!credentialScope.isCurrent(token)) return;
       setError(
         error instanceof Error
           ? error.message
@@ -185,7 +210,7 @@ export default function ImageForgePage() {
       );
       setGenerationLogs([]);
     } finally {
-      setIsGenerating(false);
+      if (credentialScope.isCurrent(token)) setIsGenerating(false);
     }
   };
 
@@ -200,18 +225,29 @@ export default function ImageForgePage() {
   const handleDownload = async () => {
     if (!selectedImage) return;
     try {
-      const response = await fetch(selectedImage.url);
-      const blob = await response.blob();
+      setError(null);
+      const blob = await generatedImageBlob(selectedImage.url);
+      const extensions: Record<string, string> = {
+        "image/png": "png",
+        "image/jpeg": "jpg",
+        "image/webp": "webp",
+      };
+      const extension = extensions[blob.type.toLowerCase().split(";")[0]];
+      if (!extension) throw new Error("Unsupported image download format");
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `arcanea-${selectedImage.id}.png`;
+      a.download = `arcanea-${selectedImage.id}.${extension}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Download failed:", error);
+      setError(
+        selectedImage.url.startsWith("https://")
+          ? "Direct download is unavailable. Open the original image and save it from your browser."
+          : "The image could not be downloaded. Try again from this image.",
+      );
     }
   };
 
@@ -224,7 +260,7 @@ export default function ImageForgePage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90 font-sans relative pb-32">
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90 font-sans relative pb-72 md:pb-32">
         {/* Header */}
         <header className="border-b border-white/[0.06] backdrop-blur-md sticky top-0 z-40 bg-[var(--arc-cosmic-void)]/80">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -380,19 +416,20 @@ export default function ImageForgePage() {
                 <div className="relative border border-white/[0.08] bg-black/40 rounded-3xl overflow-hidden aspect-[16/10] group">
                   <Image
                     src={selectedImage.url}
+                    unoptimized
                     alt={selectedImage.prompt}
                     fill
                     sizes="(max-width: 1200px) 100vw, 1200px"
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350 flex flex-col justify-end p-6">
-                    <div className="flex items-end justify-between gap-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 transition-opacity duration-350 motion-reduce:transition-none flex flex-col justify-end p-6">
+                    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
                       <div className="max-w-2xl">
                         <span className="text-[10px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider">
                           Prompt context
                         </span>
-                        <p className="text-sm text-white/80 leading-relaxed font-body mt-1">
+                        <p className="text-sm text-white/80 leading-relaxed font-body mt-1 line-clamp-3">
                           {selectedImage.prompt}
                         </p>
                       </div>
@@ -408,6 +445,16 @@ export default function ImageForgePage() {
                             <Copy className="w-5 h-5" />
                           )}
                         </button>
+                        {selectedImage.url.startsWith("https://") && (
+                          <a
+                            href={selectedImage.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="min-h-11 inline-flex items-center rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-deep)] px-3 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                          >
+                            Open original image
+                          </a>
+                        )}
                         <button
                           onClick={handleDownload}
                           className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.12] transition-colors"
@@ -439,6 +486,7 @@ export default function ImageForgePage() {
                         >
                           <Image
                             src={img.url}
+                            unoptimized
                             alt={img.prompt}
                             fill
                             sizes="96px"
@@ -537,7 +585,7 @@ export default function ImageForgePage() {
         </div>
 
         {/* ── Bottom Floating Toolbar ── */}
-        <div className="fixed bottom-6 inset-x-0 z-30 px-6 pointer-events-none">
+        <div className="fixed bottom-6 inset-x-0 z-30 px-4 sm:px-6 pointer-events-none">
           <m.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -547,6 +595,7 @@ export default function ImageForgePage() {
             {/* Input area */}
             <div className="flex-1 w-full relative">
               <textarea
+                aria-label="Image prompt"
                 ref={textareaRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -566,8 +615,8 @@ export default function ImageForgePage() {
             </div>
 
             {/* Quick config parameters row */}
-            <div className="flex items-center justify-between w-full md:w-auto gap-2 border-t md:border-t-0 md:border-l border-white/[0.06] pt-2 md:pt-0 md:pl-2">
-              <div className="flex items-center gap-1.5 relative">
+            <div className="flex flex-col items-stretch md:flex-row md:items-center md:justify-between w-full md:w-auto gap-2 border-t md:border-t-0 md:border-l border-white/[0.06] pt-2 md:pt-0 md:pl-2">
+              <div className="flex flex-wrap items-center gap-1.5 relative">
                 {/* Style Selector */}
                 <button
                   onClick={(e) => {
@@ -664,9 +713,10 @@ export default function ImageForgePage() {
                 {/* Count Stepper */}
                 <div className="flex items-center bg-white/[0.03] border border-white/[0.06] rounded-xl p-0.5">
                   <button
+                    aria-label="Fewer images"
                     onClick={() => setImageCount(Math.max(1, imageCount - 1))}
                     disabled={imageCount <= 1}
-                    className="p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                    className="min-h-11 min-w-11 p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
                   >
                     <Minus className="w-3 h-3" />
                   </button>
@@ -674,9 +724,10 @@ export default function ImageForgePage() {
                     {imageCount}
                   </span>
                   <button
+                    aria-label="More images"
                     onClick={() => setImageCount(Math.min(4, imageCount + 1))}
                     disabled={imageCount >= 4}
-                    className="p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                    className="min-h-11 min-w-11 p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
                   >
                     <Plus className="w-3 h-3" />
                   </button>
@@ -687,12 +738,12 @@ export default function ImageForgePage() {
               <button
                 onClick={handleGenerate}
                 disabled={!prompt.trim() || isGenerating}
-                className="py-2.5 px-5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center gap-1.5 transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
+                className="min-h-11 justify-center py-2.5 px-5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center gap-1.5 transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
               >
                 <Sparkle className="w-4 h-4 text-black" />
                 <span>Forge</span>
                 <span className="text-[10px] font-mono opacity-50 ml-1">
-                  ⚡{imageCount}
+                  {costFor("image.standard", imageCount)} credits
                 </span>
               </button>
             </div>

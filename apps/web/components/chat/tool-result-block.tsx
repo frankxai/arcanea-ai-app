@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
-import React, { useState } from 'react';
-import { LazyMotion, domAnimation, m } from 'framer-motion';
-import { InlineImage } from './inline-image';
-import { ResearchProgress } from './research-progress';
-import ChatMarkdown from './chat-markdown';
+import React, { useState } from "react";
+import { LazyMotion, domAnimation, m } from "framer-motion";
+import { InlineImage } from "./inline-image";
+import { ResearchProgress } from "./research-progress";
+import ChatMarkdown from "./chat-markdown";
 import {
   CaretRight,
   CaretDown,
@@ -18,11 +18,15 @@ import {
   MagnifyingGlass,
   Brain,
   BookOpen,
-} from '@/lib/phosphor-icons';
+} from "@/lib/phosphor-icons";
 
 const cardEnter = {
   hidden: { opacity: 0, y: 6 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -49,27 +53,27 @@ function getToolMeta(toolName: string): ToolMeta {
   const map: Record<string, ToolMeta> = {
     image_generate: {
       icon: <ImageSquare className="w-3.5 h-3.5" />,
-      label: 'Image Generation',
+      label: "Image Generation",
     },
     generate_image: {
       icon: <ImageSquare className="w-3.5 h-3.5" />,
-      label: 'Image Generation',
+      label: "Image Generation",
     },
     web_search: {
       icon: <MagnifyingGlass className="w-3.5 h-3.5" />,
-      label: 'Web Search',
+      label: "Web Search",
     },
     memory_store: {
       icon: <Brain className="w-3.5 h-3.5" />,
-      label: 'Memory',
+      label: "Memory",
     },
     deep_research: {
       icon: <BookOpen className="w-3.5 h-3.5" />,
-      label: 'Deep Research',
+      label: "Deep Research",
     },
     code_interpreter: {
       icon: <Wrench className="w-3.5 h-3.5" />,
-      label: 'Code Interpreter',
+      label: "Code Interpreter",
     },
   };
 
@@ -77,7 +81,7 @@ function getToolMeta(toolName: string): ToolMeta {
     map[toolName] || {
       icon: <Wrench className="w-3.5 h-3.5" />,
       label: toolName
-        .replace(/_/g, ' ')
+        .replace(/_/g, " ")
         .replace(/\b\w/g, (c) => c.toUpperCase()),
     }
   );
@@ -89,13 +93,27 @@ function getToolMeta(toolName: string): ToolMeta {
 
 function getDomain(url: string): string {
   try {
-    return new URL(url).hostname.replace('www.', '');
+    return new URL(url).hostname.replace("www.", "");
   } catch {
     return url;
   }
 }
 
-function SearchResults({ result }: { result: { query: string; results: Array<{ title: string; url: string; content: string; score?: number }>; answer?: string; error?: string } }) {
+function SearchResults({
+  result,
+}: {
+  result: {
+    query: string;
+    results: Array<{
+      title: string;
+      url: string;
+      content: string;
+      score?: number;
+    }>;
+    answer?: string;
+    error?: string;
+  };
+}) {
   if (result.error) {
     return <p className="text-red-400 text-sm">{result.error}</p>;
   }
@@ -104,21 +122,39 @@ function SearchResults({ result }: { result: { query: string; results: Array<{ t
     <div className="space-y-2">
       {result.answer && (
         <div className="mb-3 pb-3 border-b border-white/[0.06] p-3 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/[0.04] border border-[var(--arc-brand-atlantean-teal)]/10">
-          <p className="text-sm text-white/80 leading-relaxed">{result.answer}</p>
+          <p className="text-sm text-white/80 leading-relaxed">
+            {result.answer}
+          </p>
         </div>
       )}
       {result.results.map((r, i) => {
         const domain = getDomain(r.url);
         return (
-          <a key={i} href={r.url} target="_blank" rel="noopener noreferrer"
-            className="block p-2.5 rounded-lg bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.04] hover:border-white/[0.08] transition-all group">
+          <a
+            key={i}
+            href={r.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block p-2.5 rounded-lg bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.04] hover:border-white/[0.08] transition-all group"
+          >
             <div className="flex items-center gap-2 mb-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <Image src={`https://www.google.com/s2/favicons?domain=${domain}&sz=16`} alt="" width={16} height={16} className="w-4 h-4 rounded-sm" loading="lazy"  />
+              <Image
+                src={`https://www.google.com/s2/favicons?domain=${domain}&sz=16`}
+                alt=""
+                width={16}
+                height={16}
+                className="w-4 h-4 rounded-sm"
+                loading="lazy"
+              />
               <span className="text-xs text-white/30">{domain}</span>
             </div>
-            <p className="text-sm text-[var(--arc-brand-atlantean-teal)] group-hover:text-[var(--arc-brand-atlantean-teal)] font-medium line-clamp-1">{r.title}</p>
-            <p className="text-xs text-white/40 mt-1 line-clamp-2">{r.content}</p>
+            <p className="text-sm text-[var(--arc-brand-atlantean-teal)] group-hover:text-[var(--arc-brand-atlantean-teal)] font-medium line-clamp-1">
+              {r.title}
+            </p>
+            <p className="text-xs text-white/40 mt-1 line-clamp-2">
+              {r.content}
+            </p>
           </a>
         );
       })}
@@ -130,12 +166,23 @@ function SearchResults({ result }: { result: { query: string; results: Array<{ t
 // Memory Saved Indicator
 // ---------------------------------------------------------------------------
 
-function MemorySavedIndicator({ result }: { result: { content: string; category: string; saved?: boolean; error?: string } }) {
+function MemorySavedIndicator({
+  result,
+}: {
+  result: {
+    content: string;
+    category: string;
+    saved?: boolean;
+    error?: string;
+  };
+}) {
   return (
     <div className="flex items-center gap-2 py-1">
       <Brain className="w-4 h-4 text-[var(--arc-brand-atlantean-teal)]" />
       <span className="text-sm text-white/50">
-        {result.saved !== false ? `Remembered: "${result.content.slice(0, 80)}${result.content.length > 80 ? '...' : ''}"` : result.error || 'Memory not saved'}
+        {result.saved !== false
+          ? `Remembered: "${result.content.slice(0, 80)}${result.content.length > 80 ? "..." : ""}"`
+          : result.error || "Memory not saved"}
       </span>
     </div>
   );
@@ -178,15 +225,17 @@ function ResearchReport({ result }: { result: ResearchReportResult }) {
             onClick={() => setShowSources(!showSources)}
             className="text-xs text-white/30 hover:text-white/50 transition-colors flex items-center gap-1"
           >
-            {showSources ? '\u25be' : '\u25b8'} {result.sources.length} sources
+            {showSources ? "\u25be" : "\u25b8"} {result.sources.length} sources
           </button>
           {showSources && (
             <div className="mt-2 space-y-1.5">
               {result.sources.map((s, i) => {
-                let domain = '';
+                let domain = "";
                 try {
-                  domain = new URL(s.url).hostname.replace('www.', '');
-                } catch { /* ignore */ }
+                  domain = new URL(s.url).hostname.replace("www.", "");
+                } catch {
+                  /* ignore */
+                }
                 return (
                   <a
                     key={i}
@@ -220,15 +269,41 @@ function ResearchReport({ result }: { result: ResearchReportResult }) {
 function isSearchResult(
   toolName: string,
   result: unknown,
-): result is { query: string; results: Array<{ title: string; url: string; content: string; score?: number }>; answer?: string; error?: string } {
-  return toolName === 'web_search' && typeof result === 'object' && result !== null && 'results' in result && Array.isArray((result as Record<string, unknown>).results);
+): result is {
+  query: string;
+  results: Array<{
+    title: string;
+    url: string;
+    content: string;
+    score?: number;
+  }>;
+  answer?: string;
+  error?: string;
+} {
+  return (
+    toolName === "web_search" &&
+    typeof result === "object" &&
+    result !== null &&
+    "results" in result &&
+    Array.isArray((result as Record<string, unknown>).results)
+  );
 }
 
 function isMemoryResult(
   toolName: string,
   result: unknown,
-): result is { content: string; category: string; saved?: boolean; error?: string } {
-  return toolName === 'memory_store' && typeof result === 'object' && result !== null && 'content' in result;
+): result is {
+  content: string;
+  category: string;
+  saved?: boolean;
+  error?: string;
+} {
+  return (
+    toolName === "memory_store" &&
+    typeof result === "object" &&
+    result !== null &&
+    "content" in result
+  );
 }
 
 function isImageResult(
@@ -251,8 +326,8 @@ function isImageResult(
   }>;
 } {
   return (
-    (toolName === 'image_generate' || toolName === 'generate_image') &&
-    typeof result === 'object' &&
+    (toolName === "image_generate" || toolName === "generate_image") &&
+    typeof result === "object" &&
     result !== null
   );
 }
@@ -262,16 +337,16 @@ function isResearchResult(
   result: unknown,
 ): result is ResearchReportResult {
   return (
-    toolName === 'deep_research' &&
-    typeof result === 'object' &&
+    toolName === "deep_research" &&
+    typeof result === "object" &&
     result !== null &&
-    'report' in result &&
-    'sources' in result
+    "report" in result &&
+    "sources" in result
   );
 }
 
 function isErrorResult(result: unknown): result is { error: string } {
-  return typeof result === 'object' && result !== null && 'error' in result;
+  return typeof result === "object" && result !== null && "error" in result;
 }
 
 // ---------------------------------------------------------------------------
@@ -288,7 +363,7 @@ export function ToolResultBlock({
   const hasError = !isLoading && isErrorResult(result);
 
   // Determine status
-  const status = isLoading ? 'running' : hasError ? 'error' : 'complete';
+  const status = isLoading ? "running" : hasError ? "error" : "complete";
 
   const statusBadge = {
     running: (
@@ -313,12 +388,14 @@ export function ToolResultBlock({
 
   // Loading state — simple spinner (with research progress for deep_research)
   if (isLoading && !result) {
-    if (toolName === 'deep_research') {
+    if (toolName === "deep_research") {
       return (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
             <span className="text-white/50">{meta.icon}</span>
-            <span className="text-xs text-white/70 font-medium flex-1">{meta.label}</span>
+            <span className="text-xs text-white/70 font-medium flex-1">
+              {meta.label}
+            </span>
             {statusBadge.running}
           </div>
           <div className="px-3">
@@ -330,9 +407,7 @@ export function ToolResultBlock({
     return (
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
         <CircleNotch className="w-4 h-4 text-[var(--arc-brand-atlantean-teal)] animate-spin" />
-        <span className="text-xs text-white/50">
-          {meta.label}...
-        </span>
+        <span className="text-xs text-white/50">{meta.label}...</span>
       </div>
     );
   }
@@ -341,16 +416,23 @@ export function ToolResultBlock({
   if (isSearchResult(toolName, result)) {
     return (
       <LazyMotion features={domAnimation}>
-      <m.div variants={cardEnter} initial="hidden" animate="visible" className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)]">
-        <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
-          <span className="text-white/50">{meta.icon}</span>
-          <span className="text-xs text-white/70 font-medium flex-1">{meta.label}: {result.query}</span>
-          {statusBadge[status]}
-        </div>
-        <div className="px-3 py-2">
-          <SearchResults result={result} />
-        </div>
-      </m.div>
+        <m.div
+          variants={cardEnter}
+          initial="hidden"
+          animate="visible"
+          className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)]"
+        >
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
+            <span className="text-white/50">{meta.icon}</span>
+            <span className="text-xs text-white/70 font-medium flex-1">
+              {meta.label}: {result.query}
+            </span>
+            {statusBadge[status]}
+          </div>
+          <div className="px-3 py-2">
+            <SearchResults result={result} />
+          </div>
+        </m.div>
       </LazyMotion>
     );
   }
@@ -359,19 +441,26 @@ export function ToolResultBlock({
   if (isResearchResult(toolName, result)) {
     return (
       <LazyMotion features={domAnimation}>
-      <m.div variants={cardEnter} initial="hidden" animate="visible" className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)]">
-        <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
-          <span className="text-white/50">{meta.icon}</span>
-          <span className="text-xs text-white/70 font-medium flex-1">
-            {meta.label}
-            {result.totalSearches ? ` \u00b7 ${result.totalSearches} searches` : ''}
-          </span>
-          {statusBadge[status]}
-        </div>
-        <div className="px-3 py-2">
-          <ResearchReport result={result} />
-        </div>
-      </m.div>
+        <m.div
+          variants={cardEnter}
+          initial="hidden"
+          animate="visible"
+          className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)]"
+        >
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
+            <span className="text-white/50">{meta.icon}</span>
+            <span className="text-xs text-white/70 font-medium flex-1">
+              {meta.label}
+              {result.totalSearches
+                ? ` \u00b7 ${result.totalSearches} searches`
+                : ""}
+            </span>
+            {statusBadge[status]}
+          </div>
+          <div className="px-3 py-2">
+            <ResearchReport result={result} />
+          </div>
+        </m.div>
       </LazyMotion>
     );
   }
@@ -381,12 +470,51 @@ export function ToolResultBlock({
     return <MemorySavedIndicator result={result} />;
   }
 
+  // Image requests require an explicit creator submission in Imagine.
+  if (
+    (toolName === "image_generate" || toolName === "generate_image") &&
+    typeof result === "object" &&
+    result !== null &&
+    "type" in result &&
+    result.type === "image_generation_handoff" &&
+    "prompt" in result &&
+    typeof result.prompt === "string" &&
+    result.prompt.trim().length > 0 &&
+    result.prompt.length <= 2000
+  ) {
+    const href = `/imagine?${new URLSearchParams({ prompt: result.prompt })}`;
+    const ratio =
+      "aspectRatio" in result &&
+      typeof result.aspectRatio === "string" &&
+      ["1:1", "16:9", "9:16", "4:3"].includes(result.aspectRatio)
+        ? result.aspectRatio
+        : "1:1";
+    return (
+      <div className="my-2 space-y-3 rounded-xl border border-[var(--arc-text-muted)] p-4 text-[var(--arc-text-primary)]">
+        <p className="text-sm whitespace-pre-wrap break-words">
+          {result.prompt}
+        </p>
+        <p className="text-sm text-[var(--arc-text-secondary)]">
+          Review this prompt and select {ratio} in Imagine. Generation starts
+          when you submit it there.
+        </p>
+        <a
+          href={href}
+          className="inline-flex rounded-lg px-3 py-2 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          Review in Imagine
+        </a>
+      </div>
+    );
+  }
+
   // Image generation — render inline image directly
   if (isImageResult(toolName, result)) {
     const imgResult = result;
-    const imageItems = Array.isArray(imgResult.images) && imgResult.images.length > 0
-      ? imgResult.images
-      : [imgResult];
+    const imageItems =
+      Array.isArray(imgResult.images) && imgResult.images.length > 0
+        ? imgResult.images
+        : [imgResult];
 
     if (imageItems.length > 0) {
       return (
@@ -395,7 +523,7 @@ export function ToolResultBlock({
             const imgSrc =
               image.url ||
               image.src ||
-              (image.data ? `data:image/png;base64,${image.data}` : '');
+              (image.data ? `data:image/png;base64,${image.data}` : "");
 
             if (!imgSrc) return null;
 
@@ -419,7 +547,9 @@ export function ToolResultBlock({
       <div className="px-3 py-2 rounded-xl border border-red-500/20 bg-red-500/5">
         <div className="flex items-center gap-2">
           <span className="text-white/50">{meta.icon}</span>
-          <span className="text-xs text-white/70 font-medium">{meta.label}</span>
+          <span className="text-xs text-white/70 font-medium">
+            {meta.label}
+          </span>
           {statusBadge.error}
         </div>
         <p className="text-xs text-red-400 mt-1">
@@ -455,7 +585,9 @@ export function ToolResultBlock({
       {expanded && result != null && (
         <div className="border-t border-white/[0.06] px-3 py-2 max-h-[300px] overflow-auto">
           <pre className="text-[11px] text-white/50 font-mono whitespace-pre-wrap break-all leading-relaxed bg-[var(--arc-cosmic-void)] rounded-lg p-2 overflow-x-auto">
-            {typeof result === 'string' ? result : JSON.stringify(result, null, 2)}
+            {typeof result === "string"
+              ? result
+              : JSON.stringify(result, null, 2)}
           </pre>
         </div>
       )}

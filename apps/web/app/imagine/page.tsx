@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
 import { requestImages, requestAnimation } from "@/lib/imagine/request";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -122,6 +123,19 @@ interface GenerationRow {
 // ---------------------------------------------------------------------------
 
 export default function ImaginePage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  if (token.actor === null)
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Loading your workspace…
+      </p>
+    );
+  return <ImaginePageContent key={`${token.actor}:${token.revision}`} />;
+}
+
+function ImaginePageContent() {
+  const { credentialScope } = useAuth();
   const searchParams = useSearchParams();
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -185,20 +199,25 @@ export default function ImaginePage() {
       model?: string,
       enhance?: boolean,
     ): Promise<GenerationRow | null> => {
+      const token = credentialScope.get();
       const id = rowId || `row_${Date.now()}_${generationCounterRef.current++}`;
-      const res = await requestImages({
-        prompt,
-        count: 4,
-        aspectRatio,
-        style,
-        model,
-        enhance,
-      });
+      const res = await requestImages(
+        {
+          prompt,
+          count: 4,
+          aspectRatio,
+          style,
+          model,
+          enhance,
+        },
+        { scope: credentialScope, token },
+      );
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || "Generation failed");
       }
       const data = await res.json();
+      if (!credentialScope.isCurrent(token)) return null;
       const images: GeneratedImage[] = (data.images || []).map(
         (
           img: {
@@ -406,6 +425,7 @@ export default function ImaginePage() {
     async (imageId: string, imageUrl: string) => {
       setAnimatingIds((prev) => new Set(prev).add(imageId));
       setError(null);
+      const token = credentialScope.get();
       try {
         let urlForAnimation = imageUrl;
         if (imageUrl.startsWith("data:")) {
@@ -420,8 +440,10 @@ export default function ImaginePage() {
               prompt: "animation source",
             }),
           });
+          if (!credentialScope.isCurrent(token)) return;
           if (saveRes.ok) {
             const saveData = await saveRes.json();
+            if (!credentialScope.isCurrent(token)) return;
             if (saveData.url) {
               urlForAnimation = saveData.url;
               setRows((rows) =>
@@ -437,12 +459,16 @@ export default function ImaginePage() {
             }
           }
         }
-        const res = await requestAnimation({ imageUrl: urlForAnimation });
+        const res = await requestAnimation(
+          { imageUrl: urlForAnimation },
+          { scope: credentialScope, token },
+        );
         if (!res.ok) {
           const data = await res.json();
           throw new Error(data.error || "Animation failed");
         }
         const data = await res.json();
+        if (!credentialScope.isCurrent(token)) return;
         if (data.videoUrl) {
           setRows((prev) =>
             prev.map((row) => ({
@@ -454,6 +480,7 @@ export default function ImaginePage() {
           );
         }
       } catch (err) {
+        if (!credentialScope.isCurrent(token)) return;
         setError(err instanceof Error ? err.message : "Animation failed");
       } finally {
         setAnimatingIds((prev) => {
