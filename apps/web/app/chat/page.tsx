@@ -92,19 +92,102 @@ import { useChatWorldMode } from "@/hooks/use-chat-world-mode";
 import { useAutoSave } from "@/lib/arc/auto-save";
 import { analytics } from "@/lib/analytics/events";
 import { ChatImagineTabs } from "@/components/chat/chat-imagine-tabs";
+import { useAuth } from "@/lib/auth/context";
+import {
+  consumeEntryDraft,
+  entryDraftRecovery,
+  ENTRY_DRAFT_MAX_CHARS,
+} from "@/lib/chat/entry-draft";
+import entryStyles from "@arcanea/design-system/entry-handoff.module.css";
 
 export default function ChatPage() {
-  const chatSessions = useChatSessions();
+  const { user } = useAuth();
+  // Only the opaque reference survives an account change; message content does not.
+  const [retainedEntryId, setRetainedEntryId] = useState<string | null>(null);
+  return (
+    <AccountChatPage
+      key={user?.id ?? "guest"}
+      retainedEntryId={retainedEntryId}
+      onRetainEntryId={setRetainedEntryId}
+    />
+  );
+}
+
+function AccountChatPage({
+  retainedEntryId,
+  onRetainEntryId,
+}: {
+  retainedEntryId: string | null;
+  onRetainEntryId: (id: string | null) => void;
+}) {
+  const { user, isLoading: authLoading } = useAuth();
+  const draftOwner = user?.id ?? null;
+  const chatSessions = useChatSessions(draftOwner, !authLoading);
   const conversation = useConversation({
     activeProject: chatSessions.activeProject,
   });
   const autoSave = useAutoSave(conversation.messages, conversation.isLoading);
   const searchParams = useSearchParams();
+  useEffect(
+    () => () => {
+      conversation.stop();
+    },
+    [draftOwner, conversation.stop],
+  );
 
   const [showExport, setShowExport] = useState(false);
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const [serverHasKeys, setServerHasKeys] = useState(false);
-  const [pendingInput, setPendingInput] = useState("");
+  const [pendingDraft, setPendingDraft] = useState<{
+    text: string;
+    owner: string | null;
+  } | null>(null);
+  const pendingInput =
+    !authLoading && pendingDraft?.owner === draftOwner ? pendingDraft.text : "";
+  const setPendingInput = useCallback(
+    (text: string) => {
+      setPendingDraft(text ? { text, owner: draftOwner } : null);
+    },
+    [draftOwner],
+  );
+  const [entryNotice, setEntryNotice] = useState(
+    retainedEntryId
+      ? "A previous draft is available. Choose Retry draft to open it for this account."
+      : "",
+  );
+  const [entryRetryId, setEntryRetryId] = useState<string | null>(
+    retainedEntryId,
+  );
+  const openEntryDraft = useCallback(
+    (id: string) => {
+      try {
+        const result = consumeEntryDraft(window.sessionStorage, id, draftOwner);
+        if (result.ok) {
+          setPendingInput(result.text);
+          setEntryNotice("");
+          setEntryRetryId(null);
+          onRetainEntryId(null);
+        } else {
+          setEntryNotice(entryDraftRecovery(result.reason));
+          setEntryRetryId(
+            result.reason === "account" || result.reason === "storage"
+              ? id
+              : null,
+          );
+          onRetainEntryId(
+            result.reason === "account" || result.reason === "storage"
+              ? id
+              : null,
+          );
+        }
+      } catch {
+        setEntryNotice(entryDraftRecovery("storage"));
+        setEntryRetryId(id);
+        onRetainEntryId(id);
+      }
+    },
+    [draftOwner, setPendingInput, onRetainEntryId],
+  );
   const [showAgentPicker, setShowAgentPicker] = useState(false);
   const [activeAgent, setActiveAgent] = useState<{
     type: "auto" | "luminor";
@@ -142,25 +225,58 @@ export default function ChatPage() {
           }
         : null;
 
-  // Hero prompt handoff — read ?prompt= from URL and auto-populate input
-  const promptConsumed = useRef(false);
+  // Entry links only prepare text. Provider execution requires an explicit Send.
+  const entryConsumed = useRef<string | null>(null);
   useEffect(() => {
-    if (promptConsumed.current) return;
-    const prompt = searchParams.get("prompt");
-    if (prompt && prompt.trim()) {
-      promptConsumed.current = true;
-      if (searchParams.get("auto") !== "1") {
-        setPendingInput(prompt.trim());
+    if (authLoading) return;
+    // A new account session must not replay an entry from cached route props.
+    const currentParams = new URLSearchParams(window.location.search);
+    const draftId = currentParams.get("draft");
+    const prompt = currentParams.get("prompt");
+    const entry = draftId
+      ? `draft:${draftId}`
+      : prompt !== null
+        ? `legacy:${prompt}`
+        : null;
+    if (!entry) {
+      entryConsumed.current = null;
+      return;
+    }
+    if (entry && entryConsumed.current !== entry) {
+      entryConsumed.current = entry;
+      setEntryNotice("");
+      setEntryRetryId(null);
+      onRetainEntryId(null);
+      if (draftId) {
+        openEntryDraft(draftId);
+      } else if (prompt?.trim()) {
+        if (prompt.trim().length <= ENTRY_DRAFT_MAX_CHARS)
+          setPendingInput(prompt.trim());
+        else
+          setEntryNotice(
+            "This draft is too long for chat. Prepare a message of up to 4,000 characters.",
+          );
       }
       const params = new URLSearchParams(window.location.search);
+      params.delete("draft");
       params.delete("prompt");
       params.delete("auto");
       const nextUrl = params.toString()
         ? `/chat?${params.toString()}`
         : "/chat";
-      window.history.replaceState(null, "", nextUrl);
+      window.history.replaceState(
+        window.history.state,
+        "",
+        nextUrl + window.location.hash,
+      );
     }
-  }, [searchParams]);
+  }, [
+    searchParams,
+    authLoading,
+    openEntryDraft,
+    setPendingInput,
+    onRetainEntryId,
+  ]);
 
   // World character -> activate as Luminor when loaded
   const worldCharApplied = useRef(false);
@@ -530,6 +646,33 @@ export default function ChatPage() {
           </div>
         )}
 
+        {entryNotice && (
+          <div className={entryStyles.notice} role="alert">
+            <p>{entryNotice}</p>
+            <div className={entryStyles.recovery}>
+              <Link href="/">Return home</Link>
+              {entryRetryId && (
+                <button
+                  type="button"
+                  disabled={authLoading}
+                  onClick={() => openEntryDraft(entryRetryId)}
+                >
+                  Retry draft
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setEntryNotice("");
+                  setEntryRetryId(null);
+                  onRetainEntryId(null);
+                }}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
         {/* Chat area with messages + input bar */}
         <ChatArea
           messages={conversation.messages}
@@ -603,11 +746,12 @@ export default function ChatPage() {
               />
               <div className="px-4 pb-3">
                 <ChatInputBar
+                  key={draftOwner ?? "guest"}
                   onSend={handleSend}
                   onModelChange={conversation.setModelId}
                   currentModel={conversation.modelId ?? "arcanea-auto"}
                   isStreaming={conversation.isStreaming}
-                  onStop={conversation.handleRegenerate}
+                  onStop={conversation.stop}
                   enabledTools={conversation.enabledTools}
                   onToggleTool={conversation.toggleTool}
                   externalMessage={pendingInput}

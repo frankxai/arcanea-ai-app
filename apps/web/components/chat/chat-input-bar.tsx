@@ -28,6 +28,11 @@ import {
 import { MentionPopup, type MentionItem } from "./mention-popup";
 import { VoiceWaveform } from "./voice-waveform";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
+import {
+  ENTRY_DRAFT_MAX_CHARS,
+  isCompositionKey,
+} from "@/lib/chat/entry-draft";
+import entryStyles from "@arcanea/design-system/entry-handoff.module.css";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -53,7 +58,7 @@ interface ChatInputBarProps {
 // Constants
 // ---------------------------------------------------------------------------
 
-const MAX_CHARS = 4000;
+const MAX_CHARS = ENTRY_DRAFT_MAX_CHARS;
 const CHAR_WARN_THRESHOLD = 3000;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
@@ -490,6 +495,7 @@ export function ChatInputBar({
   const [mentionStart, setMentionStart] = useState(-1);
 
   const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const composing = useRef(false);
   const textareaRef = externalTextareaRef || internalTextareaRef;
 
   // Consume external message when it changes (e.g. from starter chip click)
@@ -568,7 +574,7 @@ export function ChatInputBar({
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, parseFloat(getComputedStyle(textareaRef.current).maxHeight))}px`;
     }
   }, [message]);
 
@@ -597,6 +603,7 @@ export function ChatInputBar({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (isCompositionKey(e.nativeEvent, composing.current)) return;
       // If mention popup is visible, let it handle navigation keys
       if (
         mentionVisible &&
@@ -1179,6 +1186,12 @@ export function ChatInputBar({
             value={message}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onCompositionStart={() => {
+              composing.current = true;
+            }}
+            onCompositionEnd={() => {
+              composing.current = false;
+            }}
             onPaste={handlePaste}
             placeholder={
               enabledTools.has("image")
@@ -1192,8 +1205,7 @@ export function ChatInputBar({
             aria-label="Message input"
             disabled={isStreaming}
             rows={1}
-            className="w-full px-4 py-3 pr-20 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none focus:shadow-[0_0_12px_rgba(0,188,212,0.1)] disabled:opacity-40 text-[15px] rounded-2xl transition-shadow"
-            style={{ minHeight: "52px", maxHeight: "200px" }}
+            className={`${entryStyles.chatInput} w-full resize-none disabled:opacity-40 rounded-2xl`}
           />
 
           {/* Right-side buttons (mic + send/stop) */}
@@ -1249,7 +1261,7 @@ export function ChatInputBar({
               <button
                 type="button"
                 onClick={onStop}
-                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center bg-white/10 text-white/70 hover:bg-white/15 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+                className={entryStyles.sendButton}
                 aria-label="Stop generating"
               >
                 <svg
@@ -1266,14 +1278,10 @@ export function ChatInputBar({
                 type="button"
                 onClick={handleSend}
                 disabled={!canSend}
-                className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
-                  canSend
-                    ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_0_16px_rgba(0,188,212,0.35),0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_0_24px_rgba(0,188,212,0.5),0_4px_12px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95"
-                    : "bg-white/[0.04] text-white/20"
-                }`}
+                className={entryStyles.sendButton}
                 aria-label="Send message"
               >
-                <PhPaperPlane className="w-4 h-4 text-white" />
+                <PhPaperPlane aria-hidden="true" />
               </button>
             )}
           </div>

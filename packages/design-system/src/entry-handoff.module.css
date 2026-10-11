@@ -1,0 +1,222 @@
+.entry,
+.chatInput,
+.sendButton,
+.notice {
+  --entry-gap: 0.75rem;
+  --entry-control: 2.75rem;
+  --entry-rule: 1px;
+  --entry-focus: 2px;
+  --entry-offset: 3px;
+}
+.entry {
+  width: 100%;
+  max-width: 42rem;
+  margin-inline: auto;
+  font-family: var(--arc-font-body);
+  color: var(--arc-text-primary);
+}
+.composer {
+  display: flex;
+  align-items: center;
+  gap: var(--entry-gap);
+  padding: var(--entry-gap);
+  border: var(--entry-rule) solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-xl);
+  background: var(--arc-cosmic-deep);
+}
+.composer:focus-within {
+  border-color: var(--arc-brand-atlantean-teal);
+}
+.mark {
+  flex-shrink: 0;
+  border-radius: var(--arc-radius-md);
+}
+.input {
+  field-sizing: content;
+  flex: 1;
+  min-width: 0;
+  min-height: var(--entry-control);
+  max-height: 12rem;
+  resize: vertical;
+  border: 0;
+  border-radius: var(--arc-radius-sm);
+  background: transparent;
+  color: var(--arc-text-primary);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.input::placeholder {
+  color: var(--arc-text-secondary);
+  opacity: 1;
+}
+.chatInput {
+  min-height: 3.25rem;
+  max-height: 12.5rem;
+  padding: 0.75rem 7.5rem 0.75rem 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--arc-text-primary);
+  font-family: var(--arc-font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.chatInput::placeholder {
+  color: var(--arc-text-secondary);
+  opacity: 1;
+}
+.sendButton {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  min-height: var(--entry-control);
+  min-width: var(--entry-control);
+  padding: 0;
+  border: var(--entry-rule) solid var(--arc-brand-atlantean-teal);
+  border-radius: var(--arc-radius-xl);
+  background: var(--arc-brand-atlantean-teal);
+  color: var(--arc-cosmic-void);
+  cursor: pointer;
+}
+.sendButton svg {
+  width: 1rem;
+  height: 1rem;
+  color: inherit;
+}
+.sendButton:disabled {
+  cursor: default;
+  background: var(--arc-cosmic-surface);
+  border-color: var(--arc-cosmic-border-bright);
+  color: var(--arc-text-secondary);
+}
+.chatInput:focus-visible,
+.sendButton:focus-visible {
+  outline: var(--entry-focus) solid var(--arc-brand-atlantean-teal);
+  outline-offset: var(--entry-offset);
+}
+.open,
+.starters button,
+.recovery button,
+.recovery a {
+  min-height: var(--entry-control);
+  padding: 0.5rem var(--entry-gap);
+  border: var(--entry-rule) solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-lg);
+  background: var(--arc-cosmic-deep);
+  color: var(--arc-text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+.open {
+  display: grid;
+  place-items: center;
+  min-width: var(--entry-control);
+  background: var(--arc-brand-atlantean-teal);
+  color: var(--arc-cosmic-void);
+}
+.open svg,
+.starters svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.entry :is(button, a, textarea):focus-visible,
+.notice :is(button, a):focus-visible {
+  outline: var(--entry-focus) solid var(--arc-brand-atlantean-teal);
+  outline-offset: var(--entry-offset);
+}
+.entry button:disabled {
+  cursor: default;
+  color: var(--arc-text-secondary);
+  background: var(--arc-cosmic-surface);
+}
+.hint {
+  margin: 0.75rem 0 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--arc-text-secondary);
+}
+.starters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.starters button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+.notice {
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-lg);
+  background: var(--arc-cosmic-deep);
+  color: var(--arc-text-primary);
+  font-family: var(--arc-font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.notice p {
+  margin: 0 0 0.5rem;
+}
+.recovery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.recovery a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: underline;
+  text-underline-offset: var(--entry-offset);
+}
+@media (hover: hover) {
+  .entry button:enabled:hover,
+  .recovery a:hover {
+    border-color: var(--arc-brand-atlantean-teal);
+  }
+  .starters button:enabled:hover,
+  .recovery button:hover,
+  .recovery a:hover {
+    background: var(--arc-cosmic-raised);
+  }
+}
+@media (min-width: 40rem) {
+  .starters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+@media (max-width: 30rem) {
+  .mark {
+    display: none;
+  }
+}
+@media (forced-colors: active) {
+  .composer,
+  .notice,
+  .entry button,
+  .recovery a {
+    border-color: ButtonText;
+  }
+  .open,
+  .sendButton {
+    background: ButtonFace;
+    color: ButtonText;
+    border-color: ButtonText;
+  }
+  .entry button:disabled {
+    color: GrayText;
+  }
+  .entry :is(button, a, textarea):focus-visible,
+  .notice :is(button, a):focus-visible,
+  .chatInput:focus-visible,
+  .sendButton:focus-visible {
+    outline-color: Highlight;
+  }
+}
