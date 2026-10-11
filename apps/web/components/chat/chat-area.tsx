@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
-import { FACTS } from "@/lib/facts";
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -68,12 +67,9 @@ const CREATIVE_STARTERS = [
 ];
 
 const SUBTITLES = [
-  "Stories, code, worlds, music \u2014 type a prompt or pick a starter below.",
-  `${FACTS.luminors} specialist agents. Pick one or let Auto route your message.`,
-  "Better at the second draft. Paste what you\u2019ve got so far.",
-  "Images take ~10s. Stories are instant. Worlds take a conversation.",
-  "Attach images, use @mentions for agents, or just type.",
-  "Built for makers. Not a general assistant.",
+  "Write a scene, develop a character or explore a world.",
+  "Paste a draft and tell Arcanea what you want to change.",
+  "Choose a starter below, then make the idea your own.",
 ];
 
 function getSubtitle(): string {
@@ -654,39 +650,38 @@ export function ChatArea({
       {/* Keyboard shortcuts overlay */}
       <Dialog.Root open={showShortcuts} onOpenChange={setShowShortcuts}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50 flex items-center justify-center">
-            <Dialog.Content
-              className="bg-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm w-full mx-4 max-h-full overflow-y-auto shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"
-              onCloseAutoFocus={(event) => {
-                event.preventDefault();
-                if (shortcutsReturnFocusRef.current?.isConnected)
-                  shortcutsReturnFocusRef.current.focus();
-                else onFocusInput();
-              }}
-            >
-              <Dialog.Title className="text-sm font-semibold text-[var(--arc-text-primary)] mb-4">
-                Keyboard shortcuts
-              </Dialog.Title>
-              <div className="space-y-2 text-xs">
-                {KEYBOARD_SHORTCUTS.map(([key, desc]) => (
-                  <div key={key} className="flex items-center justify-between">
-                    <span className="text-[var(--arc-text-secondary)]">
-                      {desc}
-                    </span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[var(--arc-text-primary)] font-mono text-[10px] border border-white/[0.08]">
-                      {key}
-                    </kbd>
-                  </div>
-                ))}
-              </div>
-              <Dialog.Description className="text-xs text-[var(--arc-text-secondary)] mt-4 text-center">
-                Press ? or Esc to close
-              </Dialog.Description>
-              <Dialog.Close className="mt-4 min-h-11 w-full rounded-lg border border-white/[0.15] px-4 py-3 text-sm text-[var(--arc-text-primary)] hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]">
-                Close
-              </Dialog.Close>
-            </Dialog.Content>
-          </Dialog.Overlay>
+          <Dialog.Overlay className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50" />
+          <Dialog.Content
+            className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 bg-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm mx-auto max-h-full overflow-y-auto shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              if (shortcutsReturnFocusRef.current?.isConnected)
+                shortcutsReturnFocusRef.current.focus();
+              else onFocusInput();
+            }}
+          >
+            <Dialog.Title className="text-sm font-semibold text-[var(--arc-text-primary)] mb-4">
+              Keyboard shortcuts
+            </Dialog.Title>
+            <div className="space-y-2 text-xs">
+              {KEYBOARD_SHORTCUTS.map(([key, desc]) => (
+                <div key={key} className="flex items-center justify-between">
+                  <span className="text-[var(--arc-text-secondary)]">
+                    {desc}
+                  </span>
+                  <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[var(--arc-text-primary)] font-mono text-[10px] border border-white/[0.08]">
+                    {key}
+                  </kbd>
+                </div>
+              ))}
+            </div>
+            <Dialog.Description className="text-xs text-[var(--arc-text-secondary)] mt-4 text-center">
+              Press ? or Esc to close
+            </Dialog.Description>
+            <Dialog.Close className="mt-4 min-h-11 w-full rounded-lg border border-white/[0.15] px-4 py-3 text-sm text-[var(--arc-text-primary)] hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]">
+              Close
+            </Dialog.Close>
+          </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
     </div>

@@ -141,6 +141,13 @@ async function main() {
     );
     const file = `${name}.png`;
     await page.screenshot({ path: path.join(output, file) });
+    await expect(surface).toBeVisible();
+    if (name.startsWith("shortcuts-")) {
+      await expect(surface).toBeInViewport();
+      await expect(
+        surface.getByRole("button", { name: "Close", exact: true }),
+      ).toBeFocused();
+    }
     const capture = {
       file,
       sha256: digest(await fs.readFile(path.join(output, file))),
