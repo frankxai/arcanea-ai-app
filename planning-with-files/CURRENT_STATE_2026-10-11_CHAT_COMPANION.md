@@ -381,7 +381,6 @@ fails and the separate paid review approval remains pending. This preserves the
 actual source merge; no high-risk promotion or funded review is authorized by
 readiness alone. Fresh checks are required for the name repair.
 
-
 ## Accepted chat production and bounded interface follow-up
 
 Scope: Complete the chat selector and featured companion controls with Phosphor
@@ -429,7 +428,7 @@ loaded and decoded mascot imagery and records dimensions before capture.
 
 An external action merges591 at20:04:56Z to d2285fb74f296ce783d3f0fed9bdef6959e3f9d9.
 The current arcanea.ai alias points to READY production deployment
- dpl_BqPRrUniUUUB2Kgu8hNMmvEfgfJ7 at that source. This lane does not perform that
+dpl_BqPRrUniUUUB2Kgu8hNMmvEfgfJ7 at that source. This lane does not perform that
 promotion or infer an independent verdict, budget approval or customer success
 from the merge. The review-timeout gap remains explicit.
 
@@ -458,3 +457,21 @@ The full goal stays active: real read/create/save/reopen/payment and private
 production storage, graph/memory/canvas/studio, operational Queen/SIS, academy/
 community, books/art/music/video, income streams, API/MCP/kits/IP and clients all
 retain their owning acceptance and publication gates.
+
+## Follow-up browser pass and state-record formatting repair
+
+At 49aeae5748da91f6074ced81245873bc0c3da142, compiled companion job
+114566511193 passes all four modes with no browser failures and complete cleanup.
+All four full-chat captures now record decoded mascot images at 140 by 76 pixels.
+Desktop/mobile renders show the actual SVG selectors and featured controls.
+CI 38172051566 Build and TypeScript pass, but Lint job 114566648600 fails only
+the changed-file Prettier step for this appended state record. Its raw log is
+retained. Formatting is repaired in the owned record; application and fixture
+source remains unchanged. Fresh exact-revision CI is required.
+
+Independent job 114566511321 returns one experience response with normal stop,
+89,528 input and 11,955 completion tokens, including 10,741 reasoning tokens,
+and reports zero cost. The source-quote validator rejects it. No verdict or
+remaining-module coverage is accepted, no quote is normalized, and no unchanged
+source is retried. The response and unvalidated findings remain retained. The
+strong independent review and real creator/customer acceptance remain open.
