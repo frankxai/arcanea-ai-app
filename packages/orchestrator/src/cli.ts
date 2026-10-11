@@ -44,8 +44,7 @@ program
   .description("Show which model+runtime will run a task for a given surface.")
   .option(
     "-s, --surface <surface>",
-    "Surface to resolve against",
-    "claude-arcanea",
+    "Surface to resolve against (saved default, otherwise claude-arcanea)",
   )
   .action(explainCommand);
 
@@ -136,7 +135,10 @@ program
   .description(
     "Show baseline vs adaptive routing for a task, using ~/.arcanea/history.jsonl.",
   )
-  .option("-s, --surface <surface>", "Surface to analyze", "claude-arcanea")
+  .option(
+    "-s, --surface <surface>",
+    "Surface to analyze (saved default, otherwise claude-arcanea)",
+  )
   .action(learnCommand);
 
 const workflow = program
