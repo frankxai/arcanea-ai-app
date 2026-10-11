@@ -116,3 +116,17 @@ document retains useful evidence. The new rendering policy requires renewed
 exact-source review and hosted execution; source inspection is not a pass.
 
 Primary reference: [Next.js static paths at runtime](https://nextjs.org/docs/app/api-reference/functions/generate-static-params).
+
+The next actual hosted run38132364804 at source1ccb6368 still fails the visible
+article assertion. Its retained artifact11699717656 contains 8,722 article text
+characters under a hidden ancestor and a screenshot of the loading boundary.
+This confirms the Markdown renders on the server; first-request static generation
+alone still leaves its content dependent on the inline streaming script. No
+promotion occurred. Earlier source reasoning did not establish visible reading.
+
+The repair now enumerates all known public chapter paths at build time using the
+existing `BOOK_META`, fail-closed `isBookPublic()` and `getChapterFiles()` policy.
+This is a larger build-time alternative justified by the real visibility failure.
+Unknown paths retain runtime `notFound()` recovery and its visibility gate; no
+dynamicParams denial, manifest grant, story rewrite or private route is introduced.
+Retain the previous failures and renew final-source review and hosted checks.

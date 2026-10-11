@@ -153,6 +153,19 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
   }
 }
 
+export async function generateStaticParams(): Promise<
+  { bookId: string; chapterId: string }[]
+> {
+  const paths: { bookId: string; chapterId: string }[] = [];
+  for (const [bookId, book] of Object.entries(BOOK_META)) {
+    if (!(await isBookPublic(book.dir))) continue;
+    for (const chapter of await getChapterFiles(book.dir)) {
+      paths.push({ bookId, chapterId: chapter.id });
+    }
+  }
+  return paths;
+}
+
 async function loadChapter(bookId: string, chapterId: string) {
   const bookMeta = BOOK_META[bookId];
   if (!bookMeta) return null;
