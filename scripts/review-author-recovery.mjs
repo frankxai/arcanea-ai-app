@@ -37,7 +37,7 @@ const authResponseReview =
 const base = hubReleaseReview
   ? hubBase
   : projectDocumentReview
-    ? "22aa23ba106d1b9affa0adcacbcfa73e99f6e59e"
+    ? "a00d10b6cfd11558af57c516d4b4545c88cab03f"
     : generationReview
       ? "0661416b66c2674eb63a84a9597ca1163eb2d378"
       : worldCreatorReview

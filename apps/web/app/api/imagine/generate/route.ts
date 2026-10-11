@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
       model,
       style,
       enhance: shouldEnhance,
+      expectedActor,
     } = await req.json();
 
     if (
@@ -101,6 +102,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Sign in to generate images", reason: "unauthenticated" },
         { status: 401 },
+      );
+    }
+
+    // An old tab can retain A's draft after another tab receives B's login cookie.
+    // Assert the scene's actor before any credit/provider admission; never derive
+    // authentication or the ledger owner from this optional compatibility field.
+    if (
+      expectedActor !== undefined &&
+      (typeof expectedActor !== "string" || expectedActor !== user.id)
+    ) {
+      return NextResponse.json(
+        {
+          error: "Your account changed. Reload before creating this scene.",
+          reason: "account_changed",
+        },
+        { status: 403, headers: { "Cache-Control": "private, no-store" } },
       );
     }
 

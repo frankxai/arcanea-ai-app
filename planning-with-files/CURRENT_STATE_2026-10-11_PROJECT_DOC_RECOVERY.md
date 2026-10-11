@@ -266,3 +266,36 @@ Fresh branch metadata confirms ready PR562 and560 are BEHIND and explicitly held
 for exact independent review and real creator/provider/private-storage acceptance.
 Green structural checks alone do not clear those owners' release gates. The current
 source, complete-source reviews, failed runtime attempts and records remain separate.
+
+## Full current-source acceptance and receiving reader integration
+
+Candidate219307c9 completed normal CI38151481354 and trusted manual38151783132
+SUCCESS, including Build, TypeScript, Lint, CI Status and Gemini3.1Pro independent
+PASS with35 verified Git source hashes. Actual three-mode authenticated document
+acceptance passes seven checks per mode,9 real password logins,0 page errors and
+0 supplier posts.14 service hashes and6 inspected renders match source, with private
+configuration removed and cleanup failures0. The clean-Forward source correction
+is included; the specific retained-guard RED was controlled history, while the prior
+basic real navigation sequence also passed. Rejected earlier attempts remain retained.
+
+Accepted main advanced to a00d10b6cfd11558af57c516d4b4545c88cab03f through owner
+PR584's private source-linked reader scene. Its30 paths enter this integration.
+Only the shared private-config test conflicts: the merged admission keeps the
+accepted immutable source/ref controls, accepted provider/reading-scene runner
+allowlist and legacy private env context while admitting the actual document runner.
+Every other incoming path must remain byte-identical to accepted main. Root guide
+hash is unchanged, no deeper instruction scope governs these incoming paths, and
+the lane claim now names50 integration paths. No reader creation behavior is rewritten.
+
+The reviewer base is pinned to accepted a00 so incoming accepted files are not
+misclassified as this document change. Fresh integrated full CI, complete-source
+review and actual document browser acceptance remain required before protected
+merge or production. Production catalog still lacks all four project/doc tables;
+no migration, customer write or financial provision occurred. Production guest HTTP
+returns401 without credentials; this is not source-bound signed-in acceptance.
+
+Global marketing footer and guest-header timing seen in some authenticated fixture
+captures remain craft/account-clarity followups; no cause or production incident is
+claimed. Image upload/private serving/export, paid usefulness and the full objective
+remain open. Browser inventory has no connected browser; no local heavy worker starts
+under PP HOLD. The existing private-store/live-test cost question remains unanswered.

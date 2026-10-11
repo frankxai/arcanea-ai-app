@@ -9,10 +9,21 @@ const { execFileSync } = require("node:child_process");
 
 const repo = path.resolve(__dirname, "../..");
 const file =
-  process.env.PROJECT_DOCUMENT_CONFIG_FIXTURE === "true"
+  process.env.PRIVATE_CONFIGURATION_RUNNER ??
+  (process.env.PROJECT_DOCUMENT_CONFIG_FIXTURE === "true"
     ? "scripts/run-project-document-service-fixture.mjs"
-    : "scripts/run-provider-account-fixture.mjs";
-const ref = process.env.PROVIDER_FIXTURE_SOURCE_REF;
+    : "scripts/run-provider-account-fixture.mjs");
+if (
+  ![
+    "scripts/run-provider-account-fixture.mjs",
+    "scripts/run-reading-scene-auth-fixture.mjs",
+    "scripts/run-project-document-service-fixture.mjs",
+  ].includes(file)
+)
+  throw Error("Use an admitted fixture runner.");
+const ref =
+  process.env.PRIVATE_CONFIGURATION_SOURCE_REF ??
+  process.env.PROVIDER_FIXTURE_SOURCE_REF;
 if (ref && !/^[0-9a-f]{40}$/.test(ref))
   throw Error("Use an immutable fixture source.");
 const source = ref
@@ -78,6 +89,8 @@ function fixture(t, overrides = {}) {
     context.head = "fixture-source";
     context.accounts = [];
     context.output = "fixture-output";
+    context.env = { NEXT_PUBLIC_SUPABASE_URL: "http://fixture.invalid" };
+    context.anon = "synthetic-fixture-value";
     vm.runInNewContext(
       `exports.create = () => ({ write: () => { ${legacyWrite}; }, remove: () => { ${legacyRemove}; } });`,
       context,
