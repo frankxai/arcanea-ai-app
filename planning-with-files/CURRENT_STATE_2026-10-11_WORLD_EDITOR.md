@@ -248,5 +248,26 @@ with fresh exact-source review and complete runtime proof still required.
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.
-Stop any session-owned worker at handoff. Current status: source candidate; hosted
-checks, exact-revision independent review and release remain pending.
+Stop any session-owned worker at handoff.
+
+Evidence snapshot, 11 October 2026 at 09:57 UTC: PR #579 source
+07689b9ec4dcd43cd88f851ea4f5c54a33b62795 incorporates accepted main
+97801884c78afacdb718302c7655bae0f3a86580, including the account owner's merged
+PR #578. All five incoming fixture files match accepted main; all five editor
+slice files retain the previously reviewed source bytes. Complete CI 38129302911
+passes install, lint, TypeScript, Build and CI Status, including all five
+world-editor/recovery modes and the isolated synthetic provider fixture.
+Tested merge 17c70faf57ae80806622b0329f673b84c3fa17e9 has the identical complete
+tree. Branch-restricted authenticated jobs were skipped and do not establish
+customer acceptance. Native Vercel preview dpl_EkmYWmuND8rtEbcr7CsSJFdBC9xW is
+READY at that source; its current browser acceptance and serving release were
+unverified at this observation. The full 19-fragment independent source review
+found no code defect and flagged the superseded status paragraph corrected here.
+It did not independently execute code or inspect Git. Earlier failed evidence
+above remains historical; none is waived by the later pass.
+
+Use the latest source and required checks on
+https://github.com/frankxai/arcanea-ai-app/pull/579 for a release decision.
+Bind independent review and preview acceptance to that exact candidate, then
+verify receiving main, serving deployment and bounded live recovery separately.
+This dated snapshot does not certify a later revision or a production release.
