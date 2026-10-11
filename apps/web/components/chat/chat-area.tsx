@@ -245,6 +245,7 @@ export function ChatArea({
 
   // -------------------------------------------------------------------------
   const shortcutsReturnFocusRef = useRef<HTMLElement | null>(null);
+  const shortcutsPortalRef = useRef<HTMLDivElement>(null);
 
   // Keyboard shortcuts overlay toggle
   // -------------------------------------------------------------------------
@@ -301,7 +302,10 @@ export function ChatArea({
   // -------------------------------------------------------------------------
 
   return (
-    <div className="relative flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+    <div
+      ref={shortcutsPortalRef}
+      className="relative flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden"
+    >
       {/* Search overlay */}
       {searchOverlay}
 
@@ -649,7 +653,7 @@ export function ChatArea({
 
       {/* Keyboard shortcuts overlay */}
       <Dialog.Root open={showShortcuts} onOpenChange={setShowShortcuts}>
-        <Dialog.Portal>
+        <Dialog.Portal container={shortcutsPortalRef.current}>
           <Dialog.Overlay className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50" />
           <Dialog.Content
             className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 bg-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm mx-auto max-h-full overflow-y-auto shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"

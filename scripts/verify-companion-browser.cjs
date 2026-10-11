@@ -35,6 +35,7 @@ const source = [
   "apps/web/components/command-palette.tsx",
   "apps/web/components/worlds/WorldsOnboarding.tsx",
   "apps/web/package.json",
+  "apps/web/app/chat/layout.tsx",
 ];
 const modes = [
   {
