@@ -1,10 +1,10 @@
-import type { Model } from '@arcanea/router-spec';
+import type { Model } from "@arcanea/router-spec";
 
 /**
  * Maps a model's provider to a concrete CLI runtime.
  * Each runtime knows how to shell out to the right binary in headless mode.
  */
-export type RuntimeId = 'claude' | 'opencode' | 'codex' | 'gemini';
+export type RuntimeId = "claude" | "opencode" | "codex" | "gemini";
 
 export interface Runtime {
   id: RuntimeId;
@@ -18,29 +18,33 @@ export interface Runtime {
 
 const RUNTIMES: Record<RuntimeId, Runtime> = {
   claude: {
-    id: 'claude',
-    binary: 'claude',
+    id: "claude",
+    binary: "claude",
     // `claude -p "<prompt>" --model <id>` — honors Max sub auth.
-    argv: (modelId, prompt) => ['-p', prompt, '--model', modelId],
+    argv: (modelId, prompt) => ["-p", prompt, "--model", modelId],
   },
   opencode: {
-    id: 'opencode',
-    binary: 'opencode',
-    // `opencode run -p "<prompt>" -m <id>` — free tier via Zen.
-    argv: (modelId, prompt) => ['run', '-p', prompt, '-m', modelId],
+    id: "opencode",
+    binary: "opencode",
+    // OpenCode -p is a password; the prompt is positional.
+    argv: (modelId, prompt) => [
+      "run",
+      "--model",
+      `opencode/${modelId}`,
+      "--",
+      prompt,
+    ],
   },
   codex: {
-    id: 'codex',
-    binary: 'codex',
-    // `codex exec "<prompt>"` — OpenAI Codex CLI.
-    argv: (_modelId, prompt) => ['exec', prompt],
+    id: "codex",
+    binary: "codex",
+    argv: (modelId, prompt) => ["exec", "--model", modelId, "--", prompt],
   },
   gemini: {
-    id: 'gemini',
-    binary: 'gemini',
-    // `gemini -p "<prompt>" --yolo --compress-subagents --sis-sync`
-    // non-interactive end-to-end mode with cross-session memory bridge.
-    argv: (_modelId, prompt) => ['-p', prompt, '--yolo', '--compress-subagents', '--sis-sync'],
+    id: "gemini",
+    binary: "gemini",
+    // Keep the user's native approval policy; dispatch does not grant new permissions.
+    argv: (modelId, prompt) => ["--model", modelId, "--prompt", prompt],
   },
 };
 
@@ -49,17 +53,16 @@ const RUNTIMES: Record<RuntimeId, Runtime> = {
  */
 export function runtimeFor(model: Model): RuntimeId {
   switch (model.provider) {
-    case 'anthropic':
-      return 'claude';
-    case 'opencode-zen':
-      return 'opencode';
-    case 'openai':
-      return 'codex';
-    case 'google':
-      return 'gemini';
+    case "anthropic":
+      return "claude";
+    case "opencode-zen":
+      return "opencode";
+    case "openai":
+      return "codex";
+    case "google":
+      return "gemini";
     default:
-      // Default to claude for unknown providers (safest auth path).
-      return 'claude';
+      throw new Error(`Unsupported model provider: ${model.provider}`);
   }
 }
 

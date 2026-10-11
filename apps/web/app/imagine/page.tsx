@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { requestImages } from "@/lib/imagine/request";
+import { requestImages, requestAnimation } from "@/lib/imagine/request";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
@@ -422,14 +422,22 @@ export default function ImaginePage() {
           });
           if (saveRes.ok) {
             const saveData = await saveRes.json();
-            if (saveData.url) urlForAnimation = saveData.url;
+            if (saveData.url) {
+              urlForAnimation = saveData.url;
+              setRows((rows) =>
+                rows.map((row) => ({
+                  ...row,
+                  images: row.images.map((image) =>
+                    image.id === imageId
+                      ? { ...image, url: saveData.url }
+                      : image,
+                  ),
+                })),
+              );
+            }
           }
         }
-        const res = await fetch("/api/imagine/animate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ imageUrl: urlForAnimation }),
-        });
+        const res = await requestAnimation({ imageUrl: urlForAnimation });
         if (!res.ok) {
           const data = await res.json();
           throw new Error(data.error || "Animation failed");

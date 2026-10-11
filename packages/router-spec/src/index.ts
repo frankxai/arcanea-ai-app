@@ -1,15 +1,15 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
-import { parse } from 'yaml';
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+import { parse } from "yaml";
 
 // Locate models.yaml relative to this file so it works both from source
 // (src/index.ts) and from a built dist/ folder.
 const here = dirname(fileURLToPath(import.meta.url));
-const SPEC_PATH = resolve(here, '..', 'models.yaml');
+const SPEC_PATH = resolve(here, "..", "models.yaml");
 
-export type Tier = 'free' | 'sub' | 'byok' | 'premium';
-export type AuthContext = Tier | 'display-only';
+export type Tier = "free" | "sub" | "byok" | "premium";
+export type AuthContext = Tier | "display-only";
 
 export interface ModelPricing {
   input: number;
@@ -66,9 +66,29 @@ let cached: RouterSpec | null = null;
 
 export function loadSpec(): RouterSpec {
   if (cached) return cached;
-  const raw = readFileSync(SPEC_PATH, 'utf8');
+  const raw = readFileSync(SPEC_PATH, "utf8");
   cached = parse(raw) as RouterSpec;
   return cached;
+}
+
+/** Catalog eligibility only; this does not prove credentials or provider access. */
+export function isModelEligible(
+  modelId: string,
+  taskId: string,
+  surfaceId: string,
+  spec: RouterSpec = loadSpec(),
+): boolean {
+  const model = spec.models[modelId];
+  const task = spec.tasks[taskId];
+  const surface = spec.surfaces[surfaceId];
+  return Boolean(
+    model &&
+    task &&
+    surface &&
+    !model.deprecated &&
+    surface.authContext.includes(model.tier) &&
+    model.context >= (task.contextMin ?? 0),
+  );
 }
 
 /**
@@ -84,28 +104,28 @@ export function resolveTask(
   const surface = spec.surfaces[surfaceId];
   if (!surface) throw new Error(`Unknown surface: ${surfaceId}`);
 
-  const override = surface.taskOverrides?.[taskId];
-  if (override) return override;
-
   const task = spec.tasks[taskId];
   if (!task) throw new Error(`Unknown task: ${taskId}`);
 
-  const candidates = [...task.primary, ...(task.fallback ?? [])];
-
-  return candidates.filter((modelId) => {
-    const model = spec.models[modelId];
-    if (!model) return false;
-    return surface.authContext.length === 0 || surface.authContext.includes(model.tier);
-  });
+  const candidates = surface.taskOverrides?.[taskId] ?? [
+    ...task.primary,
+    ...(task.fallback ?? []),
+  ];
+  return [...new Set(candidates)].filter((modelId) =>
+    isModelEligible(modelId, taskId, surfaceId, spec),
+  );
 }
 
 /**
  * Find the first model in a candidate list that is not deprecated and exists.
  */
-export function pickModel(candidates: string[], spec: RouterSpec = loadSpec()): string | null {
+export function pickModel(
+  candidates: string[],
+  spec: RouterSpec = loadSpec(),
+): string | null {
   for (const id of candidates) {
     const model = spec.models[id];
     if (model && !model.deprecated) return id;
   }
-  return candidates[0] ?? null;
+  return null;
 }
