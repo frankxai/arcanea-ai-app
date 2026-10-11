@@ -40,9 +40,9 @@ ImageCard passes captured authority, exposes an accessible save toggle and error
 and keeps its 44px favorite target visible on touch and keyboard focus. Downloads
 reuse the bounded PNG/JPEG/WEBP decoder with correct filenames and a guarded original
 link fallback. Favorite previews avoid the unauthenticated Next image optimizer.
-Unrelated component syntax/style was retained; its tracked CRLF was normalized to
-LF for the whitespace gate. New helper/test and the already formatted page use the
-existing formatter. No new image, canon or marketing asset was generated.
+Unrelated component behavior was retained. The required changed-file formatting
+gate normalizes the touched legacy ImageCard source, including its CRLF and JSX
+layout. All five changed files pass the existing formatter. No new image, canon or marketing asset was generated.
 
 Twelve focused native cases and the existing ten request/export cases pass.
 Changed-source lint passes. Full type/build, authenticated/rendered acceptance and
