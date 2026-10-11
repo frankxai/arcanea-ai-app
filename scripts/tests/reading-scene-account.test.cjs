@@ -91,6 +91,8 @@ function workspace({ completed = false, pending = false } = {}) {
     release = resolve;
   });
   const initial = [scene, false, false, "", "", null, "configured"];
+  const selectionNode = {};
+  const selectionContainer = { contains: (node) => node === selectionNode };
   const component = load(
     "apps/web/components/saga/scene-visualizer.tsx",
     {
@@ -131,6 +133,15 @@ function workspace({ completed = false, pending = false } = {}) {
       setTimeout,
       clearTimeout,
       location: { pathname: scene.source.path },
+      window: {
+        getSelection: () => ({
+          isCollapsed: false,
+          anchorNode: selectionNode,
+          focusNode: selectionNode,
+          toString: () => scene.source.passage,
+        }),
+      },
+      document: { addEventListener() {}, removeEventListener() {} },
       sessionStorage: {
         getItem: (key) => {
           reads.push(key);
@@ -159,7 +170,7 @@ function workspace({ completed = false, pending = false } = {}) {
   const props = {
     ...scene.source,
     sourceText: scene.source.passage,
-    readingRef: { current: null },
+    readingRef: { current: selectionContainer },
   };
   const element = component.SceneVisualizer(props);
   const view = element.type(element.props);
@@ -272,4 +283,14 @@ test("generation cannot retain an unexpected second image", async () => {
   assert.equal(w.requests.length, 1);
   assert.equal(w.writes.length, 1, "Only the pending request is retained");
   assert.equal(JSON.parse(w.writes[0].value).result, null);
+});
+
+test("a newly admitted workspace captures the still-selected chapter passage without another selection event", () => {
+  const w = workspace();
+  w.effects[1]();
+  assert.ok(
+    w.updates.some(
+      ({ index, next }) => index === 4 && next === w.scene.source.passage,
+    ),
+  );
 });

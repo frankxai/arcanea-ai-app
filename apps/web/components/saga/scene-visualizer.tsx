@@ -221,6 +221,9 @@ function SceneWorkspace({
       const selected = chapterSelection(readingRef.current);
       if (selected !== null) setSelection(selected);
     }
+    // Auth can become ready after selectionchange. A remounted workspace must
+    // capture the existing chapter range without requiring the reader to reselect.
+    captureSelection();
     document.addEventListener("selectionchange", captureSelection);
     return () =>
       document.removeEventListener("selectionchange", captureSelection);

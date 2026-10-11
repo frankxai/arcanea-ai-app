@@ -86,6 +86,7 @@ export function SceneWorkspaceView({
           type="button"
           className={`${button} ${styles.primary} ${styles.selectionAction}`}
           onClick={selectPassage}
+          disabled={busy || isLoading}
         >
           Visualize selection
         </button>
@@ -95,7 +96,7 @@ export function SceneWorkspaceView({
           type="button"
           className={button}
           onClick={selectPassage}
-          disabled={busy}
+          disabled={busy || isLoading}
         >
           Visualize a passage
         </button>

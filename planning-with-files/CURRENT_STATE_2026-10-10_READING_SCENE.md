@@ -389,3 +389,20 @@ and deployment/source binding are required before promotion. The whole founder
 goal and programme276 remain open; real provider quality/cost, premium commerce,
 canvas/memory, Queen runtime, academies, publishing/community and developer access
 are not completed by this correction.
+
+The correction was committed as `7d9edadbbe34ab46ff51ecb5d5d7f9298adc1c77`.
+Hosted route/recovery, real PostgREST/PG and compiled desktop/mobile/forced-color/
+reduced-motion checks passed. The actual Auth browser failed before login: a
+chapter selection made while Auth initialized was lost when the workspace epoch
+remounted, so the selection action never appeared. Failure artifact11703813535
+and its exact-source browser/runner receipts are retained; cleanup removed the
+allocated private configuration with no errors. This is a real failed attempt.
+
+A sixth actual-component regression reproduces that missing selection snapshot.
+On scope admission, the selection effect now captures the existing chapter range
+before listening for subsequent changes. The action also waits for Auth readiness.
+This preserves immediate reading and the reader's selected sentence while keeping
+the synchronous account guards. Fresh hosted Auth and exact-source review remain
+required. The first 45-source zero-price review timed out with no verdict; its
+receipt is retained and a second bounded attempt targets that same old revision.
+Neither an old verdict nor the passing compiled fixture approves changed source.
