@@ -2,6 +2,7 @@
 "use client";
 import { FACTS } from "@/lib/facts";
 import Image from "next/image";
+import * as Dialog from "@radix-ui/react-dialog";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -247,6 +248,8 @@ export function ChatArea({
   const [hasMounted, setHasMounted] = useState(false);
 
   // -------------------------------------------------------------------------
+  const shortcutsReturnFocusRef = useRef<HTMLElement | null>(null);
+
   // Keyboard shortcuts overlay toggle
   // -------------------------------------------------------------------------
 
@@ -259,13 +262,16 @@ export function ChatArea({
         document.activeElement?.tagName !== "TEXTAREA" &&
         document.activeElement?.tagName !== "INPUT"
       ) {
+        if (!showShortcuts)
+          shortcutsReturnFocusRef.current =
+            document.activeElement as HTMLElement;
         setShowShortcuts((v) => !v);
       }
       if (e.key === "Escape") setShowShortcuts(false);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [showShortcuts]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -329,7 +335,7 @@ export function ChatArea({
 
             <div className="relative max-w-[480px] w-full text-center">
               {/* Arcanea mascot — primary, floating */}
-              <div className="mb-4 mx-auto animate-empty-fade-in flex justify-center">
+              <div className="mb-4 mx-auto flex justify-center">
                 <Image
                   src="/images/mascot/arcanea-primary.png"
                   alt="Arcanea"
@@ -337,23 +343,17 @@ export function ChatArea({
                   height={140}
                   priority
                   sizes="140px"
-                  className="object-contain drop-shadow-[0_0_30px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_22%,transparent)] animate-[mascot-float_3s_ease-in-out_infinite]"
+                  className="object-contain drop-shadow-[0_0_30px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_22%,transparent)]"
                 />
               </div>
 
               {/* Time-aware greeting */}
-              <h1
-                className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight animate-empty-fade-in text-[var(--arc-text-primary)]"
-                style={{ animationDelay: "60ms" }}
-              >
+              <h1 className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight text-[var(--arc-text-primary)]">
                 {activeLuminor ? activeLuminor.name : emptyGreeting}
               </h1>
 
               {/* Rotating subtitle */}
-              <p
-                className="text-sm text-white/30 mb-8 animate-empty-fade-in font-light"
-                style={{ animationDelay: "100ms" }}
-              >
+              <p className="text-sm text-[var(--arc-text-secondary)] mb-8">
                 {emptySubtitle}
               </p>
 
@@ -363,7 +363,7 @@ export function ChatArea({
                 role="list"
                 aria-label="Creative starters"
               >
-                {CREATIVE_STARTERS.map((starter, i) => (
+                {CREATIVE_STARTERS.map((starter) => (
                   <button
                     key={starter.text}
                     type="button"
@@ -372,21 +372,18 @@ export function ChatArea({
                       onFocusInput();
                     }}
                     className="relative flex flex-col items-start gap-1.5 px-4 py-3.5 rounded-xl text-left bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.07] backdrop-blur-sm hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:bg-gradient-to-br hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent hover:shadow-[0_0_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_18%,transparent)] transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
-                    style={{
-                      animation: `fadeInUp 400ms cubic-bezier(0.22, 1, 0.36, 1) ${150 + i * 60}ms both`,
-                    }}
                   >
                     <div className="flex items-center gap-2">
                       <starter.icon
-                        className="w-4 h-4 text-white/25 group-hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors duration-300"
+                        className="w-4 h-4 text-[var(--arc-text-secondary)] group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors duration-300"
                         weight="duotone"
                         aria-hidden="true"
                       />
-                      <span className="text-[13px] text-white/60 group-hover:text-white/85 transition-colors duration-300 font-medium">
+                      <span className="text-[13px] text-[var(--arc-text-primary)] transition-colors duration-300 font-medium">
                         {starter.text}
                       </span>
                     </div>
-                    <span className="text-[11px] text-white/25 group-hover:text-white/40 transition-colors duration-300 leading-snug pl-6">
+                    <span className="text-[11px] text-[var(--arc-text-secondary)] transition-colors duration-300 leading-snug pl-6">
                       {starter.hint}
                     </span>
                   </button>
@@ -395,11 +392,8 @@ export function ChatArea({
 
               {/* Luminor quick-select — 3 featured personalities */}
               {!activeLuminor && (
-                <div
-                  className="flex items-center justify-center gap-2 mb-4 animate-empty-fade-in"
-                  style={{ animationDelay: "300ms" }}
-                >
-                  <span className="text-[10px] text-white/20 mr-1">
+                <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+                  <span className="text-[10px] text-[var(--arc-text-secondary)] mr-1">
                     Talk to
                   </span>
                   {FEATURED_LUMINOR_IDS.map((lid) => {
@@ -417,7 +411,7 @@ export function ChatArea({
                         <span className="text-sm" aria-hidden="true">
                           {l.avatar}
                         </span>
-                        <span className="text-[11px] text-white/40 group-hover:text-white/70 transition-colors">
+                        <span className="text-[11px] text-[var(--arc-text-secondary)] group-hover:text-[var(--arc-text-primary)] transition-colors">
                           {l.loreName}
                         </span>
                       </button>
@@ -427,10 +421,7 @@ export function ChatArea({
               )}
 
               {/* Capabilities hint — tools users don't know exist */}
-              <div
-                className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/20 animate-empty-fade-in"
-                style={{ animationDelay: "350ms" }}
-              >
+              <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-[var(--arc-text-secondary)]">
                 <span className="flex items-center gap-1">
                   <PhImageSquare className="w-3 h-3" /> Images
                 </span>
@@ -452,8 +443,7 @@ export function ChatArea({
               {hasMounted && lastSessionTitle && onContinueLastSession && (
                 <button
                   onClick={onContinueLastSession}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs text-white/35 hover:text-white/60 border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-200 mx-auto animate-empty-fade-in"
-                  style={{ animationDelay: "450ms" }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-200 mx-auto"
                 >
                   <PhArrowClockwise className="w-3 h-3 shrink-0" />
                   <span className="truncate max-w-[200px]">
@@ -464,16 +454,13 @@ export function ChatArea({
 
               {/* BYOK — the sovereignty surface, not a whisper (TASTE.md Gate 7) */}
               {hasMounted && !clientApiKey && !serverHasKeys && (
-                <div
-                  className="mt-6 w-full max-w-md rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.07] to-transparent px-5 py-4 text-left animate-empty-fade-in"
-                  style={{ animationDelay: "500ms" }}
-                >
+                <div className="mt-6 w-full max-w-md rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.07] to-transparent px-5 py-4 text-left">
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
-                      <p className="text-[13px] font-medium text-white/85">
+                      <p className="text-[13px] font-medium text-[var(--arc-text-primary)]">
                         Bring your own key
                       </p>
-                      <p className="mt-0.5 text-[11px] leading-relaxed text-white/40">
+                      <p className="mt-0.5 text-[11px] leading-relaxed text-[var(--arc-text-secondary)]">
                         Claude, Gemini, GPT, or 300+ models via OpenRouter. Your
                         key stays in this browser.
                       </p>
@@ -665,37 +652,43 @@ export function ChatArea({
       {children}
 
       {/* Keyboard shortcuts overlay */}
-      {showShortcuts && (
-        <div
-          className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50 flex items-center justify-center"
-          onClick={() => setShowShortcuts(false)}
-        >
-          <div
-            className="bg-gradient-to-b from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm w-full mx-4 shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              animation: "fadeInUp 200ms cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
-            <h2 className="text-sm font-semibold text-[var(--arc-text-primary)] mb-4">
-              Keyboard shortcuts
-            </h2>
-            <div className="space-y-2 text-xs">
-              {KEYBOARD_SHORTCUTS.map(([key, desc]) => (
-                <div key={key} className="flex items-center justify-between">
-                  <span className="text-white/40">{desc}</span>
-                  <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-white/60 font-mono text-[10px] border border-white/[0.08]">
-                    {key}
-                  </kbd>
-                </div>
-              ))}
-            </div>
-            <p className="text-[10px] text-white/20 mt-4 text-center">
-              Press ? or Esc to close
-            </p>
-          </div>
-        </div>
-      )}
+      <Dialog.Root open={showShortcuts} onOpenChange={setShowShortcuts}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-[var(--arc-cosmic-void)]/70 backdrop-blur-md z-50 flex items-center justify-center">
+            <Dialog.Content
+              className="bg-[var(--arc-cosmic-void)] rounded-2xl border border-white/[0.08] p-6 max-w-sm w-full mx-4 max-h-full overflow-y-auto shadow-[0_24px_80px_color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)]"
+              onCloseAutoFocus={(event) => {
+                event.preventDefault();
+                if (shortcutsReturnFocusRef.current?.isConnected)
+                  shortcutsReturnFocusRef.current.focus();
+                else onFocusInput();
+              }}
+            >
+              <Dialog.Title className="text-sm font-semibold text-[var(--arc-text-primary)] mb-4">
+                Keyboard shortcuts
+              </Dialog.Title>
+              <div className="space-y-2 text-xs">
+                {KEYBOARD_SHORTCUTS.map(([key, desc]) => (
+                  <div key={key} className="flex items-center justify-between">
+                    <span className="text-[var(--arc-text-secondary)]">
+                      {desc}
+                    </span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[var(--arc-text-primary)] font-mono text-[10px] border border-white/[0.08]">
+                      {key}
+                    </kbd>
+                  </div>
+                ))}
+              </div>
+              <Dialog.Description className="text-xs text-[var(--arc-text-secondary)] mt-4 text-center">
+                Press ? or Esc to close
+              </Dialog.Description>
+              <Dialog.Close className="mt-4 min-h-11 w-full rounded-lg border border-white/[0.15] px-4 py-3 text-sm text-[var(--arc-text-primary)] hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]">
+                Close
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Overlay>
+        </Dialog.Portal>
+      </Dialog.Root>
     </div>
   );
 }

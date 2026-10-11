@@ -34,6 +34,7 @@ const source = [
   "apps/web/app/api/ai/chat/route.ts",
   "apps/web/components/command-palette.tsx",
   "apps/web/components/worlds/WorldsOnboarding.tsx",
+  "apps/web/package.json",
 ];
 const modes = [
   {
@@ -94,6 +95,15 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
+    await page.evaluate(async () => {
+      const animations = document
+        .getAnimations()
+        .filter((animation) =>
+          Number.isFinite(animation.effect?.getComputedTiming().iterations),
+        );
+      await Promise.all(animations.map((animation) => animation.finished));
+      await new Promise(requestAnimationFrame);
+    });
     const file = `${name}.png`;
     await page.screenshot({ path: path.join(output, file) });
     const capture = {
@@ -456,13 +466,41 @@ async function main() {
       await fullChatHeading.scrollIntoViewIfNeeded();
       await expect(fullChatHeading).toBeInViewport();
       await fullChatHeading.click();
+      const starters = page.getByRole("list", { name: "Creative starters" });
+      const starterButtons = starters.getByRole("button");
+      await expect(starterButtons).toHaveCount(4);
+      assert.ok(
+        await starters.evaluate((element) =>
+          [...element.querySelectorAll("button")].every(
+            (button) =>
+              getComputedStyle(button).opacity === "1" &&
+              button.getAnimations().length === 0,
+          ),
+        ),
+        "Creative starters are immediately readable without entrance animations",
+      );
       await capturePage(page, `full-chat-${mode.name}`);
+      await starterButtons.first().focus();
       await page.keyboard.press("?");
+      const shortcutsDialog = page.getByRole("dialog", {
+        name: "Keyboard shortcuts",
+      });
+      const closeShortcuts = shortcutsDialog.getByRole("button", {
+        name: "Close",
+        exact: true,
+      });
+      await expect(closeShortcuts).toBeFocused();
+      await page.keyboard.press("Tab");
+      await expect(closeShortcuts).toBeFocused();
+      await page.keyboard.press("Shift+Tab");
+      await expect(closeShortcuts).toBeFocused();
       await expect(
         page.getByRole("heading", { name: "Keyboard shortcuts", exact: true }),
       ).toBeVisible();
       await capturePage(page, `shortcuts-${mode.name}`);
       await page.keyboard.press("Escape");
+      await expect(shortcutsDialog).toBeHidden();
+      await expect(starterButtons.first()).toBeFocused();
       await page.goto(base);
       await expect(opener).toBeHidden();
       assert.deepEqual(pageErrors, []);
@@ -483,6 +521,8 @@ async function main() {
         keyboardFocus: true,
         fullChatHeadingVisible: true,
         shortcutsHeadingVisible: true,
+        shortcutsFocusContainedAndRestored: true,
+        startersImmediatelyReadable: true,
         geometry,
         pageErrors,
       });
