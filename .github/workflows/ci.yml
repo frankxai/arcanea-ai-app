@@ -374,8 +374,21 @@ jobs:
       - name: Verify saga public release boundary (default-deny)
         run: pnpm --dir apps/web test:saga-gate
 
+      - name: Verify catalog entries match reader chapters
+        run: |
+          pnpm --dir apps/web exec tsx lib/saga/__tests__/chapter-files.test.ts
+          pnpm --dir apps/web exec tsx --test lib/saga/__tests__/series-entry.test.ts
+
       - name: Run package tests
         run: pnpm test:quick
+
+      - name: Verify model routing and native CLI adapters
+        timeout-minutes: 2
+        run: |
+          pnpm --dir packages/router-spec build
+          pnpm --dir packages/router-spec validate
+          pnpm --dir packages/orchestrator build
+          pnpm exec tsx --test --test-concurrency=1 packages/router-spec/tests/validate.test.ts packages/orchestrator/tests/*.test.ts packages/orchestrator/tests/ecosystem/*.test.ts
 
       - name: Verify public collection assets and proposal relationships
         run: |
@@ -386,6 +399,29 @@ jobs:
 
       - name: Verify shop checkout trust boundaries
         run: pnpm --dir apps/web exec tsx --test lib/shop/__tests__/checkout.test.ts
+
+      - name: Verify reader catalog and featured chapter journeys
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+        timeout-minutes: 5
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+          PLAYWRIGHT_SKIP_BROWSER_GC: "1"
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/reader-next.log" 2>&1 &
+          reader_server_pid=$!
+          trap 'kill "$reader_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-reader-entry-browser.cjs
+
+      - name: Upload reader journey evidence
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+        uses: actions/upload-artifact@v7
+        with:
+          name: reader-entry-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/reader-entry/
+          retention-days: 7
+          if-no-files-found: warn
 
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
