@@ -221,6 +221,137 @@ const response = (status, body) =>
     status,
     headers: { "Content-Type": "application/json" },
   });
+test("actual server adapter reads installed private SDK bytes and decodes them before completion", async () => {
+  const appRequire = createRequire(path.resolve("apps/web/package.json"));
+  const sdkRequire = createRequire(appRequire.resolve("@vercel/blob"));
+  const { MockAgent, getGlobalDispatcher, setGlobalDispatcher } =
+    sdkRequire("undici");
+  assert.equal(typeof appRequire("@vercel/blob").get, "function");
+  const server = { exports: {} };
+  const code = ts.transpileModule(
+    fs.readFileSync(path.join(base, "media-server.ts"), "utf8"),
+    {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2022,
+        esModuleInterop: true,
+      },
+    },
+  ).outputText;
+  new Function("exports", "require", "module", code)(
+    server.exports,
+    (name) => {
+      if (name === "./media") return media;
+      // This adapter test never creates a real or synthetic Auth/database client.
+      if (name === "@/lib/supabase/server")
+        return new Proxy(
+          {},
+          {
+            get() {
+              throw Error("Unexpected database access");
+            },
+          },
+        );
+      return appRequire(name);
+    },
+    server,
+  );
+  const png = await appRequire("sharp")({
+    create: {
+      width: 2,
+      height: 2,
+      channels: 3,
+      background: { r: 1, g: 2, b: 3 },
+    },
+  })
+    .png()
+    .toBuffer();
+  const claim = await media.parseDocumentMediaClaim(
+    {
+      ...scope,
+      assetId,
+      byteSize: png.length,
+      mimeType: "image/png",
+      sha256: await media.mediaDigest(png),
+      filename: "map.png",
+      alt: "A map",
+    },
+    scope,
+  );
+  const token = "vercel_blob_rw_arcaneafixture_" + "0".repeat(48);
+  const oldDispatcher = getGlobalDispatcher(),
+    agent = new MockAgent();
+  agent.disableNetConnect();
+  let reads = 0,
+    completions = 0;
+  agent
+    .get("https://arcaneafixture.private.blob.vercel-storage.com")
+    .intercept({ method: "GET", path: /^\/document-private\// })
+    .reply((options) => {
+      reads++;
+      assert.equal(
+        new URL(options.path, "https://fixture.invalid").pathname.slice(1),
+        media.documentMediaPath(claim),
+      );
+      assert.match(options.path, /[?&]cache=0(?:&|$)/);
+      assert.equal(options.headers.authorization, `Bearer ${token}`);
+      return {
+        statusCode: 200,
+        data: png,
+        responseOptions: {
+          headers: {
+            "content-type": "image/png",
+            "content-length": String(png.length),
+            etag: claim.sha256,
+          },
+        },
+      };
+    })
+    .persist();
+  const record = (status) => ({
+    ...claim,
+    status,
+    sourceStatus: "creator_supplied_unverified",
+    rightsStatus: "unverified",
+  });
+  setGlobalDispatcher(agent);
+  try {
+    const store = server.exports.documentMediaStore(token);
+    const saved = await media.finalizeDocumentMedia(
+      claim,
+      {
+        reserve: async () => record("reserved"),
+        complete: async () => {
+          completions++;
+          return record("ready");
+        },
+      },
+      store,
+      server.exports.decodeDocumentMedia,
+    );
+    assert.equal(saved.status, "ready");
+    assert.equal(completions, 1);
+    await assert.rejects(
+      store.read(media.documentMediaPath(claim), png.length - 1),
+      (error) => error.status === 503,
+    );
+    await assert.rejects(
+      server.exports.decodeDocumentMedia(png, "image/jpeg"),
+      (error) => error.status === 400,
+    );
+    await assert.rejects(
+      server.exports.decodeDocumentMedia(
+        new Uint8Array([1, 2, 3]),
+        "image/png",
+      ),
+      (error) => error.status === 400,
+    );
+    assert.equal(reads, 2);
+  } finally {
+    setGlobalDispatcher(oldDispatcher);
+    await agent.close();
+  }
+});
 test("lost direct-upload acknowledgement is reconciled without a second put or new ID", async () => {
   let stored = false,
     puts = 0;
