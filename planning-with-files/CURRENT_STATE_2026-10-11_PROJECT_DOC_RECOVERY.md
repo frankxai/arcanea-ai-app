@@ -299,3 +299,25 @@ captures remain craft/account-clarity followups; no cause or production incident
 claimed. Image upload/private serving/export, paid usefulness and the full objective
 remain open. Browser inventory has no connected browser; no local heavy worker starts
 under PP HOLD. The existing private-store/live-test cost question remains unanswered.
+
+## Receiving reader workflow admission correction
+
+Integrated a40ecb89 passes normal CI38153050448, independent author source review
+and actual authenticated document acceptance in manual38153091941. Build remains
+live when this entry is written. The separate reader run38153050418 fails because
+its workflow invokes the accepted disposable Auth runner from the document branch,
+outside that runner's explicit reading-scene/provider-account/main admission.
+This is a runner refusal, not a failed real login or scene recovery assertion.
+
+Only that workflow step now mirrors the unchanged runner's repository, actor and
+three admitted branches. Route, account, private-config, database/PostgREST and
+compiled reading-browser checks still execute on other PRs. This does not expand
+fixture access or certify authenticated reader behavior on an unadmitted branch.
+The complete unchanged runner enters the next document independent-review packet
+alongside the complete workflow delta. The previous failure remains retained.
+
+The accepted reader workflow is now the sole deliberate change among its29 earlier
+byte-preserved incoming paths. The other28 remain identical to accepted a00 main.
+The shared fixture-test conflict resolution remains separately recorded. Fresh
+exact-revision review, reader CI and document CI/runtime gates must pass before
+landing. Production migrations, customer acceptance and money remain unchanged.

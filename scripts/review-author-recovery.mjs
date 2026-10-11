@@ -189,6 +189,7 @@ if (generationReview) {
 }
 if (projectDocumentReview) {
   contexts = [
+    "scripts/run-reading-scene-auth-fixture.mjs",
     "apps/web/app/api/projects/route.ts",
     "apps/web/lib/projects/server.ts",
     "apps/web/lib/projects/trace.ts",
