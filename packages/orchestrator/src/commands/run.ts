@@ -1,29 +1,46 @@
-import { loadSpec, resolveTask, pickModel } from '@arcanea/router-spec';
-import { execa } from 'execa';
-import { runtimeFor, getRuntime } from '../runtimes.js';
-import { loadConfig, applyPreference } from '../config.js';
-import { appendHistory, readHistory } from '../history.js';
-import { adaptiveRerank, shouldApplyAdaptive } from '../adaptive.js';
-import kleur from 'kleur';
+import {
+  loadSpec,
+  resolveTask,
+  pickModel,
+  isModelEligible,
+} from "@arcanea/router-spec";
+import { execa } from "execa";
+import { runtimeFor, getRuntime } from "../runtimes.js";
+import { loadConfig, applyPreference } from "../config.js";
+import { appendHistory, readHistory } from "../history.js";
+import { adaptiveRerank, shouldApplyAdaptive } from "../adaptive.js";
+import kleur from "kleur";
 
 interface Options {
   task: string;
-  surface: string;
+  surface?: string;
   model?: string;
   dryRun?: boolean;
-  noHistory?: boolean;
+  history?: boolean;
 }
 
-export async function runCommand(promptParts: string[], opts: Options): Promise<void> {
-  const prompt = promptParts.join(' ');
+export async function runCommand(
+  promptParts: string[],
+  opts: Options,
+): Promise<void> {
+  const prompt = promptParts.join(" ");
   if (!prompt.trim()) {
-    console.error(kleur.red('Empty prompt.'));
+    console.error(kleur.red("Empty prompt."));
     process.exit(1);
   }
 
   const spec = loadSpec();
   const config = loadConfig();
-  const surface = config.defaultSurface ?? opts.surface;
+  const surface = opts.surface ?? config.defaultSurface ?? "claude-arcanea";
+
+  if (!spec.tasks[opts.task]) {
+    console.error(kleur.red(`Unknown task: ${opts.task}`));
+    process.exit(1);
+  }
+  if (!spec.surfaces[surface]) {
+    console.error(kleur.red(`Unknown surface: ${surface}`));
+    process.exit(1);
+  }
 
   let modelId: string | null;
   if (opts.model) {
@@ -31,20 +48,34 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
       console.error(kleur.red(`Unknown model override: ${opts.model}`));
       process.exit(1);
     }
+    if (!isModelEligible(opts.model, opts.task, surface, spec)) {
+      console.error(
+        kleur.red(
+          `Model ${opts.model} is not eligible for task=${opts.task} surface=${surface}.`,
+        ),
+      );
+      process.exit(1);
+    }
     modelId = opts.model;
   } else {
     const candidates = resolveTask(opts.task, surface, spec);
     // Re-rank by user's tier preference, then filter by installed runtimes.
     const tierMap = new Map(
-      candidates.map((id) => [id, spec.models[id]?.tier]).filter(([, t]) => !!t) as [string, 'free' | 'sub' | 'byok'][],
+      candidates
+        .map((id) => [id, spec.models[id]?.tier])
+        .filter(([, t]) => !!t) as [string, "free" | "sub" | "byok"][],
     );
     const preferred = applyPreference(candidates, tierMap, config.preference);
     const available = preferred.filter((id) => {
-      const rt = runtimeFor(spec.models[id]);
-      return config.auth[rt]?.installed !== false;
+      try {
+        const rt = runtimeFor(spec.models[id]);
+        return config.auth[rt]?.installed !== false;
+      } catch {
+        return false;
+      }
     });
     // Phase 8: adaptive routing — re-rank by local success history
-    let finalCandidates = available.length > 0 ? available : preferred;
+    let finalCandidates = available;
     const events = readHistory();
     if (shouldApplyAdaptive(config.adaptiveRouting, events.length)) {
       finalCandidates = adaptiveRerank(finalCandidates, events, opts.task);
@@ -56,21 +87,42 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
     console.error(
       kleur.red(`No model resolved for task=${opts.task} surface=${surface}.`),
     );
-    console.error(kleur.dim(`Hint: run \`arcanea-orchestrator doctor\` to detect installed CLIs.`));
+    console.error(
+      kleur.dim(
+        `Hint: run \`arcanea-orchestrator doctor\` to detect installed CLIs.`,
+      ),
+    );
     process.exit(1);
   }
 
   const model = spec.models[modelId];
-  const rtId = runtimeFor(model);
+  let rtId: ReturnType<typeof runtimeFor>;
+  try {
+    rtId = runtimeFor(model);
+  } catch (error) {
+    console.error(
+      kleur.red(error instanceof Error ? error.message : String(error)),
+    );
+    process.exit(1);
+  }
+  if (config.auth[rtId]?.installed === false) {
+    console.error(
+      kleur.red(
+        `Runtime ${rtId} is not installed; run \`arcanea-orchestrator doctor\`.`,
+      ),
+    );
+    process.exit(1);
+  }
   const runtime = getRuntime(rtId);
   const argv = runtime.argv(modelId, prompt);
 
   const authRec = config.auth[rtId];
-  const authNote = authRec?.installed === false
-    ? kleur.red(' [not installed — run `arcanea-orchestrator doctor`]')
-    : authRec?.tier
-    ? kleur.dim(` [auth: ${authRec.tier}]`)
-    : '';
+  const authNote =
+    authRec?.installed === false
+      ? kleur.red(" [not installed — run `arcanea-orchestrator doctor`]")
+      : authRec?.tier
+        ? kleur.dim(` [auth: ${authRec.tier}]`)
+        : "";
 
   console.error(
     kleur.dim(
@@ -79,7 +131,9 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
   );
 
   if (opts.dryRun) {
-    console.error(kleur.dim(`  [dry-run] would exec: ${runtime.binary} ${argv.join(' ')}`));
+    console.error(
+      kleur.dim(`  [dry-run] would exec: ${runtime.binary} ${argv.join(" ")}`),
+    );
     return;
   }
 
@@ -90,14 +144,14 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
   try {
     // Stream stdout/stderr through. Inherit stdin so interactive auth prompts still work.
     const subprocess = execa(runtime.binary, argv, {
-      stdio: 'inherit',
+      stdio: "inherit",
       reject: false,
     });
     const result = await subprocess;
     capturedExit = result.exitCode ?? null;
     if (result.exitCode !== 0) {
       // stderr already streamed via inherit; nothing to capture here.
-      if (!opts.noHistory) {
+      if (opts.history !== false) {
         appendHistory({
           ts: new Date().toISOString(),
           task: opts.task,
@@ -111,7 +165,7 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
       }
       process.exit(result.exitCode ?? 1);
     }
-    if (!opts.noHistory) {
+    if (opts.history !== false) {
       appendHistory({
         ts: new Date().toISOString(),
         task: opts.task,
@@ -126,7 +180,7 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     capturedError = msg.slice(0, 200);
-    if (msg.includes('ENOENT')) {
+    if (msg.includes("ENOENT")) {
       console.error(
         kleur.red(
           `  [arcanea] binary not found: ${runtime.binary}. Install the CLI first.`,
@@ -135,7 +189,7 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
     } else {
       console.error(kleur.red(`  [arcanea] ${msg}`));
     }
-    if (!opts.noHistory) {
+    if (opts.history !== false) {
       appendHistory({
         ts: new Date().toISOString(),
         task: opts.task,
