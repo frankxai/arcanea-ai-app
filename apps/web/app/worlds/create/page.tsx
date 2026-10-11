@@ -1059,6 +1059,7 @@ export default function CreateWorldPage() {
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8">
             <Link
               href="/worlds"
+              aria-label="Back to worlds"
               onClick={(event) => {
                 if (
                   draftHasChanges &&

@@ -120,6 +120,20 @@ restore/refine holes. The revised source needs a fresh review with the base diff
 Reported review usage: 0.0006 plan credits; mission total 0.0028, zero on-demand.
 These provider units do not establish an observed dollar conversion or balance.
 
+The second static review of 2c932e4 found no application-code blocker and two P3
+test weaknesses: missing-header fallback and unowned confirmation handlers. Both
+are addressed by asserting the actual header and capturing/validating/resolving
+each confirmation. The explicit page back link is named Back to worlds so the
+test cannot silently select a global/footer route. This review used 0.0003 plan
+credits, bringing reported mission usage to 0.0031 with zero on-demand usage.
+
+Hosted CI 38116235991 at superseded ada7f61 passed frozen install, lint and
+typecheck; its actual compiled build succeeded, then the world browser script
+failed with dialog.dismiss already handled. The former broad Worlds-link
+selector and unawaited confirmation handler left a second listener to consume
+the reload dialog. All failed evidence is retained; this is not a passed run.
+The corrected candidate needs fresh hosted execution and exact-source review.
+
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.

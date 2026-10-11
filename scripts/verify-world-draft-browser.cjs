@@ -119,6 +119,22 @@ const draft = {
           page.off("dialog", resolveUnexpected);
         }
       };
+      const confirmAction = async (trigger, message, response) => {
+        const expected = page.waitForEvent("dialog");
+        const action = trigger().then(
+          () => null,
+          (error) => error,
+        );
+        const dialog = await expected;
+        assert.equal(dialog.type(), "confirm");
+        assert.ok(
+          dialog.message().includes(message),
+          `${mode.name}: expected confirmation`,
+        );
+        await dialog[response]();
+        const error = await action;
+        if (error) throw error;
+      };
       page.setDefaultTimeout(15000);
       page.on("pageerror", (error) => errors.push(error.message));
       let modelRequests = 0;
@@ -234,10 +250,15 @@ const draft = {
             top: box.top,
             bottom: box.bottom,
             height: innerHeight,
+            hasHeader: header !== null,
             headerBottom: header?.getBoundingClientRect().bottom ?? 0,
             unobscured: point === heading || heading.contains(point),
           };
         }, target.slice(1));
+        assert.ok(
+          position.hasHeader,
+          `${mode.name}: fixed navbar exists before checking clearance`,
+        );
         assert.ok(
           position.focused,
           `${mode.name}: ${name} receives keyboard focus`,
@@ -306,13 +327,22 @@ const draft = {
         draft.world,
         "Working-copy download must not apply edits",
       );
-      page.once("dialog", (dialog) => dialog.dismiss());
-      await button("Cancel draft changes").click();
+      await confirmAction(
+        () => button("Cancel draft changes").click(),
+        "Discard these unapplied draft changes?",
+        "dismiss",
+      );
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
       );
-      page.once("dialog", (dialog) => dialog.dismiss());
-      await page.locator('a[href="/worlds"]').last().click();
+      await confirmAction(
+        () =>
+          page
+            .getByRole("link", { name: "Back to worlds", exact: true })
+            .click(),
+        "Leave without applying these draft changes?",
+        "dismiss",
+      );
       await expect(editor).toBeVisible();
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
@@ -332,8 +362,11 @@ const draft = {
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
       );
-      page.once("dialog", (dialog) => dialog.accept());
-      await button("Cancel draft changes").click();
+      await confirmAction(
+        () => button("Cancel draft changes").click(),
+        "Discard these unapplied draft changes?",
+        "accept",
+      );
       await expect(button("Edit world draft")).toBeFocused();
       assert.deepEqual(
         JSON.parse(await readStorage(currentKey)).world,
@@ -421,11 +454,17 @@ const draft = {
         .getByLabel("Rule 1 consequence", { exact: true })
         .fill(draft.world.laws[0].description);
       await button("Apply draft changes").click();
-      page.once("dialog", (dialog) => dialog.dismiss());
-      await button("Start over").click();
+      await confirmAction(
+        () => button("Start over").click(),
+        "Start a new concept?",
+        "dismiss",
+      );
       await expect(worldTitle).toBeVisible();
-      page.once("dialog", (dialog) => dialog.accept());
-      await button("Start over").click();
+      await confirmAction(
+        () => button("Start over").click(),
+        "Start a new concept?",
+        "accept",
+      );
       await expect(
         page.getByRole("textbox", { name: "Describe your world" }),
       ).toBeVisible();
@@ -447,8 +486,11 @@ const draft = {
         conceptKey,
       );
       await page.reload();
-      page.once("dialog", (dialog) => dialog.accept());
-      await button("Use new concept").click();
+      await confirmAction(
+        () => button("Use new concept").click(),
+        "Start a new concept?",
+        "accept",
+      );
       const input = page.getByRole("textbox", { name: "Describe your world" });
       await expect(input).toHaveValue("A new city beneath the sea");
       await input.press("End");
@@ -463,8 +505,11 @@ const draft = {
           );
         };
       });
-      page.once("dialog", (dialog) => dialog.accept());
-      await button("Start over").click();
+      await confirmAction(
+        () => button("Start over").click(),
+        "Start a new concept?",
+        "accept",
+      );
       await expect(
         page
           .getByRole("alert")
