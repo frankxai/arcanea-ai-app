@@ -239,11 +239,30 @@ async function verifyReadingControls(page, mode) {
     if (mode.hasTouch) await theme.tap();
     else await theme.press("Enter");
     await expect(theme).toHaveAttribute("title", `Theme: ${expected}`);
-    const colors = await paragraph.evaluate((p) => {
-      const style = getComputedStyle(p);
-      const reader = p.closest("article").parentElement.parentElement;
-      return { prose: style.color, reader: getComputedStyle(reader).color };
-    });
+    const readingColors = () =>
+      paragraph.evaluate((p) => {
+        const style = getComputedStyle(p);
+        const reader = p.closest("article").parentElement.parentElement;
+        const readerStyle = getComputedStyle(reader);
+        return {
+          prose: style.color,
+          reader: readerStyle.color,
+          transitionDuration: readerStyle.transitionDuration,
+        };
+      });
+    await expect
+      .poll(async () => {
+        const colors = await readingColors();
+        return colors.prose === colors.reader;
+      })
+      .toBe(true);
+    const colors = await readingColors();
+    assert.ok(
+      colors.transitionDuration
+        .split(",")
+        .every((duration) => Number.parseFloat(duration) === 0),
+      "Reading theme preference switches do not animate",
+    );
     assert.equal(
       colors.prose,
       colors.reader,

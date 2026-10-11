@@ -525,7 +525,7 @@ export function ChapterReader({
 
   return (
     <div
-      className={`min-h-screen ${s.bg} ${s.text} transition-colors duration-300`}
+      className={`min-h-screen ${s.bg} ${s.text}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleTap}
