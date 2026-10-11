@@ -57,8 +57,29 @@ result. These are behavior checks, not literary or customer acceptance.
 Machine: the latest browser-qa admission remains HOLD; no local build, browser,
 renderer, additional agent or model server was launched. Ordinary source edits
 and small Node tests run locally; required application checks run in hosted CI.
-This slice's storage observation was 85,908,987,904 bytes free. Hosted checks and
-independent review are pending at this candidate record.
+This slice's storage observation was 85,908,987,904 bytes free. Fresh browser-qa
+preflight remains HOLD: 4,035 MB free versus 8,192 MB required, CPU 81%, 27 task
+runtimes versus eight, and parallelism one. The current-edition print render
+remains unrun.
+
+First disclosed candidate dda5a578d90484035588e9015f74fbd4d0f2bad1 passed all 22
+SDK cases on hosted Linux and Windows in run 38185771247. Independent Nemotron
+Ultra source review returned PASS with zero findings; the normal strict verifier
+bound all fourteen supplied full-file hashes and the complete five-file delta.
+Reported review cost was zero; no caller credential or private artifact was
+supplied. The upstream payer is unverified. Static review cannot establish
+customer, literary, tenant or publication acceptance.
+
+Its application lint job 114607810345 failed Prettier's changed-file check on
+README, evolution and SDK test formatting. The raw failure is preserved; types
+passed. Those files are now formatted with installed Prettier 3.9.9; all five
+owned files pass the format check and all 22 local SDK cases pass again. A
+pnpm-exec version lookup unexpectedly started dependency resolution. That owned
+session was stopped with Ctrl+C; its last output reported zero downloads and 26
+cached additions. No lockfile or out-of-scope tracked change appeared. The actual
+formatter was invoked directly through Node. The old review is retained as prior
+revision evidence; fresh exact-source review and hosted checks remain required
+for this formatted follow-up before promotion.
 
 Instruction sources unchanged and loaded during this ongoing goal:
 AGENTS.md SHA256 36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5;

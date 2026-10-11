@@ -68,7 +68,7 @@ export function distillOffline(memories, { max = 3 } = {}) {
 function canonPromotionError() {
   const error = new Error(
     "Legacy evolution is disabled: private memories cannot publish canon. " +
-    "Use scene start/revise/export for private drafts; canon promotion requires a separate human-approved workflow.",
+      "Use scene start/revise/export for private drafts; canon promotion requires a separate human-approved workflow.",
   );
   error.code = "ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED";
   return error;
