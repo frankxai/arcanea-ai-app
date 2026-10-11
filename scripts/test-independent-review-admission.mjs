@@ -22,6 +22,26 @@ const files = [
   "ops/sessions/2026-10-10.md",
 ];
 
+test("CI Status declares every result dependency it enforces", () => {
+  const workflow = readFileSync(join(root, ".github/workflows/ci.yml"), "utf8");
+  const status = workflow.slice(workflow.indexOf("  ci-status:"));
+  assert.ok(status.startsWith("  ci-status:"));
+  const declared = status
+    .match(/needs:\s*\[([\s\S]*?)\]/)?.[1]
+    .split(",")
+    .map((name) => name.trim());
+  assert.ok(declared?.length);
+  const references = [
+    ...status.matchAll(/needs\.([a-zA-Z0-9_-]+)\.result/g),
+  ].map((match) => match[1]);
+  assert.ok(references.includes("author-independent-review"));
+  for (const job of references)
+    assert.ok(
+      declared.includes(job),
+      `CI Status cannot read undeclared result ${job}`,
+    );
+});
+
 test("private Imagine review denies local, pull-request, foreign and unpinned dispatches before provider access", () => {
   const env = {
     ...Object.fromEntries(

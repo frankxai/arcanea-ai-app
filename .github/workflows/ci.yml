@@ -715,6 +715,7 @@ jobs:
         build,
         generation-preview,
         provider-account-preview,
+        author-independent-review,
       ]
     # always() and nothing else: this job must run even when an upstream job fails
     # or is cancelled, so it reports a real verdict. Any condition that can make it
