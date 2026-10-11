@@ -18,6 +18,8 @@ export interface CloudSession {
 function normalizeCloudMessage(
   message: Record<string, unknown>,
 ): ChatMessage | null {
+  if (!message || typeof message !== "object" || Array.isArray(message))
+    return null;
   if (typeof message.id !== "string") return null;
   if (message.role !== "user" && message.role !== "assistant") return null;
 

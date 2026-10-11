@@ -253,3 +253,73 @@ test("malformed cloud message payload recovers without breaking hydration", () =
   });
   assert.equal(result.messages.length, 0);
 });
+
+test("newer metadata-only cloud rows preserve saved messages and local pins", () => {
+  const f = fixture();
+  const store = f.load("local-store").createChatSessionStore("creator-a");
+  store.saveChatSession("saved-scene", [
+    {
+      id: "scene-message",
+      role: "user",
+      content: "Keep this scene",
+      parts: [{ type: "text", text: "Keep this scene" }],
+    },
+  ]);
+  store.togglePinSession("saved-scene");
+  const before = store.loadChatSession("saved-scene");
+  const metadata = f.load("supabase-store").cloudSessionToLocalSession({
+    id: before.id,
+    title: "Renamed in the cloud",
+    messages: null,
+    created_at: before.createdAt,
+    updated_at: new Date(Date.parse(before.updatedAt) + 1000).toISOString(),
+  });
+  store.mergeChatSessions([metadata]);
+  const after = store.loadChatSession(before.id);
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(after.messages)),
+    JSON.parse(JSON.stringify(before.messages)),
+  );
+  assert.equal(after.title, metadata.title);
+  assert.equal(after.pinned, true);
+  assert.equal(store.searchSessions("Keep this scene").length, 1);
+  const other = f.load("local-store").createChatSessionStore("creator-b");
+  assert.equal(other.loadChatSession(before.id), null);
+});
+
+test("newer nonempty cloud transcripts still replace older local messages", () => {
+  const store = fixture()
+    .load("local-store")
+    .createChatSessionStore("creator-a");
+  store.saveChatSession("scene", [{ id: "old", role: "user", content: "Old" }]);
+  const before = store.loadChatSession("scene");
+  store.mergeChatSessions([
+    {
+      ...before,
+      messages: [{ id: "new", role: "assistant", content: "Revised scene" }],
+      updatedAt: new Date(Date.parse(before.updatedAt) + 1000).toISOString(),
+    },
+  ]);
+  assert.equal(
+    store.loadChatSession("scene").messages[0].content,
+    "Revised scene",
+  );
+});
+
+test("invalid entries in a cloud message array do not break valid-message recovery", () => {
+  const api = fixture().load("supabase-store");
+  const result = api.cloudSessionToLocalSession({
+    id: "partial-cloud",
+    title: "Scene",
+    messages: [
+      null,
+      false,
+      42,
+      "bad",
+      [],
+      { id: "valid", role: "user", content: "Recovered" },
+    ],
+  });
+  assert.equal(result.messages.length, 1);
+  assert.equal(result.messages[0].content, "Recovered");
+});

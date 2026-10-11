@@ -299,6 +299,13 @@ export function createChatSessionStore(owner: string | null | undefined) {
       ) {
         merged.set(normalized.id, {
           ...normalized,
+          // Cloud session rows can contain metadata without a transcript. A
+          // metadata refresh must not erase the browser's saved conversation.
+          messages:
+            normalized.messages.length > 0
+              ? normalized.messages
+              : existing.messages,
+          pinned: normalized.pinned ?? existing.pinned,
           projectId: normalized.projectId ?? existing.projectId ?? null,
         });
       }
