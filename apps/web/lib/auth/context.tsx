@@ -69,6 +69,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(initialSession?.user ?? null);
       } catch (error) {
         console.error("Error getting initial session:", error);
+        if (mounted && authRevisionRef.current === initialRevision) {
+          credentialScope.set(providerActor(undefined, false));
+          setSession(null);
+          setUser(null);
+        }
       } finally {
         if (mounted && authRevisionRef.current === initialRevision)
           setIsLoading(false);
