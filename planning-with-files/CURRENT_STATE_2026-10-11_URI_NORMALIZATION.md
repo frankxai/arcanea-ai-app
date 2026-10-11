@@ -3,7 +3,7 @@
 Owner: Codex thread `01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`.
 Origin: `https://github.com/frankxai/arcanea-ai-app.git`.
 Branch: `agent/codex/uri-normalization-20261011`.
-Base: `194f102e3d609ce17e52b8999a702bf76734fcd7`.
+Base: `d5f16b301dde856b004a1a262f596a4ca9c04e86`.
 Initial reviewed candidate: `eacb8f6a6ef9b3c9d1c5cb21a3a41e6889982d47` on `a561c3e2`.
 Issue: [592](https://github.com/frankxai/arcanea-ai-app/issues/592).
 Related: programme #276 and Dependabot #67.
@@ -78,3 +78,12 @@ all six peer source files byte-for-byte from accepted 194f102e; no peer checkout
 or in-flight edit is touched. The original eacb8f6a review and passing six-method
 frozen-install run remain at their own source. Independent review and required
 CI must run again for this combined revision; old acceptance is not transferred.
+
+The pre-merge check later found accepted PR594, which adds one worldbuilding
+lab document. Its exact accepted bytes are preserved through another normal
+integration. Candidate 0ffc4779 has a source-bound zero-finding PASS and all six
+applicable workflows green, including Build/TypeScript/Lint/CI Status. Those
+receipts remain historical. The URI implementation is unchanged; only this
+pickup is amended. Fresh source review and required CI are needed for the new
+combined revision. No canon or literary approval follows from preserving a
+separately accepted peer document.
