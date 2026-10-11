@@ -87,8 +87,10 @@ learner/showcase trial and proven extraction. This is proposed operating
 documentation, not measured allocation, a live queue or a dispatched mission.
 
 SYSTEM.md now names the conflict between Frank's supplied Node 20 instruction
-and the checked-in Node 24/pnpm pins and AGENTS.md. A runtime clarification is
-pending; no application runtime, dependency or policy was changed.
+and the checked-in Node 24/pnpm pins and AGENTS.md. Frank answered the clarification
+on 11 October: keep the checked-in Node 24 / pinned pnpm contract. The current
+guide records that decision; no application runtime, dependency or AGENTS file was
+changed. It authorizes the runtime contract, not paid reviews or release approval.
 
 Fresh `pp preflight --workload review-lite` returned HOLD: 1390 MB free RAM,
 6144 MB required, posture restart-soon and 25 task runtimes against a budget of 12.
