@@ -232,3 +232,54 @@ https://openrouter.ai/docs/guides/best-practices/reasoning-tokens ; Kilo/model
 behavior remains subject to actual response evidence. Nine no-network cases pass,
 including the actual parser's denial of empty, truncated, tool-bearing and wrong
 model responses. No source verdict or production promotion is claimed.
+
+At `7b99e4dac74c73cdd5ad5b10aa25ae11249f631a`, build, types, lint,
+compiled Companion and Reading38163995274 all finish SUCCESS. Independent
+review 38163995268 is rejected for a source-binding mismatch: the response invents
+eight-character head/base values and a different manifest. It also uses synthetic
+ellipsis quotes and alternate finding fields. Its unvalidated warning cannot
+approve the source or establish those findings. The single call reports 143792
+prompt tokens and 13552 completion tokens. It finishes normally and reports zero
+cost. The raw response, complete inputs and failed receipt are retained. No
+unchanged retry.
+
+Accepted main `d5f16b301dde856b004a1a262f596a4ca9c04e86` is integrated
+as merge `f26b8ae99184cb6a686bd8be997363b151d375c5`. Its seven document,
+footer, fixture and worldbuilding paths are integration-only and remain identical
+to accepted main. This chat candidate still changes 22 paths and does not execute
+a live migration. Latest read-only alias metadata reports production READY at
+d5f; that deployment does not contain this candidate.
+
+The prompt previously told the reviewer to replace all example fields, including
+the literal binding values, and omitted the exact finding object from its example.
+The repair uses an actual strict JSON Schema: full head/base/manifest values are
+single-value enums, source paths are supplied enums, and findings require the
+literal quote, scenario and fix fields. The exact binding is repeated after the
+source. Local validation remains mandatory even if the endpoint ignores or only
+partially enforces the schema. Observations must also audit changed paths.
+
+The explicit independent model is now `dots-studio/dots-3-note-preview:free`.
+Live Kilo catalog evidence lists 512000 context and both response_format and
+structured_outputs; its official model card describes code and long-context use,
+without establishing performance on this task. The previous model did not list
+structured output support. Sources checked: https://kilo.ai/docs/gateway/api-reference,
+https://openrouter.ai/docs/guides/features/structured-outputs and
+https://huggingface.co/dots-studio/dots3-note-prev . No superiority claim is made.
+
+Budget: five sequential anonymous zero-price calls maximum, one per experience,
+account/transport, companion-browser, reading-browser and review-protocol module;
+240 seconds per call, 26 minutes per hosted job, immediate stop on any failure,
+no credentials, tools, paid fallback, automatic retry or private source. Every
+changed path has one accountable module and the union includes all 42 complete
+source/context paths. All five actual encoded packets must pass inline-allow-free
+secret scanning, live explicit-zero prices, structured-output support and the
+unchanged conservative byte-based context bound before inference. Endpoint/schema
+errors remain failures. This supersedes the earlier three-module contract.
+
+Ten actual no-network admission tests and 14 actual-SDK/account/Stop/error cases
+pass locally on Node 24.16.0. Packet previews fit the verified 512000 context bound,
+including the 24000 output allowance; these previews are not hosted review results.
+Machine admission remains HOLD at 4651MB free against 6144MB required. No local
+build, browser, install, reviewer or agent is launched. Fresh complete independent
+review, exact-source hosted checks/captures, reconciliation, release gates and real
+provider/customer acceptance remain required. The full programme stays active.

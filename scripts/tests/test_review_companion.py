@@ -18,7 +18,7 @@ KERNEL = ".arcanea/prompts/luminor-engineering-kernel.md"
 class ReviewAdmission(unittest.TestCase):
     def model(self):
         return {"id": REVIEW.MODEL, "pricing": {"prompt": "0", "completion": "0"},
-                "context_length": 1_000_000}
+                "context_length": 512_000, "supported_parameters": ["response_format", "structured_outputs"]}
 
     def test_only_explicit_zero_price_model_fits_complete_request(self):
         REVIEW.zero_price(self.model(), 1000)
@@ -30,6 +30,8 @@ class ReviewAdmission(unittest.TestCase):
             {"pricing": {"prompt": "Infinity", "completion": "0"}},
             {"pricing": {"prompt": "0"}},
             {"context_length": 1000},
+            {"supported_parameters": []},
+            {"supported_parameters": ["response_format"]},
         ):
             with self.subTest(changes=changes), self.assertRaises(REVIEW.Denied):
                 REVIEW.zero_price({**self.model(), **changes}, 1000)
@@ -72,6 +74,8 @@ class ReviewAdmission(unittest.TestCase):
             {"coveredFiles": ["a.ts", "context.ts", "a.ts"]},
             {"verdict": "APPROVE"}, {"limitations": None},
             {"observations": []},
+            {"head": "afa570a8", "base": "f6e3870e"},
+            {"unexpectedApproval": True},
         ):
             with self.subTest(changes=changes), self.assertRaises(REVIEW.Denied):
                 REVIEW.validate({**self.valid_review(), **changes}, HEAD, BASE, "manifest", content)
@@ -87,6 +91,26 @@ class ReviewAdmission(unittest.TestCase):
                 REVIEW.validate(bad, HEAD, BASE, "manifest", content)
         with self.assertRaises(REVIEW.Denied):
             REVIEW.validate({**valid, "verdict": "pass"}, HEAD, BASE, "manifest", content)
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.validate(self.valid_review(), HEAD, BASE, "manifest", content, ["changed.ts"])
+
+    def test_actual_request_pins_structured_output_and_literal_bindings(self):
+        content = {KERNEL: "Accepted kernel", "a.ts": "return false;"}
+        request = json.loads(REVIEW.request_for("experience", HEAD, BASE, "c" * 64,
+                                               content, {path: "hash" for path in content}, "Changed a.ts"))
+        output = request["response_format"]
+        self.assertEqual(output["type"], "json_schema")
+        self.assertIs(output["json_schema"]["strict"], True)
+        schema = output["json_schema"]["schema"]
+        for key, literal in (("head", HEAD), ("base", BASE), ("manifestSha256", "c" * 64)):
+            self.assertEqual(schema["properties"][key]["enum"], [literal])
+            self.assertIn(literal, request["messages"][-1]["content"])
+        finding = schema["properties"]["findings"]["items"]
+        self.assertEqual(set(finding["required"]), {"priority", "path", "line", "title", "quote", "scenario", "fix"})
+        self.assertFalse(finding["additionalProperties"])
+        self.assertEqual(set(schema["properties"]["coveredFiles"]["items"]["enum"]), set(content))
+        self.assertEqual(request["tools"], [])
+        self.assertNotIn("Replace ALL", request["messages"][0]["content"])
 
     def test_actual_orchestration_denies_scan_price_and_context_before_generation(self):
         env = {"GITHUB_ACTIONS": "true", "GITHUB_REPOSITORY": REVIEW.REPOSITORY,
@@ -114,14 +138,19 @@ class ReviewAdmission(unittest.TestCase):
         changed = ["apps/web/components/lumina/companion-chat.tsx",
                    "apps/web/components/lumina/lumina-bubble.tsx", "apps/web/app/chat/page.tsx",
                    "apps/web/components/chat/chat-welcome.tsx", "apps/web/components/chat/chat-overlays.tsx",
+                   "apps/web/components/chat/chat-area.tsx",
                    "packages/design-system/src/companion.module.css",
-                   "apps/web/hooks/use-conversation.ts", "scripts/review-companion.py"]
+                   "apps/web/hooks/use-conversation.ts", "scripts/review-companion.py",
+                   "scripts/verify-companion-browser.cjs", "scripts/verify-reading-scene-browser.cjs"]
         content = {path: "Complete source" for path in set(changed) | set(REVIEW.CONTEXTS)}
         primary, planned = REVIEW.modules(changed, content)
         self.assertEqual(set().union(*primary.values()), set(changed))
         self.assertEqual(sum(len(x) for x in primary.values()), len(changed))
         self.assertEqual(set().union(*(set(x) for x in planned.values())), set(content))
         self.assertTrue(all(set(primary[name]) <= set(planned[name]) for name in primary))
+        self.assertEqual(tuple(planned), REVIEW.MODULE_NAMES)
+        self.assertEqual(primary["reading-browser"], {"scripts/verify-reading-scene-browser.cjs"})
+        self.assertIn("apps/web/components/saga/chapter-reader.tsx", planned["reading-browser"])
         for data, paths in (({**content, "unassigned-context.ts": "Unseen"}, changed),
                             (content, [*changed, "unowned.txt"]),
                             ({path: value for path, value in content.items() if path != KERNEL}, changed)):
