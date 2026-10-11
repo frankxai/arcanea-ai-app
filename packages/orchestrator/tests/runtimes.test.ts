@@ -60,6 +60,11 @@ test("Codex receives the selected model instead of its configured default", () =
 
 test("Gemini receives the selected model without changing approvals", () => {
   const rt = getRuntime("gemini");
-  const argv = rt.argv("gemini-3-pro", "hello");
-  assert.deepEqual(argv, ["--model", "gemini-3-pro", "--prompt", "hello"]);
+  const argv = rt.argv("gemini-3.1-pro-preview", "hello");
+  assert.deepEqual(argv, [
+    "--model",
+    "gemini-3.1-pro-preview",
+    "--prompt",
+    "hello",
+  ]);
 });

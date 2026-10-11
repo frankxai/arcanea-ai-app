@@ -8,7 +8,9 @@
 #   - A task-class maps to an ordered list of model candidates.
 #   - The harness picks the first available candidate given its auth context
 #     (Claude Max sub? OpenCode Zen? BYOK?).
-#   - `tier: free` costs $0 tokens. `tier: sub` is paid via subscription.
+#   - Tier/pricing entries are routing metadata, not billing authorization.
+#     Provider accounts and current vendor limits determine actual charges.
+#   - `tier: free` labels a historical free route; `tier: sub` a subscription.
 #     `tier: byok` is user-provided API key. `tier: premium` is metered.
 #
 # When you change this file:
@@ -17,8 +19,8 @@
 #   3. Run `pnpm --filter @arcanea/router-spec build` (syncs to web + CLIs).
 #   4. /models page + blog auto-regenerate on next build.
 
-version: 1.0.1
-lastUpdated: 2026-06-19
+version: 1.0.2
+lastUpdated: 2026-10-11
 maintainer: frankxai
 
 # ─── Model catalog ──────────────────────────────────────────────────────────
@@ -31,7 +33,7 @@ models:
     family: claude
     context: 1000000
     sweBench: 80.3
-    tier: sub # Claude Max $200/mo covers unlimited in Claude Code
+    tier: sub # Actual plan access and limits are enforced by Claude Code/account.
     byokPrice: { input: 15, output: 75 }
     strengths: [orchestration, extended-thinking, long-context, agentic]
     aliases: ["opus-4.7", "opus-4-7", "claude-opus-4-7[1m]"]
@@ -73,6 +75,15 @@ models:
     tier: byok
     byokPrice: { input: 2.5, output: 10 }
     strengths: [multimodal, long-context, grounding]
+    deprecated: "Gemini 3 Pro preview shut down 2026-03-09; select gemini-3.1-pro-preview explicitly."
+
+  gemini-3.1-pro-preview:
+    provider: google
+    family: gemini
+    context: 1048576
+    tier: byok
+    strengths: [multimodal, long-context, reasoning]
+    notes: "Native identifier verified in Google's model/deprecation references on 2026-10-11. Preview, account access and narrative quality untested. Other catalog entries remain historical snapshots."
 
   # ── OpenCode Zen free tier (bulk worker pool) ─────────────────────────────
 
@@ -194,7 +205,7 @@ tasks:
   orchestrate:
     description: Multi-agent coordination, task decomposition, dispatch
     primary: [claude-opus-4-7, qwen3.6-plus-free]
-    fallback: [claude-sonnet-4-6, gemini-3-pro]
+    fallback: [claude-sonnet-4-6, gemini-3.1-pro-preview]
     contextMin: 200000
     rationale: Needs long context + agentic reasoning. Opus on Max sub, Qwen 3.6 for free-tier fallback.
 
@@ -241,7 +252,7 @@ tasks:
   research.deep:
     description: Cross-source synthesis, competitive analysis, long-form report
     primary: [claude-opus-4-7, qwen3.6-plus-free]
-    fallback: [gemini-3-pro, glm-5-free]
+    fallback: [gemini-3.1-pro-preview, glm-5-free]
     contextMin: 500000
     rationale: Deep research needs massive context + reasoning.
 
@@ -361,8 +372,8 @@ surfaces:
     prefer: byok
     authContext: [byok]
     taskOverrides:
-      research.deep: [gemini-3-pro]
-      world.expand: [gemini-3-pro]
+      research.deep: [gemini-3.1-pro-preview]
+      world.expand: [gemini-3.1-pro-preview]
 
   web.models-page:
     description: Public /models arena on arcanea.ai. Reads catalog + tasks for display.
