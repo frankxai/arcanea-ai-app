@@ -95,14 +95,27 @@ async function main() {
     rows.push(row);
     await persist();
   }
-  const onUnhandled = (error) => {
-    // Keep async failures blocking without emitting exception bodies or secrets.
+  function failureDetails(error) {
     const names = ["TimeoutError", "TargetClosedError", "AssertionError"];
     const kind = names.includes(error?.name) ? error.name : "Other";
     const match =
       typeof error?.stack === "string" &&
       /verify-generation-preview-browser\.cjs:(\d+):/.exec(error.stack);
-    asyncFailures.push({ kind, scriptLine: match ? Number(match[1]) : null });
+    const safeValue = (value) =>
+      typeof value === "boolean" ||
+      (typeof value === "number" && Number.isFinite(value))
+        ? value
+        : undefined;
+    return {
+      kind,
+      scriptLine: match ? Number(match[1]) : null,
+      expected: safeValue(error?.expected),
+      actual: safeValue(error?.actual),
+    };
+  }
+  const onUnhandled = (error) => {
+    // Keep async failures blocking without emitting exception bodies or secrets.
+    asyncFailures.push(failureDetails(error));
     void persist().catch(() => {});
   };
   process.on("unhandledRejection", onUnhandled);
@@ -169,6 +182,17 @@ async function main() {
       .getByRole("button", { name: "Sign In", exact: true })
       .click();
     await page.waitForURL(`**${next}`, { timeout: 30000 });
+  }
+  async function logout(page, account) {
+    const username = account.email.split("@")[0];
+    await page
+      .getByRole("button")
+      .filter({ has: page.getByText(username, { exact: true }) })
+      .click();
+    await page.getByRole("menuitem", { name: "Sign Out", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "Sign In", exact: true }),
+    ).toBeVisible();
   }
   const modes = [
     {
@@ -260,8 +284,9 @@ async function main() {
         unrelatedHostFetchDenied: true,
         sourceSha256: imageHash,
       });
-    } catch {
+    } catch (error) {
       await record({
+        ...failureDetails(error),
         scope: "production-media-csp",
         passed: false,
         bypassCSP: false,
@@ -283,7 +308,10 @@ async function main() {
           route,
           context,
           refuseExport && route.request().resourceType() === "fetch"
-            ? {}
+            ? {
+                "access-control-allow-origin":
+                  "https://generation-fixture.invalid",
+              }
             : { "access-control-allow-origin": config.base },
         ),
       );
@@ -318,7 +346,10 @@ async function main() {
             r.request().method() === "POST",
         );
         pending.catch(() => {});
-        await page.getByRole("button", { name: /^Forge/ }).click();
+        const forge = page.getByRole("button", { name: /^Forge/ });
+        await expect(forge).toBeInViewport();
+        await expect(forge).toContainText("10 credits");
+        await forge.click();
         const first = await pending;
         assert.equal(first.status(), 409);
         const requestKey = first.request().postDataJSON().requestKey;
@@ -337,7 +368,8 @@ async function main() {
             r.request().method() === "POST",
         );
         pending.catch(() => {});
-        await page.getByRole("button", { name: /^Forge/ }).click();
+        await expect(forge).toBeInViewport();
+        await forge.click();
         const resumed = await pending;
         assert.equal(resumed.status(), 200);
         const receipt = await resumed.json();
@@ -420,8 +452,9 @@ async function main() {
           downloadedSha256: imageHash,
           corsRefusalManualExport: true,
         });
-      } catch {
+      } catch (error) {
         await record({
+          ...failureDetails(error),
           mode: mode.name,
           scope: "studio",
           passed: false,
@@ -492,8 +525,9 @@ async function main() {
           passed: true,
           savedAndReopened: true,
         });
-      } catch {
+      } catch (error) {
         await record({
+          ...failureDetails(error),
           mode: mode.name,
           scope: "page-cover",
           passed: false,
@@ -535,6 +569,8 @@ async function main() {
       await expect(saved).toBeVisible();
       await settingsPage.reload();
       await expect(google).toHaveValue("fixture-settings-account-a-key");
+      settingsPhase = "settings-account-a-signout";
+      await logout(settingsPage, config.accounts[0]);
       settingsPhase = "settings-account-b-switch";
       await login(settingsPage, config.accounts[1], "/settings/providers");
       await provider.selectOption("google");
@@ -544,6 +580,8 @@ async function main() {
       await expect(saved).toBeVisible();
       await settingsPage.reload();
       await expect(google).toHaveValue("fixture-settings-account-b-key");
+      settingsPhase = "settings-account-b-signout";
+      await logout(settingsPage, config.accounts[1]);
       settingsPhase = "settings-account-a-return";
       await login(settingsPage, config.accounts[0], "/settings/providers");
       await expect(google).toHaveValue("fixture-settings-account-a-key");
@@ -573,8 +611,9 @@ async function main() {
         returningAccountPreserved: true,
         actualProviderVerification: false,
       });
-    } catch {
+    } catch (error) {
       await record({
+        ...failureDetails(error),
         scope: "real-auth-provider-settings",
         passed: false,
         failurePhase: settingsPhase,
@@ -588,29 +627,40 @@ async function main() {
     const page = await context.newPage();
     try {
       await login(page, config.accounts[1]);
+      phase = "second-account-password-token";
       const tokenResponse = await api(
         "/auth/v1/token?grant_type=password",
         config.anon,
-        { method: "POST", body: JSON.stringify(config.accounts[1]) },
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: config.accounts[1].email,
+            password: config.accounts[1].password,
+          }),
+        },
       );
       assert.equal(tokenResponse.status, 200);
       const token = (await tokenResponse.json()).access_token;
+      phase = "private-operation-denial";
       const privateRows = await api(
         "/rest/v1/billing_operations?select=*",
         token,
       );
       assert.ok([401, 403].includes(privateRows.status));
+      phase = "privileged-recovery-denial";
       const privilegedRpc = await api(
         "/rest/v1/rpc/billing_recovery_ready",
         token,
         { method: "POST", body: "{}" },
       );
       assert.ok([401, 403, 404].includes(privilegedRpc.status));
+      phase = "foreign-page-write-denial";
       const foreign = await context.request.patch(
         `${config.base}/api/pages/generation-fixture-0`,
         { data: { title: "Forbidden overwrite" } },
       );
       assert.equal(foreign.status(), 403);
+      phase = "second-account-balance-exhausted";
       const emptied = await api(
         `/rest/v1/billing_accounts?user_id=eq.${config.accounts[1].id}`,
         config.admin,
@@ -618,6 +668,7 @@ async function main() {
       );
       assert.ok(emptied.ok);
       const before = await state();
+      phase = "depleted-account-no-submission";
       const denied = await context.request.post(
         `${config.base}/api/imagine/generate`,
         {
@@ -638,8 +689,9 @@ async function main() {
         foreignPageDenied: true,
         depletedNoProvider: true,
       });
-    } catch {
+    } catch (error) {
       await record({
+        ...failureDetails(error),
         scope: "account-isolation",
         passed: false,
         failurePhase: phase,

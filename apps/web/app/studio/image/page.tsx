@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { costFor } from "@/lib/billing/catalog";
 import {
   requestImages,
   generatedImageSource,
@@ -239,7 +240,7 @@ export default function ImageForgePage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90 font-sans relative pb-32">
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90 font-sans relative pb-72 md:pb-32">
         {/* Header */}
         <header className="border-b border-white/[0.06] backdrop-blur-md sticky top-0 z-40 bg-[var(--arc-cosmic-void)]/80">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -408,7 +409,7 @@ export default function ImageForgePage() {
                         <span className="text-[10px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider">
                           Prompt context
                         </span>
-                        <p className="text-sm text-white/80 leading-relaxed font-body mt-1">
+                        <p className="text-sm text-white/80 leading-relaxed font-body mt-1 line-clamp-3">
                           {selectedImage.prompt}
                         </p>
                       </div>
@@ -564,7 +565,7 @@ export default function ImageForgePage() {
         </div>
 
         {/* ── Bottom Floating Toolbar ── */}
-        <div className="fixed bottom-6 inset-x-0 z-30 px-6 pointer-events-none">
+        <div className="fixed bottom-6 inset-x-0 z-30 px-4 sm:px-6 pointer-events-none">
           <m.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -593,8 +594,8 @@ export default function ImageForgePage() {
             </div>
 
             {/* Quick config parameters row */}
-            <div className="flex items-center justify-between w-full md:w-auto gap-2 border-t md:border-t-0 md:border-l border-white/[0.06] pt-2 md:pt-0 md:pl-2">
-              <div className="flex items-center gap-1.5 relative">
+            <div className="flex flex-col items-stretch md:flex-row md:items-center md:justify-between w-full md:w-auto gap-2 border-t md:border-t-0 md:border-l border-white/[0.06] pt-2 md:pt-0 md:pl-2">
+              <div className="flex flex-wrap items-center gap-1.5 relative">
                 {/* Style Selector */}
                 <button
                   onClick={(e) => {
@@ -691,9 +692,10 @@ export default function ImageForgePage() {
                 {/* Count Stepper */}
                 <div className="flex items-center bg-white/[0.03] border border-white/[0.06] rounded-xl p-0.5">
                   <button
+                    aria-label="Fewer images"
                     onClick={() => setImageCount(Math.max(1, imageCount - 1))}
                     disabled={imageCount <= 1}
-                    className="p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                    className="min-h-11 min-w-11 p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
                   >
                     <Minus className="w-3 h-3" />
                   </button>
@@ -701,9 +703,10 @@ export default function ImageForgePage() {
                     {imageCount}
                   </span>
                   <button
+                    aria-label="More images"
                     onClick={() => setImageCount(Math.min(4, imageCount + 1))}
                     disabled={imageCount >= 4}
-                    className="p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                    className="min-h-11 min-w-11 p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
                   >
                     <Plus className="w-3 h-3" />
                   </button>
@@ -714,12 +717,12 @@ export default function ImageForgePage() {
               <button
                 onClick={handleGenerate}
                 disabled={!prompt.trim() || isGenerating}
-                className="py-2.5 px-5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center gap-1.5 transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
+                className="min-h-11 justify-center py-2.5 px-5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center gap-1.5 transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
               >
                 <Sparkle className="w-4 h-4 text-black" />
                 <span>Forge</span>
                 <span className="text-[10px] font-mono opacity-50 ml-1">
-                  ⚡{imageCount}
+                  {costFor("image.standard", imageCount)} credits
                 </span>
               </button>
             </div>

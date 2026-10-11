@@ -208,3 +208,44 @@ Two363 rendered capture companions were verified and logged in the existing glob
 visual ledger, zero paid inference and failed overall acceptance. The neutral2px
 blockquote border in doc-editor remains under its earlier narrow false-positive
 exception; no additional design suppression or unrelated editor change was added.
+
+## Nine retained browser rows and mobile correction
+
+Hosted run38121817359 at345b7a3ff629fba252868511ef414e613c5312e8
+fails full acceptance. The receipt retains all nine rows and no async failures.
+Production-header media CSP and desktop/mobile/reduced-motion Page cover save/reopen
+pass, four of nine rows. Desktop Studio fails its CORS-refusal assertion; mobile
+and reduced-motion Studio fail initial submission; real-auth settings fails at
+account B login; the second-account denial case remains unresolved. Financial
+SQL, recovery and concurrency pass. Supplier counters retain four fixture
+submissions and five polls; no paid inference or production write occurred.
+Gemini3.1Pro static PASS binds32 exact Git source hashes, packet and final text.
+Six failed/successful render captures have verified companion hashes and existing
+global visual-ledger entries. Earlier failures remain preserved.
+
+The 375px capture reproduces a real toolbar overflow: Forge is outside the viewport.
+The options now wrap and Forge gets its own mobile row, minimum44px touch size,
+with bottom clearance. Count controls have accessible names. The displayed credit
+quote comes from costFor(image.standard,count), matching current managed admission.
+The browser gate now requires the actual Forge control in viewport and its
+10-credit quote before submitting. Rendered confirmation remains pending.
+
+Installed Playwright automatically inserts allow-origin when a route fulfills
+without that header. The refused-export mock now explicitly supplies a different
+origin; download refusal and manual export must still pass without a new job.
+Real-auth A/B/A settings switches now use the actual Sign Out UI before another
+login, preserving the server redirect for already authenticated users. These
+fixture preconditions do not establish live provider verification. The B token
+request includes exactly email/password. Each isolation boundary has a distinct
+phase and failures retain only allowlisted kind, source line, numeric/boolean
+expected and actual, never raw error bodies or credentials. Its actual failing
+boundary remains unknown until the next hosted receipt.
+
+Native fixture7/7, changed app/script lint, syntax and whitespace pass locally.
+Local review-lite admission HOLD reports1858MB free versus6144MB required and
+27 task runtimes; no heavy local worker or additional agent was started. Fresh
+exact-revision independent review and nine-case hosted acceptance remain required.
+Build retains its inherited guest-settings failure until the receiving owner
+lands or explicitly admits integration of PR578. That draft at3a22e0aea375eb6c2f79410fc023d4b3f789e676
+has full hosted run38120918429 PASS, but its final independent review remains open.
+Do not waive Build or treat skipped draft checks as authenticated acceptance.
