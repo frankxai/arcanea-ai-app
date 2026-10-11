@@ -61,6 +61,16 @@ instructions; no new styling or animation is introduced. Its review format:
 | Earlier browser artifact contained JSON only                   | CI retains catalog/reader screenshots for each tested mode | The resulting interface can be inspected alongside functional evidence |
 
 Screenshots are observations of the built application, not generated artwork.
+
+First current hosted CI38113724195 passed types/lint and the built application,
+then failed the newly added screenshot locator: #multiverse matched both hidden
+and visible responsive copies. The failed JSON artifact11692971001 binds built
+790ee9078cb0bbbb71ebaffa0729fe5f027ba68c and sourcedfc90eb8 and is preserved.
+The correction requires exactly one visible catalog, scrolls it into view and
+captures that section. Existing real-prose/navigation/recovery assertions remain
+enabled. The initial NVIDIA PASS did not catch this verifier defect and cannot
+sign off the correction; current source review and a new hosted run are required.
+
 CI keeps both the actual built Git commit and PR source head, which can differ
 for GitHub's merge checkout. Rendered proof, screenshot inspection, production
 behavior and actual reader completion must be reported separately. Current

@@ -131,9 +131,12 @@ async function readChapter(page, href, text) {
           evidence.errors.push({ mode: mode.name, message: error.message }),
         );
         await page.goto(base + "/books");
-        await expect(page.locator("#multiverse")).toBeVisible();
+        const catalog = page.locator("#multiverse:visible");
+        await expect(catalog).toHaveCount(1);
+        await catalog.scrollIntoViewIfNeeded();
+        await expect(catalog).toBeVisible();
         const catalogImage = `${mode.name}-catalog.png`;
-        await page.screenshot({ path: `${output}/${catalogImage}` });
+        await catalog.screenshot({ path: `${output}/${catalogImage}` });
         record.screenshots.push(catalogImage);
         for (const entry of entries) {
           await page.goto(base + "/books");
