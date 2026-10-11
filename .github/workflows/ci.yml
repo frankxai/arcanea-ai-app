@@ -213,13 +213,6 @@ jobs:
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=0 -f supabase/tests/author-draft-recovery.sql
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=1 -f supabase/tests/author-draft-recovery.sql
 
-      - name: Verify private image owner access and atomic storage admission
-        env:
-          PGPASSWORD: disposable-author-fixture
-        run: |
-          createdb -h localhost -U postgres arcanea_private_imagine_fixture
-          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
-
       - name: Verify atomic project document save and recovery
         env:
           PGPASSWORD: disposable-author-fixture
@@ -233,6 +226,13 @@ jobs:
         env:
           PROJECT_DOCUMENT_CONFIG_FIXTURE: "true"
         run: node --test scripts/tests/provider-fixture-private-config.test.cjs
+
+      - name: Verify private image owner access and atomic storage admission
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          createdb -h localhost -U postgres arcanea_private_imagine_fixture
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
