@@ -21,6 +21,8 @@ import urllib.request
 
 REPOSITORY = "frankxai/arcanea-ai-app"
 BRANCH = "agent/codex/provider-account-20261011"
+WORLD_BRANCH = "agent/codex/chat-world-handoff-20261011"
+OWNED_PULL_REQUESTS = {BRANCH: 597, WORLD_BRANCH: 602}
 MODEL = "dots-studio/dots-3-note-preview:free"
 GATEWAY = "https://api.kilo.ai/api/gateway"
 MAX_OUTPUT = 24000
@@ -45,6 +47,28 @@ CONTEXTS = (
     "scripts/tests/provider-chat-instance.test.cjs",
     ".github/workflows/reading-scene.yml",
 )
+WORLD_PATHS = frozenset({
+    "apps/web/app/api/worlds/generate/route.ts",
+    "apps/web/components/chat/chat-notices.tsx", "apps/web/hooks/use-chat-world-mode.ts",
+    "apps/web/lib/chat/world-handoff.ts", "apps/web/lib/chat/world-character-mode.ts",
+    "apps/web/lib/worlds/generation.ts", "scripts/tests/chat-world-handoff.test.cjs",
+    "scripts/test-world-generation.cjs", "scripts/verify-companion-browser.cjs",
+    "scripts/review-companion.py", "scripts/tests/test_review_companion.py",
+    ".github/workflows/companion.yml",
+    "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md",
+})
+WORLD_CONTEXTS = tuple(sorted(set(CONTEXTS) | WORLD_PATHS | {
+    "apps/web/app/chat/page.tsx", "apps/web/hooks/use-conversation.ts",
+    "apps/web/components/lumina/companion-chat.tsx", "apps/web/components/lumina/lumina-bubble.tsx",
+    "apps/web/components/chat/chat-area.tsx", "apps/web/components/chat/chat-overlays.tsx",
+    "apps/web/components/chat/chat-welcome.tsx", "apps/web/components/chat/agent-header.tsx",
+    "packages/design-system/src/companion.module.css", "packages/design-system/package.json",
+    "apps/web/lib/luminors/config.ts", "apps/web/lib/worlds/draft.ts",
+    "apps/web/app/worlds/create/page.tsx", "apps/web/components/worlds/world-draft-editor.tsx",
+    "apps/web/components/worlds/world-model-settings.tsx", "apps/web/components/worlds/world-art-brief.tsx",
+    "apps/web/lib/supabase/server.ts", "apps/web/lib/async-deadline.ts",
+    "apps/web/lib/gateway/credential-policy.mjs", ".github/workflows/ci.yml",
+}))
 
 
 class Denied(RuntimeError):
@@ -109,12 +133,14 @@ def public_pin(head, base, pr_number):
     require(pr.get("head", {}).get("sha") == head
             and pr.get("base", {}).get("sha") == base,
             "Pull-request revision changed")
-    require(pr.get("head", {}).get("ref") == BRANCH
+    branch = pr.get("head", {}).get("ref")
+    require(OWNED_PULL_REQUESTS.get(branch) == pr_number
             and pr.get("head", {}).get("repo", {}).get("full_name") == REPOSITORY,
             "Review requires the owned same-repository lane")
+    return branch
 
 
-def sources(head, base):
+def sources(head, base, contexts=None):
     require(git("rev-parse", "HEAD").decode().strip() == head, "Checkout revision mismatch")
     require(not git("status", "--porcelain=v1", "--untracked-files=no").strip(),
             "Tracked source is dirty")
@@ -124,7 +150,7 @@ def sources(head, base):
     changed = git("diff", "--name-only", base, head).decode().splitlines()
     require(0 < len(changed) <= 45, "Changed source count exceeds review contract")
     content, hashes = {}, {}
-    for path in sorted(set(changed) | set(CONTEXTS)):
+    for path in sorted(set(changed) | set(CONTEXTS if contexts is None else contexts)):
         require(re.fullmatch(r"[a-zA-Z0-9_./\[\]-]+", path)
                 and ".." not in path
                 and not re.search(r"(^|/)(\.env|credentials|secrets)([./]|$)", path, re.I),
@@ -235,8 +261,17 @@ def validate(review, head, base, manifest, content, changed=None):
                 "Observations do not audit this module's changed source")
 
 
-def modules(changed, content):
+def modules(changed, content, branch=BRANCH):
     """Each changed path has one accountable module; context is shared as needed."""
+    require(branch in OWNED_PULL_REQUESTS, "Review branch has no admitted contract")
+    if branch == WORLD_BRANCH:
+        require(bool(changed) and set(changed) <= WORLD_PATHS,
+                "World review contains source outside its owned contract")
+        require(set(content) == set(WORLD_CONTEXTS) | set(changed),
+                "Complete world caller or review context is missing or unassigned")
+        # One complete packet preserves cross-boundary recovery and actor call sites.
+        # The same scanner, live price/context limit and response validator apply.
+        return {"world-handoff": set(changed)}, {"world-handoff": dict(content)}
     primary = {name: set() for name in MODULE_NAMES}
     native_account = {"scripts/tests/companion-chat-instance.test.cjs", "scripts/tests/chat-stop-control.test.cjs",
                       "scripts/tests/chat-error-message.test.cjs"}
@@ -367,11 +402,12 @@ def main():
     require(os.environ.get("GITHUB_ACTIONS") == "true"
             and os.environ.get("GITHUB_REPOSITORY") == REPOSITORY
             and os.environ.get("GITHUB_ACTOR") == "frankxai", "Hosted owner admission refused")
-    public_pin(args.head, args.base, args.pull_request)
-    changed, content, hashes, delta = sources(args.head, args.base)
+    branch = public_pin(args.head, args.base, args.pull_request)
+    contexts = WORLD_CONTEXTS if branch == WORLD_BRANCH else CONTEXTS
+    changed, content, hashes, delta = sources(args.head, args.base, contexts)
     manifest = sha(json.dumps({"head": args.head, "base": args.base, "sourceHashes": hashes},
                               sort_keys=True).encode())
-    primary, planned = modules(changed, content)
+    primary, planned = modules(changed, content, branch=branch)
     packets, module_hashes, module_manifests = {}, {}, {}
     for name, module_content in planned.items():
         selected_hashes = {path: hashes[path] for path in module_content}
@@ -404,9 +440,10 @@ def main():
         "sourceHashes": hashes, "changedFiles": changed, "completeSourceFiles": len(content),
         "publicRepository": REPOSITORY, "publicSourceConfirmedAt": stamp(),
         "model": MODEL, "credentialUse": "none", "tools": [], "providerCalls": 0,
-        "maximumProviderCalls": len(MODULE_NAMES), "independentVerdict": None, "modules": [],
+        "maximumProviderCalls": len(planned), "independentVerdict": None, "modules": [],
         "privacy": "Already-public Git source only; provider may retain inputs and outputs",
-        "scope": "Six complete modules; lead reconciliation and runtime/customer evidence required",
+        "scope": f"{len(planned)} complete modules; lead reconciliation and runtime/customer evidence required",
+        "branch": branch, "pullRequest": args.pull_request,
         "state": "prepared-scanned-zero-price",
     }
 
@@ -457,7 +494,7 @@ def main():
             require(review["verdict"] == "pass", "Module findings require lead reconciliation")
         public_pin(args.head, args.base, args.pull_request)
         require(git("rev-parse", "HEAD").decode().strip() == args.head, "Checkout changed during review")
-        require(covered == set(content) and len(receipt["modules"]) == len(MODULE_NAMES),
+        require(covered == set(content) and len(receipt["modules"]) == len(planned),
                 "Aggregate review coverage is incomplete")
         receipt.update(state="review-received-reconciliation-required", independentVerdict="pass",
                        coveredFiles=sorted(covered), completedAt=stamp(),

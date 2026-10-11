@@ -234,3 +234,41 @@ Fresh review-lite admission is HOLD: 4,746 MB free versus 6,144 MB required and
 was started. Ordinary source edits and small checks remain permitted. The full
 goal and both draft PRs remain unfinished; independent and real provider/private
 customer proof, production verification and broader creator/business work remain.
+
+## Creator transition and independent review contract
+
+At 9f818512387d4912f3ac4ff3ad6c76a89392726d, compiled114594356745 /
+Companion38181338911 is terminal FAILURE on the creator's Edit world draft
+button. Its five captures include the actual prepared-draft state and failed
+creator page; both were inspected. The creator is signed out while the header
+shows the fixture account. Synthetic BroadcastChannel events do not persist a
+Supabase session. The creator's new subscription initializes from that absent
+session and can supersede an earlier broadcast. The fixture now waits for the
+creator's initial signed-out affordance, then broadcasts and requires the edit
+control. This changes no application authentication. Reload, uncertainty consent
+and both downloads were reached before the failure; no later editing or four-mode
+acceptance is inferred. The scenario also checks the original name and captures
+the revised editor in each mode. Request-count and all previous assertions remain.
+CI38181338784 at the same 9f source is terminal SUCCESS, including
+Build114594973499 and CIStatus114595559492. Twelve actual admission tests pass
+after the review repair; the two prior refusals remain recorded above.
+
+The existing public review rail had no admitted contract for this branch and
+cannot route its world-generation handler through the old six-module contract.
+Two no-network tests reproduced these limits before correction. Three additional
+paths were separately route-checked, found unowned and added to the native lease:
+review-companion.py, its admission tests and companion.yml. The explicit reviewed
+source contract now binds only PR597 to its original branch and PR602 to this
+branch, with same-repository owner, public visibility and immutable head/base
+requirements. The old six-module review remains intact. This world slice uses
+one complete packet, including creator, editor, auth/key, deadline, generation,
+draft, browser and both CI workflows; no changed source or caller is excerpted.
+
+Secret scanning, ignored-inline-allow denial, explicit zero-price model, current
+catalog/context checks, no redirects/secrets/tools/fallback/retries, strict literal
+bindings/citations, full-file coverage and reconciliation requirements remain.
+Other branches, mismatched PRs, private source, missing context, paid pricing and
+unowned changed paths are denied. Workflow triggers retain all prior events and
+add the actual world sources so future repairs receive compiled verification.
+This is an implemented admission candidate, not an earned independent verdict or
+permission to skip stronger review, runtime/customer proof or release approval.

@@ -326,6 +326,20 @@ async function main() {
         { actor, names, key: fakeKey },
       );
     };
+    const authenticateCreator = async () => {
+      // Broadcast fixtures do not persist a Supabase session. The creator's
+      // initial session callback must settle before this isolated sign-in event.
+      await expect(
+        page.getByRole("button", {
+          name: "Sign in to create your world",
+          exact: true,
+        }),
+      ).toBeVisible();
+      await authenticate();
+      await expect(
+        page.getByRole("button", { name: "Edit world draft", exact: true }),
+      ).toBeVisible();
+    };
     const world = {
       name: "Tide Ledger",
       slug: "tide-ledger",
@@ -484,12 +498,15 @@ async function main() {
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(/\/worlds\/create\?resume=1$/);
     await expect(page.getByRole("main")).toBeVisible();
-    await authenticate();
+    await authenticateCreator();
     const edit = page.getByRole("button", {
       name: "Edit world draft",
       exact: true,
     });
     await edit.click();
+    await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
+      "Tide Ledger",
+    );
     await page
       .getByLabel("World name", { exact: true })
       .fill("Tide Ledger revised");
@@ -502,11 +519,12 @@ async function main() {
     await expect(ready).toBeVisible();
     await open.click();
     await expect(page).toHaveURL(/\/worlds\/create\?resume=1$/);
-    await authenticate();
+    await authenticateCreator();
     await edit.click();
     await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
       "Tide Ledger revised",
     );
+    await capturePage(page, `world-editor-${mode.name}`);
     assert.equal(
       attempts,
       2,

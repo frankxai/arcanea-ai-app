@@ -65,6 +65,63 @@ class ReviewAdmission(unittest.TestCase):
                 ],
                 "acceptanceGaps": ["Static only"], "limitations": ["No runtime execution"]}
 
+    def test_pinned_world_pr_is_admitted_without_opening_other_lanes(self):
+        repo = {"visibility": "public", "private": False}
+        commit = {"sha": HEAD}
+        pr = {"state": "open", "head": {"sha": HEAD,
+              "ref": "agent/codex/chat-world-handoff-20261011",
+              "repo": {"full_name": REVIEW.REPOSITORY}}, "base": {"sha": BASE}}
+        with patch.object(REVIEW, "network", side_effect=[json.dumps(x).encode()
+                          for x in (repo, commit, pr)]) as network:
+            self.assertEqual(REVIEW.public_pin(HEAD, BASE, 602), pr["head"]["ref"])
+            self.assertEqual(network.call_count, 3)
+        legacy_pr = {**pr, "head": {**pr["head"], "ref": REVIEW.BRANCH}}
+        with patch.object(REVIEW, "network", side_effect=[json.dumps(x).encode()
+                          for x in (repo, commit, legacy_pr)]):
+            self.assertEqual(REVIEW.public_pin(HEAD, BASE, 597), REVIEW.BRANCH)
+        for number, bad_pr in (
+            (601, pr),
+            (602, {**pr, "state": "closed"}),
+            (602, {**pr, "head": {**pr["head"], "ref": REVIEW.BRANCH}}),
+            (602, {**pr, "head": {**pr["head"], "repo": {"full_name": "fork/app"}}}),
+        ):
+            with self.subTest(number=number, pr=bad_pr), \
+                 patch.object(REVIEW, "network", side_effect=[json.dumps(x).encode()
+                              for x in (repo, commit, bad_pr)]), self.assertRaises(REVIEW.Denied):
+                REVIEW.public_pin(HEAD, BASE, number)
+
+    def test_world_review_covers_complete_callers_and_rejects_missing_context(self):
+        changed = ["apps/web/app/api/worlds/generate/route.ts",
+                   "apps/web/components/chat/chat-notices.tsx",
+                   "apps/web/hooks/use-chat-world-mode.ts",
+                   "apps/web/lib/chat/world-handoff.ts",
+                   "apps/web/lib/chat/world-character-mode.ts",
+                   "apps/web/lib/worlds/generation.ts",
+                   "scripts/tests/chat-world-handoff.test.cjs",
+                   "scripts/test-world-generation.cjs", "scripts/verify-companion-browser.cjs",
+                   "scripts/review-companion.py", "scripts/tests/test_review_companion.py",
+                   ".github/workflows/companion.yml",
+                   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md"]
+        contexts = getattr(REVIEW, "WORLD_CONTEXTS", REVIEW.CONTEXTS)
+        content = {path: "Complete source" for path in set(changed) | set(contexts)}
+        branch = "agent/codex/chat-world-handoff-20261011"
+        primary, planned = REVIEW.modules(changed, content, branch=branch)
+        self.assertEqual(primary, {"world-handoff": set(changed)})
+        self.assertEqual(set(planned["world-handoff"]), set(content))
+        required = {"apps/web/app/worlds/create/page.tsx",
+                    "apps/web/components/worlds/world-draft-editor.tsx",
+                    "apps/web/lib/worlds/draft.ts", "apps/web/app/chat/page.tsx",
+                    "apps/web/lib/auth/context.tsx", "apps/web/lib/ai/provider-preferences.ts",
+                    ".github/workflows/ci.yml", ".github/workflows/companion.yml"}
+        self.assertTrue(required <= set(planned["world-handoff"]))
+        for path in required:
+            incomplete = {key: value for key, value in content.items() if key != path}
+            with self.subTest(path=path), self.assertRaises(REVIEW.Denied):
+                REVIEW.modules(changed, incomplete, branch=branch)
+        for extra_path in ("apps/web/app/api/billing/route.ts", "private-memory.txt"):
+            with self.subTest(path=extra_path), self.assertRaises(REVIEW.Denied):
+                REVIEW.modules([*changed, extra_path], {**content, extra_path: "Other lane"}, branch=branch)
+
     def test_incomplete_fabricated_and_misbound_review_is_rejected(self):
         content = {"a.ts": "// guard\nreturn false;\n", "context.ts": "Context\n"}
         REVIEW.validate(self.valid_review(), HEAD, BASE, "manifest", content)
@@ -126,7 +183,7 @@ class ReviewAdmission(unittest.TestCase):
                             (0, {**self.model(), "pricing": {"prompt": "1", "completion": "0"}}),
                             (0, {**self.model(), "context_length": 1000})):
             with patch.dict(REVIEW.os.environ, env, clear=True), patch.object(REVIEW.sys, "argv", args), \
-                 patch.object(REVIEW, "public_pin"), \
+                 patch.object(REVIEW, "public_pin", return_value=REVIEW.BRANCH), \
                  patch.object(REVIEW, "sources", return_value=(["a.ts"], content, {KERNEL: "k", "a.ts": "a"}, "diff")), \
                  patch.object(REVIEW, "modules", return_value=(primary, planned)), \
                  patch.object(REVIEW, "git", return_value=b"Fixture delta"), \
