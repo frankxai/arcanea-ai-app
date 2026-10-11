@@ -133,3 +133,62 @@ lint reports nine files, zero errors and zero warnings; fresh hosted checks rema
 required. The earlier failed attempts are retained. No timeout or safety assertion
 was relaxed. Local review admission is HOLD after free RAM crossed the floor;
 no new local browser, reviewer, install or worker is started.
+
+## Hosted release follow-up, 11 October 2026
+
+At candidate `287241d0574c55549133d00515d6d11c845ba334`, CI38160630917
+passes frozen install, lint, TypeScript and build. Companion38160630885 passes
+four modes, 24 synthetic provider requests, 28 source hashes and twelve captures;
+the receipt reports browser/stream-server cleanup with no errors. The source,
+PNG sidecars and downloaded artifacts remain bound to that retained revision.
+Desktop/mobile companion and full-chat, mobile shortcuts, short-height reduced
+motion and forced-color companion frames were inspected. The welcome and controls
+are readable/reachable. Inherited full-chat composer contrast remains a separate
+acceptance gap; passing this fixture does not close the full visual/product bar.
+
+Reading38160630282 fails at the existing launcher-overlap check because its exact
+locator still names `Open Arcanea assistant`; the app now names that same control
+`Open Arcanea companion`. The locator is corrected without removing presence,
+geometry or overlap assertions. Fresh compiled reading/auth/database evidence is
+required. Production alias inspection reports READY at accepted base
+`a561c3e2c34eb0898339e53377b11f47eadf956c`; this chat candidate is still a draft.
+
+Owner and issue remain the integration contract above and programme276. Scope
+also includes the reading verifier, `scripts/review-companion.py`, its no-network
+admission regressions, the owned Companion workflow and this pickup. Budget:
+one anonymous call per matching hosted PR event to explicit model
+`nvidia/nemotron-3.5-lightning:free`, only after the live catalogue confirms zero
+prices and the complete encoded request fits its context. No credentials, tools,
+fallback or retry. Only already-public exact Git source is submitted; unpublished
+IP, private memory, assets and customer content are excluded. Kilo's current
+anonymous/model contracts were checked at https://kilo.ai/docs/gateway/authentication
+and https://kilo.ai/docs/gateway/models-and-providers. Providers may retain public
+inputs/output; this does not authorize private-data submission or paid inference.
+
+The hosted reviewer adapts the existing retained public review protocol. It
+requires the owned same-repository branch/actor, public commit and matching open
+PR head/base; covers every changed file and complete required context; scans the
+actual encoded input with inline allow comments disabled; verifies model, full
+coverage, source quotes and manifest in the response; and rechecks the PR after
+inference. All response/usage/source receipts remain artifacts. A source pass
+still requires lead reconciliation and cannot establish runtime/customer release
+acceptance. Other lanes/forks do not dispatch. The payload scanner is pinned to
+gitleaks8.30.1 and its official GitHub asset SHA256.
+
+Acceptance: denial of missing/nonzero/invalid prices, incomplete context, private
+source, wrong owner/revision, inherited credentials, incomplete coverage and
+invented source quotes before promotion. Verification: actual no-network review
+tests, unchanged native SDK regressions, secret/ownership hooks and fresh hosted
+checks plus complete independent source verdict/reconciliation. Rollback: revert
+the reviewer/job and locator follow-up while preserving the consumer correction
+and accepted production. Stop at any provider/schema/coverage failure; preserve
+the attempt and repair the actual cause rather than bypassing it.
+
+Fresh review-lite admission reports HOLD at 5668MB free versus 6144MB required,
+27 task runtimes and no owned dev server. Hosted execution supplies this review;
+no local reviewer, server, build, installation or new agent is started. The current
+capability-loading path is absent on starlight-agent-config origin/main; its
+scoped historical source was explicitly read at
+`fed3c56c8166ef4457cf164b36d5524e569b7224`. That read restores guidance for this
+session, not accepted policy or a runtime enforcement mechanism. Queen/SIS,
+memory/graph/canvas, commerce, publication and the full programme remain open.
