@@ -3,7 +3,7 @@
 
 import { useAuth } from "@/lib/auth/context";
 import { requestImages, requestAnimation } from "@/lib/imagine/request";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import Image from "next/image";
@@ -136,6 +136,11 @@ export default function ImaginePage() {
 
 function ImaginePageContent() {
   const { credentialScope } = useAuth();
+  const favoriteToken = credentialScope.get();
+  const favoriteAuthority = useMemo(
+    () => ({ scope: credentialScope, token: favoriteToken }),
+    [credentialScope, favoriteToken],
+  );
   const searchParams = useSearchParams();
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -169,8 +174,14 @@ function ImaginePageContent() {
   const currentNegativePromptRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    setFavCount(getFavoriteCount());
-  }, []);
+    try {
+      setFavCount(getFavoriteCount(favoriteAuthority));
+    } catch {
+      setError(
+        "Favorites could not be read. Your browser data has been preserved.",
+      );
+    }
+  }, [favoriteAuthority]);
 
   // Prompt handoff from homepage showcase card (?prompt=...)
   const promptConsumed = useRef(false);
@@ -185,9 +196,17 @@ function ImaginePageContent() {
   }, [searchParams]);
 
   const refreshFavorites = useCallback(() => {
-    setFavorites(getFavorites());
-    setFavCount(getFavoriteCount());
-  }, []);
+    if (!credentialScope.isCurrent(favoriteAuthority.token)) return;
+    try {
+      const saved = getFavorites(favoriteAuthority);
+      setFavorites(saved);
+      setFavCount(saved.length);
+    } catch {
+      setError(
+        "Favorites could not be read. Your browser data has been preserved.",
+      );
+    }
+  }, [credentialScope, favoriteAuthority]);
 
   // Generate a single row of images
   const generateRow = useCallback(
@@ -766,6 +785,7 @@ function ImaginePageContent() {
                   row.images.map((img, i) => (
                     <div key={img.id} className="break-inside-avoid mb-2">
                       <ImageCard
+                        authority={favoriteAuthority}
                         id={img.id}
                         src={img.url}
                         prompt={img.prompt}
@@ -876,6 +896,7 @@ function ImaginePageContent() {
                         >
                           <Image
                             src={fav.blobUrl}
+                            unoptimized
                             alt={fav.prompt}
                             width={200}
                             height={200}
@@ -889,8 +910,20 @@ function ImaginePageContent() {
                               <div className="flex gap-1.5">
                                 <button
                                   onClick={() => {
-                                    removeFavorite(fav.id);
-                                    refreshFavorites();
+                                    if (
+                                      !credentialScope.isCurrent(
+                                        favoriteAuthority.token,
+                                      )
+                                    )
+                                      return;
+                                    try {
+                                      removeFavorite(fav.id, favoriteAuthority);
+                                      refreshFavorites();
+                                    } catch {
+                                      setError(
+                                        "The favorite was not removed. Retry when browser storage is available.",
+                                      );
+                                    }
                                   }}
                                   className="p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400"
                                   title="Remove"

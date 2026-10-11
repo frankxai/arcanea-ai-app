@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState, useCallback, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { isFavorited, addFavorite, removeFavorite } from '@/lib/imagine-favorites';
+import { generatedImageBlob, type GenerationAuthority } from '@/lib/imagine/request';
 
 const ASPECT_CLASSES: Record<string, string> = {
   '1:1': 'aspect-square',
@@ -17,6 +18,7 @@ const ASPECT_CLASSES: Record<string, string> = {
 };
 
 interface ImageCardProps {
+  authority: GenerationAuthority;
   id: string;
   src: string;
   prompt: string;
@@ -32,6 +34,7 @@ interface ImageCardProps {
 }
 
 export function ImageCard({
+  authority,
   id,
   src,
   prompt,
@@ -50,50 +53,93 @@ export function ImageCard({
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [favoriteError, setFavoriteError] = useState<string | null>(null);
 
   useEffect(() => {
-    setFavorited(isFavorited(id));
-  }, [id]);
-
-  const handleToggleFavorite = useCallback(async (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (isSaving) return;
-
-    if (favorited) {
-      removeFavorite(id);
-      setFavorited(false);
-      onFavoriteChange?.();
-      return;
-    }
-
-    setIsSaving(true);
     try {
-      await addFavorite({ id, url: src, prompt, data, mimeType });
-      setFavorited(true);
-      onFavoriteChange?.();
+      setFavorited(isFavorited(id, authority));
+      setFavoriteError(null);
     } catch {
-      // Favorite failed silently
-    } finally {
-      setIsSaving(false);
+      setFavoriteError(
+        "Favorites could not be read. Your browser data has been preserved.",
+      );
     }
-  }, [id, src, prompt, data, mimeType, favorited, isSaving, onFavoriteChange]);
+  }, [id, authority]);
+
+  const handleToggleFavorite = useCallback(
+    async (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      if (isSaving) return;
+      if (!authority.scope.isCurrent(authority.token)) return;
+      setFavoriteError(null);
+      setIsSaving(true);
+      try {
+        if (favorited) removeFavorite(id, authority);
+        else
+          await addFavorite(
+            { id, url: src, prompt, data, mimeType },
+            authority,
+          );
+        if (!authority.scope.isCurrent(authority.token)) return;
+        setFavorited(!favorited);
+        onFavoriteChange?.();
+      } catch (error) {
+        if (!authority.scope.isCurrent(authority.token)) return;
+        setFavoriteError(
+          error instanceof Error
+            ? error.message
+            : "The image was not saved. Download it and retry.",
+        );
+      } finally {
+        if (authority.scope.isCurrent(authority.token)) setIsSaving(false);
+      }
+    },
+    [
+      id,
+      src,
+      prompt,
+      data,
+      mimeType,
+      favorited,
+      isSaving,
+      onFavoriteChange,
+      authority,
+    ],
+  );
 
   const handleDownload = useCallback(async () => {
     try {
-      const response = await fetch(src);
-      const blob = await response.blob();
+      const blob = await generatedImageBlob(src);
+      if (!authority.scope.isCurrent(authority.token)) return;
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = `arcanea-imagine-${id}.png`;
+      const extension =
+        blob.type === "image/webp"
+          ? "webp"
+          : blob.type === "image/jpeg"
+            ? "jpg"
+            : "png";
+      a.download = `arcanea-imagine-${id}.${extension}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch {
-      window.open(src, '_blank');
+      if (!authority.scope.isCurrent(authority.token)) return;
+      try {
+        const original = new URL(src);
+        if (
+          original.protocol === "https:" &&
+          !original.username &&
+          !original.password
+        )
+          window.open(src, "_blank", "noopener,noreferrer");
+      } catch {
+        /* Invalid sources do not open another page. */
+      }
     }
-  }, [src, id]);
+  }, [src, id, authority]);
 
   const handleCopyPrompt = useCallback(() => {
     navigator.clipboard.writeText(prompt);
@@ -185,10 +231,13 @@ export function ImageCard({
         {/* Favorite button — always visible (top-left) */}
         <button
           onClick={handleToggleFavorite}
-          className={`absolute top-3 left-3 p-2 rounded-xl backdrop-blur-sm transition-all z-10 ${
+          disabled={isSaving}
+          aria-label={favorited ? 'Remove from favorites' : 'Save image to favorites'}
+          aria-pressed={favorited}
+          className={`absolute top-3 left-3 min-h-11 min-w-11 p-2 rounded-xl backdrop-blur-sm transition-all z-10 ${
             favorited
               ? 'bg-pink-500/20 border border-pink-500/30'
-              : 'bg-black/30 opacity-0 group-hover:opacity-100 hover:bg-white/20'
+              : 'bg-black/30 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus-visible:opacity-100 hover:bg-white/20'
           } ${isSaving ? 'animate-pulse' : ''}`}
           title={favorited ? 'Remove from favorites' : 'Add to favorites'}
         >
@@ -311,6 +360,11 @@ export function ImageCard({
           </div>
         )}
       </m.div>
+      {favoriteError && (
+        <p role="alert" className="mt-2 text-sm text-[var(--arc-text-secondary)]">
+          {favoriteError}
+        </p>
+      )}
 
       {/* Lightbox */}
       {isExpanded && (
