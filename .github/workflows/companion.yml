@@ -2,7 +2,7 @@ name: Companion
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review, edited]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - apps/web/components/lumina/**
       - apps/web/components/chat/chat-area.tsx

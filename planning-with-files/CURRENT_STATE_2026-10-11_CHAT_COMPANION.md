@@ -537,3 +537,11 @@ branch-landing inventory and connected-creator backlog are retained. Integration
 does not implement the proposed backlog or requalify the reader customer outcome.
 The eleven integration-only paths are released; only seven follow-up paths remain
 owned. No force push, conflict waiver, migration or provider spend occurs.
+
+The follow-up also removes metadata-only edited events from Companion's PR
+trigger. Updating a title or description must not dispatch another unchanged-source
+review or compiled browser run. Open, source synchronization, reopen and ready
+events remain; job permissions, caller/branch/actor gates, privacy, source pinning,
+checks, zero-price admission and maximum-call bounds are unchanged. The Companion
+workflow is explicitly added to the remaining eight-file ownership scope and
+complete review delta. Fresh source-triggered hosted validation remains required.
