@@ -65,3 +65,46 @@ The bounded verifier then passed all five owned paths, eleven local links, sourc
 facts and retained branch identities. Tracked product files and the lockfile match
 HEAD. Formatter/check/diff verification is local documentation evidence; hosted
 repository checks and independent operating-map review remain separate gates.
+
+## Current-source reconciliation after transcript recovery
+
+The previous five-file source `3548d78c` passed hosted CI 38100941479, including
+build, types and lint. CodeQL was skipped for that documentation scope. The
+refinement retains it as a prior candidate; new-source hosted checks and
+independent adoption review remain pending.
+
+Requeried 517/284/280 and PR558, plus accepted hub PR241. MCP integration 558 is
+merged; the three issues remain open. A fresh official npm metadata request
+returned `@arcanea/mcp-server` latest 0.7.0, with the old repository pointer.
+No package was downloaded, installed or executed. The integrated 1.0.0 source
+and old published package are distinct; public distribution still needs its
+owner's license and delivery decisions. Registry metadata does not reproduce
+the old package's reported runtime failure.
+
+The team proposal now records programme 276's 60/30/10 world-first capacity
+constraint and the concrete sequence from manuscript to reader creation,
+learner/showcase trial and proven extraction. This is proposed operating
+documentation, not measured allocation, a live queue or a dispatched mission.
+
+SYSTEM.md now names the conflict between Frank's supplied Node 20 instruction
+and the checked-in Node 24/pnpm pins and AGENTS.md. A runtime clarification is
+pending; no application runtime, dependency or policy was changed.
+
+Fresh `pp preflight --workload review-lite` returned HOLD: 1390 MB free RAM,
+6144 MB required, posture restart-soon and 25 task runtimes against a budget of 12.
+
+No local reviewer, agent, build, browser or worker was started. The machine contract
+permits reading, text edits and small checks; only those local actions were used.
+No foreign process was stopped or unfinished task archived. The exact-current
+adoption review must wait for admission or an authorized suitable cloud rail.
+
+Frozen chat recovery PR567 remains at `086f2fe1`, reader PR560 at `e6691535` and
+companion PR562 at `86a412ef`. Their checks/reviews cannot approve this refinement
+or the whole platform. Production remains unchanged by this documentation slice.
+
+The four refined files pass the existing direct Prettier binary and whitespace
+check. The first formatting check flagged the planning record; that file was
+formatted and the repeat passed. A small source check passed all eleven local
+links, unchanged instruction hashes, frozen branch identities and unchanged
+product files/lockfile. The prior verifier receipt remains retained separately;
+these checks do not claim independent review or current-source hosted acceptance.

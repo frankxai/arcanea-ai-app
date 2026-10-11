@@ -53,12 +53,19 @@ accepted internal artifact, a fresh consumer install, a creator who can complete
 and export the task, support/version ownership and publication approval. A prompt
 template alone does not establish that outcome. Do not create a root `skill.md`.
 
-The MCP source candidate is `packages/arcanea-mcp` version 1.0.0, integrated by
-PR558 with packed-consumer/restart evidence. The 10 October delivery record reports
-public latest 0.7.0 as broken; recheck the registry before giving install instructions.
-Do not tell community users that unpublished source is a released package. Local
-single-user HTTP sessions do not establish public authentication or API metering.
-Distribution remains owned by 517.
+The MCP source is `packages/arcanea-mcp` version 1.0.0, integrated by merged
+[PR558](https://github.com/frankxai/arcanea-ai-app/pull/558) with packed-consumer
+and restart evidence. A fresh read of the npm registry on 11 October 2026 returned
+`@arcanea/mcp-server` latest 0.7.0 and repository `frankxai/arcanea`. That published
+version is distinct from the integrated source. The 10 October record reports
+the old package as broken; this registry metadata check did not run it again.
+[Hub PR241](https://github.com/frankxai/agentic-ops-hub/pull/241) records verified
+source delivery and a remaining asset-license decision before npm distribution.
+Do not give community users an install command for the unpublished 1.0.0 source
+or describe the old package as freshly consumer-tested. Local single-user HTTP
+sessions do not establish public authentication or API metering. Canonical npm
+and official MCP Registry distribution remain owned by
+[517](https://github.com/frankxai/arcanea-ai-app/issues/517).
 
 The root/app/design-system manifests reference a LICENSE file that is absent from
 the inspected tree. Some packages declare MIT metadata. Neither fact grants a

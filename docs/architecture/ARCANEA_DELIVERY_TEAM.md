@@ -11,6 +11,36 @@ showcase can reuse that work. Compare this journey with an ebook, a separate med
 tool and files in a folder on the same task: accepted output, continuity errors,
 repair effort, time, cost and recovery. Competitive advantage remains unproved.
 
+## Delivery order and capacity
+
+[Programme 276](https://github.com/frankxai/arcanea-ai-app/issues/276) prioritizes
+worlds, audience and releases: at least 60% of programme capacity, at most 30% for
+enabling Studio Intelligence, and at most 10% for Academy, external tooling and
+open-source extraction. This is its planning constraint, not measured allocation
+or an implemented scheduler. A new founder decision can change the priorities;
+this document does not silently replace them with platform-first work.
+
+1. Creative direction and Product select the existing manuscript/release scope
+   through 277. Continuity, editorial and rights review produce a chapter worth
+   reading and a traceable source for 278/279/280. Preserve the chosen manuscript;
+   a missing selection is a dependency, not permission to invent a new book.
+2. Engineering and AI systems carry that source into the existing reader and
+   workspace lanes, 454/505. Prove passage selection, a useful interpretation,
+   inspected provider output, private save/reopen/export and account denial.
+   Quality verifies the exact candidate and actual receiving deployment.
+3. Audience and Creative direction prepare a consented excerpt or showcase from
+   the accepted artifact. A bounded learner trial adds feedback and moderation.
+   Measure completed work and return use before widening the community offer.
+4. Extract a developer kit, additional app surface or paid offer after repeated
+   useful delivery establishes what creators need. Commerce proves entitlement,
+   checkout, delivery/refund and contribution margin in its existing lanes.
+
+The lead records the dependency, accountable seat, artifact, reviewer and next
+bounded action on the existing issue. Research should answer a decision in this
+chain, such as continuity, provider quality or audience fit. Maintenance repairs
+active creator failures within their route's lane. Durable-memory work on 284
+supports these missions through the existing SIS/Queen/Temporal authorities.
+
 ## Accountable seats and specialists
 
 These eight seats are responsibilities. A bounded mission has one lead and one

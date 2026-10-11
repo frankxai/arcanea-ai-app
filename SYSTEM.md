@@ -20,8 +20,12 @@ execution records before making architectural changes.
 | Durable orchestration | Existing Queen/SIS integration, owned by 284                                    |
 
 The repository at `b4520829644ba57c2ca60119833319f1137dfb99` pins Node 24 in
-`.nvmrc` and `pnpm@11.28.4` in `package.json`. Use the checked-out pins; do not
-change a runtime or dependency as a side effect of documentation work.
+`.nvmrc` and `pnpm@11.28.4` in `package.json`. The checked-in AGENTS.md follows
+those pins, while Frank's supplied instructions for this session require Node 20.
+That conflict remains unresolved. These are observed configuration facts, not an
+override of the supplied instruction or proof of runtime compliance. Resolve the
+contract before application promotion; do not change runtime or dependencies as a
+side effect of documentation work.
 
 `vercel.json` declares:
 
