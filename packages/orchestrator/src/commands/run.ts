@@ -26,6 +26,7 @@ export function resolveRunnableCandidates(
   surface: string,
   spec: RouterSpec,
   config: UserConfig,
+  withAdaptive = true,
 ): string[] {
   if (
     !spec.surfaces[surface].authContext.some(
@@ -48,6 +49,7 @@ export function resolveRunnableCandidates(
       return false;
     }
   });
+  if (!withAdaptive) return available;
   const events = readHistory();
   return shouldApplyAdaptive(config.adaptiveRouting, events.length)
     ? adaptiveRerank(available, events, taskId)
