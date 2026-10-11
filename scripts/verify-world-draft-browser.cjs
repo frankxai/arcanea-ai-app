@@ -75,6 +75,18 @@ const draft = {
         height: 900,
         reducedMotion: "reduce",
       },
+      {
+        name: "tablet",
+        width: 768,
+        height: 1024,
+        reducedMotion: "no-preference",
+      },
+      {
+        name: "narrow-short",
+        width: 320,
+        height: 640,
+        reducedMotion: "reduce",
+      },
     ]) {
       const context = await browser.newContext({
         viewport: { width: mode.width, height: mode.height },
@@ -150,6 +162,146 @@ const draft = {
       await expect(choice).toHaveCount(0);
       assert.equal(await readStorage(conceptKey), null);
       await button("Edit world draft").click();
+      const editor = page.getByRole("region", {
+        name: "Edit world draft",
+        exact: true,
+      });
+      await expect(
+        page.getByLabel("World name", { exact: true }),
+      ).toBeFocused();
+      const sectionNavigation = editor.getByRole("navigation", {
+        name: "World draft sections",
+      });
+      for (const name of [
+        "World details",
+        "Rules",
+        "Systems",
+        "Characters",
+        "Locations",
+        "Founding event",
+        "Apply or cancel",
+      ]) {
+        const link = sectionNavigation.getByRole("link", { name, exact: true });
+        await link.focus();
+        await link.press("Enter");
+        const target = await link.getAttribute("href");
+        const position = await page.evaluate((id) => {
+          const heading = document.getElementById(id);
+          const box = heading.getBoundingClientRect();
+          return {
+            focused: document.activeElement === heading,
+            top: box.top,
+            bottom: box.bottom,
+            height: innerHeight,
+          };
+        }, target.slice(1));
+        assert.ok(
+          position.focused,
+          `${mode.name}: ${name} receives keyboard focus`,
+        );
+        assert.ok(
+          position.top >= 70 && position.bottom <= position.height,
+          `${mode.name}: ${name} clears the fixed header`,
+        );
+      }
+      assert.ok(
+        await page.evaluate(
+          () =>
+            document.documentElement.scrollWidth <=
+            document.documentElement.clientWidth + 1,
+        ),
+        `${mode.name}: editor horizontal overflow`,
+      );
+      await page.getByLabel("World name", { exact: true }).fill("");
+      await expect(editor.getByRole("status")).toContainText(
+        "Unapplied changes",
+      );
+      await button("Apply draft changes").click();
+      await expect(editor.getByRole("alert")).toBeFocused();
+      await expect(button("Export draft")).toBeDisabled();
+      await page.evaluate(() => {
+        window.__workingCopyURL = URL.createObjectURL;
+        URL.createObjectURL = () => {
+          throw new Error("Synthetic working-copy download failure");
+        };
+      });
+      await button("Download working edits").click();
+      await expect(editor.getByRole("alert")).toBeFocused();
+      await expect(editor.getByRole("alert")).toContainText(
+        "Your edits remain on this page",
+      );
+      await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
+        "",
+      );
+      await page.evaluate(() => {
+        URL.createObjectURL = window.__workingCopyURL;
+        delete window.__workingCopyURL;
+      });
+      const workingDownload = page.waitForEvent("download");
+      await button("Download working edits").click();
+      const workingCopy = JSON.parse(
+        await fs.readFile(await (await workingDownload).path(), "utf8"),
+      );
+      assert.equal(workingCopy.format, "arcanea.world-working-edits.v1");
+      assert.deepEqual(workingCopy.world, { ...draft.world, name: "" });
+      assert.deepEqual(
+        JSON.parse(await readStorage(currentKey)).world,
+        draft.world,
+        "Working-copy download must not apply edits",
+      );
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await button("Cancel draft changes").click();
+      await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
+        "",
+      );
+      let reloadWarning = false;
+      const keepWorking = async (dialog) => {
+        assert.equal(dialog.type(), "beforeunload");
+        reloadWarning = true;
+        await dialog.dismiss();
+      };
+      page.once("dialog", keepWorking);
+      await page
+        .reload()
+        .catch((error) =>
+          assert.match(error.message, /ERR_ABORTED|Navigation.*cancel/i),
+        );
+      page.off("dialog", keepWorking);
+      assert.equal(
+        reloadWarning,
+        true,
+        "Dirty editor warns before a supported browser reload",
+      );
+      await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
+        "",
+      );
+      page.once("dialog", (dialog) => dialog.accept());
+      await button("Cancel draft changes").click();
+      await expect(button("Edit world draft")).toBeFocused();
+      assert.deepEqual(
+        JSON.parse(await readStorage(currentKey)).world,
+        draft.world,
+        "Confirmed cancellation preserves applied draft",
+      );
+      await button("Edit world draft").click();
+      await page
+        .getByLabel("World name", { exact: true })
+        .fill("The remembered library");
+      await page
+        .getByLabel("World name", { exact: true })
+        .fill(draft.world.name);
+      const noReloadWarning = () => {
+        throw new Error("Reversed edits must remove the reload warning");
+      };
+      page.once("dialog", noReloadWarning);
+      await page.reload();
+      page.off("dialog", noReloadWarning);
+      await button("Edit world draft").click();
+      await page.screenshot({
+        path: `${output}/${mode.name}-editor.png`,
+        fullPage: true,
+        animations: "disabled",
+      });
       await page
         .getByLabel("World name", { exact: true })
         .fill("The remembered library");
@@ -242,6 +394,11 @@ const draft = {
       "complete art brief copied without model requests",
       "complete draft inspection and exact JSON export",
       "applied creator edits survive reload without a model request",
+      "section links move keyboard focus below the fixed header",
+      "invalid working edits download without applying or granting export",
+      "cancelled discard and cancelled browser reload preserve unapplied edits",
+      "confirmed discard preserves applied draft and returns focus",
+      "reversed edits remove browser reload warning",
       "explicit pending-concept choice",
       "cancel and confirm start over",
       "previous draft survives reload",

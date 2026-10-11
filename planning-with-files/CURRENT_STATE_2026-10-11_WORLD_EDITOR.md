@@ -1,0 +1,99 @@
+# World draft editing and safe cancellation
+
+Scope: make long world drafts easier to edit and preserve unapplied work through
+cancelled discard or a supported browser reload. Owner: Codex task
+`01a1254f-d5b4-7ba0-a3dd-9b8ca0969cea`, sole writer in
+`arcanea-world-editor-20261011`, branch `agent/codex/world-editor-20261011`.
+Origin: `https://github.com/frankxai/arcanea-ai-app.git`.
+Base: `a131c1e9dfa2a2e6b8d93e1be4bd32c43794afc1`.
+Owning work: existing programme #276, creator outcome #191 and release #427.
+
+Files: apps/web/components/worlds/world-draft-editor.tsx,
+scripts/verify-world-draft-browser.cjs and this record.
+
+User job: revise the complete world, including its later characters and locations,
+without searching a single long form or silently discarding unfinished fields.
+Reuse the released editor, canonical world schema, private save/recovery and the
+existing compiled browser fixture. This slice changes no generation, account,
+database, cloud save, identity, commerce or public-canon authority.
+
+## Evidence and design decision
+
+Baseline source a131c1e passed CI 38114200438. The existing world-draft suite's
+original 1440/375px and reduced-motion captures were recovered from artifact
+11692413425, with companion provenance and generation-ledger entries validated
+against the accepted local schema. Desktop and phone originals were inspected.
+They prove the compiled synthetic fixture, not production account or creator use.
+Source inspection identifies the cancellation failure: Cancel unconditionally
+clears the editing buffer. The existing suite exercises applied edit/reload and
+export but does not exercise unapplied cancellation.
+
+Three bounded arrangements were considered: the existing uninterrupted form;
+tabs that show one content type at a time; and visible content groups with a
+section outline. The outline is selected because it keeps adjacent world content
+inspectable, preserves existing field labels and gives phone users wrapped direct
+links without hiding later fields. The existing Geist/dark/teal design remains.
+
+The feel contract keeps text editing and keyboard navigation immediate. Actions
+have quiet press feedback, 44px targets and visible focus. Group headings receive
+keyboard focus with fixed-header clearance. No gesture, timeline, animation
+dependency or raster asset serves this editing job; those passes are skipped.
+
+| Before                                     | After                                                          | Why                                                     |
+| ------------------------------------------ | -------------------------------------------------------------- | ------------------------------------------------------- |
+| One uninterrupted field list               | Named world-content groups and direct section links            | Find later content without losing the rest of the draft |
+| Cancel immediately clears edits            | Changed content requires explicit discard confirmation         | A cancelled discard preserves unfinished work           |
+| No unapplied working-copy action           | Download the complete working buffer, including invalid fields | Keep incomplete work without applying or publishing it  |
+| Editing actions remove the focused control | Enter focuses the world name; apply/cancel returns to Edit     | Keyboard users retain a clear location                  |
+
+Working-copy downloads are marked `arcanea.world-working-edits.v1`; they are not
+accepted world exports. Automatic editor-buffer recovery/import remains outside
+this slice. Browser beforeunload is a scoped warning, not a mobile persistence
+guarantee. It is attached only while content differs, removed after reversal or
+closure, and may not fire for app switching or client-side routing. A creator
+must apply or download work before leaving. No guarantee of full tab-loss recovery
+is made. Existing applied-draft recovery remains authoritative.
+
+## Acceptance and verification
+
+The authored compiled browser suite covers 320/375/768/1440px and reduced motion:
+section-link keyboard/focus/header clearance; reflow; invalid-field rejection;
+complete working-copy bytes without changing storage/export authority; download
+failure and retry with the buffer retained; cancelled
+discard; cancelled reload; confirmed discard and returned focus; reversed-input
+warning cleanup; applied edit/reload; exact JSON export and existing recovery.
+Retain zero model requests and no unexpected runtime errors. The new modes and
+editor captures require actual hosted execution; authored coverage is not a pass.
+
+Required release checks: pinned Node 24/pnpm 11.28.4, frozen lockfile, existing full
+build/type/lint/security and `node scripts/verify-world-draft-browser.cjs` against
+the compiled app. Local browser/build admission is HOLD; use the existing hosted
+CI path, without starting another server or weakening required checks. Source
+formatting and small targeted checks are allowed. Independent exact-head review,
+fresh original editor captures and source-bound preview/production inspection
+remain required before qualifying promotion. A test is authored, not passed,
+until its actual result is inspected. Under the mission's explicit hosted-CI
+instruction, publish only this owned candidate branch to run the existing gates
+before opening the required draft PR. The local build preflight at 05:49 UTC was
+HOLD: 3769 MB free against 8192 MB required. No local server, dependency install
+or full build is authorised by that reading. Enabled ownership/security hooks,
+component transpile and script syntax checks remain local; transpile uses the
+already installed TypeScript 6.0.3 and is not the pinned project typecheck.
+
+Root AGENTS SHA256:
+`36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`.
+apps/web/CLAUDE SHA256:
+`a43b1abc5f46c7cfd82605644f5a017cb7d3e8f34a6147f808416ad29a160a0e`.
+Root/app instructions, current source/recovery planning, shared hub/master-plan
+context, TASTE/DESIGN, restored SYSTEM/SCHEMA/SKILLS, design routing/spec/rollout,
+task contracts, Emil, frontend and Arcanea frontend guidance were explicitly read.
+Older Node 20, Higgsfield, 16 percent disk and foreign-primary writing instructions
+are superseded by the current user/runtime/machine contracts. The foreign primary
+and its dirty work remain untouched. Routing and exclusive ownership passed;
+claims record hashes and ownership, not runtime compliance.
+
+Rollback: revert only this component/test slice through a reviewed PR. No database
+migration or user-data rewrite is involved. Preserve working-copy files, prior
+receipts, all foreign branches and the existing applied-draft recovery records.
+Stop any session-owned worker at handoff. Current status: source candidate; hosted
+checks, exact-revision independent review and release remain pending.
