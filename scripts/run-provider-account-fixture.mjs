@@ -14,13 +14,16 @@ import { join, isAbsolute } from "node:path";
 import { setTimeout as pause } from "node:timers/promises";
 
 // This job creates its own loopback Auth/database. It accepts no hosted secrets.
+const privateImagine =
+  process.env.GITHUB_REF_NAME === "agent/codex/private-imagine-assets-20261011";
 if (
   process.env.GITHUB_ACTIONS !== "true" ||
   process.env.GITHUB_REPOSITORY !== "frankxai/arcanea-ai-app" ||
   process.env.GITHUB_ACTOR !== "frankxai" ||
   process.env.GITHUB_EVENT_NAME !== "workflow_dispatch" ||
   process.env.RUNNER_OS !== "Linux" ||
-  process.env.GITHUB_REF_NAME !== "agent/codex/provider-account-20261011" ||
+  (!privateImagine &&
+    process.env.GITHUB_REF_NAME !== "agent/codex/provider-account-20261011") ||
   !/^\d+$/.test(process.env.GITHUB_RUN_ID || "") ||
   !/^\d+$/.test(process.env.GITHUB_RUN_ATTEMPT || "") ||
   !isAbsolute(process.env.RUNNER_TEMP || "")
@@ -45,15 +48,24 @@ for (const name of [
   "FAL_KEY",
   "POLAR_ACCESS_TOKEN",
   "STRIPE_SECRET_KEY",
+  "BLOB_READ_WRITE_TOKEN",
+  "PRIVATE_IMAGINE_BLOB_READ_WRITE_TOKEN",
+  "PRIVATE_IMAGINE_STORAGE_ENABLED",
+  "PRIVATE_IMAGINE_FIXTURE",
+  "VERCEL_BLOB_API_URL",
+  "VERCEL_BLOB_RETRIES",
+  "NODE_OPTIONS",
 ])
   if (process.env[name])
     throw Error("Hosted credentials are prohibited in provider acceptance.");
 if (process.env.NEXT_PUBLIC_SUPABASE_URL)
   throw Error("An inherited Supabase project is prohibited in this fixture.");
 
-const output = "screenshots/provider-settings";
+const output = privateImagine
+  ? "screenshots/private-imagine"
+  : "screenshots/provider-settings";
 mkdirSync(output, { recursive: true });
-const network = `provider-settings-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
+const network = `${privateImagine ? "private-imagine" : "provider-settings"}-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
 const configPath = join(process.env.RUNNER_TEMP, `${network}.private.json`);
 function createPrivateConfiguration(path) {
   const descriptor = openSync(path, "wx", 0o600);
@@ -90,8 +102,9 @@ const receipt = {
   head,
   backend: "disposable PostgreSQL/GoTrue/PostgREST",
   productionWrites: 0,
-  scope:
-    "Compiled settings and real isolated password login; no production clone or provider output",
+  scope: privateImagine
+    ? "Compiled private Imagine with real isolated password login/Postgres and actual Blob SDK using a bounded undici fixture; no live provider or paid creation acceptance"
+    : "Compiled settings and real isolated password login; no production clone or provider output",
   passed: false,
   images: {},
   sourceHashes: {},
@@ -105,6 +118,23 @@ for (const file of [
   "apps/web/lib/auth/context.tsx",
   "apps/web/lib/ai/provider-preferences.ts",
   "apps/web/lib/supabase/middleware.ts",
+  ...(privateImagine
+    ? [
+        "scripts/private-imagine-blob-fixture.cjs",
+        "scripts/verify-private-imagine-browser.cjs",
+        "scripts/tests/private-imagine-blob-fixture.test.cjs",
+        "supabase/migrations/20261011000001_private_imagine_assets.sql",
+        "apps/web/app/api/imagine/save/route.ts",
+        "apps/web/app/api/imagine/gallery/route.ts",
+        "apps/web/app/api/imagine/assets/[id]/route.ts",
+        "apps/web/lib/imagine/private-assets-server.ts",
+        "apps/web/lib/imagine/private-assets.ts",
+        "apps/web/lib/imagine-favorites.ts",
+        "apps/web/app/imagine/page.tsx",
+        "apps/web/components/imagine/ImageCard.tsx",
+        "apps/web/components/imagine/FavoritesPanel.tsx",
+      ]
+    : []),
 ])
   receipt.sourceHashes[file] = createHash("sha256")
     .update(readFileSync(file))
@@ -164,7 +194,9 @@ const env = {
   ...inherited,
   NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54321",
   NEXT_PUBLIC_SUPABASE_ANON_KEY: anon,
-  PROVIDER_SETTINGS_FIXTURE: configPath,
+  ...(privateImagine
+    ? { PRIVATE_IMAGINE_FIXTURE: configPath }
+    : { PROVIDER_SETTINGS_FIXTURE: configPath }),
 };
 async function run(command, args, timeoutMs) {
   const child = spawn(command, args, { env, stdio: "ignore", detached: true });
@@ -260,6 +292,27 @@ try {
     "-c",
     "create or replace function auth.uid() returns uuid language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claim.sub', true), ''), (nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub'))::uuid $$;",
   ]);
+  if (privateImagine) {
+    phase = "private-image-migration";
+    docker([
+      "exec",
+      db,
+      "psql",
+      "-U",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-c",
+      "create or replace function auth.role() returns text language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claim.role', true), ''), (nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'role')) $$;",
+    ]);
+    docker(
+      ["exec", "-i", db, "psql", "-U", "postgres", "-v", "ON_ERROR_STOP=1"],
+      readFileSync(
+        "supabase/migrations/20261011000001_private_imagine_assets.sql",
+        "utf8",
+      ),
+    );
+  }
   container(
     "rest",
     "postgrest/postgrest:v14.17",
@@ -351,14 +404,38 @@ try {
       "-c",
       `insert into public.profiles(id,username,full_name) values ('${account.id}','fixture-${index}','Fixture ${index}');`,
     ]);
+    if (privateImagine)
+      docker([
+        "exec",
+        db,
+        "psql",
+        "-U",
+        "postgres",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-c",
+        `insert into public.imagine_storage_accounts(user_id,capacity_bytes) values ('${account.id}',${index === 0 ? 16384 : 0});`,
+      ]);
     accounts.push(account);
   }
+  const blob = privateImagine
+    ? {
+        token: `vercel_blob_rw_arcaneafixture_${randomBytes(24).toString("hex")}`,
+        apiOrigin: "https://blob-fixture.invalid",
+        interruptedAssetIds: [
+          "11111111-1111-4111-8111-111111111111",
+          "22222222-2222-4222-8222-222222222222",
+          "33333333-3333-4333-8333-333333333333",
+        ],
+      }
+    : null;
   privateConfiguration.write({
     head,
     base: "http://localhost:3001",
     supabaseUrl: "http://127.0.0.1:54321",
     accounts,
     output,
+    ...(privateImagine ? { blob } : {}),
   });
   phase = "compiled-app-build";
   await run("pnpm", ["turbo", "run", "build", "--filter=@arcanea/web"], 600000);
@@ -377,25 +454,62 @@ try {
     120000,
   );
   phase = "app-readiness";
-  const server = spawn(
-    "pnpm",
-    [
-      "--dir",
-      "apps/web",
-      "exec",
-      "next",
-      "start",
-      "-H",
-      "127.0.0.1",
-      "-p",
-      "3001",
-    ],
-    { env, stdio: "ignore", detached: true },
-  );
+  const server = privateImagine
+    ? spawn(
+        "node",
+        [
+          "--require",
+          join(process.cwd(), "scripts/private-imagine-blob-fixture.cjs"),
+          join(process.cwd(), "apps/web/node_modules/next/dist/bin/next"),
+          "start",
+          "apps/web",
+          "-H",
+          "127.0.0.1",
+          "-p",
+          "3001",
+        ],
+        {
+          env: {
+            ...env,
+            SUPABASE_SERVICE_ROLE_KEY: admin,
+            PRIVATE_IMAGINE_BLOB_READ_WRITE_TOKEN: blob.token,
+            PRIVATE_IMAGINE_STORAGE_ENABLED: "true",
+            VERCEL_BLOB_API_URL: blob.apiOrigin,
+            VERCEL_BLOB_RETRIES: "0",
+          },
+          stdio: "ignore",
+          detached: true,
+        },
+      )
+    : spawn(
+        "pnpm",
+        [
+          "--dir",
+          "apps/web",
+          "exec",
+          "next",
+          "start",
+          "-H",
+          "127.0.0.1",
+          "-p",
+          "3001",
+        ],
+        { env, stdio: "ignore", detached: true },
+      );
   children.add(server);
   await ready("http://localhost:3001/auth/login");
-  phase = "protected-settings-acceptance";
-  await run("node", ["scripts/verify-provider-settings-browser.cjs"], 240000);
+  phase = privateImagine
+    ? "protected-private-image-acceptance"
+    : "protected-settings-acceptance";
+  await run(
+    "node",
+    [
+      privateImagine
+        ? "scripts/verify-private-imagine-browser.cjs"
+        : "scripts/verify-provider-settings-browser.cjs",
+    ],
+    privateImagine ? 360000 : 240000,
+  );
   const acceptance = JSON.parse(
     readFileSync(`${output}/browser-evidence.json`, "utf8"),
   );
@@ -403,9 +517,46 @@ try {
     acceptance.head !== head ||
     acceptance.passed !== true ||
     acceptance.realPasswordLogins !== 9 ||
-    acceptance.aiPosts !== 0
+    (privateImagine
+      ? acceptance.liveSupplierPosts !== 0 || acceptance.modes.length !== 3
+      : acceptance.aiPosts !== 0)
   )
     throw Error("The settings receipt did not earn exact-source acceptance.");
+  if (privateImagine) {
+    const storage = JSON.parse(
+      readFileSync(`${output}/blob-transport-receipt.json`, "utf8"),
+    );
+    if (
+      storage.puts < 3 ||
+      storage.uncertainPuts !== 3 ||
+      storage.invalidRequests !== 0 ||
+      storage.productionWrites !== 0 ||
+      storage.externalNetworkAllowed !== false
+    )
+      throw Error("Private SDK transport receipt is incomplete.");
+    receipt.storage = storage;
+    const accounting = JSON.parse(
+      docker([
+        "exec",
+        db,
+        "psql",
+        "-U",
+        "postgres",
+        "-At",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-c",
+        "select json_build_object('readyBytes',coalesce((select sum(byte_size) from public.imagine_private_assets where status='ready'),0),'reservedBytes',coalesce((select sum(reserved_bytes) from public.imagine_storage_accounts),0),'usedBytes',coalesce((select sum(used_bytes) from public.imagine_storage_accounts),0),'rightsUnverified',not exists(select 1 from public.imagine_private_assets where rights_status <> 'unverified' or visibility <> 'private')); ",
+      ]),
+    );
+    if (
+      accounting.readyBytes !== accounting.usedBytes ||
+      accounting.reservedBytes !== 0 ||
+      !accounting.rightsUnverified
+    )
+      throw Error("Private accounting does not match retained ready bytes.");
+    receipt.accounting = accounting;
+  }
   receipt.acceptance = acceptance;
   receipt.passed = true;
 } catch {
