@@ -462,6 +462,11 @@ export function useConversation(
     setMessages([]);
     setInput("");
     setChatError(null);
+    setBranches(new Map());
+    setSwarmResult(null);
+    setBeamPrompt(null);
+    setEditingMessageId(null);
+    setCopiedId(null);
     return () => {
       void stop();
     };
@@ -639,6 +644,7 @@ export function useConversation(
   useEffect(() => {
     if (
       initialPrompt &&
+      credentialScope.isCurrent(credentialToken) &&
       !initialPromptSentRef.current &&
       messages.length === 0
     ) {
@@ -649,7 +655,14 @@ export function useConversation(
         setInput((current) => current || initialPrompt);
       }
     }
-  }, [initialPrompt, autoSendInitialPrompt, messages.length, sendMessage]);
+  }, [
+    initialPrompt,
+    autoSendInitialPrompt,
+    messages.length,
+    sendMessage,
+    credentialScope,
+    credentialToken,
+  ]);
 
   // ---------------------------------------------------------------------------
   // Cmd+K command palette

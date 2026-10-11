@@ -109,6 +109,14 @@ Review-lite admission later returned HOLD with 4,528 MB available and 6,144 MB
 required. No provider review was called. The unsubmitted core review packet's
 strict scan flagged three source-manifest SHA256 values next to paths containing
 `credential`; the redacted records identify manifest values, not customer keys.
-The adapter is being corrected to label digest and path separately while keeping
+The adapter now labels digest and path separately and the unsubmitted core packet
+passes the strict scan, while keeping
 the full payload scan and immutable source/hash validation enabled. No blocked
 packet is sent, no paid budget is assumed, and no complete review is claimed.
+
+Request-state refinement also clears branch transcripts and private transient
+conversation state on actor transition. The inherited URL-prompt handler waits
+for a valid actor before consuming its initial prompt, preventing a pending-auth
+denial from losing that prompt. Its existing automatic-send behavior remains an
+inherited acceptance gap; the held entry567 candidate handles deliberate staged
+entry, URL privacy and account-bound history and still needs separate promotion.
