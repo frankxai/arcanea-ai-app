@@ -95,3 +95,20 @@ and [React external stores](https://react.dev/reference/react/useSyncExternalSto
 The installed AI SDK useChat source recreates its Chat instance when the id changes
 and prevents an earlier instance's subscription from updating the new snapshot.
 This source inspection does not establish live provider cancellation or refunds.
+
+## Hosted recovery
+
+Draft [576](https://github.com/frankxai/arcanea-ai-app/pull/576) first published
+`ac8f964714f90a8037ccc5c618c6374aace4d56b`. Hosted Lint passed, including the
+native cases, while TypeScript failed on two implicit callback parameter types
+from the existing mock/Supabase client union. The callback now names
+AuthChangeEvent and Session explicitly. Fresh hosted verification is required;
+the earlier failure remains part of the evidence.
+
+Review-lite admission later returned HOLD with 4,528 MB available and 6,144 MB
+required. No provider review was called. The unsubmitted core review packet's
+strict scan flagged three source-manifest SHA256 values next to paths containing
+`credential`; the redacted records identify manifest values, not customer keys.
+The adapter is being corrected to label digest and path separately while keeping
+the full payload scan and immutable source/hash validation enabled. No blocked
+packet is sent, no paid budget is assumed, and no complete review is claimed.

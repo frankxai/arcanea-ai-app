@@ -11,7 +11,12 @@ import {
   useMemo,
   ReactNode,
 } from "react";
-import { User, Session, AuthError } from "@supabase/supabase-js";
+import {
+  User,
+  Session,
+  AuthError,
+  type AuthChangeEvent,
+} from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import {
   createCredentialScope,
@@ -74,14 +79,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, currentSession) => {
-      if (!mounted) return;
-      authRevisionRef.current += 1;
-      credentialScope.set(providerActor(currentSession?.user.id, false));
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setIsLoading(false);
-    });
+    } = supabase.auth.onAuthStateChange(
+      (_event: AuthChangeEvent, currentSession: Session | null) => {
+        if (!mounted) return;
+        authRevisionRef.current += 1;
+        credentialScope.set(providerActor(currentSession?.user.id, false));
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+        setIsLoading(false);
+      },
+    );
 
     return () => {
       mounted = false;
