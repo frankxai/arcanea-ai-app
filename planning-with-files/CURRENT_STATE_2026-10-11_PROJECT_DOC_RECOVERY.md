@@ -110,3 +110,19 @@ copies. Do not restore the known false-success route or delete creator data.
 
 Full estate, premium creator, subscription/storage/API/credits and connected client/
 local/cloud harness goal remains ACTIVE. This checkpoint closes none of those gates.
+
+## Hosted checkpoint at5398d9861495079c8d10d9e8ed5d104c3bb69786
+
+Draft PR585 full CI38144386309 is terminal SUCCESS: Install, Lint, TypeScript,
+Build and CI Status pass. PostgreSQL17 job114484729648 ran the proposed migration
+and its fixture. Its retained log proves owner/parent isolation, direct write denial,
+atomic forced-history rollback, stable replay, retained legacy history, atomic new
+creation and a real two-connection race with one commit and one conflict.
+Log SHA256f1d8025d7413dc2415c07d23259c60b6c6255622c5e59dee93b42ab75944d91f.
+No document SQL or write occurred in production.
+
+The next candidate narrowly admits the existing independent provider review on this
+owned branch with accepted-base pin e07d568, complete changed source and relevant
+context, unchanged30-file/900KB limits and the existing trusted manual workflow.
+It is not a review PASS. Hosted gates and review must bind the resulting revision;
+authenticated compiled browser/customer acceptance remains open.
