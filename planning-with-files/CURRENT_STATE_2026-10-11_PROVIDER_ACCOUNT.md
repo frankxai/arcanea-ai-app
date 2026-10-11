@@ -306,3 +306,17 @@ Next.js's route announcer; assertions now select the settings form's own alert.
 Safe diagnostics retain an assertion line and role counts without raw exception
 text or credential values. The failed run is preserved and the guard remains
 blocking until a corrected exact-source run passes.
+
+## Private configuration race repair, 11 October
+
+CodeQL analysis at a7041809 reported new alert277 in the isolated runner: checking a configuration path before writing could overwrite a file that appeared between those operations. The runner now allocates the private file atomically with `openSync(path, "wx", 0o600)`, writes through that descriptor and returns a cleanup handle only after successful allocation. Cleanup preserves occupied paths when allocation fails, closes the owned descriptor and reports cleanup failure safely.
+
+The source-derived native regression exercises the actual runner's operations. Before repair all three checks failed: an arriving file was overwritten, writes used a pathname and interrupted writes had no owned descriptor cleanup. The corrected source must pass collision preservation, descriptor writes/permissions and interrupted-write cleanup. The existing hosted authenticated fixture and CodeQL analysis need fresh results at the new revision; the nine real logins and prior static reviews remain bound to a7041809.
+
+Scope: eliminate the isolated runner's private-file creation race.
+Owner: codex-provider-account-20261011.
+Files: runner, private-configuration regression, existing native CI step and this pickup.
+Non-goals: production auth, secrets, database, billing, permissions, dependencies or changes to the accepted Chat repair.
+Acceptance criteria: preserve an occupied file; close/remove only a successfully allocated configuration; pass exact-source hosted settings acceptance; resolve alert277 through fresh security analysis.
+Verification: native three-case old/new regression, hosted CI/authenticated fixture, CodeQL result and exact-revision independent review.
+Rollback: revert this runner-only refinement through the owned lane; the earlier private-file race returns and must remain recorded as an open security finding.

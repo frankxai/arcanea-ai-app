@@ -193,7 +193,7 @@ jobs:
       - name: Verify customer voice credentials, privacy and recovery
         run: |
           pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
-          node --test scripts/tests/provider-chat-instance.test.cjs
+          node --test scripts/tests/provider-chat-instance.test.cjs scripts/tests/provider-fixture-private-config.test.cjs
 
       - name: Verify author credentials and exact draft acknowledgements
         run: |

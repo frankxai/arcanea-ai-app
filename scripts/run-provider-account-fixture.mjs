@@ -7,6 +7,8 @@ import {
   writeFileSync,
   rmSync,
   existsSync,
+  openSync,
+  closeSync,
 } from "node:fs";
 import { join, isAbsolute } from "node:path";
 import { setTimeout as pause } from "node:timers/promises";
@@ -53,8 +55,20 @@ const output = "screenshots/provider-settings";
 mkdirSync(output, { recursive: true });
 const network = `provider-settings-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
 const configPath = join(process.env.RUNNER_TEMP, `${network}.private.json`);
-if (existsSync(configPath))
-  throw Error("The fixture configuration path is already occupied.");
+function createPrivateConfiguration(path) {
+  const descriptor = openSync(path, "wx", 0o600);
+  return {
+    write: (configuration) =>
+      writeFileSync(descriptor, JSON.stringify(configuration)),
+    remove: () => {
+      try {
+        closeSync(descriptor);
+      } finally {
+        rmSync(path, { force: true });
+      }
+    },
+  };
+}
 const secret = randomBytes(32).toString("hex");
 const password = randomBytes(24).toString("hex");
 const jwt = (role) => {
@@ -70,7 +84,8 @@ const containers = [];
 const children = new Set();
 let gateway;
 let networkCreated = false;
-let phase = "container-admission";
+let privateConfiguration;
+let phase = "private-configuration-admission";
 const receipt = {
   head,
   backend: "disposable PostgreSQL/GoTrue/PostgREST",
@@ -84,6 +99,7 @@ const receipt = {
 for (const file of [
   "scripts/run-provider-account-fixture.mjs",
   "scripts/verify-provider-settings-browser.cjs",
+  "scripts/tests/provider-fixture-private-config.test.cjs",
   "supabase/tests/world-creator-service-fixture.sql",
   "apps/web/app/settings/providers/page.tsx",
   "apps/web/lib/auth/context.tsx",
@@ -173,6 +189,8 @@ async function run(command, args, timeoutMs) {
 }
 
 try {
+  privateConfiguration = createPrivateConfiguration(configPath);
+  phase = "container-admission";
   docker(["network", "create", network]);
   networkCreated = true;
   container("db", "postgres:17", { POSTGRES_PASSWORD: password });
@@ -335,17 +353,13 @@ try {
     ]);
     accounts.push(account);
   }
-  writeFileSync(
-    configPath,
-    JSON.stringify({
-      head,
-      base: "http://localhost:3001",
-      supabaseUrl: "http://127.0.0.1:54321",
-      accounts,
-      output,
-    }),
-    { mode: 0o600 },
-  );
+  privateConfiguration.write({
+    head,
+    base: "http://localhost:3001",
+    supabaseUrl: "http://127.0.0.1:54321",
+    accounts,
+    output,
+  });
   phase = "compiled-app-build";
   await run("pnpm", ["turbo", "run", "build", "--filter=@arcanea/web"], 600000);
   phase = "browser-install";
@@ -427,9 +441,16 @@ try {
       cleanupFailures.push("network");
     }
   }
-  rmSync(configPath, { force: true });
+  if (privateConfiguration) {
+    try {
+      privateConfiguration.remove();
+    } catch {
+      cleanupFailures.push("private-configuration");
+    }
+  }
   receipt.cleanup = {
-    privateConfigurationRemoved: !existsSync(configPath),
+    privateConfigurationRemoved:
+      !privateConfiguration || !existsSync(configPath),
     failures: cleanupFailures,
   };
   if (cleanupFailures.length) {
