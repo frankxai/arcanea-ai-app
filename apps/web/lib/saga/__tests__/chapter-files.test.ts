@@ -1,5 +1,9 @@
-import { strict as assert } from 'node:assert';
-import { countChapterWords, isChapterMarkdown } from '../chapter-files';
+import { strict as assert } from "node:assert";
+import {
+  chapterIdFromFilename,
+  countChapterWords,
+  isChapterMarkdown,
+} from "../chapter-files";
 
 let passed = 0;
 let failed = 0;
@@ -17,52 +21,68 @@ function test(name: string, fn: () => void) {
 }
 
 function main() {
-  test('chapter policy includes numbered chapters and real prologues', () => {
+  test("HTML IDs strip leading numbers while preserving names and case", () => {
+    assert.equal(chapterIdFromFilename("01-subject-7.md"), "subject-7");
+    assert.equal(chapterIdFromFilename("00-prologue.md"), "prologue");
+    assert.equal(
+      chapterIdFromFilename("chapter-01-the-bond.md"),
+      "chapter-01-the-bond",
+    );
+    assert.equal(chapterIdFromFilename("01-The-Arrival.md"), "The-Arrival");
+  });
+
+  test("chapter policy includes numbered chapters and real prologues", () => {
     for (const filename of [
-      '01-arrival.md',
-      'chapter-01-before-the-name.md',
-      '00-prolog.md',
-      '00-prologue.md',
-      '00-prologo-de-luz.md',
+      "01-arrival.md",
+      "01-bible.md",
+      "01-outline.md",
+      "chapter-01-before-the-name.md",
+      "00-prolog.md",
+      "00-prologue.md",
+      "00-prologo-de-luz.md",
     ]) {
       assert.equal(isChapterMarkdown(filename), true, filename);
     }
   });
 
-  test('chapter policy excludes companion and non-chapter markdown', () => {
+  test("chapter policy excludes companion and non-chapter markdown", () => {
     for (const filename of [
-      'README.md',
-      'PITCH.md',
-      'CLAUDE.md',
-      'AUTHORS_NOTE.md',
-      'GLOSSARY.md',
-      '00-outline.md',
-      'cover.png',
+      "README.md",
+      "PITCH.md",
+      "CLAUDE.md",
+      "AUTHORS_NOTE.md",
+      "GLOSSARY.md",
+      "BIBLE.md",
+      "OUTLINE.md",
+      "Bible.md",
+      "outline.md",
+      "00-outline.md",
+      "cover.png",
     ]) {
       assert.equal(isChapterMarkdown(filename), false, filename);
     }
   });
 
-  test('chapter policy rejects uppercase extensions the routes cannot strip', () => {
-    assert.equal(isChapterMarkdown('CHAPTER-02.MD'), false);
+  test("chapter policy rejects uppercase extensions the routes cannot strip", () => {
+    assert.equal(isChapterMarkdown("CHAPTER-02.MD"), false);
   });
 
-  test('word counts ignore YAML frontmatter', () => {
-    const body = 'One two\n\nthree four.';
+  test("word counts ignore YAML frontmatter", () => {
+    const body = "One two\n\nthree four.";
     const withFrontmatter = [
-      '---',
-      'title: A title that must not change the count',
-      'gate: All Ten',
-      '---',
+      "---",
+      "title: A title that must not change the count",
+      "gate: All Ten",
+      "---",
       body,
-    ].join('\n');
+    ].join("\n");
 
     assert.equal(countChapterWords(body), 4);
     assert.equal(countChapterWords(withFrontmatter), 4);
   });
 
-  test('frontmatter-only documents contain no chapter words', () => {
-    assert.equal(countChapterWords('---\ntitle: Empty\n---\n'), 0);
+  test("frontmatter-only documents contain no chapter words", () => {
+    assert.equal(countChapterWords("---\ntitle: Empty\n---\n"), 0);
   });
 
   if (failed > 0) {

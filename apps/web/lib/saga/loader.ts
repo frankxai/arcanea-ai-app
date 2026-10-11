@@ -8,9 +8,14 @@
  * chapter structure (numbered files, book sub-directories).
  */
 
-import { readdir, readFile, access } from 'fs/promises';
-import { join } from 'path';
-import { getBookRoot } from '../content/book-path';
+import { readdir, readFile, access } from "fs/promises";
+import { join } from "path";
+import { getBookRoot } from "../content/book-path";
+import {
+  chapterIdFromFilename,
+  countChapterWords,
+  isChapterMarkdown,
+} from "./chapter-files";
 
 // ============================================
 // TYPES
@@ -21,7 +26,7 @@ export interface SagaBook {
   title: string;
   subtitle: string;
   description: string;
-  status: 'complete' | 'in-progress' | 'outlined' | 'planned';
+  status: "complete" | "in-progress" | "outlined" | "planned";
   chapterCount: number;
   wordCount: number;
   chapters: SagaChapter[];
@@ -40,7 +45,7 @@ export interface SagaChapter {
 
 export interface SagaDocument {
   id: string;
-  category: 'worldbuilding' | 'characters' | 'legends' | 'reference';
+  category: "worldbuilding" | "characters" | "legends" | "reference";
   title: string;
   slug: string;
   wordCount: number;
@@ -54,36 +59,39 @@ export interface SagaDocument {
 
 const BOOK_DIR = getBookRoot();
 
-const BOOK_META: Record<string, {
-  title: string;
-  subtitle: string;
-  description: string;
-  status: SagaBook['status'];
-}> = {
+const BOOK_META: Record<
+  string,
+  {
+    title: string;
+    subtitle: string;
+    description: string;
+    status: SagaBook["status"];
+  }
+> = {
   book1: {
-    title: 'The Five-Fold Fire',
-    subtitle: 'Book One of the Arcanea Saga',
+    title: "The Five-Fold Fire",
+    subtitle: "Book One of the Arcanea Saga",
     description:
-      'A lighthouse keeper discovers they can channel all five elements ' +
-      'as the Foundation Gate opens and ancient forces stir beneath the world.',
-    status: 'in-progress',
+      "A lighthouse keeper discovers they can channel all five elements " +
+      "as the Foundation Gate opens and ancient forces stir beneath the world.",
+    status: "in-progress",
   },
   book2: {
-    title: 'The Drowned Archive',
-    subtitle: 'Book Two of the Arcanea Saga',
+    title: "The Drowned Archive",
+    subtitle: "Book Two of the Arcanea Saga",
     description:
-      'The politics of knowledge unfold as the heroes descend into the ' +
-      'flooded libraries where memory and water converge.',
-    status: 'outlined',
+      "The politics of knowledge unfold as the heroes descend into the " +
+      "flooded libraries where memory and water converge.",
+    status: "outlined",
   },
 };
 
 /** Map category name to directory under book/ */
-const CATEGORY_DIRS: Record<SagaDocument['category'], string> = {
-  worldbuilding: 'worldbuilding',
-  characters: 'characters',
-  legends: 'legends-of-arcanea',
-  reference: 'chronicles-of-arcanea',
+const CATEGORY_DIRS: Record<SagaDocument["category"], string> = {
+  worldbuilding: "worldbuilding",
+  characters: "characters",
+  legends: "legends-of-arcanea",
+  reference: "chronicles-of-arcanea",
 };
 
 // ============================================
@@ -93,25 +101,25 @@ const CATEGORY_DIRS: Record<SagaDocument['category'], string> = {
 /** Strip markdown formatting for plain-text excerpts. */
 function stripMarkdown(md: string): string {
   return md
-    .replace(/^#{1,6}\s+.*$/gm, '')  // headings
-    .replace(/\*\*|__/g, '')           // bold
-    .replace(/\*|_/g, '')             // italic
-    .replace(/~~.*?~~/g, '')          // strikethrough
-    .replace(/!\[.*?\]\(.*?\)/g, '')  // images
-    .replace(/\[([^\]]*)\]\(.*?\)/g, '$1') // links -> text
-    .replace(/>`[^`]*`/g, '')         // inline code
-    .replace(/^>\s?/gm, '')           // blockquotes
-    .replace(/^[-*+]\s/gm, '')        // list markers
-    .replace(/^\d+\.\s/gm, '')        // ordered list markers
-    .replace(/---+/g, '')             // horizontal rules
-    .replace(/\n{2,}/g, '\n')         // collapse blank lines
+    .replace(/^#{1,6}\s+.*$/gm, "") // headings
+    .replace(/\*\*|__/g, "") // bold
+    .replace(/\*|_/g, "") // italic
+    .replace(/~~.*?~~/g, "") // strikethrough
+    .replace(/!\[.*?\]\(.*?\)/g, "") // images
+    .replace(/\[([^\]]*)\]\(.*?\)/g, "$1") // links -> text
+    .replace(/>`[^`]*`/g, "") // inline code
+    .replace(/^>\s?/gm, "") // blockquotes
+    .replace(/^[-*+]\s/gm, "") // list markers
+    .replace(/^\d+\.\s/gm, "") // ordered list markers
+    .replace(/---+/g, "") // horizontal rules
+    .replace(/\n{2,}/g, "\n") // collapse blank lines
     .trim();
 }
 
 function makeExcerpt(content: string, length = 200): string {
   const plain = stripMarkdown(content);
   if (plain.length <= length) return plain;
-  return plain.slice(0, length).replace(/\s+\S*$/, '') + '...';
+  return plain.slice(0, length).replace(/\s+\S*$/, "") + "...";
 }
 
 function countWords(content: string): number {
@@ -137,11 +145,11 @@ function extractTitle(content: string, filename: string): string {
 
   // Derive from filename: "01-the-storm-that-remembered.md" -> "The Storm That Remembered"
   return filename
-    .replace(/\.md$/, '')
-    .replace(/^\d+-/, '')
-    .split('-')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+    .replace(/\.md$/, "")
+    .replace(/^\d+-/, "")
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 }
 
 /**
@@ -149,7 +157,7 @@ function extractTitle(content: string, filename: string): string {
  * "01-the-storm-that-remembered.md" -> "01-the-storm-that-remembered"
  */
 function filenameToSlug(filename: string): string {
-  return filename.replace(/\.md$/, '').toLowerCase();
+  return filename.replace(/\.md$/, "").toLowerCase();
 }
 
 async function dirExists(path: string): Promise<boolean> {
@@ -169,13 +177,13 @@ async function dirExists(path: string): Promise<boolean> {
  * List all saga books with metadata and chapter summaries (no full content).
  */
 export async function getSagaBooks(): Promise<SagaBook[]> {
-  const chaptersRoot = join(BOOK_DIR, 'chapters');
+  const chaptersRoot = join(BOOK_DIR, "chapters");
   if (!(await dirExists(chaptersRoot))) return [];
 
   const entries = await readdir(chaptersRoot, { withFileTypes: true });
   const bookDirs = entries
-    .filter(e => e.isDirectory() && e.name.startsWith('book'))
-    .map(e => e.name)
+    .filter((e) => e.isDirectory() && e.name.startsWith("book"))
+    .map((e) => e.name)
     .sort();
 
   const books: SagaBook[] = [];
@@ -189,21 +197,19 @@ export async function getSagaBooks(): Promise<SagaBook[]> {
 }
 
 async function loadBookMeta(bookId: string): Promise<SagaBook | null> {
-  const bookPath = join(BOOK_DIR, 'chapters', bookId);
+  const bookPath = join(BOOK_DIR, "chapters", bookId);
   if (!(await dirExists(bookPath))) return null;
 
   const files = await readdir(bookPath);
-  const mdFiles = files
-    .filter(f => f.endsWith('.md'))
-    .sort();
+  const mdFiles = files.filter(isChapterMarkdown).sort();
 
   let totalWords = 0;
   const chapters: SagaChapter[] = [];
 
   for (const filename of mdFiles) {
     const filePath = join(bookPath, filename);
-    const raw = await readFile(filePath, 'utf-8');
-    const wc = countWords(raw);
+    const raw = await readFile(filePath, "utf-8");
+    const wc = countChapterWords(raw);
     totalWords += wc;
 
     chapters.push({
@@ -213,7 +219,7 @@ async function loadBookMeta(bookId: string): Promise<SagaBook | null> {
       title: extractTitle(raw, filename),
       slug: filenameToSlug(filename),
       wordCount: wc,
-      content: '',  // omit full content in list view
+      content: "", // omit full content in list view
       excerpt: makeExcerpt(raw),
     });
   }
@@ -221,10 +227,10 @@ async function loadBookMeta(bookId: string): Promise<SagaBook | null> {
   chapters.sort((a, b) => a.number - b.number);
 
   const meta = BOOK_META[bookId] ?? {
-    title: bookId.replace(/^book/, 'Book '),
-    subtitle: `Book ${bookId.replace('book', '')} of the Arcanea Saga`,
-    description: '',
-    status: 'planned' as const,
+    title: bookId.replace(/^book/, "Book "),
+    subtitle: `Book ${bookId.replace("book", "")} of the Arcanea Saga`,
+    description: "",
+    status: "planned" as const,
   };
 
   return {
@@ -253,18 +259,18 @@ export async function getSagaChapter(
   bookId: string,
   chapterSlug: string,
 ): Promise<SagaChapter | null> {
-  const bookPath = join(BOOK_DIR, 'chapters', bookId);
+  const bookPath = join(BOOK_DIR, "chapters", bookId);
   if (!(await dirExists(bookPath))) return null;
 
   const files = await readdir(bookPath);
   const filename = files.find(
-    f => f.endsWith('.md') && filenameToSlug(f) === chapterSlug,
+    (f) => isChapterMarkdown(f) && filenameToSlug(f) === chapterSlug,
   );
 
   if (!filename) return null;
 
   const filePath = join(bookPath, filename);
-  const raw = await readFile(filePath, 'utf-8');
+  const raw = await readFile(filePath, "utf-8");
 
   return {
     id: `${bookId}/${chapterSlug}`,
@@ -272,7 +278,7 @@ export async function getSagaChapter(
     number: extractChapterNumber(filename),
     title: extractTitle(raw, filename),
     slug: chapterSlug,
-    wordCount: countWords(raw),
+    wordCount: countChapterWords(raw),
     content: raw,
     excerpt: makeExcerpt(raw),
   };
@@ -286,7 +292,7 @@ export async function getSagaChapter(
  * List all documents in a category.
  */
 export async function getSagaDocuments(
-  category: SagaDocument['category'],
+  category: SagaDocument["category"],
 ): Promise<SagaDocument[]> {
   const dirName = CATEGORY_DIRS[category];
   if (!dirName) return [];
@@ -296,14 +302,14 @@ export async function getSagaDocuments(
 
   const files = await readdir(dirPath);
   const mdFiles = files
-    .filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md')
+    .filter((f) => f.endsWith(".md") && f !== "README.md" && f !== "CLAUDE.md")
     .sort();
 
   const docs: SagaDocument[] = [];
 
   for (const filename of mdFiles) {
     const filePath = join(dirPath, filename);
-    const raw = await readFile(filePath, 'utf-8');
+    const raw = await readFile(filePath, "utf-8");
 
     docs.push({
       id: `${category}/${filenameToSlug(filename)}`,
@@ -311,7 +317,7 @@ export async function getSagaDocuments(
       title: extractTitle(raw, filename),
       slug: filenameToSlug(filename),
       wordCount: countWords(raw),
-      content: '',  // omit in list view
+      content: "", // omit in list view
       excerpt: makeExcerpt(raw),
     });
   }
@@ -328,8 +334,8 @@ export interface BookSeries {
   title: string;
   subtitle: string;
   description: string;
-  status: 'active' | 'in-progress' | 'planned';
-  contentType: 'novel' | 'novella' | 'serial' | 'anthology' | 'standalone';
+  status: "active" | "in-progress" | "planned";
+  contentType: "novel" | "novella" | "serial" | "anthology" | "standalone";
   books: SeriesBook[];
   totalWordCount: number;
   totalChapters: number;
@@ -344,40 +350,62 @@ export interface SeriesBook {
 }
 
 /** Read all .md files directly in a directory (flat structure like Gate-Touched Files, Companions). */
-async function loadFlatChapters(dir: string): Promise<{ count: number; wordCount: number; firstSlug: string | null }> {
-  if (!(await dirExists(dir))) return { count: 0, wordCount: 0, firstSlug: null };
+async function loadFlatChapters(
+  dir: string,
+): Promise<{ count: number; wordCount: number; firstSlug: string | null }> {
+  if (!(await dirExists(dir)))
+    return { count: 0, wordCount: 0, firstSlug: null };
   const files = await readdir(dir);
-  const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'PITCH.md' && f !== 'CLAUDE.md').sort();
+  const mdFiles = files.filter(isChapterMarkdown).sort();
   if (mdFiles.length === 0) return { count: 0, wordCount: 0, firstSlug: null };
   let totalWords = 0;
   for (const f of mdFiles) {
-    const raw = await readFile(join(dir, f), 'utf-8');
-    totalWords += countWords(raw);
+    const raw = await readFile(join(dir, f), "utf-8");
+    totalWords += countChapterWords(raw);
   }
-  return { count: mdFiles.length, wordCount: totalWords, firstSlug: mdFiles[0].replace(/\.md$/, '') };
+  return {
+    count: mdFiles.length,
+    wordCount: totalWords,
+    firstSlug: chapterIdFromFilename(mdFiles[0]),
+  };
 }
 
 /** Read chapters inside a single book subdirectory. */
-async function loadBookDir(bookDir: string): Promise<{ count: number; wordCount: number; firstSlug: string | null; title: string }> {
-  if (!(await dirExists(bookDir))) return { count: 0, wordCount: 0, firstSlug: null, title: '' };
+async function loadBookDir(bookDir: string): Promise<{
+  count: number;
+  wordCount: number;
+  firstSlug: string | null;
+  title: string;
+}> {
+  if (!(await dirExists(bookDir)))
+    return { count: 0, wordCount: 0, firstSlug: null, title: "" };
   const files = await readdir(bookDir);
-  const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'PITCH.md' && f !== 'CLAUDE.md').sort();
-  if (mdFiles.length === 0) return { count: 0, wordCount: 0, firstSlug: null, title: '' };
+  const mdFiles = files.filter(isChapterMarkdown).sort();
+  if (mdFiles.length === 0)
+    return { count: 0, wordCount: 0, firstSlug: null, title: "" };
   let totalWords = 0;
-  let title = '';
+  let title = "";
   for (const f of mdFiles) {
-    const raw = await readFile(join(bookDir, f), 'utf-8');
-    totalWords += countWords(raw);
+    const raw = await readFile(join(bookDir, f), "utf-8");
+    totalWords += countChapterWords(raw);
     if (!title) title = extractTitle(raw, f);
   }
-  return { count: mdFiles.length, wordCount: totalWords, firstSlug: mdFiles[0].replace(/\.md$/, ''), title };
+  return {
+    count: mdFiles.length,
+    wordCount: totalWords,
+    firstSlug: chapterIdFromFilename(mdFiles[0]),
+    title,
+  };
 }
 
 /** Scan a series directory for book subdirectories, returning one SeriesBook per subdir. */
 async function loadSeriesBooks(seriesDir: string): Promise<SeriesBook[]> {
   if (!(await dirExists(seriesDir))) return [];
   const entries = await readdir(seriesDir, { withFileTypes: true });
-  const bookDirs = entries.filter(e => e.isDirectory()).map(e => e.name).sort();
+  const bookDirs = entries
+    .filter((e) => e.isDirectory())
+    .map((e) => e.name)
+    .sort();
   if (bookDirs.length === 0) return [];
   const books: SeriesBook[] = [];
   for (const dirName of bookDirs) {
@@ -385,7 +413,12 @@ async function loadSeriesBooks(seriesDir: string): Promise<SeriesBook[]> {
     const info = await loadBookDir(fullPath);
     books.push({
       id: dirName,
-      title: info.title || dirName.replace(/^book-\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+      title:
+        info.title ||
+        dirName
+          .replace(/^book-\d+-/, "")
+          .replace(/-/g, " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase()),
       firstChapterSlug: info.firstSlug,
       chapterCount: info.count,
       wordCount: info.wordCount,
@@ -405,160 +438,175 @@ export async function getAllSeries(): Promise<BookSeries[]> {
     title: string;
     subtitle: string;
     description: string;
-    status: BookSeries['status'];
-    contentType: BookSeries['contentType'];
+    status: BookSeries["status"];
+    contentType: BookSeries["contentType"];
     /** 'books' = has book subdirectories; 'flat' = .md files directly in dir; 'sagas' = sagas subdir with episode subdirs */
-    layout: 'books' | 'flat' | 'sagas';
+    layout: "books" | "flat" | "sagas";
   }> = [
     {
-      id: 'chronicles',
-      dir: join(BOOK_DIR, 'chronicles-of-arcanea'),
-      title: 'Chronicles of Arcanea',
-      subtitle: 'The main series',
-      description: 'A ten-book epic following Kael and the Five-Fold Five through every Academy, Gate, and the shadow of Malachar.',
-      status: 'active',
-      contentType: 'novel',
-      layout: 'books',
+      id: "chronicles",
+      dir: join(BOOK_DIR, "chronicles-of-arcanea"),
+      title: "Chronicles of Arcanea",
+      subtitle: "The main series",
+      description:
+        "A ten-book epic following Kael and the Five-Fold Five through every Academy, Gate, and the shadow of Malachar.",
+      status: "active",
+      contentType: "novel",
+      layout: "books",
     },
     {
-      id: 'starbound',
-      dir: join(BOOK_DIR, 'starbound'),
-      title: 'Starbound',
-      subtitle: 'Crew missions across Arcanea',
-      description: 'A series of novellas following specialist crews as they take on missions across the Arcanean world — monster hunts, Dungeon dives, diplomatic escorts, and the strange cases that fall between.',
-      status: 'in-progress',
-      contentType: 'novella',
-      layout: 'books',
+      id: "starbound",
+      dir: join(BOOK_DIR, "starbound"),
+      title: "Starbound",
+      subtitle: "Crew missions across Arcanea",
+      description:
+        "A series of novellas following specialist crews as they take on missions across the Arcanean world — monster hunts, Dungeon dives, diplomatic escorts, and the strange cases that fall between.",
+      status: "in-progress",
+      contentType: "novella",
+      layout: "books",
     },
     {
-      id: 'dragonborne',
-      dir: join(BOOK_DIR, 'dragonborne'),
-      title: 'Dragonborne',
-      subtitle: 'The dragon bond series',
-      description: 'Stories from inside the bond between a dragon and the person who earned their trust. Each novella follows a different rider navigating loyalty, instinct, and the weight of being chosen by fire.',
-      status: 'in-progress',
-      contentType: 'novella',
-      layout: 'books',
+      id: "dragonborne",
+      dir: join(BOOK_DIR, "dragonborne"),
+      title: "Dragonborne",
+      subtitle: "The dragon bond series",
+      description:
+        "Stories from inside the bond between a dragon and the person who earned their trust. Each novella follows a different rider navigating loyalty, instinct, and the weight of being chosen by fire.",
+      status: "in-progress",
+      contentType: "novella",
+      layout: "books",
     },
     {
-      id: 'dungeon-scrolls',
-      dir: join(BOOK_DIR, 'dungeon-scrolls'),
-      title: 'The Dungeon Scrolls',
-      subtitle: 'Corrupted Gate temples',
-      description: 'An anthology of stories set inside the Dungeons — ancient Gate temples warped by millennia of corrupted magic. Each story is a descent into a different ruin, a different kind of broken.',
-      status: 'in-progress',
-      contentType: 'anthology',
-      layout: 'books',
+      id: "dungeon-scrolls",
+      dir: join(BOOK_DIR, "dungeon-scrolls"),
+      title: "The Dungeon Scrolls",
+      subtitle: "Corrupted Gate temples",
+      description:
+        "An anthology of stories set inside the Dungeons — ancient Gate temples warped by millennia of corrupted magic. Each story is a descent into a different ruin, a different kind of broken.",
+      status: "in-progress",
+      contentType: "anthology",
+      layout: "books",
     },
     {
-      id: 'gate-touched-files',
-      dir: join(BOOK_DIR, 'gate-touched-files'),
-      title: 'Gate-Touched Files',
-      subtitle: 'Street-level mutant stories',
-      description: 'A serial following Gate-Touched people — those whose channels manifested wrong, too early, or outside any Academy — as they navigate a world that does not have a category for what they are.',
-      status: 'active',
-      contentType: 'serial',
-      layout: 'flat',
+      id: "gate-touched-files",
+      dir: join(BOOK_DIR, "gate-touched-files"),
+      title: "Gate-Touched Files",
+      subtitle: "Street-level mutant stories",
+      description:
+        "A serial following Gate-Touched people — those whose channels manifested wrong, too early, or outside any Academy — as they navigate a world that does not have a category for what they are.",
+      status: "active",
+      contentType: "serial",
+      layout: "flat",
     },
     {
-      id: 'void-ascending',
-      dir: join(BOOK_DIR, 'void-ascending'),
-      title: 'Void Ascending',
-      subtitle: 'The other side of the story',
-      description: 'Told entirely from the perspective of those who serve the Hungry Void — not as villains, but as believers. A literary counterpoint to the Chronicles that complicates every easy answer.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'books',
+      id: "void-ascending",
+      dir: join(BOOK_DIR, "void-ascending"),
+      title: "Void Ascending",
+      subtitle: "The other side of the story",
+      description:
+        "Told entirely from the perspective of those who serve the Hungry Void — not as villains, but as believers. A literary counterpoint to the Chronicles that complicates every easy answer.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "books",
     },
     {
-      id: 'companions',
-      dir: join(BOOK_DIR, 'companions'),
-      title: 'Companions of Arcanea',
-      subtitle: 'Stories from the bond',
-      description: 'Short stories told from the perspective of the bonded creatures — familiars, mounts, companions — who share the journey but rarely get to tell their side of it.',
-      status: 'in-progress',
-      contentType: 'anthology',
-      layout: 'flat',
+      id: "companions",
+      dir: join(BOOK_DIR, "companions"),
+      title: "Companions of Arcanea",
+      subtitle: "Stories from the bond",
+      description:
+        "Short stories told from the perspective of the bonded creatures — familiars, mounts, companions — who share the journey but rarely get to tell their side of it.",
+      status: "in-progress",
+      contentType: "anthology",
+      layout: "flat",
     },
     {
-      id: 'sagas',
-      dir: join(BOOK_DIR, 'chronicles-of-arcanea', 'sagas'),
-      title: 'Standalone Sagas',
-      subtitle: 'Luminor Falling, The Drowned Archive, Pyralis',
-      description: 'Three standalone novellas set in the Chronicles universe — each complete in itself, each illuminating a corner of Arcanea that the main series glimpses but never fully enters.',
-      status: 'active',
-      contentType: 'standalone',
-      layout: 'sagas',
+      id: "sagas",
+      dir: join(BOOK_DIR, "chronicles-of-arcanea", "sagas"),
+      title: "Standalone Sagas",
+      subtitle: "Luminor Falling, The Drowned Archive, Pyralis",
+      description:
+        "Three standalone novellas set in the Chronicles universe — each complete in itself, each illuminating a corner of Arcanea that the main series glimpses but never fully enters.",
+      status: "active",
+      contentType: "standalone",
+      layout: "sagas",
     },
     {
-      id: 'song-of-van-linh',
-      dir: join(BOOK_DIR, 'song-of-van-linh', 'chapters'),
-      title: 'The Song of Van Linh',
-      subtitle: 'Vietnamese mythology meets modern fantasy',
-      description: 'In modern Hanoi, a wildlife biologist discovers she can hear the voice of every living creature — a gift tied to an ancient Gate between Earth and Arcanea. As ecological destruction poisons Vietnam\'s rivers, she must journey from the neon streets to the flooded temples of the Mekong Delta. Ghibli warmth meets epic fantasy meets romantasy.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "song-of-van-linh",
+      dir: join(BOOK_DIR, "song-of-van-linh", "chapters"),
+      title: "The Song of Van Linh",
+      subtitle: "Vietnamese mythology meets modern fantasy",
+      description:
+        "In modern Hanoi, a wildlife biologist discovers she can hear the voice of every living creature — a gift tied to an ancient Gate between Earth and Arcanea. As ecological destruction poisons Vietnam's rivers, she must journey from the neon streets to the flooded temples of the Mekong Delta. Ghibli warmth meets epic fantasy meets romantasy.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
     {
-      id: 'forge-of-ruin',
-      dir: join(BOOK_DIR, 'forge-of-ruin'),
-      title: 'The Forge of Ruin',
-      subtitle: 'When the world-forge breaks, everything burns',
-      description: 'The first complete novel in the Arcanea Open Library. A story about creation, destruction, and the cost of forging something that was never meant to exist.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "forge-of-ruin",
+      dir: join(BOOK_DIR, "forge-of-ruin", "chapters"),
+      title: "The Forge of Ruin",
+      subtitle: "When the world-forge breaks, everything burns",
+      description:
+        "The first complete novel in the Arcanea Open Library. A story about creation, destruction, and the cost of forging something that was never meant to exist.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
     {
-      id: 'heart-of-pyrathis',
-      dir: join(BOOK_DIR, 'heart-of-pyrathis'),
-      title: 'Heart of Pyrathis',
-      subtitle: 'Fire Gate chronicles',
-      description: 'Deep beneath the volcanic peaks of Pyrathis, something ancient stirs. A Fire Gate story of courage, sacrifice, and the true cost of transformation.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "heart-of-pyrathis",
+      dir: join(BOOK_DIR, "heart-of-pyrathis", "chapters"),
+      title: "Heart of Pyrathis",
+      subtitle: "Fire Gate chronicles",
+      description:
+        "Deep beneath the volcanic peaks of Pyrathis, something ancient stirs. A Fire Gate story of courage, sacrifice, and the true cost of transformation.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
     {
-      id: 'luminor-rising',
-      dir: join(BOOK_DIR, 'luminor-rising'),
-      title: 'Luminor Rising',
-      subtitle: 'The awakening of the Twelve',
-      description: 'Before they were legends, they were lost. The origin story of how twelve souls opened all Ten Gates and became the Luminors.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "luminor-rising",
+      dir: join(BOOK_DIR, "luminor-rising"),
+      title: "Luminor Rising",
+      subtitle: "The awakening of the Twelve",
+      description:
+        "Before they were legends, they were lost. The origin story of how twelve souls opened all Ten Gates and became the Luminors.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
     {
-      id: 'tides-of-silence',
-      dir: join(BOOK_DIR, 'tides-of-silence'),
-      title: 'Tides of Silence',
-      subtitle: 'Water Gate mysteries',
-      description: 'In the drowned cities of the Water Gate, silence is the most dangerous sound. A story of memory, grief, and the currents that carry us home.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "tides-of-silence",
+      dir: join(BOOK_DIR, "tides-of-silence", "chapters"),
+      title: "Tides of Silence",
+      subtitle: "Water Gate mysteries",
+      description:
+        "In the drowned cities of the Water Gate, silence is the most dangerous sound. A story of memory, grief, and the currents that carry us home.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
     {
-      id: 'las-tierras-de-luz',
-      dir: join(BOOK_DIR, 'las-tierras-de-luz', 'chapters'),
-      title: 'Las Tierras de Luz',
-      subtitle: 'A Legend of the Kingdom of Light',
-      description: 'In the valley-Realm of Veldoria, an eleven-year-old girl named Mira wakes one morning to find a small prismatic light hovering above her chest. Soon she discovers she can wake the sleeping lights in every being she passes — but no one else can see what she sees. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees. A magical-realism novel about the loneliness of the first witness and the quiet joy that lives beneath every ordinary day.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "las-tierras-de-luz",
+      dir: join(BOOK_DIR, "las-tierras-de-luz", "chapters"),
+      title: "Las Tierras de Luz",
+      subtitle: "A Legend of the Kingdom of Light",
+      description:
+        "In the valley-Realm of Veldoria, an eleven-year-old girl named Mira wakes one morning to find a small prismatic light hovering above her chest. Soon she discovers she can wake the sleeping lights in every being she passes — but no one else can see what she sees. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees. A magical-realism novel about the loneliness of the first witness and the quiet joy that lives beneath every ordinary day.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
     {
-      id: 'lumara-valle-de-los-destellos',
-      dir: join(BOOK_DIR, 'lumara-valle-de-los-destellos', 'chapters'),
-      title: 'Lumara — el valle de los destellos',
-      subtitle: 'A bedtime fairy tale for ages 5-8 (ES primary, EN woven)',
-      description: 'A ten-night bilingual bedtime book set in Lumara, a magical valley reached by a moonlight door, where destellos grow like flowers. Six-and-a-half-year-old Lila and her stuffed rabbit Conejito walk into ten gentle encounters with a glass river, a hummingbird that sings colors, a snail with a galaxy inside, a silver fox, a butterfly that paints the air, an owl of silences, a deer with candles on its antlers, the girl with the flower in her hair, and the tree of names. Written in the warmth of Studio Ghibli, the tenderness of Saint-Exupéry, and the voice of Astrid Lindgren. A gift, for a niece.',
-      status: 'in-progress',
-      contentType: 'novel',
-      layout: 'flat',
+      id: "lumara-valle-de-los-destellos",
+      dir: join(BOOK_DIR, "lumara-valle-de-los-destellos", "chapters"),
+      title: "Lumara — el valle de los destellos",
+      subtitle: "A bedtime fairy tale for ages 5-8 (ES primary, EN woven)",
+      description:
+        "A ten-night bilingual bedtime book set in Lumara, a magical valley reached by a moonlight door, where destellos grow like flowers. Six-and-a-half-year-old Lila and her stuffed rabbit Conejito walk into ten gentle encounters with a glass river, a hummingbird that sings colors, a snail with a galaxy inside, a silver fox, a butterfly that paints the air, an owl of silences, a deer with candles on its antlers, the girl with the flower in her hair, and the tree of names. Written in the warmth of Studio Ghibli, the tenderness of Saint-Exupéry, and the voice of Astrid Lindgren. A gift, for a niece.",
+      status: "in-progress",
+      contentType: "novel",
+      layout: "flat",
     },
   ];
 
@@ -567,17 +615,19 @@ export async function getAllSeries(): Promise<BookSeries[]> {
   for (const cfg of SERIES_CONFIGS) {
     let books: SeriesBook[] = [];
 
-    if (cfg.layout === 'flat') {
+    if (cfg.layout === "flat") {
       // Files sit directly in the series dir
       const info = await loadFlatChapters(cfg.dir);
-      books = [{
-        id: cfg.id,
-        title: cfg.title,
-        firstChapterSlug: info.firstSlug,
-        chapterCount: info.count,
-        wordCount: info.wordCount,
-      }];
-    } else if (cfg.layout === 'sagas') {
+      books = [
+        {
+          id: cfg.id,
+          title: cfg.title,
+          firstChapterSlug: info.firstSlug,
+          chapterCount: info.count,
+          wordCount: info.wordCount,
+        },
+      ];
+    } else if (cfg.layout === "sagas") {
       // Each subdir is a standalone saga with its own chapter files
       books = await loadSeriesBooks(cfg.dir);
     } else {
@@ -608,7 +658,7 @@ export async function getAllSeries(): Promise<BookSeries[]> {
  * Get a single document with full content.
  */
 export async function getSagaDocument(
-  category: SagaDocument['category'],
+  category: SagaDocument["category"],
   slug: string,
 ): Promise<SagaDocument | null> {
   const dirName = CATEGORY_DIRS[category];
@@ -619,13 +669,13 @@ export async function getSagaDocument(
 
   const files = await readdir(dirPath);
   const filename = files.find(
-    f => f.endsWith('.md') && filenameToSlug(f) === slug,
+    (f) => f.endsWith(".md") && filenameToSlug(f) === slug,
   );
 
   if (!filename) return null;
 
   const filePath = join(dirPath, filename);
-  const raw = await readFile(filePath, 'utf-8');
+  const raw = await readFile(filePath, "utf-8");
 
   return {
     id: `${category}/${slug}`,
