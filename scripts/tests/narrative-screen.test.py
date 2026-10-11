@@ -9,6 +9,7 @@ from unittest.mock import patch
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 import importlib.util
+import io
 
 ROOT = pathlib.Path(__file__).resolve().parent
 SCRIPT = ROOT.parent / 'narrative-evals/openrouter-screen.py'
@@ -317,6 +318,25 @@ class RunnerChecks(unittest.TestCase):
     def test_credentials_cannot_follow_redirects(self):
         with self.assertRaises(RuntimeError):
             run.NoRedirect().redirect_request(None, None, 307, 'redirect', {}, 'https://unapproved.example/')
+
+    def test_actual_request_constructor_preserves_fixed_generation_url_without_encoding_calls(self):
+        captured = []
+        class OfflineOpener:
+            def open(self, request, timeout):
+                captured.append((request.full_url, request.get_method(), request.data, timeout))
+                return io.BytesIO(b'{"data":{"id":"gen-OFFLINE-123"}}')
+        with patch.object(run.urllib.request, 'build_opener', return_value=OfflineOpener()):
+            result, raw = run.request('/generation?id=gen-OFFLINE-123', 'TEST ONLY')
+        self.assertEqual(result['data']['id'], 'gen-OFFLINE-123')
+        self.assertEqual(captured, [('https://openrouter.ai/api/v1/generation?id=gen-OFFLINE-123', 'GET', None, 180)])
+        self.assertEqual(json.loads(raw), result)
+
+    def test_request_rejects_foreign_origin_query_injection_and_wrong_methods_before_transport(self):
+        for path, body in [('https://unapproved.example/', None), ('/generation?id=gen-123&other=value', None),
+                           ('/generation?id=../private', None), ('/key', b'{}'), ('/chat/completions', None)]:
+            with patch.object(run.urllib.request, 'build_opener', side_effect=AssertionError('Network must not be reached')):
+                with self.assertRaises(ValueError):
+                    run.request(path, 'TEST ONLY', body)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
