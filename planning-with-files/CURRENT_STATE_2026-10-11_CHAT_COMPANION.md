@@ -475,3 +475,50 @@ and reports zero cost. The source-quote validator rejects it. No verdict or
 remaining-module coverage is accepted, no quote is normalized, and no unchanged
 source is retried. The response and unvalidated findings remain retained. The
 strong independent review and real creator/customer acceptance remain open.
+
+## Featured companion selection and complete type context
+
+Scope: Disclose the missing-key companion state honestly; verify keyboard
+selection of all three featured companions and preparation
+of an editable starter draft without sending a provider request. Remove the
+unnecessary double cast and include the complete actual Luminor configuration in
+the independent experience review and browser source manifest.
+Owner: codex-provider-account-20261011, programme 276, draft PR 597.
+Files: Owned companion-chat.tsx, chat-welcome.tsx, verify-companion-browser.cjs, review-companion.py,
+test_review_companion.py and this record. Accepted configuration is read-only.
+Non-goals: No new model, inference retry, budget approval, private-store changes,
+canon edits, migration, production promotion or broader creator-success claim.
+Acceptance criteria: The companion asks a creator to connect a key until an
+actual current-account key exists, then shows the chosen provider. Every featured SVG control has a 44px target and supports
+Enter; each selects its actual configured companion and lets a creator prepare
+and focus a starter draft. No selection automatically sends. Complete review
+context retains all previous files and now includes LuminorConfig/system prompts.
+Verification: No-network admission regressions, syntax/format checks, hosted
+four-mode browser, full CI and valid exact-revision independent reconciliation.
+Rollback: Revert this follow-up without changing accepted production ancestry.
+
+At 7a046ab7722cb669662af7988f9c6840103ac7c0, CI 38172914296 passes Install,
+Lint, TypeScript, Build and CI Status; compiled companion 114569117863 passes.
+Independent 114569117691 times out after one experience call without a response,
+usage or verdict. That terminal attempt is retained and is not relaunched.
+
+Production aliases arcanea.ai and www.arcanea.ai now resolve to READY production
+dpl_6Sbtb42jH9TW633JDizSnUp3YV5X, source bb403ba15b308aeb424cf801efb3c0eb3417ae45.
+That source is one commit ahead of accepted chat d228; only the voice-credentials
+browser verifier differs. This lane did not perform either production promotion.
+
+The rejected 49ae review cites two findings one line away from their literal
+source, so its verdict remains invalid. Lead tracing finds account-revision
+remounts, actual SDK cancellation checks and current-token callbacks; voice has
+abort/unmount checks both before dispatch and after awaits. The alleged missing
+Luminor fields exist in the actual configuration. The packet omitted that full
+definition; it now includes it. The double cast is unnecessary because
+LuminorConfig supplies all required ActiveLuminor fields and is removed. The
+companion's misleading configured-key label is repaired by checking the actual
+current-account key. The fallback provider and inherited example-backend mock
+remain separate from real authentication/provider/customer qualification;
+synthetic checks cannot qualify those outcomes.
+
+Machine preflight at 20:46:46Z holds new local review workloads: 6,088MB free
+against the 6,144MB reserve. No new agent, local build, browser, server or model is
+started; ordinary edits and small checks continue, with hosted validation used.

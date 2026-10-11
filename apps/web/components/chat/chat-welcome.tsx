@@ -178,7 +178,11 @@ export function ChatWelcome({
 
         {/* Luminor quick-select — 3 featured personalities */}
         {!activeLuminor && (
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+          <div
+            className="flex flex-wrap items-center justify-center gap-2 mb-4"
+            role="group"
+            aria-label="Featured companions"
+          >
             <span className="text-[10px] text-[var(--arc-text-secondary)] mr-1">
               Talk to
             </span>
@@ -189,7 +193,7 @@ export function ChatWelcome({
                 <button
                   key={lid}
                   type="button"
-                  onClick={() => onSelectLuminor(l as unknown as ActiveLuminor)}
+                  onClick={() => onSelectLuminor(l)}
                   className="flex min-h-11 items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-200 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                   title={`${l.loreName} — ${l.specialty}`}
                 >

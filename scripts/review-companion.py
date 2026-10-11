@@ -38,6 +38,7 @@ CONTEXTS = (
     "apps/web/components/chat/chat-overlays.tsx",
     "apps/web/components/chat/chat-notices.tsx",
     "apps/web/lib/chat/error-message.ts",
+    "apps/web/lib/luminors/config.ts",
     "packages/design-system/src/companion.module.css",
     "apps/web/hooks/use-provider.ts", "apps/web/lib/ai/provider-preferences.ts",
     "apps/web/lib/auth/context.tsx", "apps/web/lib/supabase/client.ts",
@@ -282,6 +283,7 @@ def modules(changed, content):
                    "apps/web/components/chat/chat-notices.tsx", "apps/web/lib/chat/error-message.ts"}
     extra = {
         "experience": common | identity | interaction | {
+            "apps/web/lib/luminors/config.ts",
             "packages/design-system/src/tokens.css", "apps/web/components/chat/command-palette.tsx",
             "apps/web/components/command-palette.tsx", "apps/web/components/worlds/WorldsOnboarding.tsx",
             "packages/design-system/src/companion.module.css"},
