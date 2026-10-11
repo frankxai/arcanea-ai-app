@@ -241,3 +241,92 @@ No account/provider request or outbound mutation occurred; the browser closed.
 This proves locator fidelity only, not the SDK follow-up or authenticated settings.
 Fresh browser-qa admission at07:14 was BOUNDED, 9,988 MB free /8,192 required,
 CPU35 percent. No localhost server, dependency install or additional agent was used.
+
+## Isolated protected settings acceptance
+
+Source 3a22e0ae passes full hosted run38120918429, including compiled public-chat
+account assertions in desktop, mobile and reduced motion. Its final full review
+timed out and its partial Cohere response was malformed; final independent
+approval remains open. Hub255 and programme276 retain the exact results.
+
+The next acceptance job reuses the existing disposable PostgreSQL/GoTrue/PostgREST
+projection pattern instead of repurposing the restricted author preview. It
+creates two temporary accounts, uses the actual login UI and unchanged server
+middleware, and checks account-specific provider saves/reloads, cross-tab conflict
+denial, interrupted storage recovery and a stale form submission immediately after
+the actual cross-tab auth subscriber runs. The timing hook does not synthesize a
+session; the other tab signs in through GoTrue. Fixture cookie clearing prepares
+the account switch and does not certify the product sign-out UI.
+
+Scope: Finish isolated two-account protected-settings acceptance for this repair.
+Owner: codex-provider-account-20261011.
+Files: scripts/run-provider-account-fixture.mjs,
+scripts/verify-provider-settings-browser.cjs, .github/workflows/ci.yml and this
+existing pickup; prior SDK fix paths remain in the same candidate.
+Non-goals: Hosted Supabase/project changes, production data or migrations,
+author fixture scope, live provider calls, pricing, canon or permissions.
+Acceptance criteria: Exact-source compiled settings pass with nine real isolated
+password logins across three modes, both actors' independent save/reload/return,
+cross-tab and same-turn stale-save denial, storage failure/retry and zero AI POSTs.
+Verification: Native syntax/format and hosted provider-account-preview; retain
+safe source/image hashes and masked screenshots. Fresh exact-source independent
+review is still required. Production/provider/customer evidence remains separate.
+Rollback: Revert only this fixture/job wiring; preserve the account and SDK fixes.
+
+The runner is restricted to this owned hosted branch, exact GITHUB_SHA and Frank's
+actor. It refuses inherited Supabase/provider credentials, binds services to
+loopback, creates random ephemeral tokens and removes its own containers/network
+and private configuration. No local containers, build or browser started under
+the latest review-lite RAM HOLD (4,681 MB free /6,144 required). Ordinary source
+editing and small checks remain permitted. The new fixture is implemented but
+has not yet earned hosted or independent acceptance.
+
+At5b33f521, ordinary PR run38123102700 passes all required CI jobs while the
+restricted provider job is skipped; manual run38123099974 is running, with its
+isolated login job dependent on build. The independent full28-source review returned WARN. Its
+skipped-needs allegation conflicts with ci-status's always() and the observed PR
+success; its branch-gate complaint opposes the deliberate admission boundary;
+its memo-cursor claim ignores the reset on every render; its transport note
+explicitly describes correct behavior. The raw WARN is retained.
+
+The stale-form finding misstates capture order and cannot pass with oldForm=null
+because the test requires exactly one attempt. It nevertheless prompted a useful
+stronger witness: assert that the old Google form remains connected with its
+unsaved A key, and that its actual React submit handler prevents the native
+submit after auth subscribers run. Both observations are now required along with
+unchanged A storage and empty B storage. Fresh hosted and exact-source review
+must cover this refinement; no isolated or production pass is inferred.
+
+Manual run38123099974 ends with the required settings job failing at cross-tab
+conflict. Its source-bound receipt confirms one actual password login and the
+first account's save/reload before that stage, zero AI POSTs, zero page errors,
+and complete owned-container/private-config cleanup. The masked capture shows
+the expected conflict message. The fixture's global alert selector also matches
+Next.js's route announcer; assertions now select the settings form's own alert.
+Safe diagnostics retain an assertion line and role counts without raw exception
+text or credential values. The failed run is preserved and the guard remains
+blocking until a corrected exact-source run passes.
+
+## Private configuration race repair, 11 October
+
+CodeQL analysis at a7041809 reported new alert277 in the isolated runner: checking a configuration path before writing could overwrite a file that appeared between those operations. The runner now allocates the private file atomically with `openSync(path, "wx", 0o600)`, writes through that descriptor and returns a cleanup handle only after successful allocation. Cleanup preserves occupied paths when allocation fails, closes the owned descriptor and reports cleanup failure safely.
+
+The source-derived native regression exercises the actual runner's operations. Before repair all three checks failed: an arriving file was overwritten, writes used a pathname and interrupted writes had no owned descriptor cleanup. The corrected source must pass collision preservation, descriptor writes/permissions and interrupted-write cleanup. The existing hosted authenticated fixture and CodeQL analysis need fresh results at the new revision; the nine real logins and prior static reviews remain bound to a7041809.
+
+Scope: eliminate the isolated runner's private-file creation race.
+Owner: codex-provider-account-20261011.
+Files: runner, private-configuration regression, existing native CI step and this pickup.
+Non-goals: production auth, secrets, database, billing, permissions, dependencies or changes to the accepted Chat repair.
+Acceptance criteria: preserve an occupied file; close/remove only a successfully allocated configuration; pass exact-source hosted settings acceptance; resolve alert277 through fresh security analysis.
+Verification: native three-case old/new regression, hosted CI/authenticated fixture, CodeQL result and exact-revision independent review.
+Rollback: revert this runner-only refinement through the owned lane; the earlier private-file race returns and must remain recorded as an open security finding.
+
+## Accepted generation baseline and remaining fixture scope
+
+Frank merged PR577 as 0dd501281f89f0612454b1200ba40f8fac5799f6. It includes the earlier donor Chat-instance repair and source-equivalent SDK regression/public-chat verifier. READY production deployment dpl_pn9b6gyZ8cNVjG4UD5YAcnU7pwLL reports that source. PR578 now contributes only the isolated settings runner/browser, private-file regression, CI wiring and this pickup. Application, generation and image-recovery source are preserved from accepted main.
+
+Premium Web OS adoption review retains the accepted account-epoch image recovery, image display/download, CORS fallback and mobile controls as app behavior. Visual doctrine, asset rights, paid-provider and customer-quality approval remain separate. The generation fixture's dependencies on install/lint/typecheck and its Luminor image test remain intact. The main pickup prefix and all other incoming files were checked for exact preservation; only the owned CI native-test line and pickup tail required conflict resolution.
+
+The initial preservation helper expected sparse-excluded files on disk and failed after resolving both conflicts. The merge committed before that check completed. A Git-object verifier subsequently confirmed all 19 other incoming source hashes, all three owned fixture sources and the main pickup prefix. It records the failure and correction without changing accepted application source.
+
+The private-file tests fail three cases against a7041809 and pass all three after the atomic descriptor repair. Hosted a7041809 settings evidence records nine real isolated logins, all three modes and zero AI POSTs. The corrected 9abe0519 run is a prior-source attempt after this main integration. Fresh CI/authenticated acceptance, security results and independent review must bind to the integrated head. CodeQL alert277 has not been manually dismissed.
