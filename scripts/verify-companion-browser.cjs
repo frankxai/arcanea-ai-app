@@ -95,21 +95,50 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
-    await page.waitForFunction(() =>
-      document
-        .getAnimations()
-        .every(
-          (animation) =>
-            !Number.isFinite(
-              animation.effect?.getComputedTiming().iterations,
-            ) ||
-            animation.playState === "finished" ||
-            animation.playState === "idle",
+    const surface = name.startsWith("full-chat-")
+      ? page.getByRole("log", { name: "Chat messages", exact: true })
+      : page.getByRole("dialog", {
+          name: name.startsWith("shortcuts-")
+            ? "Keyboard shortcuts"
+            : "Arcanea companion",
+          exact: true,
+        });
+    await expect(surface).toBeVisible();
+    await expect
+      .poll(() =>
+        surface.evaluate(
+          (element) =>
+            element
+              .getAnimations({ subtree: true })
+              .filter(
+                (animation) =>
+                  Number.isFinite(
+                    animation.effect?.getComputedTiming().iterations,
+                  ) && animation.playState === "running",
+              ).length,
         ),
-    );
-    await page.evaluate(async () => {
+      )
+      .toBe(0);
+    const surfaceGeometry = await surface.evaluate(async (element) => {
       await new Promise(requestAnimationFrame);
+      const box = element.getBoundingClientRect();
+      const ancestorOpacities = [];
+      for (let current = element; current; current = current.parentElement)
+        ancestorOpacities.push(Number(getComputedStyle(current).opacity));
+      return {
+        x: box.x,
+        y: box.y,
+        width: box.width,
+        height: box.height,
+        ancestorOpacities,
+      };
     });
+    assert.ok(
+      surfaceGeometry.width > 0 &&
+        surfaceGeometry.height > 0 &&
+        surfaceGeometry.ancestorOpacities.every((opacity) => opacity === 1),
+      "Capture surface and its ancestors are fully painted",
+    );
     const file = `${name}.png`;
     await page.screenshot({ path: path.join(output, file) });
     const capture = {
@@ -117,6 +146,7 @@ async function main() {
       sha256: digest(await fs.readFile(path.join(output, file))),
       head,
       sourceHashes,
+      surfaceGeometry,
       fixture: true,
       realProviderCalls: 0,
       productionWrites: 0,
