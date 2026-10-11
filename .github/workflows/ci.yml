@@ -178,6 +178,9 @@ jobs:
       - name: Verify independent review admission before provider access
         run: node --test scripts/test-independent-review-admission.mjs
 
+      - name: Verify disposable generation provider isolation
+        run: node --test scripts/tests/generation-fixture.test.mjs
+
       - name: Verify auth recovery and creator economics
         run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs scripts/tests/provider-routing.test.mjs scripts/tests/provider-preferences.test.mjs scripts/tests/notification-channel.test.mjs
 
@@ -572,6 +575,42 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+  generation-preview:
+    name: Authenticated generation acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/generation-admission-20261011'
+    needs: [install, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Exact-source review hashes require the immutable base revision.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real password login, durable image recovery and account isolation
+        run: node scripts/run-generation-service-fixture.mjs
+      - name: Retain safe generation acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: generation-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/generation-service/
+          retention-days: 7
+          if-no-files-found: warn
+
   # ============================================
   # STATUS — the merge gate. It is the only job here that cannot skip under any
   # event, so it is the only context whose green is unconditionally earned.
@@ -581,7 +620,7 @@ jobs:
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
-    needs: [install, lint, typecheck, build]
+    needs: [install, lint, typecheck, build, generation-preview]
     # always() and nothing else: this job must run even when an upstream job fails
     # or is cancelled, so it reports a real verdict. Any condition that can make it
     # skip reads as a passing required check.
@@ -613,6 +652,11 @@ jobs:
           fi
           if [ "${{ needs.build.result }}" != "success" ]; then
             echo "::error::Build failed — blocks merge"
+            PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/generation-admission-20261011" ] && [ "${{ needs.generation-preview.result }}" != "success" ]; then
+            echo "::error::Authenticated generation acceptance is unearned for this dispatched revision"
             PASS=false
           fi
 
