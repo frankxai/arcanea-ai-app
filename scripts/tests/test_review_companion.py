@@ -92,8 +92,12 @@ class ReviewAdmission(unittest.TestCase):
             bad["findings"][0].update(changes)
             with self.subTest(changes=changes), self.assertRaises(REVIEW.Denied):
                 REVIEW.validate(bad, HEAD, BASE, "manifest", content)
-        with self.assertRaises(REVIEW.Denied):
-            REVIEW.validate({**valid, "verdict": "pass"}, HEAD, BASE, "manifest", content)
+        for priority in ("P0", "P1", "P2", "P3"):
+            contradictory = copy.deepcopy(valid)
+            contradictory["verdict"] = "pass"
+            contradictory["findings"][0]["priority"] = priority
+            with self.subTest(priority=priority), self.assertRaises(REVIEW.Denied):
+                REVIEW.validate(contradictory, HEAD, BASE, "manifest", content)
         with self.assertRaises(REVIEW.Denied):
             REVIEW.validate(self.valid_review(), HEAD, BASE, "manifest", content, ["changed.ts"])
 
@@ -164,6 +168,26 @@ class ReviewAdmission(unittest.TestCase):
                             ({path: value for path, value in content.items() if path != KERNEL}, changed)):
             with self.assertRaises(REVIEW.Denied):
                 REVIEW.modules(paths, data)
+
+    def test_followup_reviews_all_context_without_empty_domain_calls(self):
+        changed = ["apps/web/components/chat/chat-welcome.tsx",
+                   "apps/web/components/chat/agent-header.tsx",
+                   "scripts/verify-companion-browser.cjs",
+                   "scripts/review-companion.py",
+                   "scripts/tests/test_review_companion.py",
+                   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_COMPANION.md"]
+        content = {path: "Complete source" for path in set(changed) | set(REVIEW.CONTEXTS)}
+        primary, planned = REVIEW.modules(changed, content)
+        self.assertEqual(set(primary), {"experience", "composer", "companion-browser", "review-protocol"})
+        self.assertTrue(all(primary.values()))
+        self.assertEqual(sum(len(paths) for paths in primary.values()), len(changed))
+        self.assertEqual(set().union(*(set(paths) for paths in planned.values())), set(content))
+        self.assertIn("apps/web/components/saga/chapter-reader.tsx", planned["companion-browser"])
+        self.assertIn("apps/web/app/api/ai/chat/route.ts", planned["companion-browser"])
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.modules([], {path: content[path] for path in REVIEW.CONTEXTS})
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.modules(changed, {**content, "unassigned.ts": "Unregistered context"})
 
     def test_truncated_empty_tool_and_wrong_model_responses_cannot_be_accepted(self):
         valid = {"model": REVIEW.MODEL, "choices": [{"finish_reason": "stop", "message": {

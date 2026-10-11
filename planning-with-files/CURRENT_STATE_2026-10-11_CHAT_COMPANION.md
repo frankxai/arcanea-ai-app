@@ -380,3 +380,81 @@ PR591 was externally marked ready and is restored to draft while browser accepta
 fails and the separate paid review approval remains pending. This preserves the
 actual source merge; no high-risk promotion or funded review is authorized by
 readiness alone. Fresh checks are required for the name repair.
+
+
+## Accepted chat production and bounded interface follow-up
+
+Scope: Complete the chat selector and featured companion controls with Phosphor
+SVGs and visible keyboard/touch targets; require decoded welcome images in render
+captures; make the review verdict policy explicit and support a narrow follow-up
+without dropping complete configured context.
+Owner: codex-provider-account-20261011, programme276. Original PR591 is merged by
+another action; this follow-up needs its own draft PR.
+Files: Owned agent-header.tsx, chat-welcome.tsx, verify-companion-browser.cjs,
+review-companion.py, test_review_companion.py and this state record.
+Non-goals: No provider spending, credentials, migration execution, canon/name
+changes, private-store provisioning or claim of complete creator acceptance.
+Acceptance criteria: Existing send/Stop/account/draft and menu/focus recovery pass;
+selectors render SVGs and featured controls have44px targets; welcome captures
+wait for image decode and include dimensions; all changed files have one review
+owner, all configured complete context is retained, and contradictory verdicts fail.
+Verification: Hosted compiled browser, lint/typecheck/build, source/PNG bindings,
+no-network review regressions, exact-revision independent reconciliation.
+Rollback: Revert only the follow-up commit; retain accepted production ancestry.
+
+Current remote merge7a3cc5db0a42796c55b86074690dfce3ae3120f5 preserves accepted
+private-image maina05de2b978fe97a9c670ecba67bca1a132eb63a8. All29 incoming Git
+objects match that accepted main; integration-only ownership is released. No
+migration or private-storage configuration is executed by this lane. Accepted
+private-image source remains separate from actual supplier/store/customer proof.
+
+CI38170241793 passes Install, Lint, TypeScript, Build and CI Status at7a.
+Reading38170241802 passes. Companion38170241798 compiled114561153399 passes,
+but independent114561153626 times out after one dispatched experience request:
+no response, usage or verdict. The prior43cc independent114560053508 also times
+out; its CI38169875820 Build is terminal cancelled after the newer remote merge.
+Those cancelled/timed-out attempts are retained and are never restarted unchanged.
+No valid current independent source verdict is claimed.
+
+All12 actual7a captures were inspected;31 Git-source hashes and every PNG/sidecar
+hash match both7a and accepted production sourced2285fb74f296ce783d3f0fed9bdef6959e3f9d9.
+Four modes prove close/Stop/identity recovery, menu keyboard selection/Escape/focus,
+shortcut containment/return and no page errors. Each measures14 composer/control
+entries: minimum contrast7.2109 in ordinary/reduced modes and14.0247 in forced
+colors, with44px enabled controls. These are24 synthetic loopback requests and
+zero real provider calls/production writes; owned browser/server cleanup succeeds.
+The desktop welcome capture lacks a completed mascot image, so visual readiness
+is incomplete despite the behavioral pass. The follow-up waits for visible,
+loaded and decoded mascot imagery and records dimensions before capture.
+
+An external action merges591 at20:04:56Z to d2285fb74f296ce783d3f0fed9bdef6959e3f9d9.
+The current arcanea.ai alias points to READY production deployment
+ dpl_BqPRrUniUUUB2Kgu8hNMmvEfgfJ7 at that source. This lane does not perform that
+promotion or infer an independent verdict, budget approval or customer success
+from the merge. The review-timeout gap remains explicit.
+
+Raw7be review findings and response hash are preserved. Its pass plus three
+findings is invalid and is not normalized into approval. Lead reconciliation
+traces intentional draft retention/close abort, closed-first dialog/ref timing
+and the stream-only Stop trigger with error reset on the next send. No cited
+failure is reproduced in the stated scenario; source-only gaps remain. The
+prompt now states that pass requires empty findings, including P3 suggestions.
+The validator still rejects contradictory verdicts, false lines/quotes, wrong
+source/model, missing coverage and private/paid inputs.
+
+A follow-up changes four review domains. The contract dispatches only domains
+with changed files, at most the original six; every changed file still has one
+owner and every configured complete context remains supplied. Inherited chat,
+error-display, SDK/account and reader context is added explicitly so accepted
+files stay reviewable after the original changes land. Unregistered context and
+empty changes are denied; aggregate coverage and source/price/scan/support bounds
+remain enforced. No output/context bound, timeout or release assertion is reduced.
+Eleven no-network regressions pass, including complete sparse-follow-up coverage
+and nonempty pass denial for every priority. Two changed TSX files parse; browser
+syntax and owned-file formatting pass. Fresh hosted renders and full checks are
+required for the follow-up. The separate $2 review approval is still unanswered.
+
+The full goal stays active: real read/create/save/reopen/payment and private
+production storage, graph/memory/canvas/studio, operational Queen/SIS, academy/
+community, books/art/music/video, income streams, API/MCP/kits/IP and clients all
+retain their owning acceptance and publication gates.

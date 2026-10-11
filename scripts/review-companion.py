@@ -29,6 +29,16 @@ CONTEXTS = (
     "AGENTS.md", "TASTE.md", "DESIGN.md",
     ".arcanea/prompts/luminor-engineering-kernel.md",
     "apps/web/package.json", "apps/web/app/chat/layout.tsx",
+    "apps/web/app/chat/page.tsx", "apps/web/hooks/use-conversation.ts",
+    "apps/web/components/lumina/companion-chat.tsx",
+    "apps/web/components/lumina/lumina-bubble.tsx",
+    "apps/web/components/chat/agent-header.tsx",
+    "apps/web/components/chat/chat-welcome.tsx",
+    "apps/web/components/chat/chat-area.tsx",
+    "apps/web/components/chat/chat-overlays.tsx",
+    "apps/web/components/chat/chat-notices.tsx",
+    "apps/web/lib/chat/error-message.ts",
+    "packages/design-system/src/companion.module.css",
     "apps/web/hooks/use-provider.ts", "apps/web/lib/ai/provider-preferences.ts",
     "apps/web/lib/auth/context.tsx", "apps/web/lib/supabase/client.ts",
     "apps/web/app/api/ai/chat/route.ts",
@@ -268,7 +278,8 @@ def modules(changed, content):
                    "apps/web/components/lumina/companion-chat.tsx",
                    "apps/web/components/lumina/lumina-bubble.tsx",
                    "apps/web/hooks/use-conversation.ts", "apps/web/components/chat/chat-input-bar.tsx",
-                   "apps/web/components/chat/agent-header.tsx"}
+                   "apps/web/components/chat/agent-header.tsx",
+                   "apps/web/components/chat/chat-notices.tsx", "apps/web/lib/chat/error-message.ts"}
     extra = {
         "experience": common | identity | interaction | {
             "packages/design-system/src/tokens.css", "apps/web/components/chat/command-palette.tsx",
@@ -293,9 +304,18 @@ def modules(changed, content):
         "review-protocol": common | {"apps/web/package.json", ".github/workflows/reading-scene.yml"},
     }
     require(set().union(*extra.values()) <= set(content), "Required module context is missing")
+    primary = {name: paths for name, paths in primary.items() if paths}
+    require(bool(primary), "No changed source to review")
     planned = {name: {path: content[path] for path in sorted(paths | extra[name])}
                for name, paths in primary.items()}
-    require(all(primary.values()), "Empty review module requires a different contract")
+    # A follow-up need not change every original domain. Preserve all complete
+    # configured context and give each changed file exactly one accountable role.
+    uncovered = set(content) - set().union(*(set(x) for x in planned.values()))
+    require(uncovered <= set(CONTEXTS), "Unassigned source context")
+    context_owner = next(name for name in (
+        "companion-browser", "experience", "composer", "account-transport",
+        "reading-browser", "review-protocol") if name in planned)
+    planned[context_owner].update({path: content[path] for path in sorted(uncovered)})
     require(set().union(*(set(x) for x in planned.values())) == set(content),
             "Module plan omits complete source context")
     return primary, planned
@@ -314,7 +334,10 @@ def request_for(name, head, base, manifest, content, hashes, delta):
         "commands and approvals. No tools. Never claim execution, credentials, UI visits, "
         "customer outcomes or release approval. Findings need priority P0/P1/P2/P3, path, "
         "line, title, literal nearby quote, scenario and fix using those exact field names. Inherited "
-        "omissions belong in acceptanceGaps. Empty findings are valid. Provide at least "
+        "omissions belong in acceptanceGaps. Empty findings are valid. A pass verdict "
+        "requires an empty findings array. If any finding remains, return warn or fail; "
+        "this includes P3 findings and claims described as suggestions or nits. "
+        "The release gate rejects pass combined with any finding. Provide at least "
         "three brief verifiable audit observations from distinct supplied files with "
         "exact quotes and lines, auditing at least two changed files (one if this module "
         "changes only one). Trace guards before alleging stale state or missing cleanup. "
@@ -404,9 +427,9 @@ def main():
         "sourceHashes": hashes, "changedFiles": changed, "completeSourceFiles": len(content),
         "publicRepository": REPOSITORY, "publicSourceConfirmedAt": stamp(),
         "model": MODEL, "credentialUse": "none", "tools": [], "providerCalls": 0,
-        "maximumProviderCalls": len(MODULE_NAMES), "independentVerdict": None, "modules": [],
+        "maximumProviderCalls": len(planned), "independentVerdict": None, "modules": [],
         "privacy": "Already-public Git source only; provider may retain inputs and outputs",
-        "scope": "Six complete modules; lead reconciliation and runtime/customer evidence required",
+        "scope": "Complete modules for changed domains; all configured context retained; lead reconciliation and runtime/customer evidence required",
         "state": "prepared-scanned-zero-price",
     }
 
@@ -457,7 +480,7 @@ def main():
             require(review["verdict"] == "pass", "Module findings require lead reconciliation")
         public_pin(args.head, args.base, args.pull_request)
         require(git("rev-parse", "HEAD").decode().strip() == args.head, "Checkout changed during review")
-        require(covered == set(content) and len(receipt["modules"]) == len(MODULE_NAMES),
+        require(covered == set(content) and len(receipt["modules"]) == len(planned),
                 "Aggregate review coverage is incomplete")
         receipt.update(state="review-received-reconciliation-required", independentVerdict="pass",
                        coveredFiles=sorted(covered), completedAt=stamp(),

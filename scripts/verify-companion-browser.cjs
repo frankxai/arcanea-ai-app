@@ -223,6 +223,31 @@ async function main() {
           exact: true,
         });
     await expect(surface).toBeVisible();
+    let imageReadiness = [];
+    if (name.startsWith("full-chat-")) {
+      const mascot = surface.getByRole("img", { name: "Arcanea", exact: true });
+      await expect(mascot).toBeVisible();
+      await expect
+        .poll(
+          () =>
+            mascot.evaluate(
+              (image) => image.complete && image.naturalWidth > 0,
+            ),
+          { timeout: 10_000 },
+        )
+        .toBe(true);
+      imageReadiness = await mascot.evaluate(async (image) => {
+        await image.decode();
+        return [
+          {
+            alt: image.alt,
+            complete: image.complete,
+            naturalWidth: image.naturalWidth,
+            naturalHeight: image.naturalHeight,
+          },
+        ];
+      });
+    }
     await expect
       .poll(() =>
         surface.evaluate(
@@ -273,6 +298,7 @@ async function main() {
       head,
       sourceHashes,
       surfaceGeometry,
+      imageReadiness,
       fixture: true,
       realProviderCalls: 0,
       productionWrites: 0,
