@@ -220,6 +220,20 @@ jobs:
           createdb -h localhost -U postgres arcanea_private_imagine_fixture
           psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
 
+      - name: Verify atomic project document save and recovery
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          pnpm --dir apps/web exec tsx --test lib/docs/__tests__/save.test.ts
+          pnpm --dir apps/web exec tsx lib/docs/__tests__/api-contracts.test.ts
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v doc_disposable=1 -v original_first=1 -f supabase/tests/project-doc-revisions.sql
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v doc_disposable=1 -v original_first=0 -f supabase/tests/project-doc-revisions.sql
+
+      - name: Verify document fixture private configuration ownership
+        env:
+          PROJECT_DOCUMENT_CONFIG_FIXTURE: "true"
+        run: node --test scripts/tests/provider-fixture-private-config.test.cjs
+
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
@@ -569,7 +583,7 @@ jobs:
   author-independent-review:
     name: Independent author source review
     needs: [author-preview, world-preview]
-    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011' || github.ref_name == 'agent/codex/private-imagine-assets-20261011')
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011' || github.ref_name == 'agent/codex/private-imagine-assets-20261011' || github.ref_name == 'agent/codex/project-document-recovery-20261011')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -664,6 +678,42 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+  project-document-preview:
+    name: Authenticated project document acceptance
+    # Independent review intentionally runs after skipped author/world jobs.
+    # Avoid their inherited success() skip, while still requiring every direct gate.
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/project-document-recovery-20261011' && needs.install.result == 'success' && needs.lint.result == 'success' && needs.typecheck.result == 'success' && needs.author-independent-review.result == 'success'
+    needs: [install, lint, typecheck, author-independent-review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Actual isolated login, document recovery and account isolation
+        run: node scripts/run-project-document-service-fixture.mjs
+      - name: Retain safe document acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: project-document-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/project-document-service/
+          retention-days: 7
+          if-no-files-found: warn
+
   provider-account-preview:
     name: Authenticated provider settings acceptance
     if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/provider-account-20261011'
@@ -750,6 +800,7 @@ jobs:
         generation-preview,
         provider-account-preview,
         private-imagine-preview,
+        project-document-preview,
         author-independent-review,
       ]
     # always() and nothing else: this job must run even when an upstream job fails
@@ -804,6 +855,13 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/provider-account-20261011" ] && [ "${{ needs.provider-account-preview.result }}" != "success" ]; then
             echo "::error::Authenticated provider settings acceptance is unearned for this dispatched revision"
             PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/project-document-recovery-20261011" ]; then
+            if [ "${{ needs.project-document-preview.result }}" != "success" ] || [ "${{ needs.author-independent-review.result }}" != "success" ]; then
+              echo "::error::Document authenticated acceptance or exact-source review is unearned"
+              PASS=false
+            fi
           fi
 
           if [ "$PASS" = true ]; then
