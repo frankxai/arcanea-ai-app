@@ -42,10 +42,21 @@ bounded interactive workload and no new swarm. No local app build or browser
 was started.
 
 Verification: 16 offline checks passed in the private initial runner, including
-with Python optimization enabled; synthetic repository checks and hosted review
-must bind the final candidate. Their fixtures are not founder approval records
+with Python optimization enabled. The repository version adds credential/payer
+binding, billing receipt verification and lock-descriptor cleanup; final tests
+and hosted review must bind that revised candidate. Their fixtures are not founder approval records
 or model outputs. Paid model performance, human acceptance, holdout evaluation,
 equal-budget 1/3/5 roles and native harness comparisons remain pending.
+
+The first independent public-source review at `b09cbb55` returned WARN with five
+findings. It is retained as WARN. The nearby pre-lock validation, enforced equal
+approval/plan cap, inclusive response cap, documented byte-estimate convention
+and fixed-price synthetic fixture contradict those reported scenarios. An
+independent lead check found a separate real payer/accounting gap: account BYOK
+priority can bill a provider despite a credit-funded intent. The revised tool
+requires operator-verified absence of eligible BYOK keys and checks each actual
+generation's payer, model and cost. Those manual funding checks do not monitor
+external account changes. Fresh whole-candidate review is still required.
 
 Recovery: inspect retained private artifacts and reconcile uncertain generation
 and billing records without automatically releasing reservations or replaying

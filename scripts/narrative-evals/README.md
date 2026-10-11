@@ -20,7 +20,13 @@ classify arbitrary prose. Keep manuscripts, references and live outputs private.
 
 Paid execution needs explicit operator-verified founder authority, a separate
 approval receipt bound to the plan hash, scope, call count, total cap and expiry,
-and an authorized key supplied through `OPENROUTER_API_KEY`. Do not put a key in
+an exact credential fingerprint, and an authorized key supplied through
+`OPENROUTER_API_KEY`. The permitted payer is OpenRouter credits. The operator must
+verify and record that no account BYOK key is eligible for these requests before
+execution, and preserve that configuration during the run. OpenRouter can
+prioritize account BYOK keys even when the client supplies no provider key.
+The local receipt records this manual check; it does not monitor account changes.
+Do not put a key in
 chat, the plan, the receipt, source control or command arguments. The local receipt
 check validates fields, not signer identity. No key creation, purchase or top-up
 is implemented or authorized by this tool.
@@ -30,7 +36,11 @@ approved cap, count BYOK usage and have sufficient remaining credit. The runner
 checks that limit before each new request. It fixes the API origin, rejects
 authenticated redirects, restricts provider prices and data collection, requires
 parameter support and disables provider fallback. Requests contain no tools,
-plugins or model fallback. Provider-default sampling and reasoning remain a
+plugins or model fallback. A separate generation-metadata read verifies the
+returned model, payer and cost against each completion before accepting it.
+Unexpected BYOK billing or mismatched metadata preserves the attempt and stops
+further calls. This post-response check cannot prevent a first charge caused by
+an external account-configuration change. Provider-default sampling and reasoning remain a
 recorded experimental limitation.
 
 ```sh
@@ -38,7 +48,7 @@ python scripts/narrative-evals/openrouter-screen.py --plan /absolute/private/pla
 ```
 
 Each reservation is flushed to `attempts.jsonl` before the inference request.
-Raw responses and their hashes, returned model/provider, usage, cost and response
+Raw responses, billing metadata and their hashes, returned model/provider, usage, cost and response
 latency are retained beside the private plan. Re-running verifies and skips
 completed calls. An interrupted reservation, lost response, missing cost, changed
 output, model substitution, tool request or truncated output stops further calls.
@@ -61,4 +71,6 @@ the full evaluation programme or justify foundation promotion.
 
 Official API references: [model catalog](https://openrouter.ai/api/v1/models),
 [provider routing](https://openrouter.ai/docs/guides/routing/provider-selection),
-and [key credit limits](https://openrouter.ai/docs/api_reference/limits).
+[key credit limits](https://openrouter.ai/docs/api_reference/limits),
+[account BYOK priority](https://openrouter.ai/docs/guides/overview/auth/byok),
+and [generation metadata](https://openrouter.ai/docs/api/api-reference/generations/get-request-&-usage-metadata-for-a-generation).

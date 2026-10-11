@@ -80,6 +80,9 @@ def authorize(plan, plan_hash, approval, now=None):
     require(money(approval['maxTotalUSD']) == money(plan['maxTotalUSD']))
     require(approval['maxCalls'] == plan['maxCalls'])
     require(approval['allowTopup'] is False and approval['allowKeyCreation'] is False)
+    require(approval['payer'] == 'openrouter-credits')
+    require(approval['byokEligibilityVerifiedAbsent'] is True)
+    require(isinstance(approval['fundingConfigurationReceipt'], str) and approval['fundingConfigurationReceipt'].strip())
     expires = datetime.fromisoformat(approval['expiresAt'])
     require(expires.tzinfo is not None and expires > now)
 
@@ -94,7 +97,8 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         raise RuntimeError('Redirect denied; credentials stay on the fixed API origin')
 
 def request(path, key, body=None):
-    require(path in ('/key', '/chat/completions'))
+    require(path in ('/key', '/chat/completions') or re.fullmatch(r'/generation\?id=gen-[0-9A-Za-z-]{1,124}', path))
+    require((path == '/chat/completions') == (body is not None))
     headers = {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json',
                'X-OpenRouter-Title': 'Arcanea private development screen'}
     req = urllib.request.Request(API + path, data=body, headers=headers, method='POST' if body is not None else 'GET')
@@ -139,13 +143,18 @@ def execute(plan, plan_hash, approval, root, key, transport=request):
     validate(plan)
     authorize(plan, plan_hash, approval)
     require(key, 'Provision the separately authorized capped key through the operator environment')
+    require(approval['credentialSha256'] == digest(key.encode('utf-8')), 'Approval belongs to another experiment credential')
     lock = root / 'writer.lock'
     # Never delete another writer's lock, including one left by a crash.
     fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
     lock_token = str(os.getpid()) + ':' + plan_hash
-    os.write(fd, lock_token.encode('ascii'))
-    os.fsync(fd)
-    os.close(fd)
+    try:
+        os.write(fd, lock_token.encode('ascii'))
+        os.fsync(fd)
+    finally:
+        # A failed lock initialization retains the lock for reconciliation but
+        # must not leak its descriptor. Never clear a foreign or partial lock.
+        os.close(fd)
     ledger = root / 'attempts.jsonl'
     try:
         jobs = {job['id']: job for job in plan['jobs']}
@@ -156,6 +165,8 @@ def execute(plan, plan_hash, approval, root, key, transport=request):
                 rows = [json.loads(s) for s in ledger.read_text(encoding='utf-8').splitlines()]
                 record = next(r for r in rows if r['jobId'] == job['id'] and r['kind'] == 'completed')
                 require(digest(artifact.read_bytes()) == record['responseSha256'])
+                billing_path = root / (job['id'] + '.billing.json')
+                require(digest(billing_path.read_bytes()) == record['billingSha256'])
                 continue
             authorize(plan, plan_hash, approval)
             reservation = money(job['reservationUSD'])
@@ -177,6 +188,18 @@ def execute(plan, plan_hash, approval, root, key, transport=request):
                     os.fsync(handle.fileno())
                 actual = money(result['usage']['cost'])
                 require(actual <= reservation)
+                generation_id = result['id']
+                require(isinstance(generation_id, str) and re.fullmatch(r'gen-[0-9A-Za-z-]{1,124}', generation_id))
+                billing, billing_raw = transport('/generation?id=' + generation_id, key)
+                billing_path = root / (job['id'] + '.billing.json')
+                with billing_path.open('xb') as handle:
+                    handle.write(billing_raw)
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                bill = billing['data']
+                require(bill['id'] == generation_id and bill['model'] == job['model'])
+                require(bill['is_byok'] is False, 'Unexpected upstream payer; retain the charge for reconciliation')
+                require(money(bill['total_cost']) == actual, 'Completion and billing cost receipts disagree')
                 require(result['model'] == job['model'], 'Returned model does not match the pinned candidate')
                 choice = result['choices'][0]
                 require(choice['finish_reason'] == 'stop', 'Truncated or tool-request output needs explicit review')
@@ -186,7 +209,8 @@ def execute(plan, plan_hash, approval, root, key, transport=request):
                 append(ledger, {**base, 'kind': 'completed', 'actualUSD': str(actual),
                                'responseSha256': digest(raw), 'generationId': result['id'],
                                'returnedModel': result['model'], 'usage': result['usage'],
-                               'responseLatencySeconds': elapsed, 'returnedProvider': result.get('provider')})
+                               'responseLatencySeconds': elapsed, 'returnedProvider': bill.get('provider_name'),
+                               'payer': 'openrouter-credits', 'billingSha256': digest(billing_raw)})
                 spent += actual
                 completed.add(job['id'])
             except Exception as error:

@@ -5,6 +5,7 @@ import json
 import pathlib
 import tempfile
 import unittest
+from unittest.mock import patch
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 import importlib.util
@@ -40,6 +41,9 @@ def approval(plan, sha='bound-plan'):
     return {'planSha256': sha, 'authorizedBy': 'Frank', 'authorizationSource': 'OFFLINE TEST ONLY',
             'scope': 'one-public-source-development-screen', 'maxTotalUSD': plan['maxTotalUSD'],
             'maxCalls': plan['maxCalls'], 'allowTopup': False, 'allowKeyCreation': False,
+            'payer': 'openrouter-credits', 'byokEligibilityVerifiedAbsent': True,
+            'fundingConfigurationReceipt': 'OFFLINE TEST ONLY; no eligible account BYOK configuration',
+            'credentialSha256': hashlib.sha256(b'TEST ONLY').hexdigest(),
             'expiresAt': (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()}
 
 def one_job():
@@ -51,6 +55,10 @@ def one_job():
 
 def key_data():
     return {'data': {'limit': 10, 'limit_reset': None, 'include_byok_in_limit': True, 'limit_remaining': 10}}
+
+def billing_data(plan):
+    return {'data': {'id': 'gen-OFFLINE-generation', 'model': plan['jobs'][0]['model'],
+                     'is_byok': False, 'total_cost': 0.01, 'provider_name': 'OFFLINE FIXTURE'}}
 
 class RunnerChecks(unittest.TestCase):
     def test_plan_valid_and_no_reference_or_holdout_delivery(self):
@@ -113,6 +121,18 @@ class RunnerChecks(unittest.TestCase):
             with self.assertRaises(ValueError):
                 run.capped_key(data, Decimal('10'))
 
+    def test_unverified_payer_and_different_credential_stop_before_transport(self):
+        plan = one_job()
+        for mutate in [lambda a: a.update({'payer': 'provider-byok'}),
+                       lambda a: a.update({'byokEligibilityVerifiedAbsent': False}),
+                       lambda a: a.update({'fundingConfigurationReceipt': ''}),
+                       lambda a: a.update({'credentialSha256': 'different'})]:
+            item = approval(plan)
+            mutate(item)
+            with self.with_root() as directory:
+                with self.assertRaises(ValueError):
+                    run.execute(plan, 'bound-plan', item, pathlib.Path(directory), 'TEST ONLY', lambda *a: self.fail('Transport reached'))
+
     def test_nan_infinity_negative_and_boolean_money_rejected(self):
         for value in ['NaN', 'Infinity', '-1', True, None]:
             with self.subTest(value=value), self.assertRaises(ValueError):
@@ -148,6 +168,17 @@ class RunnerChecks(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', lambda *a: self.fail('Transport reached'))
             self.assertEqual(lock.read_text(encoding='ascii'), 'another-owner')
+
+    def test_failed_lock_initialization_closes_descriptor_and_preserves_lock(self):
+        plan = one_job()
+        with self.with_root() as directory:
+            root = pathlib.Path(directory)
+            with patch.object(run.os, 'fsync', side_effect=OSError('OFFLINE lock initialization failure')), patch.object(run.os, 'close', wraps=run.os.close) as closer:
+                with self.assertRaises(OSError):
+                    run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', lambda *a: self.fail('Transport reached'))
+                closer.assert_called_once()
+            self.assertTrue((root / 'writer.lock').exists())
+            self.assertFalse((root / 'attempts.jsonl').exists())
 
     def test_lost_response_retains_reservation_and_resume_does_not_replay(self):
         plan = one_job()
@@ -185,7 +216,10 @@ class RunnerChecks(unittest.TestCase):
             calls.append(path)
             if path == '/key':
                 return key_data(), b'{}'
-            data = {'id': 'OFFLINE-generation', 'model': plan['jobs'][0]['model'],
+            if path.startswith('/generation?'):
+                data = billing_data(plan)
+                return data, json.dumps(data).encode('utf-8')
+            data = {'id': 'gen-OFFLINE-generation', 'model': plan['jobs'][0]['model'],
                     'usage': {'cost': 0.01}, 'choices': [{'finish_reason': 'stop', 'message': {'content': 'OFFLINE SAMPLE'}}]}
             return data, json.dumps(data).encode('utf-8')
         with self.with_root() as directory:
@@ -193,7 +227,7 @@ class RunnerChecks(unittest.TestCase):
             result = run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', transport)
             self.assertEqual(result['completedCalls'], 1)
             self.assertEqual(run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', transport), result)
-            self.assertEqual(calls, ['/key', '/chat/completions'])
+            self.assertEqual(calls, ['/key', '/chat/completions', '/generation?id=gen-OFFLINE-generation'])
 
     def test_changed_completed_response_stops_resume(self):
         plan = one_job()
@@ -201,10 +235,27 @@ class RunnerChecks(unittest.TestCase):
         with self.with_root() as directory:
             root = pathlib.Path(directory).resolve()
             (root / (job['id'] + '.response.json')).write_bytes(b'altered')
+            (root / (job['id'] + '.billing.json')).write_bytes(b'original-billing')
             ledger = root / 'attempts.jsonl'
             common = {'planSha256': 'bound-plan', 'jobId': job['id']}
             run.append(ledger, {**common, 'kind': 'reserved', 'reservationUSD': job['reservationUSD']})
-            run.append(ledger, {**common, 'kind': 'completed', 'actualUSD': '0.01', 'responseSha256': hashlib.sha256(b'original').hexdigest()})
+            run.append(ledger, {**common, 'kind': 'completed', 'actualUSD': '0.01', 'responseSha256': hashlib.sha256(b'original').hexdigest(), 'billingSha256': hashlib.sha256(b'original-billing').hexdigest()})
+            with self.assertRaises(ValueError):
+                run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', lambda *a: self.fail('Transport reached'))
+
+    def test_changed_completed_billing_receipt_stops_resume(self):
+        plan = one_job()
+        job = plan['jobs'][0]
+        with self.with_root() as directory:
+            root = pathlib.Path(directory)
+            (root / (job['id'] + '.response.json')).write_bytes(b'original-response')
+            (root / (job['id'] + '.billing.json')).write_bytes(b'altered-billing')
+            common = {'planSha256': 'bound-plan', 'jobId': job['id']}
+            ledger = root / 'attempts.jsonl'
+            run.append(ledger, {**common, 'kind': 'reserved', 'reservationUSD': job['reservationUSD']})
+            run.append(ledger, {**common, 'kind': 'completed', 'actualUSD': '0.01',
+                       'responseSha256': hashlib.sha256(b'original-response').hexdigest(),
+                       'billingSha256': hashlib.sha256(b'original-billing').hexdigest()})
             with self.assertRaises(ValueError):
                 run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', lambda *a: self.fail('Transport reached'))
 
@@ -220,7 +271,10 @@ class RunnerChecks(unittest.TestCase):
                 calls.append(path)
                 if path == '/key':
                     return key_data(), b'{}'
-                data = {'id': 'OFFLINE-generation', 'model': plan['jobs'][0]['model'],
+                if path.startswith('/generation?'):
+                    data = billing_data(plan)
+                    return data, json.dumps(data).encode('utf-8')
+                data = {'id': 'gen-OFFLINE-generation', 'model': plan['jobs'][0]['model'],
                         'usage': {'cost': 0.01}, 'choices': [{'finish_reason': 'stop', 'message': {'content': 'OFFLINE SAMPLE'}}]}
                 mutate(data)
                 return data, json.dumps(data).encode('utf-8')
@@ -228,8 +282,37 @@ class RunnerChecks(unittest.TestCase):
                 root = pathlib.Path(directory).resolve()
                 with self.assertRaises(RuntimeError):
                     run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', transport)
-                self.assertEqual(calls, ['/key', '/chat/completions'])
+                self.assertEqual(calls[:2], ['/key', '/chat/completions'])
+                self.assertLessEqual(len(calls), 3)
                 self.assertTrue((root / (plan['jobs'][0]['id'] + '.response.json')).exists())
+
+    def test_billing_payer_model_id_or_cost_drift_is_retained_and_never_replayed(self):
+        for mutate in [lambda b: b['data'].update({'is_byok': True}),
+                       lambda b: b['data'].update({'model': 'another-model'}),
+                       lambda b: b['data'].update({'id': 'gen-other'}),
+                       lambda b: b['data'].update({'total_cost': 0.02})]:
+            plan = one_job()
+            calls = []
+            def transport(path, key, body=None):
+                calls.append(path)
+                if path == '/key':
+                    return key_data(), b'{}'
+                if path.startswith('/generation?'):
+                    data = billing_data(plan)
+                    mutate(data)
+                else:
+                    data = {'id': 'gen-OFFLINE-generation', 'model': plan['jobs'][0]['model'], 'usage': {'cost': 0.01},
+                            'choices': [{'finish_reason': 'stop', 'message': {'content': 'OFFLINE SAMPLE'}}]}
+                return data, json.dumps(data).encode('utf-8')
+            with self.with_root() as directory:
+                root = pathlib.Path(directory)
+                with self.assertRaises(RuntimeError):
+                    run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', transport)
+                self.assertEqual(len(calls), 3)
+                self.assertTrue((root / (plan['jobs'][0]['id'] + '.billing.json')).exists())
+                with self.assertRaises(RuntimeError):
+                    run.execute(plan, 'bound-plan', approval(plan), root, 'TEST ONLY', transport)
+                self.assertEqual(len(calls), 3)
 
     def test_credentials_cannot_follow_redirects(self):
         with self.assertRaises(RuntimeError):
