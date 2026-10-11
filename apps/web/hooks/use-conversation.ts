@@ -243,8 +243,6 @@ export function useConversation(
   options?: UseConversationOptions,
 ): ConversationState {
   const searchParams = useSearchParams();
-  const initialPrompt = searchParams.get("prompt");
-  const autoSendInitialPrompt = searchParams.get("auto") === "1";
   const luminorId = searchParams.get("luminor");
   const {
     provider,
@@ -267,7 +265,6 @@ export function useConversation(
   const [chatError, setChatError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
-  const initialPromptSentRef = useRef(false);
   const [branches, setBranches] = useState<Map<string, UIMessage[][]>>(
     new Map(),
   );
@@ -586,25 +583,6 @@ export function useConversation(
       }
     }
   }, [messages, isLoading]);
-
-  // ---------------------------------------------------------------------------
-  // Prefill initial prompt from URL. Auto-send is opt-in via ?auto=1.
-  // ---------------------------------------------------------------------------
-
-  useEffect(() => {
-    if (
-      initialPrompt &&
-      !initialPromptSentRef.current &&
-      messages.length === 0
-    ) {
-      initialPromptSentRef.current = true;
-      if (autoSendInitialPrompt) {
-        sendMessage({ text: initialPrompt });
-      } else {
-        setInput((current) => current || initialPrompt);
-      }
-    }
-  }, [initialPrompt, autoSendInitialPrompt, messages.length, sendMessage]);
 
   // ---------------------------------------------------------------------------
   // Cmd+K command palette

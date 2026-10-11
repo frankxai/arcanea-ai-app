@@ -28,6 +28,10 @@ import {
 import { MentionPopup, type MentionItem } from "./mention-popup";
 import { VoiceWaveform } from "./voice-waveform";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
+import {
+  ENTRY_DRAFT_MAX_CHARS,
+  isCompositionKey,
+} from "@/lib/chat/entry-draft";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -53,7 +57,7 @@ interface ChatInputBarProps {
 // Constants
 // ---------------------------------------------------------------------------
 
-const MAX_CHARS = 4000;
+const MAX_CHARS = ENTRY_DRAFT_MAX_CHARS;
 const CHAR_WARN_THRESHOLD = 3000;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
@@ -490,6 +494,7 @@ export function ChatInputBar({
   const [mentionStart, setMentionStart] = useState(-1);
 
   const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const composing = useRef(false);
   const textareaRef = externalTextareaRef || internalTextareaRef;
 
   // Consume external message when it changes (e.g. from starter chip click)
@@ -597,6 +602,7 @@ export function ChatInputBar({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (isCompositionKey(e.nativeEvent, composing.current)) return;
       // If mention popup is visible, let it handle navigation keys
       if (
         mentionVisible &&
@@ -1179,6 +1185,12 @@ export function ChatInputBar({
             value={message}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onCompositionStart={() => {
+              composing.current = true;
+            }}
+            onCompositionEnd={() => {
+              composing.current = false;
+            }}
             onPaste={handlePaste}
             placeholder={
               enabledTools.has("image")

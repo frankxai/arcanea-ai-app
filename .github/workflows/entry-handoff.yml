@@ -1,0 +1,76 @@
+name: Entry handoff
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+    paths:
+      - apps/web/app/v3/hero-chat-box.tsx
+      - apps/web/app/chat/page.tsx
+      - apps/web/hooks/use-conversation.ts
+      - apps/web/components/chat/chat-input-bar.tsx
+      - apps/web/lib/chat/entry-draft.ts
+      - apps/web/lib/auth/context.tsx
+      - packages/design-system/**
+      - scripts/verify-entry-handoff-browser.cjs
+      - scripts/tests/entry-draft.test.cjs
+      - .github/workflows/entry-handoff.yml
+      - planning-with-files/CURRENT_STATE_2026-10-11_ENTRY_HANDOFF.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: entry-handoff-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  entry-handoff:
+    name: Compiled home-to-chat handoff
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+      ENTRY_EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Verify one-use drafts and denial recovery
+        run: node --test scripts/tests/entry-draft.test.cjs
+      - name: Build the actual web application
+        run: pnpm turbo run build --filter=@arcanea/web
+      - name: Install hosted browser
+        run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Exercise private handoff, composition and account changes
+        run: |
+          node apps/web/node_modules/next/dist/bin/next start apps/web --hostname 127.0.0.1 -p 3001 > "$RUNNER_TEMP/entry-next.log" 2>&1 &
+          entry_server_pid=$!
+          trap 'kill "$entry_server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --max-time 2 http://127.0.0.1:3001/ > /dev/null; then ready=true; break; fi
+            sleep 1
+          done
+          if [ "$ready" != true ]; then echo "Compiled app did not become ready"; exit 1; fi
+          timeout 240 node scripts/verify-entry-handoff-browser.cjs
+      - name: Keep revision-bound captures and fixture receipts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: entry-handoff-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_attempt }}
+          path: screenshots/entry-handoff/
+          if-no-files-found: ignore
+          retention-days: 7

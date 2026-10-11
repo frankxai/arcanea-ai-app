@@ -92,8 +92,17 @@ import { useChatWorldMode } from "@/hooks/use-chat-world-mode";
 import { useAutoSave } from "@/lib/arc/auto-save";
 import { analytics } from "@/lib/analytics/events";
 import { ChatImagineTabs } from "@/components/chat/chat-imagine-tabs";
+import { useAuth } from "@/lib/auth/context";
+import {
+  consumeEntryDraft,
+  entryDraftRecovery,
+  ENTRY_DRAFT_MAX_CHARS,
+} from "@/lib/chat/entry-draft";
+import entryStyles from "@arcanea/design-system/entry-handoff.module.css";
 
 export default function ChatPage() {
+  const { user, isLoading: authLoading } = useAuth();
+  const draftOwner = user?.id ?? null;
   const chatSessions = useChatSessions();
   const conversation = useConversation({
     activeProject: chatSessions.activeProject,
@@ -104,7 +113,19 @@ export default function ChatPage() {
   const [showExport, setShowExport] = useState(false);
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const [serverHasKeys, setServerHasKeys] = useState(false);
-  const [pendingInput, setPendingInput] = useState("");
+  const [pendingDraft, setPendingDraft] = useState<{
+    text: string;
+    owner: string | null;
+  } | null>(null);
+  const pendingInput =
+    !authLoading && pendingDraft?.owner === draftOwner ? pendingDraft.text : "";
+  const setPendingInput = useCallback(
+    (text: string) => {
+      setPendingDraft(text ? { text, owner: draftOwner } : null);
+    },
+    [draftOwner],
+  );
+  const [entryNotice, setEntryNotice] = useState("");
   const [showAgentPicker, setShowAgentPicker] = useState(false);
   const [activeAgent, setActiveAgent] = useState<{
     type: "auto" | "luminor";
@@ -142,25 +163,58 @@ export default function ChatPage() {
           }
         : null;
 
-  // Hero prompt handoff — read ?prompt= from URL and auto-populate input
-  const promptConsumed = useRef(false);
+  // Entry links only prepare text. Provider execution requires an explicit Send.
+  const entryConsumed = useRef<string | null>(null);
   useEffect(() => {
-    if (promptConsumed.current) return;
+    if (authLoading) return;
+    const draftId = searchParams.get("draft");
     const prompt = searchParams.get("prompt");
-    if (prompt && prompt.trim()) {
-      promptConsumed.current = true;
-      if (searchParams.get("auto") !== "1") {
-        setPendingInput(prompt.trim());
+    const entry = draftId
+      ? `draft:${draftId}`
+      : prompt !== null
+        ? `legacy:${prompt}`
+        : null;
+    if (!entry) {
+      entryConsumed.current = null;
+      return;
+    }
+    if (entry && entryConsumed.current !== entry) {
+      entryConsumed.current = entry;
+      setEntryNotice("");
+      if (draftId) {
+        try {
+          const result = consumeEntryDraft(
+            window.sessionStorage,
+            draftId,
+            draftOwner,
+          );
+          if (result.ok) setPendingInput(result.text);
+          else setEntryNotice(entryDraftRecovery(result.reason));
+        } catch {
+          setEntryNotice(entryDraftRecovery("storage"));
+        }
+      } else if (prompt?.trim()) {
+        if (prompt.trim().length <= ENTRY_DRAFT_MAX_CHARS)
+          setPendingInput(prompt.trim());
+        else
+          setEntryNotice(
+            "This draft is too long for chat. Prepare a message of up to 4,000 characters.",
+          );
       }
       const params = new URLSearchParams(window.location.search);
+      params.delete("draft");
       params.delete("prompt");
       params.delete("auto");
       const nextUrl = params.toString()
         ? `/chat?${params.toString()}`
         : "/chat";
-      window.history.replaceState(null, "", nextUrl);
+      window.history.replaceState(
+        window.history.state,
+        "",
+        nextUrl + window.location.hash,
+      );
     }
-  }, [searchParams]);
+  }, [searchParams, authLoading, draftOwner, setPendingInput]);
 
   // World character -> activate as Luminor when loaded
   const worldCharApplied = useRef(false);
@@ -530,6 +584,17 @@ export default function ChatPage() {
           </div>
         )}
 
+        {entryNotice && (
+          <div className={entryStyles.notice} role="alert">
+            <p>{entryNotice}</p>
+            <div className={entryStyles.recovery}>
+              <Link href="/">Return home</Link>
+              <button type="button" onClick={() => setEntryNotice("")}>
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
         {/* Chat area with messages + input bar */}
         <ChatArea
           messages={conversation.messages}
@@ -603,6 +668,7 @@ export default function ChatPage() {
               />
               <div className="px-4 pb-3">
                 <ChatInputBar
+                  key={draftOwner ?? "guest"}
                   onSend={handleSend}
                   onModelChange={conversation.setModelId}
                   currentModel={conversation.modelId ?? "arcanea-auto"}

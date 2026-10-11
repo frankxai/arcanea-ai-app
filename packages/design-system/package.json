@@ -27,7 +27,8 @@
       "default": "./dist/primitives/index.js"
     },
     "./tokens.css": "./src/tokens.css",
-    "./companion.module.css": "./src/companion.module.css"
+    "./companion.module.css": "./src/companion.module.css",
+    "./entry-handoff.module.css": "./src/entry-handoff.module.css"
   },
   "scripts": {
     "build": "tsc",
