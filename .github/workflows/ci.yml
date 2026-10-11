@@ -376,6 +376,14 @@ jobs:
       - name: Run package tests
         run: pnpm test:quick
 
+      - name: Verify model routing and native CLI adapters
+        timeout-minutes: 2
+        run: |
+          pnpm --dir packages/router-spec build
+          pnpm --dir packages/router-spec validate
+          pnpm --dir packages/orchestrator build
+          pnpm exec tsx --test --test-concurrency=1 packages/router-spec/tests/validate.test.ts packages/orchestrator/tests/*.test.ts packages/orchestrator/tests/ecosystem/*.test.ts
+
       - name: Verify public collection assets and proposal relationships
         run: |
           node scripts/verify-sovereign-depths.mjs

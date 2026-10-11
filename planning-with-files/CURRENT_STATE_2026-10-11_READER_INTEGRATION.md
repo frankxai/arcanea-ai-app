@@ -71,6 +71,12 @@ captures that section. Existing real-prose/navigation/recovery assertions remain
 enabled. The initial NVIDIA PASS did not catch this verifier defect and cannot
 sign off the correction; current source review and a new hosted run are required.
 
+The main CI Build now also compiles router-spec/orchestrator, validates the model
+catalog and runs the complete selected package/native CLI tests sequentially in
+a bounded two-minute step. The separate manually disabled Orchestrator workflow
+is unchanged. This adds actual package verification to the existing required
+main-target check rather than equating an application build with CLI conformance.
+
 CI keeps both the actual built Git commit and PR source head, which can differ
 for GitHub's merge checkout. Rendered proof, screenshot inspection, production
 behavior and actual reader completion must be reported separately. Current
