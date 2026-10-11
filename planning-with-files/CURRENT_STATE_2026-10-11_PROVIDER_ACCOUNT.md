@@ -120,3 +120,26 @@ for a valid actor before consuming its initial prompt, preventing a pending-auth
 denial from losing that prompt. Its existing automatic-send behavior remains an
 inherited acceptance gap; the held entry567 candidate handles deliberate staged
 entry, URL privacy and account-bound history and still needs separate promotion.
+
+## Compiled account-boundary verification
+
+At source `1cc0cd056045ca856634cc63b4f1e378c089033e`, hosted TypeScript and Lint
+pass in PR run38115743305 and manual run38115808934. The full compiled-browser
+run is still in progress. Vercel's status check reports success; exact deployment
+source binding and rendered account acceptance are separate checks.
+
+The admitted credentials-core source review returned zero reported cost but
+`finish_reason: length` after 6,000 completion tokens. It supplies no valid
+verdict. Its response and receipt are preserved privately. A later review-lite
+probe returned HOLD at 5,215 MB available / 6,144 MB required; no further review
+call was made under that refusal.
+
+The existing compiled voice verifier now also exercises provider settings and
+chat with guest/A/B identity changes through the real installed Supabase
+BroadcastChannel subscriber. Synthetic sessions, local fixture keys and denied
+intercepted chat responses cover a same-turn stale settings submission, unchanged
+actor refresh, returning to saved keys, unused legacy keys, model/key selection,
+and a pending chat abort on account switch. Three existing desktop/mobile/reduced
+motion modes will run these assertions. This verifier is newly authored and
+requires hosted execution before any pass claim. It is neither a real GoTrue login
+nor a database ownership, cross-device persistence or provider-quality test.

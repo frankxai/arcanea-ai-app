@@ -567,6 +567,273 @@ async function verifyRoomRecovery(browser, mode) {
   }
 }
 
+async function verifyAccountCredentials(browser, mode) {
+  const context = await browser.newContext({
+    viewport: { width: mode.width, height: mode.height },
+    reducedMotion: mode.motion,
+  });
+  let releasePending;
+  try {
+    // Real compiled Supabase subscribers receive synthetic cross-tab events.
+    // No credentials, login, database writes or provider execution are real.
+    await context.addInitScript(() => {
+      const NativeChannel = window.BroadcastChannel;
+      window.__nativeAuthChannel = NativeChannel;
+      window.__authChannelNames = [];
+      window.BroadcastChannel = class extends NativeChannel {
+        constructor(name) {
+          super(name);
+          if (/^sb-.*-auth-token$/.test(name))
+            window.__authChannelNames.push(name);
+        }
+        addEventListener(type, listener, options) {
+          if (type !== "message" || !/^sb-.*-auth-token$/.test(this.name))
+            return super.addEventListener(type, listener, options);
+          return super.addEventListener(
+            type,
+            (event) => {
+              listener.call(this, event);
+              // Submit the old form in the same turn as the auth subscriber,
+              // before React has replaced that account's controls.
+              window.__afterFixtureAuthEvent?.();
+              window.__afterFixtureAuthEvent = undefined;
+            },
+            options,
+          );
+        }
+      };
+      if (!localStorage.getItem("fixture-account-credentials-seeded")) {
+        for (const [actor, keys, provider, model] of [
+          [
+            "guest",
+            { openrouter: "fixture-guest-key" },
+            "openrouter",
+            "arcanea-auto",
+          ],
+          [
+            "user:fixture-account-a",
+            { google: "fixture-account-a-key" },
+            "google",
+            "arcanea-gemini-flash",
+          ],
+          [
+            "user:fixture-account-b",
+            { openai: "fixture-account-b-key" },
+            "openai",
+            "arcanea-gpt5",
+          ],
+        ]) {
+          const suffix = `:v2:${encodeURIComponent(actor)}`;
+          localStorage.setItem(
+            `arcanea-provider-keys${suffix}`,
+            JSON.stringify(keys),
+          );
+          localStorage.setItem(`arcanea-active-provider${suffix}`, provider);
+          localStorage.setItem(`arcanea-active-model${suffix}`, model);
+        }
+        localStorage.setItem(
+          "arcanea-provider-keys",
+          JSON.stringify({ google: "fixture-unassigned-key" }),
+        );
+        localStorage.setItem("fixture-account-credentials-seeded", "true");
+      }
+      const nativeFetch = window.fetch;
+      window.__accountChatAborts = 0;
+      window.fetch = function (input, init) {
+        if (input === "/api/ai/chat")
+          init?.signal?.addEventListener(
+            "abort",
+            () => window.__accountChatAborts++,
+            { once: true },
+          );
+        return nativeFetch.call(this, input, init);
+      };
+    });
+    const page = await context.newPage();
+    page.setDefaultTimeout(15000);
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.route("**/api/conversations**", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ conversations: [] }),
+      }),
+    );
+    await page.route("https://*.supabase.co/**", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: "[]",
+      }),
+    );
+    const posts = [];
+    let pending = false;
+    await page.route("**/api/ai/chat", async (route) => {
+      posts.push(route.request().postDataJSON());
+      if (pending)
+        await new Promise((resolve) => {
+          releasePending = resolve;
+        });
+      await route
+        .fulfill({
+          status: 401,
+          contentType: "application/json",
+          body: JSON.stringify({ error: "Fixture account request denied." }),
+        })
+        .catch(() => {});
+    });
+    async function event(actor, name = actor ? "SIGNED_IN" : "SIGNED_OUT") {
+      await expect
+        .poll(() => page.evaluate(() => window.__authChannelNames?.length || 0))
+        .toBeGreaterThan(0);
+      await page.evaluate(
+        ({ actor, name }) => {
+          const channel = new window.__nativeAuthChannel(
+            window.__authChannelNames[0],
+          );
+          const session = actor
+            ? {
+                access_token: "synthetic-access-token",
+                refresh_token: "synthetic-refresh-token",
+                token_type: "bearer",
+                expires_in: 3600,
+                expires_at: Math.floor(Date.now() / 1000) + 3600,
+                user: {
+                  id: actor,
+                  aud: "authenticated",
+                  role: "authenticated",
+                  email: `${actor}@example.invalid`,
+                  app_metadata: {},
+                  user_metadata: {},
+                  created_at: "2026-10-11T00:00:00Z",
+                },
+              }
+            : null;
+          channel.postMessage({ event: name, session });
+          setTimeout(() => channel.close(), 50);
+        },
+        { actor, name },
+      );
+    }
+    await page.goto(base + "/settings/providers", {
+      waitUntil: "domcontentloaded",
+    });
+    const google = page.getByLabel("Google Gemini API key", { exact: true });
+    const openai = page.getByLabel("OpenAI API key", { exact: true });
+    await expect(google).toHaveValue("");
+    await event("fixture-account-a");
+    await expect(google).toHaveValue("fixture-account-a-key");
+    await google.fill("fixture-unsaved-account-a");
+    await event("fixture-account-a", "TOKEN_REFRESHED");
+    await expect(google).toHaveValue("fixture-unsaved-account-a");
+    await page.evaluate(() => {
+      const form = document
+        .querySelector("#provider-key-google")
+        .closest("form");
+      window.__afterFixtureAuthEvent = () => form.requestSubmit();
+    });
+    await event("fixture-account-b");
+    await expect(openai).toHaveValue("fixture-account-b-key");
+    await expect(google).toHaveValue("");
+    assert.equal(
+      await page.evaluate(
+        () =>
+          JSON.parse(
+            localStorage.getItem(
+              "arcanea-provider-keys:v2:user%3Afixture-account-a",
+            ),
+          ).google,
+      ),
+      "fixture-account-a-key",
+      "The previous account's form must not save after its auth event",
+    );
+    await event("fixture-account-a");
+    await expect(google).toHaveValue("fixture-account-a-key");
+    await google.fill("fixture-account-a-saved");
+    await page
+      .getByRole("button", { name: "Save connection", exact: true })
+      .click();
+    await expect(page.getByRole("status")).toContainText(
+      "Saved for this account",
+    );
+    assert.equal(
+      await page.evaluate(
+        () =>
+          JSON.parse(
+            localStorage.getItem(
+              "arcanea-provider-keys:v2:user%3Afixture-account-b",
+            ),
+          ).openai,
+      ),
+      "fixture-account-b-key",
+    );
+    await event(null);
+    await expect(google).toHaveValue("");
+    assert.equal(
+      await page.evaluate(
+        () => JSON.parse(localStorage.getItem("arcanea-provider-keys")).google,
+      ),
+      "fixture-unassigned-key",
+    );
+
+    await page.goto(base + "/chat", { waitUntil: "domcontentloaded" });
+    const input = page.getByRole("textbox", {
+      name: "Message input",
+      exact: true,
+    });
+    await expect(input).toBeVisible();
+    await event("fixture-account-a");
+    await expect(
+      page.getByRole("button", { name: "Model: Flash", exact: true }),
+    ).toBeVisible();
+    pending = true;
+    await input.fill("Account A private fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(1);
+    assert.equal(posts[0].clientApiKey, "fixture-account-a-saved");
+    assert.equal(posts[0].gatewayModel, "arcanea-gemini-flash");
+    await event("fixture-account-b");
+    await expect(
+      page.getByRole("button", { name: "Model: GPT-5", exact: true }),
+    ).toBeVisible();
+    await expect
+      .poll(() => page.evaluate(() => window.__accountChatAborts))
+      .toBe(1);
+    releasePending();
+    pending = false;
+    await expect(input).toHaveValue("");
+    await expect(
+      page.getByText("Account A private fixture request", { exact: true }),
+    ).toHaveCount(0);
+    await input.fill("Account B fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(2);
+    assert.equal(posts[1].clientApiKey, "fixture-account-b-key");
+    assert.equal(posts[1].gatewayModel, "arcanea-gpt5");
+    assert.deepEqual(errors, []);
+    return {
+      accountCredentialIsolation: true,
+      sameActorRefreshKeepsDraft: true,
+      staleSettingsSaveDenied: true,
+      accountReturnReadsSavedKeys: true,
+      legacyCredentialsPreservedUnused: true,
+      accountSwitchCancelsChat: true,
+      accountChatCredentialSelection: true,
+      syntheticAuthEvents: true,
+      realLogin: false,
+      providerRequests: 0,
+    };
+  } finally {
+    releasePending?.();
+    await context.close();
+  }
+}
+
 async function main() {
   const browser = await chromium.launch();
   const evidence = [];
@@ -732,6 +999,7 @@ async function main() {
         mode: mode.name,
         ...(await verifyChatRecovery(browser, mode)),
         ...(await verifyRoomRecovery(browser, mode)),
+        ...(await verifyAccountCredentials(browser, mode)),
       });
     }
   } finally {
