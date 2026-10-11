@@ -729,13 +729,16 @@ async function verifyAccountCredentials(browser, mode) {
     await event("fixture-account-a");
     // AgentHeader renders this picker; CompactModelPicker is currently unused.
     const modelButton = (label) =>
-      page.getByRole("button").filter({
-        has: page.locator("span").filter({ hasText: new RegExp(`^${label}$`) }),
-      });
+      page.getByRole("button", { name: `Model: ${label}`, exact: true });
     // Distinct initial models wait for the actual account-specific state.
     await expect(modelButton("Gemini Pro")).toBeVisible();
     await modelButton("Gemini Pro").click();
-    await modelButton("Flash").click();
+    const flashOption = page
+      .getByRole("menu", { name: "Choose a model", exact: true })
+      .getByRole("menuitemradio")
+      .filter({ has: page.locator("span").filter({ hasText: /^Flash$/ }) });
+    await expect(flashOption).toHaveCount(1);
+    await flashOption.click();
     await expect(modelButton("Flash")).toBeVisible();
     await input.fill("Same-account draft fixture");
     await event("fixture-account-a", "TOKEN_REFRESHED");
