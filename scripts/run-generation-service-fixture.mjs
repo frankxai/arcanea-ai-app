@@ -64,7 +64,7 @@ const receipt = {
   head,
   backend: "disposable Supabase Auth/PostgREST/PostgreSQL",
   productionWrites: 0,
-  csp: "Disposable loopback browser exception only; production HTTPS CSP is unchanged and is not certified",
+  csp: "Authenticated HTTP loopback journeys bypass CSP; a separate no-bypass browser case checks production headers against deterministic imgen.x.ai media. Actual supplier CORS is not certified",
   providerCalls: 0,
   providerRequestsAttempted: 0,
   scope:
@@ -377,7 +377,7 @@ try {
           JSON.stringify({
             status: "done",
             data: Array.from({ length: job.n }, (_, index) => ({
-              url: `https://generation-fixture.invalid/${id}-${index}.webp`,
+              url: `https://imgen.x.ai/fixture-${id}-${index}.webp`,
             })),
           }),
         );

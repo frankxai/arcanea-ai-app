@@ -5,7 +5,11 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { requestImages, generatedImageSource } from "@/lib/imagine/request";
+import {
+  requestImages,
+  generatedImageSource,
+  generatedImageBlob,
+} from "@/lib/imagine/request";
 import {
   ArrowLeft,
   Sparkle,
@@ -200,9 +204,8 @@ export default function ImageForgePage() {
   const handleDownload = async () => {
     if (!selectedImage) return;
     try {
-      const response = await fetch(selectedImage.url);
-      if (!response.ok) throw new Error("Image download failed");
-      const blob = await response.blob();
+      setError(null);
+      const blob = await generatedImageBlob(selectedImage.url);
       const extensions: Record<string, string> = {
         "image/png": "png",
         "image/jpeg": "jpg",
@@ -219,8 +222,11 @@ export default function ImageForgePage() {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Download failed:", error);
-      setError("The image could not be downloaded. Try again from this image.");
+      setError(
+        selectedImage.url.startsWith("https://")
+          ? "Direct download is unavailable. Open the original image and save it from your browser."
+          : "The image could not be downloaded. Try again from this image.",
+      );
     }
   };
 
@@ -397,7 +403,7 @@ export default function ImageForgePage() {
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 transition-opacity duration-350 motion-reduce:transition-none flex flex-col justify-end p-6">
-                    <div className="flex items-end justify-between gap-4">
+                    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
                       <div className="max-w-2xl">
                         <span className="text-[10px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider">
                           Prompt context
@@ -418,6 +424,16 @@ export default function ImageForgePage() {
                             <Copy className="w-5 h-5" />
                           )}
                         </button>
+                        {selectedImage.url.startsWith("https://") && (
+                          <a
+                            href={selectedImage.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="min-h-11 inline-flex items-center rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-deep)] px-3 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                          >
+                            Open original image
+                          </a>
+                        )}
                         <button
                           onClick={handleDownload}
                           className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.12] transition-colors"

@@ -617,7 +617,9 @@ jobs:
   generation-preview:
     name: Authenticated generation acceptance
     if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/generation-admission-20261011'
-    needs: [install, build]
+    # This fixture compiles its own app with disposable Auth. Collect its evidence
+    # even if a separate gallery suite fails; CI Status still requires both.
+    needs: [install, lint, typecheck]
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:

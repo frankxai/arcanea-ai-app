@@ -157,6 +157,7 @@ if (worldCreatorReview) {
 }
 if (generationReview) {
   contexts = [
+    "apps/web/lib/imagine/request.ts",
     "apps/web/lib/auth/context.tsx",
     "apps/web/lib/ai/provider-preferences.ts",
     "apps/web/components/chat/message-bubble.tsx",

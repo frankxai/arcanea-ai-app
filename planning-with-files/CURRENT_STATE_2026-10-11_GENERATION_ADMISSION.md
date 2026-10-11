@@ -127,3 +127,49 @@ Hosted043 baseline completed with seven failed rows: Studio password-login, Page
 The first two browser baselines were blocked by fixture startup/auth boundaries, so the suspected rendering fault was reproduced independently with the installed Next16.3.8 getImgProps and ImageOptimizerCache.validateParams. The actual images configuration was extracted as its plain literal via TypeScript; the intl wrapper was not executed because the local SWC binding is unavailable. In production mode, https://generation-fixture.invalid/fixture-1.webp becomes /_next/image?... and the actual optimizer rejects it with the exact error "url" parameter is not allowed. With unoptimized it retains the original URL and has no optimizer srcSet. This is a native renderer/allowlist proof, not authenticated or paid inference acceptance.
 
 Studio's generated output/thumbnail and the Page cover now use unoptimized. Static showcase assets retain their existing behavior; no hostname wildcard or production CSP relaxation is introduced. Studio checks download HTTP status/MIME, keeps PNG/JPEG/WEBP filenames consistent with the returned format, and reports download refusal in the existing error surface. Mobile image actions are visible without hover; desktop actions reveal on hover or keyboard focus, with reduced-motion transitions disabled. The browser verifier now checks the fixture WEBP filename as well as exact bytes. Actual authenticated rendering, download, save/reopen and account isolation still require the fresh integrated hosted run. The native renderer proof replaces the blocked baseline as the reproduction evidence before these repairs; no browser acceptance pass is implied.
+
+## Media policy and export follow-up
+
+Exact integrated source0b23979be9696e15622f0bc73ab710a1ec4c51bd failed manual
+run38119259475. Install, TypeScript and Lint passed. Build compiled but its inherited
+voice/account browser test could not find Chat provider at line726 because the
+synthetic guest session cannot authorize server-protected /settings/providers.
+Generation acceptance was skipped. Normal draft CI omits those browser suites and
+is not full release approval. Another owner's draft578 fixes the guest precondition
+and SDK account callbacks; its e2674c90 manual run still fails the later Auto picker.
+That source is preserved and has not been merged into this lane.
+
+The Gemini3.1Pro review FAIL at0b is bound to30 Git source hashes, packet and final
+text hashes. Its high finding is real: the actual production img-src omitted
+imgen.x.ai, xAI's documented ephemeral output host. connect-src also omitted it,
+blocking CDN downloads regardless of vendor CORS. The narrow production header
+change permits only that exact HTTPS host in those two directives. No wildcard
+host, general server fetch proxy or unrelated provider source is admitted.
+
+Studio's shared downloader now decodes PNG/JPEG/WEBP base64 locally without fetch;
+CDN download omits cookies/referrers, refuses redirects and bounds streamed output
+to8MiB and20s. Invalid status/format/empty/oversized output fails. A visible Open
+original image HTTPS link offers a manual browser save when CORS refuses a direct
+export; neither server fetching nor public storage is silently introduced. Mobile
+controls wrap below the prompt. Native inline/CDN tests and changed app lint pass.
+
+The hosted verifier adds a separate bypassCSP:false browser case against the real
+server headers: intercepted imgen fixture bytes must load and fetch, while an
+unrelated host remains blocked. Authenticated HTTP loopback journeys retain their
+explicit CSP exception. They also simulate CORS refusal and check the original-link
+fallback without another supplier submission. A separate real GoTrue A/B/A journey
+saves/reopens distinct browser-local provider settings. This is real server-auth
+admission, not actual supplier-key verification, cloud credential synchronization
+or same-turn stale-save acceptance. Nine rows require a fresh exact-head pass.
+
+The generation job builds its own fixture app. Its dependencies now require install,
+lint and TypeScript, allowing its evidence collection even when unrelated gallery
+acceptance fails. CI Status continues requiring both Build and authenticated
+Generation success; no release gate was removed or weakened.
+
+The official xAI output-storage documentation was reread11 October2026. Default
+imgen URLs are ephemeral. Saving a Page URL does not provide durable media storage.
+Private retained assets, verified quotas, customer export, cancellation recovery,
+production schema/provider availability and offer economics still gate paid beta.
+All current screenshots are deterministic existing-asset fixtures with companion
+provenance; no real paid image has been generated. The broad estate goal stays active.

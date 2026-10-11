@@ -125,6 +125,93 @@ async function main() {
     },
   ];
   try {
+    // Inspect the real server CSP separately: loopback Auth requires bypass in
+    // the authenticated journeys below, which must not certify this policy.
+    const policyContext = await browser.newContext({ bypassCSP: false });
+    try {
+      const allowed = "https://imgen.x.ai/fixture-csp.webp";
+      const blocked = "https://generation-fixture.invalid/fixture-csp.webp";
+      await policyContext.route(allowed, (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "image/webp",
+          body: image,
+          headers: { "access-control-allow-origin": config.base },
+        }),
+      );
+      await policyContext.route(blocked, (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "image/webp",
+          body: image,
+          headers: { "access-control-allow-origin": config.base },
+        }),
+      );
+      const page = await policyContext.newPage();
+      const response = await page.goto(config.base + "/studio/image");
+      assert.ok(response.headers()["content-security-policy"]);
+      const result = await page.evaluate(
+        async ({ allowed, blocked }) => {
+          async function load(url) {
+            const img = document.createElement("img");
+            const loaded = new Promise((resolve) => {
+              img.onload = () => resolve(img.naturalWidth > 0);
+              img.onerror = () => resolve(false);
+            });
+            img.src = url;
+            document.body.appendChild(img);
+            try {
+              return await loaded;
+            } finally {
+              img.remove();
+            }
+          }
+          const allowedImage = await load(allowed);
+          const bytes = await (
+            await fetch(allowed, { credentials: "omit" })
+          ).arrayBuffer();
+          const blockedImage = await load(blocked);
+          let blockedFetch = false;
+          try {
+            await fetch(blocked);
+          } catch {
+            blockedFetch = true;
+          }
+          return {
+            allowedImage,
+            bytes: Array.from(new Uint8Array(bytes)),
+            blockedImage,
+            blockedFetch,
+          };
+        },
+        { allowed, blocked },
+      );
+      assert.equal(result.allowedImage, true);
+      assert.equal(
+        createHash("sha256").update(Buffer.from(result.bytes)).digest("hex"),
+        imageHash,
+      );
+      assert.equal(result.blockedImage, false);
+      assert.equal(result.blockedFetch, true);
+      rows.push({
+        scope: "production-media-csp",
+        passed: true,
+        bypassCSP: false,
+        supplierHostImageAllowed: true,
+        supplierHostFetchAllowed: true,
+        unrelatedHostImageDenied: true,
+        unrelatedHostFetchDenied: true,
+        sourceSha256: imageHash,
+      });
+    } catch {
+      rows.push({
+        scope: "production-media-csp",
+        passed: false,
+        bypassCSP: false,
+      });
+    } finally {
+      await policyContext.close();
+    }
     for (const mode of modes) {
       const context = await browser.newContext({
         // Accepted disposable HTTP loopback rail; production CSP is unchanged.
@@ -133,12 +220,16 @@ async function main() {
         reducedMotion: mode.reducedMotion,
         acceptDownloads: true,
       });
-      await context.route("https://generation-fixture.invalid/**", (route) =>
+      let refuseExport = false;
+      await context.route("https://imgen.x.ai/fixture-**", (route) =>
         route.fulfill({
           status: 200,
           contentType: "image/webp",
           body: image,
-          headers: { "access-control-allow-origin": config.base },
+          headers:
+            refuseExport && route.request().resourceType() === "fetch"
+              ? {}
+              : { "access-control-allow-origin": config.base },
         }),
       );
       const page = await context.newPage();
@@ -233,6 +324,23 @@ async function main() {
           createHash("sha256").update(Buffer.concat(chunks)).digest("hex"),
           imageHash,
         );
+        phase = "cors-refusal-manual-export";
+        refuseExport = true;
+        await page.getByTitle("Download image", { exact: true }).click();
+        await expect(
+          page.getByText(
+            "Direct download is unavailable. Open the original image and save it from your browser.",
+            { exact: true },
+          ),
+        ).toBeVisible();
+        const original = page.getByRole("link", {
+          name: "Open original image",
+          exact: true,
+        });
+        await expect(original).toHaveAttribute("href", receipt.images[0].url);
+        await expect(original).toHaveAttribute("target", "_blank");
+        await expect(original).toHaveAttribute("rel", "noopener noreferrer");
+        assert.equal((await state()).submissions, accepted.submissions);
         phase = "viewport-and-reduced-motion";
         assert.ok(
           await page.evaluate(
@@ -251,6 +359,7 @@ async function main() {
           sameKeyRecovered: true,
           completedReplay: true,
           downloadedSha256: imageHash,
+          corsRefusalManualExport: true,
         });
       } catch {
         rows.push({
@@ -337,6 +446,81 @@ async function main() {
       }
       await context.close();
     }
+    // A real GoTrue account switch, not synthetic browser identity, admits the
+    // middleware-protected settings page and proves browser-local key isolation.
+    const settingsContext = await browser.newContext({ bypassCSP: true });
+    const settingsPage = await settingsContext.newPage();
+    let settingsPhase = "settings-account-a-login";
+    try {
+      await login(settingsPage, config.accounts[0], "/settings/providers");
+      const provider = settingsPage.getByLabel("Chat provider", {
+        exact: true,
+      });
+      const google = settingsPage.getByLabel("Google Gemini API key", {
+        exact: true,
+      });
+      const saved = settingsPage.getByText(
+        "Saved for this account in this browser. Provider access has not been verified.",
+        { exact: true },
+      );
+      const save = settingsPage.getByRole("button", {
+        name: "Save connection",
+        exact: true,
+      });
+      settingsPhase = "settings-account-a-save-reopen";
+      await provider.selectOption("google");
+      await google.fill("fixture-settings-account-a-key");
+      await save.click();
+      await expect(saved).toBeVisible();
+      await settingsPage.reload();
+      await expect(google).toHaveValue("fixture-settings-account-a-key");
+      settingsPhase = "settings-account-b-switch";
+      await login(settingsPage, config.accounts[1], "/settings/providers");
+      await provider.selectOption("google");
+      await expect(google).toHaveValue("");
+      await google.fill("fixture-settings-account-b-key");
+      await save.click();
+      await expect(saved).toBeVisible();
+      await settingsPage.reload();
+      await expect(google).toHaveValue("fixture-settings-account-b-key");
+      settingsPhase = "settings-account-a-return";
+      await login(settingsPage, config.accounts[0], "/settings/providers");
+      await expect(google).toHaveValue("fixture-settings-account-a-key");
+      const keys = await settingsPage.evaluate(
+        (ids) =>
+          ids.map(
+            (id) =>
+              JSON.parse(
+                localStorage.getItem(
+                  `arcanea-provider-keys:v2:${encodeURIComponent(`user:${id}`)}`,
+                ) || "{}",
+              ).google,
+          ),
+        config.accounts.map((account) => account.id),
+      );
+      assert.deepEqual(keys, [
+        "fixture-settings-account-a-key",
+        "fixture-settings-account-b-key",
+      ]);
+      rows.push({
+        scope: "real-auth-provider-settings",
+        passed: true,
+        mode: "desktop",
+        passwordLogin: true,
+        savedAndReopened: true,
+        sameBrowserAccountIsolation: true,
+        returningAccountPreserved: true,
+        actualProviderVerification: false,
+      });
+    } catch {
+      rows.push({
+        scope: "real-auth-provider-settings",
+        passed: false,
+        failurePhase: settingsPhase,
+      });
+    } finally {
+      await settingsContext.close();
+    }
     // Real authenticated Data API denial plus a depleted second actor at the app boundary.
     let phase = "second-account-isolation";
     const context = await browser.newContext({ bypassCSP: true });
@@ -409,9 +593,9 @@ async function main() {
       JSON.stringify(
         {
           head: config.head,
-          passed: rows.length === 7 && rows.every((row) => row.passed),
+          passed: rows.length === 9 && rows.every((row) => row.passed),
           rows,
-          csp: "Disposable HTTP loopback fixture bypasses browser CSP; production HTTPS CSP is unchanged and is not certified",
+          csp: "Authenticated HTTP loopback journeys bypass CSP. Separate no-bypass production-media-csp case tests real headers with intercepted imgen.x.ai fixture bytes; actual supplier CORS is not certified",
           paidProviderCalls: 0,
           providerRequestsAttempted: 0,
           fixtureSupplier: await state(),
@@ -421,7 +605,7 @@ async function main() {
       ),
     );
   }
-  assert.equal(rows.length, 7);
+  assert.equal(rows.length, 9);
   assert.ok(
     rows.every((row) => row.passed),
     "Compiled generation acceptance did not pass",

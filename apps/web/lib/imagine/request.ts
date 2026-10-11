@@ -99,3 +99,59 @@ export function generatedImageSource(image: unknown): string | null {
     return `data:${value.mimeType};base64,${value.data}`;
   return null;
 }
+
+/** Inline receipts need no network permission; CDN exports may require manual save. */
+export async function generatedImageBlob(source: string): Promise<Blob> {
+  const maxBytes = 8 * 1024 * 1024;
+  const supported = ["image/png", "image/jpeg", "image/webp"];
+  const inline =
+    /^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/]+={0,2})$/.exec(
+      source,
+    );
+  if (inline) {
+    if (inline[2].length % 4 || inline[2].length > Math.ceil(maxBytes / 3) * 4)
+      throw new Error("Invalid or oversized inline image");
+    const decoded = atob(inline[2]);
+    if (decoded.length > maxBytes)
+      throw new Error("Image is too large to download");
+    const bytes = Uint8Array.from(decoded, (character) =>
+      character.charCodeAt(0),
+    );
+    return new Blob([bytes], { type: inline[1] });
+  }
+  const parsed = new URL(source);
+  if (parsed.protocol !== "https:" || parsed.username || parsed.password)
+    throw new Error("Invalid image download source");
+  const response = await fetch(source, {
+    credentials: "omit",
+    redirect: "error",
+    referrerPolicy: "no-referrer",
+    signal: AbortSignal.timeout(20000),
+  });
+  const type = response.headers
+    .get("content-type")
+    ?.split(";")[0]
+    .trim()
+    .toLowerCase();
+  if (!response.ok || !type || !supported.includes(type) || !response.body) {
+    await response.body?.cancel();
+    throw new Error("Image download unavailable");
+  }
+  const reader = response.body.getReader();
+  const chunks: Uint8Array<ArrayBuffer>[] = [];
+  let size = 0;
+  try {
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > maxBytes) throw new Error("Image is too large to download");
+      chunks.push(new Uint8Array(value));
+    }
+    if (!size) throw new Error("Image download is empty");
+    return new Blob(chunks, { type });
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+}

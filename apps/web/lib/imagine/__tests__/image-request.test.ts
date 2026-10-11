@@ -4,6 +4,7 @@ import {
   requestImages,
   requestAnimation,
   generatedImageSource,
+  generatedImageBlob,
 } from "../request";
 
 test("lost transport response retains the same request key; confirmed success starts a new operation", async () => {
@@ -158,5 +159,86 @@ test("an unrenderable success receipt retains the same operation key on retry", 
     if (descriptor)
       Object.defineProperty(globalThis, "sessionStorage", descriptor);
     else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+
+test("inline PNG/JPEG/WEBP exports decode locally without fetch or connect-src data permission", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => {
+    throw Error("Inline export must not fetch");
+  };
+  try {
+    for (const type of ["image/png", "image/jpeg", "image/webp"]) {
+      const blob = await generatedImageBlob(`data:${type};base64,aGVsbG8=`);
+      assert.equal(blob.type, type);
+      assert.equal(await blob.text(), "hello");
+    }
+    for (const source of [
+      "data:image/svg+xml;base64,aGVsbG8=",
+      "http://images.test/result.png",
+      "https://secret@images.test/result.png",
+      "data:image/png;base64,a",
+    ]) {
+      await assert.rejects(generatedImageBlob(source));
+    }
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("CDN export checks status, format, stream bounds and uses no cookies or referrer", async () => {
+  const original = globalThis.fetch;
+  let cancelled = false;
+  try {
+    globalThis.fetch = async (_url, options) => {
+      assert.equal(options?.credentials, "omit");
+      assert.equal(options?.redirect, "error");
+      assert.equal(options?.referrerPolicy, "no-referrer");
+      assert.ok(options?.signal instanceof AbortSignal);
+      return new Response("fixture bytes", {
+        headers: { "content-type": "image/webp" },
+      });
+    };
+    const blob = await generatedImageBlob("https://imgen.x.ai/fixture.webp");
+    assert.equal(blob.type, "image/webp");
+    assert.equal(await blob.text(), "fixture bytes");
+    for (const response of [
+      new Response("not an image", {
+        headers: { "content-type": "text/html" },
+      }),
+      new Response("", { status: 403 }),
+      new Response("", { headers: { "content-type": "image/png" } }),
+    ]) {
+      globalThis.fetch = async () => response;
+      await assert.rejects(
+        generatedImageBlob("https://imgen.x.ai/fixture.webp"),
+      );
+    }
+    globalThis.fetch = async () =>
+      new Response(
+        new ReadableStream({
+          pull(controller) {
+            controller.enqueue(new Uint8Array(9 * 1024 * 1024));
+          },
+          cancel() {
+            cancelled = true;
+          },
+        }),
+        { headers: { "content-type": "image/png" } },
+      );
+    await assert.rejects(
+      generatedImageBlob("https://imgen.x.ai/fixture.webp"),
+      /too large/,
+    );
+    assert.equal(cancelled, true);
+    globalThis.fetch = async () => {
+      throw new TypeError("CORS refused");
+    };
+    await assert.rejects(
+      generatedImageBlob("https://imgen.x.ai/fixture.webp"),
+      /CORS/,
+    );
+  } finally {
+    globalThis.fetch = original;
   }
 });
