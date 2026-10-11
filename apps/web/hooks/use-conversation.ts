@@ -18,7 +18,7 @@ import {
   useId,
 } from "react";
 import { useSearchParams } from "next/navigation";
-import { useChat } from "@ai-sdk/react";
+import { Chat, useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type FileUIPart, type UIMessage } from "ai";
 import { useModelSelection, readProviderFromStorage } from "./use-provider";
 import { useAuth } from "@/lib/auth/context";
@@ -428,6 +428,35 @@ export function useConversation(
     });
   }, [credentialScope, credentialToken]);
 
+  // The options form of useChat forwards old callbacks to its latest options.
+  // An explicit instance keeps a pending request bound to its original actor.
+  const scopedChat = useMemo(
+    () =>
+      new Chat({
+        id: `${conversationIdentity}:${credentialToken.revision}`,
+        transport,
+        onError: (err) => {
+          if (!credentialScope.isCurrent(credentialToken)) return;
+          // The AI SDK wraps HTTP errors. The server returns plain text for 4xx/5xx.
+          // err.message often contains the response body for non-200 responses.
+          let msg = err.message || "";
+
+          // Strip "Error:" prefix if present
+          msg = msg.replace(/^Error:\s*/, "");
+
+          // Pass through the server message directly — getErrorMessage() in
+          // chat-area.tsx will map it to a user-friendly title + action.
+          // Only fall back to a generic message if we have nothing useful.
+          if (!msg || msg === "undefined") {
+            msg = "Something went wrong. Try again or check Settings.";
+          }
+
+          setChatError(msg);
+        },
+      }),
+    [conversationIdentity, credentialScope, credentialToken, transport],
+  );
+
   const {
     messages,
     status,
@@ -435,28 +464,7 @@ export function useConversation(
     sendMessage: sendSdkMessage,
     setMessages,
     stop,
-  } = useChat({
-    id: `${conversationIdentity}:${credentialToken.revision}`,
-    transport,
-    onError: (err) => {
-      if (!credentialScope.isCurrent(credentialToken)) return;
-      // The AI SDK wraps HTTP errors. The server returns plain text for 4xx/5xx.
-      // err.message often contains the response body for non-200 responses.
-      let msg = err.message || "";
-
-      // Strip "Error:" prefix if present
-      msg = msg.replace(/^Error:\s*/, "");
-
-      // Pass through the server message directly — getErrorMessage() in
-      // chat-area.tsx will map it to a user-friendly title + action.
-      // Only fall back to a generic message if we have nothing useful.
-      if (!msg || msg === "undefined") {
-        msg = "Something went wrong. Try again or check Settings.";
-      }
-
-      setChatError(msg);
-    },
-  });
+  } = useChat({ chat: scopedChat });
 
   useEffect(() => {
     setMessages([]);

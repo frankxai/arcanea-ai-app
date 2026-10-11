@@ -151,3 +151,93 @@ the provider before checking its field and expects only the selected account's
 field to exist. After saving clears the old model choice, it chooses Flash through
 the actual chat picker. This is a test correction; fresh hosted execution remains
 required and the failing run is retained.
+
+## SDK callback isolation
+
+Inspection of the installed AI SDK found that id-based recreation changes the
+Chat instance but forwards earlier instance callbacks through the hook's latest
+options ref. A native reproduction with actual SDK Chat/hook source and the
+application's callback delivers a pending A error to B after render but before
+passive cleanup. The hook now gives each actor revision an explicit memoized Chat
+instance, keeping transport and callbacks bound to that actor. The native CI
+regression executes that application configuration against the installed SDK;
+React scheduling and transport remain synthetic. It verifies same-actor instance
+retention, old-actor error denial and current-actor error visibility. Hosted full
+verification and independent review must cover this new source.
+
+Run38117065473 at4c9910b3 again passes types/lint and compiles, but settings
+assertions time out because server middleware redirects this unauthenticated
+offline fixture to login. The retained earlier aria snapshot confirms the same
+gate; selecting a provider alone did not resolve the first failure. The compiled
+verifier now preserves and checks that server denial, then exercises public chat
+guest/A/B credentials, picker persistence, same-actor refresh and pending abort.
+Authenticated settings UI, including same-turn stale save, remains an explicit
+release requirement. The existing author fixture is source-bound to another
+isolated preview; its account configuration cannot be silently repurposed. A
+secure configuration-location question is pending while independent work proceeds.
+
+## Promotion and follow-up
+
+Frank merged PR576 at `0661416b66c2674eb63a84a9597ca1163eb2d378` while the
+later SDK fix `ec63769aaee38df41a0e06ef5223b68da56cf289` was still outside that
+PR's accepted head. Production deployment `dpl_DrRY9DDU4YHQDQoB34E9XYRFbqZA`
+reports READY for the merge source; canonical HTTP and authenticated settings
+acceptance have not been established. The SDK regression also reproduces on
+that exact merged source: a late A error invokes B's callback before passive
+cleanup. The explicit-instance fix passes the same regression. This is actual
+installed SDK/application source with synthetic React scheduling and transport.
+
+The follow-up integrates accepted main into the existing owned feature branch,
+preserving incoming generation574 and routing changes. Only the conversation
+hook, SDK regression, existing native CI step, browser verifier and this pickup
+are intended to differ from accepted main. Native ownership/security checks
+remain enabled. The newer branch-name claim was refused because the active
+claim belongs to the existing branch; that branch and claim are retained.
+
+Hosted run [38118469758](https://github.com/frankxai/arcanea-ai-app/actions/runs/38118469758)
+at ec63769 passes TypeScript, Lint and app compilation, then fails the account
+fixture because it targets the unused CompactModelPicker. The verifier now uses
+AgentHeader's rendered buttons and distinct initial account models to await the
+actual account state. Failed account runs retain an aria snapshot. Fresh hosted
+execution is required. The authenticated settings fixture failures on 84147 and
+4c991 remain recorded; public chat does not prove protected settings saves.
+
+Independent review at 4c991: the eleven-source core review returned WARN with
+nine findings requiring lead reconciliation; the chat review returned malformed
+JSON and supplies no valid verdict. Earlier Lightning review truncated. These
+are partial attempts, not release approval. Fresh review-lite admission at
+06:40 UTC returned HOLD, 4,348 MB available / 6,144 MB required; no further
+reviewer, browser or additional agent was started. Complete exact-revision
+review and authorized two-account settings verification remain release gates.
+
+Follow-up source cdfd16e3 passes TypeScript, Lint and compilation in run38119301242,
+then fails its exact send-count assertion: the fixture also counted chat's GET
+readiness probe as an inference request. GET now receives a separate unconfigured
+fixture response; only POST enters the request count and pending-request gate.
+The exact A/B/guest send-count and account-key assertions remain required.
+
+Before that fixture refinement, the complete five-file follow-up and sixteen
+context files at cdfd16e3 received an independent static PASS with no findings
+from nvidia/nemotron-3-ultra-550b-a55b:free. Source/head/base/manifest and all
+twenty-one file hashes were validated; reported total127109 tokens and cost0.
+The earlier core WARN's nine findings were separately reconciled against eleven
+unchanged source hashes. Its WARN remains recorded. Review-lite was freshly
+BOUNDED at 06:52 UTC, 10,307 MB available / 6,144 required, before the single
+coherent review workload. The changed verifier still requires fresh exact-source
+review and hosted execution; real authenticated settings remain unverified.
+
+E267's complete twenty-one-source static review also returned PASS with no findings
+and cost0. Its full run38119990806 passed types, lint and compilation, reached
+the final guest-model check after account key/model/abort assertions, then failed
+because the broad Auto text locator also matched the focus-mode Auto control.
+The locator now requires the model label span, preserving both controls and the
+exact assertions. Fresh compiled execution and source-bound review are required.
+
+A read-only public control probe reproduced the old Auto locator's two matches
+and the corrected locator's single model match on desktop1440 and mobile375.
+It executes each actual verifier locator, checks Flash selection and preserves
+focus Auto. AgentHeader's source hash equals the mapped production0661416 source.
+No account/provider request or outbound mutation occurred; the browser closed.
+This proves locator fidelity only, not the SDK follow-up or authenticated settings.
+Fresh browser-qa admission at07:14 was BOUNDED, 9,988 MB free /8,192 required,
+CPU35 percent. No localhost server, dependency install or additional agent was used.

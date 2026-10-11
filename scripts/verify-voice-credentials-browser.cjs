@@ -573,6 +573,7 @@ async function verifyAccountCredentials(browser, mode) {
     reducedMotion: mode.motion,
   });
   let releasePending;
+  let page;
   try {
     // Real compiled Supabase subscribers receive synthetic cross-tab events.
     // No credentials, login, database writes or provider execution are real.
@@ -585,21 +586,6 @@ async function verifyAccountCredentials(browser, mode) {
           super(name);
           if (/^sb-.*-auth-token$/.test(name))
             window.__authChannelNames.push(name);
-        }
-        addEventListener(type, listener, options) {
-          if (type !== "message" || !/^sb-.*-auth-token$/.test(this.name))
-            return super.addEventListener(type, listener, options);
-          return super.addEventListener(
-            type,
-            (event) => {
-              listener.call(this, event);
-              // Submit the old form in the same turn as the auth subscriber,
-              // before React has replaced that account's controls.
-              window.__afterFixtureAuthEvent?.();
-              window.__afterFixtureAuthEvent = undefined;
-            },
-            options,
-          );
         }
       };
       if (!localStorage.getItem("fixture-account-credentials-seeded")) {
@@ -614,7 +600,7 @@ async function verifyAccountCredentials(browser, mode) {
             "user:fixture-account-a",
             { google: "fixture-account-a-key" },
             "google",
-            "arcanea-gemini-flash",
+            "arcanea-gemini-pro",
           ],
           [
             "user:fixture-account-b",
@@ -649,7 +635,7 @@ async function verifyAccountCredentials(browser, mode) {
         return nativeFetch.call(this, input, init);
       };
     });
-    const page = await context.newPage();
+    page = await context.newPage();
     page.setDefaultTimeout(15000);
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
@@ -670,6 +656,15 @@ async function verifyAccountCredentials(browser, mode) {
     const posts = [];
     let pending = false;
     await page.route("**/api/ai/chat", async (route) => {
+      if (route.request().method() === "GET") {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({ status: "unconfigured" }),
+        });
+        return;
+      }
+      assert.equal(route.request().method(), "POST");
       posts.push(route.request().postDataJSON());
       if (pending)
         await new Promise((resolve) => {
@@ -719,71 +714,10 @@ async function verifyAccountCredentials(browser, mode) {
     await page.goto(base + "/settings/providers", {
       waitUntil: "domcontentloaded",
     });
-    const google = page.getByLabel("Google Gemini API key", { exact: true });
-    const openai = page.getByLabel("OpenAI API key", { exact: true });
-    await page
-      .getByLabel("Chat provider", { exact: true })
-      .selectOption("google");
-    await expect(google).toHaveValue("");
-    await event("fixture-account-a");
-    await expect(google).toHaveValue("fixture-account-a-key");
-    await google.fill("fixture-unsaved-account-a");
-    await event("fixture-account-a", "TOKEN_REFRESHED");
-    await expect(google).toHaveValue("fixture-unsaved-account-a");
-    await page.evaluate(() => {
-      const form = document
-        .querySelector("#provider-key-google")
-        .closest("form");
-      window.__afterFixtureAuthEvent = () => form.requestSubmit();
-    });
-    await event("fixture-account-b");
-    await expect(openai).toHaveValue("fixture-account-b-key");
-    await expect(google).toHaveCount(0);
-    assert.equal(
-      await page.evaluate(
-        () =>
-          JSON.parse(
-            localStorage.getItem(
-              "arcanea-provider-keys:v2:user%3Afixture-account-a",
-            ),
-          ).google,
-      ),
-      "fixture-account-a-key",
-      "The previous account's form must not save after its auth event",
-    );
-    await event("fixture-account-a");
-    await expect(google).toHaveValue("fixture-account-a-key");
-    await google.fill("fixture-account-a-saved");
-    await page
-      .getByRole("button", { name: "Save connection", exact: true })
-      .click();
-    await expect(page.getByRole("status")).toContainText(
-      "Saved for this account",
-    );
-    assert.equal(
-      await page.evaluate(
-        () =>
-          JSON.parse(
-            localStorage.getItem(
-              "arcanea-provider-keys:v2:user%3Afixture-account-b",
-            ),
-          ).openai,
-      ),
-      "fixture-account-b-key",
-    );
-    await event(null);
-    await expect(
-      page.getByLabel("OpenRouter API key", { exact: true }),
-    ).toHaveValue("fixture-guest-key");
-    await page
-      .getByLabel("Chat provider", { exact: true })
-      .selectOption("google");
-    await expect(google).toHaveValue("");
-    assert.equal(
-      await page.evaluate(
-        () => JSON.parse(localStorage.getItem("arcanea-provider-keys")).google,
-      ),
-      "fixture-unassigned-key",
+    // A browser-only session event cannot authorize a protected server route.
+    // Keep that denial; authenticated settings need the approved real fixture.
+    await expect(page).toHaveURL(
+      /\/auth\/login\?next=%2Fsettings%2Fproviders$/,
     );
 
     await page.goto(base + "/chat", { waitUntil: "domcontentloaded" });
@@ -793,27 +727,29 @@ async function verifyAccountCredentials(browser, mode) {
     });
     await expect(input).toBeVisible();
     await event("fixture-account-a");
-    // Saving a provider clears its old model choice; choose one through chat.
-    await page
-      .getByRole("button", { name: "Model: Auto", exact: true })
-      .click();
-    await page.getByPlaceholder("Search models...").fill("Flash");
-    await page.getByRole("option", { name: /Flash/ }).click();
-    await expect(
-      page.getByRole("button", { name: "Model: Flash", exact: true }),
-    ).toBeVisible();
+    // AgentHeader renders this picker; CompactModelPicker is currently unused.
+    const modelButton = (label) =>
+      page.getByRole("button").filter({
+        has: page.locator("span").filter({ hasText: new RegExp(`^${label}$`) }),
+      });
+    // Distinct initial models wait for the actual account-specific state.
+    await expect(modelButton("Gemini Pro")).toBeVisible();
+    await modelButton("Gemini Pro").click();
+    await modelButton("Flash").click();
+    await expect(modelButton("Flash")).toBeVisible();
+    await input.fill("Same-account draft fixture");
+    await event("fixture-account-a", "TOKEN_REFRESHED");
+    await expect(input).toHaveValue("Same-account draft fixture");
     pending = true;
     await input.fill("Account A private fixture request");
     await page
       .getByRole("button", { name: "Send message", exact: true })
       .click();
     await expect.poll(() => posts.length).toBe(1);
-    assert.equal(posts[0].clientApiKey, "fixture-account-a-saved");
+    assert.equal(posts[0].clientApiKey, "fixture-account-a-key");
     assert.equal(posts[0].gatewayModel, "arcanea-gemini-flash");
     await event("fixture-account-b");
-    await expect(
-      page.getByRole("button", { name: "Model: GPT-5", exact: true }),
-    ).toBeVisible();
+    await expect(modelButton("GPT-5")).toBeVisible();
     await expect
       .poll(() => page.evaluate(() => window.__accountChatAborts))
       .toBe(1);
@@ -830,12 +766,30 @@ async function verifyAccountCredentials(browser, mode) {
     await expect.poll(() => posts.length).toBe(2);
     assert.equal(posts[1].clientApiKey, "fixture-account-b-key");
     assert.equal(posts[1].gatewayModel, "arcanea-gpt5");
+    await event("fixture-account-a");
+    await expect(modelButton("Flash")).toBeVisible();
+    await event(null);
+    await expect(modelButton("Auto")).toBeVisible();
+    await input.fill("Guest fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(3);
+    assert.equal(posts[2].clientApiKey, "fixture-guest-key");
+    assert.equal(posts[2].provider, "openrouter");
+    assert.equal(
+      await page.evaluate(
+        () => JSON.parse(localStorage.getItem("arcanea-provider-keys")).google,
+      ),
+      "fixture-unassigned-key",
+    );
     assert.deepEqual(errors, []);
     return {
       accountCredentialIsolation: true,
       sameActorRefreshKeepsDraft: true,
-      staleSettingsSaveDenied: true,
-      accountReturnReadsSavedKeys: true,
+      guestSettingsServerDenied: true,
+      authenticatedSettingsUiChecked: false,
+      accountReturnRestoresModel: true,
       legacyCredentialsPreservedUnused: true,
       accountSwitchCancelsChat: true,
       accountChatCredentialSelection: true,
@@ -843,6 +797,30 @@ async function verifyAccountCredentials(browser, mode) {
       realLogin: false,
       providerRequests: 0,
     };
+  } catch (error) {
+    if (page) {
+      await fs.mkdir("screenshots", { recursive: true });
+      await fs
+        .writeFile(
+          `screenshots/account-credentials-${mode.name}-failure.json`,
+          JSON.stringify(
+            {
+              sourceCommit: process.env.GITHUB_SHA || null,
+              mode: mode.name,
+              url: page.url(),
+              error: error.message,
+              snapshot: await page.locator("body").ariaSnapshot(),
+              syntheticAuthEvents: true,
+              realLogin: false,
+              providerRequests: 0,
+            },
+            null,
+            2,
+          ),
+        )
+        .catch(() => {});
+    }
+    throw error;
   } finally {
     releasePending?.();
     await context.close();

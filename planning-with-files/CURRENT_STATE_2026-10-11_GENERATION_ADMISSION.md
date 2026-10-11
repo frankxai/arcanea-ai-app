@@ -249,3 +249,14 @@ Build retains its inherited guest-settings failure until the receiving owner
 lands or explicitly admits integration of PR578. That draft at3a22e0aea375eb6c2f79410fc023d4b3f789e676
 has full hosted run38120918429 PASS, but its final independent review remains open.
 Do not waive Build or treat skipped draft checks as authenticated acceptance.
+
+## Explicit PR578 receiving integration
+
+The isolated generation receiving lane admits exact donor PR578 at3a22e0aea375eb6c2f79410fc023d4b3f789e676 for combined verification. The donor checkout, branch and owner remain untouched. Four full donor files are byte-identical; only its two-line CI test addition is composed with the receiving generation job. Donor final independent review remains open, so this is integration for review, not approval or merge. The combined hosted packet includes every full changed source and use-provider context, retaining all prior billing, Studio, CSP and actual Auth checks. Required Build and generation gates stay enforced.
+
+Exact SHA256 donor bindings:
+
+- `apps/web/hooks/use-conversation.ts`: `f9e612fe88a3b2132768f6972a927d2234133c108149836f02cc7732a9297178`
+- `scripts/tests/provider-chat-instance.test.cjs`: `444fb461a926f93642581f348617ef64f00ac99a706615f8d89a048c427a6a3e`
+- `scripts/verify-voice-credentials-browser.cjs`: `8870dd018b2f4508303b4ca08f889f117ae7932f98b50add566b301a591e8341`
+- `planning-with-files/CURRENT_STATE_2026-10-11_PROVIDER_ACCOUNT.md`: `59a257a56b2a0f3485e77293ce0a9ee23c3e869b0f0c37ccfcb865e35d7f1cd9`

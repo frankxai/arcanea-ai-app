@@ -194,7 +194,9 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
 
       - name: Verify customer voice credentials, privacy and recovery
-        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
+        run: |
+          pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
+          node --test scripts/tests/provider-chat-instance.test.cjs
 
       - name: Verify author credentials and exact draft acknowledgements
         run: |
