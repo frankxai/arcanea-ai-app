@@ -6,6 +6,7 @@ import {
   useEffect,
   useSyncExternalStore,
   useMemo,
+  useRef,
 } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -28,6 +29,11 @@ import {
 } from "@/lib/docs/client";
 import { DocumentSaveError, type DocumentPatch } from "@/lib/docs/save";
 import type { JSONContent } from "novel";
+import {
+  uploadDocumentImage,
+  readPortableDocumentMedia,
+} from "@/lib/docs/media-client";
+import { buildPortableDocumentExport } from "@/lib/docs/portable-export";
 
 const subscribeHydration = () => () => {};
 const clientHydrated = () => true;
@@ -374,6 +380,33 @@ function MountedEditor({
   backHref: string;
 }) {
   const { draft, doc } = loaded;
+  const [exporting, setExporting] = useState(false);
+  const [exportMessage, setExportMessage] = useState<{
+    text: string;
+    error: boolean;
+  } | null>(null);
+  const mediaAbort = useRef<AbortController | null>(null);
+  useEffect(() => {
+    const abort = new AbortController();
+    mediaAbort.current = abort;
+    return () => abort.abort();
+  }, []);
+  const mediaScope = useMemo(
+    () => ({
+      ownerId: doc.user_id!,
+      projectId: doc.project_id!,
+      docId: doc.id,
+    }),
+    [doc.user_id, doc.project_id, doc.id],
+  );
+  const imageUpload = useCallback(
+    (file: File) =>
+      uploadDocumentImage(file, mediaScope, {
+        current,
+        signal: mediaAbort.current?.signal,
+      }),
+    [mediaScope, current],
+  );
   const snapshot = useSyncExternalStore(
     draft.subscribe,
     draft.snapshot,
@@ -551,6 +584,58 @@ function MountedEditor({
     anchor.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+  async function exportDocument() {
+    if (!current() || exporting) return;
+    setExporting(true);
+    setExportMessage(null);
+    const latest = draft.snapshot().value ?? loaded.initial;
+    try {
+      const result = await buildPortableDocumentExport(
+        {
+          title: latest.title ?? doc.title,
+          content_json: latest.content_json ?? { type: "doc", content: [] },
+          content_text: latest.content_text ?? "",
+          confirmed_revision: draft.revision(),
+          pending_operation: draft.pending(),
+        },
+        mediaScope,
+        (id) =>
+          readPortableDocumentMedia(mediaScope, id, {
+            current,
+            signal: mediaAbort.current?.signal,
+          }),
+        current,
+      );
+      if (!current()) return;
+      if ((draft.snapshot().value ?? loaded.initial) !== latest)
+        throw Error(
+          "Your draft changed during export. Retry to download its current version.",
+        );
+      const url = URL.createObjectURL(
+        new Blob([result.html], { type: "text/html" }),
+      );
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `arcanea-document-${doc.id}.html`;
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setExportMessage({
+        text: `Exported this document with ${result.mediaCount} saved image${result.mediaCount === 1 ? "" : "s"}. It can be opened offline.`,
+        error: false,
+      });
+    } catch (error) {
+      if (current())
+        setExportMessage({
+          text:
+            error instanceof Error
+              ? error.message
+              : "Export was not completed. Your draft is unchanged; download its JSON instead.",
+          error: true,
+        });
+    } finally {
+      if (current()) setExporting(false);
+    }
+  }
   const status = snapshot.saving
     ? "Saving…"
     : snapshot.dirty
@@ -601,6 +686,14 @@ function MountedEditor({
               Download draft
             </button>
             <button
+              type="button"
+              className={control}
+              disabled={exporting || deleting}
+              onClick={() => void exportDocument()}
+            >
+              {exporting ? "Preparing export…" : "Export document"}
+            </button>
+            <button
               className={control}
               disabled={deleting || snapshot.saving}
               onClick={() => void deleteDoc()}
@@ -611,6 +704,22 @@ function MountedEditor({
         </div>
       </header>
       <main className="mx-auto max-w-4xl px-6 py-8">
+        {exportMessage && (
+          <div className="mb-4 text-sm">
+            <p role={exportMessage.error ? "alert" : "status"}>
+              {exportMessage.text}
+            </p>
+            {exportMessage.error && (
+              <button
+                type="button"
+                className={`${control} mt-3`}
+                onClick={download}
+              >
+                Download draft JSON
+              </button>
+            )}
+          </div>
+        )}
         {(message || saveError || !draft.backupAvailable()) && (
           <section
             aria-label="Document recovery"
@@ -671,6 +780,7 @@ function MountedEditor({
           className="mb-8 w-full rounded bg-transparent text-3xl font-semibold placeholder:text-[var(--arc-text-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
         />
         <DocEditor
+          onImageUpload={imageUpload}
           initialContent={
             loaded.initial.content_json &&
             Object.keys(loaded.initial.content_json).length

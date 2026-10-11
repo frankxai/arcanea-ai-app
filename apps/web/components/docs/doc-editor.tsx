@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { useCallback, useRef, useEffect, type ReactNode } from "react";
+import {
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   EditorRoot,
   EditorContent,
@@ -54,30 +61,12 @@ interface DocEditorProps {
   /** Debounce delay in ms (default 2000) */
   saveDelay?: number;
   readOnly?: boolean;
+  onImageUpload?: (file: File) => Promise<string>;
 }
 
 // ---------------------------------------------------------------------------
-// Image upload stub (replace with real Supabase Storage upload)
+// Image upload is supplied by the current owner/document workspace.
 // ---------------------------------------------------------------------------
-
-const uploadFn = createImageUpload({
-  onUpload: async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch("/api/upload/image", {
-      method: "POST",
-      body: formData,
-    });
-    if (!res.ok) throw new Error("Upload failed");
-    const data = await res.json();
-    return data.url as string;
-  },
-  validateFn: (file: File) => {
-    if (!file.type.startsWith("image/")) return false;
-    if (file.size > 10 * 1024 * 1024) return false;
-    return true;
-  },
-});
 
 function commandIcon(label: string): ReactNode {
   return (
@@ -91,201 +80,205 @@ function commandIcon(label: string): ReactNode {
 // Slash command items
 // ---------------------------------------------------------------------------
 
-const suggestionItems = createSuggestionItems([
-  {
-    title: "Text",
-    description: "Plain paragraph",
-    icon: commandIcon("T"),
-    searchTerms: ["text", "paragraph", "p"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .toggleNode("paragraph", "paragraph")
-        .run();
+function documentSuggestionItems(
+  uploadFn: ReturnType<typeof createImageUpload>,
+) {
+  return createSuggestionItems([
+    {
+      title: "Text",
+      description: "Plain paragraph",
+      icon: commandIcon("T"),
+      searchTerms: ["text", "paragraph", "p"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .toggleNode("paragraph", "paragraph")
+          .run();
+      },
     },
-  },
-  {
-    title: "Heading 1",
-    description: "Large section heading",
-    icon: commandIcon("H1"),
-    searchTerms: ["h1", "heading", "title"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode("heading", { level: 1 })
-        .run();
+    {
+      title: "Heading 1",
+      description: "Large section heading",
+      icon: commandIcon("H1"),
+      searchTerms: ["h1", "heading", "title"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode("heading", { level: 1 })
+          .run();
+      },
     },
-  },
-  {
-    title: "Heading 2",
-    description: "Medium section heading",
-    icon: commandIcon("H2"),
-    searchTerms: ["h2", "heading", "subtitle"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode("heading", { level: 2 })
-        .run();
+    {
+      title: "Heading 2",
+      description: "Medium section heading",
+      icon: commandIcon("H2"),
+      searchTerms: ["h2", "heading", "subtitle"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode("heading", { level: 2 })
+          .run();
+      },
     },
-  },
-  {
-    title: "Heading 3",
-    description: "Small section heading",
-    icon: commandIcon("H3"),
-    searchTerms: ["h3", "heading"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .setNode("heading", { level: 3 })
-        .run();
+    {
+      title: "Heading 3",
+      description: "Small section heading",
+      icon: commandIcon("H3"),
+      searchTerms: ["h3", "heading"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode("heading", { level: 3 })
+          .run();
+      },
     },
-  },
-  {
-    title: "Bullet List",
-    description: "Unordered list",
-    icon: commandIcon("•"),
-    searchTerms: ["ul", "list", "bullet", "unordered"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).toggleBulletList().run();
+    {
+      title: "Bullet List",
+      description: "Unordered list",
+      icon: commandIcon("•"),
+      searchTerms: ["ul", "list", "bullet", "unordered"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleBulletList().run();
+      },
     },
-  },
-  {
-    title: "Numbered List",
-    description: "Ordered list",
-    icon: commandIcon("1."),
-    searchTerms: ["ol", "list", "numbered", "ordered"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+    {
+      title: "Numbered List",
+      description: "Ordered list",
+      icon: commandIcon("1."),
+      searchTerms: ["ol", "list", "numbered", "ordered"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+      },
     },
-  },
-  {
-    title: "To-Do",
-    description: "Task checklist item",
-    icon: commandIcon("[]"),
-    searchTerms: ["todo", "task", "check", "checkbox"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).toggleTaskList().run();
+    {
+      title: "To-Do",
+      description: "Task checklist item",
+      icon: commandIcon("[]"),
+      searchTerms: ["todo", "task", "check", "checkbox"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run();
+      },
     },
-  },
-  {
-    title: "Quote",
-    description: "Block quotation",
-    icon: commandIcon('"'),
-    searchTerms: ["blockquote", "quote"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).toggleBlockquote().run();
+    {
+      title: "Quote",
+      description: "Block quotation",
+      icon: commandIcon('"'),
+      searchTerms: ["blockquote", "quote"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleBlockquote().run();
+      },
     },
-  },
-  {
-    title: "Code",
-    description: "Code block",
-    icon: commandIcon("</>"),
-    searchTerms: ["code", "codeblock", "pre"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+    {
+      title: "Code",
+      description: "Code block",
+      icon: commandIcon("</>"),
+      searchTerms: ["code", "codeblock", "pre"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+      },
     },
-  },
-  {
-    title: "Divider",
-    description: "Horizontal rule",
-    icon: commandIcon("---"),
-    searchTerms: ["hr", "divider", "separator", "rule"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+    {
+      title: "Divider",
+      description: "Horizontal rule",
+      icon: commandIcon("---"),
+      searchTerms: ["hr", "divider", "separator", "rule"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+      },
     },
-  },
-  {
-    title: "Image",
-    description: "Upload or embed an image",
-    icon: commandIcon("Img"),
-    searchTerms: ["image", "img", "photo", "picture"],
-    command: ({
-      editor,
-      range,
-    }: {
-      editor: EditorInstance;
-      range: { from: number; to: number };
-    }) => {
-      editor.chain().focus().deleteRange(range).run();
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/*";
-      input.onchange = async () => {
-        if (!input.files?.[0]) return;
-        uploadFn(input.files[0], editor.view, editor.state.selection.from);
-      };
-      input.click();
+    {
+      title: "Image",
+      description: "Upload a private document image",
+      icon: commandIcon("Img"),
+      searchTerms: ["image", "img", "photo", "picture"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).run();
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = async () => {
+          if (!input.files?.[0]) return;
+          uploadFn(input.files[0], editor.view, editor.state.selection.from);
+        };
+        input.click();
+      },
     },
-  },
-]);
+  ]);
+}
 
 // ---------------------------------------------------------------------------
 // Extensions
@@ -318,9 +311,112 @@ export function DocEditor({
   onReady,
   saveDelay = 2000,
   readOnly = false,
+  onImageUpload,
 }: DocEditorProps) {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const editorRef = useRef<EditorInstance | null>(null);
+  const pendingImageRef = useRef<File | null>(null);
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const alive = useRef(true);
+  const [pendingImage, setPendingImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  useEffect(() => {
+    alive.current = true;
+    const unload = (event: BeforeUnloadEvent) => {
+      if (!pendingImageRef.current) return;
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    const navigation = (event: MouseEvent) => {
+      const link =
+        event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+      if (
+        pendingImageRef.current &&
+        link &&
+        !link.hasAttribute("download") &&
+        !window.confirm(
+          "Leave before this image is saved? Download its original first if you do not have a copy.",
+        )
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    window.addEventListener("beforeunload", unload);
+    document.addEventListener("click", navigation, true);
+    return () => {
+      alive.current = false;
+      window.removeEventListener("beforeunload", unload);
+      document.removeEventListener("click", navigation, true);
+    };
+  }, []);
+  const uploadFn = useMemo(
+    () =>
+      createImageUpload({
+        onUpload: async (file: File) => {
+          if (readOnly || !onImageUpload)
+            throw Error(
+              "Private image saving is unavailable in this editor. Keep the original file.",
+            );
+          if (pendingImageRef.current && pendingImageRef.current !== file)
+            throw Error(
+              "Finish or download the pending image before adding another.",
+            );
+          pendingImageRef.current = file;
+          if (alive.current) {
+            setPendingImage(file);
+            setImageError(null);
+            setUploadingImage(true);
+          }
+          try {
+            const url = await onImageUpload(file);
+            if (!alive.current)
+              throw Error(
+                "The document closed before image saving was confirmed.",
+              );
+            pendingImageRef.current = null;
+            setPendingImage(null);
+            return url;
+          } catch (error) {
+            if (alive.current)
+              setImageError(
+                error instanceof Error
+                  ? error.message
+                  : "Image saving was not confirmed. Keep the original file.",
+              );
+            throw error;
+          } finally {
+            if (alive.current) setUploadingImage(false);
+          }
+        },
+        validateFn: (file: File) => {
+          const valid =
+            ["image/png", "image/jpeg", "image/webp"].includes(file.type) &&
+            file.size > 0 &&
+            file.size <= 10 * 1024 * 1024;
+          if (!valid && alive.current)
+            setImageError(
+              "Use a PNG, JPEG or WEBP image of at most 10 MiB. Your original file is unchanged.",
+            );
+          return valid;
+        },
+      }),
+    [onImageUpload, readOnly],
+  );
+  const suggestionItems = useMemo(
+    () => documentSuggestionItems(uploadFn),
+    [uploadFn],
+  );
+  const imageControl =
+    "min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] px-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50";
+  function insertFile(file: File) {
+    const editor = editorRef.current;
+    if (!editor) return;
+    uploadFn(file, editor.view, editor.state.selection.from);
+  }
 
   const triggerSave = useCallback(
     (editor: EditorInstance) => {
@@ -366,6 +462,68 @@ export function DocEditor({
 
   return (
     <div className="doc-editor relative min-h-[60vh]">
+      {!readOnly && (
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            className={imageControl}
+            disabled={uploadingImage || pendingImage !== null || !onImageUpload}
+            onClick={() => imageInputRef.current?.click()}
+          >
+            Add image
+          </button>
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            hidden
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              if (file) insertFile(file);
+              event.target.value = "";
+            }}
+          />
+          <span className="text-sm text-[var(--arc-text-secondary)]">
+            PNG, JPEG or WEBP, up to 10 MiB
+          </span>
+        </div>
+      )}
+      {(imageError || pendingImage) && (
+        <section
+          aria-label="Image recovery"
+          className="mb-4 rounded-lg border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-4"
+        >
+          <p role={imageError ? "alert" : "status"} className="mb-3 text-sm">
+            {imageError ?? "Saving your image… Keep this page open."}
+          </p>
+          {pendingImage && (
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className={imageControl}
+                disabled={uploadingImage}
+                onClick={() => insertFile(pendingImage)}
+              >
+                Retry image
+              </button>
+              <button
+                type="button"
+                className={imageControl}
+                onClick={() => {
+                  const url = URL.createObjectURL(pendingImage);
+                  const anchor = document.createElement("a");
+                  anchor.href = url;
+                  anchor.download = pendingImage.name;
+                  anchor.click();
+                  setTimeout(() => URL.revokeObjectURL(url), 1000);
+                }}
+              >
+                Download original image
+              </button>
+            </div>
+          )}
+        </section>
+      )}
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}
