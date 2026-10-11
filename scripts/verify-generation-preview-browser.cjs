@@ -1,8 +1,13 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
 const { createHash, randomUUID } = require("node:crypto");
-const { chromium, expect } = require("@playwright/test");
+const { createRequire } = require("node:module");
+const { resolve } = require("node:path");
+const { chromium, expect } = createRequire(resolve("apps/web/package.json"))(
+  "@playwright/test",
+);
 
+let bootstrapPhase = "hosted-admission";
 async function main() {
   if (
     process.env.GITHUB_ACTIONS !== "true" ||
@@ -10,6 +15,7 @@ async function main() {
     process.env.GITHUB_REF_NAME !== "agent/codex/generation-admission-20261011"
   )
     throw Error("Only the owned disposable hosted generation lane is admitted");
+  bootstrapPhase = "private-config";
   const config = JSON.parse(
     await fs.readFile(process.env.GENERATION_TEST_CONFIG, "utf8"),
   );
@@ -21,10 +27,13 @@ async function main() {
       account.email.endsWith("@example.invalid"),
     ),
   );
+  bootstrapPhase = "fixture-image-read";
   const image = await fs.readFile(config.imageFile);
   const imageHash = createHash("sha256").update(image).digest("hex");
   const rows = [];
+  bootstrapPhase = "chromium-launch";
   const browser = await chromium.launch({ headless: true });
+  bootstrapPhase = "compiled-client-journeys";
   async function api(path, token = config.admin, init = {}) {
     const response = await fetch(config.supabaseUrl + path, {
       ...init,
@@ -414,7 +423,37 @@ async function main() {
     "Compiled generation acceptance did not pass",
   );
 }
-main().catch(() => {
+main().catch(async () => {
+  // Never serialize an exception that may contain private config or credentials.
+  const evidencePath = "screenshots/generation-service/browser-evidence.json";
+  if (
+    process.env.GITHUB_ACTIONS === "true" &&
+    process.env.GITHUB_REPOSITORY === "frankxai/arcanea-ai-app" &&
+    process.env.GITHUB_REF_NAME ===
+      "agent/codex/generation-admission-20261011" &&
+    /^[a-f0-9]{40}$/.test(process.env.GITHUB_SHA || "")
+  ) {
+    try {
+      await fs.access(evidencePath);
+    } catch {
+      await fs.mkdir("screenshots/generation-service", { recursive: true });
+      await fs.writeFile(
+        evidencePath,
+        JSON.stringify(
+          {
+            head: process.env.GITHUB_SHA,
+            passed: false,
+            failurePhase: bootstrapPhase,
+            rows: [],
+            providerCalls: 0,
+            providerRequestsAttempted: 0,
+          },
+          null,
+          2,
+        ),
+      );
+    }
+  }
   console.error(
     "Disposable generation client acceptance failed; inspect sanitized phase evidence.",
   );

@@ -115,3 +115,24 @@ test("the full fixture refuses local execution and inherited hosted credentials 
   assert.notEqual(credential.status, 0);
   assert.match(credential.stderr, /Hosted credentials are prohibited/);
 });
+
+test("Browser verifier resolves the app-owned dependency and refuses local execution before Chromium", () => {
+  const result = spawnSync(
+    process.execPath,
+    ["scripts/verify-generation-preview-browser.cjs"],
+    {
+      cwd: new URL("../../", import.meta.url),
+      env: {
+        ...process.env,
+        GITHUB_ACTIONS: "false",
+        GITHUB_REPOSITORY: "",
+        GITHUB_REF_NAME: "",
+      },
+      encoding: "utf8",
+      timeout: 15000,
+    },
+  );
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Disposable generation client acceptance failed/);
+  assert.doesNotMatch(result.stderr, /MODULE_NOT_FOUND|Cannot find module/);
+});
