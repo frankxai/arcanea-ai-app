@@ -209,3 +209,19 @@ are partial attempts, not release approval. Fresh review-lite admission at
 06:40 UTC returned HOLD, 4,348 MB available / 6,144 MB required; no further
 reviewer, browser or additional agent was started. Complete exact-revision
 review and authorized two-account settings verification remain release gates.
+
+Follow-up source cdfd16e3 passes TypeScript, Lint and compilation in run38119301242,
+then fails its exact send-count assertion: the fixture also counted chat's GET
+readiness probe as an inference request. GET now receives a separate unconfigured
+fixture response; only POST enters the request count and pending-request gate.
+The exact A/B/guest send-count and account-key assertions remain required.
+
+Before that fixture refinement, the complete five-file follow-up and sixteen
+context files at cdfd16e3 received an independent static PASS with no findings
+from nvidia/nemotron-3-ultra-550b-a55b:free. Source/head/base/manifest and all
+twenty-one file hashes were validated; reported total127109 tokens and cost0.
+The earlier core WARN's nine findings were separately reconciled against eleven
+unchanged source hashes. Its WARN remains recorded. Review-lite was freshly
+BOUNDED at 06:52 UTC, 10,307 MB available / 6,144 required, before the single
+coherent review workload. The changed verifier still requires fresh exact-source
+review and hosted execution; real authenticated settings remain unverified.

@@ -656,6 +656,15 @@ async function verifyAccountCredentials(browser, mode) {
     const posts = [];
     let pending = false;
     await page.route("**/api/ai/chat", async (route) => {
+      if (route.request().method() === "GET") {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({ status: "unconfigured" }),
+        });
+        return;
+      }
+      assert.equal(route.request().method(), "POST");
       posts.push(route.request().postDataJSON());
       if (pending)
         await new Promise((resolve) => {
