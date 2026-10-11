@@ -235,6 +235,7 @@ async function verifyReadingControls(page, mode) {
   );
   assert.equal(lineHeight, 36, "Relaxed line height reaches the actual prose");
   await theme.focus();
+  const themeStyles = [];
   for (const expected of ["light", "sepia", "cosmic", "dark"]) {
     if (mode.hasTouch) await theme.tap();
     else await theme.press("Enter");
@@ -247,6 +248,7 @@ async function verifyReadingControls(page, mode) {
         return {
           prose: style.color,
           reader: readerStyle.color,
+          transitionProperty: readerStyle.transitionProperty,
           transitionDuration: readerStyle.transitionDuration,
         };
       });
@@ -257,10 +259,13 @@ async function verifyReadingControls(page, mode) {
       })
       .toBe(true);
     const colors = await readingColors();
+    // The global reduced-motion rule sets a tiny duration even when no property
+    // can transition. CSS transition-property:none means no transitions occur.
     assert.ok(
-      colors.transitionDuration
-        .split(",")
-        .every((duration) => Number.parseFloat(duration) === 0),
+      colors.transitionProperty === "none" ||
+        colors.transitionDuration
+          .split(",")
+          .every((duration) => Number.parseFloat(duration) === 0),
       "Reading theme preference switches do not animate",
     );
     assert.equal(
@@ -268,6 +273,7 @@ async function verifyReadingControls(page, mode) {
       colors.reader,
       "The prose inherits its selected reading theme",
     );
+    themeStyles.push({ theme: expected, ...colors });
   }
   await page.evaluate(() =>
     localStorage.setItem(
@@ -315,6 +321,7 @@ async function verifyReadingControls(page, mode) {
     fontSize: true,
     lineHeight,
     themes: true,
+    themeStyles,
     focusSurvivesScroll: true,
     capture,
     passed: true,
