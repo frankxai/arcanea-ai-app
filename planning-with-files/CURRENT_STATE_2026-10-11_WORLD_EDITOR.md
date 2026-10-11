@@ -134,6 +134,20 @@ selector and unawaited confirmation handler left a second listener to consume
 the reload dialog. All failed evidence is retained; this is not a passed run.
 The corrected candidate needs fresh hosted execution and exact-source review.
 
+The exact-head static review of a12255b returned PASS for its inspected source;
+it did not run browser checks or inspect captures. Its 0.0003 plan-credit usage
+brings observed mission v0 usage to 0.0034, with zero on-demand usage. Hosted run
+38116878526 passed frozen install, lint, typecheck and the compiled application
+build, then failed the cancelled-reload assertion: Chromium retained the page
+but Playwright reported navigation timeout instead of ERR_ABORTED. The revised
+test requires the beforeunload dialog, dismisses it, checks the expected aborted
+or timed-out navigation, and verifies that the original document object and the
+unapplied field survive. This avoids accepting a reconstructed draft after reload.
+The latest browser-qa preflight remains HOLD: 4063 MB free against
+8192 MB required. No local browser was started. This correction changes test
+evidence only; the application source remains unchanged from the static PASS.
+Fresh hosted execution and exact-revision review are still required.
+
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior
 receipts, all foreign branches and the existing applied-draft recovery records.

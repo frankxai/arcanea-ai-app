@@ -348,17 +348,33 @@ const draft = {
         "",
       );
       assert.match(page.url(), /\/worlds\/create/);
+      const documentBeforeReload = await page.evaluateHandle(() => document);
       const reloadDialog = page.waitForEvent("dialog");
-      const cancelledReload = page.reload().then(
-        () => null,
-        (error) => error,
-      );
+      const cancelledReload = page
+        .reload({ waitUntil: "commit", timeout: 2000 })
+        .then(
+          () => null,
+          (error) => error,
+        );
       const warning = await reloadDialog;
       assert.equal(warning.type(), "beforeunload");
       await warning.dismiss();
       const cancellation = await cancelledReload;
-      if (cancellation)
-        assert.match(cancellation.message, /ERR_ABORTED|Navigation.*cancel/i);
+      assert.ok(cancellation, "Dismissed reload must not complete navigation");
+      assert.ok(
+        cancellation.name === "TimeoutError" ||
+          /ERR_ABORTED|Navigation.*cancel/i.test(cancellation.message),
+        cancellation.message,
+      );
+      assert.equal(
+        await page.evaluate(
+          (original) => original === document,
+          documentBeforeReload,
+        ),
+        true,
+        "Cancelled reload retains the original document, not a reconstructed draft",
+      );
+      await documentBeforeReload.dispose();
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
       );
