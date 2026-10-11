@@ -117,7 +117,9 @@ async function boundedFile(root, relative, limit) {
     const bytes = buffer.subarray(0, count);
     return {
       bytes,
-      utf8: new TextDecoder("utf-8", { fatal: true }).decode(bytes),
+      utf8: new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(
+        bytes,
+      ),
     };
   } finally {
     await handle.close();
@@ -160,7 +162,7 @@ async function sourcesFor(root, spec) {
       authority: "creator-working-source",
     });
   }
-  const manifest = JSON.parse(sources[0].utf8);
+  const manifest = JSON.parse(sources[0].utf8.replace(/^\uFEFF/, ""));
   requireValue(
     own(manifest) && /^wld_[0-9A-HJKMNP-TV-Z]{26}$/.test(manifest.id),
     "World manifest needs a valid world id.",
@@ -272,7 +274,7 @@ function validateRecord(record) {
       record.characterPath.endsWith(".md"),
     "Scene source selection integrity failed.",
   );
-  const manifest = JSON.parse(record.sources[0].utf8);
+  const manifest = JSON.parse(record.sources[0].utf8.replace(/^\uFEFF/, ""));
   requireValue(
     own(record.world) &&
       same(record.world, { id: manifest.id, name: manifest.name }) &&

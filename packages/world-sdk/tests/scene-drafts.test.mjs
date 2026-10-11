@@ -18,6 +18,7 @@ import { buildManifest } from "../src/manifest.mjs";
 import { readWorld } from "../src/fs-world.mjs";
 import { contentHash } from "../src/contenthash.mjs";
 import { buildIndex } from "../src/index-build.mjs";
+import { recordMemory, listMemories } from "../src/evolution.mjs";
 
 const exec = promisify(execFile);
 const cli = fileURLToPath(new URL("../bin/cli.mjs", import.meta.url));
@@ -56,6 +57,21 @@ const spec = {
     "Mara must carry a stranger before the gates shut; the fare will cost a memory.",
   author: "test-author",
 };
+
+test("equal-timestamp memories are distinct even under simultaneous writes", async (t) => {
+  const dir = await fixture(t);
+  const timestamp = "2026-10-11T21:00:00.000Z";
+  const writes = await Promise.all(
+    ["first", "second", "third", "fourth"].map((content) =>
+      recordMemory(dir, { ts: timestamp, content }),
+    ),
+  );
+  assert.equal(new Set(writes.map((write) => write.path)).size, 4);
+  assert.deepEqual(
+    (await listMemories(dir)).map((record) => record.content).sort(),
+    ["first", "fourth", "second", "third"],
+  );
+});
 const prose =
   "Mara held the boat against the stone. 'Your fare,' she said. The stranger offered a memory of home. She left the coin on the quay.";
 const revision = (draft, text = prose) => ({
@@ -224,6 +240,24 @@ test("an absent scene read creates no directories; source snapshots preserve CRL
     createHash("sha256").update(bytes).digest("hex"),
   );
   assert.deepEqual(Buffer.from(draft.record.sources[1].utf8), bytes);
+});
+
+test("UTF-8 BOM world and character documents retain their exact captured bytes", async (t) => {
+  const dir = await fixture(t);
+  for (const relative of ["world.arcanea.json", "characters/mara.md"]) {
+    const file = path.join(dir, relative);
+    await fs.writeFile(
+      file,
+      Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), await fs.readFile(file)]),
+    );
+  }
+  const draft = await createSceneDraft(dir, spec);
+  for (const source of draft.record.sources)
+    assert.deepEqual(
+      Buffer.from(source.utf8),
+      await fs.readFile(path.join(dir, source.path)),
+    );
+  assert.match(await scenePrompt(dir, spec.sceneId), /Mara/);
 });
 
 test("real CLI capture, prompt, revision and export preserve provenance and refuse overwrites", async (t) => {

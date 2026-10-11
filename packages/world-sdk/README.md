@@ -60,6 +60,10 @@ node --test tests/*.test.mjs
 
 ## Source-linked scenes
 
+Memory records now use distinct UUID filenames with exclusive creation. Two
+events with the same timestamp remain separate; their recorded timestamps are
+preserved. This does not change the existing evolution/canon-promotion helpers.
+
 Use the existing World SDK to carry a selected world and character into your
 writing harness, retain revisions and export a scene with its captured sources.
 The scene commands make no model request and read no provider key. Choose and

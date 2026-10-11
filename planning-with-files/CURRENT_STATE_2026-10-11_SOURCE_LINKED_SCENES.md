@@ -13,7 +13,7 @@ Owned files: packages/world-sdk/src/scene-drafts.mjs,
 packages/world-sdk/bin/scene-cli.mjs, packages/world-sdk/bin/cli.mjs,
 packages/world-sdk/src/index.mjs, packages/world-sdk/index.d.ts,
 packages/world-sdk/tests/scene-drafts.test.mjs, packages/world-sdk/README.md,
-.github/workflows/world-scenes.yml and this record. Foreign world-editor,
+.github/workflows/world-scenes.yml, packages/world-sdk/src/evolution.mjs and this record. Foreign world-editor,
 chat-world handoff and library scopes remain untouched.
 
 Creator job: take explicitly selected world and character documents into the
@@ -74,6 +74,28 @@ semantic canon validator, calibrated judge, competitor comparison or production
 creator outcome is proved. Day-one library correction #515 remains with its
 foreign owner. ARC-REL-001 remains Dragonborne; publication approval is pending.
 
-Rollback: revert this nine-file slice via a reviewed PR. Preserve creator draft
+Rollback: revert this ten-file slice via a reviewed PR. Preserve creator draft
 directories and exports; no live data migration or canon change is introduced.
 Never delete incomplete export directories or accepted revisions as cleanup.
+
+PR601 first candidate aa14768a593a0406a010e2e5be97b7dc5375a106 ran hosted workflow
+38178219823: all eight new scene cases pass on both platforms. Windows has 17
+passes; Linux has 16 passes and one inherited memory test failure. The failure is
+real: recordMemory uses only the timestamp as its filename, so same-millisecond
+events overwrite each other. A forced equal-timestamp regression fails with one
+stored path instead of four. Memory files now use random UUID names and exclusive
+creation; timestamps remain unchanged in their records. No evolution/canon
+promotion behavior is changed. A separate UTF-8 BOM case reproduced a captured
+source hash failure; snapshots now preserve the BOM while manifest parsing skips
+only that marker. The updated local suite has 19 passes, zero failures or skips.
+Fresh hosted execution and exact-source independent review remain required.
+
+The initial Poolside source review at aa14768a returned malformed JSON containing
+a WARN and five alleged findings. Its complete raw response and error are kept.
+It supplies no accepted independent verdict. Lead inspection rejects the claimed
+CLI position bug: args[3] is the output directory and the real CLI tests exercise
+that exact vector. It also incorrectly says the concurrent Windows case is absent.
+Its empty-capture complaint contradicts the deliberate revision-zero state;
+the hypothetical UUID collision already refuses via wx. Its proposed rename
+replacement could overwrite an accepted revision. These lead findings do not
+substitute for a fresh, valid independent review of the corrected candidate.
