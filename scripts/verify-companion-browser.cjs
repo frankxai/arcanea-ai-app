@@ -95,13 +95,19 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
-    await page.evaluate(async () => {
-      const animations = document
+    await page.waitForFunction(() =>
+      document
         .getAnimations()
-        .filter((animation) =>
-          Number.isFinite(animation.effect?.getComputedTiming().iterations),
-        );
-      await Promise.all(animations.map((animation) => animation.finished));
+        .every(
+          (animation) =>
+            !Number.isFinite(
+              animation.effect?.getComputedTiming().iterations,
+            ) ||
+            animation.playState === "finished" ||
+            animation.playState === "idle",
+        ),
+    );
+    await page.evaluate(async () => {
       await new Promise(requestAnimationFrame);
     });
     const file = `${name}.png`;
@@ -247,9 +253,7 @@ async function main() {
       });
       await expect(opener).toBeVisible({ timeout: 15000 });
       await page.keyboard.press("Control+k");
-      await expect(
-        page.getByPlaceholder("Where do you want to go?"),
-      ).toBeVisible();
+      await expect(page.getByRole("combobox")).toBeVisible();
       await expect(
         page.getByRole("dialog", { name: "Arcanea companion" }),
       ).toBeHidden();
