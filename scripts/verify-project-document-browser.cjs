@@ -275,9 +275,10 @@ async function main() {
         for await (const chunk of stream) chunks.push(chunk);
         return Buffer.concat(chunks).toString("utf8");
       };
-      const capture = async (label) => {
+      const capture = async (label, { locator, fullPage = true } = {}) => {
         const file = `${config.output}/document-${mode.name}-${label}.png`;
-        await page.screenshot({ path: file, fullPage: true });
+        if (locator) await locator.screenshot({ path: file });
+        else await page.screenshot({ path: file, fullPage });
         fs.writeFileSync(
           `${file}.vis.provenance.json`,
           JSON.stringify(
@@ -382,6 +383,60 @@ async function main() {
           true,
         );
         await capture("saved");
+
+        stage = "scrolled-document-controls";
+        const controls = page.getByRole("region", {
+          name: "Document controls",
+        });
+        await expect(controls).toBeVisible();
+        const scrolledControls = await controls.evaluate(async (header) => {
+          const frame = () =>
+            new Promise((resolve) => requestAnimationFrame(resolve));
+          const inspect = () => {
+            const nav = document.querySelector("nav.fixed");
+            if (!nav) throw Error("Global navigation unavailable.");
+            const navBottom = nav.getBoundingClientRect().bottom;
+            return [...header.querySelectorAll("a, button, select")].map(
+              (element) => {
+                const bounds = element.getBoundingClientRect();
+                const hit = document.elementFromPoint(
+                  bounds.x + bounds.width / 2,
+                  bounds.y + bounds.height / 2,
+                );
+                return {
+                  top: bounds.top,
+                  navBottom,
+                  unobstructed: hit !== null && element.contains(hit),
+                };
+              },
+            );
+          };
+          if (window.scrollY <= 0)
+            throw Error("The footer focus must scroll the document.");
+          const oldTop = header.style.top;
+          let legacy;
+          try {
+            // Reproduce the previous sticky top:0 collision in the real layout.
+            header.style.top = "0px";
+            await frame();
+            legacy = inspect();
+          } finally {
+            header.style.top = oldTop;
+            await frame();
+          }
+          return { legacy, current: inspect(), scrollY: window.scrollY };
+        });
+        assert.equal(scrolledControls.legacy[0].unobstructed, false);
+        assert.equal(scrolledControls.current.length, 4);
+        for (const control of scrolledControls.current) {
+          assert.ok(control.top >= control.navBottom);
+          assert.equal(control.unobstructed, true);
+        }
+        result.scrolledControls = scrolledControls;
+        result.checks.push(
+          "scrolled-controls-visible-clickable-legacy-overlap-reproduced",
+        );
+        await capture("controls-scrolled", { fullPage: false });
 
         stage = "lost-acknowledgement-reload-replay";
         loseAcknowledgement = true;
@@ -687,7 +742,7 @@ async function main() {
         result.checks.push(
           "project-footer-touch-keyboard-public-newsletter-preserved",
         );
-        await capture("public-footer");
+        await capture("public-footer", { locator: publicFooter });
         assert.equal(result.pageErrors, 0);
         result.passed = true;
       } catch (error) {

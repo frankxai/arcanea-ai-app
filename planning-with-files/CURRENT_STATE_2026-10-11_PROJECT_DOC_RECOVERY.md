@@ -391,3 +391,48 @@ revert of the footer slice; preserve documents, backups and all database rows.
 Editor image upload/private serving/export, oversized chrome on other private
 surfaces, creator usefulness, storage/commercial, clients/harness and estate
 landing remain open. The full objective stays ACTIVE.
+
+## Current render triage and scrolled controls
+
+The cd959975 footer candidate passed manual38158561597 and normal38158559678
+with exact35 review and16 service Git-byte source bindings. Three modes passed
+eight cases each, nine actual isolated password logins, zero page errors or
+supplier posts, zero production writes and successful private-config cleanup.
+All nine PNGs were actually inspected, companions hash-verified and registered
+in the existing rolling generation ledger as browser captures, generated:false.
+Footer scope passed, with61px height in each mode and visible focus. Full-surface
+visual acceptance remains false: the desktop saved captures show a sticky
+controls/global-nav collision; full-page public captures contain large blank
+offscreen sections and do not establish public animation/visibility acceptance.
+No hook rule or file is suppressed. The existing DocEditor neutral quote border
+is intentional typography; that older finding is not a footer regression.
+
+Accepted main advanced through owner589 to a561c3e2c34eb0898339e53377b11f47eadf956c.
+Its separate five book-review consumer files are integrated and preserved exactly.
+No incoming app, Auth, SQL, dependency or instruction source changed. Review
+base pins a561; earlier cd results are retained and cannot approve the next head.
+
+| Before                                                           | After                                    | Why                                                                       |
+| ---------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------- |
+| Sticky document controls and fixed global nav both use top:0     | Controls use the existing --nav-h offset | Keep persistent controls available without covering their pointer targets |
+| Full-page public capture scales footer text too small to inspect | Capture the actual public footer element | Review newsletter and link layout at its real size                        |
+
+An ordinary non-sticky header would avoid the collision, but loses persistent
+controls in longer drafts. Retaining sticky controls below the existing nav
+token preserves the accepted editor workflow without changing the global nav,
+its other routes or the root layout. The actual browser regression checks real
+post-scroll geometry and elementFromPoint for Documents, type and both buttons.
+It reproduces the old top:0 overlap temporarily, restores the real style in
+finally, verifies all current controls, and retains a viewport capture. Actual
+Navbar and globals.css source bindings are included. All seven document recovery
+cases and existing footer/public-newsletter checks remain. The newly authored
+regression is pending current hosted execution; do not claim its pass yet.
+
+Scope remains six files relative to accepted a561: Footer, document page, review
+packet, browser verifier, service source bindings and this record. Existing
+owner/branch/privacy/admission30-file/900KB limits are unchanged. No new local
+build, browser, agent or worktree is started. Required current build, types, lint,
+independent review, browser renders, ready CodeQL, protected merge and accepted
+production checks are pending. No database change is needed. The full objective
+and signed-in production/private assets/customer/commercial/harness gaps remain
+open. Rollback reverts only this chrome/refinement slice and preserves all data.
