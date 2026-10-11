@@ -161,6 +161,19 @@ async function recoverMissingChapter(page, href, mode, capture) {
           const response = await page.goto(base + entry.href);
           chapter.status = response?.status() ?? null;
           assert.ok(response?.ok(), "Initial chapter request must succeed");
+          chapter.documentArticles = await page
+            .locator("article")
+            .evaluateAll((articles) =>
+              articles.map((article) => ({
+                textCharacters: article.textContent?.length ?? 0,
+                hiddenByAncestor: Boolean(article.closest("[hidden]")),
+              })),
+            );
+          if (entry === entries[0]) {
+            const capture = `${mode.name}-initial-reader.png`;
+            await page.screenshot({ path: `${output}/${capture}` });
+            record.screenshots.push(capture);
+          }
           chapter.layout = await readChapter(page, entry.href, entry.text);
           assert.ok(
             chapter.layout.left >= -1 &&
@@ -168,11 +181,6 @@ async function recoverMissingChapter(page, href, mode, capture) {
             "Initial chapter article fits viewport",
           );
           chapter.passed = true;
-          if (entry === entries[0]) {
-            const capture = `${mode.name}-initial-reader.png`;
-            await page.screenshot({ path: `${output}/${capture}` });
-            record.screenshots.push(capture);
-          }
         }
         for (const href of [
           "/books/forge-of-ruin/not-a-real-chapter",

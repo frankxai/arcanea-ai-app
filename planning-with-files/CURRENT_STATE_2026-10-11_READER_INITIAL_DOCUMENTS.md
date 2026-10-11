@@ -18,6 +18,7 @@ same tree. Node 24 and pinned pnpm 11.28.4 govern this work, as Frank confirmed.
 Files:
 
 - `apps/web/components/saga/chapter-reader.tsx`
+- `apps/web/app/books/[bookId]/[chapterId]/page.tsx`
 - `apps/web/app/books/[bookId]/[chapterId]/not-found.tsx`
 - `scripts/verify-reader-entry-browser.cjs`
 - this current-state record
@@ -44,14 +45,14 @@ Acceptance criteria:
 Verification: the existing CI Build executes
 `node scripts/verify-reader-entry-browser.cjs` on ready PRs and main. Retain its
 built/source commits, run and attempt, layouts, screenshots and failed receipts.
-Run local syntax/format checks using existing dependencies. Review the four-file
+Run local syntax/format checks using existing dependencies. Review the five-file
 delta plus the existing renderer, route, visibility policy, tokens and CI context.
 No paid inference is needed. Local build preflight returned HOLD: 4,230 MB RAM
 free versus 8,192 MB required, 27 task runtimes. Use hosted CI; start no local
 build, browser, server or additional agent. Ordinary edits and small checks remain
 permitted under the machine contract.
 
-Rollback: revert only this four-file repair through the normal reviewed path,
+Rollback: revert only this five-file repair through the normal reviewed path,
 preserving manuscripts, canon, other owners' edits and accepted account recovery.
 
 ## Reproduction and implementation decision
@@ -79,7 +80,7 @@ Relevant skills loaded: Starlight SI routing, Arcanea task contracts, Premium
 Web OS, Emil design engineering and humanizer. Root `AGENTS.md` SHA-256:
 `36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`.
 The applicable app guide is `apps/web/CLAUDE.md`; no deeper AGENTS scope governs
-these four paths. Loading policies is distinct from runtime enforcement.
+these five paths. Loading policies is distinct from runtime enforcement.
 
 | Before                                     | After                                             | Why                                                                 |
 | ------------------------------------------ | ------------------------------------------------- | ------------------------------------------------------------------- |
@@ -89,3 +90,29 @@ these four paths. Loading policies is distinct from runtime enforcement.
 Status: implementation and hosted verification in progress. This slice does not
 establish live scene-generation quality, customer adoption, book publication,
 commercial viability or completion of the full founder programme.
+
+## Hosted failure and initial-document recovery
+
+At source `7ea7950537ee533e74b614f17e9a3a8dab40009d`, draft CI
+38131064194 passes build, types and lint. Ready-PR CI38131483233 builds successfully
+but its real JavaScript-disabled browser fails on the first chapter: HTTP 200,
+no visible article. Artifact11699371830 binds source7ea to built mergea49c5f984
+and retains the failure. No promotion occurred. The direct Markdown import alone
+does not satisfy acceptance.
+
+The chapter route forces dynamic rendering beneath three inherited loading
+boundaries. Public manuscripts and their fail-closed visibility manifests live
+in the immutable deployment content tree; this route has no customer-dependent
+data. Render each public chapter as a complete static document on its first
+request. Retain the existing loading UI for client navigation, the existing
+server public gate and `notFound()` recovery, and avoid a full-book build-time
+fanout or changes to global loading boundaries. A manuscript/visibility change
+requires a new deployment, as the bundled source already does. Supabase project
+and private author routes are outside this change.
+
+The renewed browser proof also records article text/hidden-ancestor observations
+and captures the first page before asserting visible prose, so a failed initial
+document retains useful evidence. The new rendering policy requires renewed
+exact-source review and hosted execution; source inspection is not a pass.
+
+Primary reference: [Next.js static paths at runtime](https://nextjs.org/docs/app/api-reference/functions/generate-static-params).

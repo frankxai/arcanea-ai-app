@@ -15,7 +15,10 @@ import {
 import { isBookPublic } from "@/lib/content/book-visibility";
 const BOOK_ROOT = getBookRoot();
 
-export const dynamic = "force-dynamic";
+// Public manuscripts and their visibility manifests are fixed by the deployment.
+// Complete the initial document before serving it so loading boundaries do not
+// leave readers waiting for JavaScript to reveal the chapter.
+export const dynamic = "force-static";
 
 /* ------------------------------------------------------------------ */
 /*  Book metadata                                                      */
