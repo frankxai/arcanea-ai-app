@@ -436,3 +436,39 @@ independent review, browser renders, ready CodeQL, protected merge and accepted
 production checks are pending. No database change is needed. The full objective
 and signed-in production/private assets/customer/commercial/harness gaps remain
 open. Rollback reverts only this chrome/refinement slice and preserves all data.
+
+## Preserve failed reduced-motion probe; settle geometry before captures
+
+At95e562d1, normal CI38160198810 finishes SUCCESS; manual38160212912
+source review, types and lint pass, but actual document acceptance fails.
+Desktop and mobile each complete all nine cases, with zero page errors and
+actual old top:0 occlusion versus four restored unobstructed controls. Their
+measured controls start at76px, below actual nav bottoms74px and73px. Reduced
+motion completes the initial save/reopen but fails the legacy negative probe:
+its first control is still hit-testable, actual:true versus expected:false.
+No current overall browser approval is earned. Seven isolated logins occur;
+no production write or supplier post; private descriptor cleanup succeeds.
+Retain the entire95 review/browser attempt, its ten companion captures and raw
+failure. The independent Gemini3.1Pro PASS has36 verified Git-byte bindings
+and zero blocking findings; its scope does not override the browser failure.
+
+The legacy/current geometry probe previously ran immediately after full-page
+capture and relied on incidental focus scrolling. This revision moves pointer
+verification before full-page capture, requests an explicit instant bottom
+scroll, settles two animation frames before geometry and after both style
+changes, and records the numeric legacy/current result before assertions.
+Screenshot/scroll restoration is a working explanation, not a verified root
+cause. The old occlusion and all four repaired-control assertions remain
+mandatory in every mode; no reduced-motion skip, loosened threshold, retry
+loop, source/admission expansion or product behavior change is introduced.
+The next exact-head hosted execution must resolve the failure. No approval
+is claimed until all three complete modes pass and new renders are inspected.
+
+Actual inspection also finds the95 desktop public-footer crop blank despite
+DOM visibility passing; its mobile footer crop renders. Locator captures now
+request instant centered scrolling and settle frames, and public newsletter
+acceptance requires actual pointer hit testing without submitting. Full-page
+document captures settle at scroll top; the distinct controls-scrolled viewport
+keeps the real scroll proof. Scrolled-control failures retain viewport captures
+and diagnostic geometry. Screenshot artifacts do not prove that a production
+customer saw blank content. No preference, animation or product CSS is disabled.

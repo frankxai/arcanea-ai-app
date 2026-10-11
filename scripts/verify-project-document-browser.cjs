@@ -277,8 +277,31 @@ async function main() {
       };
       const capture = async (label, { locator, fullPage = true } = {}) => {
         const file = `${config.output}/document-${mode.name}-${label}.png`;
-        if (locator) await locator.screenshot({ path: file });
-        else await page.screenshot({ path: file, fullPage });
+        if (locator) {
+          await locator.evaluate((element) =>
+            element.scrollIntoView({ block: "center", behavior: "instant" }),
+          );
+          await page.evaluate(
+            () =>
+              new Promise((resolve) =>
+                requestAnimationFrame(() => requestAnimationFrame(resolve)),
+              ),
+          );
+          await locator.screenshot({ path: file });
+        } else {
+          if (fullPage) {
+            await page.evaluate(() =>
+              window.scrollTo({ top: 0, behavior: "instant" }),
+            );
+            await page.evaluate(
+              () =>
+                new Promise((resolve) =>
+                  requestAnimationFrame(() => requestAnimationFrame(resolve)),
+                ),
+            );
+          }
+          await page.screenshot({ path: file, fullPage });
+        }
         fs.writeFileSync(
           `${file}.vis.provenance.json`,
           JSON.stringify(
@@ -382,9 +405,15 @@ async function main() {
             .evaluate((element) => element.matches(":focus-visible")),
           true,
         );
-        await capture("saved");
-
         stage = "scrolled-document-controls";
+        // Verify pointer geometry before full-page capture, at a settled real
+        // viewport and explicit scroll rather than incidental footer focus.
+        await page.evaluate(() =>
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "instant",
+          }),
+        );
         const controls = page.getByRole("region", {
           name: "Document controls",
         });
@@ -392,6 +421,8 @@ async function main() {
         const scrolledControls = await controls.evaluate(async (header) => {
           const frame = () =>
             new Promise((resolve) => requestAnimationFrame(resolve));
+          await frame();
+          await frame();
           const inspect = () => {
             const nav = document.querySelector("nav.fixed");
             if (!nav) throw Error("Global navigation unavailable.");
@@ -419,24 +450,27 @@ async function main() {
             // Reproduce the previous sticky top:0 collision in the real layout.
             header.style.top = "0px";
             await frame();
+            await frame();
             legacy = inspect();
           } finally {
             header.style.top = oldTop;
             await frame();
+            await frame();
           }
           return { legacy, current: inspect(), scrollY: window.scrollY };
         });
+        result.scrolledControls = scrolledControls;
         assert.equal(scrolledControls.legacy[0].unobstructed, false);
         assert.equal(scrolledControls.current.length, 4);
         for (const control of scrolledControls.current) {
           assert.ok(control.top >= control.navBottom);
           assert.equal(control.unobstructed, true);
         }
-        result.scrolledControls = scrolledControls;
         result.checks.push(
           "scrolled-controls-visible-clickable-legacy-overlap-reproduced",
         );
         await capture("controls-scrolled", { fullPage: false });
+        await capture("saved");
 
         stage = "lost-acknowledgement-reload-replay";
         loseAcknowledgement = true;
@@ -734,6 +768,24 @@ async function main() {
             exact: true,
           }),
         ).toBeVisible();
+        const newsletter = publicFooter.getByRole("textbox", {
+          name: "Email address for newsletter",
+        });
+        await newsletter.evaluate((element) =>
+          element.scrollIntoView({ block: "center", behavior: "instant" }),
+        );
+        await expect
+          .poll(() =>
+            newsletter.evaluate((element) => {
+              const bounds = element.getBoundingClientRect();
+              const hit = document.elementFromPoint(
+                bounds.x + bounds.width / 2,
+                bounds.y + bounds.height / 2,
+              );
+              return hit !== null && element.contains(hit);
+            }),
+          )
+          .toBe(true);
         await expect(
           page.getByRole("navigation", {
             name: "Workspace links",
@@ -768,7 +820,9 @@ async function main() {
             keyboardFocus:
               document.activeElement?.matches(":focus-visible") === true,
           }));
-          await capture(`failed-${stage}`);
+          await capture(`failed-${stage}`, {
+            fullPage: stage !== "scrolled-document-controls",
+          });
         } catch {
           result.failureCaptureUnavailable = true;
         }
