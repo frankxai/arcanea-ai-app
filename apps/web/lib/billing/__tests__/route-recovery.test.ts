@@ -203,6 +203,14 @@ test("anonymous and zero-credit image denial call neither enhancer nor image pro
           return "enhanced";
         },
       },
+      "@/lib/imagine/video-jobs": {
+        checkpointImageJob: async () => {
+          throw Error("Unexpected checkpoint");
+        },
+        readImageJob: async () => {
+          throw Error("Unexpected recovery");
+        },
+      },
       "@/lib/imagine/generate": {
         OPENROUTER_IMAGE_MODELS: [],
         generateImages: async () => {
@@ -265,6 +273,14 @@ test("unknown models are refused; catalog models charge their quoted tier and co
       "@/lib/imagine/enhance-image-prompt": {
         enhanceImagePrompt: async (p: string) => p,
       },
+      "@/lib/imagine/video-jobs": {
+        checkpointImageJob: async () => {
+          throw Error("Unexpected checkpoint");
+        },
+        readImageJob: async () => {
+          throw Error("Unexpected recovery");
+        },
+      },
       "@/lib/imagine/generate": {
         OPENROUTER_IMAGE_MODELS: [
           { id: "fixture/quality", tier: "quality" },
@@ -307,7 +323,8 @@ test("unknown models are refused; catalog models charge their quoted tier and co
           let completed;
           try {
             completed = await work();
-          } catch {
+          } catch (error) {
+            if (error instanceof OperationPendingError) throw error;
             throw new OperationFailedError();
           }
           const { result, actualCredits } = completed;
@@ -331,7 +348,7 @@ test("unknown models are refused; catalog models charge their quoted tier and co
       model.startsWith("unknown")
         ? 400
         : model.endsWith("oversized")
-          ? 502
+          ? 409
           : 200,
     );
     if (res.ok) {
@@ -424,4 +441,172 @@ test("failed atomic webhook transaction returns retryable status; redelivery app
   assert.equal(retry.status, 200);
   assert.equal((await retry.json()).duplicate, false);
   assert.equal(calls, 2);
+});
+
+test("the actual image handler admits once and recovers only an actor-bound checkpoint", async () => {
+  const requestKey = "00000000-0000-0000-0000-000000000001";
+  for (const scenario of [
+    "anonymous",
+    "depleted",
+    "initial",
+    "recover",
+    "pending",
+    "oversized",
+  ]) {
+    let submissions = 0;
+    let recoveries = 0;
+    let checkpoints = 0;
+    const generated = {
+      provider: "grok",
+      model: "grok-imagine-image-2.0",
+      images: [
+        {
+          url:
+            scenario === "oversized"
+              ? "x".repeat(3 * 1024 * 1024)
+              : "https://images.test/image.png",
+        },
+      ],
+    };
+    const savedJob = {
+      provider: "grok",
+      requestId: "accepted-1",
+      model: generated.model,
+      count: 1,
+    };
+    const route = load("../../../app/api/imagine/generate/route.ts", {
+      "node:crypto": {
+        createHash: () => ({
+          update: () => ({ digest: () => "image-fingerprint" }),
+        }),
+      },
+      "next/server": { NextResponse: Response },
+      "@/lib/supabase/server": {
+        createClient: async () => ({
+          auth: {
+            getUser: async () => ({
+              data: {
+                user: scenario === "anonymous" ? null : { id: "user-a" },
+              },
+            }),
+          },
+        }),
+      },
+      "@/lib/imagine/enhance-image-prompt": {
+        enhanceImagePrompt: async () => {
+          throw Error("Recovery must not enhance again");
+        },
+      },
+      "@/lib/imagine/styles": { applyStyle: (prompt: string) => ({ prompt }) },
+      "@/lib/billing/catalog": { costFor },
+      "@/lib/imagine/generate": {
+        OPENROUTER_IMAGE_MODELS: [],
+        generateImages: async (
+          _options: unknown,
+          runtime: {
+            reference: string;
+            checkpoint: (job: unknown) => Promise<void>;
+          },
+        ) => {
+          submissions++;
+          assert.equal(runtime.reference, "user-a:" + requestKey);
+          await runtime.checkpoint(savedJob);
+          return generated;
+        },
+        resumeImages: async (job: unknown, runtime: { reference: string }) => {
+          recoveries++;
+          assert.deepEqual(job, savedJob);
+          assert.equal(runtime.reference, "user-a:" + requestKey);
+          if (scenario === "pending")
+            throw new OperationPendingError(runtime.reference);
+          return generated;
+        },
+      },
+      "@/lib/imagine/video-jobs": {
+        checkpointImageJob: async (
+          userId: string,
+          reference: string,
+          job: unknown,
+        ) => {
+          checkpoints++;
+          assert.equal(userId, "user-a");
+          assert.equal(reference, "user-a:" + requestKey);
+          assert.deepEqual(job, savedJob);
+        },
+        readImageJob: async (userId: string, reference: string) => {
+          assert.equal(userId, "user-a");
+          assert.equal(reference, "user-a:" + requestKey);
+          return savedJob;
+        },
+      },
+      "@/lib/billing/ledger": {
+        BillingError,
+        InsufficientCreditsError,
+        OperationPendingError,
+        OperationConflictError,
+        OperationFailedError,
+        withReservation: async (
+          input: { amount: number; userId: string; requestKey: string },
+          work: (
+            reference: string,
+          ) => Promise<{ result: unknown; actualCredits: number }>,
+          recover: (
+            reference: string,
+          ) => Promise<{ result: unknown; actualCredits: number }>,
+        ) => {
+          assert.equal(input.userId, "user-a");
+          assert.equal(input.requestKey, requestKey);
+          assert.equal(input.amount, costFor("image.standard", 1));
+          if (scenario === "depleted")
+            throw new InsufficientCreditsError(input.amount, 0);
+          const output = await (
+            ["recover", "pending"].includes(scenario) ? recover : work
+          )("user-a:" + requestKey);
+          assert.equal(output.actualCredits, costFor("image.standard", 1));
+          return {
+            result: output.result,
+            charged: output.actualCredits,
+            account: { balance: 10 },
+          };
+        },
+      },
+    });
+    const response = await route.POST(
+      new Request("https://www.arcanea.ai/api/imagine/generate", {
+        method: "POST",
+        body: JSON.stringify({
+          prompt: "A lighthouse",
+          requestKey,
+          count: 1,
+          provider: "grok",
+        }),
+      }),
+    );
+    const expected = {
+      anonymous: 401,
+      depleted: 402,
+      initial: 200,
+      recover: 200,
+      pending: 409,
+      oversized: 409,
+    };
+    assert.equal(
+      response.status,
+      expected[scenario as keyof typeof expected],
+      scenario,
+    );
+    assert.equal(
+      submissions,
+      ["initial", "oversized"].includes(scenario) ? 1 : 0,
+    );
+    assert.equal(checkpoints, submissions);
+    assert.equal(recoveries, ["recover", "pending"].includes(scenario) ? 1 : 0);
+    const receipt = await response.json();
+    if (response.status === 200) {
+      assert.equal(receipt.generationId, "gen_" + requestKey);
+      assert.equal(receipt.safety.fallbackUsed, false);
+    }
+    if (response.status === 409)
+      assert.equal(receipt.reason, "operation_pending");
+  }
 });

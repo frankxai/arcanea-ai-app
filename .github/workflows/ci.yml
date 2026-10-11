@@ -184,6 +184,9 @@ jobs:
       - name: Verify public chat credentials and denial before provider execution
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/gateway/__tests__/chat-route.test.ts
 
+      - name: Verify generation admission, provider recovery and billing invariants
+        run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
+
       - name: Verify customer voice credentials, privacy and recovery
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts
 

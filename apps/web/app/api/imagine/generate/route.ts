@@ -5,7 +5,7 @@ import { enhanceImagePrompt } from "@/lib/imagine/enhance-image-prompt";
  *
  * Admission is server-side and atomic: the signed-in user's credits are
  * reserved before any provider call, settled for the images actually returned,
- * and released in full if the provider fails. Anonymous requests get 401; the
+ * and released only after a definite rejection. Unknown outcomes remain pending. Anonymous requests get 401; the
  * /imagine page stays browsable but generation on Arcanea-managed keys needs an
  * account. Prices come from the billing catalog, never from this file.
  */
@@ -13,8 +13,11 @@ import { enhanceImagePrompt } from "@/lib/imagine/enhance-image-prompt";
 import { NextRequest, NextResponse } from "next/server";
 import {
   generateImages,
+  resumeImages,
+  type ImageGenerationResult,
   OPENROUTER_IMAGE_MODELS,
 } from "@/lib/imagine/generate";
+import { checkpointImageJob, readImageJob } from "@/lib/imagine/video-jobs";
 import { applyStyle } from "@/lib/imagine/styles";
 import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 import { createClient } from "@/lib/supabase/server";
@@ -119,6 +122,20 @@ export async function POST(req: NextRequest) {
       )
       .digest("hex");
 
+    const deliver = (generated: ImageGenerationResult, reference: string) => {
+      const result = { ...generated, images: generated.images.slice(0, count) };
+      if (
+        !result.images.length ||
+        Buffer.byteLength(JSON.stringify(result), "utf8") > 3 * 1024 * 1024
+      )
+        throw new OperationPendingError(reference);
+      return { result, actualCredits: result.images.length * perImage };
+    };
+    const runtime = (reference: string) => ({
+      reference,
+      checkpoint: (job: Parameters<typeof checkpointImageJob>[2]) =>
+        checkpointImageJob(user.id, reference, job),
+    });
     let outcome: Awaited<
       ReturnType<
         typeof withReservation<Awaited<ReturnType<typeof generateImages>>>
@@ -139,7 +156,7 @@ export async function POST(req: NextRequest) {
             provider: provider ?? null,
           },
         },
-        async () => {
+        async (reference) => {
           const processedPrompt = shouldEnhance
             ? await enhanceImagePrompt(prompt)
             : prompt;
@@ -147,31 +164,26 @@ export async function POST(req: NextRequest) {
             processedPrompt,
             style || "none",
           );
-          const generated = await generateImages({
-            prompt: styledPrompt,
-            count,
-            aspectRatio,
-            forceProvider: provider || undefined,
-            openrouterModel: model || undefined,
-          });
-          // The quoted request count is the maximum billable/deliverable quantity.
-          const result = {
-            ...generated,
-            images: generated.images.slice(0, count),
-          };
-          if (result.images.length === 0) throw new Error("No images returned");
-          // Reject undeliverable output before staging or charging. Inline bytes
-          // appear once in the response, with headroom for receipt metadata.
-          if (
-            result.images.some(
-              (img) => typeof img.url !== "string" || !img.url,
-            ) ||
-            Buffer.byteLength(JSON.stringify(result), "utf8") > 3 * 1024 * 1024
-          ) {
-            throw new Error("Generation output exceeds the delivery limit");
-          }
-          return { result, actualCredits: result.images.length * perImage };
+          const generated = await generateImages(
+            {
+              prompt: styledPrompt,
+              count,
+              aspectRatio,
+              forceProvider: provider || undefined,
+              openrouterModel: model || undefined,
+            },
+            runtime(reference),
+          );
+          return deliver(generated, reference);
         },
+        async (reference) =>
+          deliver(
+            await resumeImages(
+              await readImageJob(user.id, reference),
+              runtime(reference),
+            ),
+            reference,
+          ),
       );
     } catch (error) {
       if (error instanceof OperationPendingError)
@@ -252,7 +264,7 @@ export async function POST(req: NextRequest) {
       },
       safety: {
         providerConfigured: true,
-        fallbackUsed: result.provider !== "openrouter",
+        fallbackUsed: false,
       },
       saveState: { canSave: images.length > 0 },
       error: null,
