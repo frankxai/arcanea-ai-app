@@ -33,10 +33,16 @@ export async function GET(req: NextRequest) {
       'id, mode, planner_source, plan_luminors, total_ms, total_tokens, input, synthesis, created_at',
     )
     .order('created_at', { ascending: false })
+    .order('id', { ascending: false })
     .limit(limit);
 
   if (cursor) {
-    query = query.lt('created_at', cursor);
+    const [cursorDate, cursorId] = cursor.split('_');
+    if (cursorId) {
+      query = query.or(`created_at.lt.${cursorDate},and(created_at.eq.${cursorDate},id.lt.${cursorId})`);
+    } else {
+      query = query.lt('created_at', cursor);
+    }
   }
   if (mode === 'solo' || mode === 'swarm') {
     query = query.eq('mode', mode);
@@ -74,7 +80,7 @@ export async function GET(req: NextRequest) {
   }));
 
   const nextCursor =
-    rows.length === limit ? rows[rows.length - 1].created_at : null;
+    rows.length === limit ? `${rows[rows.length - 1].created_at}_${rows[rows.length - 1].id}` : null;
 
   return NextResponse.json({ traces, nextCursor });
 }
