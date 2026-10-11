@@ -343,3 +343,132 @@ functions. Reviewed migration bytes remain6950d9d46b9d04cc93968f6257a16c4c05b874
 unapplied. A separate rollback-only production role proof is prepared, not executed;
 it creates no customer identity and cannot establish signed-in customer acceptance.
 The full objective and private storage/billing/creator/client/harness gates stay open.
+
+## Protected production release and project-footer refinement
+
+PR585 merged normally on11 October16:45:46UTC as a4285de66ce00cbbaa66d7f5b6910f9b627be49f,
+with identical Git tree to reviewed/tested a3b1a75a. Candidate manual38155685455,
+normal38155688503, reader38155688536 and CodeQL38155688938 all pass; receiving
+main CI38156811344 and CodeQL38156811343 also finish SUCCESS. Six current renders
+and companions were inspected.37 independent Git-byte review hashes and14 service
+hashes match the exact candidate. Nine real isolated password logins cover seven
+cases per mode, not production customers.
+
+Canonical production dpl_BVi9xsxMexTeajVHq5EAvCqJPCPw is READY at accepted a4285de6,
+with www/apex/app aliases. Reviewed migration20261011131128, SHA256
+6950d9d46b9d04cc93968f6257a16c4c05b87459b14c0657326713c65da0ab07, is applied.
+The tool assigned20261011164806; only its unique owned source-hash/byte-guarded
+history row was mapped to the canonical version, keeping every statement and
+all other history intact. Actual PostgreSQL17.6 table RLS/grants, unique operation
+index and all three function bodies match reviewed source. Seven rollback-only
+role/null-subject denials pass with zero rows/accounts retained; three canonical
+anonymous HTTP checks return401/private,no-store. Signed-in production/customer
+save/reopen is still unverified. No finance/storage provision or identity change.
+
+Scope: retain focus while editing and recovering a project document. Sole root
+owner continues the existing document lane; footer ownership transferred narrowly
+from its separate private-assets lane, preserving the other46 paths there and
+all50 original document-lane paths. Main integration has no app/SQL source delta.
+Only Footer, this record, review packet, fixture source bindings and browser
+verification change. Source review base now pins accepted a4285de6; all required
+source/release/admission/privacy gates remain enabled. No new local heavy job.
+
+| Before                                                               | After                                                  | Why                                                                      |
+| -------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| Project editor has the full marketing newsletter and dozens of links | Compact Support, Privacy and Terms on /projects routes | Keep editing/recovery controls primary and support/legal links available |
+| Same public footer everywhere                                        | Existing public marketing footer remains elsewhere     | Preserve discovery and newsletter behavior                               |
+
+The new view uses existing tokens, consistent hooks and pathname selection, no
+Auth-state flicker gate or animation. The actual hosted acceptance now checks
+three live link destinations,44px targets, Tab/focus, bounded compact height and
+public newsletter retention alongside all seven document recovery cases. Source
+receipt additionally binds Footer and root layout. Separate nested workspace
+layouts were considered; that larger route restructuring is unnecessary here.
+New tests/renders and fresh independent review remain pending until run. Draft
+promotion only after all same-head gates pass, inspect new actual renders, normal
+protected merge and verify accepted source on production. Rollback is an owned
+revert of the footer slice; preserve documents, backups and all database rows.
+Editor image upload/private serving/export, oversized chrome on other private
+surfaces, creator usefulness, storage/commercial, clients/harness and estate
+landing remain open. The full objective stays ACTIVE.
+
+## Current render triage and scrolled controls
+
+The cd959975 footer candidate passed manual38158561597 and normal38158559678
+with exact35 review and16 service Git-byte source bindings. Three modes passed
+eight cases each, nine actual isolated password logins, zero page errors or
+supplier posts, zero production writes and successful private-config cleanup.
+All nine PNGs were actually inspected, companions hash-verified and registered
+in the existing rolling generation ledger as browser captures, generated:false.
+Footer scope passed, with61px height in each mode and visible focus. Full-surface
+visual acceptance remains false: the desktop saved captures show a sticky
+controls/global-nav collision; full-page public captures contain large blank
+offscreen sections and do not establish public animation/visibility acceptance.
+No hook rule or file is suppressed. The existing DocEditor neutral quote border
+is intentional typography; that older finding is not a footer regression.
+
+Accepted main advanced through owner589 to a561c3e2c34eb0898339e53377b11f47eadf956c.
+Its separate five book-review consumer files are integrated and preserved exactly.
+No incoming app, Auth, SQL, dependency or instruction source changed. Review
+base pins a561; earlier cd results are retained and cannot approve the next head.
+
+| Before                                                           | After                                    | Why                                                                       |
+| ---------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------- |
+| Sticky document controls and fixed global nav both use top:0     | Controls use the existing --nav-h offset | Keep persistent controls available without covering their pointer targets |
+| Full-page public capture scales footer text too small to inspect | Capture the actual public footer element | Review newsletter and link layout at its real size                        |
+
+An ordinary non-sticky header would avoid the collision, but loses persistent
+controls in longer drafts. Retaining sticky controls below the existing nav
+token preserves the accepted editor workflow without changing the global nav,
+its other routes or the root layout. The actual browser regression checks real
+post-scroll geometry and elementFromPoint for Documents, type and both buttons.
+It reproduces the old top:0 overlap temporarily, restores the real style in
+finally, verifies all current controls, and retains a viewport capture. Actual
+Navbar and globals.css source bindings are included. All seven document recovery
+cases and existing footer/public-newsletter checks remain. The newly authored
+regression is pending current hosted execution; do not claim its pass yet.
+
+Scope remains six files relative to accepted a561: Footer, document page, review
+packet, browser verifier, service source bindings and this record. Existing
+owner/branch/privacy/admission30-file/900KB limits are unchanged. No new local
+build, browser, agent or worktree is started. Required current build, types, lint,
+independent review, browser renders, ready CodeQL, protected merge and accepted
+production checks are pending. No database change is needed. The full objective
+and signed-in production/private assets/customer/commercial/harness gaps remain
+open. Rollback reverts only this chrome/refinement slice and preserves all data.
+
+## Preserve failed reduced-motion probe; settle geometry before captures
+
+At95e562d1, normal CI38160198810 finishes SUCCESS; manual38160212912
+source review, types and lint pass, but actual document acceptance fails.
+Desktop and mobile each complete all nine cases, with zero page errors and
+actual old top:0 occlusion versus four restored unobstructed controls. Their
+measured controls start at76px, below actual nav bottoms74px and73px. Reduced
+motion completes the initial save/reopen but fails the legacy negative probe:
+its first control is still hit-testable, actual:true versus expected:false.
+No current overall browser approval is earned. Seven isolated logins occur;
+no production write or supplier post; private descriptor cleanup succeeds.
+Retain the entire95 review/browser attempt, its ten companion captures and raw
+failure. The independent Gemini3.1Pro PASS has36 verified Git-byte bindings
+and zero blocking findings; its scope does not override the browser failure.
+
+The legacy/current geometry probe previously ran immediately after full-page
+capture and relied on incidental focus scrolling. This revision moves pointer
+verification before full-page capture, requests an explicit instant bottom
+scroll, settles two animation frames before geometry and after both style
+changes, and records the numeric legacy/current result before assertions.
+Screenshot/scroll restoration is a working explanation, not a verified root
+cause. The old occlusion and all four repaired-control assertions remain
+mandatory in every mode; no reduced-motion skip, loosened threshold, retry
+loop, source/admission expansion or product behavior change is introduced.
+The next exact-head hosted execution must resolve the failure. No approval
+is claimed until all three complete modes pass and new renders are inspected.
+
+Actual inspection also finds the95 desktop public-footer crop blank despite
+DOM visibility passing; its mobile footer crop renders. Locator captures now
+request instant centered scrolling and settle frames, and public newsletter
+acceptance requires actual pointer hit testing without submitting. Full-page
+document captures settle at scroll top; the distinct controls-scrolled viewport
+keeps the real scroll proof. Scrolled-control failures retain viewport captures
+and diagnostic geometry. Screenshot artifacts do not prove that a production
+customer saw blank content. No preference, animation or product CSS is disabled.

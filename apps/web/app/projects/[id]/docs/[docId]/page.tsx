@@ -558,7 +558,11 @@ function MountedEditor({
       : "Saved";
   return (
     <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-[var(--arc-text-primary)]">
-      <header className="sticky top-0 z-20 border-b border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-void)]">
+      <header
+        role="region"
+        aria-label="Document controls"
+        className="sticky top-[var(--nav-h)] z-20 border-b border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-void)]"
+      >
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 py-3">
           <Link
             className={`${control} inline-flex items-center`}

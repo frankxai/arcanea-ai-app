@@ -275,9 +275,33 @@ async function main() {
         for await (const chunk of stream) chunks.push(chunk);
         return Buffer.concat(chunks).toString("utf8");
       };
-      const capture = async (label) => {
+      const capture = async (label, { locator, fullPage = true } = {}) => {
         const file = `${config.output}/document-${mode.name}-${label}.png`;
-        await page.screenshot({ path: file, fullPage: true });
+        if (locator) {
+          await locator.evaluate((element) =>
+            element.scrollIntoView({ block: "center", behavior: "instant" }),
+          );
+          await page.evaluate(
+            () =>
+              new Promise((resolve) =>
+                requestAnimationFrame(() => requestAnimationFrame(resolve)),
+              ),
+          );
+          await locator.screenshot({ path: file });
+        } else {
+          if (fullPage) {
+            await page.evaluate(() =>
+              window.scrollTo({ top: 0, behavior: "instant" }),
+            );
+            await page.evaluate(
+              () =>
+                new Promise((resolve) =>
+                  requestAnimationFrame(() => requestAnimationFrame(resolve)),
+                ),
+            );
+          }
+          await page.screenshot({ path: file, fullPage });
+        }
         fs.writeFileSync(
           `${file}.vis.provenance.json`,
           JSON.stringify(
@@ -347,6 +371,105 @@ async function main() {
         const content = (await get(address)).content;
         assert.equal(content.content_json.type, "doc");
         result.checks.push("actual-owner-save-cloud-reopen-rich-json");
+        stage = "project-workspace-footer";
+        const workspaceFooter = page.getByRole("contentinfo", {
+          name: "Project workspace footer",
+        });
+        const workspaceLinks = workspaceFooter.getByRole("link");
+        await expect(workspaceFooter).toBeVisible();
+        await expect(workspaceLinks).toHaveCount(3);
+        await expect(workspaceFooter.getByRole("textbox")).toHaveCount(0);
+        const footerBounds = await workspaceFooter.boundingBox();
+        assert.ok(footerBounds && footerBounds.height <= 96);
+        result.workspaceFooterHeight = footerBounds.height;
+        for (const [index, href] of [
+          "/contact",
+          "/privacy",
+          "/terms",
+        ].entries()) {
+          const link = workspaceLinks.nth(index);
+          await expect(link).toHaveAttribute("href", href);
+          const bounds = await link.boundingBox();
+          assert.ok(bounds && bounds.height >= 44 && bounds.width >= 44);
+          assert.equal(
+            (await page.request.get(`${config.base}${href}`)).status(),
+            200,
+          );
+        }
+        await workspaceLinks.first().focus();
+        await page.keyboard.press("Tab");
+        await expect(workspaceLinks.nth(1)).toBeFocused();
+        assert.equal(
+          await workspaceLinks
+            .nth(1)
+            .evaluate((element) => element.matches(":focus-visible")),
+          true,
+        );
+        stage = "scrolled-document-controls";
+        // Verify pointer geometry before full-page capture, at a settled real
+        // viewport and explicit scroll rather than incidental footer focus.
+        await page.evaluate(() =>
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "instant",
+          }),
+        );
+        const controls = page.getByRole("region", {
+          name: "Document controls",
+        });
+        await expect(controls).toBeVisible();
+        const scrolledControls = await controls.evaluate(async (header) => {
+          const frame = () =>
+            new Promise((resolve) => requestAnimationFrame(resolve));
+          await frame();
+          await frame();
+          const inspect = () => {
+            const nav = document.querySelector("nav.fixed");
+            if (!nav) throw Error("Global navigation unavailable.");
+            const navBottom = nav.getBoundingClientRect().bottom;
+            return [...header.querySelectorAll("a, button, select")].map(
+              (element) => {
+                const bounds = element.getBoundingClientRect();
+                const hit = document.elementFromPoint(
+                  bounds.x + bounds.width / 2,
+                  bounds.y + bounds.height / 2,
+                );
+                return {
+                  top: bounds.top,
+                  navBottom,
+                  unobstructed: hit !== null && element.contains(hit),
+                };
+              },
+            );
+          };
+          if (window.scrollY <= 0)
+            throw Error("The footer focus must scroll the document.");
+          const oldTop = header.style.top;
+          let legacy;
+          try {
+            // Reproduce the previous sticky top:0 collision in the real layout.
+            header.style.top = "0px";
+            await frame();
+            await frame();
+            legacy = inspect();
+          } finally {
+            header.style.top = oldTop;
+            await frame();
+            await frame();
+          }
+          return { legacy, current: inspect(), scrollY: window.scrollY };
+        });
+        result.scrolledControls = scrolledControls;
+        assert.equal(scrolledControls.legacy[0].unobstructed, false);
+        assert.equal(scrolledControls.current.length, 4);
+        for (const control of scrolledControls.current) {
+          assert.ok(control.top >= control.navBottom);
+          assert.equal(control.unobstructed, true);
+        }
+        result.checks.push(
+          "scrolled-controls-visible-clickable-legacy-overlap-reproduced",
+        );
+        await capture("controls-scrolled", { fullPage: false });
         await capture("saved");
 
         stage = "lost-acknowledgement-reload-replay";
@@ -631,6 +754,47 @@ async function main() {
         result.checks.push(
           "actual-a-b-a-auth-stale-form-and-late-response-isolation",
         );
+        stage = "public-marketing-footer-preserved";
+        await page.goto(config.base);
+        const publicFooter = page.getByRole("contentinfo");
+        await expect(
+          publicFooter.getByRole("textbox", {
+            name: "Email address for newsletter",
+          }),
+        ).toBeVisible();
+        await expect(
+          publicFooter.getByRole("button", {
+            name: "Subscribe",
+            exact: true,
+          }),
+        ).toBeVisible();
+        const newsletter = publicFooter.getByRole("textbox", {
+          name: "Email address for newsletter",
+        });
+        await newsletter.evaluate((element) =>
+          element.scrollIntoView({ block: "center", behavior: "instant" }),
+        );
+        await expect
+          .poll(() =>
+            newsletter.evaluate((element) => {
+              const bounds = element.getBoundingClientRect();
+              const hit = document.elementFromPoint(
+                bounds.x + bounds.width / 2,
+                bounds.y + bounds.height / 2,
+              );
+              return hit !== null && element.contains(hit);
+            }),
+          )
+          .toBe(true);
+        await expect(
+          page.getByRole("navigation", {
+            name: "Workspace links",
+          }),
+        ).toHaveCount(0);
+        result.checks.push(
+          "project-footer-touch-keyboard-public-newsletter-preserved",
+        );
+        await capture("public-footer", { locator: publicFooter });
         assert.equal(result.pageErrors, 0);
         result.passed = true;
       } catch (error) {
@@ -656,7 +820,9 @@ async function main() {
             keyboardFocus:
               document.activeElement?.matches(":focus-visible") === true,
           }));
-          await capture(`failed-${stage}`);
+          await capture(`failed-${stage}`, {
+            fullPage: stage !== "scrolled-document-controls",
+          });
         } catch {
           result.failureCaptureUnavailable = true;
         }

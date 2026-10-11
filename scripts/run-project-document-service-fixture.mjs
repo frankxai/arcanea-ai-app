@@ -113,6 +113,10 @@ for (const file of [
   "apps/web/lib/auth/context.tsx",
   "apps/web/lib/ai/provider-preferences.ts",
   "apps/web/lib/supabase/middleware.ts",
+  "apps/web/components/navigation/footer.tsx",
+  "apps/web/app/layout.tsx",
+  "apps/web/app/globals.css",
+  "apps/web/components/navigation/navbar.tsx",
 ])
   receipt.sourceHashes[file] = createHash("sha256")
     .update(readFileSync(file))

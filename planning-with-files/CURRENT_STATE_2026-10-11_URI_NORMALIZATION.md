@@ -3,7 +3,8 @@
 Owner: Codex thread `01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`.
 Origin: `https://github.com/frankxai/arcanea-ai-app.git`.
 Branch: `agent/codex/uri-normalization-20261011`.
-Base: `a561c3e2c34eb0898339e53377b11f47eadf956c`.
+Base: `194f102e3d609ce17e52b8999a702bf76734fcd7`.
+Initial reviewed candidate: `eacb8f6a6ef9b3c9d1c5cb21a3a41e6889982d47` on `a561c3e2`.
 Issue: [592](https://github.com/frankxai/arcanea-ai-app/issues/592).
 Related: programme #276 and Dependabot #67.
 
@@ -71,3 +72,9 @@ separate active-peer ownership checks passed; no deeper instruction file was
 found for the five paths. Hashes record sources, not native instruction reload
 or universal runtime enforcement. Private provenance and red/green receipts stay
 under `.starlight/evidence/arcanea-manuscript-selection-20261011/uri-normalization-candidate/`.
+
+Accepted PR590 advanced main during this slice. A normal integration preserves
+all six peer source files byte-for-byte from accepted 194f102e; no peer checkout
+or in-flight edit is touched. The original eacb8f6a review and passing six-method
+frozen-install run remain at their own source. Independent review and required
+CI must run again for this combined revision; old acceptance is not transferred.
