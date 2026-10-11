@@ -3,6 +3,7 @@ const fs = require("node:fs/promises");
 const { createRequire } = require("node:module");
 const { resolve } = require("node:path");
 const { execFileSync } = require("node:child_process");
+const { createHash } = require("node:crypto");
 const { chromium, expect } = createRequire(resolve("apps/web/package.json"))(
   "@playwright/test",
 );
@@ -63,7 +64,32 @@ async function readChapter(page, href, text) {
     "A real chapter must have prose",
   );
   await expect(page).not.toHaveTitle(/Chapter Not Found/);
-  return article.evaluate((element) => {
+  const header = page.locator("header h1");
+  await expect(header).toHaveCount(1);
+  const title = await header.innerText();
+  const openingHeadings = await article.evaluate((element) => {
+    const headings = [];
+    for (const node of element.querySelectorAll("h1,h2,h3,p")) {
+      if (node.tagName === "P") break;
+      headings.push(node.textContent || "");
+    }
+    return headings;
+  });
+  const normalizeTitle = (value) =>
+    value.normalize("NFC").trim().replace(/\s+/gu, " ").toLowerCase();
+  assert.ok(
+    !openingHeadings.some(
+      (heading) =>
+        normalizeTitle(
+          heading.replace(
+            /^(?:Chapter\s+\w+:\s+|Kapitel\s+\d+:\s+|Capítulo\s+\d+:\s+)/,
+            "",
+          ),
+        ) === normalizeTitle(title),
+    ),
+    `The chapter header must not repeat before the prose: ${href}, ${title}`,
+  );
+  const layout = await article.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     const style = getComputedStyle(element);
     let effectiveOpacity = 1;
@@ -80,6 +106,7 @@ async function readChapter(page, href, text) {
       effectiveOpacity,
     };
   });
+  return { ...layout, title, openingHeadings };
 }
 
 async function recoverMissingChapter(page, href, mode, capture) {
@@ -121,6 +148,7 @@ async function recoverMissingChapter(page, href, mode, capture) {
     runId: process.env.GITHUB_RUN_ID || null,
     runAttempt: process.env.GITHUB_RUN_ATTEMPT || null,
     browser: null,
+    sourceHashes: {},
     modes: [],
     initialDocuments: [],
     passed: false,
@@ -130,6 +158,38 @@ async function recoverMissingChapter(page, href, mode, capture) {
   };
   let browser;
   try {
+    for (const file of [
+      "apps/web/components/saga/chapter-reader.tsx",
+      "apps/web/lib/content/reader-presentation.ts",
+      "apps/web/components/chat/chat-markdown.tsx",
+      "apps/web/app/books/[bookId]/[chapterId]/page.tsx",
+      "apps/web/lib/saga/chapter-files.ts",
+      "apps/web/lib/content/book-path.ts",
+      "apps/web/lib/content/book-visibility.ts",
+      "apps/web/app/globals.css",
+      "apps/web/components/navigation/navbar.tsx",
+      "packages/design-system/src/tokens.css",
+      "apps/web/next.config.js",
+      "apps/web/app/books/books-data.ts",
+      "book/chapters/book1/01-the-storm-that-remembered.md",
+      "book/chapters/book1/04-the-triennium.md",
+      "book/chapters/book1/10-the-foundation-opens.md",
+      "book/song-of-van-linh/chapters/02-the-frequency-of-starlings.md",
+      "book/forge-of-ruin/chapters/00-prologue.md",
+      "book/heart-of-pyrathis/chapters/01-the-cold-season.md",
+      "book/tides-of-silence/chapters/01-the-gyres-hymn.md",
+      "book/song-of-van-linh/chapters/01-subject-7.md",
+      "scripts/verify-reader-entry-browser.cjs",
+      ".github/workflows/ci.yml",
+    ]) {
+      const bytes = execFileSync("git", [
+        "show",
+        `${evidence.builtCommit}:${file}`,
+      ]);
+      evidence.sourceHashes[file] = createHash("sha256")
+        .update(bytes)
+        .digest("hex");
+    }
     let ready = false;
     for (let attempt = 0; attempt < 30; attempt++) {
       try {
@@ -362,6 +422,34 @@ async function recoverMissingChapter(page, href, mode, capture) {
     evidence.failure = error.stack || String(error);
     throw error;
   } finally {
+    // Browser renders, not model-generated images. Keep every actual capture,
+    // including failed attempts, with its exact source and capture digest.
+    for (const capture of (await fs.readdir(output)).filter((name) =>
+      name.endsWith(".png"),
+    )) {
+      const bytes = await fs.readFile(`${output}/${capture}`);
+      const provenance = {
+        schema: "arcanea.rendered-fixture.v1",
+        prompt: `Capture the actual built public reader journey ${capture}; existing manuscripts/illustrations are unchanged, with no newly generated creative media.`,
+        model: null,
+        seed: null,
+        provider: "GitHub Actions / Playwright browser rendering",
+        renderer: evidence.browser,
+        agentSession: `github-actions:${evidence.runId}:${evidence.runAttempt}`,
+        head: evidence.builtCommit,
+        reviewedSourceCommit: evidence.reviewedSourceCommit,
+        sourceHashes: evidence.sourceHashes,
+        captureSha256: createHash("sha256").update(bytes).digest("hex"),
+        generated: false,
+        inspected: false,
+        limits:
+          "Functional browser evidence only; pre-existing manuscript/illustration rights, visual quality, signed-in production, customer usefulness and whole-product acceptance are not certified.",
+      };
+      await fs.writeFile(
+        `${output}/${capture}.vis.provenance.json`,
+        JSON.stringify(provenance, null, 2),
+      );
+    }
     await fs.writeFile(
       output + "/evidence.json",
       JSON.stringify(evidence, null, 2),

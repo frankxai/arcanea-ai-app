@@ -7,6 +7,7 @@ import ChatMarkdown from "@/components/chat/chat-markdown";
 import { useRouter } from "next/navigation";
 import { ReadingToolbar } from "./reading-toolbar";
 import { SceneVisualizer } from "./scene-visualizer";
+import { getReaderContent } from "@/lib/content/reader-presentation";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
@@ -248,7 +249,14 @@ export function ChapterReader({
   // TOC
   const [showToc, setShowToc] = useState(false);
   const [activeHeading, setActiveHeading] = useState("");
-  const tocHeadings = useMemo(() => extractHeadings(content), [content]);
+  const readingContent = useMemo(
+    () => getReaderContent(content, bookTitle, title),
+    [content, bookTitle, title],
+  );
+  const tocHeadings = useMemo(
+    () => extractHeadings(readingContent),
+    [readingContent],
+  );
   const readingRef = useRef<HTMLDivElement | null>(null);
 
   // Notes (existing functionality preserved)
@@ -571,7 +579,7 @@ export function ChapterReader({
             ref={readingRef}
             className={`${s.prose} ${fontSizeClass} ${lineHeightClass} ${fontFamilyClass}`}
           >
-            <ChatMarkdown content={content} />
+            <ChatMarkdown content={readingContent} />
           </div>
           <SceneVisualizer
             bookId={bookId}

@@ -729,7 +729,7 @@ async function verifyAccountCredentials(browser, mode) {
     await event("fixture-account-a");
     // AgentHeader renders this picker; CompactModelPicker is currently unused.
     const modelButton = (label) =>
-      page.getByRole("button").filter({
+      page.locator('button, [role="menuitemradio"]').filter({
         has: page.locator("span").filter({ hasText: new RegExp(`^${label}$`) }),
       });
     // Distinct initial models wait for the actual account-specific state.
