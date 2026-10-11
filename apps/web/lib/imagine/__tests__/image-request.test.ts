@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { requestImages } from "../request";
+import { requestImages, requestAnimation } from "../request";
 
 test("lost transport response retains the same request key; confirmed success starts a new operation", async () => {
   const slots = new Map<string, string>();
@@ -21,7 +21,10 @@ test("lost transport response retains the same request key; confirmed success st
   globalThis.fetch = async (_url, options) => {
     requests.push(JSON.parse(options!.body as string));
     if (requests.length === 1) throw Error("connection lost");
-    return Response.json({ images: [] });
+    return Response.json({
+      generationId: `gen_${requests.at(-1)!.requestKey}`,
+      images: [{ url: "https://images.test/result.png" }],
+    });
   };
   try {
     await assert.rejects(requestImages({ prompt: "private draft", count: 1 }));
@@ -57,6 +60,42 @@ test("unavailable storage refuses generation before any request", async () => {
   try {
     await assert.rejects(requestImages({ prompt: "draft" }), /session storage/);
     assert.equal(calls, 0);
+  } finally {
+    globalThis.fetch = oldFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+test("pending video recovery retains its key and is separate from image generation", async () => {
+  const slots = new Map<string, string>();
+  const requests: { endpoint: unknown; requestKey: string }[] = [];
+  const oldFetch = globalThis.fetch;
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (key: string) => slots.get(key) ?? null,
+      setItem: (key: string, value: string) => slots.set(key, value),
+      removeItem: (key: string) => slots.delete(key),
+    },
+  });
+  globalThis.fetch = async (endpoint, options) => {
+    requests.push({ endpoint, ...JSON.parse(String(options?.body)) });
+    return Response.json({ reason: "operation_pending" }, { status: 409 });
+  };
+  try {
+    const input = { imageUrl: "https://private.test/asset.png" };
+    await requestAnimation(input);
+    await requestAnimation(input);
+    await requestImages(input);
+    assert.equal(requests[0].endpoint, "/api/imagine/animate");
+    assert.equal(requests[0].requestKey, requests[1].requestKey);
+    assert.notEqual(requests[0].requestKey, requests[2].requestKey);
+    assert.ok([...slots.keys()].every((key) => !key.includes("private.test")));
   } finally {
     globalThis.fetch = oldFetch;
     if (descriptor)
