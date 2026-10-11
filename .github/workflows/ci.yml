@@ -210,6 +210,14 @@ jobs:
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=0 -f supabase/tests/author-draft-recovery.sql
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=1 -f supabase/tests/author-draft-recovery.sql
 
+      - name: Verify atomic project document save and recovery
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          pnpm --dir apps/web exec tsx --test lib/docs/__tests__/save.test.ts
+          pnpm --dir apps/web exec tsx lib/docs/__tests__/api-contracts.test.ts
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v doc_disposable=1 -f supabase/tests/project-doc-revisions.sql
+
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 

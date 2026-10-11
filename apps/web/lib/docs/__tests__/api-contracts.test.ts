@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { strict as assert } from 'node:assert';
-import { NextRequest } from 'next/server';
+import { strict as assert } from "node:assert";
+import { NextRequest } from "next/server";
 import {
   GET as getProjectDocsRoute,
   POST as postProjectDocsRoute,
   projectDocsRouteDeps,
-} from '@/app/api/projects/[id]/docs/route';
+} from "@/app/api/projects/[id]/docs/route";
 import {
   DELETE as deleteProjectDocRoute,
   GET as getProjectDocRoute,
   PATCH as patchProjectDocRoute,
   projectDocRouteDeps,
-} from '@/app/api/projects/[id]/docs/[docId]/route';
+} from "@/app/api/projects/[id]/docs/[docId]/route";
 
 let passed = 0;
 let failed = 0;
@@ -39,7 +39,9 @@ type DocsPayload = {
 
 type DocPayload = {
   success: true;
-  data: { doc: { id: string; title: string; content?: { word_count: number } | null } };
+  data: {
+    doc: { id: string; title: string; content?: { word_count: number } | null };
+  };
 };
 
 type ErrorPayload = {
@@ -52,7 +54,7 @@ async function main() {
   const originalProjectDocDeps = { ...projectDocRouteDeps };
 
   try {
-    await test('GET /api/projects/[id]/docs returns unauthorized without user', async () => {
+    await test("GET /api/projects/[id]/docs returns unauthorized without user", async () => {
       projectDocsRouteDeps.getDocsAuthContext = async () => ({
         supabase: {} as never,
         db: {} as never,
@@ -60,35 +62,47 @@ async function main() {
       });
 
       const response = await getProjectDocsRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs'),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        new NextRequest("http://localhost/api/projects/project_1/docs"),
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<ErrorPayload>(response);
 
       assert.equal(response.status, 401);
-      assert.equal(payload.error.code, 'UNAUTHORIZED');
+      assert.equal(payload.error.code, "UNAUTHORIZED");
     });
 
-    await test('GET /api/projects/[id]/docs returns normalized docs', async () => {
-      const calls: Array<{ table: string; filters: Array<[string, string]> }> = [];
+    await test("GET /api/projects/[id]/docs returns normalized docs", async () => {
+      const calls: Array<{ table: string; filters: Array<[string, string]> }> =
+        [];
       projectDocsRouteDeps.getDocsAuthContext = async () => ({
         supabase: {} as never,
-        user: { id: 'user_1' },
+        user: { id: "user_1" },
         db: {
           from(table: string) {
             const state = { table, filters: [] as Array<[string, string]> };
             calls.push(state);
             let orderCalls = 0;
             return {
-              select() { return this; },
-              eq(field: string, value: string) { state.filters.push([field, value]); return this; },
+              select() {
+                return this;
+              },
+              eq(field: string, value: string) {
+                state.filters.push([field, value]);
+                return this;
+              },
               order() {
                 orderCalls += 1;
                 if (orderCalls < 2) {
                   return this;
                 }
                 return Promise.resolve({
-                  data: [{ id: 'doc_1', title: 'Atlas Brief', project_doc_content: [{ word_count: 321 }] }],
+                  data: [
+                    {
+                      id: "doc_1",
+                      title: "Atlas Brief",
+                      project_doc_content: [{ word_count: 321 }],
+                    },
+                  ],
                   error: null,
                 });
               },
@@ -98,24 +112,25 @@ async function main() {
       });
 
       const response = await getProjectDocsRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs'),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        new NextRequest("http://localhost/api/projects/project_1/docs"),
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<DocsPayload>(response);
 
       assert.equal(response.status, 200);
       assert.equal(payload.data.docs[0].word_count, 321);
       assert.deepEqual(calls[0].filters, [
-        ['project_id', 'project_1'],
-        ['user_id', 'user_1'],
+        ["project_id", "project_1"],
+        ["user_id", "user_1"],
       ]);
     });
 
-    await test('POST /api/projects/[id]/docs creates project-scoped docs', async () => {
-      const inserts: Array<{ table: string; values: Record<string, unknown> }> = [];
+    await test("POST /api/projects/[id]/docs creates project-scoped docs", async () => {
+      const inserts: Array<{ table: string; values: Record<string, unknown> }> =
+        [];
       projectDocsRouteDeps.getDocsAuthContext = async () => ({
         supabase: {} as never,
-        user: { id: 'user_1' },
+        user: { id: "user_1" },
         db: {
           from(table: string) {
             return {
@@ -123,10 +138,15 @@ async function main() {
                 inserts.push({ table, values });
                 return this;
               },
-              select() { return this; },
+              select() {
+                return this;
+              },
               single() {
-                if (table === 'project_docs') {
-                  return Promise.resolve({ data: { id: 'doc_1', title: 'Untitled' }, error: null });
+                if (table === "project_docs") {
+                  return Promise.resolve({
+                    data: { id: "doc_1", title: "Untitled" },
+                    error: null,
+                  });
                 }
                 return Promise.resolve({ data: null, error: null });
               },
@@ -136,36 +156,50 @@ async function main() {
       });
 
       const response = await postProjectDocsRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs', {
-          method: 'POST',
-          body: JSON.stringify({ title: 'Untitled', doc_type: 'note' }),
-          headers: { 'Content-Type': 'application/json' },
+        new NextRequest("http://localhost/api/projects/project_1/docs", {
+          method: "POST",
+          body: JSON.stringify({ title: "Untitled", doc_type: "note" }),
+          headers: { "Content-Type": "application/json" },
         }),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<DocPayload>(response);
 
       assert.equal(response.status, 201);
-      assert.equal(payload.data.doc.id, 'doc_1');
-      assert.equal(inserts[0].values.project_id, 'project_1');
-      assert.equal(inserts[0].values.workspace_id, 'project_1');
+      assert.equal(payload.data.doc.id, "doc_1");
+      assert.equal(inserts[0].values.project_id, "project_1");
+      assert.equal(inserts[0].values.workspace_id, "project_1");
+      assert.equal(
+        inserts.length,
+        1,
+        "content is created by the same-transaction database trigger",
+      );
     });
 
-    await test('GET /api/projects/[id]/docs/[docId] enforces project scope', async () => {
+    await test("GET /api/projects/[id]/docs/[docId] enforces project scope", async () => {
       const calls: Array<Array<[string, string]>> = [];
       projectDocRouteDeps.getDocAuthContext = async () => ({
         supabase: {} as never,
-        user: { id: 'user_1' },
+        user: { id: "user_1" },
         db: {
           from() {
             const filters: Array<[string, string]> = [];
             calls.push(filters);
             return {
-              select() { return this; },
-              eq(field: string, value: string) { filters.push([field, value]); return this; },
+              select() {
+                return this;
+              },
+              eq(field: string, value: string) {
+                filters.push([field, value]);
+                return this;
+              },
               single() {
                 return Promise.resolve({
-                  data: { id: 'doc_1', title: 'Atlas Brief', project_doc_content: [{ word_count: 42 }] },
+                  data: {
+                    id: "doc_1",
+                    title: "Atlas Brief",
+                    project_doc_content: [{ word_count: 42 }],
+                  },
                   error: null,
                 });
               },
@@ -175,21 +209,21 @@ async function main() {
       });
 
       const response = await getProjectDocRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs/doc_1'),
-        { params: Promise.resolve({ id: 'project_1', docId: 'doc_1' }) },
+        new NextRequest("http://localhost/api/projects/project_1/docs/doc_1"),
+        { params: Promise.resolve({ id: "project_1", docId: "doc_1" }) },
       );
       const payload = await parseJson<DocPayload>(response);
 
       assert.equal(response.status, 200);
-      assert.equal(payload.data.doc.id, 'doc_1');
+      assert.equal(payload.data.doc.id, "doc_1");
       assert.deepEqual(calls[0], [
-        ['id', 'doc_1'],
-        ['project_id', 'project_1'],
-        ['user_id', 'user_1'],
+        ["id", "doc_1"],
+        ["project_id", "project_1"],
+        ["user_id", "user_1"],
       ]);
     });
 
-    await test('PATCH /api/projects/[id]/docs/[docId] rejects unauthenticated access', async () => {
+    await test("PATCH /api/projects/[id]/docs/[docId] rejects unauthenticated access", async () => {
       projectDocRouteDeps.getDocAuthContext = async () => ({
         supabase: {} as never,
         db: {} as never,
@@ -197,30 +231,34 @@ async function main() {
       });
 
       const response = await patchProjectDocRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs/doc_1', {
-          method: 'PATCH',
-          body: JSON.stringify({ title: 'Atlas Revised' }),
-          headers: { 'Content-Type': 'application/json' },
+        new NextRequest("http://localhost/api/projects/project_1/docs/doc_1", {
+          method: "PATCH",
+          body: JSON.stringify({ title: "Atlas Revised" }),
+          headers: { "Content-Type": "application/json" },
         }),
-        { params: Promise.resolve({ id: 'project_1', docId: 'doc_1' }) },
+        { params: Promise.resolve({ id: "project_1", docId: "doc_1" }) },
       );
       const payload = await parseJson<ErrorPayload>(response);
 
       assert.equal(response.status, 401);
-      assert.equal(payload.error.code, 'UNAUTHORIZED');
+      assert.equal(payload.error.code, "UNAUTHORIZED");
     });
 
-    await test('DELETE /api/projects/[id]/docs/[docId] returns success payload', async () => {
+    await test("DELETE /api/projects/[id]/docs/[docId] returns success payload", async () => {
       projectDocRouteDeps.getDocAuthContext = async () => ({
         supabase: {} as never,
-        user: { id: 'user_1' },
+        user: { id: "user_1" },
         db: {
           from() {
             return {
-              delete() { return this; },
-              eq() { return this; },
-              then() {
-                return Promise.resolve({ error: null });
+              delete() {
+                return this;
+              },
+              eq() {
+                return this;
+              },
+              then(resolve: (value: { error: null }) => unknown) {
+                return Promise.resolve({ error: null }).then(resolve);
               },
             };
           },
@@ -228,12 +266,14 @@ async function main() {
       });
 
       const response = await deleteProjectDocRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs/doc_1', {
-          method: 'DELETE',
+        new NextRequest("http://localhost/api/projects/project_1/docs/doc_1", {
+          method: "DELETE",
         }),
-        { params: Promise.resolve({ id: 'project_1', docId: 'doc_1' }) },
+        { params: Promise.resolve({ id: "project_1", docId: "doc_1" }) },
       );
-      const payload = await parseJson<{ success: true; data: { ok: true } }>(response);
+      const payload = await parseJson<{ success: true; data: { ok: true } }>(
+        response,
+      );
 
       assert.equal(response.status, 200);
       assert.equal(payload.data.ok, true);
