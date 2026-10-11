@@ -201,3 +201,22 @@ The verifier follows that prototype-shaped address on both initial-document mode
 and captures a missing page before assertions, retaining a useful failure frame.
 The final delta again has five files. Renew exact-source review and hosted proof;
 the previous24-source static PASS does not establish this new recovery behavior.
+
+## Functional pass and post-render capture refinement
+
+The actual reader step in CI38135917137 passes at sourceb1ec690f. Artifact11700904220
+binds built merge341145a77770a2523b606a6a8c8e5c27a0a2b589 and retains17 frames.
+All four real chapters pass on desktop and375px mobile with Next bundles denied;
+each mode records308 denied requests/33 distinct chunks, opaque source prose and
+viewport fit. All three invalid-address recoveries, including **proto**, return
+HTTP200/noindex and native-link back to the catalogue. Fully hydrated desktop,
+mobile and reduced-motion entries/featured/navigation/recovery also pass; page
+errors are zero. This is compiled fixture acceptance, not production or full reader.
+
+Inspection of desktop/mobile recovery and reduced-motion frames passes this
+bounded visual check. The mobile pre-hydration frame, however, was captured before
+the later successful prose assertion and still shows loading. Refine the verifier
+to keep the early failure capture but overwrite it with the actual readable state
+after all prose/layout/opacity assertions pass. Application code is unchanged.
+Renew final-source review and hosted verification so the final capture is honest;
+retain the prior functional pass and its premature frame as separate evidence.

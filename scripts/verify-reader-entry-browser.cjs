@@ -204,6 +204,11 @@ async function recoverMissingChapter(page, href, mode, capture) {
               chapter.layout.right <= chapter.layout.viewportWidth + 1,
             "Pre-hydration chapter article fits viewport",
           );
+          if (entry === entries[0]) {
+            await page.screenshot({
+              path: `${output}/${mode.name}-initial-reader.png`,
+            });
+          }
           chapter.passed = true;
         }
         for (const href of [
