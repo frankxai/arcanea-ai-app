@@ -154,6 +154,7 @@ export interface ConversationState {
   error: Error | undefined;
   sendMessage: (opts: { text: string; files?: FileUIPart[] }) => void;
   setMessages: (msgs: UIMessage[]) => void;
+  stop: () => void;
 
   // Input
   input: string;
@@ -412,6 +413,7 @@ export function useConversation(
     error,
     sendMessage: sendSdkMessage,
     setMessages,
+    stop,
   } = useChat({
     transport,
     onError: (err) => {
@@ -870,6 +872,8 @@ export function useConversation(
     error,
     sendMessage,
     setMessages,
+
+    stop,
 
     // Input
     input,

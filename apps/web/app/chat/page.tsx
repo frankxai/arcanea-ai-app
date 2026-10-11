@@ -101,6 +101,11 @@ import {
 import entryStyles from "@arcanea/design-system/entry-handoff.module.css";
 
 export default function ChatPage() {
+  const { user } = useAuth();
+  return <AccountChatPage key={user?.id ?? "guest"} />;
+}
+
+function AccountChatPage() {
   const { user, isLoading: authLoading } = useAuth();
   const draftOwner = user?.id ?? null;
   const chatSessions = useChatSessions();
@@ -109,6 +114,12 @@ export default function ChatPage() {
   });
   const autoSave = useAutoSave(conversation.messages, conversation.isLoading);
   const searchParams = useSearchParams();
+  useEffect(
+    () => () => {
+      conversation.stop();
+    },
+    [draftOwner, conversation.stop],
+  );
 
   const [showExport, setShowExport] = useState(false);
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
@@ -703,7 +714,7 @@ export default function ChatPage() {
                   onModelChange={conversation.setModelId}
                   currentModel={conversation.modelId ?? "arcanea-auto"}
                   isStreaming={conversation.isStreaming}
-                  onStop={conversation.handleRegenerate}
+                  onStop={conversation.stop}
                   enabledTools={conversation.enabledTools}
                   onToggleTool={conversation.toggleTool}
                   externalMessage={pendingInput}

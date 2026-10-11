@@ -1,5 +1,6 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
+const http = require("node:http");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { execFileSync } = require("node:child_process");
@@ -126,8 +127,65 @@ async function main() {
     modes: [],
     captures: [],
     failures: [],
-    cleanup: { browserClosed: false },
+    cleanup: { browserClosed: false, streamServerClosed: false },
   };
+  const streams = [];
+  const fixtureServerErrors = [];
+  let holdStream = false;
+  const server = http.createServer(async (request, response) => {
+    if (request.method !== "POST") {
+      response.writeHead(405);
+      response.end();
+      return;
+    }
+    try {
+      const chunks = [];
+      for await (const chunk of request) chunks.push(chunk);
+      const body = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+      assert.equal(body.provider, "google");
+      assert.equal(body.clientApiKey, fakeKey);
+      assert.equal(body.gatewayModel, "arcanea-gemini-flash");
+      const record = { held: holdStream, aborted: false, finished: false };
+      streams.push(record);
+      response.on("close", () => {
+        if (!record.finished) record.aborted = true;
+      });
+      response.writeHead(200, {
+        "content-type": "text/event-stream",
+        "x-vercel-ai-ui-message-stream": "v1",
+        "cache-control": "no-store",
+      });
+      const event = (value) =>
+        response.write(`data: ${JSON.stringify(value)}\n\n`);
+      event({ type: "start", messageId: `entry-fixture-${streams.length}` });
+      event({ type: "start-step" });
+      event({ type: "text-start", id: "text-1" });
+      event({
+        type: "text-delta",
+        id: "text-1",
+        delta: holdStream
+          ? "Interrupted map remains."
+          : "The map warmed in Mara's hands.",
+      });
+      if (!holdStream) {
+        event({ type: "text-end", id: "text-1" });
+        event({ type: "finish-step" });
+        event({ type: "finish", finishReason: "stop" });
+        record.finished = true;
+        response.end("data: [DONE]\n\n");
+      }
+    } catch {
+      fixtureServerErrors.push(
+        "Synthetic fixture rejected a request; request details remain private",
+      );
+      response.destroy();
+    }
+  });
+  await new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", resolve);
+  });
+  const fixtureUrl = `http://127.0.0.1:${server.address().port}/chat`;
   let browser;
   let activePage;
   const capture = async (page, surface, name) => {
@@ -205,31 +263,7 @@ async function main() {
           assert.equal(body.clientApiKey, fakeKey);
           assert.equal(body.gatewayModel, "arcanea-gemini-flash");
           assert.ok(JSON.stringify(body.messages).includes("Edited map draft"));
-          const events = [
-            { type: "start", messageId: `entry-fixture-${mode.name}` },
-            { type: "start-step" },
-            { type: "text-start", id: "text-1" },
-            {
-              type: "text-delta",
-              id: "text-1",
-              delta: "The map warmed in Mara's hands.",
-            },
-            { type: "text-end", id: "text-1" },
-            { type: "finish-step" },
-            { type: "finish", finishReason: "stop" },
-          ];
-          return route.fulfill({
-            status: 200,
-            headers: {
-              "content-type": "text/event-stream",
-              "x-vercel-ai-ui-message-stream": "v1",
-              "cache-control": "no-store",
-            },
-            body:
-              events
-                .map((event) => `data: ${JSON.stringify(event)}\n\n`)
-                .join("") + "data: [DONE]\n\n",
-          });
+          return route.continue({ url: fixtureUrl });
         }
         if (url.pathname.startsWith("/api/"))
           return route.fulfill({ status: 200, json: {} });
@@ -252,6 +286,15 @@ async function main() {
         name: "Open draft in chat",
         exact: true,
       });
+      await expect
+        .poll(() =>
+          entryInput.evaluate(
+            (element) =>
+              element.scrollTop === 0 &&
+              element.scrollHeight <= element.clientHeight + 1,
+          ),
+        )
+        .toBe(true);
       const size = await opener.boundingBox();
       assert.ok(
         size.height >= 44 && size.width >= 44,
@@ -277,6 +320,25 @@ async function main() {
         "Typed draft stays out of navigation requests",
       );
       await expect(input).toBeFocused();
+      const send = page.getByRole("button", {
+        name: "Send message",
+        exact: true,
+      });
+      const sendSize = await send.boundingBox();
+      assert.ok(sendSize.height >= 44 && sendSize.width >= 44);
+      if (mode.forcedColors === "active") {
+        const paint = await send.evaluate((element) => ({
+          background: getComputedStyle(element).backgroundColor,
+          icon: getComputedStyle(element.querySelector("svg")).color,
+          border: getComputedStyle(element).borderTopStyle,
+        }));
+        assert.notEqual(
+          paint.icon,
+          paint.background,
+          "Forced-color send glyph remains visible",
+        );
+        assert.notEqual(paint.border, "none");
+      }
       await capture(page, input, `chat-prefill-${mode.name}`);
       await composeEnter(input);
       assert.equal(posts, 0, "Chat composition Enter never sends");
@@ -293,10 +355,32 @@ async function main() {
         1,
         "Explicit Send makes exactly one intercepted request",
       );
+      holdStream = true;
+      await input.fill("Edited map draft — stop sample");
+      await send.click();
+      const log = page.getByRole("log", { name: "Chat messages", exact: true });
+      await expect(log).toContainText("Interrupted map remains.");
+      const held = streams.at(-1);
+      await page
+        .getByRole("button", { name: "Stop generating", exact: true })
+        .click();
+      await expect(send).toBeVisible();
+      await expect(input).toBeEnabled();
+      await expect.poll(() => held.aborted).toBe(true);
+      await expect(log).toContainText("Interrupted map remains.");
+      assert.equal(
+        posts,
+        2,
+        "Stop never regenerates or submits another request",
+      );
+      holdStream = false;
+      await capture(page, input, `chat-stopped-${mode.name}`);
       await input.fill("Previous account draft");
       await identityChange(page);
       await expect(input).toHaveValue("");
-      assert.equal(posts, 1, "Account change does not send");
+      await expect(log).not.toContainText("Interrupted map remains.");
+      await expect(log).not.toContainText("The map warmed in Mara's hands.");
+      assert.equal(posts, 2, "Account change does not send");
       // Seed a public synthetic account-A record; this is a browser UI denial check, not real tenant proof.
       await page.evaluate(
         ({ key, id, owner }) =>
@@ -328,7 +412,7 @@ async function main() {
       );
       assert.equal(new URL(page.url()).searchParams.get("keep"), "1");
       assert.equal(new URL(page.url()).hash, "#entry");
-      assert.equal(posts, 1);
+      assert.equal(posts, 2);
       await page
         .getByRole("button", { name: "Retry draft", exact: true })
         .click();
@@ -342,7 +426,7 @@ async function main() {
         await page.evaluate((key) => sessionStorage.getItem(key), draftKey),
         null,
       );
-      assert.equal(posts, 1, "Account recovery prefills without sending");
+      assert.equal(posts, 2, "Account recovery prefills without sending");
       checkPrivateUrls = false; // Old public URL compatibility is tested separately from the new typed-draft path.
       await page.goto(
         `${base}/chat?prompt=Legacy%20public%20scene&auto=1&keep=2`,
@@ -351,7 +435,7 @@ async function main() {
       assert.equal(new URL(page.url()).searchParams.get("keep"), "2");
       assert.equal(new URL(page.url()).searchParams.has("prompt"), false);
       assert.equal(new URL(page.url()).searchParams.has("auto"), false);
-      assert.equal(posts, 1, "Legacy auto links only prefill");
+      assert.equal(posts, 2, "Legacy auto links only prefill");
       await page.goto(base);
       await expect(entryInput).toBeEnabled();
       await entryInput.fill("Recovery draft remains on home");
@@ -391,7 +475,7 @@ async function main() {
       await capture(page, home, `home-recovery-${mode.name}`);
       await identityChange(page);
       await expect(entryInput).toHaveValue("");
-      assert.equal(posts, 1);
+      assert.equal(posts, 2);
       assert.deepEqual(errors, []);
       const overflow = await home.evaluate(
         (element) => element.getBoundingClientRect().right > window.innerWidth,
@@ -400,11 +484,16 @@ async function main() {
       receipt.modes.push({
         mode: mode.name,
         homeImeSafe: true,
+        compactDraftOpeningVisible: true,
+        sendTouchTargetAndPaint: true,
+        stopAbortsWithoutReplacement: held.aborted && posts === 2,
+        stoppedPartialReplyRetained: true,
         chatImeSafe: true,
         typedDraftUrlSafe: !urlLeak,
         prefillOnly: true,
         explicitSyntheticPosts: posts,
         accountComposerCleared: true,
+        accountSessionCleared: true,
         wrongAccountDenied: true,
         rightAccountRetryRecovered: true,
         legacyAutoPrefillOnly: true,
@@ -414,6 +503,8 @@ async function main() {
       await context.close();
       activePage = null;
     }
+    assert.deepEqual(fixtureServerErrors, []);
+    receipt.fixtureServerErrors = fixtureServerErrors;
     receipt.state = "passed";
   } catch (error) {
     receipt.state = "failed";
@@ -428,6 +519,9 @@ async function main() {
       await browser.close();
       receipt.cleanup.browserClosed = true;
     }
+    server.closeAllConnections();
+    await new Promise((resolve) => server.close(resolve));
+    receipt.cleanup.streamServerClosed = true;
     await fs.writeFile(
       path.join(output, "verification.json"),
       `${JSON.stringify(receipt, null, 2)}\n`,

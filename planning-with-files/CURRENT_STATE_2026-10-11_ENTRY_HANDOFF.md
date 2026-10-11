@@ -2,11 +2,11 @@
 
 Source task: `01a1269f-23eb-7bb2-b609-77d731cacc50`; programme issue [276](https://github.com/frankxai/arcanea-ai-app/issues/276).
 
-Scope: creator entry privacy, editable chat prefill, composition-aware Enter and browser-storage recovery.
+Scope: creator entry privacy, editable chat prefill, composition-aware Enter, browser-storage/account recovery, visible send controls and correct Stop cancellation.
 Owner: Codex, exclusive lease `codex-entry-handoff-20261011`; sequential work, no new agent or local heavy worker.
 Files: the eleven paths in that lease. Base: `86a412efcebf3873bbed0d8796d6a684e85470da`, frozen chat companion candidate.
 Non-goals: history service, new homepage replacement, real provider spend, credit ledger, media generation, account migration, production promotion and the wider team programme.
-Acceptance: typed home text stays out of URLs; auth settles before handoff; another actor cannot prefill it; composition Enter never navigates or sends; navigation never executes a provider; storage denial leaves editable text and recovery actions on home; explicit Send uses the existing AI SDK transport.
+Acceptance: typed home text stays out of URLs; auth settles before handoff; another actor cannot prefill it; composition Enter never navigates or sends; navigation never executes a provider; storage denial leaves editable text and recovery actions on home; the right actor can explicitly retry; explicit Send uses the existing AI SDK transport; Stop aborts the browser request, retains partial text and submits no replacement; compact multiline home drafts and send controls remain visible at mobile/forced-color sizes.
 Verification: direct Node draft tests; compiled hosted browser in desktop, 375px mobile, reduced-motion and forced-colors modes; changed-scope lint/typecheck/build; exact-revision captures and source hashes; manual visual inspection and design scan. Independent release review remains required.
 Rollback: revert this eleven-file slice on its branch, preserving the frozen parent and other owners' work. It adds no migration or backend credential storage.
 
@@ -24,6 +24,8 @@ The record can be consumed once by the same actor for ten minutes. It is removed
 | Recovery   | No storage handoff or account guard                                    | Storage failure preserves home text; mismatched actor denied; account change remounts composer |
 
 ## Source and ownership evidence
+
+Visual inspection of twelve bound captures at `966784711f7d2e8f40685deef7d5a157a55c5ec1` found that the compact home field scrolled past the opening line on mobile and the inherited chat Send icon disappeared in forced colors. Those passing test artifacts are retained as an intermediate version. The corrected revision uses intrinsic CSS field sizing (native two-row fallback), readable chat placeholder tokens and an explicit 44px token-styled Send/Stop control. Browser tests now assert opening-line visibility, forced-color glyph paint, and an actual held loopback stream canceled without a replacement request. CSS behavior was checked against [MDN field-sizing documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing); older engines retain native textarea scrolling. No new image, provider or dependency is introduced. Source inspection also confirmed full chat's Stop button called regenerate; it now calls the installed AI SDK stop method, which the page also invokes on account change and unmount. This establishes no server/provider cancellation or charge/refund guarantee.
 
 Worktree: `C:/Users/frank/starlight/worktrees/arcanea-billing-recovery-20261010`; origin `https://github.com/frankxai/arcanea-ai-app.git`; branch `agent/codex/home-chat-handoff-20261011`. Location guard and eleven-file route check passed before writes; they verify routing and do not acquire ownership. The active lease separately assigns these files. PR447's history APIs and service and PR505's replacement homepage files are preserved. PR505 may eventually replace the V3 homepage entry, so its owner must integrate this behavior at that future boundary.
 
