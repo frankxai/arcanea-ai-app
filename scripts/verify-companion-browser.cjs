@@ -49,6 +49,8 @@ const source = [
   "apps/web/app/chat/layout.tsx",
   "apps/web/hooks/use-chat-world-mode.ts",
   "apps/web/lib/chat/world-handoff.ts",
+  "apps/web/lib/chat/world-character-mode.ts",
+  "apps/web/lib/luminors/config.ts",
   "apps/web/lib/worlds/draft.ts",
   "apps/web/lib/worlds/generation.ts",
   "apps/web/app/api/worlds/generate/route.ts",
@@ -389,6 +391,19 @@ async function main() {
     await expect(
       page.getByRole("log", { name: "Chat messages", exact: true }),
     ).toContainText("A door opens beneath the tide.");
+    // The accepted CTA threshold counts creator messages, not assistant turns.
+    await input.fill(
+      "Keep memories, not dreams. Mara refuses to surrender her daughter's name.",
+    );
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect(
+      page.getByRole("button", { name: "Send message", exact: true }),
+    ).toBeEnabled();
+    await expect(
+      page.getByText("/images/luminors/default.webp", { exact: true }),
+    ).toHaveCount(0);
     const prepare = page.getByRole("button", {
       name: "Prepare world draft",
       exact: true,

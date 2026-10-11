@@ -158,6 +158,14 @@ const output = () => ({
   saved: false,
   actor_id: owner,
 });
+test("world builder exposes the chat glyph and supported typed metadata", () => {
+  const builder = load(
+    "apps/web/lib/chat/world-character-mode.ts",
+  ).buildWorldBuilderLuminor("Creator-owned world source");
+  assert.equal(builder.avatar, "✦");
+  assert.equal(builder.academy, "creation_light");
+  assert.equal(builder.wisdom, "Poiesis");
+});
 function fixture(overrides = {}) {
   const map = new Map();
   const requests = [];

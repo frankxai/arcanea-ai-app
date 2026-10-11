@@ -177,3 +177,23 @@ confirmed new attempt can reuse it. A new native regression passes alongside the
 existing cases: 37 combined checks. No credentials or account IDs enter portable
 conversation/download artifacts. The pending source still belongs to the signed-in
 account in this tab; no cloud or cross-device promise is added.
+
+## First compiled world scenario result and repair
+
+Companion38179520905 / compiled114588916530 is terminal FAILURE at c467: the
+prepared-world action was absent. The actual page and captured image confirm
+world mode and a completed one-user/one-assistant conversation. The existing
+page threshold counts two creator messages, not two total turns. The verifier's
+setup is corrected to supply the second explicit creator decision; the accepted
+threshold is preserved. The failure receipt and four captures remain retained,
+including the actually inspected failed desktop frame. Cleanup passed; no page
+exception, real provider call or production write was recorded.
+
+That frame also exposes a product defect: the World Builder's avatar field is
+rendered as text, but its value is an image path. The helper is separately admitted
+as the tenth owned path. A native test reproduced the wrong value before repair.
+The builder now uses the existing chat glyph and supported academy/wisdom metadata
+without the invalid type assertions. No new portrait, asset or brand identity is
+introduced. The verifier checks that the path is absent and binds both helper and
+configuration source. This refinement has 38 combined native checks; compiled
+coverage needs a fresh actual run before acceptance.
