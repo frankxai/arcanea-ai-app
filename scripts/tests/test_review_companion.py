@@ -83,7 +83,10 @@ class ReviewAdmission(unittest.TestCase):
                    "quote": "return false;", "scenario": "Explicit trigger", "fix": "Check actor"}
         valid = {**self.valid_review(), "verdict": "warn", "findings": [finding]}
         REVIEW.validate(valid, HEAD, BASE, "manifest", content)
-        for changes in ({"line": True}, {"line": 99}, {"quote": "invented;"},
+        for changes in ({"line": True}, {"line": 99}, {"line": 1},
+                        {"quote": "// guard\nreturn false;"},
+                        {"quote": "// guard return false;"},
+                        {"quote": "return  false;"}, {"quote": "invented;"},
                         {"path": "unseen.ts"}, {"scenario": ""}):
             bad = copy.deepcopy(valid)
             bad["findings"][0].update(changes)

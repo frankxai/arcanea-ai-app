@@ -29,7 +29,9 @@ const CreditBalance = dynamic(
     import("@/components/credits/credit-balance").then((m) => m.CreditBalance),
   {
     ssr: false,
-    loading: () => <span className="text-xs text-white/20">---</span>,
+    loading: () => (
+      <span className="text-xs text-[var(--arc-text-secondary)]">---</span>
+    ),
   },
 );
 import { CreationIndicator } from "@/components/chat/creation-indicator";
@@ -270,7 +272,7 @@ export default function ChatPage() {
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={chatSessions.toggleSidebar}
-              className="md:hidden w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+              className="md:hidden w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.04] transition-colors"
               aria-label="Toggle sidebar"
               aria-expanded={chatSessions.isSidebarExpanded}
             >
@@ -297,7 +299,7 @@ export default function ChatPage() {
             {conversation.messages.length > 0 && (
               <button
                 onClick={() => setShowExport(true)}
-                className="w-10 h-10 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors"
+                className="w-10 h-10 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.04] transition-colors"
                 aria-label="Export conversation"
                 title="Export"
               >
@@ -307,7 +309,7 @@ export default function ChatPage() {
             {conversation.messages.length > 0 && (
               <button
                 onClick={handleNewChat}
-                className="flex items-center gap-1.5 h-10 sm:h-auto px-3 py-1.5 rounded-lg text-xs text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+                className="flex items-center gap-1.5 h-10 sm:h-auto px-3 py-1.5 rounded-lg text-xs text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.04] transition-colors"
               >
                 <PhPlus className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">New</span>
@@ -413,7 +415,7 @@ export default function ChatPage() {
                   textareaRef={textareaRef}
                 />
                 <div className="flex items-center justify-between mt-2 px-1">
-                  <span className="text-[10px] text-white/15 hidden sm:inline">
+                  <span className="text-[10px] text-[var(--arc-text-secondary)] hidden sm:inline">
                     @mention for agents
                   </span>
                   <CreationIndicator autoSave={autoSave} />

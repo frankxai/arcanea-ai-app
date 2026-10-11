@@ -162,7 +162,7 @@ def response_schema(head, base, manifest, content):
     text = {"type": "string", "minLength": 1, "maxLength": 3000}
     path = {"type": "string", "enum": list(content)}
     line = {"type": "integer", "minimum": 1}
-    quote = {**text, "description": "Literal nearby source text; no ellipses, paraphrases or line-number prefixes"}
+    quote = {**text, "description": "Exact contiguous text from the single cited source line. Preserve spaces and ASCII quotes. Exclude the numbered prefix; never join lines or paraphrase."}
     finding = object_of({
         "priority": {"type": "string", "enum": ["P0", "P1", "P2", "P3"]},
         "path": path, "line": line, "title": text, "quote": quote,
@@ -206,8 +206,7 @@ def validate(review, head, base, manifest, content, changed=None):
         for field in ("title", "quote", "scenario", "fix"):
             require(isinstance(finding.get(field), str) and 0 < len(finding[field]) <= 3000,
                     "Finding evidence is missing or oversized")
-        nearby = "\n".join(lines[max(0, line - 4):line + 3])
-        require(finding["quote"] in nearby, "Finding quote does not match cited source")
+        require(finding["quote"] in lines[line - 1], "Finding quote does not match cited source")
     for key in ("acceptanceGaps", "limitations"):
         require(isinstance(review.get(key), list)
                 and all(isinstance(x, str) for x in review[key]), "Review limits are missing")
@@ -223,7 +222,7 @@ def validate(review, head, base, manifest, content, changed=None):
         require(type(line) is int and 1 <= line <= len(lines), "Observation line is invalid")
         quote, behavior = observation.get("quote"), observation.get("behavior")
         require(isinstance(quote, str) and bool(quote)
-                and quote in "\n".join(lines[max(0, line - 4):line + 3])
+                and quote in lines[line - 1]
                 and isinstance(behavior, str) and 0 < len(behavior) <= 3000,
                 "Observation lacks concrete source evidence")
         observed.add(observation["path"])
@@ -307,7 +306,13 @@ def request_for(name, head, base, manifest, content, hashes, delta):
         "changes only one). Trace guards before alleging stale state or missing cleanup. "
         "Report conclusions, not private reasoning. Return JSON matching response_format. "
         "Copy the binding values exactly; never replace, shorten or invent revision/hash "
-        "values. Quote actual source without synthetic ellipses. Gaps and limitations are "
+        "values. Copy a contiguous excerpt of ONE exact source line for each quote, "
+        "without its numbered prefix. Preserve all spaces and quote characters; do not "
+        "join multiple lines, change straight quotes to curly quotes, or add ellipses. "
+        "The line field must identify that very line. Verify the three distinct-file "
+        "observations before returning. Do not assume an SDK cleanup API exists: cite "
+        "its supplied definition and reachable failing caller or state the dependency "
+        "limitation. Gaps and limitations are "
         "arrays of concrete strings, never objects or placeholders."
     )
     numbered = "\n".join(

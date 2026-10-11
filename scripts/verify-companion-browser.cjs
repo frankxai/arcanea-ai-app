@@ -22,9 +22,12 @@ const source = [
   "apps/web/components/chat/chat-notices.tsx",
   "apps/web/components/chat/chat-overlays.tsx",
   "apps/web/components/chat/chat-welcome.tsx",
+  "apps/web/components/chat/chat-input-bar.tsx",
+  "apps/web/components/chat/agent-header.tsx",
   "apps/web/app/chat/page.tsx",
   "apps/web/lib/chat/error-message.ts",
   "packages/design-system/src/companion.module.css",
+  "packages/design-system/src/tokens.css",
   "packages/design-system/package.json",
   "scripts/verify-companion-browser.cjs",
   "scripts/tests/chat-error-message.test.cjs",
@@ -69,6 +72,92 @@ const modes = [
 ];
 const digest = (data) => crypto.createHash("sha256").update(data).digest("hex");
 const fakeKey = "companion-fixture-only-no-provider-access";
+
+async function composerReadability(page) {
+  const measurements = await page.evaluate(() => {
+    const composer = document.querySelector("[data-chat-composer]");
+    const header = document.querySelector("[data-chat-input-header]");
+    if (!composer || !header) throw new Error("Compiled composer is missing");
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const pixel = () => [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+    const luminance = (rgb) =>
+      rgb.reduce((sum, value, index) => {
+        const channel = value / 255;
+        return (
+          sum +
+          (channel <= 0.04045
+            ? channel / 12.92
+            : ((channel + 0.055) / 1.055) ** 2.4) *
+            [0.2126, 0.7152, 0.0722][index]
+        );
+      }, 0);
+    const measure = (element, label, minimum, pseudo) => {
+      const ancestors = [];
+      for (let node = element; node; node = node.parentElement)
+        ancestors.push(node);
+      context.clearRect(0, 0, 1, 1);
+      context.fillStyle = "white";
+      context.fillRect(0, 0, 1, 1);
+      for (const node of ancestors.reverse()) {
+        context.fillStyle = getComputedStyle(node).backgroundColor;
+        context.fillRect(0, 0, 1, 1);
+      }
+      const background = luminance(pixel());
+      context.fillStyle = getComputedStyle(element, pseudo).color;
+      context.fillRect(0, 0, 1, 1);
+      const foreground = luminance(pixel());
+      const rect = element.getBoundingClientRect();
+      return {
+        label,
+        minimum,
+        contrast:
+          (Math.max(background, foreground) + 0.05) /
+          (Math.min(background, foreground) + 0.05),
+        width: rect.width,
+        height: rect.height,
+      };
+    };
+    const textarea = composer.querySelector("textarea");
+    const result = [
+      measure(textarea, "Message placeholder", 4.5, "::placeholder"),
+    ];
+    for (const button of header.querySelectorAll("button")) {
+      if (button.getClientRects().length)
+        result.push(
+          measure(
+            button,
+            button.getAttribute("aria-label") || button.textContent.trim(),
+            4.5,
+          ),
+        );
+    }
+    for (const button of composer.querySelectorAll("button:enabled")) {
+      if (button.getClientRects().length)
+        result.push(
+          measure(
+            button,
+            button.getAttribute("aria-label") || button.textContent.trim(),
+            3,
+          ),
+        );
+    }
+    return result;
+  });
+  for (const item of measurements) {
+    assert.ok(
+      item.contrast >= item.minimum,
+      `${item.label}: ${item.contrast.toFixed(2)} contrast below ${item.minimum}`,
+    );
+    if (item.label !== "Message placeholder")
+      assert.ok(
+        item.width >= 44 && item.height >= 44,
+        `${item.label}: composer touch target below 44px`,
+      );
+  }
+  return measurements;
+}
 
 async function main() {
   const target = new URL(base);
@@ -557,7 +646,22 @@ async function main() {
         ),
         "Creative starters are immediately readable without entrance animations",
       );
+      const composerContrast = await composerReadability(page);
       await capturePage(page, `full-chat-${mode.name}`);
+      const modelTrigger = page.getByRole("button", { name: /^Model: / });
+      await modelTrigger.focus();
+      await page.keyboard.press("Enter");
+      const modelMenu = page.getByRole("menu", { name: "Choose a model" });
+      await expect(modelMenu).toBeVisible();
+      const modelChoices = modelMenu.getByRole("menuitemradio");
+      assert.ok((await modelChoices.count()) > 0);
+      await page.keyboard.press("Escape");
+      await expect(modelMenu).toBeHidden();
+      await expect(modelTrigger).toBeFocused();
+      await modelTrigger.click();
+      await modelChoices.first().click();
+      await expect(modelMenu).toBeHidden();
+      await expect(modelTrigger).toBeFocused();
       await starterButtons.first().focus();
       await page.keyboard.press("?");
       const shortcutsDialog = page.getByRole("dialog", {
@@ -596,6 +700,8 @@ async function main() {
         identityEventAborted: identityRecord.aborted,
         identityCleared: true,
         draftPreserved: true,
+        composerContrast,
+        modelMenuKeyboardRecovery: true,
         noRawProviderError: true,
         shortcutSingleOwner: true,
         keyboardFocus: true,

@@ -340,7 +340,7 @@ export function ChatArea({
                 <div className="flex gap-3">
                   {activeLuminor?.avatar ? (
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-[var(--arc-text-primary)] text-xs font-bold shrink-0"
                       style={{
                         background: `linear-gradient(135deg, ${activeLuminor.color || ACCENT}, ${activeLuminor.color || ACCENT}80)`,
                       }}
@@ -360,12 +360,12 @@ export function ChatArea({
                       >
                         {activeLuminor?.name || "Arcanea"}
                       </span>
-                      <span className="text-[10px] text-white/20 font-mono">
+                      <span className="text-[10px] text-[var(--arc-text-secondary)] font-mono">
                         {providerLabel}
                       </span>
                     </div>
                     {runtimeSummary && (
-                      <div className="mb-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-white/35">
+                      <div className="mb-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-[var(--arc-text-secondary)]">
                         {runtimeSummary}
                       </div>
                     )}
@@ -381,7 +381,7 @@ export function ChatArea({
                         />
                         <div className="absolute inset-[3px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 animate-pulse" />
                       </div>
-                      <span className="text-xs text-white/40 font-medium flex items-center gap-1">
+                      <span className="text-xs text-[var(--arc-text-secondary)] font-medium flex items-center gap-1">
                         Composing
                         <span className="flex gap-0.5">
                           <span
@@ -415,7 +415,7 @@ export function ChatArea({
           <button
             onClick={scrollToBottom}
             aria-label="Scroll to latest message"
-            className="w-9 h-9 rounded-full bg-gradient-to-b from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] border border-white/[0.1] shadow-[0_4px_16px_color-mix(in_srgb,var(--arc-cosmic-void)_70%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)] flex items-center justify-center text-white/50 hover:text-[var(--arc-brand-atlantean-teal)] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_4px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_15%,transparent)] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+            className="w-9 h-9 rounded-full bg-gradient-to-b from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] border border-white/[0.1] shadow-[0_4px_16px_color-mix(in_srgb,var(--arc-cosmic-void)_70%,transparent),0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_8%,transparent)] flex items-center justify-center text-[var(--arc-text-secondary)] hover:text-[var(--arc-brand-atlantean-teal)] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_4px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_15%,transparent)] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
           >
             <PhArrowDown className="w-4 h-4" />
           </button>

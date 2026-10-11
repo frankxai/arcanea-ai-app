@@ -6,6 +6,8 @@ on:
     paths:
       - apps/web/components/lumina/**
       - apps/web/components/chat/chat-area.tsx
+      - apps/web/components/chat/chat-input-bar.tsx
+      - apps/web/components/chat/agent-header.tsx
       - apps/web/components/chat/chat-notices.tsx
       - apps/web/components/chat/chat-overlays.tsx
       - apps/web/components/chat/chat-welcome.tsx

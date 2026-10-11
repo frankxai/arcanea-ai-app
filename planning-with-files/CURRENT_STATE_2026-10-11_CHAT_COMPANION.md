@@ -283,3 +283,64 @@ Machine admission remains HOLD at 4651MB free against 6144MB required. No local
 build, browser, install, reviewer or agent is launched. Fresh complete independent
 review, exact-source hosted checks/captures, reconciliation, release gates and real
 provider/customer acceptance remain required. The full programme stays active.
+
+## Composer refinement after the d00 review failure
+
+Scope: Make the full-chat composer, model selection and focus controls readable
+and usable with keyboard and touch, while preserving send, Stop and account lifetime.
+Owner: codex-provider-account-20261011, programme #276 and draft PR #591.
+Files: Existing owned chat page, input bar, agent header, design-system companion
+stylesheet, browser fixture, review protocol and this state record. The input-bar
+styling is adopted from this same thread's retained entry-handoff lane; its draft
+and history work remains preserved in PR #567.
+Non-goals: No billing, provider spending, credentials, canon, migration or release
+approval. No claim of customer success from synthetic streams.
+Acceptance criteria: Rendered enabled text and placeholders meet 4.5:1 contrast;
+icons meet 3:1; primary composer controls have 44px targets; model selection works
+with keyboard, Escape and focus return; all existing interruption checks pass.
+Verification: Actual hosted compiled browser fixture, source-bound captures,
+existing SDK tests, lint, typecheck and build. Valid independent review remains
+required at the resulting revision.
+Rollback: Revert the composer refinement commit without removing accepted main
+or the preceding account/Stop changes.
+
+Accepted URI normalization main 89f9d1fd911407aa3bc8128fecca96f00c7cc6c6 is
+integrated as dc32e4ac642ce8e1340a7d2cabbc2288a6d81edb. All five incoming
+Git objects match accepted main; their integration-only ownership is released.
+Production was observed READY at 89f9d1f. This chat candidate remains draft.
+
+At d00b4e3381df911085b71c9431b126f8c46aa17b, build, types, lint,
+Reading 38165933399 and the compiled Companion job 114548376488 pass.
+The independent review in 38165933431 fails literal source-quote validation.
+It also repeats observations from one file. The single response reports cost zero
+and a normal stop; four remaining modules never dispatch. Its proposed SDK
+dispose method is absent from the inspected installed SDK, and its type-only
+runtime claim lacks a demonstrated failure. Neither finding nor verdict is
+accepted as valid. Raw evidence is retained, and the validator is not weakened.
+
+The prepared paid Gemini packet is not executed or approved. It becomes stale
+when this candidate changes and must be rebuilt and cost-qualified if approved.
+Current PP admits one bounded review-lite workload at 7520MB free, with no new
+parallel agents. Design guidance is read from the existing design-agent-standards
+repo because the historical loose-root paths have moved; this is an explicit
+source handoff, not a new runtime enforcement hook.
+
+The composer now uses a solid design-token surface, readable token text and
+placeholder colors, 16px input text and 44px controls. Focus pills expose pressed
+state and keep readable labels when inactive. The model picker uses the already
+installed Radix radio menu with keyboard navigation and Escape/focus recovery.
+No dependency is added. The browser fixture measures actual rendered placeholder,
+label and enabled-icon contrast and target geometry in each of its four modes;
+those new assertions have not yet run in the hosted compiled app.
+
+The retained low-contrast captures are the refinement input. The serious design
+alternative is the existing accepted composer with faint controls and a click-only
+model popup; this change preserves its creation and account behavior. No buyer,
+competitor superiority or paid product qualification is inferred from the change.
+Four modified TSX files parse with the installed compiler, 14 actual-SDK/account/
+Stop/error cases pass, and ten no-network review admission tests pass. Quoted
+citations now require the very cited source line; wrong-line, joined-line and
+changed-whitespace regressions are denied. The independent prompt specifies this
+literal format and requires evidence before inventing an SDK cleanup API.
+Fresh compiled browser checks, typecheck, lint, build, design inspection and valid
+independent review remain pending. No production promotion is made.

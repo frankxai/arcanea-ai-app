@@ -6,6 +6,7 @@ import {
   type VoiceRecovery,
 } from "@/lib/voice/customer-credentials";
 import Image from "next/image";
+import styles from "@arcanea/design-system/companion.module.css";
 import Link from "next/link";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
@@ -139,13 +140,13 @@ function CompactModelPicker({
         aria-expanded={open}
         aria-haspopup="listbox"
         className="flex items-center gap-1.5 px-2.5 py-1 min-h-[44px] rounded-lg text-[11px] font-medium transition-all duration-200
-          border border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/[0.04] text-white/50 hover:text-white/70
+          border border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/[0.04] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)]
           focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
       >
         <ProviderLogo provider={selected.provider} size={16} />
         <span>{selected.shortName}</span>
         <PhCaretDown
-          className={`w-3 h-3 text-white/30 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`w-3 h-3 text-[var(--arc-text-secondary)] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -162,7 +163,7 @@ function CompactModelPicker({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search models..."
-              className="w-full px-3 py-2 text-xs bg-white/[0.04] border border-white/[0.06] rounded-lg text-white/80 placeholder-white/25 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
+              className="w-full px-3 py-2 text-xs bg-white/[0.04] border border-white/[0.06] rounded-lg text-[var(--arc-text-primary)] placeholder:text-[var(--arc-text-secondary)] focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
                   setOpen(false);
@@ -187,8 +188,8 @@ function CompactModelPicker({
                     style={{ backgroundColor: tierColor(tier) }}
                   />
                   <span
-                    className="text-[10px] font-semibold uppercase tracking-wider"
-                    style={{ color: `${tierColor(tier)}90` }}
+                    className="text-[10px] font-semibold"
+                    style={{ color: tierColor(tier) }}
                   >
                     {TIER_META[tier]?.label}
                   </span>
@@ -209,7 +210,7 @@ function CompactModelPicker({
                     className={`w-full text-left px-3 py-2 flex items-center gap-2.5 rounded-lg transition-all duration-150 ${
                       model.id === value
                         ? "bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/10 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.15)]"
-                        : "text-white/60 hover:bg-white/[0.04] hover:text-white/80"
+                        : "text-[var(--arc-text-secondary)] hover:bg-white/[0.04] hover:text-[var(--arc-text-primary)]"
                     }`}
                   >
                     <ProviderLogo provider={model.provider} size={20} />
@@ -217,7 +218,7 @@ function CompactModelPicker({
                       {model.shortName}
                     </span>
                     {model.tokensPerSecond && (
-                      <span className="text-[9px] text-white/20 font-mono">
+                      <span className="text-[9px] text-[var(--arc-text-secondary)] font-mono">
                         {model.tokensPerSecond}t/s
                       </span>
                     )}
@@ -227,7 +228,7 @@ function CompactModelPicker({
             ))}
 
             {grouped.length === 0 && (
-              <div className="px-4 py-6 text-center text-xs text-white/25">
+              <div className="px-4 py-6 text-center text-xs text-[var(--arc-text-secondary)]">
                 No models match &ldquo;{search}&rdquo;
               </div>
             )}
@@ -277,16 +278,15 @@ function ToolToggle({
           disabled
             ? "opacity-30 cursor-not-allowed"
             : active
-              ? `border text-white/90 shadow-[0_0_16px_${color}30,inset_0_1px_0_${color}20]`
-              : "bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06] hover:border-white/[0.1]"
+              ? "border text-[var(--arc-text-primary)]"
+              : "bg-white/[0.03] border border-white/[0.06] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.06] hover:border-white/[0.1]"
         }`}
         style={
           active
             ? {
-                background: `linear-gradient(135deg, ${color}20, ${color}08)`,
-                borderColor: `${color}50`,
-                color: color,
-                boxShadow: `0 0 16px ${color}25, inset 0 1px 0 ${color}15`,
+                background: `color-mix(in srgb, ${color} 12%, var(--arc-cosmic-surface))`,
+                borderColor: color,
+                color: "var(--arc-text-primary)",
               }
             : undefined
         }
@@ -297,7 +297,7 @@ function ToolToggle({
         )}
       </button>
       {tooltip && !active && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[var(--arc-cosmic-void)] text-white/70 text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[var(--arc-cosmic-void)] text-[var(--arc-text-secondary)] text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
           {tooltip}
         </div>
       )}
@@ -361,7 +361,7 @@ function ToolsPopover({
         className={`flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
           activeCount > 0
             ? "bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)]"
-            : "bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06]"
+            : "bg-white/[0.03] border border-white/[0.06] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.06]"
         }`}
         aria-label={`Tools (${activeCount} selected)`}
         aria-expanded={open}
@@ -379,7 +379,7 @@ function ToolsPopover({
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute bottom-full left-0 mb-2 w-64 rounded-xl bg-[var(--arc-cosmic-void)] border border-white/[0.08] shadow-2xl z-50 py-2">
-            <p className="px-3 py-1 text-xs font-semibold text-white/60">
+            <p className="px-3 py-1 text-xs font-semibold text-[var(--arc-text-secondary)]">
               Tool availability
             </p>
             {tools.map((t) => {
@@ -401,24 +401,24 @@ function ToolsPopover({
                     style={
                       active
                         ? {
-                            backgroundColor: `${t.color}15`,
-                            borderColor: `${t.color}40`,
+                            backgroundColor: `color-mix(in srgb, ${t.color} 12%, var(--arc-cosmic-surface))`,
+                            borderColor: t.color,
                             color: t.color,
                           }
                         : {
-                            backgroundColor: "rgba(255,255,255,0.03)",
-                            borderColor: "rgba(255,255,255,0.06)",
-                            color: "rgba(255,255,255,0.3)",
+                            backgroundColor: "var(--arc-cosmic-surface)",
+                            borderColor: "var(--arc-cosmic-border-bright)",
+                            color: "var(--arc-text-secondary)",
                           }
                     }
                   >
                     <Icon className="w-3.5 h-3.5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-white/80">
+                    <p className="text-xs font-medium text-[var(--arc-text-primary)]">
                       {t.label}
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-[var(--arc-text-secondary)]">
                       {active ? "Turn off to continue with text chat" : t.desc}
                     </p>
                   </div>
@@ -1066,7 +1066,7 @@ function ChatInputBarSession({
       {/* Validation toast */}
       {validationToast && (
         <div className="absolute -top-12 left-4 right-4 flex items-center justify-center z-20">
-          <div className="px-3 py-1.5 rounded-lg bg-red-500/90 text-white text-xs font-medium shadow-lg backdrop-blur-sm flex items-center gap-2">
+          <div className="px-3 py-1.5 rounded-lg bg-red-500/90 text-[var(--arc-text-primary)] text-xs font-medium shadow-lg backdrop-blur-sm flex items-center gap-2">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
               <circle
                 cx="8"
@@ -1099,30 +1099,7 @@ function ChatInputBarSession({
         </div>
       )}
 
-      <div
-        className="relative rounded-2xl backdrop-blur-xl transition-all duration-300 group/input"
-        style={{
-          background: message.trim()
-            ? "linear-gradient(135deg, rgba(13,13,20,0.92), rgba(0,30,40,0.88))"
-            : "linear-gradient(135deg, rgba(13,13,20,0.85), rgba(16,16,26,0.85))",
-          boxShadow: message.trim()
-            ? "0 0 40px rgba(0,188,212,0.1), 0 0 80px rgba(0,188,212,0.04), inset 0 1px 0 rgba(255,255,255,0.04)"
-            : "0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.03)",
-        }}
-      >
-        {/* Gradient border overlay */}
-        <div
-          className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
-          style={{
-            padding: "1px",
-            background: message.trim()
-              ? "linear-gradient(135deg, rgba(0,188,212,0.4), rgba(13,71,161,0.3), rgba(0,137,123,0.4))"
-              : "linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04), rgba(255,255,255,0.06))",
-            mask: "linear-gradient(var(--arc-text-primary) 0 0) content-box, linear-gradient(var(--arc-text-primary) 0 0)",
-            maskComposite: "exclude",
-            WebkitMaskComposite: "xor",
-          }}
-        />
+      <div className={styles.inputSurface} data-chat-composer>
         {/* Attachment preview */}
         {attachments.length > 0 && (
           <div className="flex gap-2 px-4 pt-3 pb-1 flex-wrap">
@@ -1140,25 +1117,25 @@ function ChatInputBarSession({
                   />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-1">
-                    <PhPaperclip className="w-4 h-4 text-white/30" />
-                    <span className="text-[8px] text-white/30 truncate max-w-[56px] px-1">
+                    <PhPaperclip className="w-4 h-4 text-[var(--arc-text-secondary)]" />
+                    <span className="text-[8px] text-[var(--arc-text-secondary)] truncate max-w-[56px] px-1">
                       {file.name}
                     </span>
                   </div>
                 )}
                 {/* Filename + size overlay on hover */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/attach:opacity-100 transition-opacity rounded-lg flex flex-col items-center justify-center p-1">
-                  <span className="text-[9px] text-white/80 truncate max-w-full">
+                  <span className="text-[9px] text-[var(--arc-text-primary)] truncate max-w-full">
                     {file.name}
                   </span>
-                  <span className="text-[8px] text-white/40">
+                  <span className="text-[8px] text-[var(--arc-text-secondary)]">
                     {formatFileSize(file.size)}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => removeAttachment(i)}
-                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white opacity-0 group-hover/attach:opacity-100 transition-opacity z-10"
+                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)] opacity-0 group-hover/attach:opacity-100 transition-opacity z-10"
                   aria-label={`Remove ${file.name}`}
                 >
                   <PhX className="w-3 h-3" />
@@ -1228,7 +1205,7 @@ function ChatInputBarSession({
             aria-label="Message input"
             disabled={isStreaming}
             rows={1}
-            className="w-full px-4 py-3 pr-20 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none focus:shadow-[0_0_12px_rgba(0,188,212,0.1)] disabled:opacity-40 text-[15px] rounded-2xl transition-shadow"
+            className="w-full px-4 py-3 pr-20 bg-transparent text-[var(--arc-text-primary)] placeholder:text-[var(--arc-text-secondary)] resize-none focus:outline-none disabled:opacity-40 text-base rounded-2xl"
             style={{ minHeight: "52px", maxHeight: "200px" }}
           />
 
@@ -1242,8 +1219,8 @@ function ChatInputBarSession({
                   onClick={startRecording}
                   className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
                     message.trim()
-                      ? "text-white/20 hover:text-[var(--arc-brand-atlantean-teal)]/70 hover:bg-[var(--arc-brand-atlantean-teal)]/5"
-                      : "text-white/30 hover:text-white/60 hover:bg-white/[0.04]"
+                      ? "text-[var(--arc-text-secondary)] hover:text-[var(--arc-brand-atlantean-teal)]/70 hover:bg-[var(--arc-brand-atlantean-teal)]/5"
+                      : "text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.04]"
                   }`}
                   aria-label={
                     voiceAutoSend
@@ -1274,7 +1251,9 @@ function ChatInputBarSession({
                         className={`absolute top-0.5 w-2.5 h-2.5 rounded-full bg-white transition-transform ${voiceAutoSend ? "translate-x-3" : "translate-x-0.5"}`}
                       />
                     </span>
-                    <span className="text-white/50">Auto-send</span>
+                    <span className="text-[var(--arc-text-secondary)]">
+                      Auto-send
+                    </span>
                   </button>
                 </div>
               </div>
@@ -1285,7 +1264,7 @@ function ChatInputBarSession({
               <button
                 type="button"
                 onClick={onStop}
-                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center bg-white/10 text-white/70 hover:bg-white/15 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center bg-white/10 text-[var(--arc-text-secondary)] hover:bg-white/15 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
                 aria-label="Stop generating"
               >
                 <svg
@@ -1304,12 +1283,12 @@ function ChatInputBarSession({
                 disabled={!canSend}
                 className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
                   canSend
-                    ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_0_16px_rgba(0,188,212,0.35),0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_0_24px_rgba(0,188,212,0.5),0_4px_12px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95"
-                    : "bg-white/[0.04] text-white/20"
+                    ? styles.sendAction
+                    : "bg-white/[0.04] text-[var(--arc-text-secondary)]"
                 }`}
                 aria-label="Send message"
               >
-                <PhPaperPlane className="w-4 h-4 text-white" />
+                <PhPaperPlane className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -1320,7 +1299,9 @@ function ChatInputBarSession({
           <div className="px-4 pb-1" role="status" aria-live="polite">
             <span
               className={`text-[10px] ${
-                isNearLimit ? "text-orange-400" : "text-white/20"
+                isNearLimit
+                  ? "text-[var(--arc-fire)]"
+                  : "text-[var(--arc-text-secondary)]"
               }`}
             >
               {charCount} / {MAX_CHARS}
@@ -1346,7 +1327,7 @@ function ChatInputBarSession({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-white/40 hover:text-white/60 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+              className="flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
               aria-label="Attach file"
               title="Attach file"
             >
@@ -1361,7 +1342,7 @@ function ChatInputBarSession({
           </div>
 
           {/* Keyboard hints */}
-          <span className="text-[10px] text-white/15 hidden sm:inline">
+          <span className="text-[10px] text-[var(--arc-text-secondary)] hidden sm:inline">
             ⏎ Send · ⇧⏎ New line
           </span>
           <div className="sr-only" role="note">
