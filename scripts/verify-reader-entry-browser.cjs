@@ -77,6 +77,32 @@ async function readChapter(page, href, text) {
   });
 }
 
+async function recoverMissingChapter(page, href, mode, capture) {
+  const response = await page.goto(base + href);
+  const status = response?.status() ?? null;
+  // Next may have sent a streamed 200 before its notFound boundary renders.
+  assert.ok(status === 404 || status === 200, "Missing chapter response");
+  await expect(page.getByRole("article")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Chapter unavailable", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.locator('meta[name="robots"][content*="noindex"]').first(),
+  ).toHaveAttribute("content", /noindex/);
+  const link = page.getByRole("link", { name: "Browse books", exact: true });
+  await expect(link).toHaveAttribute("href", "/books");
+  if (capture) await page.screenshot({ path: `${output}/${capture}` });
+  if (mode.hasTouch) await link.tap();
+  else {
+    await link.focus();
+    await expect(link).toBeFocused();
+    await link.press("Enter");
+  }
+  await expect(page).toHaveURL(base + "/books");
+  await expect(page.locator("#multiverse:visible")).toHaveCount(1);
+  return { href, status, recoveredTo: "/books", passed: true };
+}
+
 (async () => {
   await fs.mkdir(output, { recursive: true });
   const event = process.env.GITHUB_EVENT_PATH
@@ -90,6 +116,7 @@ async function readChapter(page, href, text) {
     runAttempt: process.env.GITHUB_RUN_ATTEMPT || null,
     browser: null,
     modes: [],
+    initialDocuments: [],
     passed: false,
     errors: [],
     scope:
@@ -110,6 +137,57 @@ async function readChapter(page, href, text) {
     assert.ok(ready, "Built app did not become ready");
     browser = await chromium.launch();
     evidence.browser = browser.version();
+    for (const mode of modes.slice(0, 2)) {
+      const context = await browser.newContext({
+        javaScriptEnabled: false,
+        viewport: mode.viewport,
+        hasTouch: mode.hasTouch,
+        isMobile: mode.isMobile || false,
+      });
+      const record = {
+        mode: mode.name,
+        javaScriptEnabled: false,
+        entries: [],
+        recovery: [],
+        screenshots: [],
+      };
+      evidence.initialDocuments.push(record);
+      try {
+        const page = await context.newPage();
+        page.setDefaultTimeout(15000);
+        for (const entry of entries) {
+          const chapter = { href: entry.href, passed: false };
+          record.entries.push(chapter);
+          const response = await page.goto(base + entry.href);
+          chapter.status = response?.status() ?? null;
+          assert.ok(response?.ok(), "Initial chapter request must succeed");
+          chapter.layout = await readChapter(page, entry.href, entry.text);
+          assert.ok(
+            chapter.layout.left >= -1 &&
+              chapter.layout.right <= chapter.layout.viewportWidth + 1,
+            "Initial chapter article fits viewport",
+          );
+          chapter.passed = true;
+          if (entry === entries[0]) {
+            const capture = `${mode.name}-initial-reader.png`;
+            await page.screenshot({ path: `${output}/${capture}` });
+            record.screenshots.push(capture);
+          }
+        }
+        for (const href of [
+          "/books/forge-of-ruin/not-a-real-chapter",
+          "/books/not-a-real-book/not-a-real-chapter",
+        ]) {
+          const capture = `${mode.name}-initial-missing-${record.recovery.length}.png`;
+          record.screenshots.push(capture);
+          record.recovery.push(
+            await recoverMissingChapter(page, href, mode, capture),
+          );
+        }
+      } finally {
+        await context.close();
+      }
+    }
     for (const mode of modes) {
       const context = await browser.newContext({
         viewport: mode.viewport,
@@ -222,6 +300,14 @@ async function readChapter(page, href, text) {
         ).toHaveAttribute("content", /noindex/);
         await page.goBack();
         await readChapter(page, entries[0].href, entries[0].text);
+        const missingImage = `${mode.name}-missing.png`;
+        record.screenshots.push(missingImage);
+        record.recoveryLink = await recoverMissingChapter(
+          page,
+          "/books/forge-of-ruin/not-a-real-chapter",
+          mode,
+          missingImage,
+        );
         record.recovery = true;
       } finally {
         await context.close();
