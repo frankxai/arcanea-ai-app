@@ -3,16 +3,9 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import ChatMarkdown from "@/components/chat/chat-markdown";
 import { useRouter } from "next/navigation";
 import { ReadingToolbar } from "./reading-toolbar";
-
-const ChatMarkdown = dynamic(() => import("@/components/chat/chat-markdown"), {
-  ssr: false,
-  loading: () => (
-    <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />
-  ),
-});
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */

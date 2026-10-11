@@ -194,7 +194,7 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
 
       - name: Verify account favorites and private image recovery
-        run: pnpm --dir apps/web exec tsx --test lib/imagine/__tests__/favorites.test.ts lib/imagine/__tests__/private-assets.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/imagine/__tests__/favorites.test.ts lib/imagine/__tests__/private-assets.test.ts lib/imagine/__tests__/hydration.test.ts
 
       - name: Verify customer voice credentials, privacy and recovery
         run: |

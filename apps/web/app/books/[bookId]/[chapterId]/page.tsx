@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { readdir, readFile } from "fs/promises";
 import { join } from "path";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import matter from "gray-matter";
 import { ChapterReader } from "@/components/saga/chapter-reader";
@@ -13,6 +12,7 @@ import {
   isChapterMarkdown,
 } from "@/lib/saga/chapter-files";
 import { isBookPublic } from "@/lib/content/book-visibility";
+import ChapterNotFound from "./not-found";
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = "force-dynamic";
@@ -151,8 +151,8 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
 }
 
 async function loadChapter(bookId: string, chapterId: string) {
+  if (!Object.hasOwn(BOOK_META, bookId)) return null;
   const bookMeta = BOOK_META[bookId];
-  if (!bookMeta) return null;
   if (!(await isBookPublic(bookMeta.dir))) return null;
 
   const chapters = await getChapterFiles(bookMeta.dir);
@@ -213,7 +213,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { bookId, chapterId } = await params;
   const chapter = await loadChapter(bookId, chapterId);
-  if (!chapter) return { title: "Chapter Not Found" };
+  if (!chapter) return { title: "Chapter Not Found", robots: { index: false } };
 
   return {
     title: `${chapter.title} -- ${chapter.bookTitle} -- The Arcanea Saga`,
@@ -232,7 +232,8 @@ export async function generateMetadata({
 export default async function ChapterPage({ params }: PageProps) {
   const { bookId, chapterId } = await params;
   const chapter = await loadChapter(bookId, chapterId);
-  if (!chapter) notFound();
+  // Keep address recovery in the server HTML when the app bundle cannot load.
+  if (!chapter) return <ChapterNotFound />;
 
   return (
     <ChapterReader

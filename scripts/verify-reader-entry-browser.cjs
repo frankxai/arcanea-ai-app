@@ -66,6 +66,10 @@ async function readChapter(page, href, text) {
   return article.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     const style = getComputedStyle(element);
+    let effectiveOpacity = 1;
+    for (let ancestor = element; ancestor; ancestor = ancestor.parentElement) {
+      effectiveOpacity *= Number(getComputedStyle(ancestor).opacity);
+    }
     return {
       width: rect.width,
       left: rect.left,
@@ -73,8 +77,36 @@ async function readChapter(page, href, text) {
       viewportWidth: innerWidth,
       fontSize: style.fontSize,
       textCharacters: element.innerText.length,
+      effectiveOpacity,
     };
   });
+}
+
+async function recoverMissingChapter(page, href, mode, capture) {
+  const response = await page.goto(base + href);
+  const status = response?.status() ?? null;
+  if (capture) await page.screenshot({ path: `${output}/${capture}` });
+  // Next may have sent a streamed 200 before its notFound boundary renders.
+  assert.ok(status === 404 || status === 200, "Missing chapter response");
+  await expect(page.getByRole("article")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Chapter unavailable", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.locator('meta[name="robots"][content*="noindex"]').first(),
+  ).toHaveAttribute("content", /noindex/);
+  const link = page.getByRole("link", { name: "Browse books", exact: true });
+  await expect(link).toHaveAttribute("href", "/books");
+  if (capture) await page.screenshot({ path: `${output}/${capture}` });
+  if (mode.hasTouch) await link.tap();
+  else {
+    await link.focus();
+    await expect(link).toBeFocused();
+    await link.press("Enter");
+  }
+  await expect(page).toHaveURL(base + "/books");
+  await expect(page.locator("#multiverse:visible")).toHaveCount(1);
+  return { href, status, recoveredTo: "/books", passed: true };
 }
 
 (async () => {
@@ -90,6 +122,7 @@ async function readChapter(page, href, text) {
     runAttempt: process.env.GITHUB_RUN_ATTEMPT || null,
     browser: null,
     modes: [],
+    initialDocuments: [],
     passed: false,
     errors: [],
     scope:
@@ -110,6 +143,94 @@ async function readChapter(page, href, text) {
     assert.ok(ready, "Built app did not become ready");
     browser = await chromium.launch();
     evidence.browser = browser.version();
+    for (const mode of modes.slice(0, 2)) {
+      const context = await browser.newContext({
+        javaScriptEnabled: true,
+        viewport: mode.viewport,
+        hasTouch: mode.hasTouch,
+        isMobile: mode.isMobile || false,
+      });
+      const record = {
+        mode: mode.name,
+        javaScriptEnabled: true,
+        appBundlesBlocked: true,
+        blockedAppScripts: [],
+        errors: [],
+        entries: [],
+        recovery: [],
+        screenshots: [],
+      };
+      evidence.initialDocuments.push(record);
+      // React's inline streaming script reveals server HTML before hydration.
+      // Deny every Next bundle so client rendering cannot produce the prose.
+      await context.route(/\/_next\/static\/.*\.js(?:\?.*)?$/, (route) => {
+        record.blockedAppScripts.push(new URL(route.request().url()).pathname);
+        return route.abort("blockedbyclient");
+      });
+      try {
+        const page = await context.newPage();
+        page.on("pageerror", (error) => record.errors.push(error.message));
+        page.setDefaultTimeout(15000);
+        for (const entry of entries) {
+          const chapter = { href: entry.href, passed: false };
+          record.entries.push(chapter);
+          const response = await page.goto(base + entry.href);
+          chapter.status = response?.status() ?? null;
+          assert.ok(response?.ok(), "Initial chapter request must succeed");
+          chapter.documentArticles = await page
+            .locator("article")
+            .evaluateAll((articles) =>
+              articles.map((article) => ({
+                textCharacters: article.textContent?.length ?? 0,
+                hiddenByAncestor: Boolean(article.closest("[hidden]")),
+              })),
+            );
+          if (entry === entries[0]) {
+            const capture = `${mode.name}-initial-reader.png`;
+            await page.screenshot({ path: `${output}/${capture}` });
+            record.screenshots.push(capture);
+          }
+          chapter.layout = await readChapter(page, entry.href, entry.text);
+          assert.ok(
+            record.blockedAppScripts.length > 0,
+            "App bundles were denied",
+          );
+          assert.ok(
+            chapter.layout.effectiveOpacity > 0.99,
+            "Chapter prose is opaque",
+          );
+          assert.ok(
+            chapter.layout.left >= -1 &&
+              chapter.layout.right <= chapter.layout.viewportWidth + 1,
+            "Pre-hydration chapter article fits viewport",
+          );
+          if (entry === entries[0]) {
+            await page.screenshot({
+              path: `${output}/${mode.name}-initial-reader.png`,
+            });
+          }
+          chapter.passed = true;
+        }
+        for (const href of [
+          "/books/forge-of-ruin/not-a-real-chapter",
+          "/books/not-a-real-book/not-a-real-chapter",
+          "/books/__proto__/not-a-real-chapter",
+        ]) {
+          const capture = `${mode.name}-initial-missing-${record.recovery.length}.png`;
+          record.screenshots.push(capture);
+          record.recovery.push(
+            await recoverMissingChapter(page, href, mode, capture),
+          );
+        }
+        assert.deepEqual(
+          record.errors,
+          [],
+          "Pre-hydration reading has no page errors",
+        );
+      } finally {
+        await context.close();
+      }
+    }
     for (const mode of modes) {
       const context = await browser.newContext({
         viewport: mode.viewport,
@@ -222,6 +343,14 @@ async function readChapter(page, href, text) {
         ).toHaveAttribute("content", /noindex/);
         await page.goBack();
         await readChapter(page, entries[0].href, entries[0].text);
+        const missingImage = `${mode.name}-missing.png`;
+        record.screenshots.push(missingImage);
+        record.recoveryLink = await recoverMissingChapter(
+          page,
+          "/books/forge-of-ruin/not-a-real-chapter",
+          mode,
+          missingImage,
+        );
         record.recovery = true;
       } finally {
         await context.close();

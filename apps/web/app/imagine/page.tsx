@@ -3,7 +3,14 @@
 
 import { useAuth } from "@/lib/auth/context";
 import { requestImages, requestAnimation } from "@/lib/imagine/request";
-import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+  useSyncExternalStore,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import Link from "next/link";
@@ -124,10 +131,21 @@ interface GenerationRow {
 // Page
 // ---------------------------------------------------------------------------
 
+const subscribeHydration = () => () => {};
+const clientHydrated = () => true;
+const serverHydrated = () => false;
+
 export default function ImaginePage() {
   const { credentialScope } = useAuth();
+  // Auth may resolve before this streamed page hydrates. Keep its first
+  // document identical to the server, then use the current account scope.
+  const hydrated = useSyncExternalStore(
+    subscribeHydration,
+    clientHydrated,
+    serverHydrated,
+  );
   const token = credentialScope.get();
-  if (token.actor === null)
+  if (!hydrated || token.actor === null)
     return (
       <p role="status" className="text-sm text-white/70">
         Loading your workspace…
