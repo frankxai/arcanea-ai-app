@@ -23,7 +23,7 @@ REPOSITORY = "frankxai/arcanea-ai-app"
 BRANCH = "agent/codex/provider-account-20261011"
 MODEL = "nvidia/nemotron-3.5-lightning:free"
 GATEWAY = "https://api.kilo.ai/api/gateway"
-MAX_OUTPUT = 12000
+MAX_OUTPUT = 24000
 CONTEXTS = (
     "AGENTS.md", "TASTE.md", "DESIGN.md",
     ".arcanea/prompts/luminor-engineering-kernel.md",
@@ -273,6 +273,18 @@ def request_for(name, head, base, manifest, content, hashes, delta):
     return json.dumps(request, ensure_ascii=False).encode("utf-8")
 
 
+def parse_response(result):
+    require(result.get("model") in {MODEL, MODEL.removesuffix(":free")}, "Response model mismatch")
+    choices = result.get("choices")
+    require(isinstance(choices, list) and len(choices) == 1, "Ambiguous review response")
+    choice = choices[0]
+    require(choice.get("finish_reason") == "stop" and not choice["message"].get("tool_calls"),
+            "Incomplete or tool-bearing review")
+    text = choice["message"].get("content")
+    require(isinstance(text, str) and bool(text.strip()), "Empty review response")
+    return json.loads(re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip()).strip())
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--head", required=True)
@@ -353,16 +365,12 @@ def main():
             receipt["modules"].append(module)
             receipt.update(state="dispatched", providerCalls=receipt["providerCalls"] + 1)
             save_receipt()
-            raw = network(f"{GATEWAY}/chat/completions", encoded, timeout=180)
+            raw = network(f"{GATEWAY}/chat/completions", encoded, timeout=240)
             (out / f"{name}-response.json").write_bytes(raw)
             result = json.loads(raw)
             module.update(actualModel=result.get("model"), responseSha256=sha(raw), usage=result.get("usage"))
-            require(result.get("model") in {MODEL, MODEL.removesuffix(":free")}, "Response model mismatch")
-            choice = result["choices"][0]
-            require(choice.get("finish_reason") == "stop" and not choice["message"].get("tool_calls"),
-                    "Incomplete or tool-bearing review")
-            text = re.sub(r"^```(?:json)?\s*|\s*```$", "", choice["message"]["content"].strip()).strip()
-            review = json.loads(text)
+            module["finishReason"] = result.get("choices", [{}])[0].get("finish_reason")
+            review = parse_response(result)
             (out / f"{name}-review-unvalidated.json").write_text(json.dumps(review, indent=2) + "\n", encoding="utf-8")
             validate(review, args.head, args.base, module_manifests[name], module_content)
             usage = result.get("usage", {})

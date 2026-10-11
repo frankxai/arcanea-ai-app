@@ -97,7 +97,7 @@ jobs:
     # provider secrets are made available; forks and other lanes do not dispatch.
     if: github.event_name == 'pull_request' && github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'agent/codex/provider-account-20261011'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 18
     env:
       REVIEW_HEAD: ${{ github.event.pull_request.head.sha }}
       REVIEW_BASE: ${{ github.event.pull_request.base.sha }}

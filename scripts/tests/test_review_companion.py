@@ -128,6 +128,20 @@ class ReviewAdmission(unittest.TestCase):
             with self.assertRaises(REVIEW.Denied):
                 REVIEW.modules(paths, data)
 
+    def test_truncated_empty_tool_and_wrong_model_responses_cannot_be_accepted(self):
+        valid = {"model": REVIEW.MODEL, "choices": [{"finish_reason": "stop", "message": {
+            "content": json.dumps(self.valid_review())}}]}
+        self.assertEqual(REVIEW.parse_response(valid), self.valid_review())
+        for update in ({"finish_reason": "length"},
+                       {"message": {"content": ""}},
+                       {"message": {"content": json.dumps(self.valid_review()), "tool_calls": [{}]}}):
+            invalid = copy.deepcopy(valid)
+            invalid["choices"][0].update(update)
+            with self.subTest(update=update), self.assertRaises(REVIEW.Denied):
+                REVIEW.parse_response(invalid)
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.parse_response({**valid, "model": "different/model"})
+
     def test_unadmitted_actor_does_not_access_public_or_provider_network(self):
         with patch.dict(REVIEW.os.environ, {"GITHUB_ACTIONS": "true", "GITHUB_ACTOR": "other"}, clear=True), \
              patch.object(REVIEW.sys, "argv", [str(SCRIPT), "--head", HEAD, "--base", BASE, "--pull-request", "591"]), \

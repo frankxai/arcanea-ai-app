@@ -218,3 +218,17 @@ Fresh hosted module results are still required. Application source is unchanged
 by this protocol refinement, but the new candidate requires fresh revision-bound
 checks. No customer, paid provider, production migration or whole-product success
 is established by these fixtures.
+
+At `e2996a7087535fdd159cf005095e460ff8f0dbf2`, CI38163275690 and
+Reading38163275706 pass, as does the compiled Companion job38163275611.
+The experience review stops at finish_reason=length: all12000 output tokens were
+reasoning tokens, with zero final content. That attempt reports cost0, has no
+valid verdict and remains in the retained artifact. Other modules did not dispatch.
+The output allowance now includes24000 reasoning/visible tokens, each call has a
+240-second bound and the three-module job has an18-minute bound. This preserves
+reasoning, the complete source, exact quotes/coverage and truncation refusal.
+The documented combined reasoning/output budget behavior was checked at
+https://openrouter.ai/docs/guides/best-practices/reasoning-tokens ; Kilo/model
+behavior remains subject to actual response evidence. Nine no-network cases pass,
+including the actual parser's denial of empty, truncated, tool-bearing and wrong
+model responses. No source verdict or production promotion is claimed.
