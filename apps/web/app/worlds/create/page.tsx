@@ -534,6 +534,7 @@ export default function CreateWorldPage() {
         setSaving(false);
         setImageLoading(false);
         setEditingDraft(false);
+        setDraftHasChanges(false);
         setLegacyConcept(null);
         setRefining(false);
         setPhase("input");
@@ -948,6 +949,7 @@ export default function CreateWorldPage() {
   };
 
   const handleRefine = (suffix: string) => {
+    if (saving || imageLoading || editingDraft) return;
     setRefining(false);
     generate(description, suffix);
   };
@@ -1011,7 +1013,13 @@ export default function CreateWorldPage() {
   };
 
   const restorePrevious = () => {
-    if (!previousDraft || saving || imageLoading || phase === "generating")
+    if (
+      !previousDraft ||
+      saving ||
+      imageLoading ||
+      editingDraft ||
+      phase === "generating"
+    )
       return;
     const restored = draftResult(previousDraft.world, previousDraft.draft_id);
     const restoredImage = previousHeroImage;
@@ -1220,7 +1228,12 @@ export default function CreateWorldPage() {
             {previousDraft && previousDraft.draft_id !== result?.draft_id && (
               <button
                 onClick={restorePrevious}
-                disabled={saving || imageLoading || phase === "generating"}
+                disabled={
+                  saving ||
+                  imageLoading ||
+                  editingDraft ||
+                  phase === "generating"
+                }
                 className="mb-6 rounded-lg border border-white/20 px-4 py-3 text-sm disabled:opacity-50"
               >
                 Restore previous draft
@@ -1640,6 +1653,9 @@ export default function CreateWorldPage() {
                               <button
                                 key={suffix}
                                 onClick={() => handleRefine(suffix)}
+                                disabled={
+                                  saving || imageLoading || editingDraft
+                                }
                                 className="px-4 py-2 rounded-full text-[13px] text-[var(--arc-brand-arcanean-gold)]/50 hover:text-[var(--arc-brand-arcanean-gold)]/80 bg-[var(--arc-brand-arcanean-gold)]/[0.03] hover:bg-[var(--arc-brand-arcanean-gold)]/[0.08] border border-[var(--arc-brand-arcanean-gold)]/10 hover:border-[var(--arc-brand-arcanean-gold)]/30 transition-colors duration-300"
                               >
                                 {suffix}

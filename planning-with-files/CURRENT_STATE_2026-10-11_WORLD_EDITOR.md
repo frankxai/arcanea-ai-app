@@ -9,8 +9,8 @@ Base: `a131c1e9dfa2a2e6b8d93e1be4bd32c43794afc1`.
 Owning work: existing programme #276, creator outcome #191 and release #427.
 
 Files: apps/web/components/worlds/world-draft-editor.tsx,
-apps/web/app/worlds/create/page.tsx (dirty-state relay and existing leave warning
-only), scripts/verify-world-draft-browser.cjs and this record.
+apps/web/app/worlds/create/page.tsx (dirty-state relay, existing leave warning and
+restore/refine guards), scripts/verify-world-draft-browser.cjs and this record.
 
 User job: revise the complete world, including its later characters and locations,
 without searching a single long form or silently discarding unfinished fields.
@@ -56,9 +56,14 @@ must apply or download work before leaving. No guarantee of full tab-loss recove
 is made. Existing applied-draft recovery remains authoritative.
 
 The existing parent owns the single beforeunload listener and the explicit Worlds
-back-link confirmation. The editor reports dirty state through a stable setter;
+back-link confirmation. The editor reports dirty state through a stable setter,
+clears it on unmount and resets it in the existing account-reset lifecycle;
 open-editor state still blocks saving, export and regeneration. No second unload
 listener is introduced. The parent's existing large file is not rewritten.
+The restore action and already-open refinement choices now share that edit guard.
+Absent and empty optional backstory/location text are equivalent only for dirty
+tracking; downloads still preserve the actual whole buffer. Repeated download
+failures restore error focus. No account or authentication authority is changed.
 
 ## Acceptance and verification
 
@@ -68,6 +73,10 @@ complete working-copy bytes without changing storage/export authority; download
 failure and retry with the buffer retained; cancelled
 discard; cancelled reload; confirmed discard and returned focus; reversed-input
 warning cleanup; applied edit/reload; exact JSON export and existing recovery.
+Tab traversal, actual header bounds, optional-field reversal, immediate cleanup
+after apply/cancel, repeated download failure and disabled restore/refine choices
+are authored checks. Dirty account-reset/unmount behavior has source cleanup;
+this anonymous fixture does not prove an authenticated account transition.
 Retain zero model requests and no unexpected runtime errors. The new modes and
 editor captures require actual hosted execution; authored coverage is not a pass.
 
@@ -101,6 +110,15 @@ Older Node 20, Higgsfield, 16 percent disk and foreign-primary writing instructi
 are superseded by the current user/runtime/machine contracts. The foreign primary
 and its dirty work remain untouched. Routing and exclusive ownership passed;
 claims record hashes and ownership, not runtime compliance.
+
+Independent v0 Max review of ada7f61 returned STATIC WARN. Its five reviewed
+attachments and supplied hashes are retained privately. It had no base checkout,
+executed no tests and viewed no candidate screenshots. The candidate refinements
+address its dirty-unmount, optional reversal, repeated-error focus and controlled
+dialog assertions, strengthen actual Tab/header checks and protect the inherited
+restore/refine holes. The revised source needs a fresh review with the base diff.
+Reported review usage: 0.0006 plan credits; mission total 0.0028, zero on-demand.
+These provider units do not establish an observed dollar conversion or balance.
 
 Rollback: revert only this component/test slice through a reviewed PR. No database
 migration or user-data rewrite is involved. Preserve working-copy files, prior

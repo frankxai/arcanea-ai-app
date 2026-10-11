@@ -7,6 +7,20 @@ function replace<T>(items: T[], index: number, patch: Partial<T>): T[] {
   return items.map((item, i) => (i === index ? { ...item, ...patch } : item));
 }
 
+function comparableDraft(world: WorldDraft): string {
+  return JSON.stringify({
+    ...world,
+    characters: world.characters.map(({ backstory, ...character }) => ({
+      ...character,
+      backstory: backstory ?? "",
+    })),
+    locations: world.locations.map(({ description, ...location }) => ({
+      ...location,
+      description: description ?? "",
+    })),
+  });
+}
+
 function EditGroup({
   id,
   title,
@@ -54,7 +68,7 @@ export function WorldDraftEditor({
   const wasEditing = useRef(false);
   const editorOpen = editing !== null;
   const hasChanges =
-    editing !== null && JSON.stringify(editing) !== JSON.stringify(world);
+    editing !== null && comparableDraft(editing) !== comparableDraft(world);
 
   useEffect(() => {
     if (editorOpen) {
@@ -73,6 +87,8 @@ export function WorldDraftEditor({
   useEffect(() => {
     onDirtyChange(hasChanges);
   }, [hasChanges, onDirtyChange]);
+
+  useEffect(() => () => onDirtyChange(false), [onDirtyChange]);
 
   if (!editing) {
     return (
@@ -411,6 +427,7 @@ export function WorldDraftEditor({
                       setError(
                         "The working copy could not be downloaded. Your edits remain on this page.",
                       );
+                      errorMessage.current?.focus();
                     } finally {
                       if (url) URL.revokeObjectURL(url);
                     }

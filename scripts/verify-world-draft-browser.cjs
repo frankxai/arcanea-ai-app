@@ -103,6 +103,22 @@ const draft = {
       const choice = page.getByRole("region", { name: "Choose your draft" });
       const readStorage = (key) =>
         page.evaluate((key) => sessionStorage.getItem(key), key);
+      const reloadWithoutWarning = async (label) => {
+        let warned = false;
+        let resolution;
+        const resolveUnexpected = (dialog) => {
+          warned = true;
+          resolution = dialog.accept();
+        };
+        page.on("dialog", resolveUnexpected);
+        try {
+          await page.reload();
+          if (resolution) await resolution;
+          assert.equal(warned, false, `${mode.name}: ${label}`);
+        } finally {
+          page.off("dialog", resolveUnexpected);
+        }
+      };
       page.setDefaultTimeout(15000);
       page.on("pageerror", (error) => errors.push(error.message));
       let modelRequests = 0;
@@ -119,11 +135,23 @@ const draft = {
         page.getByRole("textbox", { name: "Describe your world" }),
       ).toBeVisible();
       await page.evaluate(
-        ({ currentKey, conceptKey, draft }) => {
+        ({ currentKey, previousKey, conceptKey, draft }) => {
           sessionStorage.setItem(currentKey, JSON.stringify(draft));
+          sessionStorage.setItem(
+            previousKey,
+            JSON.stringify({
+              ...draft,
+              draft_id: "aaad4508-1165-477b-a644-c9c2c81922a5",
+              world: {
+                ...draft.world,
+                name: "Previous synthetic world",
+                slug: "previous-synthetic-world",
+              },
+            }),
+          );
           sessionStorage.setItem(conceptKey, "A new city beneath the sea");
         },
-        { currentKey, conceptKey, draft },
+        { currentKey, previousKey, conceptKey, draft },
       );
       await page.reload();
       await expect(worldTitle).toBeVisible();
@@ -161,6 +189,7 @@ const draft = {
       );
       await expect(choice).toHaveCount(0);
       assert.equal(await readStorage(conceptKey), null);
+      await button("Refine").click();
       await button("Edit world draft").click();
       const editor = page.getByRole("region", {
         name: "Edit world draft",
@@ -172,7 +201,7 @@ const draft = {
       const sectionNavigation = editor.getByRole("navigation", {
         name: "World draft sections",
       });
-      for (const name of [
+      const sectionNames = [
         "World details",
         "Rules",
         "Systems",
@@ -180,7 +209,14 @@ const draft = {
         "Locations",
         "Founding event",
         "Apply or cancel",
-      ]) {
+      ];
+      for (const name of [...sectionNames].reverse()) {
+        await page.keyboard.press("Shift+Tab");
+        await expect(
+          sectionNavigation.getByRole("link", { name, exact: true }),
+        ).toBeFocused();
+      }
+      for (const name of sectionNames) {
         const link = sectionNavigation.getByRole("link", { name, exact: true });
         await link.focus();
         await link.press("Enter");
@@ -188,11 +224,18 @@ const draft = {
         const position = await page.evaluate((id) => {
           const heading = document.getElementById(id);
           const box = heading.getBoundingClientRect();
+          const header = document.querySelector("nav.fixed");
+          const point = document.elementFromPoint(
+            box.left + box.width / 2,
+            box.top + box.height / 2,
+          );
           return {
             focused: document.activeElement === heading,
             top: box.top,
             bottom: box.bottom,
             height: innerHeight,
+            headerBottom: header?.getBoundingClientRect().bottom ?? 0,
+            unobscured: point === heading || heading.contains(point),
           };
         }, target.slice(1));
         assert.ok(
@@ -200,7 +243,9 @@ const draft = {
           `${mode.name}: ${name} receives keyboard focus`,
         );
         assert.ok(
-          position.top >= 70 && position.bottom <= position.height,
+          position.top >= position.headerBottom &&
+            position.bottom <= position.height &&
+            position.unobscured,
           `${mode.name}: ${name} clears the fixed header`,
         );
       }
@@ -213,6 +258,16 @@ const draft = {
         `${mode.name}: editor horizontal overflow`,
       );
       await page.getByLabel("World name", { exact: true }).fill("");
+      await expect(button("Restore previous draft")).toBeDisabled();
+      for (const name of [
+        "more dramatic and epic",
+        "darker and more mysterious",
+        "more whimsical and playful",
+        "grittier and more realistic",
+        "more ancient and mythological",
+      ]) {
+        await expect(button(name)).toBeDisabled();
+      }
       await expect(editor.getByRole("status")).toContainText(
         "Unapplied changes",
       );
@@ -233,6 +288,8 @@ const draft = {
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
       );
+      await button("Download working edits").click();
+      await expect(editor.getByRole("alert")).toBeFocused();
       await page.evaluate(() => {
         URL.createObjectURL = window.__workingCopyURL;
         delete window.__workingCopyURL;
@@ -261,24 +318,17 @@ const draft = {
         "",
       );
       assert.match(page.url(), /\/worlds\/create/);
-      let reloadWarning = false;
-      const keepWorking = async (dialog) => {
-        assert.equal(dialog.type(), "beforeunload");
-        reloadWarning = true;
-        await dialog.dismiss();
-      };
-      page.once("dialog", keepWorking);
-      await page
-        .reload()
-        .catch((error) =>
-          assert.match(error.message, /ERR_ABORTED|Navigation.*cancel/i),
-        );
-      page.off("dialog", keepWorking);
-      assert.equal(
-        reloadWarning,
-        true,
-        "Dirty editor warns before a supported browser reload",
+      const reloadDialog = page.waitForEvent("dialog");
+      const cancelledReload = page.reload().then(
+        () => null,
+        (error) => error,
       );
+      const warning = await reloadDialog;
+      assert.equal(warning.type(), "beforeunload");
+      await warning.dismiss();
+      const cancellation = await cancelledReload;
+      if (cancellation)
+        assert.match(cancellation.message, /ERR_ABORTED|Navigation.*cancel/i);
       await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
         "",
       );
@@ -290,6 +340,9 @@ const draft = {
         draft.world,
         "Confirmed cancellation preserves applied draft",
       );
+      await reloadWithoutWarning(
+        "Confirmed cancellation removes the warning before reopening",
+      );
       await button("Edit world draft").click();
       await page
         .getByLabel("World name", { exact: true })
@@ -297,12 +350,40 @@ const draft = {
       await page
         .getByLabel("World name", { exact: true })
         .fill(draft.world.name);
-      const noReloadWarning = () => {
-        throw new Error("Reversed edits must remove the reload warning");
-      };
-      page.once("dialog", noReloadWarning);
+      await reloadWithoutWarning("Reversed edits remove the reload warning");
+      await page.evaluate(
+        ({ currentKey, draft }) => {
+          const optional = structuredClone(draft);
+          delete optional.world.characters[3].backstory;
+          delete optional.world.locations[3].description;
+          sessionStorage.setItem(currentKey, JSON.stringify(optional));
+        },
+        { currentKey, draft },
+      );
       await page.reload();
-      page.off("dialog", noReloadWarning);
+      await button("Edit world draft").click();
+      for (const label of ["Character 4 backstory", "Location 4 description"]) {
+        await page
+          .getByLabel(label, { exact: true })
+          .fill("Temporary working text");
+        await expect(editor.getByRole("status")).toContainText(
+          "Unapplied changes",
+        );
+        await page.getByLabel(label, { exact: true }).fill("");
+        await expect(editor.getByRole("status")).toContainText(
+          "No changes yet",
+        );
+      }
+      await reloadWithoutWarning(
+        "Visually reversed optional fields remove the warning",
+      );
+      await page.evaluate(
+        ({ currentKey, draft }) => {
+          sessionStorage.setItem(currentKey, JSON.stringify(draft));
+        },
+        { currentKey, draft },
+      );
+      await page.reload();
       await button("Edit world draft").click();
       await page.screenshot({
         path: `${output}/${mode.name}-editor.png`,
@@ -323,7 +404,9 @@ const draft = {
           exact: true,
         }),
       ).toBeVisible();
-      await page.reload();
+      await reloadWithoutWarning(
+        "Apply removes the reload warning immediately",
+      );
       await expect(
         page.getByRole("heading", {
           name: "The remembered library",
