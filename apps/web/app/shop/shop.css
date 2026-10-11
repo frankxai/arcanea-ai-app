@@ -271,8 +271,8 @@
 }
 .shop-guide-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
   margin-top: 36px;
 }
 .shop-guide-row > a {

@@ -135,6 +135,15 @@ export default function ShopPage() {
             </p>
             <span className="shop-text-link">Read the field note </span>
           </Link>
+          <Link href="/shop/guides/ai-disclosure-canon-provenance">
+            <span>03 / Provenance & Legal</span>
+            <h3>AI disclosure & canon provenance.</h3>
+            <p>
+              Review Steam, KDP, and Copyright Office rules with a worked
+              canon-state workflow.
+            </p>
+            <span className="shop-text-link">Read the field note </span>
+          </Link>
         </div>
       </section>
     </>

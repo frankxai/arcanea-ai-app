@@ -94,6 +94,52 @@ export const SHOP_GUIDES = [
       },
     ],
   },
+  {
+    slug: "ai-disclosure-canon-provenance",
+    title: "AI disclosure and canon provenance for novelists and game developers.",
+    searchTitle:
+      "AI disclosure & canon provenance guide — Steam, KDP, and US Copyright Office rules",
+    description:
+      "A practical guide citing Steam (Jan 2024), Amazon KDP (Sept 2023), and US Copyright Office (March 2023) rules with exact dates, source links, and a worked canon-state provenance workflow.",
+    category: "Provenance & Legal",
+    intro:
+      "Navigating platform disclosure requirements and intellectual property protection when using AI models requires distinguishing raw machine proposals from human-authored canon assets. Use this guide to review current platform policies and implement an auditable canon-state provenance workflow.",
+    sections: [
+      {
+        title: "Understand platform disclosure rules and citations.",
+        paragraphs: [
+          "Major publishing and storefront platforms now require creators to classify how AI models were used during production. Citing rules with exact dates and sources ensures your disclosures remain accurate and compliant:",
+          "[Steam / Valve Policy (January 2024)](https://store.steampowered.com/news/group/4145017/view/3862463717997849405): Valve requires game developers to disclose pre-generated AI content (art, code, text, audio) and live-generated AI content in the Steamworks AI survey. Developers must guarantee that pre-generated assets contain no infringing material and that live generation includes guardrails to prevent illegal output.",
+          "[Amazon KDP AI Guidelines (September 2023)](https://kdp.amazon.com/en_US/help/topic/G200672300): Amazon Kindle Direct Publishing distinguishes strictly between 'AI-generated' content (text, images, or translations created directly by AI without substantial human modification) and 'AI-assisted' content (human created material refined, brainstormed, or edited using AI). Mandatory disclosure is required during title setup for AI-generated content.",
+          "[US Copyright Office Policy (March 2023)](https://www.copyright.gov/ai/): In its Statement of Policy (88 FR 16190, March 16, 2023) and rulings (e.g. *Zarya of the Dawn* and *Thaler v. Perlmutter*), the Copyright Office affirms that copyright requires human authorship. Purely machine-generated outputs cannot be copyrighted and must be disclaimed, whereas human selection, arrangement, and creative transformation remain eligible for copyright protection.",
+        ],
+      },
+      {
+        title: "Maintain a canon-state ledger for full auditability.",
+        paragraphs: [
+          "To satisfy platform disclosure surveys and protect your IP, separate your production state into explicit tiers in a versioned continuity record:",
+          "1. **Raw Proposal (`canonState: 'proposal'`)**: Model-generated text or image drafts. Logged with model version, prompt hash, and timestamp. Uncredited and non-binding.",
+          "2. **Human Curation & Transformation (`canonState: 'in_review'`)**: Human author selects, edits, restructures, and rewrites the draft, adding character constraints and narrative direction.",
+          "3. **Accepted Canon (`canonState: 'accepted'`)**: Binding asset recorded with `authorship: 'human_transformed'` or `'human_authored'`, human edit delta percentage, and platform category ('AI-assisted' for KDP).",
+        ],
+      },
+      {
+        title: "Worked example: Canon-state workflow for a novel or game.",
+        paragraphs: [
+          "Consider developing a game dialogue sequence or novel chapter. In Step 1, an AI model proposes a 500-word character interaction. The workflow marks the entry as `canonState: 'proposal'` with `model: 'claude-3-5-sonnet'`.",
+          "In Step 2, the writer rewrites 350 words, inserts an original plot conflict, and alters the character's motivation. The ledger records the human transformation delta (70% human rewrite).",
+          "In Step 3, the asset transitions to `canonState: 'accepted'` and generates an automated export manifest. On Amazon KDP, this asset qualifies as 'AI-assisted' (human created and heavily edited), while on Steam's AI survey, pre-generated background textures are logged as disclosed pre-generated AI.",
+        ],
+      },
+      {
+        title: "Export an auditable provenance packet with UTM tracking.",
+        paragraphs: [
+          "When submitting your book or game for release, export plain Markdown and JSON metadata documenting your canon-state history. This provides verifiable proof of human authorship and exact platform disclosure compliance.",
+          "Test your project using our open tools and production kits with captured tracking links: try the [Free World Starter](/shop/sample?utm_source=arcanea_guides&utm_medium=field_note&utm_campaign=pillar_guide_2_disclosure) or inspect the full [Worldbuilder Production Edition](/shop/worldbuilder-production-edition?utm_source=arcanea_guides&utm_medium=field_note&utm_campaign=pillar_guide_2_disclosure).",
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export function findGuide(slug: string) {
