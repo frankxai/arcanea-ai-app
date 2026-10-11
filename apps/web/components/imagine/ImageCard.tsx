@@ -116,7 +116,7 @@ export function ImageCard({
 
   const handleDownload = useCallback(async () => {
     try {
-      const blob = await generatedImageBlob(src);
+      const blob = await generatedImageBlob(src, authority);
       if (!authority.scope.isCurrent(authority.token)) return;
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");

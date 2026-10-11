@@ -98,3 +98,17 @@ Rollback is an owned reviewed revert that preserves asset bytes, reservations,
 metadata and unowned legacy browser data. Reverting the account helper restores the
 known cross-account leak and false-success behavior, so record that consequence.
 The slice remains unfinished and must stay draft. The complete native goal is ACTIVE.
+
+## Private server candidate, 11 October
+
+Draft PR580 is open at the account-cache foundation103a3e96d42cab4049920a2d70e3756527db49b3. Its full manual CI38128274165 completes SUCCESS for Install/Lint/TypeScript/Build/CI Status. Its restricted authenticated and independent review jobs SKIP; this does not certify private assets. The next server revision below is not covered by that older result.
+
+New candidate source uses a dedicated private Blob token and explicit new-write enablement. All new puts are private and immutable. Authenticated byte reads enforce owner metadata before store access, re-hash actual bounded bytes and return no-store/nosniff responses. Disabling new writes leaves configured owner exports readable. Existing public objects and legacy manifests remain untouched. No new store or live environment was provisioned.
+
+The pending migration stores private metadata, exact bytes/checksum, source/prompt/description, immutable operation fingerprint and lifecycle. Source and rights are explicitly unverified creator claims; the row grants no license or publishing rights. Only the trusted server can reserve/complete. No numeric account capacity is minted by default. Each account's row lock serializes byte admission; completion moves reserved bytes to used once. Unknown upload outcomes hold reservations and use the same stable content-bound ID until actual object readback reconciles them. Browser receipts must match the captured owner and asset handle.
+
+Saved-image input is capped at3 MiB, with real streamed JSON limits below the deployed request-body bound. Larger originals retain the existing8 MiB export decoder and a clear download/size error. PNG/JPEG/WEBP require actual pixel decoding, MIME consistency and bounded dimensions. A governed direct-upload path for larger saves is still future acceptance; it is not supplied by these server routes.
+
+Native cases now cover private handles, same-origin cookie scoping, foreign/stale receipts, interrupted save identity, unknown upload/metadata acknowledgements, immutable/corrupt/missing bytes and actual PNG decoding. Native service tests use controlled repository/store adapters, not an actual paid Blob store or Supabase identity. A new disposable PostgreSQL fixture is wired into the existing CI service after the rolled-back author bootstraps. It tests migration/RLS, unconfigured/full quota, duplicate completion, unknown holds and two simultaneous database connections racing for one capacity. Its hosted result is pending until this candidate is pushed and run. No local heavy work was started under RAM HOLD2774/6144MB.
+
+Release remains draft. The current animation caller still posts the previous save contract, and the video route still requires public HTTPS sources. Private animation resolution before credit reservation, durable gallery hydration/cache-loss reopen, real Auth plus storage-adapter browser acceptance, rendered craft, cancellation/repair controls, exact-candidate independent review, full hosted checks and approved production provisioning all remain open. Neither a passing foundation build nor the new native cases closes these requirements.

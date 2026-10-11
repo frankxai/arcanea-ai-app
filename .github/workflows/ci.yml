@@ -193,6 +193,9 @@ jobs:
       - name: Verify generation admission, provider recovery and billing invariants
         run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
 
+      - name: Verify account favorites and private image recovery
+        run: pnpm --dir apps/web exec tsx --test lib/imagine/__tests__/favorites.test.ts lib/imagine/__tests__/private-assets.test.ts
+
       - name: Verify customer voice credentials, privacy and recovery
         run: |
           pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
@@ -209,6 +212,13 @@ jobs:
         run: |
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=0 -f supabase/tests/author-draft-recovery.sql
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=1 -f supabase/tests/author-draft-recovery.sql
+
+      - name: Verify private image owner access and atomic storage admission
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          createdb -h localhost -U postgres arcanea_private_imagine_fixture
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs

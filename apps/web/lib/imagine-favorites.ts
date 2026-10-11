@@ -5,6 +5,7 @@ import {
 
 export interface FavoriteImage {
   id: string;
+  assetId?: string;
   blobUrl: string;
   originalUrl: string;
   prompt: string;
@@ -160,20 +161,63 @@ export async function addFavorite(
   const source = image.data
     ? `data:${image.mimeType || "image/png"};base64,${image.data}`
     : image.url;
-  const blob = await generatedImageBlob(source);
+  const blob = await generatedImageBlob(source, authority);
   requireAccount(authority);
+  if (blob.size > 3 * 1024 * 1024)
+    throw new Error(
+      "Saved images must be at most 3 MiB. Download this original to keep it.",
+    );
   const bytes = new Uint8Array(await blob.arrayBuffer());
+  requireAccount(authority);
+  const ownerId = authority.token.actor!.slice(5);
+  const prompt = image.prompt.slice(0, 2000);
+  const alt = prompt.trim() || "Saved creator image";
+  const provider = image.provider?.slice(0, 100) ?? null;
+  const sha = Array.from(
+    new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
+    (byte) => byte.toString(16).padStart(2, "0"),
+  ).join("");
+  const digest = Array.from(
+    new Uint8Array(
+      await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(
+          JSON.stringify([
+            ownerId,
+            image.id,
+            sha,
+            blob.type,
+            prompt,
+            alt,
+            provider,
+          ]),
+        ),
+      ),
+    ),
+    (byte) => byte.toString(16).padStart(2, "0"),
+  ).join("");
+  // Version 8 content-bound UUID preserves identity even if a browser cache or
+  // upload acknowledgement is lost. Different metadata cannot reuse the ID.
+  const assetId = `${digest.slice(0, 8)}-${digest.slice(8, 12)}-8${digest.slice(13, 16)}-${((parseInt(digest[16], 16) & 3) | 8).toString(16)}${digest.slice(17, 20)}-${digest.slice(20, 32)}`;
   requireAccount(authority);
   const chunks: string[] = [];
   for (let offset = 0; offset < bytes.length; offset += 16384)
     chunks.push(String.fromCharCode(...bytes.subarray(offset, offset + 16384)));
   const response = await fetch("/api/imagine/save", {
     method: "POST",
+    credentials: "same-origin",
+    redirect: "error",
+    signal: AbortSignal.timeout(60000),
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       imageData: btoa(chunks.join("")),
       mimeType: blob.type,
-      prompt: image.prompt.slice(0, 2000),
+      ownerId,
+      assetId,
+      prompt,
+      alt,
+      sourceId: image.id,
+      provider,
     }),
   });
   requireAccount(authority);
@@ -184,13 +228,20 @@ export async function addFavorite(
     !receipt ||
     typeof receipt !== "object" ||
     !("url" in receipt) ||
-    !savedImageUrl(receipt.url)
+    !savedImageUrl(receipt.url) ||
+    !("ownerId" in receipt) ||
+    receipt.ownerId !== ownerId ||
+    !("assetId" in receipt) ||
+    receipt.assetId !== assetId ||
+    receipt.url !==
+      `/api/imagine/assets/${assetId}.${blob.type === "image/jpeg" ? "jpg" : blob.type.slice(6)}`
   )
     throw new Error(
       "The image was not saved. Download it now and retry saving when storage is available.",
     );
   const favorite: FavoriteImage = {
     id: image.id,
+    assetId,
     blobUrl: receipt.url,
     originalUrl:
       !image.url.startsWith("data:") && savedImageUrl(image.url)

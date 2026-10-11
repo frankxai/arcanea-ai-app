@@ -49,9 +49,14 @@ beforeEach(() => {
       removeItem: (key: string) => items.delete(key),
     },
   });
-  globalThis.fetch = async () => {
+  globalThis.fetch = async (_url, options) => {
     calls++;
-    return Response.json({ url: "https://example.invalid/retained.png" });
+    const body = JSON.parse(String(options?.body));
+    return Response.json({
+      ownerId: body.ownerId,
+      assetId: body.assetId,
+      url: `/api/imagine/assets/${body.assetId}.png`,
+    });
   };
 });
 afterEach(() => {
@@ -187,4 +192,35 @@ test("an invalid inline image fails before save transport", async () => {
     addFavorite({ ...sample, data: "malformed===" }, authority("a")),
   );
   assert.equal(calls, 0);
+});
+
+test("lost save acknowledgement retries the same content-bound asset identifier", async () => {
+  const bodies: Record<string, string>[] = [];
+  globalThis.fetch = async (_url, options) => {
+    const body = JSON.parse(String(options?.body));
+    bodies.push(body);
+    if (bodies.length === 1) throw Error("fixture acknowledgement lost");
+    return Response.json({
+      ownerId: body.ownerId,
+      assetId: body.assetId,
+      url: `/api/imagine/assets/${body.assetId}.png`,
+    });
+  };
+  await assert.rejects(addFavorite(sample, authority("a")));
+  const saved = await addFavorite(sample, authority("a"));
+  assert.equal(bodies[0].assetId, bodies[1].assetId);
+  assert.equal(saved.assetId, bodies[1].assetId);
+});
+
+test("a successful receipt for another account cannot be retained", async () => {
+  globalThis.fetch = async (_url, options) => {
+    const body = JSON.parse(String(options?.body));
+    return Response.json({
+      ownerId: "b",
+      assetId: body.assetId,
+      url: `/api/imagine/assets/${body.assetId}.png`,
+    });
+  };
+  await assert.rejects(addFavorite(sample, authority("a")), /not saved/);
+  assert.equal(items.size, 0);
 });

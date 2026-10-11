@@ -139,7 +139,10 @@ export function generatedImageSource(image: unknown): string | null {
 }
 
 /** Inline receipts need no network permission; CDN exports may require manual save. */
-export async function generatedImageBlob(source: string): Promise<Blob> {
+export async function generatedImageBlob(
+  source: string,
+  authority?: GenerationAuthority,
+): Promise<Blob> {
   const maxBytes = 8 * 1024 * 1024;
   const supported = ["image/png", "image/jpeg", "image/webp"];
   const inline =
@@ -157,15 +160,32 @@ export async function generatedImageBlob(source: string): Promise<Blob> {
     );
     return new Blob([bytes], { type: inline[1] });
   }
-  const parsed = new URL(source);
-  if (parsed.protocol !== "https:" || parsed.username || parsed.password)
-    throw new Error("Invalid image download source");
+  const privateSource =
+    /^\/api\/imagine\/assets\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(?:png|jpg|webp)$/i.test(
+      source,
+    );
+  if (privateSource) {
+    if (!authority) throw new Error("Sign in to download this private image.");
+    assertGenerationAuthority(authority);
+  } else {
+    const parsed = new URL(source);
+    if (parsed.protocol !== "https:" || parsed.username || parsed.password)
+      throw new Error("Invalid image download source");
+  }
   const response = await fetch(source, {
-    credentials: "omit",
+    credentials: privateSource ? "same-origin" : "omit",
     redirect: "error",
     referrerPolicy: "no-referrer",
     signal: AbortSignal.timeout(20000),
   });
+  if (privateSource) {
+    try {
+      assertGenerationAuthority(authority!);
+    } catch (error) {
+      await response.body?.cancel();
+      throw error;
+    }
+  }
   const type = response.headers
     .get("content-type")
     ?.split(";")[0]
@@ -187,6 +207,7 @@ export async function generatedImageBlob(source: string): Promise<Blob> {
       chunks.push(new Uint8Array(value));
     }
     if (!size) throw new Error("Image download is empty");
+    if (privateSource) assertGenerationAuthority(authority!);
     return new Blob(chunks, { type });
   } finally {
     await reader.cancel().catch(() => {});

@@ -14,6 +14,73 @@ const requestImages = (input: Record<string, unknown>) =>
 const requestAnimation = (input: Record<string, unknown>) =>
   actualRequestAnimation(input, { scope: testScope, token: testScope.get() });
 
+test("private byte handles require current authority and scoped cookies", async () => {
+  const oldFetch = globalThis.fetch;
+  const source = "/api/imagine/assets/11111111-1111-4111-8111-111111111111.png";
+  const scope = createCredentialScope();
+  scope.set("user:a");
+  const authority = { scope, token: scope.get() };
+  let calls = 0;
+  globalThis.fetch = async (_url, options) => {
+    calls++;
+    assert.equal(options?.credentials, "same-origin");
+    assert.equal(options?.redirect, "error");
+    return new Response(Buffer.from("fixture"), {
+      headers: { "Content-Type": "image/png" },
+    });
+  };
+  try {
+    await assert.rejects(generatedImageBlob(source), /Sign in/);
+    assert.equal(calls, 0);
+    assert.equal(
+      await (await generatedImageBlob(source, authority)).text(),
+      "fixture",
+    );
+    scope.set("user:b");
+    await assert.rejects(
+      generatedImageBlob(source, authority),
+      /account changed/,
+    );
+    assert.equal(calls, 1);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
+test("private bytes returned after an account switch are never delivered", async () => {
+  const oldFetch = globalThis.fetch;
+  const scope = createCredentialScope();
+  scope.set("user:a");
+  const authority = { scope, token: scope.get() };
+  let cancelled = false;
+  globalThis.fetch = async () => {
+    scope.set("user:b");
+    return new Response(
+      new ReadableStream({
+        start(controller) {
+          controller.enqueue(new Uint8Array([1]));
+        },
+        cancel() {
+          cancelled = true;
+        },
+      }),
+      { headers: { "Content-Type": "image/png" } },
+    );
+  };
+  try {
+    await assert.rejects(
+      generatedImageBlob(
+        "/api/imagine/assets/11111111-1111-4111-8111-111111111111.png",
+        authority,
+      ),
+      /account changed/,
+    );
+    assert.equal(cancelled, true);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
 test("lost transport response retains the same request key; confirmed success starts a new operation", async () => {
   const slots = new Map<string, string>();
   const requests: { requestKey: string }[] = [];
