@@ -5,9 +5,11 @@ import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
 import { m } from "framer-motion";
 import {
-  isFavorited,
+  getFavorites,
+  readCloudFavorite,
   addFavorite,
   removeFavorite,
+  type FavoriteImage,
 } from "@/lib/imagine-favorites";
 import {
   generatedImageBlob,
@@ -26,6 +28,7 @@ const ASPECT_CLASSES: Record<string, string> = {
 
 interface ImageCardProps {
   authority: GenerationAuthority;
+  favorite?: FavoriteImage | null;
   id: string;
   src: string;
   prompt: string;
@@ -35,13 +38,14 @@ interface ImageCardProps {
   aspectRatio?: string;
   onAnimate?: (id: string, imageUrl: string) => void;
   onVary?: (prompt: string) => void;
-  onFavoriteChange?: () => void;
+  onFavoriteChange?: (warning?: string | null) => void;
   isAnimating?: boolean;
   videoUrl?: string;
 }
 
 export function ImageCard({
   authority,
+  favorite,
   id,
   src,
   prompt,
@@ -60,36 +64,80 @@ export function ImageCard({
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [favoriteChecking, setFavoriteChecking] = useState(false);
+  const [favoriteRecord, setFavoriteRecord] = useState<FavoriteImage | null>(
+    null,
+  );
   const [favoriteError, setFavoriteError] = useState<string | null>(null);
 
   useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+    const current = () => active && authority.scope.isCurrent(authority.token);
+    setFavoriteChecking(false);
     try {
-      setFavorited(isFavorited(id, authority));
+      const cached =
+        favorite === undefined
+          ? (getFavorites(authority).find((row) => row.id === id) ?? null)
+          : favorite;
+      setFavoriteRecord(cached);
+      setFavorited(Boolean(cached));
       setFavoriteError(null);
+      if (favorite === undefined && cached?.assetId) {
+        setFavoriteChecking(true);
+        void readCloudFavorite(cached, authority, controller.signal)
+          .then((result) => {
+            if (!current()) return;
+            setFavoriteRecord(result.favorite);
+            setFavorited(result.favorited);
+          })
+          .catch((error) => {
+            if (current())
+              setFavoriteError(
+                error instanceof Error
+                  ? error.message
+                  : "Refresh your account favorites to check this image.",
+              );
+          })
+          .finally(() => {
+            if (current()) setFavoriteChecking(false);
+          });
+      }
     } catch {
       setFavoriteError(
         "Favorites could not be read. Your browser data has been preserved.",
       );
     }
-  }, [id, authority]);
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [id, authority, favorite]);
 
   const handleToggleFavorite = useCallback(
     async (e?: React.MouseEvent) => {
       e?.stopPropagation();
-      if (isSaving) return;
+      if (isSaving || favoriteChecking) return;
       if (!authority.scope.isCurrent(authority.token)) return;
       setFavoriteError(null);
       setIsSaving(true);
       try {
-        if (favorited) removeFavorite(id, authority);
-        else
-          await addFavorite(
+        let warning: string | null = null;
+        if (favorited)
+          warning = (await removeFavorite(favoriteRecord ?? id, authority))
+            .cacheWarning;
+        else {
+          const saved = await addFavorite(
             { id, url: src, prompt, data, mimeType },
             authority,
           );
+          if (!authority.scope.isCurrent(authority.token)) return;
+          setFavoriteRecord(saved);
+          warning = saved.cacheWarning ?? null;
+        }
         if (!authority.scope.isCurrent(authority.token)) return;
         setFavorited(!favorited);
-        onFavoriteChange?.();
+        onFavoriteChange?.(warning);
       } catch (error) {
         if (!authority.scope.isCurrent(authority.token)) return;
         setFavoriteError(
@@ -109,6 +157,8 @@ export function ImageCard({
       mimeType,
       favorited,
       isSaving,
+      favoriteChecking,
+      favoriteRecord,
       onFavoriteChange,
       authority,
     ],
@@ -229,6 +279,9 @@ export function ImageCard({
           <Image
             src={src}
             alt={prompt}
+            unoptimized
+            width={1024}
+            height={1024}
             className={`w-full ${ASPECT_CLASSES[aspectRatio] || "aspect-square"} object-cover transition-transform duration-500 group-hover:scale-105`}
             loading="lazy"
           />
@@ -251,7 +304,7 @@ export function ImageCard({
         {/* Favorite button — always visible (top-left) */}
         <button
           onClick={handleToggleFavorite}
-          disabled={isSaving}
+          disabled={isSaving || favoriteChecking}
           aria-label={
             favorited ? "Remove from favorites" : "Save image to favorites"
           }
@@ -472,6 +525,9 @@ export function ImageCard({
               <Image
                 src={src}
                 alt={prompt}
+                unoptimized
+                width={1024}
+                height={1024}
                 className="max-w-full max-h-[80vh] mx-auto object-contain rounded-2xl"
               />
             )}

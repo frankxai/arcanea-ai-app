@@ -569,7 +569,7 @@ jobs:
   author-independent-review:
     name: Independent author source review
     needs: [author-preview, world-preview]
-    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011')
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011' || github.ref_name == 'agent/codex/private-imagine-assets-20261011')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -753,6 +753,11 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/generation-admission-20261011" ] && [ "${{ needs.generation-preview.result }}" != "success" ]; then
             echo "::error::Authenticated generation acceptance is unearned for this dispatched revision"
             PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/private-imagine-assets-20261011" ] && [ "${{ needs.author-independent-review.result }}" != "success" ]; then
+            echo "::error::Exact private Imagine source review is unearned for this dispatched revision"
+            exit 1
           fi
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/provider-account-20261011" ] && [ "${{ needs.provider-account-preview.result }}" != "success" ]; then

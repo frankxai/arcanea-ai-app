@@ -42,13 +42,17 @@ export function privateAssetPath(
 export function privateAssetUrl(id: string, mime: ImageMime): string {
   return `/api/imagine/assets/${privateAssetId(id)}.${IMAGE_TYPES[mime]}`;
 }
-export async function boundedJson(request: Request): Promise<unknown> {
+export async function boundedJson(
+  request: Request,
+  limit = MAX_IMAGE_JSON_BYTES,
+): Promise<unknown> {
+  const tooLarge =
+    limit === MAX_IMAGE_JSON_BYTES
+      ? "Saved images must be at most 3 MiB."
+      : "The favorite change request is too large.";
   const declared = request.headers.get("content-length");
-  if (
-    declared &&
-    (!/^\d+$/.test(declared) || Number(declared) > MAX_IMAGE_JSON_BYTES)
-  )
-    throw new PrivateAssetError(413, "Saved images must be at most 3 MiB.");
+  if (declared && (!/^\d+$/.test(declared) || Number(declared) > limit))
+    throw new PrivateAssetError(413, tooLarge);
   if (!request.body)
     throw new PrivateAssetError(400, "Image data is required.");
   const reader = request.body.getReader();
@@ -59,8 +63,7 @@ export async function boundedJson(request: Request): Promise<unknown> {
       const next = await reader.read();
       if (next.done) break;
       size += next.value.byteLength;
-      if (size > MAX_IMAGE_JSON_BYTES)
-        throw new PrivateAssetError(413, "Saved images must be at most 3 MiB.");
+      if (size > limit) throw new PrivateAssetError(413, tooLarge);
       chunks.push(next.value);
     }
     try {
@@ -168,6 +171,10 @@ export interface RetainedImage {
   provider: string | null;
   status: "reserved" | "ready";
   created_at: string;
+  favorited: boolean;
+  favorite_revision: number;
+  favorite_changed_at: string;
+  last_favorite_operation: string | null;
 }
 export interface PrivateAssetRepository {
   reserve(claim: ImageClaim): Promise<RetainedImage>;

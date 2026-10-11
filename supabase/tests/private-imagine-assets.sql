@@ -78,14 +78,56 @@ do $$ begin
   exception when insufficient_privilege then null; end;
   raise notice 'PASS owner gallery/reopen/pagination and denial of client completion/quota/delete';
 end $$;
+do $$ declare id uuid := 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+  remove_op uuid := 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee';
+  restore_op uuid := 'ffffffff-ffff-4fff-8fff-ffffffffffff';
+  row jsonb;
+begin
+  row := public.imagine_set_private_favorite(id,false,0,remove_op);
+  if row->>'favorited' <> 'false' or (row->>'favorite_revision')::bigint <> 1 then raise exception 'Favorite removal not committed'; end if;
+  if public.imagine_set_private_favorite(id,false,0,remove_op) <> row then raise exception 'Acknowledgement replay changed metadata'; end if;
+  if public.imagine_private_gallery(null,null,true) <> '[]'::jsonb or jsonb_array_length(public.imagine_private_gallery()) <> 1
+    or public.imagine_read_private_asset(id) is null then raise exception 'Removal deleted asset or left favorite visible'; end if;
+  if (select used_bytes from public.imagine_storage_accounts where user_id=auth.uid()) <> 10
+    or (select reserved_bytes from public.imagine_storage_accounts where user_id=auth.uid()) <> 10 then raise exception 'Removal changed accounted storage'; end if;
+  begin
+    perform public.imagine_set_private_favorite(id,true,0,gen_random_uuid());
+    raise exception 'Stale tab overwrote favorite state';
+  exception when raise_exception then if sqlerrm <> 'private_favorite_conflict' then raise; end if; end;
+  begin
+    perform public.imagine_set_private_favorite(id,true,0,remove_op);
+    raise exception 'Replay changed operation intent';
+  exception when raise_exception then if sqlerrm <> 'private_favorite_conflict' then raise; end if; end;
+  row := public.imagine_set_private_favorite(id,true,1,restore_op);
+  if row->>'favorited' <> 'true' or (row->>'favorite_revision')::bigint <> 2
+    or jsonb_array_length(public.imagine_private_gallery(null,null,true)) <> 1 then raise exception 'Restored favorite not visible'; end if;
+  if public.imagine_private_gallery((row->>'favorite_changed_at')::timestamptz,id,true) <> '[]'::jsonb then raise exception 'Favorite pagination repeated boundary'; end if;
+  begin
+    perform public.imagine_set_private_favorite(id,false,0,remove_op);
+    raise exception 'Delayed old operation overwrote newer favorite state';
+  exception when raise_exception then if sqlerrm <> 'private_favorite_conflict' then raise; end if; end;
+  begin
+    update public.imagine_private_assets set favorited=false, byte_size=1;
+    raise exception 'Client bypassed constrained favorite mutation';
+  exception when insufficient_privilege then null; end;
+  raise notice 'PASS favorite removal/restore, stable acknowledgement replay, stale-tab denial and retained asset/capacity';
+end $$;
 set request.jwt.claim.sub = '22222222-2222-4222-8222-222222222222';
 do $$ begin
   if public.imagine_private_gallery() <> '[]'::jsonb or public.imagine_read_private_asset('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa') is not null then raise exception 'Cross-account private image leak'; end if;
+  begin
+    perform public.imagine_set_private_favorite('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',false,2,gen_random_uuid());
+    raise exception 'Foreign favorite mutation admitted';
+  exception when raise_exception then if sqlerrm <> 'private_asset_missing' then raise; end if; end;
   raise notice 'PASS foreign account denied';
 end $$;
 set request.jwt.claim.sub = '';
 do $$ begin
   if public.imagine_private_gallery() <> '[]'::jsonb then raise exception 'Expired auth exposed private assets'; end if;
+  begin
+    perform public.imagine_set_private_favorite('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',false,2,gen_random_uuid());
+    raise exception 'Expired favorite mutation admitted';
+  exception when insufficient_privilege then null; end;
 end $$;
 set role anon;
 do $$ begin
@@ -96,6 +138,10 @@ do $$ begin
   begin
     perform public.imagine_reserve_private_asset(null,gen_random_uuid(),1,'image/png',repeat('a',64),repeat('b',64),'','scene','source','fixture');
     raise exception 'Guest reservation admitted';
+  exception when insufficient_privilege then null; end;
+  begin
+    perform public.imagine_set_private_favorite('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',false,2,gen_random_uuid());
+    raise exception 'Guest favorite mutation admitted';
   exception when insufficient_privilege then null; end;
   raise notice 'PASS guest and expired auth denied';
 end $$;
@@ -119,4 +165,23 @@ do $$ begin
 end $$;
 select dblink_disconnect('one');
 select dblink_disconnect('two');
+-- Two tabs race with the same revision but different desired favorite state.
+select dblink_connect('favorite_one','host=localhost port=5432 dbname=arcanea_private_imagine_fixture user=postgres password=disposable-author-fixture');
+select dblink_connect('favorite_two','host=localhost port=5432 dbname=arcanea_private_imagine_fixture user=postgres password=disposable-author-fixture');
+select dblink_exec('favorite_one',$$set role authenticated; set request.jwt.claim.role='authenticated'; set request.jwt.claim.sub='11111111-1111-4111-8111-111111111111'$$);
+select dblink_exec('favorite_two',$$set role authenticated; set request.jwt.claim.role='authenticated'; set request.jwt.claim.sub='11111111-1111-4111-8111-111111111111'$$);
+select dblink_send_query('favorite_one',$$select public.imagine_set_private_favorite('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',false,2,'12345678-1234-4234-8234-123456789abc') from (select pg_sleep(0.1)) delay$$);
+select dblink_send_query('favorite_two',$$select public.imagine_set_private_favorite('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',true,2,'12345678-1234-4234-8234-123456789abd') from (select pg_sleep(0.1)) delay$$);
+create temporary table favorite_race_results as select result from dblink_get_result('favorite_one',false) as response(result jsonb);
+insert into favorite_race_results select result from dblink_get_result('favorite_two',false) as response(result jsonb);
+do $$ begin
+  if (select count(*) from favorite_race_results) <> 1
+    or (select favorite_revision from public.imagine_private_assets where id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa') <> 3 then raise exception 'Concurrent favorite changes bypassed revision admission'; end if;
+  if dblink_error_message('favorite_one') not like '%private_favorite_conflict%' and dblink_error_message('favorite_two') not like '%private_favorite_conflict%' then raise exception 'Favorite race loser was not revision conflict'; end if;
+  if (select used_bytes from public.imagine_storage_accounts where user_id='11111111-1111-4111-8111-111111111111') <> 10
+    or (select reserved_bytes from public.imagine_storage_accounts where user_id='11111111-1111-4111-8111-111111111111') <> 10 then raise exception 'Favorite race changed storage accounting'; end if;
+  raise notice 'PASS actual concurrent favorite changes: one commit, one stale-revision denial, storage unchanged';
+end $$;
+select dblink_disconnect('favorite_one');
+select dblink_disconnect('favorite_two');
 \echo 'Private image PostgreSQL/RLS/atomic admission fixture passed; no production schema was used.'

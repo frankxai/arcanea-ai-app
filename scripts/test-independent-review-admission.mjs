@@ -22,6 +22,54 @@ const files = [
   "ops/sessions/2026-10-10.md",
 ];
 
+test("private Imagine review denies local, pull-request, foreign and unpinned dispatches before provider access", () => {
+  const env = {
+    ...Object.fromEntries(
+      ["PATH", "Path", "SystemRoot", "TEMP", "TMP"]
+        .filter((key) => process.env[key])
+        .map((key) => [key, process.env[key]]),
+    ),
+    GITHUB_REF_NAME: "agent/codex/private-imagine-assets-20261011",
+    GITHUB_ACTIONS: "true",
+    GITHUB_REPOSITORY: "frankxai/arcanea-ai-app",
+    GITHUB_ACTOR: "frankxai",
+    GITHUB_EVENT_NAME: "workflow_dispatch",
+    RUNNER_OS: "Linux",
+    GITHUB_RUN_ID: "1",
+    GITHUB_RUN_ATTEMPT: "1",
+    GITHUB_SHA: "0".repeat(40),
+    // No credential is supplied: these denials must precede model discovery.
+  };
+  for (const override of [
+    { GITHUB_ACTIONS: "false" },
+    { GITHUB_REPOSITORY: "foreign/repo" },
+    { GITHUB_ACTOR: "foreign" },
+    { GITHUB_EVENT_NAME: "pull_request" },
+    { RUNNER_OS: "Windows" },
+    { GITHUB_RUN_ID: "" },
+    { GITHUB_RUN_ATTEMPT: "" },
+    { REVIEW_TARGET: "hub-release" },
+    {},
+  ]) {
+    const result = spawnSync(
+      process.execPath,
+      [join(root, "scripts/review-author-recovery.mjs")],
+      {
+        cwd: root,
+        env: { ...env, ...override },
+        encoding: "utf8",
+        timeout: 10000,
+      },
+    );
+    assert.equal(result.error, undefined);
+    assert.equal(result.status, 1);
+    assert.match(
+      result.stderr,
+      /owned hosted dispatch lane|exact runner revision/,
+    );
+  }
+});
+
 test("actual review script rejects unpinned, mismatched and expanded handovers before provider access", () => {
   const temporary = mkdtempSync(join(tmpdir(), "arcanea-review-admission-"));
   const within = relative(realpathSync(tmpdir()), realpathSync(temporary));

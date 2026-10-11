@@ -56,6 +56,10 @@ function fixture() {
         provider: value.provider,
         status: "reserved",
         created_at: "2026-10-11T00:00:00.123456Z",
+        favorited: true,
+        favorite_revision: 0,
+        favorite_changed_at: "2026-10-11T00:00:00.123456Z",
+        last_favorite_operation: null,
       };
       return { ...asset };
     },

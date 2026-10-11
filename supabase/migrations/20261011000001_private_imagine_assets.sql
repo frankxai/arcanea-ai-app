@@ -27,10 +27,16 @@ create table public.imagine_private_assets (
   status text not null default 'reserved' check (status in ('reserved','ready')),
   created_at timestamptz not null default now(),
   completed_at timestamptz,
+  favorited boolean not null default true,
+  favorite_revision bigint not null default 0 check (favorite_revision between 0 and 9007199254740991),
+  favorite_changed_at timestamptz not null default now(),
+  last_favorite_operation uuid,
   check ((status = 'ready') = (completed_at is not null))
 );
 create index imagine_private_assets_gallery on public.imagine_private_assets
   (user_id, created_at desc, id desc) where status = 'ready';
+create index imagine_private_assets_favorites on public.imagine_private_assets
+  (user_id, favorite_changed_at desc, id desc) where status = 'ready' and favorited;
 alter table public.imagine_storage_accounts enable row level security;
 alter table public.imagine_private_assets enable row level security;
 create policy imagine_capacity_owner_read on public.imagine_storage_accounts
@@ -107,20 +113,49 @@ returns jsonb language sql security invoker set search_path = '' stable as $$
   select to_jsonb(asset) from public.imagine_private_assets asset
   where id = p_id and user_id = (select auth.uid()) and status = 'ready';
 $$;
-create function public.imagine_private_gallery(p_before timestamptz default null, p_id uuid default null)
+create function public.imagine_private_gallery(p_before timestamptz default null, p_id uuid default null, p_favorites boolean default false)
 returns jsonb language sql security invoker set search_path = '' stable as $$
-  select coalesce(jsonb_agg(to_jsonb(asset) order by created_at desc, id desc), '[]'::jsonb)
+  select coalesce(jsonb_agg(to_jsonb(asset) order by gallery_at desc, id desc), '[]'::jsonb)
   from (
-    select * from public.imagine_private_assets
+    select *, case when p_favorites then favorite_changed_at else created_at end as gallery_at
+    from public.imagine_private_assets
     where user_id = (select auth.uid()) and status = 'ready'
-      and (p_before is null or (created_at,id) < (p_before,p_id))
-    order by created_at desc,id desc limit 51
+      and (not p_favorites or favorited)
+      and (p_before is null or (case when p_favorites then favorite_changed_at else created_at end,id) < (p_before,p_id))
+    order by gallery_at desc,id desc limit 51
   ) asset;
 $$;
+
+-- Only the bookmark is mutable. No browser UPDATE on bytes/rights/capacity.
+create function public.imagine_set_private_favorite(p_id uuid, p_favorited boolean, p_revision bigint, p_operation uuid)
+returns jsonb language plpgsql security definer set search_path = '' as $$
+declare asset public.imagine_private_assets%rowtype;
+begin
+  if auth.uid() is null or p_operation is null or p_favorited is null or p_revision is null then
+    raise exception 'private_asset_forbidden' using errcode = '42501';
+  end if;
+  select * into asset from public.imagine_private_assets
+    where id = p_id and user_id = (select auth.uid()) and status = 'ready' for update;
+  if not found then raise exception 'private_asset_missing' using errcode = 'P0001'; end if;
+  if asset.last_favorite_operation = p_operation then
+    if asset.favorited is distinct from p_favorited or p_revision <> asset.favorite_revision - 1 then
+      raise exception 'private_favorite_conflict' using errcode = 'P0001';
+    end if;
+    return to_jsonb(asset);
+  end if;
+  if asset.favorite_revision <> p_revision then raise exception 'private_favorite_conflict' using errcode = 'P0001'; end if;
+  update public.imagine_private_assets set favorited = p_favorited,
+    favorite_revision = favorite_revision + 1, last_favorite_operation = p_operation,
+    favorite_changed_at = case when favorited is distinct from p_favorited then now() else favorite_changed_at end
+    where id = asset.id returning * into asset;
+  return to_jsonb(asset);
+end $$;
 revoke all on function public.imagine_reserve_private_asset(uuid,uuid,integer,text,text,text,text,text,text,text) from public, anon, authenticated;
 revoke all on function public.imagine_complete_private_asset(uuid,uuid,text) from public, anon, authenticated;
 grant execute on function public.imagine_reserve_private_asset(uuid,uuid,integer,text,text,text,text,text,text,text),
   public.imagine_complete_private_asset(uuid,uuid,text) to service_role;
-revoke all on function public.imagine_read_private_asset(uuid), public.imagine_private_gallery(timestamptz,uuid) from public, anon;
-grant execute on function public.imagine_read_private_asset(uuid), public.imagine_private_gallery(timestamptz,uuid) to authenticated;
+revoke all on function public.imagine_read_private_asset(uuid), public.imagine_private_gallery(timestamptz,uuid,boolean),
+  public.imagine_set_private_favorite(uuid,boolean,bigint,uuid) from public, anon;
+grant execute on function public.imagine_read_private_asset(uuid), public.imagine_private_gallery(timestamptz,uuid,boolean),
+  public.imagine_set_private_favorite(uuid,boolean,bigint,uuid) to authenticated;
 commit;

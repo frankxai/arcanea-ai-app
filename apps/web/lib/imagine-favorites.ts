@@ -6,12 +6,24 @@ import {
 export interface FavoriteImage {
   id: string;
   assetId?: string;
+  favoriteRevision?: number;
+  alt?: string;
+  cacheWarning?: string;
   blobUrl: string;
   originalUrl: string;
   prompt: string;
   aspectRatio?: string;
   provider?: string;
   savedAt: string;
+}
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
+function privateFavoriteUrl(url: unknown, id: unknown): boolean {
+  return (
+    typeof id === "string" &&
+    UUID.test(id) &&
+    typeof url === "string" &&
+    new RegExp(`^/api/imagine/assets/${id}\\.(png|jpg|webp)$`).test(url)
+  );
 }
 
 function currentAccount(authority: GenerationAuthority): boolean {
@@ -29,7 +41,11 @@ function requireAccount(authority: GenerationAuthority): string {
 
 function savedImageUrl(value: unknown): value is string {
   if (typeof value !== "string" || value.length > 2048) return false;
-  if (/^\/api\/imagine\/assets\/[a-f0-9-]{36}\.(?:png|jpg|webp)$/i.test(value))
+  if (
+    /^\/api\/imagine\/assets\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(?:png|jpg|webp)$/i.test(
+      value,
+    )
+  )
     return true;
   try {
     const url = new URL(value);
@@ -56,6 +72,11 @@ function readManifest(authority: GenerationAuthority): FavoriteImage[] {
           typeof item === "object" &&
           typeof item.id === "string" &&
           item.id.length <= 160 &&
+          (item.assetId === undefined ||
+            privateFavoriteUrl(item.blobUrl, item.assetId)) &&
+          (item.favoriteRevision === undefined ||
+            (Number.isSafeInteger(item.favoriteRevision) &&
+              item.favoriteRevision >= 0)) &&
           savedImageUrl(item.blobUrl) &&
           typeof item.originalUrl === "string" &&
           item.originalUrl.length <= 2048 &&
@@ -128,15 +149,34 @@ export function isFavorited(
 export function getFavoriteCount(authority: GenerationAuthority): number {
   return readManifest(authority).length;
 }
-export function removeFavorite(
-  imageId: string,
+export async function removeFavorite(
+  image: string | FavoriteImage,
   authority: GenerationAuthority,
 ) {
   requireAccount(authority);
-  writeManifest(
-    readManifest(authority).filter((favorite) => favorite.id !== imageId),
-    authority,
-  );
+  const target =
+    typeof image === "string"
+      ? readManifest(authority).find((row) => row.id === image)
+      : image;
+  if (target?.assetId) await changeCloudFavorite(target, false, authority);
+  requireAccount(authority);
+  try {
+    writeManifest(
+      readManifest(authority).filter((row) =>
+        target?.assetId
+          ? row.assetId !== target.assetId
+          : row.id !== (typeof image === "string" ? image : image.id),
+      ),
+      authority,
+    );
+    return { cacheWarning: null };
+  } catch (error) {
+    if (!target?.assetId) throw error;
+    return {
+      cacheWarning:
+        "Your cloud favorite was removed. Browser bookmarks could not be updated; their data is preserved.",
+    };
+  }
 }
 
 export async function addFavorite(
@@ -154,9 +194,20 @@ export async function addFavorite(
   requireAccount(authority);
   if (!image.id || image.id.length > 160 || typeof image.prompt !== "string")
     throw new Error("This image cannot be saved.");
-  const existing = readManifest(authority).find(
-    (favorite) => favorite.id === image.id,
-  );
+  let cacheWarning: string | undefined;
+  let existing: FavoriteImage | undefined;
+  try {
+    existing = readManifest(authority).find(
+      (favorite) => favorite.id === image.id,
+    );
+  } catch {
+    cacheWarning =
+      "Saved to your account. Browser bookmarks could not be read; their data is preserved.";
+  }
+  if (existing?.assetId) {
+    const updated = await changeCloudFavorite(existing, true, authority);
+    return cacheConfirmedFavorite(updated, authority);
+  }
   if (existing) return existing;
   const source = image.data
     ? `data:${image.mimeType || "image/png"};base64,${image.data}`
@@ -239,9 +290,21 @@ export async function addFavorite(
     throw new Error(
       "The image was not saved. Download it now and retry saving when storage is available.",
     );
-  const favorite: FavoriteImage = {
+  if (
+    !("favorited" in receipt) ||
+    typeof receipt.favorited !== "boolean" ||
+    !("favoriteRevision" in receipt) ||
+    !Number.isSafeInteger(receipt.favoriteRevision) ||
+    (receipt.favoriteRevision as number) < 0
+  )
+    throw new Error(
+      "The saved favorite could not be confirmed. Retry this image to recover it.",
+    );
+  let favorite: FavoriteImage = {
     id: image.id,
     assetId,
+    favoriteRevision: receipt.favoriteRevision as number,
+    alt,
     blobUrl: receipt.url,
     originalUrl:
       !image.url.startsWith("data:") && savedImageUrl(image.url)
@@ -252,10 +315,265 @@ export async function addFavorite(
     provider: image.provider,
     savedAt: new Date().toISOString(),
   };
-  // Re-read after the asynchronous upload so other completed favorites stay retained.
-  const latest = readManifest(authority);
-  const concurrent = latest.find((item) => item.id === image.id);
-  if (concurrent) return concurrent;
-  writeManifest([favorite, ...latest], authority);
-  return favorite;
+  if (!receipt.favorited)
+    favorite = await changeCloudFavorite(favorite, true, authority);
+  requireAccount(authority);
+  if (cacheWarning) return { ...favorite, cacheWarning };
+  return cacheConfirmedFavorite(favorite, authority);
+}
+
+function cacheConfirmedFavorite(
+  favorite: FavoriteImage,
+  authority: GenerationAuthority,
+): FavoriteImage {
+  requireAccount(authority);
+  try {
+    const latest = readManifest(authority).filter(
+      (row) => row.assetId !== favorite.assetId,
+    );
+    writeManifest([favorite, ...latest], authority);
+    return favorite;
+  } catch {
+    return {
+      ...favorite,
+      cacheWarning:
+        "Saved to your account. Browser bookmarks could not be updated; their data is preserved.",
+    };
+  }
+}
+export interface FavoriteCursor {
+  before: string;
+  id: string;
+}
+function validCursor(value: unknown): value is FavoriteCursor {
+  return Boolean(
+    value &&
+    typeof value === "object" &&
+    "before" in value &&
+    typeof value.before === "string" &&
+    value.before.length <= 50 &&
+    Number.isFinite(Date.parse(value.before)) &&
+    "id" in value &&
+    typeof value.id === "string" &&
+    UUID.test(value.id),
+  );
+}
+function cloudImage(
+  value: unknown,
+  ownerId: string,
+): { favorite: FavoriteImage; favorited: boolean; operationId: unknown } {
+  if (!value || typeof value !== "object" || Array.isArray(value))
+    throw Error("Invalid cloud favorite acknowledgement.");
+  const row = value as Record<string, unknown>;
+  if (
+    row.ownerId !== ownerId ||
+    typeof row.assetId !== "string" ||
+    !UUID.test(row.assetId) ||
+    typeof row.url !== "string" ||
+    !new RegExp(`^/api/imagine/assets/${row.assetId}\\.(png|jpg|webp)$`).test(
+      row.url,
+    ) ||
+    typeof row.id !== "string" ||
+    row.id.length > 160 ||
+    typeof row.prompt !== "string" ||
+    row.prompt.length > 2000 ||
+    typeof row.alt !== "string" ||
+    row.alt.length > 2000 ||
+    typeof row.updatedAt !== "string" ||
+    !Number.isFinite(Date.parse(row.updatedAt)) ||
+    typeof row.favorited !== "boolean" ||
+    !Number.isSafeInteger(row.favoriteRevision) ||
+    (row.favoriteRevision as number) < 0 ||
+    (row.provider !== null &&
+      row.provider !== undefined &&
+      (typeof row.provider !== "string" || row.provider.length > 100))
+  )
+    throw Error("Invalid cloud favorite acknowledgement.");
+  return {
+    favorite: {
+      id: row.id,
+      assetId: row.assetId,
+      blobUrl: row.url,
+      originalUrl: "",
+      prompt: row.prompt,
+      alt: row.alt,
+      provider: typeof row.provider === "string" ? row.provider : undefined,
+      savedAt: row.updatedAt,
+      favoriteRevision: row.favoriteRevision as number,
+    },
+    favorited: row.favorited,
+    operationId: row.operationId,
+  };
+}
+export async function loadFavoritePage(
+  authority: GenerationAuthority,
+  cursor: FavoriteCursor | null = null,
+  signal?: AbortSignal,
+): Promise<{ images: FavoriteImage[]; next: FavoriteCursor | null }> {
+  requireAccount(authority);
+  if (cursor !== null && !validCursor(cursor))
+    throw Error("Invalid favorite page cursor.");
+  const query = new URLSearchParams({ favorites: "true" });
+  if (cursor) {
+    query.set("before", cursor.before);
+    query.set("id", cursor.id);
+  }
+  const response = await fetch(`/api/imagine/gallery?${query}`, {
+    credentials: "same-origin",
+    redirect: "error",
+    signal: signal
+      ? AbortSignal.any([signal, AbortSignal.timeout(20000)])
+      : AbortSignal.timeout(20000),
+    cache: "no-store",
+  });
+  requireAccount(authority);
+  const data: unknown = await response.json().catch(() => null);
+  requireAccount(authority);
+  if (
+    !response.ok ||
+    !data ||
+    typeof data !== "object" ||
+    !("images" in data) ||
+    !Array.isArray(data.images) ||
+    data.images.length > 50 ||
+    !("ownerId" in data) ||
+    data.ownerId !== authority.token.actor!.slice(5) ||
+    !("next" in data) ||
+    (data.next !== null && !validCursor(data.next))
+  )
+    throw Error(
+      "Your account favorites could not be loaded. Retry to sync them.",
+    );
+  const images = data.images.map((value) =>
+    cloudImage(value, authority.token.actor!.slice(5)),
+  );
+  if (
+    images.some((row) => !row.favorited) ||
+    new Set(images.map((row) => row.favorite.assetId)).size !== images.length
+  )
+    throw Error("Invalid cloud favorites page.");
+  if (
+    cursor &&
+    data.next &&
+    cursor.before === data.next.before &&
+    cursor.id === data.next.id
+  )
+    throw Error("Favorites pagination did not advance.");
+  return { images: images.map((row) => row.favorite), next: data.next };
+}
+export async function readCloudFavorite(
+  image: FavoriteImage,
+  authority: GenerationAuthority,
+  signal?: AbortSignal,
+): Promise<{
+  favorite: FavoriteImage;
+  favorited: boolean;
+  operationId: unknown;
+}> {
+  requireAccount(authority);
+  if (!privateFavoriteUrl(image.blobUrl, image.assetId))
+    throw Error("Invalid private favorite.");
+  const response = await fetch(`${image.blobUrl}?metadata=1`, {
+    credentials: "same-origin",
+    redirect: "error",
+    cache: "no-store",
+    signal: signal
+      ? AbortSignal.any([signal, AbortSignal.timeout(20000)])
+      : AbortSignal.timeout(20000),
+  });
+  requireAccount(authority);
+  const value: unknown = await response.json().catch(() => null);
+  requireAccount(authority);
+  if (!response.ok)
+    throw Error(
+      "This favorite could not be checked. Refresh your account favorites.",
+    );
+  const result = cloudImage(value, authority.token.actor!.slice(5));
+  if (result.favorite.assetId !== image.assetId)
+    throw Error("Invalid favorite acknowledgement.");
+  return result;
+}
+export async function changeCloudFavorite(
+  image: FavoriteImage,
+  favorited: boolean,
+  authority: GenerationAuthority,
+): Promise<FavoriteImage> {
+  requireAccount(authority);
+  const current =
+    image.favoriteRevision === undefined
+      ? (await readCloudFavorite(image, authority)).favorite
+      : image;
+  requireAccount(authority);
+  if (
+    !privateFavoriteUrl(current.blobUrl, current.assetId) ||
+    !Number.isSafeInteger(current.favoriteRevision) ||
+    current.favoriteRevision! < 0
+  )
+    throw Error("Refresh your account favorites before changing this image.");
+  const ownerId = authority.token.actor!.slice(5);
+  const slot = `arcanea:favorite-change:v1:${encodeURIComponent(ownerId)}:${current.assetId}:${favorited}:${current.favoriteRevision}`;
+  let operationId: string;
+  try {
+    const pending = sessionStorage.getItem(slot);
+    if (pending !== null && !UUID.test(pending))
+      throw Error("Invalid pending favorite identity");
+    operationId = pending ?? crypto.randomUUID();
+    if (!pending) {
+      sessionStorage.setItem(slot, operationId);
+      if (sessionStorage.getItem(slot) !== operationId)
+        throw Error("Favorite identity not retained");
+    }
+  } catch {
+    throw Error(
+      "Enable browser session storage to preserve favorite-change retries.",
+    );
+  }
+  requireAccount(authority);
+  const response = await fetch(current.blobUrl, {
+    method: "PATCH",
+    credentials: "same-origin",
+    redirect: "error",
+    signal: AbortSignal.timeout(20000),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ownerId,
+      favorited,
+      revision: current.favoriteRevision,
+      operationId,
+    }),
+  });
+  requireAccount(authority);
+  const value: unknown = await response.json().catch(() => null);
+  requireAccount(authority);
+  if (!response.ok) {
+    if (response.status === 409 || response.status === 404) {
+      try {
+        sessionStorage.removeItem(slot);
+      } catch {
+        /* Preserve browser failure without claiming success. */
+      }
+    }
+    throw Error(
+      response.status === 409
+        ? "This image changed elsewhere. Refresh your favorites before retrying."
+        : "Favorite change could not be confirmed. Retry to recover the same operation.",
+    );
+  }
+  const result = cloudImage(value, ownerId);
+  if (
+    result.favorite.assetId !== current.assetId ||
+    result.favorited !== favorited ||
+    result.operationId !== operationId ||
+    result.favorite.favoriteRevision !== current.favoriteRevision! + 1
+  )
+    throw Error(
+      "Favorite change could not be confirmed. Retry to recover the same operation.",
+    );
+  requireAccount(authority);
+  try {
+    sessionStorage.removeItem(slot);
+  } catch {
+    /* A matching replay remains idempotent. */
+  }
+  return result.favorite;
 }

@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import {
   privateAssetId,
-  privateAssetUrl,
   PrivateAssetError,
 } from "@/lib/imagine/private-assets";
-import { assetRpc, retainedImage } from "@/lib/imagine/private-assets-server";
+import {
+  assetRpc,
+  retainedImage,
+  privateAssetMetadata,
+} from "@/lib/imagine/private-assets-server";
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,6 +24,7 @@ export async function GET(request: NextRequest) {
       );
     const before = request.nextUrl.searchParams.get("before");
     const beforeId = request.nextUrl.searchParams.get("id");
+    const favorites = request.nextUrl.searchParams.get("favorites") === "true";
     // Preserve DB timestamp precision rather than rounding away microseconds.
     if (
       Boolean(before) !== Boolean(beforeId) ||
@@ -30,6 +34,7 @@ export async function GET(request: NextRequest) {
     const result = await assetRpc(client, "imagine_private_gallery", {
       p_before: before,
       p_id: beforeId ? privateAssetId(beforeId) : null,
+      p_favorites: favorites,
     });
     if (!Array.isArray(result) || result.length > 51)
       throw new PrivateAssetError(503, "Private gallery is unavailable.");
@@ -44,19 +49,13 @@ export async function GET(request: NextRequest) {
       last = page.at(-1);
     return NextResponse.json(
       {
-        images: page.map((asset) => ({
-          id: asset.source_id,
-          assetId: asset.id,
-          url: privateAssetUrl(asset.id, asset.mime_type),
-          prompt: asset.prompt,
-          alt: asset.alt_text,
-          provider: asset.provider,
-          uploadedAt: asset.created_at,
-          size: asset.byte_size,
-        })),
+        images: page.map(privateAssetMetadata),
         next:
           assets.length > 50 && last
-            ? { before: last.created_at, id: last.id }
+            ? {
+                before: favorites ? last.favorite_changed_at : last.created_at,
+                id: last.id,
+              }
             : null,
         hasStorage: true,
         ownerId: user.id,

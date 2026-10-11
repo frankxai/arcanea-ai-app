@@ -4,7 +4,6 @@ import {
   boundedJson,
   parseImageClaim,
   PrivateAssetError,
-  privateAssetUrl,
   retainPrivateImage,
   validateImageBytes,
 } from "@/lib/imagine/private-assets";
@@ -12,6 +11,7 @@ import {
   privateImageStore,
   privateRepository,
   privateStoreToken,
+  privateAssetMetadata,
 } from "@/lib/imagine/private-assets-server";
 
 export const runtime = "nodejs";
@@ -37,16 +37,9 @@ export async function POST(request: NextRequest) {
       privateRepository(),
       privateImageStore(token),
     );
-    return NextResponse.json(
-      {
-        assetId: saved.id,
-        ownerId: saved.user_id,
-        url: privateAssetUrl(saved.id, saved.mime_type),
-        prompt: saved.prompt,
-        savedAt: saved.created_at,
-      },
-      { headers: { "Cache-Control": "private, no-store" } },
-    );
+    return NextResponse.json(privateAssetMetadata(saved), {
+      headers: { "Cache-Control": "private, no-store" },
+    });
   } catch (error) {
     const known = error instanceof PrivateAssetError;
     return NextResponse.json(

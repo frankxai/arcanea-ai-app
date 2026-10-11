@@ -5,6 +5,7 @@ import {
   MAX_RETAINED_IMAGE_BYTES,
   PrivateAssetError,
   privateAssetPath,
+  privateAssetUrl,
   type ImageMime,
   type RetainedImage,
   type PrivateAssetRepository,
@@ -42,15 +43,21 @@ export async function assetRpc(
     const status =
       error.message === "private_storage_full"
         ? 507
-        : error.message === "private_asset_conflict"
-          ? 409
-          : 503;
+        : error.message === "private_asset_missing"
+          ? 404
+          : ["private_asset_conflict", "private_favorite_conflict"].includes(
+                error.message,
+              )
+            ? 409
+            : 503;
     const message =
       status === 507
         ? "Your storage is full. Download this image; no saved work was removed."
-        : status === 409
-          ? "This image identifier belongs to different content."
-          : "Private saving is unavailable. Your existing images and reservations are preserved.";
+        : status === 404
+          ? "Image not found."
+          : status === 409
+            ? "This image changed elsewhere. Refresh your favorites before retrying."
+            : "Private saving is unavailable. Your existing images and reservations are preserved.";
     throw new PrivateAssetError(status, message);
   }
   return data;
@@ -72,6 +79,10 @@ export function retainedImage(value: unknown): RetainedImage {
     typeof row.prompt !== "string" ||
     typeof row.alt_text !== "string" ||
     typeof row.source_id !== "string" ||
+    typeof row.favorited !== "boolean" ||
+    !Number.isSafeInteger(row.favorite_revision) ||
+    row.favorite_revision < 0 ||
+    !Number.isFinite(Date.parse(row.favorite_changed_at)) ||
     !Number.isFinite(Date.parse(row.created_at))
   )
     throw new PrivateAssetError(503, "Private image metadata is unavailable.");
@@ -166,7 +177,24 @@ export function privateImageStore(token: string): PrivateImageStore {
     },
   };
 }
-export async function readOwnedPrivateImage(
+export function privateAssetMetadata(asset: RetainedImage) {
+  return {
+    id: asset.source_id,
+    assetId: asset.id,
+    ownerId: asset.user_id,
+    url: privateAssetUrl(asset.id, asset.mime_type),
+    prompt: asset.prompt,
+    alt: asset.alt_text,
+    provider: asset.provider,
+    uploadedAt: asset.created_at,
+    updatedAt: asset.favorite_changed_at,
+    size: asset.byte_size,
+    favorited: asset.favorited,
+    favoriteRevision: asset.favorite_revision,
+    operationId: asset.last_favorite_operation,
+  };
+}
+export async function readOwnedPrivateMetadata(
   client: unknown,
   ownerId: string,
   id: string,
@@ -178,6 +206,14 @@ export async function readOwnedPrivateImage(
   const asset = retainedImage(value);
   if (asset.user_id !== ownerId || asset.id !== id || asset.status !== "ready")
     throw new PrivateAssetError(404, "Image not found.");
+  return asset;
+}
+export async function readOwnedPrivateImage(
+  client: unknown,
+  ownerId: string,
+  id: string,
+) {
+  const asset = await readOwnedPrivateMetadata(client, ownerId, id);
   const object = await privateImageStore(privateStoreToken()).read(
     privateAssetPath(ownerId, id, asset.mime_type),
   );
