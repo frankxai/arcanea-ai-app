@@ -343,3 +343,51 @@ functions. Reviewed migration bytes remain6950d9d46b9d04cc93968f6257a16c4c05b874
 unapplied. A separate rollback-only production role proof is prepared, not executed;
 it creates no customer identity and cannot establish signed-in customer acceptance.
 The full objective and private storage/billing/creator/client/harness gates stay open.
+
+## Protected production release and project-footer refinement
+
+PR585 merged normally on11 October16:45:46UTC as a4285de66ce00cbbaa66d7f5b6910f9b627be49f,
+with identical Git tree to reviewed/tested a3b1a75a. Candidate manual38155685455,
+normal38155688503, reader38155688536 and CodeQL38155688938 all pass; receiving
+main CI38156811344 and CodeQL38156811343 also finish SUCCESS. Six current renders
+and companions were inspected.37 independent Git-byte review hashes and14 service
+hashes match the exact candidate. Nine real isolated password logins cover seven
+cases per mode, not production customers.
+
+Canonical production dpl_BVi9xsxMexTeajVHq5EAvCqJPCPw is READY at accepted a4285de6,
+with www/apex/app aliases. Reviewed migration20261011131128, SHA256
+6950d9d46b9d04cc93968f6257a16c4c05b87459b14c0657326713c65da0ab07, is applied.
+The tool assigned20261011164806; only its unique owned source-hash/byte-guarded
+history row was mapped to the canonical version, keeping every statement and
+all other history intact. Actual PostgreSQL17.6 table RLS/grants, unique operation
+index and all three function bodies match reviewed source. Seven rollback-only
+role/null-subject denials pass with zero rows/accounts retained; three canonical
+anonymous HTTP checks return401/private,no-store. Signed-in production/customer
+save/reopen is still unverified. No finance/storage provision or identity change.
+
+Scope: retain focus while editing and recovering a project document. Sole root
+owner continues the existing document lane; footer ownership transferred narrowly
+from its separate private-assets lane, preserving the other46 paths there and
+all50 original document-lane paths. Main integration has no app/SQL source delta.
+Only Footer, this record, review packet, fixture source bindings and browser
+verification change. Source review base now pins accepted a4285de6; all required
+source/release/admission/privacy gates remain enabled. No new local heavy job.
+
+| Before                                                               | After                                                  | Why                                                                      |
+| -------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| Project editor has the full marketing newsletter and dozens of links | Compact Support, Privacy and Terms on /projects routes | Keep editing/recovery controls primary and support/legal links available |
+| Same public footer everywhere                                        | Existing public marketing footer remains elsewhere     | Preserve discovery and newsletter behavior                               |
+
+The new view uses existing tokens, consistent hooks and pathname selection, no
+Auth-state flicker gate or animation. The actual hosted acceptance now checks
+three live link destinations,44px targets, Tab/focus, bounded compact height and
+public newsletter retention alongside all seven document recovery cases. Source
+receipt additionally binds Footer and root layout. Separate nested workspace
+layouts were considered; that larger route restructuring is unnecessary here.
+New tests/renders and fresh independent review remain pending until run. Draft
+promotion only after all same-head gates pass, inspect new actual renders, normal
+protected merge and verify accepted source on production. Rollback is an owned
+revert of the footer slice; preserve documents, backups and all database rows.
+Editor image upload/private serving/export, oversized chrome on other private
+surfaces, creator usefulness, storage/commercial, clients/harness and estate
+landing remain open. The full objective stays ACTIVE.

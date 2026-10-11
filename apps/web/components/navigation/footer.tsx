@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useCallback } from "react";
 import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
@@ -76,6 +77,7 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -110,6 +112,34 @@ export function Footer() {
     },
     [email, submitting],
   );
+
+  if (pathname === "/projects" || pathname?.startsWith("/projects/")) {
+    return (
+      <footer
+        aria-label="Project workspace footer"
+        className="mt-8 border-t border-border"
+      >
+        <nav
+          aria-label="Workspace links"
+          className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 px-4 py-2 text-sm text-text-secondary"
+        >
+          {[
+            { href: "/contact", label: "Support" },
+            { href: "/privacy", label: "Privacy" },
+            { href: "/terms", label: "Terms" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center hover:text-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-atlantean-aqua"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      </footer>
+    );
+  }
 
   return (
     <footer

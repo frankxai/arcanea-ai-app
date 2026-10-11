@@ -347,6 +347,40 @@ async function main() {
         const content = (await get(address)).content;
         assert.equal(content.content_json.type, "doc");
         result.checks.push("actual-owner-save-cloud-reopen-rich-json");
+        stage = "project-workspace-footer";
+        const workspaceFooter = page.getByRole("contentinfo", {
+          name: "Project workspace footer",
+        });
+        const workspaceLinks = workspaceFooter.getByRole("link");
+        await expect(workspaceFooter).toBeVisible();
+        await expect(workspaceLinks).toHaveCount(3);
+        await expect(workspaceFooter.getByRole("textbox")).toHaveCount(0);
+        const footerBounds = await workspaceFooter.boundingBox();
+        assert.ok(footerBounds && footerBounds.height <= 96);
+        result.workspaceFooterHeight = footerBounds.height;
+        for (const [index, href] of [
+          "/contact",
+          "/privacy",
+          "/terms",
+        ].entries()) {
+          const link = workspaceLinks.nth(index);
+          await expect(link).toHaveAttribute("href", href);
+          const bounds = await link.boundingBox();
+          assert.ok(bounds && bounds.height >= 44 && bounds.width >= 44);
+          assert.equal(
+            (await page.request.get(`${config.base}${href}`)).status(),
+            200,
+          );
+        }
+        await workspaceLinks.first().focus();
+        await page.keyboard.press("Tab");
+        await expect(workspaceLinks.nth(1)).toBeFocused();
+        assert.equal(
+          await workspaceLinks
+            .nth(1)
+            .evaluate((element) => element.matches(":focus-visible")),
+          true,
+        );
         await capture("saved");
 
         stage = "lost-acknowledgement-reload-replay";
@@ -631,6 +665,29 @@ async function main() {
         result.checks.push(
           "actual-a-b-a-auth-stale-form-and-late-response-isolation",
         );
+        stage = "public-marketing-footer-preserved";
+        await page.goto(config.base);
+        const publicFooter = page.getByRole("contentinfo");
+        await expect(
+          publicFooter.getByRole("textbox", {
+            name: "Email address for newsletter",
+          }),
+        ).toBeVisible();
+        await expect(
+          publicFooter.getByRole("button", {
+            name: "Subscribe",
+            exact: true,
+          }),
+        ).toBeVisible();
+        await expect(
+          page.getByRole("navigation", {
+            name: "Workspace links",
+          }),
+        ).toHaveCount(0);
+        result.checks.push(
+          "project-footer-touch-keyboard-public-newsletter-preserved",
+        );
+        await capture("public-footer");
         assert.equal(result.pageErrors, 0);
         result.passed = true;
       } catch (error) {
