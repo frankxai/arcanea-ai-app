@@ -89,3 +89,9 @@ approved bounded provider acceptance. The broader goal remains active and incomp
 Rollback is a reviewed forward change that keeps unsafe legacy admission closed;
 do not re-enable defaults, unlimited claims or paid fallback. Preserve accepted
 operation receipts and other owners' changes.
+
+## Active legacy callers reconciled before landing
+
+A complete app/package caller scan found Image Studio and the Page cover editor still using legacy payloads. Both now use the existing durable request helper, stable retry keys and modern generation receipt. Image Studio preserves its layout and displays actual HTTPS or validated inline images; failed/anonymous calls show errors and retain prior output. Simulated provider logs and branded success/failure substitutes are removed. The cover editor requests one hosted-URL Grok image at16:9 because Pages refuses inline cover bytes; actual provider availability/model compatibility remains part of the separate managed-inference release gate. No new asset upload or public media exposure was added.
+
+A separate inherited image-provider fallback chain may repeat paid work on uncertain outcomes and uses old provider models. Managed inference remains unconfigured in production; this must be repaired and independently verified before that release. This patch does not certify the inherited image transport or paid creation. Existing reserved IPv6 classification gaps are also reproduced privately for a subsequent security slice. Older exact-source receipts remain evidence of earlier revisions only; every final caller refinement requires fresh review/checks.

@@ -62,7 +62,10 @@ async function requestGeneration(
         receipt.charged >= 0
       : receipt?.generationId === `gen_${key}` &&
         Array.isArray(receipt.images) &&
-        receipt.images.length > 0);
+        receipt.images.length > 0 &&
+        receipt.images.every(
+          (image: unknown) => generatedImageSource(image) !== null,
+        ));
   if (confirmed || receipt?.reason === "generation_failed") {
     try {
       if (sessionStorage.getItem(slot) === key) sessionStorage.removeItem(slot);
@@ -71,4 +74,28 @@ async function requestGeneration(
     }
   }
   return response;
+}
+
+/** Decode only a real image artifact from the canonical generation receipt. */
+export function generatedImageSource(image: unknown): string | null {
+  if (!image || typeof image !== "object") return null;
+  const value = image as Record<string, unknown>;
+  if (typeof value.url === "string") {
+    try {
+      const parsed = new URL(value.url);
+      if (parsed.protocol === "https:" && !parsed.username && !parsed.password)
+        return value.url;
+    } catch {
+      /* Invalid provider URL. */
+    }
+  }
+  if (
+    typeof value.data === "string" &&
+    value.data.length > 0 &&
+    value.data.length % 4 === 0 &&
+    /^[A-Za-z0-9+/]*={0,2}$/.test(value.data) &&
+    ["image/png", "image/jpeg", "image/webp"].includes(String(value.mimeType))
+  )
+    return `data:${value.mimeType};base64,${value.data}`;
+  return null;
 }
