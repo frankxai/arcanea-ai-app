@@ -27,7 +27,8 @@
       "default": "./dist/primitives/index.js"
     },
     "./tokens.css": "./src/tokens.css",
-    "./reading-scene.module.css": "./src/reading-scene.module.css"
+    "./reading-scene.module.css": "./src/reading-scene.module.css",
+    "./companion.module.css": "./src/companion.module.css"
   },
   "scripts": {
     "build": "tsc",

@@ -1,0 +1,120 @@
+# Arcanea companion repair
+
+Owning programme: [#276](https://github.com/frankxai/arcanea-ai-app/issues/276). Base: `4441801b5e003499bd70ca25e141fa7986793e58`. Owner: `codex-chat-companion-20261011`. Reader PR560 remains on its separate review branch.
+
+## Task contract
+
+- Scope: make the existing floating companion use the customer's selected provider, key and model; preserve partial replies and drafts; abort on stop, close and identity change; share useful safe errors with full chat.
+- Files: `apps/web/components/lumina/{lumina-bubble,companion-chat}.tsx`, `apps/web/components/chat/chat-area.tsx`, `apps/web/app/chat/page.tsx`, `apps/web/lib/chat/error-message.ts`, `packages/design-system/{package.json,src/companion.module.css}`, `scripts/{verify-companion-browser.cjs,tests/chat-error-message.test.cjs,capture-sovereign-built-app.cjs,verify-author-draft-browser.cjs}`, `.github/workflows/companion.yml`, this pickup.
+- Non-goals: provider or credit rails, durable chat/history integration, image/voice, SDK upgrades, pricing, paid calls, production promotion or brand identity changes.
+- Acceptance: explicit send only; missing key preserves draft and gives Settings recovery; existing SDK renders streams; stop/close preserve partial text and drafts; account changes discard prior transcript and abort; keyboard/IME/focus, 44px controls, 375px, reduced motion and forced colors work; raw provider errors are never rendered.
+- Verification: pure error tests; compiled hosted browser fixture and source-bound captures; native lint/typecheck/build and security; inspect the exact preview and mobile/desktop captures.
+- Rollback: revert this consumer/styles/helper slice. It changes no creation, billing or persistence data.
+
+## Why this change
+
+| Before                                                           | After                                                                                     | Why                                                                             |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Companion sends a fixed model without a provider or customer key | Existing `useProvider` feeds the installed AI SDK transport on each explicit send         | It uses the same BYOK route as full chat                                        |
+| Custom stream parser with no request cancellation                | Installed SDK handles the protocol and aborts its request on stop, close and unmount      | Partial replies remain usable and late responses cannot cross account lifetimes |
+| Ctrl/Cmd+K opens both companion and command palette              | Existing command palette owns its shortcut                                                | One keystroke opens one interface                                               |
+| Missing-key denial becomes “Something went wrong”                | Shared safe error copy points to customer provider settings                               | The customer gets an actionable next step without raw provider details          |
+| Arbitrary consumer styling and animated spring toggles           | Canonical design-system CSS, static keyboard interactions, 44px targets and visible focus | Respect the accepted Arcanea palette and repeated-use accessibility             |
+| Empty SDK streams finish successfully with no visible answer     | Explicit “No text returned” recovery retains the sent message                             | A completed HTTP stream alone does not establish a usable reply                 |
+| Editing a failed prompt could append a duplicate user turn       | The installed SDK replaces the identified failed message                                  | Recovery keeps the conversational context coherent                              |
+
+The named alternative is the existing full chat's SDK transport/provider implementation. Reuse avoids a second protocol implementation. The installed versions are AI SDK `6.0.300` and React bindings `3.0.303`; no package upgrade is included. Current upstream documentation defaults to v7, so installed source remains the implementation reference for this repair.
+
+## Evidence limits and release state
+
+Implementation is a candidate until its checks and rendered captures pass. The hosted browser fixture intercepts provider requests and emits synthetic SDK stream events. Its synthetic Supabase BroadcastChannel event tests the actual AuthProvider's UI lifetime; it does not establish real login, cookies, production RLS or customer outcomes. No real provider calls or production writes are authorized in that fixture.
+
+At source `249e900e5e6fa440fb5aa22109d8f1875e57c58b`, both Companion runs 38094265938 and 38094906153 pass all four modes with complete cleanup. Initial native CI 38094265927 passes; ready-event CI 38094906230 retains a broader gallery failure because its capture fixture still searches for `Open Arcanea assistant`. The compiled app now calls the control `Open Arcanea companion`. The gallery capture and author-draft overlap check now use that current name, preserving their presence, hiding and geometry assertions. CodeQL analysis 38094906209 and separate finding check 114339265916 report no new alerts for 249e900e. Those results belong to that retained revision; the compatibility revision requires fresh native, browser and security evidence. The owned scope is twelve files, and the companion receipt now binds both consumer fixtures among nineteen source hashes.
+
+The automatic design scan reported incomplete coverage. A manual installed Impeccable scan of the five changed UI/error/style files found two existing decorative gradient headings in full chat. Both now use the shared `--arc-text-primary` token; the shortcut heading uses sentence case. No finding was reported for the companion components, error helper or companion styles. This scan checks code patterns; it does not establish complete accessibility, measured performance or customer acceptance.
+
+Source `49558fee00f17932f281eb927cfdcb35054272a9` retained a failed short-height capture: the full-chat greeting was outside the viewport and could not be clicked. The empty-state flex box was fixed to its parent's height while centering taller content, allowing it to overflow above the scroll origin. It now has a minimum height and can grow within a shrinkable scroll region. The capture waits for actual scroll, viewport visibility and an ordinary click before taking the full-chat screenshot; it uses no forced click, relaxed timeout or hidden loading layer. Earlier captures taken during lazy loading remain failure evidence, not final visuals.
+
+Full chat mounted its closed lazy command palette on entry, showing a dark loading backdrop while the unused chunk loaded. The palette now mounts when its existing open state is true. History/provider hooks are untouched; durable history PR447 remains separate. No active lease covered this page at the scope check, and the owned repair now includes thirteen files with twenty source bindings. The page's required full-file formatting changes layout only outside the conditional mount; the historical state at twelve files/nineteen bindings remains attached to its earlier source.
+
+The broader gallery run at 49558fee also retained an early companion-presence assertion. A hard navigation can reach the specimen before Auth resolves. The capture now waits for the actual companion, then keeps its presence/hiding assertions. The font-fallback context blocks font requests while retaining JavaScript; it uses the same companion presence check. Navigation, fallback prose, typography and specimen checks remain in place.
+
+Compiled run38096641045 at 32cabefc passed 20 source hashes, 12 captures, four browser modes and 24 synthetic requests with clean shutdown. Visual inspection still found faint secondary text and starter cards hidden during their entrance delays. The candidate now uses design-system text tokens, renders the frequently visited welcome without entrance animations, and uses the existing installed Radix dialog for labelled shortcuts, contained focus, Escape and focus restoration. The fixture waits for finite animations before captures and checks all four starters plus keyboard focus. Fresh hosted verification and independent review remain required.
+
+Run38097339361 at 41f85f63 passed desktop and mobile starter/focus checks, then failed on a cancelled finite-animation promise during reduced-motion hydration. Its failed artifact and clean shutdown are retained. Captures now wait until no finite animation is running rather than awaiting promises for animation instances that hydration can remove. The command-palette assertion uses its actual combobox role so the accepted mainline's updated placeholder does not invalidate single-owner keyboard verification.
+
+The branch integrated accepted main1b6905bd without altering its 61 files; the chat diff remains 13 files. Run38097902919 at 3d013a60 then found three legitimate comboboxes on Worlds: creation search, sort and the open palette. The fixture now scopes the single input assertion to the labelled Command Palette dialog and retains the companion-hidden assertion. Its early failure artifact remains recorded. Build/typecheck/lint and broader gallery checks passed at the preceding 41f85f63 source; new final-source checks remain required. The subsequent mainb4520829 update changes only MEMORY.md and is outside this chat diff.
+
+Run38098161662 at 1769fc83 passed desktop/mobile starter and shortcut focus/reachability checks, then timed out while waiting for all background finite animations in reduced motion. The capture now waits only for running finite animations in the actual companion, chat log or shortcuts dialog. Each capture also records geometry and requires full opacity through its ancestors. Background animations remain untouched; request, focus, viewport, starter and cleanup assertions remain. No new local browser or worker is admitted while review-lite reports HOLD at 4359MB free against 6144MB required.
+
+Run38098475857 at 008e70e9 passed all 21 source hashes, 12 captures and four modes with clean shutdown. The shortcut PNGs still showed the underlying page rather than the dialog despite its measured viewport/focus/opacity checks. Visual acceptance failed. The dialog now uses the standard sibling Overlay/Content portal layout, and the fixture checks dialog visibility, viewport and focus again after capturing. Welcome copy now describes creative actions instead of promising image speed, instant stories or a specialist count. Fresh verification and actual visual acceptance remain required.
+
+The root cause is the chat route's existing fixed z-100 isolated layer: a default body portal at z-50 paints beneath the whole page, even while Radix disables the covering page's pointer events and lets focus/click checks pass. The shortcuts portal now mounts inside the existing chat-area root, so it shares the route's layer. No layer constants were increased. Review and browser bindings now also include the unchanged chat route layout, for 22 source hashes. Actual rendered dialog inspection remains required.
+
+Retained attempts: run38092654639 at `010c7077afcff4148e256feca38822c2c192efa6` could not locate the opener after five seconds. Run38092934564 at `735399aeaf437d6d7a718d88dd26fae908cad929` retained a failure screenshot and no page errors: the normal first-visit Worlds dialog correctly hides background controls from accessibility navigation. The fixture now dismisses it through its visible Skip button. Increasing the wait alone did not fix the check. Both failed receipts remain available. A separate in-process check of the installed SDK reproduced an empty stream ending `ready` with no error or answer; explicit empty-response recovery was then added.
+
+Run38093433718 at `d18b46b44f31a812775255aa99efb4afb31322f8` reached SDK streaming and aborted the stopped request, but then observed a third fixture request and the unsent draft in the transcript. The Stop button had been reused as a submit button before the click default action finished. Stop now prevents that default action and Stop/Send have separate React identities. The regression checks that stopping sends no additional request and preserves the draft. No real provider call was made.
+
+Cancellation aborts the browser request. The current server chat route's provider cancellation and billing behaviour are outside this scope; already-started work may still be charged. Provider key storage remains the existing browser settings implementation, whose wider account isolation is a separate owned task. Replies are ephemeral in this page and do not transfer into full chat.
+
+Production release requires exact-revision independent review, real provider acceptance and applicable release gates. The full Arcanea programme remains active: Queen/SIS, graphs/memory, private creator workspaces, canvas, reader scenes, academy/community, books/media, developer kits and commerce remain distinct obligations.
+
+Skills applied: Starlight SI routing (one admitted implementation lead), Emil design engineering, Premium Web OS and humanizer. Loading guidance is not proof of runtime enforcement. Machine pressure keeps builds/browser work on the hosted runner; no new local swarm, install or server is started.
+
+## Integration with accepted production, 11 October 2026
+
+Scope: integrate the preserved chat562 candidate with current production and repair
+credential lifetime and full-chat Stop. Owner: Codex thread
+`01a1269f-23eb-7bb2-b609-77d731cacc50`, isolated checkout
+`arcanea-provider-account-20261011`, branch `agent/codex/provider-account-20261011`.
+Programme: #276. Accepted base: `a4285de66ce00cbbaa66d7f5b6910f9b627be49f`.
+Preserved candidate: `86a412efcebf3873bbed0d8796d6a684e85470da` (#562).
+Original #562 and stacked #567 remain intact. The sixteen accepted document-recovery
+files are integration-only; no live migration is executed.
+
+Files: the original thirteen chat files, use-conversation Stop action, portable
+companion/Stop SDK regressions, and ChatWelcome/ChatNotices/ChatOverlays components.
+Acceptance: current actor/key is checked immediately before SDK fetch; changing
+account A to B to A cannot resurrect an obsolete callback or recovery alert;
+removed keys do not send; updated keys are reread on explicit send; Stop aborts
+without resending and retains the partial answer. Existing browser, keyboard,
+mobile, reduced-motion and safe-error requirements remain.
+Verification: native actual-SDK tests, scoped formatting/lint, frozen hosted
+build/typecheck/lint, exact-source compiled browser captures and independent review.
+No paid provider call, billing/credit change, SDK upgrade, production secret,
+permission change, asset generation, canon promotion or live SQL migration.
+Rollback: reviewed revert of this consumer slice; preserve accepted scene and
+project-document work, account preferences and unfinished branches.
+
+The first broad own-lane refresh hit the native routing subprocess's eight-second
+limit twice. Refreshing only this integration's explicit paths succeeded through
+supported claim --adopt. No peer lease was changed. Native leases govern their
+resolved checkout; the other checkout's broad manifest claim is preserved and
+does not reserve this owned integration globally. AGENTS.md source remains
+`36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`.
+Node 24/pinned pnpm remains Frank's selected contract. Machine review-lite admits
+one bounded workload and no new parallel agents; builds/browser work use hosted CI.
+
+Before correction, seven of the nine portable companion cases failed against the
+actual old component. The matching-send and current empty-reply controls passed.
+The actual full-chat input binding called handleRegenerate, which did not abort.
+The first Stop fixture needed explicit synthetic-stream cleanup after that handler
+replaced the SDK active response; its hung attempt is retained as failed evidence.
+The corrected fixture then reproduced the missing abort in under one second.
+After correction, the nine companion cases and five Stop/account/safe-error tests
+pass locally using the already installed real SDK. React scheduling and provider
+responses are synthetic. No production login, RLS or provider-quality claim follows.
+
+Notices, welcome and overlays now have separate ownership and the chat page and
+chat-area component remain under 500 lines. The existing oversized conversation
+hook is changed only to expose the SDK Stop action; its broader refactor remains.
+Welcome copy no longer claims that keys never leave the browser or promises an
+unverified model count. One inherited mount-effect lint warning remains in the
+extracted welcome component; scoped lint has no errors. Hosted checks, fresh
+rendered inspection, independent review and real-provider/customer acceptance
+remain pending at this checkpoint. The full Arcanea programme stays open.
+
+The enabled staged secret scanner blocked the first commit on generic-api-key
+in the synthetic key assertion. The fixture uses short, unmistakable dummy
+values now; no exclusion, allow comment or hook bypass was added. The redacted
+finding is retained privately. A clean scanner run is still required.
