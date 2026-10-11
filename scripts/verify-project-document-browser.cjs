@@ -67,6 +67,7 @@ async function main() {
         checks: [],
         staleSubmitAttempts: 0,
         patchIdentities: [],
+        authStatuses: [],
       };
       let stage = "guest-denial";
       let blockWrites = false;
@@ -209,6 +210,14 @@ async function main() {
       );
       const attach = (page) => {
         page.setDefaultTimeout(15000);
+        page.on("response", (response) => {
+          const url = new URL(response.url());
+          if (
+            url.origin === config.supabaseUrl &&
+            url.pathname === "/auth/v1/token"
+          )
+            result.authStatuses.push(response.status());
+        });
         page.on("pageerror", (error) => {
           result.pageErrors++;
           result.errorKinds ??= [];
@@ -221,15 +230,20 @@ async function main() {
       };
       const page = attach(await context.newPage());
       const login = async (tab, account) => {
+        result.loginStep = "open-login";
         await tab.goto(
           `${config.base}/auth/login?next=%2Fsettings%2Fproviders`,
         );
+        result.loginStep = "fill-email";
         await tab.getByLabel("Email", { exact: true }).fill(account.email);
         await tab
           .getByLabel("Password", { exact: true })
           .fill(account.password);
+        result.loginStep = "submit-password";
         await tab.getByRole("button", { name: "Sign In", exact: true }).click();
+        result.loginStep = "wait-destination";
         await tab.waitForURL((url) => url.pathname === "/settings/providers");
+        result.loginStep = "verify-account-settings";
         await expect(
           tab.getByRole("heading", { name: "Your AI connection", exact: true }),
         ).toBeVisible();
@@ -465,11 +479,13 @@ async function main() {
           memory.content_text,
           "Memory draft remains recoverable after storage fails.",
         );
+        stage = "native-back-preserves-memory-draft";
         await page.evaluate(() => history.back());
         await expect(editor).toHaveText(
           "Memory draft remains recoverable after storage fails.",
         );
         assert.equal(page.url(), documentUrl);
+        stage = "recovery-touch-targets";
         const targets = await recovery
           .locator("button")
           .evaluateAll((buttons) =>
@@ -479,9 +495,13 @@ async function main() {
             })),
           );
         assert.ok(targets.every((b) => b.height >= 44 && b.width >= 44));
+        stage = "recovery-keyboard-focus";
         await recovery
           .getByRole("button", { name: "Download draft", exact: true })
           .focus();
+        // Exercise keyboard modality, rather than inheriting the download click.
+        await page.keyboard.press("Tab");
+        await page.keyboard.press("Shift+Tab");
         assert.equal(
           await recovery
             .getByRole("button", { name: "Download draft", exact: true })
@@ -492,12 +512,14 @@ async function main() {
             ),
           true,
         );
+        stage = "recovery-horizontal-overflow";
         assert.equal(
           await page.evaluate(
             () => document.documentElement.scrollWidth <= window.innerWidth,
           ),
           true,
         );
+        stage = "retry-after-storage-restored";
         await page.evaluate(() => {
           window.__documentFixture.failStorage = false;
         });
@@ -585,8 +607,33 @@ async function main() {
         );
         assert.equal(result.pageErrors, 0);
         result.passed = true;
-      } catch {
+      } catch (error) {
         result.failureStage = stage;
+        result.failureKind = error.name;
+        for (const field of ["actual", "expected"]) {
+          if (
+            typeof error[field] === "number" ||
+            typeof error[field] === "boolean"
+          )
+            result[field] = error[field];
+        }
+        try {
+          result.failurePath = new URL(page.url()).pathname;
+          result.failureControls = await page.evaluate(() => ({
+            titlePresent: !!document.getElementById("document-title"),
+            loginPresent: !!document.querySelector('input[type="password"]'),
+            alertPresent: !!document.querySelector('[role="alert"]'),
+            recoveryPresent: !!document.querySelector(
+              '[aria-label="Document recovery"]',
+            ),
+            overflow: document.documentElement.scrollWidth > window.innerWidth,
+            keyboardFocus:
+              document.activeElement?.matches(":focus-visible") === true,
+          }));
+          await capture(`failed-${stage}`);
+        } catch {
+          result.failureCaptureUnavailable = true;
+        }
         process.exitCode = 1;
       } finally {
         releaseHeld();

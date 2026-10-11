@@ -198,3 +198,30 @@ pins that accepted main. Production metadata is READY atdpl_Fd46HhRg7bhiNR6YvsbG
 on22aa23b; no document/private source is deployed by this task. Current production
 catalog still shows all four document/project tables absent. Fresh exact checks and
 authenticated acceptance must bind the integrated follow-up before release.
+
+## Actual integrated browser failure preserved
+
+Integrated1e0e345b completes Install/Lint/TypeScript/Build and independent review
+successfully; all35 reviewed sources match Git. Manual38148947748 is terminal
+FAIL because the authenticated browser fixture fails. The corrected workflow now
+executes that fixture; the failure is not a skip or a reason to weaken CI Status.
+
+Mobile actual owner save/cloud reopen, same-operation lost-ack replay before a
+newer edit, two-tab conflict/export/reopen and damaged original-backup preservation
+pass. It then fails during the combined storage/navigation/focus checks. Desktop
+and reduced-motion fail during login. Only one password-login acceptance completes;
+zero page errors and zero supplier posts are recorded. The actual service applies
+the migration and cleans up successfully, including its private configuration.
+All14 service source hashes and both immediate image companions match Git/images.
+Both mobile saved/conflict renders are inspected and registered as failed-fixture
+evidence. The global marketing footer produces an unnecessarily long editor page;
+that refinement remains open, without changing another owner's layout scope here.
+
+The next fixture change records exact controlled login/substep, numeric auth
+statuses, numeric/boolean assertions, safe control-presence/overflow metadata and
+failure renders. It never logs passwords, tokens, provider text or full errors.
+The focus case now uses Tab/Shift+Tab to exercise actual keyboard modality rather
+than inheriting a prior download click's pointer focus. The assertion and all
+zero-error/account/recovery gates remain. This is diagnostic/test refinement;
+login or product navigation fixes are not claimed. Current failures still need
+actual diagnosis, correction and fresh exact-review/hosted acceptance.
