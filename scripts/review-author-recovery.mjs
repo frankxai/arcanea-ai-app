@@ -347,7 +347,24 @@ for (const path of new Set([...changed, ...contexts])) {
   manifest.sourceHashes[path] = sha(source);
   packet += `\n===== COMPLETE SOURCE ${path} SHA256 ${sha(source)} =====\n${source}`;
 }
-packet += `\n===== FULL BASE DELTA =====\n${git("diff", base, head)}`;
+if (projectDocumentReview) {
+  // Added files already appear in full above. Sending those same bytes as a
+  // second plus-prefixed copy exhausts the budget without adding evidence.
+  // Keep every source, creation mode, and the full diff of all existing files.
+  const added = git("diff", "--diff-filter=A", "--name-only", base, head)
+    .split("\n")
+    .filter(Boolean);
+  if (added.some((path) => !Object.hasOwn(manifest.sourceHashes, path)))
+    throw Error("Every added file requires its complete source binding.");
+  manifest.deltaRepresentation = {
+    addedFiles: added,
+    mode: "complete-added-sources-and-existing-file-delta",
+    fullDeltaSha256: sha(git("diff", base, head)),
+  };
+  packet += `\n===== BASE DELTA: ADDED FILES ARE THE COMPLETE SOURCES ABOVE =====\n${git("diff", "--diff-filter=A", "--summary", base, head)}\n===== FULL EXISTING-FILE DELTA =====\n${git("diff", "--diff-filter=CDMRTUXB", base, head)}`;
+} else {
+  packet += `\n===== FULL BASE DELTA =====\n${git("diff", base, head)}`;
+}
 if (
   Buffer.byteLength(packet) >
   (mcpRuntimeReview && !hubReleaseReview ? 1_200_000 : 900_000)
