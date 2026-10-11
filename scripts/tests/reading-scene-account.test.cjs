@@ -43,7 +43,7 @@ function load(file, imports = {}, globals = {}) {
   return module.exports;
 }
 
-function workspace({ completed = false, pending = false } = {}) {
+function workspace({ completed = false, pending = false, fresh = false } = {}) {
   // Execute the whole application component and its actual credential/recovery
   // modules. React scheduling, browser storage and HTTP replies are synthetic.
   const preferences = load("apps/web/lib/ai/provider-preferences.ts");
@@ -67,7 +67,7 @@ function workspace({ completed = false, pending = false } = {}) {
     },
     brief: "Illustrate the silver bowl in the river.",
     model: "provider/model",
-    requestKey,
+    requestKey: fresh ? null : requestKey,
     result: completed
       ? {
           generationId: `gen_${requestKey}`,
@@ -293,4 +293,64 @@ test("a newly admitted workspace captures the still-selected chapter passage wit
       ({ index, next }) => index === 4 && next === w.scene.source.passage,
     ),
   );
+});
+
+test("malformed generated model/provider metadata retains only the recoverable pending request", async () => {
+  for (const metadata of [
+    { provider: "openrouter" },
+    { model: "provider/model" },
+    { provider: "foreign", model: "provider/model" },
+    { provider: "openrouter", model: "" },
+  ]) {
+    const w = workspace({ pending: true });
+    const operation = w.view.generate();
+    w.release({
+      ok: true,
+      json: async () => ({
+        generationId: `gen_${w.scene.requestKey}`,
+        status: "completed",
+        ...metadata,
+        images: [{ data: "aGVsbG8=", mimeType: "image/png" }],
+      }),
+    });
+    await operation;
+    assert.equal(
+      w.writes.length,
+      1,
+      "An invalid completed result must not overwrite recovery",
+    );
+    assert.equal(JSON.parse(w.writes[0].value).result, null);
+  }
+});
+
+test("reentrant connected generation/save actions admit one operation before React updates busy", async () => {
+  for (const action of ["generate", "save"]) {
+    const w = workspace({
+      pending: true,
+      fresh: action === "generate",
+      completed: action === "save",
+    });
+    const first = w.view[action]();
+    const second = w.view[action]();
+    const request = JSON.parse(w.requests[0].options.body);
+    w.release({
+      ok: true,
+      json: async () =>
+        action === "generate"
+          ? {
+              generationId: `gen_${request.requestKey}`,
+              status: "completed",
+              provider: "openrouter",
+              model: w.scene.model,
+              images: [{ data: "aGVsbG8=", mimeType: "image/png" }],
+            }
+          : { creationId: request.requestKey, visibility: "private" },
+    });
+    await Promise.all([first, second]);
+    assert.equal(
+      w.requests.length,
+      1,
+      "Reentrant activation cannot start another request",
+    );
+  }
 });

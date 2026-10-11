@@ -406,3 +406,27 @@ the synchronous account guards. Fresh hosted Auth and exact-source review remain
 required. The first 45-source zero-price review timed out with no verdict; its
 receipt is retained and a second bounded attempt targets that same old revision.
 Neither an old verdict nor the passing compiled fixture approves changed source.
+
+Auth run38144698465 at `a69494ab608a2e6627cc30e93d71bb6ed6523d66` still failed
+the same initial anonymous selection step; artifact11704054351 is retained. The
+selection snapshot's native pass did not establish the real startup repair.
+Bounded, credential-redacted console and DOM selection/action diagnostics are
+added to the hosted receipt rather than guessing at the remaining cause.
+
+The 45-source Lightning review at a694 returned raw `pass` with four P2 findings;
+this is not a zero-finding approval. Its response, 234,142 tokens and zero price
+are retained. Provider-check failure already gives an honest unknown/disabled
+state, and an interrupted request intentionally keeps its identity for recovery.
+Database row identity already prevents duplicate private creations. However,
+testing its malformed-result concern reproduced missing/invalid model/provider
+metadata being retained as completed. A separate test reproduced reentrant
+generation/save handlers starting two requests before React updated busy.
+
+Completed generation now passes the existing recovery validator before retention,
+which also rejects empty/overlong model names. A synchronous operation ref admits
+one generation or save until it settles, in addition to the account-epoch guard.
+Both new reproductions fail before correction; all eight component tests and nine
+brief/recovery tests pass afterward. The prior thirteen actual-route/codec tests
+cover unchanged ingestion source. Current-source hosted Auth, CI, security,
+visual checks and fresh independent review remain pending. No production release,
+real provider result, tariff, customer proof or full-goal completion is claimed.

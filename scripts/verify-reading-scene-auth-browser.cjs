@@ -3,6 +3,8 @@ const fs = require("node:fs/promises");
 const { createHash } = require("node:crypto");
 const {
   installSceneAccountBoundary,
+  readSceneDiagnostics,
+  observeSceneConsole,
 } = require("./reading-scene-account-boundary.cjs");
 const {
   chromium,
@@ -62,6 +64,7 @@ async function main() {
     other = db(config.accounts[1]),
     anonymous = db(null);
   const pageErrors = [];
+  const consoleErrors = [];
   let page;
   let stage = "initial-anonymous-reader";
   const makeContext = async () => {
@@ -73,6 +76,9 @@ async function main() {
       acceptDownloads: true,
     });
     contexts.push(context);
+    observeSceneConsole(context, (text) =>
+      consoleErrors.push(redact(text).slice(0, 1500)),
+    );
     await installSceneAccountBoundary(context, config.accounts[1].id);
     return context;
   };
@@ -446,6 +452,7 @@ async function main() {
   } catch (error) {
     receipt.stage = stage;
     receipt.error = redact(error.stack || error.message).slice(0, 2500);
+    receipt.browserState = await readSceneDiagnostics(page).catch(() => null);
     receipt.workspace = await page
       ?.getByRole("region", { name: "Passage visualization" })
       .innerText()
@@ -456,10 +463,12 @@ async function main() {
   } finally {
     // Never record passwords, sessions, JWTs or cookie values in public evidence.
     receipt.pageErrors = pageErrors.map(redact);
+    receipt.consoleErrors = consoleErrors.map(redact);
     receipt.sourceHashes = Object.fromEntries(
       await Promise.all(
         [
           "scripts/verify-reading-scene-auth-browser.cjs",
+          "scripts/reading-scene-account-boundary.cjs",
           "apps/web/components/saga/scene-visualizer.tsx",
           "apps/web/lib/reading-scene/session.ts",
           "apps/web/app/api/reading-scenes/route.ts",

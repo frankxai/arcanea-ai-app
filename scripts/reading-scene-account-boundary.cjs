@@ -84,4 +84,40 @@ async function installSceneAccountBoundary(context, secondId) {
   );
 }
 
-module.exports = { installSceneAccountBoundary };
+async function readSceneDiagnostics(page) {
+  if (!page) return null;
+  return page.evaluate(() => {
+    const selection = getSelection();
+    const anchor = selection?.anchorNode;
+    const element =
+      anchor?.nodeType === Node.ELEMENT_NODE ? anchor : anchor?.parentElement;
+    return {
+      selectionCollapsed: selection?.isCollapsed,
+      selectionLength: selection?.toString().length,
+      selectionInChapter: Boolean(element?.closest("article .prose")),
+      anchorConnected: anchor?.isConnected,
+      actions: [...document.querySelectorAll("button")]
+        .filter((button) =>
+          /^Visualize (a passage|selection)$/.test(button.textContent.trim()),
+        )
+        .map((button) => ({
+          label: button.textContent.trim(),
+          disabled: button.disabled,
+        })),
+    };
+  });
+}
+
+function observeSceneConsole(context, onError) {
+  context.on("page", (tab) =>
+    tab.on("console", (message) => {
+      if (message.type() === "error") onError(message.text());
+    }),
+  );
+}
+
+module.exports = {
+  installSceneAccountBoundary,
+  readSceneDiagnostics,
+  observeSceneConsole,
+};

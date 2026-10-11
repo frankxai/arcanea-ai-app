@@ -84,6 +84,7 @@ function SceneWorkspace({
     "checking" | "configured" | "unavailable" | "unknown"
   >("checking");
   const controller = useRef<AbortController | null>(null);
+  const operation = useRef(false);
   const actor = useRef(owner);
   const briefRef = useRef<HTMLTextAreaElement | null>(null);
   const workspaceRef = useRef<HTMLElement | null>(null);
@@ -305,7 +306,8 @@ function SceneWorkspace({
       replacement ||
       !user ||
       isLoading ||
-      !isCurrentActor()
+      !isCurrentActor() ||
+      operation.current
     )
       return;
     if (providerState !== "configured" && !scene.requestKey) return;
@@ -316,6 +318,7 @@ function SceneWorkspace({
       creationId: null,
     };
     if (!retain(next)) return;
+    operation.current = true;
     const startOwner = owner;
     const abort = new AbortController();
     controller.current = abort;
@@ -364,8 +367,13 @@ function SceneWorkspace({
         !imageSource(body.images[0])
       )
         throw new Error("Invalid generation response");
-      const result = projectSceneResult(body);
-      if (retain({ ...next, result }))
+      const completed = restoreScene(
+        JSON.stringify({ ...next, result: projectSceneResult(body) }),
+        owner,
+        next.source.path,
+      );
+      if (!completed) throw new Error("Invalid generation metadata");
+      if (retain(completed))
         setMessage("Scene created. Save privately or download a copy.");
     } catch {
       if (actor.current === startOwner && isCurrentActor())
@@ -374,6 +382,7 @@ function SceneWorkspace({
         );
     } finally {
       clearTimeout(deadline);
+      operation.current = false;
       if (actor.current === startOwner && isCurrentActor()) setBusy(false);
     }
   }
@@ -384,10 +393,12 @@ function SceneWorkspace({
       !user ||
       busy ||
       !scene.requestKey ||
-      !isCurrentActor()
+      !isCurrentActor() ||
+      operation.current
     )
       return;
     const startOwner = owner;
+    operation.current = true;
     setBusy(true);
     setMessage("Saving privately…");
     try {
@@ -422,6 +433,7 @@ function SceneWorkspace({
           "Private save could not be confirmed. Retry the same save or download a copy.",
         );
     } finally {
+      operation.current = false;
       if (actor.current === startOwner && isCurrentActor()) setBusy(false);
     }
   }

@@ -93,12 +93,16 @@ export function restoreScene(
       s.source.passage.length > 1200 ||
       !/^[a-f0-9]{64}$/.test(s.source.chapterHash) ||
       typeof s.model !== "string" ||
+      !s.model.length ||
+      s.model.length > 100 ||
       (s.requestKey !== null && !/^[a-f0-9-]{36}$/i.test(s.requestKey)) ||
       (s.creationId !== null && !/^[a-f0-9-]{36}$/i.test(s.creationId)) ||
       (s.result !== null &&
         (s.requestKey === null ||
           s.result.status !== "completed" ||
           typeof s.result.model !== "string" ||
+          !s.result.model.length ||
+          s.result.model.length > 100 ||
           !["grok", "openrouter", "gemini"].includes(s.result.provider) ||
           s.result.generationId !== `gen_${s.requestKey}` ||
           !Array.isArray(s.result.images) ||
