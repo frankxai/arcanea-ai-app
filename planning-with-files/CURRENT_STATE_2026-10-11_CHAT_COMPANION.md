@@ -522,3 +522,18 @@ synthetic checks cannot qualify those outcomes.
 Machine preflight at 20:46:46Z holds new local review workloads: 6,088MB free
 against the 6,144MB reserve. No new agent, local build, browser, server or model is
 started; ordinary edits and small checks continue, with hosted validation used.
+
+Source repairs commit e29c6b60b4d40e8644da0846d71ea4af0bfb7961. Eleven
+no-network review regressions, browser syntax, two modified TSX syntax checks and
+owned-file formatting pass locally. Type compatibility and new rendered selection
+and key-disclosure assertions still require the exact hosted candidate.
+
+Before publication, remote main advances to 4c4e33b2b369ebf12cc98e5ef77ed8f65f193556
+and this lane to 0f5d26f4d05ad55a150260f31aa8301d772bff1f through an external normal
+main merge. Integration commit 170c2e4214bcf13786addba758445f6b4426adc1 preserves
+all eleven incoming accepted Git objects and all seven owned follow-up objects
+exactly. The accepted reader title projection, unchanged manuscript provenance,
+branch-landing inventory and connected-creator backlog are retained. Integration
+does not implement the proposed backlog or requalify the reader customer outcome.
+The eleven integration-only paths are released; only seven follow-up paths remain
+owned. No force push, conflict waiver, migration or provider spend occurs.
