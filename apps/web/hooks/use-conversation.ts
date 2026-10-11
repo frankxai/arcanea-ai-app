@@ -233,6 +233,7 @@ export interface ConversationState {
   // Actions
   handleSubmit: (e: React.FormEvent) => void;
   handleRetry: () => void;
+  handleStop: () => Promise<void>;
   handleRegenerate: () => void;
   startNewChat: () => void;
 
@@ -1027,6 +1028,7 @@ export function useConversation(
     // Actions
     handleSubmit,
     handleRetry,
+    handleStop: stop,
     handleRegenerate,
     startNewChat,
 

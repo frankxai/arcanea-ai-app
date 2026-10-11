@@ -537,7 +537,7 @@ async function main() {
           true,
         );
         const assistant = page.getByRole("button", {
-          name: "Open Arcanea assistant",
+          name: "Open Arcanea companion",
           exact: true,
         });
         for (const control of await page

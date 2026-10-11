@@ -14,6 +14,73 @@ const requestImages = (input: Record<string, unknown>) =>
 const requestAnimation = (input: Record<string, unknown>) =>
   actualRequestAnimation(input, { scope: testScope, token: testScope.get() });
 
+test("private byte handles require current authority and scoped cookies", async () => {
+  const oldFetch = globalThis.fetch;
+  const source = "/api/imagine/assets/11111111-1111-4111-8111-111111111111.png";
+  const scope = createCredentialScope();
+  scope.set("user:a");
+  const authority = { scope, token: scope.get() };
+  let calls = 0;
+  globalThis.fetch = async (_url, options) => {
+    calls++;
+    assert.equal(options?.credentials, "same-origin");
+    assert.equal(options?.redirect, "error");
+    return new Response(Buffer.from("fixture"), {
+      headers: { "Content-Type": "image/png" },
+    });
+  };
+  try {
+    await assert.rejects(generatedImageBlob(source), /Sign in/);
+    assert.equal(calls, 0);
+    assert.equal(
+      await (await generatedImageBlob(source, authority)).text(),
+      "fixture",
+    );
+    scope.set("user:b");
+    await assert.rejects(
+      generatedImageBlob(source, authority),
+      /account changed/,
+    );
+    assert.equal(calls, 1);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
+test("private bytes returned after an account switch are never delivered", async () => {
+  const oldFetch = globalThis.fetch;
+  const scope = createCredentialScope();
+  scope.set("user:a");
+  const authority = { scope, token: scope.get() };
+  let cancelled = false;
+  globalThis.fetch = async () => {
+    scope.set("user:b");
+    return new Response(
+      new ReadableStream({
+        start(controller) {
+          controller.enqueue(new Uint8Array([1]));
+        },
+        cancel() {
+          cancelled = true;
+        },
+      }),
+      { headers: { "Content-Type": "image/png" } },
+    );
+  };
+  try {
+    await assert.rejects(
+      generatedImageBlob(
+        "/api/imagine/assets/11111111-1111-4111-8111-111111111111.png",
+        authority,
+      ),
+      /account changed/,
+    );
+    assert.equal(cancelled, true);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
 test("lost transport response retains the same request key; confirmed success starts a new operation", async () => {
   const slots = new Map<string, string>();
   const requests: { requestKey: string }[] = [];
@@ -81,7 +148,11 @@ test("unavailable storage refuses generation before any request", async () => {
 });
 test("pending video recovery retains its key and is separate from image generation", async () => {
   const slots = new Map<string, string>();
-  const requests: { endpoint: unknown; requestKey: string }[] = [];
+  const requests: {
+    endpoint: unknown;
+    requestKey: string;
+    ownerId?: string;
+  }[] = [];
   const oldFetch = globalThis.fetch;
   const descriptor = Object.getOwnPropertyDescriptor(
     globalThis,
@@ -105,11 +176,58 @@ test("pending video recovery retains its key and is separate from image generati
     await requestAnimation(input);
     await requestImages(input);
     assert.equal(requests[0].endpoint, "/api/imagine/animate");
+    assert.equal(requests[0].ownerId, "native-fixture");
     assert.equal(requests[0].requestKey, requests[1].requestKey);
     assert.notEqual(requests[0].requestKey, requests[2].requestKey);
     assert.ok([...slots.keys()].every((key) => !key.includes("private.test")));
   } finally {
     globalThis.fetch = oldFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});
+
+test("adding the animation account binding preserves an existing uncertain request identity", async () => {
+  const slots = new Map<string, string>();
+  const input = { imageUrl: "https://images.test/retained-frame.png" };
+  const digest = Array.from(
+    new Uint8Array(
+      await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(JSON.stringify(input)),
+      ),
+    ),
+    (byte) => byte.toString(16).padStart(2, "0"),
+  ).join("");
+  const slot = `arcanea:video-request:v2:${encodeURIComponent("user:native-fixture")}:${digest}`;
+  const originalKey = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+  slots.set(slot, originalKey);
+  const originalFetch = globalThis.fetch;
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (key: string) => slots.get(key) ?? null,
+      setItem: (key: string, value: string) => slots.set(key, value),
+      removeItem: (key: string) => slots.delete(key),
+    },
+  });
+  globalThis.fetch = async (_url, options) => {
+    const body = JSON.parse(String(options?.body));
+    assert.equal(body.requestKey, originalKey);
+    assert.equal(body.ownerId, "native-fixture");
+    return Response.json({ reason: "operation_pending" }, { status: 409 });
+  };
+  try {
+    await requestAnimation(input);
+    assert.equal(slots.get(slot), originalKey);
+    assert.equal(slots.size, 1);
+  } finally {
+    globalThis.fetch = originalFetch;
     if (descriptor)
       Object.defineProperty(globalThis, "sessionStorage", descriptor);
     else Reflect.deleteProperty(globalThis, "sessionStorage");

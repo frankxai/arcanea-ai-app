@@ -100,7 +100,8 @@ test("one accepted Grok submission polls to a real video without another paid PO
     if (options?.method === "POST") {
       const body = JSON.parse(String(options.body));
       assert.equal(body.duration, 5);
-      assert.equal(body.image_url, image);
+      assert.deepEqual(body.image, { url: image });
+      assert.equal(body.image_url, undefined);
       return Response.json({ request_id: "job-1" });
     }
     return Response.json({
@@ -237,3 +238,45 @@ test("fal preserves its configured video capability through one bounded queue su
   );
   assert.equal(posts, 1);
 });
+
+for (const provider of ["grok", "fal"])
+  test(`${provider} sends verified private frame bytes directly without public storage`, async () => {
+    const frame = "data:image/png;base64,aGVsbG8=";
+    let posts = 0;
+    await generateVideo(
+      frame,
+      "slow movement",
+      reference,
+      provider === "grok" ? { XAI_API_KEY: "dummy" } : { FAL_KEY: "dummy" },
+      async (url, options) => {
+        if (options?.method === "POST") {
+          posts++;
+          const body = JSON.parse(String(options.body));
+          if (provider === "grok") {
+            assert.deepEqual(body.image, { url: frame });
+            assert.equal(body.image_url, undefined);
+          } else assert.equal(body.image_url, frame);
+          assert.equal(String(url).includes("blob"), false);
+          return Response.json({
+            request_id: "job-private",
+            status_url:
+              "https://queue.fal.run/fal-ai/kling-video/requests/job-private/status",
+            response_url:
+              "https://queue.fal.run/fal-ai/kling-video/requests/job-private",
+          });
+        }
+        return Response.json(
+          provider === "grok"
+            ? {
+                status: "done",
+                video: { url: "https://vidgen.x.ai/fixture.mp4" },
+              }
+            : String(url).endsWith("/status")
+              ? { status: "COMPLETED" }
+              : { video: { url: "https://fal.media/fixture.mp4" } },
+        );
+      },
+      wait,
+    );
+    assert.equal(posts, 1);
+  });

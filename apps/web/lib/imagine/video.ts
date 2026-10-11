@@ -163,7 +163,7 @@ export async function generateVideo(
       ? {
           model: "grok-imagine-video",
           prompt: motion,
-          image_url: imageUrl,
+          image: { url: imageUrl },
           duration: 5,
           aspect_ratio: "1:1",
           resolution: "720p",

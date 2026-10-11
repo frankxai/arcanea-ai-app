@@ -193,10 +193,13 @@ jobs:
       - name: Verify generation admission, provider recovery and billing invariants
         run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
 
+      - name: Verify account favorites and private image recovery
+        run: pnpm --dir apps/web exec tsx --test lib/imagine/__tests__/favorites.test.ts lib/imagine/__tests__/private-assets.test.ts lib/imagine/__tests__/hydration.test.ts
+
       - name: Verify customer voice credentials, privacy and recovery
         run: |
           pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
-          node --test scripts/tests/provider-chat-instance.test.cjs scripts/tests/provider-fixture-private-config.test.cjs
+          node --test scripts/tests/provider-chat-instance.test.cjs scripts/tests/provider-fixture-private-config.test.cjs scripts/tests/private-imagine-blob-fixture.test.cjs
 
       - name: Verify author credentials and exact draft acknowledgements
         run: |
@@ -223,6 +226,13 @@ jobs:
         env:
           PROJECT_DOCUMENT_CONFIG_FIXTURE: "true"
         run: node --test scripts/tests/provider-fixture-private-config.test.cjs
+
+      - name: Verify private image owner access and atomic storage admission
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          createdb -h localhost -U postgres arcanea_private_imagine_fixture
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
@@ -576,7 +586,7 @@ jobs:
   author-independent-review:
     name: Independent author source review
     needs: [author-preview, world-preview]
-    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011' || github.ref_name == 'agent/codex/project-document-recovery-20261011')
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011' || github.ref_name == 'agent/codex/private-imagine-assets-20261011' || github.ref_name == 'agent/codex/project-document-recovery-20261011')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -741,6 +751,40 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+  private-imagine-preview:
+    name: Authenticated private Imagine acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/private-imagine-assets-20261011'
+    needs: [install, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real isolated login, private save, reopen, recovery and export
+        run: node scripts/run-provider-account-fixture.mjs
+      - name: Retain safe private Imagine acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: private-imagine-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/private-imagine/
+          retention-days: 7
+          if-no-files-found: warn
+
   # ============================================
   # STATUS — the merge gate. It is the only job here that cannot skip under any
   # event, so it is the only context whose green is unconditionally earned.
@@ -758,6 +802,7 @@ jobs:
         build,
         generation-preview,
         provider-account-preview,
+        private-imagine-preview,
         project-document-preview,
         author-independent-review,
       ]
@@ -797,6 +842,16 @@ jobs:
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/generation-admission-20261011" ] && [ "${{ needs.generation-preview.result }}" != "success" ]; then
             echo "::error::Authenticated generation acceptance is unearned for this dispatched revision"
+            PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/private-imagine-assets-20261011" ] && [ "${{ needs.author-independent-review.result }}" != "success" ]; then
+            echo "::error::Exact private Imagine source review is unearned for this dispatched revision"
+            exit 1
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/private-imagine-assets-20261011" ] && [ "${{ needs.private-imagine-preview.result }}" != "success" ]; then
+            echo "::error::Authenticated private Imagine acceptance is unearned for this dispatched revision"
             PASS=false
           fi
 
