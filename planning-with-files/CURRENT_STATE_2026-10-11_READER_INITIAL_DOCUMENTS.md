@@ -130,3 +130,11 @@ This is a larger build-time alternative justified by the real visibility failure
 Unknown paths retain runtime `notFound()` recovery and its visibility gate; no
 dynamicParams denial, manifest grant, story rewrite or private route is introduced.
 Retain the previous failures and renew final-source review and hosted checks.
+
+Before the next source freeze, accepted main advances to
+`46b77c58d5dd4bf1423fd8e45e7d1591ac016e82` through peer PR579. Its five world-editor,
+footer and verification files are integrated without conflicts; every incoming
+blob equals accepted main. Renewed review uses this accepted base and still has
+only the same five reader delta paths. The runtime remains checked-in Node24 and
+pinned pnpm11.28.4, as explicitly selected by Frank. Main integration preserves
+the peer's work and does not establish acceptance of this reader repair.
