@@ -410,9 +410,9 @@ async function main() {
     });
     await expect(prepare).toBeEnabled();
     await prepare.click();
-    await expect(page.getByRole("alert")).toContainText(
-      "may have used Google quota",
-    );
+    await expect(
+      page.getByRole("main", { name: "Chat", exact: true }).getByRole("alert"),
+    ).toContainText("may have used Google quota");
     assert.equal(attempts, 1);
     await expect(prepare).toBeDisabled();
     await page.reload();

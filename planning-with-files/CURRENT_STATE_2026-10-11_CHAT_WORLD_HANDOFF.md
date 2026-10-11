@@ -211,3 +211,26 @@ Updating the reviewable PR description caused GitHub's existing edited-event gat
 to replace initial db runs38180133050/38180133072 with38180214158/38180214167.
 The earlier pair is terminal cancelled, not an observation timeout or a manual
 restart. The same source revision is retained. No workflow trigger is removed.
+
+## Quota alert selector recovery
+
+The preceding requested-status turn gathered the terminal compiled failure and
+therefore supplied evidence that changed the next action. Current worktree,
+instruction hash and ten-path ownership were revalidated before this correction.
+At 2bb147c8196e828be75d09d8fc2aa1f1bf8be1ec, CI38180646713 is terminal SUCCESS:
+TypeScript114592431430, Lint114592431439, Build114592947893 and
+CIStatus114593608909 pass. Authenticated and independent acceptance remain skipped.
+
+Companion38180646722 / compiled114592297269 is terminal FAILURE. The actual log
+shows the quota alert assertion matched both the chat warning and Next.js's
+route announcer. The assertion is scoped to the named Chat main landmark; the
+quota text, disabled retry control, no-repeat request counts, reload, downloads,
+editor and all four mode checks are unchanged. This retains strict uniqueness
+inside the relevant user surface. The original failure remains available and
+does not establish acceptance of the later scenario steps.
+
+Fresh review-lite admission is HOLD: 4,746 MB free versus 6,144 MB required and
+27 task runtimes. No new local agent, build, browser, server, model or install
+was started. Ordinary source edits and small checks remain permitted. The full
+goal and both draft PRs remain unfinished; independent and real provider/private
+customer proof, production verification and broader creator/business work remain.
