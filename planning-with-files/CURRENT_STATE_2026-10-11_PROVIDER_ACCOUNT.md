@@ -320,3 +320,13 @@ Non-goals: production auth, secrets, database, billing, permissions, dependencie
 Acceptance criteria: preserve an occupied file; close/remove only a successfully allocated configuration; pass exact-source hosted settings acceptance; resolve alert277 through fresh security analysis.
 Verification: native three-case old/new regression, hosted CI/authenticated fixture, CodeQL result and exact-revision independent review.
 Rollback: revert this runner-only refinement through the owned lane; the earlier private-file race returns and must remain recorded as an open security finding.
+
+## Accepted generation baseline and remaining fixture scope
+
+Frank merged PR577 as 0dd501281f89f0612454b1200ba40f8fac5799f6. It includes the earlier donor Chat-instance repair and source-equivalent SDK regression/public-chat verifier. READY production deployment dpl_pn9b6gyZ8cNVjG4UD5YAcnU7pwLL reports that source. PR578 now contributes only the isolated settings runner/browser, private-file regression, CI wiring and this pickup. Application, generation and image-recovery source are preserved from accepted main.
+
+Premium Web OS adoption review retains the accepted account-epoch image recovery, image display/download, CORS fallback and mobile controls as app behavior. Visual doctrine, asset rights, paid-provider and customer-quality approval remain separate. The generation fixture's dependencies on install/lint/typecheck and its Luminor image test remain intact. The main pickup prefix and all other incoming files were checked for exact preservation; only the owned CI native-test line and pickup tail required conflict resolution.
+
+The initial preservation helper expected sparse-excluded files on disk and failed after resolving both conflicts. The merge committed before that check completed. A Git-object verifier subsequently confirmed all 19 other incoming source hashes, all three owned fixture sources and the main pickup prefix. It records the failure and correction without changing accepted application source.
+
+The private-file tests fail three cases against a7041809 and pass all three after the atomic descriptor repair. Hosted a7041809 settings evidence records nine real isolated logins, all three modes and zero AI POSTs. The corrected 9abe0519 run is a prior-source attempt after this main integration. Fresh CI/authenticated acceptance, security results and independent review must bind to the integrated head. CodeQL alert277 has not been manually dismissed.
