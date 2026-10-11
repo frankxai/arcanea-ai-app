@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
@@ -118,6 +119,19 @@ interface GeneratedImage {
 }
 
 export default function ImageForgePage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  if (token.actor === null)
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Loading your workspace…
+      </p>
+    );
+  return <ImageForgePageContent key={`${token.actor}:${token.revision}`} />;
+}
+
+function ImageForgePageContent() {
+  const { credentialScope } = useAuth();
   const [prompt, setPrompt] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("fantasy");
   const [selectedRatio, setSelectedRatio] = useState("1:1");
@@ -141,17 +155,22 @@ export default function ImageForgePage() {
 
   const handleGenerate = async () => {
     if (!prompt.trim() || isGenerating) return;
+    const token = credentialScope.get();
     setIsGenerating(true);
     setError(null);
     setGenerationLogs(["Requesting image generation…"]);
     try {
-      const response = await requestImages({
-        prompt: prompt.trim(),
-        style: selectedStyle,
-        aspectRatio: selectedRatio,
-        count: imageCount,
-      });
+      const response = await requestImages(
+        {
+          prompt: prompt.trim(),
+          style: selectedStyle,
+          aspectRatio: selectedRatio,
+          count: imageCount,
+        },
+        { scope: credentialScope, token },
+      );
       const data = await response.json();
+      if (!credentialScope.isCurrent(token)) return;
       if (!response.ok)
         throw new Error(
           typeof data.error === "string"
@@ -183,6 +202,7 @@ export default function ImageForgePage() {
       setSelectedImage(newImages[0]);
       setGenerationLogs(["Images returned by the generation service."]);
     } catch (error) {
+      if (!credentialScope.isCurrent(token)) return;
       setError(
         error instanceof Error
           ? error.message
@@ -190,7 +210,7 @@ export default function ImageForgePage() {
       );
       setGenerationLogs([]);
     } finally {
-      setIsGenerating(false);
+      if (credentialScope.isCurrent(token)) setIsGenerating(false);
     }
   };
 
@@ -575,6 +595,7 @@ export default function ImageForgePage() {
             {/* Input area */}
             <div className="flex-1 w-full relative">
               <textarea
+                aria-label="Image prompt"
                 ref={textareaRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}

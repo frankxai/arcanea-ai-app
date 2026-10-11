@@ -9,6 +9,7 @@
  * spectacle — motion is reserved for state changes that benefit from it.
  */
 
+import { useAuth } from "@/lib/auth/context";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -72,6 +73,14 @@ export function PageEditor({
   slug: string;
   initial: PageView;
 }) {
+  const { credentialScope } = useAuth();
+  const currentToken = credentialScope.get();
+  const [editorOwner, setEditorOwner] = useState<typeof currentToken | null>(
+    currentToken.actor?.startsWith("user:") ? currentToken : null,
+  );
+  if (!editorOwner && currentToken.actor?.startsWith("user:"))
+    setEditorOwner(currentToken);
+
   const router = useRouter();
   const reduce = useReducedMotion();
   const [title, setTitle] = useState(initial.title);
@@ -158,20 +167,25 @@ export function PageEditor({
   );
 
   const regenerateCover = useCallback(async () => {
+    const token = credentialScope.get();
     setCoverBusy(true);
     try {
       // Page covers require a hosted URL; inline bytes cannot be saved by Pages.
-      const res = await requestImages({
-        prompt:
-          `Editorial cover image for an article titled "${title}". ${summary}`.slice(
-            0,
-            500,
-          ),
-        count: 1,
-        aspectRatio: "16:9",
-        provider: "grok",
-      });
+      const res = await requestImages(
+        {
+          prompt:
+            `Editorial cover image for an article titled "${title}". ${summary}`.slice(
+              0,
+              500,
+            ),
+          count: 1,
+          aspectRatio: "16:9",
+          provider: "grok",
+        },
+        { scope: credentialScope, token },
+      );
       const data = await res.json();
+      if (!credentialScope.isCurrent(token)) return;
       const url = data?.images?.[0]?.url;
       if (
         res.ok &&
@@ -184,11 +198,12 @@ export function PageEditor({
         flash(data?.error || "Could not generate cover");
       }
     } catch {
+      if (!credentialScope.isCurrent(token)) return;
       flash("Could not generate cover");
     } finally {
-      setCoverBusy(false);
+      if (credentialScope.isCurrent(token)) setCoverBusy(false);
     }
-  }, [title, summary, flash]);
+  }, [credentialScope, title, summary, flash]);
 
   const save = useCallback(async () => {
     setSaving(true);
@@ -228,6 +243,14 @@ export function PageEditor({
     "w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-white/85 placeholder-white/25 transition-colors focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20";
   const iconBtn =
     "flex h-8 w-8 items-center justify-center rounded-md text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white/80 disabled:opacity-20 disabled:hover:bg-transparent";
+
+  if (editorOwner && !credentialScope.isCurrent(editorOwner))
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Your account changed. Reload this page to continue with the current
+        account.
+      </p>
+    );
 
   return (
     <LazyMotion features={domAnimation}>

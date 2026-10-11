@@ -108,6 +108,15 @@ async function main() {
         : undefined;
     return {
       kind,
+      category: /strict mode violation/i.test(error?.message || "")
+        ? "ambiguous-control"
+        : /not editable/i.test(error?.message || "")
+          ? "control-not-editable"
+          : /detached/i.test(error?.message || "")
+            ? "control-detached"
+            : /Target.*closed/i.test(error?.message || "")
+              ? "target-closed"
+              : undefined,
       scriptLine: match ? Number(match[1]) : null,
       expected: safeValue(error?.expected),
       actual: safeValue(error?.actual),
@@ -336,9 +345,10 @@ async function main() {
         authenticated = true;
         phase = "pending-image-admission";
         const prompt = `interrupt-fixture lighthouse ${mode.name}`;
-        const input = page.getByPlaceholder(
-          "Describe what you are creating (use @assets references)...",
-        );
+        const input = page.getByRole("textbox", {
+          name: "Image prompt",
+          exact: true,
+        });
         await input.fill(prompt);
         let pending = page.waitForResponse(
           (r) =>
@@ -661,12 +671,25 @@ async function main() {
       );
       assert.equal(foreign.status(), 403);
       phase = "second-account-balance-exhausted";
+      // Keep service-role table writes denied; use the actual privileged kernel.
       const emptied = await api(
-        `/rest/v1/billing_accounts?user_id=eq.${config.accounts[1].id}`,
+        "/rest/v1/rpc/billing_reserve_credits",
         config.admin,
-        { method: "PATCH", body: '{"balance":0}' },
+        {
+          method: "POST",
+          body: JSON.stringify({
+            p_user: config.accounts[1].id,
+            p_amount: 1000,
+            p_action: "image.standard",
+            p_reference: `fixture-depleted:${config.accounts[1].id}`,
+            p_metadata: { fixture: true },
+          }),
+        },
       );
-      assert.ok(emptied.ok);
+      assert.equal(emptied.status, 200);
+      const depletedAccount = await emptied.json();
+      assert.equal(depletedAccount.ok, true);
+      assert.equal(depletedAccount.balance, 0);
       const before = await state();
       phase = "depleted-account-no-submission";
       const denied = await context.request.post(

@@ -260,3 +260,45 @@ Exact SHA256 donor bindings:
 - `scripts/tests/provider-chat-instance.test.cjs`: `444fb461a926f93642581f348617ef64f00ac99a706615f8d89a048c427a6a3e`
 - `scripts/verify-voice-credentials-browser.cjs`: `8870dd018b2f4508303b4ca08f889f117ae7932f98b50add566b301a591e8341`
 - `planning-with-files/CURRENT_STATE_2026-10-11_PROVIDER_ACCOUNT.md`: `59a257a56b2a0f3485e77293ce0a9ee23c3e869b0f0c37ccfcb865e35d7f1cd9`
+
+## Combined hosted result and reproduced generation account race
+
+Full38123399814 ated3c808a03555b7d445955b84b0c6ad6bbe3e6f7 FAIL: Build,
+Install/Types/Lint and exact37-source Gemini3.1Pro static review PASS. The final
+text hash matches receipt/manifest bindings. Nine browser rows/zero async failures
+are retained: CSP, all3 cover modes, mobile Studio recovery/replay/download/CORS
+refusal and actual GoTrue A/B/A settings save/reopen PASS, six of nine. Desktop
+and reduced-motion Studio fail input refill after reload; the capture shows the
+Studio still open. Their raw exceptions remain private; cause is not established.
+The verifier now uses an explicitly named accessible Image prompt control rather
+than presentation placeholder text. The B denial reaches available-balance
+exhaustion: direct service-role PATCH fails because bypass-RLS does not grant table
+write privilege. No new table permission is granted; exhaustion uses the existing
+privileged billing_reserve_credits RPC with synthetic1000 credits and asserts
+actual zero balance. The succeeding API denial must still make no supplier call.
+Six render companions retain fixture provenance; no paid or production work.
+
+Lead reproduction overrides the static PASS as release evidence: the actual
+requestImages helper with mocked cookie actors reproduces an A completion clearing
+B's pending session key for identical inputs, followed by a fresh B retry key.
+The private reproducer uses zero network requests; no customer incident is claimed.
+The helper now requires a synchronous current authenticated scope/token, checks
+it before/after digest, before network and after receipt parsing, and keys retry
+storage by actor. Old epochs, including A-B-A, cannot clear keys or return results.
+All five browser generation clients provide the existing Auth epoch; async result
+updates reject stale tokens. Standalone image/Imagine state remounts on an account
+epoch change. Controlled Studio/Page editor data hold behind an account-change
+message while preserving the old local draft; current-account reload is required.
+Initial loading waits without consuming a prompt handoff. This does not establish
+a complete cross-client private-draft recovery/export journey.
+
+Legacy pending keys are copied into an actor slot without deleting unassigned
+records or changing the server's actor-bound operation identity. A per-actor
+adoption marker prevents a completed legacy operation replaying forever; future
+confirmed requests receive a fresh key. Native regressions prove stale completion
+cannot delete B's key, B retries reuse it, unavailable/null authority cannot submit,
+legacy recovery is preserved and confirmed legacy adoption permits a new operation.
+Request tests10/10, Luminor handoff3/3, fixture7/7 and SDK1/1 pass. Changed app lint
+passes without new warnings after render ownership uses conditional state rather
+than ref access. Fresh hosted types/build/browser and independent review remain
+required. No production merge, schema/provider/payment or account mutation.

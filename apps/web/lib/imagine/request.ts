@@ -1,21 +1,42 @@
+import type { createCredentialScope } from "../ai/provider-preferences";
+
+export type GenerationAuthority = {
+  scope: ReturnType<typeof createCredentialScope>;
+  token: ReturnType<ReturnType<typeof createCredentialScope>["get"]>;
+};
+
+function assertGenerationAuthority(authority: GenerationAuthority) {
+  if (
+    !authority?.token?.actor?.startsWith("user:") ||
+    !authority.scope.isCurrent(authority.token)
+  )
+    throw new Error(
+      "Your account changed. Sign in and retry from the current account.",
+    );
+}
+
 /** A retry retains its request key across reloads without storing prompts or images. */
 export async function requestImages(
   input: Record<string, unknown>,
+  authority: GenerationAuthority,
 ): Promise<Response> {
-  return requestGeneration("image", "/api/imagine/generate", input);
+  return requestGeneration("image", "/api/imagine/generate", input, authority);
 }
 
 export async function requestAnimation(
   input: Record<string, unknown>,
+  authority: GenerationAuthority,
 ): Promise<Response> {
-  return requestGeneration("video", "/api/imagine/animate", input);
+  return requestGeneration("video", "/api/imagine/animate", input, authority);
 }
 
 async function requestGeneration(
   kind: "image" | "video",
   endpoint: string,
   input: Record<string, unknown>,
+  authority: GenerationAuthority,
 ): Promise<Response> {
+  assertGenerationAuthority(authority);
   const body = JSON.stringify(input);
   const digest = await crypto.subtle.digest(
     "SHA-256",
@@ -24,10 +45,20 @@ async function requestGeneration(
   const fingerprint = Array.from(new Uint8Array(digest), (b) =>
     b.toString(16).padStart(2, "0"),
   ).join("");
-  const slot = `arcanea:${kind}-request:${fingerprint}`;
+  assertGenerationAuthority(authority);
+  const legacySlot = `arcanea:${kind}-request:${fingerprint}`;
+  const slot = `arcanea:${kind}-request:v2:${encodeURIComponent(authority.token.actor!)}:${fingerprint}`;
+  const adoptionSlot = `arcanea:${kind}-request:legacy-adopted:${encodeURIComponent(authority.token.actor!)}:${fingerprint}`;
+  let adoptedLegacy = false;
   let key: string | null = null;
   try {
     key = sessionStorage.getItem(slot);
+    // Existing server operations are user-bound. Copy a legacy retry key without
+    // deleting it; changing the key could duplicate an uncertain paid request.
+    if (!key && sessionStorage.getItem(adoptionSlot) !== "1") {
+      key = sessionStorage.getItem(legacySlot);
+      adoptedLegacy = key !== null;
+    }
   } catch {
     throw new Error(
       "Enable browser session storage to preserve generation retries.",
@@ -38,11 +69,17 @@ async function requestGeneration(
     sessionStorage.setItem(slot, key);
     if (sessionStorage.getItem(slot) !== key)
       throw new Error("Request key was not saved");
+    if (adoptedLegacy) {
+      sessionStorage.setItem(adoptionSlot, "1");
+      if (sessionStorage.getItem(adoptionSlot) !== "1")
+        throw new Error("Legacy adoption was not saved");
+    }
   } catch {
     throw new Error(
       "Enable browser session storage to preserve generation retries.",
     );
   }
+  assertGenerationAuthority(authority);
   const response = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -52,6 +89,7 @@ async function requestGeneration(
     .clone()
     .json()
     .catch(() => null);
+  assertGenerationAuthority(authority);
   const confirmed =
     response.ok &&
     (kind === "video"
