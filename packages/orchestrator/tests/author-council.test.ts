@@ -61,11 +61,31 @@ async function fixtureBook(
   const preload = process.env.ARCANEA_COUNCIL_SOURCE_REGISTER
     ? `await import(${JSON.stringify(process.env.ARCANEA_COUNCIL_SOURCE_REGISTER)});`
     : "";
+  let loadServer = `const { createMcpServer } = await import(${JSON.stringify(server)});`;
+  if (!preload) {
+    const emittedAvailable = await fs.access(new URL(server)).then(
+      () => true,
+      (error) => {
+        if (error.code !== "ENOENT") throw error;
+        return false;
+      },
+    );
+    // Root orchestrator tests precede the optional sibling build; exercise real source there.
+    if (!emittedAvailable) {
+      const api = pathToFileURL(require.resolve("tsx/esm/api")).href;
+      const source = new URL(
+        "../../author-council/src/mcp/server.ts",
+        import.meta.url,
+      ).href;
+      loadServer = `const { tsImport } = await import(${JSON.stringify(api)});
+const { createMcpServer } = await tsImport(${JSON.stringify(source)}, import.meta.url);`;
+    }
+  }
   const entry = path.join(book, "installed council & fixture.mjs");
   await fs.writeFile(
     entry,
     `${preload}
-const { createMcpServer } = await import(${JSON.stringify(server)});
+${loadServer}
 const { StdioServerTransport } = await import(${JSON.stringify(transport)});
 let calls = 0;
 globalThis.fetch = async (url, options) => {
