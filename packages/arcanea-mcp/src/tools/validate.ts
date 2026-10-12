@@ -8,22 +8,60 @@ interface ValidationIssue {
 }
 
 const canonicalNames = {
-  guardians: ["Lyssandria", "Leyla", "Draconia", "Maylinn", "Alera", "Lyria", "Aiyami", "Elara", "Ino", "Shinkami"],
-  godbeasts: ["Kaelith", "Veloura", "Draconis", "Laeylinn", "Otome", "Yumiko", "Sol", "Vaelith", "Kyuro"],
+  guardians: [
+    "Lyssandria",
+    "Leyla",
+    "Draconia",
+    "Maylinn",
+    "Alera",
+    "Lyria",
+    "Aiyami",
+    "Elara",
+    "Ino",
+    "Shinkami",
+  ],
+  godbeasts: [
+    "Kaelith",
+    "Veloura",
+    "Draconis",
+    "Laeylinn",
+    "Otome",
+    "Yumiko",
+    "Sol",
+    "Vaelith",
+    "Kyuro",
+  ],
   elements: ["Fire", "Water", "Earth", "Wind", "Void", "Spirit"],
-  houses: ["Lumina", "Nero", "Pyros", "Aqualis", "Terra", "Ventus", "Synthesis"],
+  houses: [
+    "Lumina",
+    "Nero",
+    "Pyros",
+    "Aqualis",
+    "Terra",
+    "Ventus",
+    "Synthesis",
+  ],
 };
 
 const incorrectTerms: Record<string, string> = {
   "light element": "Fire's creation aspect (Light is not a separate element)",
   "shadow element": "Corrupted Void (Shadow is Void without Spirit)",
-  "darkness is evil": "Nero is NOT evil - Shadow is the Dark Lord's perversion of Void",
+  "darkness is evil":
+    "Nero is NOT evil - Shadow is the Dark Lord's perversion of Void",
   "dark side": "Consider using 'Shadow' or 'Corrupted Void' for evil aspects",
 };
 
 const guardianGateMap: Record<string, number> = {
-  lyssandria: 1, leyla: 2, draconia: 3, maylinn: 4, alera: 5,
-  lyria: 6, aiyami: 7, elara: 8, ino: 9, shinkami: 10,
+  lyssandria: 1,
+  leyla: 2,
+  draconia: 3,
+  maylinn: 4,
+  alera: 5,
+  lyria: 6,
+  aiyami: 7,
+  elara: 8,
+  ino: 9,
+  shinkami: 10,
 };
 
 export async function validateCanon(

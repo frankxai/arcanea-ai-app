@@ -96,7 +96,9 @@ test("reverse declarations preserve Guardian ownership", async () => {
 });
 
 test("active guards declarations retain the existing checker contract", async () => {
-  const correct = await screen("Lyssandria guards Gate 1. Shinkami guards Gate 10.");
+  const correct = await screen(
+    "Lyssandria guards Gate 1. Shinkami guards Gate 10.",
+  );
   assert.equal(correct.valid, true);
   assert.equal(correct.checkedAssociations, 2);
   const wrong = await screen("Lyssandria guards Gate 5 with great power.");
