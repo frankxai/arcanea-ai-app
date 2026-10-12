@@ -153,6 +153,26 @@ Native cleanup succeeded and three captures remain retained. Independent review
 attempts returned an HTTP400 and an invalid response envelope; neither is an
 accepted review. Those raw responses remain preserved without a paid fallback.
 
+Source `d53b69fa2858998219eeae92de29b91dcb6d0561` passed full native CI,
+CodeQL and all four Reading progress jobs in run `38265360831`. Real acceptance
+confirmed desktop and touch retry into the same rows, 375px document/client
+width, a fully visible 1px actual article marker, keyboard scrolling of long
+equations, effective RLS denial and anonymous behavior. Five authenticated
+originals were viewed; nine leaf captures match previously inspected pixels.
+Native cleanup succeeded. The 21-file review returned WARN1 with a literal-bound
+P1 about article change. Inspection shows the effect already depends on both
+article props and retires/disconnects/removes the old observer; replacement
+effects reset their local guards. The warning remains retained, with no supported
+blocking finding as stated. Dedicated full-app SPA interleavings remain unproved.
+
+Actual mobile Read capture exposed the sticky breadcrumb beneath the global
+navigation. The refinement lets the breadcrumb scroll with the article and
+requires it to be outside the viewport in each deep-reading capture. This avoids
+changing the shared global navbar or guessing its measured height. The final
+source needs renewed review and hosted proof. The shared floating assistant can
+overlap lower body copy near the viewport edge; completion/retry controls passed
+actual hit testing. That general overlay remains outside this nine-file scope.
+
 The exact-head Dots review reported a P1 about stale pages, lost diagnostics and
 continued execution after failure. Its source quote bound correctly; inspection
 shows that the catch preserves the original error and stage, throws immediately,

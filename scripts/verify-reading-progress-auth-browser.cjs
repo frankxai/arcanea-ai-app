@@ -156,7 +156,22 @@ async function main() {
     );
   }
   async function capture(target, name, reason, locator) {
+    await target.evaluate(async () => {
+      await document.fonts.ready;
+    });
     await locator.scrollIntoViewIfNeeded();
+    const breadcrumb = await target
+      .getByRole("navigation", { name: "Breadcrumb", exact: true })
+      .boundingBox();
+    assert.ok(breadcrumb && breadcrumb.y + breadcrumb.height <= 0);
+    receipt.readingBreadcrumbs = [
+      ...(receipt.readingBreadcrumbs || []),
+      {
+        capture: name,
+        top: breadcrumb.y,
+        bottom: breadcrumb.y + breadcrumb.height,
+      },
+    ];
     const file = `${config.output}/${name}.png`;
     await target.screenshot({ path: file, fullPage: false });
     const record = {

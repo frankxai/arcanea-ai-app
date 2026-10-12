@@ -129,7 +129,7 @@ export default async function TextPage({ params }: Props) {
       </a>
 
       {/* Header Bar */}
-      <header className="sticky top-0 z-40 border-b border-cosmic-border bg-cosmic-deep/90 backdrop-blur-lg">
+      <header className="border-b border-cosmic-border bg-cosmic-deep/90 backdrop-blur-lg">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <nav
             className="flex items-center gap-2 text-sm text-text-muted"
