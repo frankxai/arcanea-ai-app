@@ -47,6 +47,8 @@ jobs:
         run: pnpm --filter @arcanea/core --filter @arcanea/cli run build
       - name: Verify existing commands without shell parsing
         run: node --test packages/cli/tests/commands.test.mjs
+      - name: Verify command metadata without shell parsing
+        run: node --test packages/cli/tests/metadata.test.mjs
       - name: Verify source and emitted installer behavior
         run: node --test packages/cli/tests/opencode.test.mjs
       - name: Verify emitted installer behavior

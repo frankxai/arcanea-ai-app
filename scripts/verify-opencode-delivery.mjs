@@ -275,6 +275,7 @@ try {
     readFileSync(join(installedCli, "../package.json"), "utf8"),
   );
   assert.equal(installedManifest.name, cliMetadata.name);
+  assert.deepEqual(installedManifest.bin, cliMetadata.bin);
   assert.equal(installedManifest.dependencies, undefined);
   assert.equal(installedManifest.scripts, undefined);
   assert.equal(
@@ -284,6 +285,16 @@ try {
     }).trim(),
     cliMetadata.version,
   );
+  assert.equal(
+    run(
+      "installed-bin-version",
+      pnpm[0],
+      [...pnpm.slice(1), "exec", "arcanea", "--version"],
+      { cwd: consumer, env },
+    ).trim(),
+    cliMetadata.version,
+  );
+  receipt.installedCliBinVerified = true;
   // The core binding also serves the existing overlays. Exercise their actual
   // minimal installers from the dependency-free packed executable.
   receipt.legacyOverlays = [];
