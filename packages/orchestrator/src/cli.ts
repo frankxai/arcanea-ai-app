@@ -77,6 +77,7 @@ program
   .description("Run the Author Council deliberation over a chapter.")
   .argument("<bookDir>", "Directory of the book")
   .argument("<chapterPath>", "Relative path to the chapter markdown file")
+  .option("--mcp-entry <path>", "Trusted already-installed Author Council MCP JavaScript entry")
   .action(authorCouncilCommand);
 
 program
