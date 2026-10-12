@@ -4,11 +4,26 @@ import { constants, promises as fs } from "node:fs";
 import path from "node:path";
 import { MANIFEST_FILE } from "./manifest.mjs";
 
-const SKIP_DIRS = new Set(["node_modules", ".git", "dist", ".turbo", ".next"]);
+import {
+  pathError,
+  safeRelative,
+  existing,
+  directory,
+  regularFile,
+  destination,
+} from "./world-paths.mjs";
+import { readRoot, readFile, readDirectory } from "./world-reads.mjs";
+import {
+  declarations,
+  sourcePath,
+  sourceMetadata,
+  uniqueSourcePaths,
+} from "./source-files.mjs";
 
 /** Minimal frontmatter reader — only the fields the standard cares about. */
 export function parseFrontmatter(text) {
-  const m = /^---\n([\s\S]*?)\n---\n?/.exec(text);
+  text = text.replace(/^\uFEFF+/, "").replace(/\r\n/g, "\n");
+  const m = /^---[ \t]*\n([\s\S]*?)\n---[ \t]*(?:\n|$)/.exec(text);
   if (!m) return { data: {}, body: text };
   const data = {};
   for (const line of m[1].split("\n")) {
@@ -24,125 +39,57 @@ export function parseFrontmatter(text) {
   return { data, body: text.slice(m[0].length) };
 }
 
-async function walk(root, rel = "") {
+async function declaredFiles(root, relative) {
+  safeRelative(relative);
+  const checked = await destination(root, relative, false, "any");
+  if (!checked.entry) return [];
+  if (checked.entry.isFile()) return [relative];
   const out = [];
-  const dir = path.join(root, rel);
-  let entries;
-  try {
-    entries = await fs.readdir(dir, { withFileTypes: true });
-  } catch {
-    return out;
-  }
-  for (const ent of entries) {
-    if (ent.isDirectory()) {
-      if (SKIP_DIRS.has(ent.name)) continue;
-      out.push(...(await walk(root, path.join(rel, ent.name))));
-    } else if (ent.isFile()) {
-      out.push(path.join(rel, ent.name).split(path.sep).join("/"));
-    }
+  for (const name of await readDirectory(root, relative)) {
+    const child = `${relative}/${name}`;
+    if (!sourcePath(child)) continue;
+    out.push(...(await declaredFiles(root, child)));
   }
   return out;
 }
 
-/** Read a world dir into { dir, manifest, files:[{path, bytes, isText, visibility}] }. */
+/** Read only declared creator sources, without Git or private tooling traversal. */
 export async function readWorld(dir) {
-  const manifestRaw = await fs.readFile(path.join(dir, MANIFEST_FILE), "utf8");
-  const manifest = JSON.parse(manifestRaw);
-  const paths = await walk(dir);
-  const files = [];
-  for (const p of paths) {
-    const bytes = await fs.readFile(path.join(dir, p));
-    const isText = /\.(md|mdx|json|txt|ya?ml|mjs|js|ts|csv|svg)$/i.test(p);
-    let visibility = "public";
-    if (isText && /\.(md|mdx)$/i.test(p)) {
-      const { data } = parseFrontmatter(bytes.toString("utf8"));
-      if (data.visibility) visibility = data.visibility;
-    }
-    files.push({ path: p, bytes, isText, visibility });
+  const root = await readRoot(dir);
+  const manifestRaw = await readFile(root, MANIFEST_FILE);
+  let manifest;
+  try {
+    manifest = JSON.parse(manifestRaw.toString("utf8").replace(/^\uFEFF/, ""));
+  } catch {
+    throw Object.assign(new Error("World manifest is not valid JSON."), {
+      code: "ERR_ARCANEA_WORLD_MANIFEST",
+    });
   }
-  return { dir, manifest, files };
+  const paths = new Set();
+  for (const selected of declarations(manifest)) {
+    for (const file of await declaredFiles(root, selected.path))
+      paths.add(file);
+  }
+  const selected = [...paths].sort();
+  uniqueSourcePaths(selected);
+  const files = [];
+  for (const relative of selected) {
+    const bytes = await readFile(root, relative);
+    const file = {
+      path: relative,
+      bytes,
+      isText: /\.(md|mdx|json|txt|ya?ml|mjs|js|ts|csv|svg)$/i.test(relative),
+    };
+    const metadata = sourceMetadata(file);
+    files.push({ ...file, visibility: metadata.visibility });
+  }
+  return { dir: root, manifest, files };
 }
 
 export async function writeManifest(dir, manifest) {
   await writeFiles(dir, [
     { path: MANIFEST_FILE, bytes: JSON.stringify(manifest, null, 2) + "\n" },
   ]);
-}
-
-function pathError(message) {
-  return Object.assign(new Error(message), { code: "ERR_ARCANEA_WORLD_PATH" });
-}
-
-function safeRelative(value) {
-  if (
-    typeof value !== "string" ||
-    !value ||
-    /[\x00-\x1f\x7f<>:"|?*\\]/.test(value) ||
-    value
-      .split("/")
-      .some(
-        (part) =>
-          !part ||
-          part === "." ||
-          part === ".." ||
-          /[. ]$/.test(part) ||
-          /^(con|prn|aux|nul|com[1-9¹²³]|lpt[1-9¹²³])(?:\.|$)/i.test(part),
-      )
-  ) {
-    throw pathError(
-      "Use a portable relative world-file path without traversal or device names.",
-    );
-  }
-  return value;
-}
-
-async function existing(file) {
-  try {
-    return await fs.lstat(file);
-  } catch (error) {
-    if (error.code !== "ENOENT") throw error;
-    return null;
-  }
-}
-
-function directory(entry) {
-  if (entry.isSymbolicLink() || !entry.isDirectory()) {
-    throw pathError(
-      "World writes cannot follow a symbolic link/junction or use a file as a directory.",
-    );
-  }
-}
-
-function regularFile(entry) {
-  if (entry.isSymbolicLink() || !entry.isFile() || entry.nlink !== 1) {
-    throw pathError(
-      "World writes require a regular file with no symbolic or additional hard links.",
-    );
-  }
-}
-
-async function destination(root, relative, makeParents = false) {
-  directory(await fs.lstat(root));
-  const parts = relative.split("/");
-  let current = root;
-  for (let i = 0; i < parts.length; i++) {
-    current = path.join(current, parts[i]);
-    let entry = await existing(current);
-    if (i === parts.length - 1) {
-      if (entry) regularFile(entry);
-      return { file: current, entry };
-    }
-    if (!entry) {
-      if (!makeParents) return { file: path.join(root, ...parts), entry: null };
-      try {
-        await fs.mkdir(current);
-      } catch (error) {
-        if (error.code !== "EEXIST") throw error;
-      }
-      entry = await fs.lstat(current);
-    }
-    directory(entry);
-  }
 }
 
 function alreadyExists() {

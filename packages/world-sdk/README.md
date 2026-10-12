@@ -18,7 +18,7 @@ Spec: `arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md` · Schema: `arcanea-ecosys
 | `harness`     | agents read assignments from the manifest, write canonical folders, commit                                    |
 | `index-build` | world → world-graph nodes + embed-ready chunks (repo → index, one way)                                        |
 | `webhook`     | framework-agnostic push handler with HMAC verify                                                              |
-| `proof`       | invisible wallet + mint adapters; `claimWorldProof` appends `provenance[]`                                    |
+| `proof`       | tagged local proposals and mock adapters; profile-dependent claims refuse                                     |
 | `evolution`   | private memories in .arcanea/memories and deterministic summaries; legacy canon-promotion entry points reject |
 
 ## CLI
@@ -40,21 +40,26 @@ import {
   buildIndex,
   remember,
 } from "@arcanea/world-sdk";
-import { claimWorldProof, mockChain } from "@arcanea/world-sdk/proof";
 
 const { manifest } = await createWorld(
   "./my-world",
   "a drowned city where memory is currency",
 );
 const index = buildIndex(await readWorld("./my-world")); // repo → index
-await claimWorldProof({ dir: "./my-world", adapter: mockChain("solana") }); // sovereignty button
 await remember("./my-world", "She opened the tide-gate for a dying diver.", {
   characterId: "sister-lethe",
   salience: 0.9,
 });
 ```
 
-Swap `mockChain()` for a real Solana (Metaplex/Helius) or EVM (thirdweb) adapter — same interface.
+`claimWorldProof(...)` now always rejects with
+`WORLD_HASH_PROFILE_REQUIRES_REVIEW` before accessing caller options, the world,
+wallet/mint adapters or provenance. This includes mock adapters and CLI `claim`.
+The declared-source hash profile changes which files participate, so existing
+untagged proof records cannot safely describe it. `computeProof(...)` produces
+a local proposal tagged with `hashProfile`; it grants no claim, rights or canon
+approval. The shared contract owner must accept a profile-aware contract before
+claims can resume. No approval flag can re-enable this claim helper.
 
 The legacy `evolveCharacter(...)` and `evolve(...)` exports remain callable but
 always reject with `ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED` before accessing the
@@ -182,8 +187,51 @@ changes can still interrupt a batch after earlier files have been written.
 
 World files remain editable through the general APIs. Containment does not
 approve canon, authorize a tenant, constrain an arbitrary Node process, or
-implement signed human promotion. Tracked/source-declared hashing, extension
-validation and the remaining graph/promotion work in issue #283 are open.
+implement signed human promotion. Extension validation and the remaining
+graph/promotion work in issue #283 are open.
+
+## Declared sources and private reads
+
+`readWorld(dir)` selects the manifest's `content` roots, `README.md`, and local
+license/royalty/cover/audio pointers. It supports ordinary folders without Git.
+Unrelated root notes, hidden files and tooling directories are omitted, including
+hidden/tooling files inside a declared root. Missing declarations contribute no
+file bytes; this does not establish that a declared policy or asset exists.
+HTTP(S) pointers are metadata only and are never downloaded. Files selected by
+multiple declarations participate once. Aliases, traversal, reserved names and
+private/tooling declarations refuse.
+
+`contentHash` and `buildIndex` apply the same declarations to caller-supplied
+file arrays. Non-public worlds refuse these public operations. Private/unlisted
+documents and `CANDIDATE`, `STAGING` or `DRAFT` documents are excluded. Frontmatter
+uses `---` fences and flat scalar fields, with BOM/CRLF, quoted keys and comments
+supported. Duplicate keys, invalid visibility/status, nested/compound YAML,
+aliases and incomplete headers fail with `ERR_ARCANEA_SOURCE_METADATA`. Complex
+metadata must be rewritten to the documented profile before publication;
+unsupported syntax is never silently classified as public. Original file bytes
+are retained; index text strips supported headers and normalizes BOM/CRLF.
+
+The exported `CONTENT_HASH_PROFILE` is
+`arcanea-world-sdk/declared-public-v1`, reused from the existing draft #499 proposal.
+The profile marker participates in the hash. This is a breaking hash change:
+recompute local snapshots and retain old hashes with their original inputs.
+It is not approval of the World Repo Standard's onchain proof contract.
+
+World and memory reads reject redirected roots/ancestors/directories, file
+symlinks and additional hard links. File bytes are read through the same checked
+open handle. An absent `.arcanea/memories` directory returns an empty list;
+permission/I/O failures propagate, and invalid JSON or memory fields raise
+`ERR_ARCANEA_MEMORY_INVALID` without including record prose. Safe legacy JSON
+filenames and equal-timestamp events remain readable. Invalid new memory input
+refuses before creating a record. A creator can retain and repair a corrupt
+record, then retry; the reader never deletes or repairs it automatically.
+`remember` checks the existing store before appending. A pre-existing corrupt
+record therefore cannot turn a refused call into a duplicate append on retry.
+
+These checks require a creator-owned, stable filesystem and one writer. A hostile
+process that swaps ancestors during I/O still requires OS isolation. This local
+boundary does not establish tenant authorization, Git-host confidentiality,
+signed human promotion, package publication or customer acceptance.
 
 ## Scoped local commits
 

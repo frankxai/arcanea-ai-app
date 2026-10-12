@@ -14,7 +14,7 @@ import { contentHash } from "../src/contenthash.mjs";
 import { buildIndex } from "../src/index-build.mjs";
 import { handlePush, verifySignature } from "../src/webhook.mjs";
 import { assignmentsFor, addCharacter } from "../src/harness.mjs";
-import { claimWorldProof, mockChain } from "../src/proof.mjs";
+import { claimWorldProof } from "../src/proof.mjs";
 import {
   recordMemory,
   listMemories,
@@ -147,34 +147,34 @@ test("push webhook rebuilds the index (with signature verification)", async () =
   assert.equal(persisted.meta.repo, "frankx/drowned");
 });
 
-test("claim proof appends provenance; content hash stable across claim", async () => {
+test("new-profile claims refuse without changing provenance or the public hash", async () => {
   const dir = await tmp();
   await createWorld(dir, SENTENCE, opts);
 
   const before = await readWorld(dir);
   const hashBefore = contentHash(before.files, before.manifest);
 
-  const res = await claimWorldProof({
-    dir,
-    adapter: mockChain("solana"),
-    now: NOW,
+  await assert.rejects(claimWorldProof({ dir, now: NOW }), {
+    code: "WORLD_HASH_PROFILE_REQUIRES_REVIEW",
   });
-  assert.match(res.contentHash, /^sha256:[0-9a-f]{64}$/);
-  assert.equal(res.entry.chain, "solana");
-  assert.equal(res.entry.standard, "metaplex-core");
-  assert.equal(res.manifest.provenance.length, 1);
-  assert.ok(res.wallet.startsWith("So1"), "embedded wallet minted");
 
   const after = await readWorld(dir);
   const hashAfter = contentHash(after.files, after.manifest);
   assert.equal(
     hashBefore,
     hashAfter,
-    "provenance + wallet excluded from content hash",
+    "refusal preserves the public content hash",
   );
-  assert.ok(
-    validateManifest(after.manifest).valid,
-    "manifest valid after claim",
+  assert.deepEqual(after.manifest, before.manifest);
+  assert.equal(
+    contentHash(before.files, {
+      ...before.manifest,
+      creator: { ...before.manifest.creator, wallet: "local-fixture-wallet" },
+      provenance: [{ contentHash: "historical-fixture" }],
+      snapshot: { ipfs: "local-fixture" },
+    }),
+    hashBefore,
+    "volatile provenance/snapshot/wallet metadata remains excluded",
   );
 });
 
