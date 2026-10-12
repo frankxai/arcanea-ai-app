@@ -4,15 +4,11 @@
 import { promises as fs } from "node:fs";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
+import { writeFiles } from "./fs-world.mjs";
 
 const MEM_DIR = ".arcanea/memories";
 
-async function ensureDir(d) {
-  await fs.mkdir(d, { recursive: true });
-}
-
 export async function recordMemory(dir, mem) {
-  await ensureDir(path.join(dir, MEM_DIR));
   const ts = mem.ts || new Date().toISOString();
   const rec = {
     ts,
@@ -27,10 +23,15 @@ export async function recordMemory(dir, mem) {
   // Multiple events can share a timestamp. Keep the timestamp in the record,
   // not in an overwrite-prone filename; exclusive creation preserves each event.
   const fname = `${randomUUID()}.json`;
-  await fs.writeFile(
-    path.join(dir, MEM_DIR, fname),
-    JSON.stringify(rec, null, 2) + "\n",
-    { flag: "wx" },
+  await writeFiles(
+    dir,
+    [
+      {
+        path: `${MEM_DIR}/${fname}`,
+        bytes: JSON.stringify(rec, null, 2) + "\n",
+      },
+    ],
+    { exclusive: true },
   );
   return { path: `${MEM_DIR}/${fname}`, record: rec };
 }

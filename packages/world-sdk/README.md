@@ -153,3 +153,34 @@ Its hashes establish byte identity and parent relationships, not literary qualit
 or whether a source claim is true. The legacy `evolve` helpers are blocked;
 general world writers, signed human promotion and the broader safety work in
 issue #283 remain open.
+
+## World-file writes
+
+`writeFiles(dir, files)` now validates every relative path and byte payload before
+changing the world. Use `/` between path segments. Traversal, absolute paths,
+Windows drive/device/stream names, empty segments and trailing dots or spaces are
+refused with `ERR_ARCANEA_WORLD_PATH`. A file cannot also be a parent directory
+within the same batch.
+
+The selected root must be an actual directory, rather than a symlink/junction;
+use its canonical directory path. Existing directory redirects, file symlinks,
+non-file targets and files with additional hard links are refused. Existing files
+are opened without truncation, then checked through the open handle and path
+before writing. The same checks protect `writeManifest`, harness character/lore/
+quest writes and private memory capture.
+
+Ordinary writes may replace an existing regular file. Use
+`writeFiles(dir, files, { exclusive: true })` to require new files; an existing
+target or duplicate batch path fails with `EEXIST`. Memory capture retains this
+exclusive creation behavior.
+
+These safeguards assume a creator-owned folder and a single trusted filesystem
+writer. They do not provide an operating-system sandbox against a process that
+can concurrently replace ancestor directories or add hard links. Batch input and
+existing-path checks happen before writes; disk errors or later filesystem
+changes can still interrupt a batch after earlier files have been written.
+
+World files remain editable through the general APIs. Containment does not
+approve canon, authorize a tenant, constrain an arbitrary Node process, or
+implement signed human promotion. Tracked/source-declared hashing, exact Git
+staging, commit-failure handling and the remaining work in issue #283 are open.
