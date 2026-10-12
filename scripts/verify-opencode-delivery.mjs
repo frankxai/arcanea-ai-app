@@ -385,8 +385,10 @@ try {
   assert.equal(basename(dirname(dataDirectory)), ".arcanea");
   // Bun can expand Windows 8.3 names while Node keeps the caller's spelling.
   // Match the existing physical project, before the data directory is created.
-  const dataProject = statSync(resolve(dataDirectory, "..", ".."));
-  const expectedProject = statSync(project);
+  const dataProject = statSync(resolve(dataDirectory, "..", ".."), {
+    bigint: true,
+  });
+  const expectedProject = statSync(project, { bigint: true });
   assert.equal(dataProject.dev, expectedProject.dev);
   assert.equal(dataProject.ino, expectedProject.ino);
   const statuses = run("native-mcp-connection", binary, ["mcp", "list"], {
