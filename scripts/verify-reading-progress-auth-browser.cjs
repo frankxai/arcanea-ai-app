@@ -445,6 +445,72 @@ async function main() {
       "375px reduced-motion Library restores the real authenticated owner's completion.",
       readStatus(mobile),
     );
+    const mobileRetryContext = await makeContext(true);
+    const mobileRetry = await mobileRetryContext.newPage();
+    page = mobileRetry;
+    let mobileSaves = 0,
+      mobileSaveFailure = null;
+    await mobileRetryContext.route(
+      "**/rest/v1/reading_progress?**",
+      async (route) => {
+        if (route.request().method() !== "POST") return route.continue();
+        try {
+          mobileSaves++;
+          assert.equal(
+            route.request().postDataJSON().user_id,
+            config.accounts[1].id,
+          );
+          const response = await route.fetch({ timeout: 10000, maxRetries: 0 });
+          assert.ok([200, 201].includes(response.status()));
+          if (mobileSaves === 1) return route.abort("failed");
+          await route.fulfill({ response });
+        } catch (error) {
+          mobileSaveFailure = redact(error.message);
+          await route.abort("failed");
+        }
+      },
+    );
+    await login(mobileRetry, config.accounts[1]);
+    await expect(button(mobileRetry, "Mark as read")).toBeEnabled();
+    // The actual end-of-article sentinel, rather than a mocked observer, starts
+    // completion when the mobile reader reaches the bottom.
+    await mobileRetry.evaluate(() =>
+      window.scrollTo(0, document.documentElement.scrollHeight),
+    );
+    await expect(button(mobileRetry, "Try saving again")).toBeEnabled();
+    await expect(readStatus(mobileRetry)).toHaveCount(0);
+    const mobileButton = button(mobileRetry, "Try saving again");
+    assert.ok((await mobileButton.boundingBox()).height >= 44);
+    assert.equal(mobileSaveFailure, null);
+    await capture(
+      mobileRetry,
+      "mobile-save-retry",
+      "Real mobile end-of-article save commits before its acknowledgement is dropped; the visible retry remains available at 375px.",
+      mobileButton,
+    );
+    await mobileButton.tap();
+    await expect(readStatus(mobileRetry)).toBeVisible();
+    assert.equal(mobileSaveFailure, null);
+    assert.equal(mobileSaves, 2);
+    const mobileRows = await clients[1]
+      .from("reading_progress")
+      .select("id,progress_percent")
+      .eq("text_slug", textSlug);
+    assert.equal(mobileRows.error, null);
+    assert.deepEqual(mobileRows.data, [
+      { id: own.data.id, progress_percent: 100 },
+    ]);
+    assert.equal((await checkedRows()).id, firstRow.id);
+    const mobileGeometry = await mobileRetry.evaluate(() => ({
+      width: innerWidth,
+      documentWidth: document.documentElement.scrollWidth,
+    }));
+    assert.ok(mobileGeometry.documentWidth <= mobileGeometry.width);
+    receipt.mobileSaves = mobileSaves;
+    receipt.mobileGeometry = mobileGeometry;
+    receipt.checks.push(
+      "The single mobile tracker uses real IntersectionObserver completion; lost acknowledgement exposes a 44px touch retry, one B row is confirmed and A remains unchanged",
+    );
     const guestContext = await makeContext(true);
     const guest = await guestContext.newPage();
     await guest.goto(config.base + article);

@@ -293,11 +293,11 @@ export default async function TextPage({ params }: Props) {
           </main>
 
           {/* Sidebar */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-8">
+          <aside>
+            <div className="space-y-8 lg:sticky lg:top-24">
               {/* Table of Contents */}
               {tocHeadings.length > 0 && (
-                <div className="rounded-xl border border-cosmic-border bg-cosmic-surface p-6">
+                <div className="hidden rounded-xl border border-cosmic-border bg-cosmic-surface p-6 lg:block">
                   <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-atlantean-teal">
                     Contents
                   </h2>
@@ -323,7 +323,7 @@ export default async function TextPage({ params }: Props) {
 
               {/* Related Texts */}
               {relatedTexts.length > 0 && (
-                <div className="rounded-xl border border-cosmic-border bg-cosmic-surface p-6">
+                <div className="hidden rounded-xl border border-cosmic-border bg-cosmic-surface p-6 lg:block">
                   <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-gold-bright">
                     Related Texts
                   </h2>
@@ -351,7 +351,7 @@ export default async function TextPage({ params }: Props) {
               )}
 
               {/* Text Stats */}
-              <div className="rounded-xl border border-cosmic-border bg-cosmic-surface p-6">
+              <div className="hidden rounded-xl border border-cosmic-border bg-cosmic-surface p-6 lg:block">
                 <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-text-muted">
                   Details
                 </h2>
@@ -386,7 +386,7 @@ export default async function TextPage({ params }: Props) {
               {/* Back to Collection */}
               <Link
                 href={`/library/${collectionSlug}`}
-                className="flex items-center gap-2 rounded-xl border border-cosmic-border bg-cosmic-surface p-4 text-sm text-text-muted hover:border-atlantean-teal/50 hover:text-atlantean-teal transition-all"
+                className="hidden items-center gap-2 rounded-xl border border-cosmic-border bg-cosmic-surface p-4 text-sm text-text-muted hover:border-atlantean-teal/50 hover:text-atlantean-teal transition-all lg:flex"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

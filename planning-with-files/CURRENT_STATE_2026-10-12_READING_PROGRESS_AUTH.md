@@ -6,7 +6,7 @@ The full founder programme remains active.
 
 Base: `ee9c1526a50a9764a83d5d525f4849952eacddea`; owner
 `codex:01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`; branch
-`agent/codex/reading-progress-auth-20261012`. Six explicit files are owned.
+`agent/codex/reading-progress-auth-20261012`. Seven explicit files are owned.
 Root instructions SHA256:
 `36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`.
 Explicit instruction reads do not reload native startup instructions or enforce
@@ -64,5 +64,22 @@ deadline, with a bounded fifteen-second assertion. Original native receipts and
 two actually inspected desktop captures remain retained. Mobile acceptance is
 still pending; cleanup succeeded without configuration residue.
 
-Rollback is a normal revert of the six named fixture/workflow/pickup files;
-application behavior, customer data and production RLS are unchanged.
+Source `28f2d5edd4f0ac961c1caf7f538d51ca83e3d227` in run `38255919236`
+passed all authenticated desktop/save/load/denial/account checks, then reproduced
+the missing mobile Read control. The existing page hid its whole sidebar below
+the desktop breakpoint. The refinement keeps one tracker below the article on
+mobile, while the existing contents/related/details/back-link blocks retain their
+desktop presentation. The real mobile sentinel, lost save acknowledgement,
+44px touch retry, one-row recovery and horizontal layout now require verification.
+
+| Before                                                        | After                                                                        | Why                                                     |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Whole sidebar, including progress, hidden on mobile           | Single existing tracker visible below the article; desktop sidebar preserved | Readers can see confirmation and retry on mobile        |
+| One interrupted GET could be transparently retried by the SDK | Transport remains interrupted until the user selects Retry                   | Verify actual recovery without disabling SDK safeguards |
+
+Emil design engineering and existing TASTE/DESIGN instructions are applied to the
+responsive change; exact-source hosted captures and fresh independent review are
+still required. These policy reads do not establish runtime or customer acceptance.
+
+Rollback is a normal revert of the seven named page/fixture/workflow/pickup files;
+customer data, production RLS and manuscript/publication approvals are unchanged.

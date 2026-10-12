@@ -6,6 +6,7 @@ on:
     paths:
       - apps/web/hooks/use-reading-progress.ts
       - apps/web/app/library/reading-tracker.tsx
+      - apps/web/app/library/**
       - scripts/tests/reading-progress-account.test.cjs
       - scripts/verify-reading-progress-browser.cjs
       - scripts/verify-reading-progress-auth-browser.cjs
@@ -22,6 +23,7 @@ on:
     paths:
       - apps/web/hooks/use-reading-progress.ts
       - apps/web/app/library/reading-tracker.tsx
+      - apps/web/app/library/**
       - scripts/tests/reading-progress-account.test.cjs
       - scripts/verify-reading-progress-browser.cjs
       - scripts/verify-reading-progress-auth-browser.cjs
