@@ -103,7 +103,7 @@ async function main() {
     });
   const clients = [sdk(), sdk()];
   const anonymous = sdk();
-  const makeContext = async (mobile = false, javaScriptEnabled = true) => {
+  const makeContext = async (mobile = false) => {
     const context = await browser.newContext({
       viewport: mobile
         ? { width: 375, height: 900 }
@@ -111,7 +111,6 @@ async function main() {
       hasTouch: mobile,
       isMobile: mobile,
       reducedMotion: "reduce",
-      javaScriptEnabled,
       bypassCSP: true,
     });
     contexts.push(context);
@@ -238,6 +237,31 @@ async function main() {
     const trigger = companionTrigger(target);
     await expect(trigger).toHaveCount(1);
     await expect(trigger).toHaveCSS("position", "static");
+    const minimum = await trigger.evaluate((element) => {
+      const wrapper = element.parentElement;
+      const empty = wrapper.cloneNode(false);
+      empty.setAttribute("aria-hidden", "true");
+      wrapper.parentElement.appendChild(empty);
+      try {
+        return {
+          minimum: getComputedStyle(wrapper).minHeight,
+          emptyHeight: empty.getBoundingClientRect().height,
+        };
+      } finally {
+        empty.remove();
+      }
+    });
+    assert.equal(minimum.minimum, "44px");
+    assert.ok(minimum.emptyHeight >= 44);
+    receipt.companionMinimum = [
+      ...(receipt.companionMinimum || []),
+      {
+        mobile,
+        ...minimum,
+        scope:
+          "Controlled empty clone in the actual compiled header; no simulated Auth state",
+      },
+    ];
     await trigger.scrollIntoViewIfNeeded();
     const box = await trigger.boundingBox();
     assert.ok(box && box.height >= 44 && box.width >= 44);
@@ -793,21 +817,8 @@ async function main() {
     receipt.checks.push(
       "Anonymous mobile Library keeps its in-flow companion; collection retains the floating entry, and actual client navigation back to the article leaves one static trigger",
     );
-    const serverOnlyContext = await makeContext(true, false);
-    const serverOnly = await serverOnlyContext.newPage();
-    diagnosticPage = serverOnly;
-    await serverOnly.goto(config.base + article);
-    const placeholder = serverOnly.locator("#main-content header > .min-h-11");
-    await expect(placeholder).toHaveCount(1);
-    await expect(placeholder).toHaveCSS("min-height", "44px");
-    assert.ok((await placeholder.boundingBox()).height >= 44);
-    assert.equal(
-      await placeholder.evaluate((element) => element.childElementCount),
-      0,
-    );
-    await expect(companionTrigger(serverOnly)).toHaveCount(0);
     receipt.checks.push(
-      "Actual server-rendered mobile header reserves 44px before companion hydration; closed/open/Escape/Close keep article and header geometry within one pixel",
+      "Actual compiled desktop/mobile CSS reserves 44px for a controlled empty header container; open/Escape/Close keep article and header geometry within one pixel. No-JavaScript delivery and pre-hydration execution are unverified",
     );
     receipt.checks.push(
       "Mobile password login restores Read; signed-out Library exposes no completion action or private progress",

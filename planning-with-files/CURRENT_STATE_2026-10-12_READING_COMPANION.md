@@ -82,3 +82,15 @@ and waits for its single automatic save before the actual keyboard retry. Manual
 save remains covered by the unchanged hook regression cases. The later 95a7480e
 static review passed with verified citations, but does not approve this refinement
 or replace failed execution. New source review and hosted execution remain required.
+
+Native source `136a447a34de290b13ae5110d3c423967b862ae2` passed the single
+desktop observer save, real keyboard retry, RLS/account checks and desktop/mobile
+open/Escape/Close geometry. Its added JavaScript-disabled page probe could not
+find the header and failed before measuring it. The response/DOM cause was not
+captured and remains unverified; no collapse or no-JavaScript support is proved.
+The intended style check now measures a controlled empty clone of the actual
+header wrapper in the compiled desktop/mobile application, then immediately
+removes it. This proves only the computed 44px minimum and empty-container height;
+it does not simulate Auth, prove pre-hydration execution or certify no-JavaScript
+delivery. The real account and reading checks are unchanged. Exact-source checks,
+captures and independent review are required on the resulting candidate.
