@@ -7,9 +7,42 @@ const appRequire = createRequire(path.resolve("apps/web/package.json"));
 const { chromium, expect } = appRequire("@playwright/test");
 
 async function largeOriginalPng() {
-  const png = await appRequire("sharp")({
-    create: { width: 2, height: 2, channels: 3, background: "#446688" },
-  })
+  // A visible creator attachment exercises layout as well as the byte limit.
+  // This deterministic diagram is a test fixture, not generated creator art.
+  const grid = Array.from({ length: 15 }, (_, index) => {
+    const x = 96 + index * 96;
+    return `<path d="M${x} 160V920"/>`;
+  }).join("");
+  const rows = Array.from({ length: 8 }, (_, index) => {
+    const y = 184 + index * 96;
+    return `<path d="M64 ${y}H1472"/>`;
+  }).join("");
+  const map = `<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+    <rect width="1536" height="1024" fill="#edf1e7"/>
+    <rect x="32" y="32" width="1472" height="960" rx="12" fill="none" stroke="#355365" stroke-width="4"/>
+    <text x="80" y="98" font-size="44" font-family="sans-serif" fill="#203f50">Continuity map</text>
+    <text x="80" y="137" font-size="24" font-family="sans-serif" fill="#476274">Deterministic upload fixture: routes, landmarks and annotations</text>
+    <g stroke="#c4d1c2" stroke-width="1">${grid}${rows}</g>
+    <path d="M70 340 Q260 250 410 390 T700 310 T1010 470 T1460 350 L1460 840 Q1200 920 950 800 T470 870 T70 790Z" fill="#b5d0ad" stroke="#73956a" stroke-width="4"/>
+    <path d="M1220 180 Q1020 400 1150 550 T900 920" fill="none" stroke="#77aaca" stroke-width="48"/>
+    <path d="M1220 180 Q1020 400 1150 550 T900 920" fill="none" stroke="#dceef5" stroke-width="7"/>
+    <path d="M230 680 Q450 410 750 480 T1290 720" fill="none" stroke="#9a6548" stroke-width="9" stroke-dasharray="20 14"/>
+    <g fill="#fcfaf0" stroke="#355365" stroke-width="5">
+      <circle cx="230" cy="680" r="22"/><circle cx="510" cy="480" r="22"/>
+      <circle cx="910" cy="520" r="22"/><circle cx="1290" cy="720" r="22"/>
+    </g>
+    <g font-family="sans-serif" font-size="30" fill="#203f50">
+      <text x="100" y="744">Harbor</text><text x="350" y="430">North ridge</text>
+      <text x="810" y="465">River crossing</text><text x="1160" y="785">Old route</text>
+    </g>
+    <path d="M1300 270L1340 190L1380 270L1340 250Z" fill="#355365"/>
+    <text x="1328" y="173" font-size="28" font-family="sans-serif" fill="#203f50">N</text>
+    <path d="M90 940H330M90 930V950M210 930V950M330 930V950" stroke="#355365" stroke-width="4"/>
+    <text x="365" y="950" font-size="22" font-family="sans-serif" fill="#476274">Fixture scale only</text>
+  </svg>`;
+  const png = await appRequire("sharp")(Buffer.from(map))
+    .flatten({ background: "#edf1e7" })
+    .removeAlpha()
     .png()
     .toBuffer();
   const length = 10485760 - png.length - 12;
@@ -626,7 +659,12 @@ async function main() {
           .poll(() =>
             editor
               .locator("img")
-              .evaluate((img) => img.complete && img.naturalWidth === 2),
+              .evaluate(
+                (img) =>
+                  img.complete &&
+                  img.naturalWidth === 1536 &&
+                  img.naturalHeight === 1024,
+              ),
           )
           .toBe(true);
         await flush();
@@ -641,9 +679,25 @@ async function main() {
           .poll(() =>
             editor
               .locator("img")
-              .evaluate((img) => img.complete && img.naturalWidth === 2),
+              .evaluate(
+                (img) =>
+                  img.complete &&
+                  img.naturalWidth === 1536 &&
+                  img.naturalHeight === 1024,
+              ),
           )
           .toBe(true);
+        const imageBounds = await editor.locator("img").boundingBox();
+        assert.ok(
+          imageBounds && imageBounds.width > 200 && imageBounds.height > 120,
+        );
+        assert.ok(
+          imageBounds.x >= 0 &&
+            imageBounds.x + imageBounds.width <= mode.width + 1,
+        );
+        assert.ok(
+          Math.abs(imageBounds.width / imageBounds.height - 1.5) < 0.05,
+        );
         const privateUrl = `${imageAddress}/${imageAsset.assetId}`;
         const bytesResponse = await page.request.get(
           `${config.base}${privateUrl}`,
@@ -687,9 +741,28 @@ async function main() {
           .poll(() =>
             offline
               .locator("img")
-              .evaluate((img) => img.complete && img.naturalWidth === 2),
+              .evaluate(
+                (img) =>
+                  img.complete &&
+                  img.naturalWidth === 1536 &&
+                  img.naturalHeight === 1024,
+              ),
           )
           .toBe(true);
+        const offlineImageBounds = await offline.locator("img").boundingBox();
+        assert.ok(
+          offlineImageBounds &&
+            offlineImageBounds.width > 200 &&
+            offlineImageBounds.height > 120,
+        );
+        assert.ok(
+          offlineImageBounds.x >= 0 &&
+            offlineImageBounds.x + offlineImageBounds.width <= mode.width + 1,
+        );
+        assert.ok(
+          Math.abs(offlineImageBounds.width / offlineImageBounds.height - 1.5) <
+            0.05,
+        );
         await offline.close();
         const counters = await fetch(
           `${config.supabaseUrl}/rest/v1/imagine_storage_accounts?user_id=eq.${config.accounts[0].id}&select=used_bytes,reserved_bytes`,
@@ -711,6 +784,10 @@ async function main() {
         result.image = {
           byteSize: readBytes.length,
           sha256: originalDigest,
+          naturalWidth: 1536,
+          naturalHeight: 1024,
+          editorBounds: imageBounds,
+          offlineBounds: offlineImageBounds,
           putRequests: imagePutRequests,
           usedBytes: account.used_bytes,
           reservedBytes: account.reserved_bytes,

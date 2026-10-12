@@ -5,6 +5,38 @@ const path = require("node:path");
 const ts = require("typescript");
 const { createRequire } = require("node:module");
 const cache = new Map();
+test("the large browser original has visible map dimensions and varied decoded pixels", async () => {
+  const filename = path.resolve("scripts/verify-project-document-browser.cjs");
+  const source = fs.readFileSync(filename, "utf8");
+  const parsed = ts.createSourceFile(
+    filename,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.JS,
+  );
+  const generator = parsed.statements.find(
+    (node) =>
+      ts.isFunctionDeclaration(node) && node.name?.text === "largeOriginalPng",
+  );
+  assert.ok(generator);
+  const appRequire = createRequire(path.resolve("apps/web/package.json"));
+  const original = await new Function(
+    "assert",
+    "appRequire",
+    `${generator.getText(parsed)}; return largeOriginalPng();`,
+  )(assert, appRequire);
+  assert.equal(original.length, 10485760);
+  const sharp = appRequire("sharp");
+  const metadata = await sharp(original, { failOn: "warning" }).metadata();
+  assert.equal(metadata.width, 1536);
+  assert.equal(metadata.height, 1024);
+  const stats = await sharp(original).stats();
+  assert.ok(
+    stats.channels.every((channel) => channel.stdev > 15),
+    "A flat dot cannot establish visible image layout",
+  );
+});
 function load(file) {
   if (cache.has(file)) return cache.get(file).exports;
   const module = { exports: {} };
