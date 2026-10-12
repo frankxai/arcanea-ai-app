@@ -206,6 +206,11 @@ jobs:
           pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
           node --test scripts/tests/auth-response-privacy.test.cjs
 
+      - name: Verify ingestion DNS, redirects and native proxy isolation
+        run: |
+          pnpm --dir apps/web test:safe-fetch
+          node --test scripts/tests/safe-fetch-network.test.cjs
+
       - name: Verify author draft ownership, persistence and migration recovery
         env:
           PGPASSWORD: disposable-author-fixture
@@ -227,12 +232,16 @@ jobs:
           PROJECT_DOCUMENT_CONFIG_FIXTURE: "true"
         run: node --test scripts/tests/provider-fixture-private-config.test.cjs
 
+      - name: Verify private document original recovery and portable export
+        run: node --test scripts/tests/document-media.test.cjs scripts/tests/document-media-client.test.cjs scripts/tests/document-media-blob-fixture.test.cjs
+
       - name: Verify private image owner access and atomic storage admission
         env:
           PGPASSWORD: disposable-author-fixture
         run: |
           createdb -h localhost -U postgres arcanea_private_imagine_fixture
           psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/project-doc-media.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
