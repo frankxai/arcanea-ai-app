@@ -409,24 +409,27 @@ async function main() {
       'article#library-reading-text > div[aria-hidden="true"]',
     );
     await expect(articleEnd).toHaveCount(1);
-    await button(page, "Mark as read").scrollIntoViewIfNeeded();
-    // The tall sticky sidebar may reach the article end while its button scrolls
-    // into view. Let that real observer request the first save; a second click
-    // could already be the user's retry after the dropped acknowledgement.
-    const endVisible = await page.evaluate(async () => {
-      await new Promise((resolve) =>
-        requestAnimationFrame(() => requestAnimationFrame(resolve)),
-      );
-      const rect = document
-        .getElementById("library-reading-text")
-        .getBoundingClientRect();
-      return rect.bottom >= 1 && rect.bottom <= innerHeight;
+    // Use the actual sentinel for one initial save. A pointer click on the sticky
+    // sidebar can race an observer request that has not reached interception yet.
+    receipt.desktopArticleEnd = await articleEnd.evaluate((element) => {
+      element.scrollIntoView({ block: "center", behavior: "instant" });
+      const rect = element.getBoundingClientRect();
+      return {
+        top: rect.top,
+        bottom: rect.bottom,
+        height: rect.height,
+        width: rect.width,
+        viewportHeight: innerHeight,
+      };
     });
-    const automaticSave = endVisible || saves.length > 0;
-    receipt.desktopInitialSaveTrigger = automaticSave
-      ? "article-end"
-      : "manual";
-    if (!automaticSave) await button(page, "Mark as read").click();
+    assert.ok(receipt.desktopArticleEnd.height > 0);
+    assert.ok(receipt.desktopArticleEnd.width > 0);
+    assert.ok(
+      receipt.desktopArticleEnd.top >= 0 &&
+        receipt.desktopArticleEnd.bottom <=
+          receipt.desktopArticleEnd.viewportHeight,
+    );
+    receipt.desktopInitialSaveTrigger = "article-end";
     await expect(button(page, "Try saving again")).toBeEnabled({
       timeout: 15000,
     });

@@ -70,3 +70,15 @@ check is useful additional evidence. Acceptance now measures header/article and
 control positions before/open/Escape/Close, and loads the actual server-rendered
 mobile page without JavaScript to verify its empty 44px placeholder. This refinement
 needs new exact-source hosted execution, captures and independent review.
+
+That candidate's stronger desktop geometry checks passed with identical measured
+positions before/open/Escape/Close. The real Auth job then reproduced an existing
+fixture race: scrolling the sticky completion control could start the observer
+save just before the fixture's manual click, producing two writes and confirming
+Read before its expected retry. Both native writes and the dropped acknowledgement
+are retained in the failure receipt; cleanup succeeded. The desktop verifier now
+centers the actual nonzero article-end sentinel, proves it is inside the viewport,
+and waits for its single automatic save before the actual keyboard retry. Manual
+save remains covered by the unchanged hook regression cases. The later 95a7480e
+static review passed with verified citations, but does not approve this refinement
+or replace failed execution. New source review and hosted execution remain required.
