@@ -164,6 +164,8 @@ export function contentHash(
   files: WorldFile[],
   manifest: WorldManifest,
 ): string;
+/** Local declared-source profile; shared proof-contract approval is pending. */
+export const CONTENT_HASH_PROFILE: "arcanea-world-sdk/declared-public-v1";
 export function readWorld(dir: string): Promise<World>;
 export function checkWorldFiles(
   dir: string,
@@ -256,15 +258,25 @@ export function handlePush(args: {
   error?: string;
 }>;
 export function mockChain(chain?: string, standard?: string): ChainAdapter;
+/** Local tagged proposal only. Does not invoke adapters or establish approved rights. */
+export function computeProof(args: {
+  manifest: WorldManifest;
+  hash: string;
+  chain?: string;
+  repoPointer?: string;
+  wallet?: string;
+  now?: string;
+}): {
+  worldId: string;
+  contentHash: string;
+  hashProfile: typeof CONTENT_HASH_PROFILE;
+  [field: string]: unknown;
+};
+/** @deprecated Always rejects before access until a profile-aware contract is accepted. */
 export function claimWorldProof(args: {
   dir: string;
   adapter?: ChainAdapter;
   chain?: string;
   repoPointer?: string;
   now?: string;
-}): Promise<{
-  entry: ProvenanceEntry;
-  contentHash: string;
-  wallet: string;
-  manifest: WorldManifest;
-}>;
+}): Promise<never>;
