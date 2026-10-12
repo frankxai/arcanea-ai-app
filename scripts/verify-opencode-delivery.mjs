@@ -284,6 +284,31 @@ try {
     }).trim(),
     cliMetadata.version,
   );
+  // The core binding also serves the existing overlays. Exercise their actual
+  // minimal installers from the dependency-free packed executable.
+  receipt.legacyOverlays = [];
+  for (const provider of ["claude", "openai", "gemini", "copilot", "cursor"]) {
+    const legacyProject = join(temporary, `existing ${provider} project`);
+    mkdirSync(legacyProject);
+    run(
+      `installed-existing-${provider}`,
+      process.execPath,
+      [cli, "install", provider, "--level", "minimal", "--dir", legacyProject],
+      { cwd: legacyProject, env },
+    );
+    const files = readdirSync(legacyProject, {
+      recursive: true,
+      withFileTypes: true,
+    }).filter((item) => item.isFile());
+    assert.ok(
+      files.some((item) => statSync(join(item.parentPath, item.name)).size > 0),
+      `${provider} must produce an actual project artifact`,
+    );
+    receipt.legacyOverlays.push({
+      provider,
+      projectArtifactFiles: files.length,
+    });
+  }
   const mcp = realpathSync(requireConsumer.resolve("@arcanea/mcp-server"));
   const mcpEntry = join(dirname(mcp), "cli.js");
   const serverRequire = createRequire(mcp);
