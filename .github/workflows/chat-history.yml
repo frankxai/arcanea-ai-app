@@ -1,0 +1,41 @@
+name: Chat account history
+
+on:
+  pull_request:
+    paths:
+      - apps/web/lib/chat/**
+      - apps/web/hooks/use-chat-sessions.ts
+      - apps/web/hooks/use-chat-persistence.ts
+      - apps/web/app/chat/page.tsx
+      - apps/web/app/projects/**
+      - scripts/tests/chat-account-storage.test.cjs
+      - .github/workflows/chat-history.yml
+  push:
+    branches: [main]
+    paths:
+      - apps/web/lib/chat/**
+      - apps/web/hooks/use-chat-sessions.ts
+      - apps/web/hooks/use-chat-persistence.ts
+      - apps/web/app/chat/page.tsx
+      - apps/web/app/projects/**
+      - scripts/tests/chat-account-storage.test.cjs
+      - .github/workflows/chat-history.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  account-boundaries:
+    name: Private chat account boundaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Actual stores and hook callbacks without network, credentials or inference
+        run: node --test scripts/tests/chat-account-storage.test.cjs

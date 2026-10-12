@@ -46,8 +46,19 @@ import { useChatWorldMode } from "@/hooks/use-chat-world-mode";
 import { useAutoSave } from "@/lib/arc/auto-save";
 import { analytics } from "@/lib/analytics/events";
 import { ChatImagineTabs } from "@/components/chat/chat-imagine-tabs";
+import { useAuth } from "@/lib/auth/context";
 
 export default function ChatPage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  // Retire messages, artifacts, search and callbacks together when auth changes.
+  // The scope guards also reject work between the auth event and this render.
+  return (
+    <ChatPageContent key={`${token.actor ?? "pending"}:${token.revision}`} />
+  );
+}
+
+function ChatPageContent() {
   const chatSessions = useChatSessions();
   const conversation = useConversation({
     activeProject: chatSessions.activeProject,

@@ -9,8 +9,14 @@
  * the offline / anonymous fallback.
  */
 
-const STORAGE_KEY = 'arcanea_chat_sessions';
-const ACTIVE_SESSION_KEY = 'arcanea_active_chat_session';
+import {
+  chatStorageKey,
+  guestChatStorageScope,
+  type ChatStorageScope,
+} from "./storage-scope";
+
+const STORAGE_KEY = "arcanea_chat_sessions";
+const ACTIVE_SESSION_KEY = "arcanea_active_chat_session";
 const MAX_SESSIONS = 50;
 const TITLE_MAX_LENGTH = 60;
 
@@ -20,7 +26,7 @@ const TITLE_MAX_LENGTH = 60;
 
 export interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   /** Structured parts from AI SDK v6 — preserved for round-trip fidelity */
   parts?: Array<{ type: string; text?: string }>;
@@ -55,10 +61,12 @@ export interface ChatSessionSummary {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function readSessions(): ChatSession[] {
-  if (typeof window === 'undefined') return [];
+function readSessions(scope: ChatStorageScope): ChatSession[] {
+  if (typeof window === "undefined") return [];
+  const key = chatStorageKey(STORAGE_KEY, scope);
+  if (!key) return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(key);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -67,10 +75,12 @@ function readSessions(): ChatSession[] {
   }
 }
 
-function writeSessions(sessions: ChatSession[]): void {
-  if (typeof window === 'undefined') return;
+function writeSessions(sessions: ChatSession[], scope: ChatStorageScope): void {
+  if (typeof window === "undefined") return;
+  const key = chatStorageKey(STORAGE_KEY, scope);
+  if (!key) return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+    localStorage.setItem(key, JSON.stringify(sessions));
   } catch {
     // localStorage full or blocked — silently fail
   }
@@ -79,7 +89,7 @@ function writeSessions(sessions: ChatSession[]): void {
 function normalizeSession(session: ChatSession): ChatSession {
   return {
     ...session,
-    title: session.title || 'New Chat',
+    title: session.title || "New Chat",
     messages: Array.isArray(session.messages) ? session.messages : [],
     luminorId: session.luminorId ?? null,
     modelId: session.modelId ?? null,
@@ -96,16 +106,16 @@ function normalizeSession(session: ChatSession): ChatSession {
  * Falls back to "New Chat" if no user message is found.
  */
 export function generateSessionTitle(messages: ChatMessage[]): string {
-  const firstUser = messages.find((m) => m.role === 'user');
-  if (!firstUser) return 'New Chat';
+  const firstUser = messages.find((m) => m.role === "user");
+  if (!firstUser) return "New Chat";
 
-  const text = firstUser.content || '';
-  if (!text.trim()) return 'New Chat';
+  const text = firstUser.content || "";
+  if (!text.trim()) return "New Chat";
 
   // Take the first line, truncate to TITLE_MAX_LENGTH
-  const firstLine = text.split('\n')[0].trim();
+  const firstLine = text.split("\n")[0].trim();
   if (firstLine.length <= TITLE_MAX_LENGTH) return firstLine;
-  return firstLine.slice(0, TITLE_MAX_LENGTH - 3) + '...';
+  return firstLine.slice(0, TITLE_MAX_LENGTH - 3) + "...";
 }
 
 /**
@@ -115,9 +125,15 @@ export function generateSessionTitle(messages: ChatMessage[]): string {
 export function saveChatSession(
   id: string,
   messages: ChatMessage[],
-  opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null; title?: string }
+  opts?: {
+    luminorId?: string | null;
+    modelId?: string | null;
+    projectId?: string | null;
+    title?: string;
+  },
+  scope: ChatStorageScope = guestChatStorageScope,
 ): void {
-  const sessions = readSessions();
+  const sessions = readSessions(scope);
   const now = new Date().toISOString();
 
   const existingIdx = sessions.findIndex((s) => s.id === id);
@@ -132,7 +148,8 @@ export function saveChatSession(
   } else if (existingIdx >= 0) {
     const existing = sessions[existingIdx];
     const autoTitle = generateSessionTitle(messages);
-    const existingIsCustom = existing.title !== 'New Chat' && existing.title !== autoTitle;
+    const existingIsCustom =
+      existing.title !== "New Chat" && existing.title !== autoTitle;
     title = existingIsCustom ? existing.title : autoTitle;
   } else {
     title = generateSessionTitle(messages);
@@ -144,7 +161,9 @@ export function saveChatSession(
     messages,
     luminorId: opts?.luminorId ?? null,
     modelId: opts?.modelId ?? null,
-    projectId: opts?.projectId ?? (existingIdx >= 0 ? sessions[existingIdx].projectId ?? null : null),
+    projectId:
+      opts?.projectId ??
+      (existingIdx >= 0 ? (sessions[existingIdx].projectId ?? null) : null),
     pinned: existingIdx >= 0 ? sessions[existingIdx].pinned : false,
     createdAt: existingIdx >= 0 ? sessions[existingIdx].createdAt : now,
     updatedAt: now,
@@ -157,41 +176,55 @@ export function saveChatSession(
   }
 
   // Sort by updatedAt descending so most recent is first
-  sessions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  sessions.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
 
   // FIFO eviction — drop oldest beyond MAX_SESSIONS, but protect pinned sessions
   const pinned = sessions.filter((s) => s.pinned);
   const unpinned = sessions.filter((s) => !s.pinned);
   const trimmed = [...pinned, ...unpinned].slice(0, MAX_SESSIONS);
 
-  writeSessions(trimmed);
+  writeSessions(trimmed, scope);
 }
 
 /**
  * Load a single chat session by ID.
  * Returns null if not found.
  */
-export function loadChatSession(id: string): ChatSession | null {
-  const sessions = readSessions();
+export function loadChatSession(
+  id: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): ChatSession | null {
+  const sessions = readSessions(scope);
   return sessions.find((s) => s.id === id) ?? null;
 }
 
-export function getActiveChatSessionId(): string | null {
-  if (typeof window === 'undefined') return null;
+export function getActiveChatSessionId(
+  scope: ChatStorageScope = guestChatStorageScope,
+): string | null {
+  if (typeof window === "undefined") return null;
+  const key = chatStorageKey(ACTIVE_SESSION_KEY, scope);
+  if (!key) return null;
   try {
-    return localStorage.getItem(ACTIVE_SESSION_KEY);
+    return localStorage.getItem(key);
   } catch {
     return null;
   }
 }
 
-export function setActiveChatSessionId(id: string | null): void {
-  if (typeof window === 'undefined') return;
+export function setActiveChatSessionId(
+  id: string | null,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  if (typeof window === "undefined") return;
+  const key = chatStorageKey(ACTIVE_SESSION_KEY, scope);
+  if (!key) return;
   try {
     if (id) {
-      localStorage.setItem(ACTIVE_SESSION_KEY, id);
+      localStorage.setItem(key, id);
     } else {
-      localStorage.removeItem(ACTIVE_SESSION_KEY);
+      localStorage.removeItem(key);
     }
   } catch {
     // ignore storage failures
@@ -202,17 +235,25 @@ export function setActiveChatSessionId(id: string | null): void {
  * List all saved sessions as summaries (no full message arrays).
  * Sorted by updatedAt descending.
  */
-export function listChatSessions(): ChatSessionSummary[] {
-  const sessions = readSessions();
+export function listChatSessions(
+  scope: ChatStorageScope = guestChatStorageScope,
+): ChatSessionSummary[] {
+  const sessions = readSessions(scope);
   return sessions.map((s) => {
-    const lastAssistant = [...s.messages].reverse().find((m) => m.role === 'assistant');
+    const lastAssistant = [...s.messages]
+      .reverse()
+      .find((m) => m.role === "assistant");
     const lastContent = lastAssistant?.content || null;
 
     return {
       id: s.id,
       title: s.title,
       messageCount: s.messages.length,
-      lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
+      lastMessage: lastContent
+        ? lastContent.length > 80
+          ? lastContent.slice(0, 80) + "..."
+          : lastContent
+        : null,
       luminorId: s.luminorId ?? null,
       projectId: s.projectId ?? null,
       pinned: s.pinned || false,
@@ -226,7 +267,10 @@ export function listChatSessions(): ChatSessionSummary[] {
  * Replace the entire session store with a normalized list.
  * Intended for canonical sync flows that merge local and cloud sessions first.
  */
-export function replaceChatSessions(sessions: ChatSession[]): void {
+export function replaceChatSessions(
+  sessions: ChatSession[],
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
   const deduped = new Map<string, ChatSession>();
 
   for (const session of sessions) {
@@ -234,20 +278,26 @@ export function replaceChatSessions(sessions: ChatSession[]): void {
   }
 
   const normalized = Array.from(deduped.values())
-    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    )
     .slice(0, MAX_SESSIONS);
 
-  writeSessions(normalized);
+  writeSessions(normalized, scope);
 }
 
 /**
  * Merge incoming sessions into the local store, preferring the most recently
  * updated copy of each session.
  */
-export function mergeChatSessions(incoming: ChatSession[]): void {
+export function mergeChatSessions(
+  incoming: ChatSession[],
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
   const merged = new Map<string, ChatSession>();
 
-  for (const session of readSessions()) {
+  for (const session of readSessions(scope)) {
     merged.set(session.id, normalizeSession(session));
   }
 
@@ -260,26 +310,35 @@ export function mergeChatSessions(incoming: ChatSession[]): void {
       continue;
     }
 
-    if (new Date(normalized.updatedAt).getTime() >= new Date(existing.updatedAt).getTime()) {
+    if (
+      new Date(normalized.updatedAt).getTime() >=
+      new Date(existing.updatedAt).getTime()
+    ) {
       merged.set(normalized.id, {
         ...normalized,
+        messages: normalized.messages.length
+          ? normalized.messages
+          : existing.messages,
         projectId: normalized.projectId ?? existing.projectId ?? null,
       });
     }
   }
 
-  replaceChatSessions(Array.from(merged.values()));
+  replaceChatSessions(Array.from(merged.values()), scope);
 }
 
 /**
  * Search sessions by query — matches title or message content.
  * Returns summaries sorted by updatedAt descending.
  */
-export function searchSessions(query: string): ChatSessionSummary[] {
-  if (!query.trim()) return listChatSessions();
+export function searchSessions(
+  query: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): ChatSessionSummary[] {
+  if (!query.trim()) return listChatSessions(scope);
 
   const lowerQuery = query.toLowerCase();
-  const sessions = readSessions();
+  const sessions = readSessions(scope);
 
   const matched = sessions.filter((s) => {
     // Match title
@@ -289,17 +348,25 @@ export function searchSessions(query: string): ChatSessionSummary[] {
   });
 
   // Already sorted by updatedAt from readSessions/saveChatSession, but ensure it
-  matched.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  matched.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
 
   return matched.map((s) => {
-    const lastAssistant = [...s.messages].reverse().find((m) => m.role === 'assistant');
+    const lastAssistant = [...s.messages]
+      .reverse()
+      .find((m) => m.role === "assistant");
     const lastContent = lastAssistant?.content || null;
 
     return {
       id: s.id,
       title: s.title,
       messageCount: s.messages.length,
-      lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
+      lastMessage: lastContent
+        ? lastContent.length > 80
+          ? lastContent.slice(0, 80) + "..."
+          : lastContent
+        : null,
       luminorId: s.luminorId ?? null,
       projectId: s.projectId ?? null,
       pinned: s.pinned || false,
@@ -312,56 +379,74 @@ export function searchSessions(query: string): ChatSessionSummary[] {
 /**
  * Rename a chat session by ID.
  */
-export function renameChatSession(id: string, title: string): void {
-  const sessions = readSessions();
+export function renameChatSession(
+  id: string,
+  title: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.title = title;
   session.updatedAt = new Date().toISOString();
-  writeSessions(sessions);
+  writeSessions(sessions, scope);
 }
 
 /**
  * Delete a chat session by ID.
  */
-export function deleteChatSession(id: string): void {
-  const sessions = readSessions();
-  writeSessions(sessions.filter((s) => s.id !== id));
+export function deleteChatSession(
+  id: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
+  writeSessions(
+    sessions.filter((s) => s.id !== id),
+    scope,
+  );
 }
 
 /**
  * Toggle the pinned state of a chat session by ID.
  */
-export function togglePinSession(id: string): void {
-  const sessions = readSessions();
+export function togglePinSession(
+  id: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.pinned = !session.pinned;
-  writeSessions(sessions);
+  writeSessions(sessions, scope);
 }
 
 /**
  * Assign a chat session to a project or clear the assignment.
  */
-export function assignSessionToProject(id: string, projectId: string | null): void {
-  const sessions = readSessions();
+export function assignSessionToProject(
+  id: string,
+  projectId: string | null,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.projectId = projectId;
   session.updatedAt = new Date().toISOString();
-  writeSessions(sessions);
+  writeSessions(sessions, scope);
 }
 
 /**
  * Remove a deleted project from all sessions.
  */
-export function clearProjectFromSessions(projectId: string): void {
-  const sessions = readSessions().map((session) => (
-    session.projectId === projectId
-      ? { ...session, projectId: null }
-      : session
-  ));
-  writeSessions(sessions);
+export function clearProjectFromSessions(
+  projectId: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope).map((session) =>
+    session.projectId === projectId ? { ...session, projectId: null } : session,
+  );
+  writeSessions(sessions, scope);
 }
 
 /**

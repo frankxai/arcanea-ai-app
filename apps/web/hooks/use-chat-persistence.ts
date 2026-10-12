@@ -1,29 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-/**
- * useChatPersistence — React hook for chat history persistence
- *
- * Manages localStorage-based chat sessions. Auto-saves messages
- * (debounced 1s) and auto-loads the most recent session on mount.
- *
- * When Supabase auth is configured later, this hook can be upgraded
- * to sync with the server while keeping localStorage as fallback.
- */
-
-import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  saveChatSession,
-  loadChatSession,
-  listChatSessions,
-  deleteChatSession,
-  newSessionId,
-  generateSessionTitle,
-  type ChatMessage,
-  type ChatSession,
-  type ChatSessionSummary,
-} from '@/lib/chat/local-store';
-import { saveSessionToCloud, deleteCloudSession } from '@/lib/chat/supabase-store';
+import { useChatSessions } from "./use-chat-sessions";
+import type {
+  ChatMessage,
+  ChatSession,
+  ChatSessionSummary,
+} from "@/lib/chat/local-store";
 
 export interface ChatPersistenceState {
   /** List of all saved sessions (summaries only) */
@@ -31,7 +14,10 @@ export interface ChatPersistenceState {
   /** Currently active session ID */
   activeSessionId: string;
   /** Save messages to the active session (debounced internally) */
-  saveMessages: (messages: ChatMessage[], opts?: { luminorId?: string | null; modelId?: string | null }) => void;
+  saveMessages: (
+    messages: ChatMessage[],
+    opts?: { luminorId?: string | null; modelId?: string | null },
+  ) => void;
   /** Load a specific session by ID — returns the full session or null */
   loadSession: (id: string) => ChatSession | null;
   /** Start a new empty session — returns the new session ID */
@@ -43,110 +29,16 @@ export interface ChatPersistenceState {
 }
 
 export function useChatPersistence(): ChatPersistenceState {
-  const [sessions, setSessions] = useState<ChatSessionSummary[]>([]);
-  const [activeSessionId, setActiveSessionId] = useState<string>(() => newSessionId());
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const mountedRef = useRef(false);
-
-  // ---------------------------------------------------------------------------
-  // Load sessions list on mount
-  // ---------------------------------------------------------------------------
-
-  const refreshSessions = useCallback(() => {
-    setSessions(listChatSessions());
-  }, []);
-
-  useEffect(() => {
-    refreshSessions();
-    mountedRef.current = true;
-  }, [refreshSessions]);
-
-  // ---------------------------------------------------------------------------
-  // Save messages (debounced 1s)
-  // ---------------------------------------------------------------------------
-
-  const saveMessages = useCallback(
-    (messages: ChatMessage[], opts?: { luminorId?: string | null; modelId?: string | null }) => {
-      // Don't save empty conversations
-      if (messages.length === 0) return;
-
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-
-      debounceRef.current = setTimeout(() => {
-        saveChatSession(activeSessionId, messages, opts);
-        refreshSessions();
-
-        // Cloud sync (fire-and-forget, non-blocking)
-        const title = generateSessionTitle(messages);
-        saveSessionToCloud({
-          id: activeSessionId,
-          title,
-          messages: messages as unknown as Record<string, unknown>[],
-          luminorId: opts?.luminorId ?? null,
-          modelId: opts?.modelId ?? null,
-        }).catch(() => {}); // silently ignore cloud sync failures
-      }, 1000);
-    },
-    [activeSessionId, refreshSessions]
-  );
-
-  // ---------------------------------------------------------------------------
-  // Load a session
-  // ---------------------------------------------------------------------------
-
-  const loadSessionFn = useCallback((id: string): ChatSession | null => {
-    const session = loadChatSession(id);
-    if (session) {
-      setActiveSessionId(id);
-    }
-    return session;
-  }, []);
-
-  // ---------------------------------------------------------------------------
-  // New session
-  // ---------------------------------------------------------------------------
-
-  const newSessionFn = useCallback((): string => {
-    const id = newSessionId();
-    setActiveSessionId(id);
-    return id;
-  }, []);
-
-  // ---------------------------------------------------------------------------
-  // Delete session
-  // ---------------------------------------------------------------------------
-
-  const deleteSessionFn = useCallback(
-    (id: string) => {
-      deleteChatSession(id);
-      deleteCloudSession(id).catch(() => {}); // best-effort cloud delete
-      refreshSessions();
-
-      // If deleting the active session, start a new one
-      if (id === activeSessionId) {
-        setActiveSessionId(newSessionId());
-      }
-    },
-    [activeSessionId, refreshSessions]
-  );
-
-  // ---------------------------------------------------------------------------
-  // Cleanup debounce on unmount
-  // ---------------------------------------------------------------------------
-
-  useEffect(() => {
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, []);
-
+  const history = useChatSessions();
   return {
-    sessions,
-    activeSessionId,
-    saveMessages,
-    loadSession: loadSessionFn,
-    newSession: newSessionFn,
-    deleteSession: deleteSessionFn,
-    refreshSessions,
+    sessions: history.allSessions,
+    activeSessionId: history.activeSessionId,
+    saveMessages: history.saveMessages,
+    loadSession: history.loadSession,
+    newSession: history.newSession,
+    deleteSession: history.deleteSession,
+    refreshSessions: () => {
+      void history.refreshSessions();
+    },
   };
 }

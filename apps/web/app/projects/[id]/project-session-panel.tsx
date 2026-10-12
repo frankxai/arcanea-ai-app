@@ -1,13 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useTransition } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowSquareOut, Link, X } from '@/lib/phosphor-icons';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import type { ProjectSessionRecord } from '@/lib/projects/server';
-import { setActiveChatProject } from '@/lib/chat/project-store';
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowSquareOut, Link, X } from "@/lib/phosphor-icons";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type { ProjectSessionRecord } from "@/lib/projects/server";
+import { setActiveChatProject } from "@/lib/chat/project-store";
+import { useAuth } from "@/lib/auth/context";
+import { createChatStorageScope, chatUserId } from "@/lib/chat/storage-scope";
 
 interface ProjectSessionPanelProps {
   projectId: string;
@@ -21,20 +29,31 @@ export function ProjectSessionPanel({
   candidateSessions,
 }: ProjectSessionPanelProps) {
   const router = useRouter();
+  const { credentialScope } = useAuth();
+  const storageScope = createChatStorageScope(credentialScope);
   const [isPending, startTransition] = useTransition();
 
   async function attachSession(sessionId: string) {
-    await fetch(`/api/projects/${projectId}/sessions/${sessionId}`, { method: 'PATCH' });
+    if (!chatUserId(storageScope)) return;
+    await fetch(`/api/projects/${projectId}/sessions/${sessionId}`, {
+      method: "PATCH",
+    });
+    if (!storageScope.isCurrent()) return;
     startTransition(() => router.refresh());
   }
 
   async function detachSession(sessionId: string) {
-    await fetch(`/api/projects/${projectId}/sessions/${sessionId}`, { method: 'DELETE' });
+    if (!chatUserId(storageScope)) return;
+    await fetch(`/api/projects/${projectId}/sessions/${sessionId}`, {
+      method: "DELETE",
+    });
+    if (!storageScope.isCurrent()) return;
     startTransition(() => router.refresh());
   }
 
   function openInChat(sessionId: string) {
-    setActiveChatProject(projectId);
+    if (!chatUserId(storageScope)) return;
+    setActiveChatProject(projectId, storageScope);
     router.push(`/chat?session=${encodeURIComponent(sessionId)}`);
   }
 
@@ -43,26 +62,41 @@ export function ProjectSessionPanel({
       <CardHeader>
         <CardTitle>Conversation Continuity</CardTitle>
         <CardDescription>
-          Linked sessions define the hot path for this workspace. Attach more sessions or open one directly in chat.
+          Linked sessions define the hot path for this workspace. Attach more
+          sessions or open one directly in chat.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Linked sessions</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
+            Linked sessions
+          </p>
           {linkedSessions.length === 0 ? (
-            <p className="text-sm text-white/50">No chats linked yet. Attach a recent session below.</p>
+            <p className="text-sm text-white/50">
+              No chats linked yet. Attach a recent session below.
+            </p>
           ) : (
             linkedSessions.map((session) => (
-              <div key={session.id} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              <div
+                key={session.id}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white">{session.title || 'Untitled chat'}</p>
+                    <p className="text-sm font-medium text-white">
+                      {session.title || "Untitled chat"}
+                    </p>
                     <p className="mt-1 text-xs text-white/45">
-                      {session.luminorId || 'No luminor'} / {session.modelId || 'default model'}
+                      {session.luminorId || "No luminor"} /{" "}
+                      {session.modelId || "default model"}
                     </p>
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
-                    <Button variant="ghost" size="sm" onClick={() => openInChat(session.id)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openInChat(session.id)}
+                    >
                       <ArrowSquareOut size={14} />
                       Open
                     </Button>
@@ -83,17 +117,30 @@ export function ProjectSessionPanel({
         </div>
 
         <div className="space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Recent sessions to attach</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
+            Recent sessions to attach
+          </p>
           {candidateSessions.length === 0 ? (
-            <p className="text-sm text-white/50">No recent sessions available outside this project.</p>
+            <p className="text-sm text-white/50">
+              No recent sessions available outside this project.
+            </p>
           ) : (
             candidateSessions.map((session) => (
-              <div key={session.id} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              <div
+                key={session.id}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-sm font-medium text-white">{session.title || 'Untitled chat'}</p>
+                    <p className="text-sm font-medium text-white">
+                      {session.title || "Untitled chat"}
+                    </p>
                     <p className="mt-1 text-xs text-white/45">
-                      {session.projectId ? 'From another project' : 'Unassigned'} / updated {new Date(session.updatedAt).toLocaleDateString()}
+                      {session.projectId
+                        ? "From another project"
+                        : "Unassigned"}{" "}
+                      / updated{" "}
+                      {new Date(session.updatedAt).toLocaleDateString()}
                     </p>
                   </div>
                   <Button
