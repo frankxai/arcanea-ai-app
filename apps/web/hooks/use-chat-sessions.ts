@@ -225,7 +225,11 @@ export function useChatSessions(): UseChatSessionsReturn {
     }
 
     window.addEventListener("focus", handleFocus);
-    return () => window.removeEventListener("focus", handleFocus);
+    window.addEventListener("online", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("online", handleFocus);
+    };
   }, [storageScope, syncCloudSessions]);
 
   useEffect(() => {
@@ -420,12 +424,14 @@ export function useChatSessions(): UseChatSessionsReturn {
   const deleteSession = useCallback(
     (id: string) => {
       if (!storageScope.isCurrent()) return;
-      deleteChatSession(id, storageScope);
+      if (!deleteChatSession(id, storageScope)) return;
       if (id === activeSessionId && debounceRef.current)
         clearTimeout(debounceRef.current);
       void deleteCloudSession(id, storageScope);
 
       if (id === activeSessionId) {
+        pendingSnapshotRef.current = null;
+        saveEpochRef.current += 1;
         const nextSessionId = newSessionId();
         setActiveSessionId(nextSessionId);
         setActiveChatSessionId(nextSessionId, storageScope);

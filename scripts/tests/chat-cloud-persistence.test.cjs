@@ -211,6 +211,172 @@ function setup() {
   };
 }
 
+function restartWithStorage(previous) {
+  const restarted = fixture();
+  for (const [key, value] of previous.values) restarted.values.set(key, value);
+  return restarted;
+}
+
+test("failed cloud deletion stays removed after source modules restart and hydration returns the old copy", async () => {
+  const { f, scope, store, cloud } = setup();
+  const original = store.loadChatSession(id, scope);
+  store.deleteChatSession(id, scope);
+  f.setQueryResult({ data: null, error: { message: "offline" } });
+  assert.equal(await cloud.deleteCloudSession(id, scope), false);
+
+  const restarted = restartWithStorage(f);
+  const nextScope = restarted.scope(actor);
+  const nextStore = restarted.load("lib/chat/local-store.ts");
+  nextStore.mergeChatSessions([original], nextScope);
+  assert.equal(nextStore.loadChatSession(id, nextScope), null);
+  assert.equal(nextStore.listChatSessions(nextScope).length, 0);
+});
+
+test("a restarted client retries the originating account's pending cloud deletion", async () => {
+  const { f, scope, store } = setup();
+  store.deleteChatSession(id, scope);
+  const restarted = restartWithStorage(f);
+  await restarted
+    .load("lib/chat/supabase-store.ts")
+    .loadCloudSessions(restarted.scope(actor));
+  const deletion = restarted.calls.find((call) => call.deleted);
+  assert.ok(deletion);
+  assert.ok(
+    deletion.filters.some(
+      ([column, value]) => column === "user_id" && value === actor.slice(5),
+    ),
+  );
+});
+
+test("storage refusal leaves the original conversation and makes no destructive cloud call", async () => {
+  const { f, scope, store, cloud } = setup();
+  f.storage.setItem = () => {
+    throw new Error("QuotaExceededError");
+  };
+  assert.equal(await cloud.deleteCloudSession(id, scope), false);
+  assert.equal(
+    store.loadChatSession(id, scope).messages[0].content,
+    messages[0].content,
+  );
+  assert.equal(f.calls.length, 0);
+});
+
+test("a stale save cannot recreate a deleted conversation after source modules restart", async () => {
+  const { f, scope, store, snapshot } = setup();
+  store.deleteChatSession(id, scope);
+  const restarted = restartWithStorage(f);
+  const nextScope = restarted.scope(actor);
+  assert.equal(
+    (
+      await restarted
+        .load("lib/chat/supabase-store.ts")
+        .saveChatSnapshotToCloud(snapshot, nextScope)
+    ).status,
+    "retired",
+  );
+  assert.equal(restarted.calls.length, 0);
+});
+
+test("pending deletions never retry under another account or a retired lifetime", async () => {
+  const { f, scope, store, cloud } = setup();
+  store.deleteChatSession(id, scope);
+  const other = f.scope("user:bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb");
+  f.setUser(other.actor.slice(5));
+  await cloud.loadCloudSessions(other);
+  await cloud.loadCloudSessions(scope);
+  assert.equal(f.calls.filter((call) => call.deleted).length, 0);
+  assert.equal(
+    f.load("lib/chat/local-store.ts").listPendingChatDeletions(other).length,
+    0,
+  );
+});
+
+test("confirmed deletion barriers survive restart and do not retry or merge stale snapshots", async () => {
+  const { f, scope, store, cloud } = setup();
+  const original = store.loadChatSession(id, scope);
+  assert.equal(await cloud.deleteCloudSession(id, scope), true);
+  const restarted = restartWithStorage(f);
+  const nextScope = restarted.scope(actor);
+  const nextStore = restarted.load("lib/chat/local-store.ts");
+  await restarted
+    .load("lib/chat/supabase-store.ts")
+    .loadCloudSessions(nextScope);
+  nextStore.replaceChatSessions([original], nextScope);
+  assert.equal(nextStore.loadChatSession(id, nextScope), null);
+  assert.equal(nextStore.listPendingChatDeletions(nextScope).length, 0);
+  assert.equal(restarted.calls.filter((call) => call.deleted).length, 0);
+});
+
+test("an already admitted cloud read cannot return a conversation deleted while it waited", async () => {
+  const { f, scope, store, cloud } = setup();
+  f.setRows([{ id, title: "Old cloud copy", messages }]);
+  let release;
+  f.delayQuery(
+    new Promise((resolve) => {
+      release = resolve;
+    }),
+  );
+  const loading = cloud.loadCloudSessions(scope);
+  while (f.calls.length === 0) await new Promise(setImmediate);
+  assert.equal(store.deleteChatSession(id, scope), true);
+  release();
+  assert.equal((await loading).length, 0);
+});
+
+test("separate deletion keys retain every intent and retry only a bounded batch per hydration", async () => {
+  const { f, scope, store, cloud } = setup();
+  const ids = Array.from({ length: 6 }, (_, index) => `removed-${index}`);
+  for (const sessionId of ids)
+    assert.equal(store.deleteChatSession(sessionId, scope), true);
+  assert.equal(store.listPendingChatDeletions(scope).length, 6);
+  await cloud.loadCloudSessions(scope);
+  assert.equal(f.calls.filter((call) => call.deleted).length, 5);
+  assert.equal(store.listPendingChatDeletions(scope).length, 1);
+  await cloud.loadCloudSessions(scope);
+  assert.equal(f.calls.filter((call) => call.deleted).length, 6);
+  assert.equal(store.listPendingChatDeletions(scope).length, 0);
+});
+
+test("quota refusal when cleaning the old cache retains durable deletion intent", async () => {
+  const { f, scope, store } = setup();
+  const originalSet = f.storage.setItem;
+  f.storage.setItem = (key, value) => {
+    if (key.startsWith("arcanea_chat_sessions:"))
+      throw new Error("QuotaExceededError");
+    originalSet(key, value);
+  };
+  assert.equal(store.deleteChatSession(id, scope), true);
+  const restarted = restartWithStorage(f);
+  const nextScope = restarted.scope(actor);
+  const nextStore = restarted.load("lib/chat/local-store.ts");
+  assert.equal(nextStore.loadChatSession(id, nextScope), null);
+  assert.equal(nextStore.listPendingChatDeletions(nextScope).length, 1);
+});
+
+test("failure to retain the cloud acknowledgement leaves the deletion pending for replay", async () => {
+  const { f, scope, store, cloud } = setup();
+  const originalSet = f.storage.setItem;
+  f.storage.setItem = (key, value) => {
+    if (value === "confirmed") throw new Error("QuotaExceededError");
+    originalSet(key, value);
+  };
+  assert.equal(await cloud.deleteCloudSession(id, scope), false);
+  assert.equal(store.loadChatSession(id, scope), null);
+  assert.equal(store.listPendingChatDeletions(scope).length, 1);
+  f.storage.setItem = originalSet;
+  assert.equal(await cloud.deleteCloudSession(id, scope), true);
+  assert.equal(store.listPendingChatDeletions(scope).length, 0);
+});
+
+test("overlapping deletion retries are idempotent after the first acknowledgement", async () => {
+  const { scope, cloud } = setup();
+  const results = await Promise.all([
+    cloud.deleteCloudSession(id, scope),
+    cloud.deleteCloudSession(id, scope),
+  ]);
+  assert.deepEqual(results, [true, true]);
+});
+
 test("initial hydration renders no browser-cache-dependent history or save label", () => {
   const { f, scope, store } = setup();
   store.setActiveChatSessionId(id, scope);

@@ -19,6 +19,7 @@ import { chatSnapshotContentKey } from "./cloud-snapshot";
 
 const STORAGE_KEY = "arcanea_chat_sessions";
 const ACTIVE_SESSION_KEY = "arcanea_active_chat_session";
+const DELETION_KEY = "arcanea_chat_deletion";
 const MAX_SESSIONS = 50;
 const TITLE_MAX_LENGTH = 60;
 
@@ -65,6 +66,74 @@ export interface ChatSessionSummary {
 // Helpers
 // ---------------------------------------------------------------------------
 
+function deletionKey(id: string, scope: ChatStorageScope): string | null {
+  const prefix = chatStorageKey(DELETION_KEY, scope);
+  return prefix && id && id.length <= 200
+    ? `${prefix}:${encodeURIComponent(id)}`
+    : null;
+}
+
+function deletionState(
+  id: string,
+  scope: ChatStorageScope,
+): "pending" | "confirmed" | "unknown" | null {
+  const key = deletionKey(id, scope);
+  if (!key || typeof window === "undefined") return "unknown";
+  try {
+    const value = localStorage.getItem(key);
+    if (value === null || value === "pending" || value === "confirmed")
+      return value;
+    return "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+
+export function isChatSessionDeleted(
+  id: string,
+  scope: ChatStorageScope,
+): boolean {
+  return deletionState(id, scope) !== null;
+}
+
+export function listPendingChatDeletions(scope: ChatStorageScope): string[] {
+  const prefix = chatStorageKey(DELETION_KEY, scope);
+  if (!prefix || typeof window === "undefined") return [];
+  const pending: string[] = [];
+  try {
+    // Separate keys keep concurrent deletions from replacing each other's intent.
+    for (let index = 0; index < localStorage.length; index++) {
+      if (!scope.isCurrent()) return [];
+      const key = localStorage.key(index);
+      if (!key?.startsWith(`${prefix}:`)) continue;
+      if (localStorage.getItem(key) !== "pending") continue;
+      const id = decodeURIComponent(key.slice(prefix.length + 1));
+      if (deletionKey(id, scope) === key) pending.push(id);
+    }
+    return pending;
+  } catch {
+    return [];
+  }
+}
+
+export function acknowledgeChatDeletion(
+  id: string,
+  scope: ChatStorageScope,
+): boolean {
+  const key = deletionKey(id, scope);
+  const state = deletionState(id, scope);
+  if (state === "confirmed") return true;
+  if (!key || state !== "pending") return false;
+  try {
+    // Keep the barrier after acknowledgement: a late read or stale save must
+    // never restore this ID. A separate copy always receives a fresh ID.
+    localStorage.setItem(key, "confirmed");
+    return localStorage.getItem(key) === "confirmed";
+  } catch {
+    return false;
+  }
+}
+
 function readSessions(scope: ChatStorageScope): ChatSession[] {
   if (typeof window === "undefined") return [];
   const key = chatStorageKey(STORAGE_KEY, scope);
@@ -73,7 +142,9 @@ function readSessions(scope: ChatStorageScope): ChatSession[] {
     const raw = localStorage.getItem(key);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((session) => !isChatSessionDeleted(session.id, scope))
+      : [];
   } catch {
     return [];
   }
@@ -87,7 +158,9 @@ function writeSessions(
   const key = chatStorageKey(STORAGE_KEY, scope);
   if (!key) return false;
   try {
-    const encoded = JSON.stringify(sessions);
+    const encoded = JSON.stringify(
+      sessions.filter((session) => !isChatSessionDeleted(session.id, scope)),
+    );
     localStorage.setItem(key, encoded);
     return localStorage.getItem(key) === encoded;
   } catch {
@@ -163,6 +236,7 @@ export function saveChatSession(
   },
   scope: ChatStorageScope = guestChatStorageScope,
 ): boolean {
+  if (isChatSessionDeleted(id, scope)) return false;
   const sessions = readSessions(scope);
   const now = new Date().toISOString();
 
@@ -453,12 +527,25 @@ export function renameChatSession(
 export function deleteChatSession(
   id: string,
   scope: ChatStorageScope = guestChatStorageScope,
-): void {
-  const sessions = readSessions(scope);
-  writeSessions(
-    sessions.filter((s) => s.id !== id),
-    scope,
-  );
+): boolean {
+  const key = deletionKey(id, scope);
+  if (!key || typeof window === "undefined") return false;
+  const previous = deletionState(id, scope);
+  if (previous === "unknown") return false;
+  try {
+    const state =
+      previous === "confirmed" || scope.actor === "guest"
+        ? "confirmed"
+        : "pending";
+    localStorage.setItem(key, state);
+    if (localStorage.getItem(key) !== state) return false;
+  } catch {
+    return false;
+  }
+  // The intent is already durable even if rewriting a quota-full cache fails.
+  // Readers hide the old copy, and cloud recovery retries the pending deletion.
+  writeSessions(readSessions(scope), scope);
+  return true;
 }
 
 /**

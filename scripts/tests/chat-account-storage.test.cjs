@@ -9,6 +9,10 @@ const { test } = require("node:test");
 function fixture() {
   const values = new Map();
   const storage = {
+    get length() {
+      return values.size;
+    },
+    key: (index) => Array.from(values.keys())[index] ?? null,
     getItem: (key) => values.get(key) ?? null,
     setItem: (key, value) => values.set(key, value),
     removeItem: (key) => values.delete(key),
@@ -22,6 +26,7 @@ function fixture() {
   let authWait;
   let queryWait;
   let rpcResult;
+  let queryResult;
   const client = {
     rpc(name, args) {
       calls.push({ rpc: name, args });
@@ -74,9 +79,12 @@ function fixture() {
           entry.deleted = true;
           return query;
         },
+        abortSignal() {
+          return query;
+        },
         async then(resolve) {
           if (queryWait) await queryWait;
-          return resolve({ data: cloudRows, error: null });
+          return resolve(queryResult ?? { data: cloudRows, error: null });
         },
       };
       return query;
@@ -181,6 +189,9 @@ function fixture() {
     },
     setRpcResult: (value) => {
       rpcResult = value;
+    },
+    setQueryResult: (value) => {
+      queryResult = value;
     },
     delayAuth: (value) => {
       authWait = value;

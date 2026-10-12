@@ -3,7 +3,14 @@
 
 import { createClient } from "@/lib/supabase/client";
 import type { ChatMessage, ChatSession } from "@/lib/chat/local-store";
-import { acknowledgeChatSnapshot, loadChatSession } from "./local-store";
+import {
+  acknowledgeChatDeletion,
+  acknowledgeChatSnapshot,
+  deleteChatSession,
+  isChatSessionDeleted,
+  listPendingChatDeletions,
+  loadChatSession,
+} from "./local-store";
 import { chatSnapshotCloudId, chatSnapshotContentKey } from "./cloud-snapshot";
 import {
   chatUserId,
@@ -39,7 +46,6 @@ interface CloudSnapshotInput {
   projectId?: string | null;
 }
 const cloudQueues = new Map<string, Promise<unknown>>();
-const deletedSessions = new Set<string>();
 const confirmedRevisions = new WeakMap<
   object,
   Map<string, { baseRevision: string | null; revision: string }>
@@ -100,6 +106,7 @@ export async function saveChatSnapshotToCloud(
 ): Promise<ChatCloudSaveResult> {
   const userId = chatUserId(scope);
   if (!userId) return { status: "retired" };
+  if (isChatSessionDeleted(session.id, scope)) return { status: "retired" };
   if (
     !Array.isArray(session.messages) ||
     session.messages.some(
@@ -139,7 +146,7 @@ export async function saveChatSnapshotToCloud(
   const contentKey = chatSnapshotContentKey(snapshot);
   const queueKey = `${userId}:${session.id}`;
   return serializeCloudWork<ChatCloudSaveResult>(queueKey, async () => {
-    if (!scope.isCurrent() || deletedSessions.has(queueKey))
+    if (!scope.isCurrent() || isChatSessionDeleted(session.id, scope))
       return { status: "retired" };
     try {
       const supabase = createClient();
@@ -149,7 +156,7 @@ export async function saveChatSnapshotToCloud(
       if (!scope.isCurrent() || user?.id !== userId)
         return { status: "retired" };
       const cloudId = await chatSnapshotCloudId(snapshot.id, userId);
-      if (!scope.isCurrent() || deletedSessions.has(queueKey))
+      if (!scope.isCurrent() || isChatSessionDeleted(snapshot.id, scope))
         return { status: "retired" };
       const localBase =
         loadChatSession(snapshot.id, scope)?.cloudRevision ?? null;
@@ -219,6 +226,14 @@ export async function loadCloudSessions(
   const userId = chatUserId(scope);
   if (!userId) return [];
   try {
+    // Bounded retries share each conversation's save/delete queue. All deleted
+    // IDs stay hidden even if the network fails or more intents await retry.
+    await Promise.all(
+      listPendingChatDeletions(scope)
+        .slice(0, 5)
+        .map((id) => deleteCloudSession(id, scope)),
+    );
+    if (!scope.isCurrent()) return [];
     const supabase = createClient();
     const {
       data: { user },
@@ -231,8 +246,12 @@ export async function loadCloudSessions(
       })
       .abortSignal(AbortSignal.timeout(20_000));
 
-    if (!scope.isCurrent() || error || !data) return [];
-    return data as unknown as CloudSession[];
+    if (!scope.isCurrent() || error || !Array.isArray(data)) return [];
+    return (data as unknown as CloudSession[]).filter(
+      (session) =>
+        typeof session?.id === "string" &&
+        !isChatSessionDeleted(session.id, scope),
+    );
   } catch {
     return [];
   }
@@ -247,8 +266,10 @@ export async function deleteCloudSession(
 ): Promise<boolean> {
   const userId = chatUserId(scope);
   if (!userId) return false;
+  // Never dispatch a destructive request when its originating device cannot
+  // retain the user's intent across a restart or a lost network response.
+  if (!deleteChatSession(sessionId, scope)) return false;
   const queueKey = `${userId}:${sessionId}`;
-  deletedSessions.add(queueKey);
   return serializeCloudWork(queueKey, async () => {
     try {
       const supabase = createClient();
@@ -262,8 +283,10 @@ export async function deleteCloudSession(
         .from("chat_sessions")
         .delete()
         .eq("id", cloudId)
-        .eq("user_id", userId);
-      return scope.isCurrent() && !error;
+        .eq("user_id", userId)
+        .abortSignal(AbortSignal.timeout(20_000));
+      if (!scope.isCurrent() || error) return false;
+      return acknowledgeChatDeletion(sessionId, scope);
     } catch {
       return false;
     }
