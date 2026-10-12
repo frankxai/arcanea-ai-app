@@ -27,6 +27,13 @@ const distDir = resolve(__dirname, "dist");
 const entryPoint = resolve(distDir, "index.js");
 const outFile = resolve(distDir, "arcanea.cjs");
 
+if (process.argv.includes("--standalone-package-only")) {
+  console.error(
+    "Build @arcanea/core and @arcanea/cli first, then pack the standalone directory with: pnpm --dir packages/cli/dist/package pack",
+  );
+  process.exit(1);
+}
+
 // ── Pre-flight checks ──────────────────────────────────────────────
 if (!existsSync(entryPoint)) {
   console.error(

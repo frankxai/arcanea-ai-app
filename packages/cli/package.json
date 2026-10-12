@@ -25,7 +25,7 @@
     "build": "tsc && node build.mjs",
     "build:ts": "tsc",
     "build:bundle": "node build.mjs",
-    "prepack": "tsc && node build.mjs",
+    "prepack": "node build.mjs --standalone-package-only",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "start": "node dist/arcanea.cjs",
@@ -72,8 +72,6 @@
     "node": ">=18.0.0"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist/package",
-    "linkDirectory": false
+    "access": "public"
   }
 }

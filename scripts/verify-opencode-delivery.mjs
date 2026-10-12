@@ -167,11 +167,34 @@ try {
 
   const artifacts = join(temporary, "artifacts");
   mkdirSync(artifacts);
+  const sourcePack = spawnSync(
+    pnpm[0],
+    [
+      ...pnpm.slice(1),
+      "--dir",
+      "packages/cli",
+      "pack",
+      "--pack-destination",
+      artifacts,
+    ],
+    { cwd: root, encoding: "utf8", timeout: 10_000 },
+  );
+  assert.equal(sourcePack.error, undefined);
+  assert.equal(sourcePack.status, 1);
+  assert.match(
+    (sourcePack.stdout || "") + (sourcePack.stderr || ""),
+    /standalone directory/,
+  );
+  assert.deepEqual(readdirSync(artifacts), []);
+  writeFileSync(
+    join(output, "source-pack-refusal.log"),
+    (sourcePack.stdout || "") + (sourcePack.stderr || ""),
+  );
   for (const name of ["cli", "arcanea-mcp"])
     run(`pack-${name}`, pnpm[0], [
       ...pnpm.slice(1),
       "--dir",
-      `packages/${name}`,
+      name === "cli" ? "packages/cli/dist/package" : "packages/arcanea-mcp",
       "pack",
       "--pack-destination",
       artifacts,

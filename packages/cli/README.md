@@ -122,7 +122,7 @@ Native delivery checks target OpenCode 1.18.35 on hosted Linux and Windows. The 
 ## Technical
 
 - The CLI builds a standalone CJS executable with its Node shebang.
-- Development uses the repository's frozen dependencies and pinned pnpm. `publishConfig.directory` packs a generated standalone manifest without runtime dependencies; it preserves the workspace manifest and shared lockfile.
+- Development uses the repository's frozen dependencies and pinned pnpm. The build generates `dist/package` with the standalone executable and a manifest without runtime dependencies. Pack that directory with `pnpm --dir packages/cli/dist/package pack`. Packing the development directory fails with these instructions, preventing an archive that depends on unpublished workspace packages. The shared lockfile remains unchanged.
 - CLI runtime: Node.js 18+. Use the installed MCP server's stricter runtime requirement when attaching its tools.
 - From the monorepo, build core and CLI, then run `pnpm --dir packages/cli test:opencode-delivery`. The check builds and packs both real packages, installs a fresh consumer and verifies a pinned native OpenCode without model inference. It does not publish packages.
 
