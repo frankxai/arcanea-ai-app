@@ -225,6 +225,61 @@ test("ready metadata never permits a second upload capability", async () => {
   );
 });
 
+test("ready completion replays validate the exact record without repeated Blob reads, decoding or quota changes", async () => {
+  const bytes = new Uint8Array([1, 2, 3]);
+  const claim = await media.parseDocumentMediaClaim(await input(bytes), scope);
+  const f = fixtures(claim, bytes);
+  f.row.status = "ready";
+  let reads = 0,
+    decodes = 0;
+  const store = {
+    read: async () => {
+      reads++;
+      return { bytes, mimeType: claim.mimeType };
+    },
+  };
+  const decode = async () => {
+    decodes++;
+  };
+  for (let index = 0; index < 64; index++) {
+    const record = await media.finalizeDocumentMedia(
+      claim,
+      f.repository,
+      store,
+      decode,
+    );
+    assert.equal(record.assetId, claim.assetId);
+    assert.equal(record.status, "ready");
+  }
+  assert.equal(reads, 0);
+  assert.equal(decodes, 0);
+  assert.deepEqual(f.counts(), { reserves: 64, completes: 0 });
+  for (const patch of [
+    { ownerId: assetId },
+    { projectId: assetId },
+    { docId: assetId },
+    { sha256: "0".repeat(64) },
+    { fingerprint: "0".repeat(64) },
+    { byteSize: 4 },
+    { mimeType: "image/jpeg" },
+    { sourceStatus: "verified" },
+    { rightsStatus: "verified" },
+    { status: "unknown" },
+  ]) {
+    const forged = {
+      reserve: async () => ({ ...f.row, ...patch }),
+      complete: f.repository.complete,
+    };
+    await assert.rejects(
+      media.finalizeDocumentMedia(claim, forged, store, decode),
+      (error) => [409, 503].includes(error.status),
+    );
+  }
+  assert.equal(reads, 0);
+  assert.equal(decodes, 0);
+  assert.equal(f.counts().completes, 0);
+});
+
 test("active-content types, malformed digests and unsafe filenames are refused", async () => {
   const body = await input();
   for (const patch of [

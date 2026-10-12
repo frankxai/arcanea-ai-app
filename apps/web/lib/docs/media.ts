@@ -253,9 +253,11 @@ export async function finalizeDocumentMedia(
 ): Promise<DocumentMediaRecord> {
   const reserved = await repository.reserve(claim);
   matchRecord(reserved, claim);
+  // Immutable ready bytes were verified before the first trusted completion.
+  // Replays still reauthorize scope, but must not repeat download and decoding.
+  if (reserved.status === "ready") return reserved;
   const bytes = await verifiedDocumentMediaBytes(claim, store);
   await decode(bytes, claim.mimeType);
-  if (reserved.status === "ready") return reserved;
   const completed = await repository.complete(claim);
   matchRecord(completed, claim);
   if (completed.status !== "ready")
