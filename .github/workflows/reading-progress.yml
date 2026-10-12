@@ -104,7 +104,7 @@ jobs:
           READING_PROGRESS_SOURCE_COMMIT: ${{ env.SOURCE_COMMIT }}
       - name: Retain exact-source captures and provenance
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: reading-progress-${{ env.SOURCE_COMMIT }}-attempt-${{ github.run_attempt }}
           path: screenshots/reading-progress/
@@ -157,7 +157,7 @@ jobs:
           READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
       - name: Retain authenticated acceptance and provenance
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: reading-progress-auth-${{ env.SOURCE_COMMIT }}-attempt-${{ github.run_attempt }}
           path: screenshots/reading-progress-auth/

@@ -57,7 +57,7 @@ jobs:
         run: node --test packages/cli/tests/opencode.test.mjs
       - name: Verify the fresh packages in native OpenCode without model inference
         run: pnpm --dir packages/cli test:opencode-delivery
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: opencode-consumer-${{ matrix.os }}
