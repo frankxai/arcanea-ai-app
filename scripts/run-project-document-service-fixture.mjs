@@ -117,6 +117,8 @@ for (const file of [
   "scripts/tests/document-media-blob-fixture.test.cjs",
   "apps/web/lib/docs/media.ts",
   "apps/web/lib/docs/media-client.ts",
+  "apps/web/lib/docs/media-outbox.ts",
+  "scripts/tests/document-media-outbox.test.cjs",
   "apps/web/lib/docs/media-server.ts",
   "apps/web/lib/docs/portable-export.ts",
   "apps/web/app/api/projects/[id]/docs/[docId]/media/route.ts",
@@ -445,6 +447,13 @@ try {
     ],
     120000,
   );
+  phase = "browser-original-restart";
+  await run(
+    process.execPath,
+    ["--test", "scripts/tests/document-media-outbox.test.cjs"],
+    90000,
+  );
+  receipt.browserOriginalRestartPassed = true;
   phase = "app-readiness";
   // Only the app child receives disposable admin/storage credentials. Browser
   // login still uses real isolated Auth, and all app authorization stays active.

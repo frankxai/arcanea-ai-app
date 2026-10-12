@@ -55,7 +55,7 @@ const base = hubReleaseReview
   : privateImagineReview
     ? "89f9d1fd911407aa3bc8128fecca96f00c7cc6c6"
     : projectDocumentReview
-      ? "a021e394c28f7221462b128443113b2aa921a690"
+      ? "33b437e71b0b945dc4b8cfa3f48df7a7aa6144aa"
       : generationReview
         ? "0661416b66c2674eb63a84a9597ca1163eb2d378"
         : worldCreatorReview
@@ -262,6 +262,8 @@ if (projectDocumentReview) {
     "scripts/run-project-document-service-fixture.mjs",
     "scripts/document-media-blob-fixture.cjs",
     "scripts/tests/document-media-blob-fixture.test.cjs",
+    "apps/web/lib/docs/media-outbox.ts",
+    "scripts/tests/document-media-outbox.test.cjs",
     "supabase/migrations/20261011000001_private_imagine_assets.sql",
     "scripts/verify-project-document-browser.cjs",
     ".github/workflows/ci.yml",

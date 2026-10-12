@@ -380,6 +380,10 @@ function MountedEditor({
   backHref: string;
 }) {
   const { draft, doc } = loaded;
+  const [confirmedImageContent, setConfirmedImageContent] = useState(() => ({
+    content: doc.content?.content_json,
+    confirmation: 0,
+  }));
   const [exporting, setExporting] = useState(false);
   const [exportMessage, setExportMessage] = useState<{
     text: string;
@@ -407,6 +411,15 @@ function MountedEditor({
       }),
     [mediaScope, current],
   );
+  const imageRecovery = useMemo(
+    () => ({
+      scope: mediaScope,
+      current,
+      confirmedContent: confirmedImageContent.content,
+      confirmation: confirmedImageContent.confirmation,
+    }),
+    [mediaScope, current, confirmedImageContent],
+  );
   const snapshot = useSyncExternalStore(
     draft.subscribe,
     draft.snapshot,
@@ -418,6 +431,12 @@ function MountedEditor({
     try {
       await draft.flush();
       if (current()) {
+        const saved = draft.snapshot();
+        if (!saved.dirty && saved.value)
+          setConfirmedImageContent((previous) => ({
+            content: saved.value?.content_json,
+            confirmation: previous.confirmation + 1,
+          }));
         setSaveError(false);
         setMessage(
           draft.backupAvailable()
@@ -781,6 +800,7 @@ function MountedEditor({
         />
         <DocEditor
           onImageUpload={imageUpload}
+          imageRecovery={imageRecovery}
           initialContent={
             loaded.initial.content_json &&
             Object.keys(loaded.initial.content_json).length

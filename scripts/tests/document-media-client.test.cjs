@@ -570,7 +570,12 @@ function editorHarness(onImageUpload, overrides = {}) {
   }).outputText;
   new Function("exports", "require", "module", code)(
     module.exports,
-    (name) => (name === "novel" ? novel : appRequire(name)),
+    (name) =>
+      name === "novel"
+        ? novel
+        : name.startsWith("@/lib/docs/")
+          ? load(path.resolve(base, name.slice("@/lib/docs/".length) + ".ts"))
+          : appRequire(name),
     module,
   );
   const html = renderToStaticMarkup(

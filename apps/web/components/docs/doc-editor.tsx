@@ -41,6 +41,18 @@ import {
   type JSONContent,
   type EditorInstance,
 } from "novel";
+import {
+  acknowledgeDocumentOriginal,
+  documentContainsOriginal,
+  readDocumentOriginal,
+  retainDocumentOriginal,
+  type DocumentOriginal,
+} from "@/lib/docs/media-outbox";
+import {
+  DocumentMediaError,
+  documentMediaUrl,
+  type DocumentMediaScope,
+} from "@/lib/docs/media";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -63,6 +75,13 @@ interface DocEditorProps {
   saveDelay?: number;
   readOnly?: boolean;
   onImageUpload?: (file: File) => Promise<string>;
+  imageRecovery?: {
+    scope: DocumentMediaScope;
+    current: () => boolean;
+    /** Content from a verified server revision, never an unsaved draft. */
+    confirmedContent: unknown;
+    confirmation: number;
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -322,15 +341,134 @@ export function DocEditor({
   saveDelay = 2000,
   readOnly = false,
   onImageUpload,
+  imageRecovery,
 }: DocEditorProps) {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const editorRef = useRef<EditorInstance | null>(null);
   const pendingImageRef = useRef<File | null>(null);
+  const originalRef = useRef<DocumentOriginal | null>(null);
+  const pendingUrlRef = useRef<string | null>(null);
+  const uploadBusyRef = useRef(false);
+  const recoveryLoadingRef = useRef(Boolean(imageRecovery));
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const alive = useRef(true);
   const [pendingImage, setPendingImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [recoveringImage, setRecoveringImage] = useState(
+    Boolean(imageRecovery),
+  );
+  const [imageRecoveryNotice, setImageRecoveryNotice] = useState<string | null>(
+    null,
+  );
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const recoveryScope = imageRecovery?.scope;
+  const recoveryCurrent = imageRecovery?.current;
+  useEffect(() => {
+    if (!recoveryScope || !recoveryCurrent) return;
+    let mounted = true;
+    recoveryLoadingRef.current = true;
+    setRecoveringImage(true);
+    void readDocumentOriginal(recoveryScope, () => mounted && recoveryCurrent())
+      .then((entry) => {
+        if (!mounted || !recoveryCurrent()) return;
+        recoveryLoadingRef.current = false;
+        if (!entry) return;
+        originalRef.current = entry;
+        pendingImageRef.current = entry.file;
+        pendingUrlRef.current = documentMediaUrl(
+          entry.claim,
+          entry.claim.assetId,
+        );
+        setPendingImage(entry.file);
+        setImageError(
+          "An original image was recovered from this browser. Retry to add it or finish saving the document.",
+        );
+        setImageRecoveryNotice(
+          "Original kept in this browser. Download a copy before clearing browser data.",
+        );
+      })
+      .catch((error: unknown) => {
+        if (!mounted || !recoveryCurrent()) return;
+        setImageError(
+          error instanceof Error
+            ? error.message
+            : "Browser image recovery is unavailable. Keep your original file.",
+        );
+        // An unreadable copy must never be replaced by a new upload.
+        if (error instanceof DocumentMediaError && error.status === 409)
+          recoveryLoadingRef.current = true;
+      })
+      .finally(() => {
+        if (!mounted || !recoveryCurrent()) return;
+        if (!originalRef.current && recoveryLoadingRef.current) {
+          // A scoped read failure keeps adding disabled until the document reopens.
+          setRecoveringImage(true);
+        } else {
+          recoveryLoadingRef.current = false;
+          setRecoveringImage(false);
+        }
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [recoveryScope, recoveryCurrent]);
+  useEffect(() => {
+    const entry = originalRef.current;
+    if (!imageRecovery || uploadingImage) return;
+    if (!entry) {
+      if (
+        pendingImageRef.current &&
+        pendingUrlRef.current &&
+        imageRecovery.current() &&
+        documentContainsOriginal(
+          imageRecovery.confirmedContent,
+          pendingUrlRef.current,
+        )
+      ) {
+        pendingImageRef.current = null;
+        pendingUrlRef.current = null;
+        setPendingImage(null);
+        setUploadedImageUrl(null);
+        setImageError(null);
+        setImageRecoveryNotice(null);
+      }
+      return;
+    }
+    let mounted = true;
+    void acknowledgeDocumentOriginal(
+      entry,
+      imageRecovery.confirmedContent,
+      () => mounted && imageRecovery.current(),
+    )
+      .then((removed) => {
+        if (
+          !removed ||
+          !mounted ||
+          !imageRecovery.current() ||
+          originalRef.current !== entry
+        )
+          return;
+        originalRef.current = null;
+        pendingImageRef.current = null;
+        pendingUrlRef.current = null;
+        setPendingImage(null);
+        setUploadedImageUrl(null);
+        setImageError(null);
+        setImageRecoveryNotice(null);
+      })
+      .catch((error: unknown) => {
+        if (mounted && imageRecovery.current())
+          setImageError(
+            error instanceof Error
+              ? error.message
+              : "Image saving is confirmed, but the browser recovery copy could not be retired.",
+          );
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [imageRecovery, pendingImage, uploadedImageUrl, uploadingImage]);
   useEffect(() => {
     alive.current = true;
     const unload = (event: BeforeUnloadEvent) => {
@@ -371,24 +509,52 @@ export function DocEditor({
             throw Error(
               "Private image saving is unavailable in this editor. Keep the original file.",
             );
-          if (pendingImageRef.current && pendingImageRef.current !== file)
+          if (
+            recoveryLoadingRef.current ||
+            uploadBusyRef.current ||
+            (pendingImageRef.current && pendingImageRef.current !== file)
+          )
             throw Error(
               "Finish or download the pending image before adding another.",
             );
           pendingImageRef.current = file;
+          uploadBusyRef.current = true;
           if (alive.current) {
             setPendingImage(file);
             setImageError(null);
             setUploadingImage(true);
           }
           try {
+            if (imageRecovery) {
+              try {
+                originalRef.current = await retainDocumentOriginal(
+                  file,
+                  imageRecovery.scope,
+                  () => alive.current && imageRecovery.current(),
+                );
+                if (alive.current && imageRecovery.current())
+                  setImageRecoveryNotice(
+                    "Original kept in this browser. Download a copy before clearing browser data.",
+                  );
+              } catch (error) {
+                if (
+                  !alive.current ||
+                  !imageRecovery.current() ||
+                  (error instanceof DocumentMediaError && error.status !== 503)
+                )
+                  throw error;
+                setImageRecoveryNotice(
+                  "Browser backup is unavailable. Download the original before closing this page.",
+                );
+              }
+            }
             const url = await onImageUpload(file);
-            if (!alive.current)
+            if (!alive.current || (imageRecovery && !imageRecovery.current()))
               throw Error(
                 "The document closed before image saving was confirmed.",
               );
-            pendingImageRef.current = null;
-            setPendingImage(null);
+            pendingUrlRef.current = url;
+            setUploadedImageUrl(url);
             return url;
           } catch (error) {
             if (alive.current)
@@ -399,6 +565,7 @@ export function DocEditor({
               );
             throw error;
           } finally {
+            uploadBusyRef.current = false;
             if (alive.current) setUploadingImage(false);
           }
         },
@@ -414,7 +581,7 @@ export function DocEditor({
           return valid;
         },
       }),
-    [onImageUpload, readOnly],
+    [onImageUpload, readOnly, imageRecovery],
   );
   const suggestionItems = useMemo(
     () => documentSuggestionItems(uploadFn),
@@ -426,6 +593,17 @@ export function DocEditor({
     const editor = editorRef.current;
     if (!editor) return;
     uploadFn(file, editor.view, editor.state.selection.from);
+  }
+  function retryImage(file: File) {
+    const editor = editorRef.current;
+    if (!editor || recoveryLoadingRef.current || uploadBusyRef.current) return;
+    if (
+      pendingUrlRef.current &&
+      documentContainsOriginal(editor.getJSON(), pendingUrlRef.current)
+    ) {
+      setImageError(null);
+      triggerSave(editor);
+    } else insertFile(file);
   }
 
   const triggerSave = useCallback(
@@ -477,7 +655,12 @@ export function DocEditor({
           <button
             type="button"
             className={imageControl}
-            disabled={uploadingImage || pendingImage !== null || !onImageUpload}
+            disabled={
+              recoveringImage ||
+              uploadingImage ||
+              pendingImage !== null ||
+              !onImageUpload
+            }
             onClick={() => imageInputRef.current?.click()}
           >
             Add image
@@ -504,15 +687,23 @@ export function DocEditor({
           className="mb-4 rounded-lg border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-4"
         >
           <p role={imageError ? "alert" : "status"} className="mb-3 text-sm">
-            {imageError ?? "Saving your image… Keep this page open."}
+            {imageError ??
+              (uploadedImageUrl
+                ? "Image uploaded. Waiting for the document save to be confirmed."
+                : "Saving your image… Keep this page open.")}
           </p>
+          {imageRecoveryNotice && (
+            <p className="mb-3 text-sm text-[var(--arc-text-secondary)]">
+              {imageRecoveryNotice}
+            </p>
+          )}
           {pendingImage && (
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 className={imageControl}
                 disabled={uploadingImage}
-                onClick={() => insertFile(pendingImage)}
+                onClick={() => retryImage(pendingImage)}
               >
                 Retry image
               </button>

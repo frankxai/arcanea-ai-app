@@ -666,10 +666,46 @@ async function main() {
         assert.equal(imageAsset.byteSize, 10485760);
         assert.equal(imageAsset.sha256, originalDigest);
         await capture("image-recovery");
+        await page.reload();
+        await expect(imageRecovery.getByRole("alert")).toContainText(
+          "recovered from this browser",
+        );
+        const reopenedOriginal = await download(
+          imageRecovery.getByRole("button", {
+            name: "Download original image",
+            exact: true,
+          }),
+          true,
+        );
+        assert.equal(
+          createHash("sha256").update(reopenedOriginal).digest("hex"),
+          originalDigest,
+        );
+        blockWrites = true;
+        const beforeImageSave = result.patchIdentities.length;
+        await imageRecovery
+          .getByRole("button", { name: "Retry image", exact: true })
+          .click();
+        await expect(editor.locator("img")).toHaveCount(1);
+        await flush();
+        await expect
+          .poll(() => result.patchIdentities.length)
+          .toBeGreaterThan(beforeImageSave);
+        await expect(imageRecovery).toHaveCount(1);
+        await page.reload();
+        await expect(imageRecovery.getByRole("alert")).toContainText(
+          "recovered from this browser",
+        );
+        await expect(editor.locator("img")).toHaveCount(1);
+        blockWrites = false;
         await imageRecovery
           .getByRole("button", { name: "Retry image", exact: true })
           .click();
         await expect(imageRecovery).toHaveCount(0);
+        await expect(editor.locator("img")).toHaveCount(1);
+        result.checks.push(
+          "durable-original-reopen-and-lost-document-save-without-duplicate-image-or-put",
+        );
         assert.equal(
           imagePutRequests,
           1,

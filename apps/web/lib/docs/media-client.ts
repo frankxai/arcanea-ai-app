@@ -123,13 +123,13 @@ async function verifyReceipt(
     );
   return body.url as string;
 }
-/** Retry identity is derived from the original and its owner/document, not time. */
-export async function uploadDocumentImage(
+/** The local recovery copy and upload share one immutable original identity. */
+export async function prepareDocumentImage(
   file: File,
   scope: DocumentMediaScope,
-  options: MediaClientOptions,
-): Promise<string> {
-  requireCurrent(options.current);
+  current: () => boolean,
+): Promise<DocumentMediaClaim> {
+  requireCurrent(current);
   if (file.size < 1 || file.size > MAX_DOCUMENT_MEDIA_BYTES)
     throw new DocumentMediaError(
       413,
@@ -138,7 +138,7 @@ export async function uploadDocumentImage(
   if (!Object.hasOwn(DOCUMENT_MEDIA_TYPES, file.type))
     throw new DocumentMediaError(400, "Use a PNG, JPEG or WEBP image.");
   const sha256 = await mediaDigest(new Uint8Array(await file.arrayBuffer()));
-  requireCurrent(options.current);
+  requireCurrent(current);
   const identity = await mediaDigest(
     new TextEncoder().encode(
       JSON.stringify([
@@ -164,7 +164,17 @@ export async function uploadDocumentImage(
     },
     scope,
   );
-  requireCurrent(options.current);
+  requireCurrent(current);
+  return claim;
+}
+
+/** Retry identity is derived from the original and its owner/document, not time. */
+export async function uploadDocumentImage(
+  file: File,
+  scope: DocumentMediaScope,
+  options: MediaClientOptions,
+): Promise<string> {
+  const claim = await prepareDocumentImage(file, scope, options.current);
   const fetcher = options.fetch ?? fetch;
   const signal = options.signal
     ? AbortSignal.any([options.signal, AbortSignal.timeout(60000)])
