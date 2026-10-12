@@ -180,6 +180,29 @@ class ReviewAdmission(unittest.TestCase):
             decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
             decoder.feed(b"x" * 8_000_001)
 
+    def test_gateway_usage_can_repeat_normal_stop_without_new_content(self):
+        # Retained708 gateway evidence has a normal terminal choice followed by
+        # the same empty terminal choice carrying usage, then [DONE].
+        raw = self.stream_bytes(usage=False)
+        usage_chunk = {"model": REVIEW.NEMOTRON_MODEL, "usage": {"cost": 0},
+                       "choices": [{"index": 0, "delta": {"content": "", "role": "assistant"},
+                                    "finish_reason": "stop"}]}
+        repeated = ("data: " + json.dumps(usage_chunk) + "\r\n\r\n").encode()
+        raw = raw.replace(b"data: [DONE]", repeated + b"data: [DONE]")
+        decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
+        decoder.feed(raw)
+        self.assertEqual(decoder.finish()["usage"], {"cost": 0})
+        for invalid in (
+            {**usage_chunk, "usage": None},
+            {**usage_chunk, "choices": [{"index": 0, "delta": {"content": "late"}, "finish_reason": "stop"}]},
+            {**usage_chunk, "choices": [{"index": 0, "delta": {}, "finish_reason": "length"}]},
+        ):
+            with self.subTest(invalid=invalid), self.assertRaises(REVIEW.Denied):
+                decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
+                bad = ("data: " + json.dumps(invalid) + "\r\n\r\n").encode()
+                decoder.feed(self.stream_bytes(usage=False).replace(b"data: [DONE]", bad + b"data: [DONE]"))
+                decoder.finish()
+
     def test_stream_network_has_one_absolute_deadline_and_always_closes(self):
         connection = Mock()
         response = Mock(status=200)

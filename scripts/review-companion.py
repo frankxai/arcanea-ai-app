@@ -191,7 +191,10 @@ class ReviewStream:
                     self.content.append(text)
                 finish = choice.get("finish_reason")
                 if finish is not None:
-                    require(finish == "stop" and self.finish_reason is None,
+                    # The gateway can repeat the empty terminal choice in its
+                    # usage event. This adds accounting, never report content.
+                    require(finish == "stop" and (self.finish_reason is None
+                            or (isinstance(chunk.get("usage"), dict) and not text)),
                             "Incomplete review stream")
                     self.finish_reason = finish
             usage = chunk.get("usage")

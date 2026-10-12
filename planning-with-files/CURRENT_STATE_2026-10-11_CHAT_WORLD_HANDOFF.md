@@ -602,3 +602,63 @@ editor owner fix, independent lead reconciliation, real authenticated/provider
 outcomes, production verification and the full Queen/SIS/graph/memory/canvas,
 commerce/community/publishing/API/client programme remain open. Goal01a1269f
 remains ACTIVE; neither application draft PR is declared complete.
+
+## Gateway terminal accounting repair and retained findings
+
+Commit708da3ad9e290b21b6f34d4bf1a4b70814439313 was pushed normally after
+the complete73-file/19-path zero-price, capacity and secret preflight passed.
+The first local helper incorrectly selected the legacy default review contract
+and refused before inference; that terminal refusal is retained separately.
+PR602's description was updated around the final source/recovery behavior.
+The existing edited/cancel-in-progress policy cancelled initial runs38190869090
+and38190869123; replacement runs38191075528 and38191075524 used the same head.
+There was no manual rerun or inference from the cancelled independent job.
+
+Replacement CI38191075528 is terminal SUCCESS: build114624443299,
+lint114623919883, TypeScript114623919887 and CI status114625155321 pass.
+Authenticated acceptance jobs are skipped and provide no acceptance. Compiled
+recovery114623814665 passes. Its artifact11720963353 was downloaded and all52
+actual Git blobs and20 PNG sidecars verified against708. All four modes retain
+single-main navigation, two explicit attempts, uncertainty consent, complete
+exports, restored completion and newer-edit protection. Browser/server cleanup
+and page/fixture errors verify clean. Failed network requests remain recorded;
+synthetic/interrupted requests are not hidden or claimed absent. Real provider
+calls and production writes are zero. Seven changed world captures were viewed;
+the occupied editor's heading overlap remains visible.
+
+Independent114624729362 is terminal FAILURE: Incomplete review stream. Artifact
+11721841070 retains exactly one world-client dispatch and178785 raw SSE bytes,
+SHA903a4e6e48c416370d320f5edcd9154b88323be3083436209fd05697a4852739.
+The matching-model stream actually ended normally: an empty stop choice followed
+by the same empty stop choice carrying usage, then DONE. Reported prompt124676,
+completion2107, reasoning337 and all reported cost fields zero are preserved.
+The initial parser wrongly refused this repeated terminal accounting marker.
+
+A regression reproduced that exact failure with22 existing cases passing and
+one new case failing. The parser now permits a repeated stop only with usage
+metadata and no new content. Repeated stops without usage, late content, length,
+provider error, tools, model drift, incomplete usage/DONE and response/deadline
+overruns remain denied. All23 no-network admission/stream cases pass. Scope,
+owner and rollback remain the same three review/test/state paths under the
+existing native lease; no application, provider or private storage boundary is
+changed for this protocol correction.
+
+Offline lead decoding preserves the actual warn report with five findings and
+26 covered source files. Strict validation still denies a fabricated/joined
+source quote. This is one retained module at708, never a corrected provider
+verdict, aggregate independent approval or approval of the next revision.
+Separate lead reconciliation inspects the real account guard, expected_actor
+check before inference, memoized token/session cleanup, recovery-first transfer
+and retry/readback behavior, adjacent error explanation and45/55-second bounds.
+Those sources do not substantiate the alleged wrong-account inference, lost
+ready recovery or stale-key use. The disabled CTA's direct descriptive link is
+a possible accessibility refinement; the latency allegation has no model
+measurement. No speculative rewrite is made for invalid reviewer claims.
+
+Hub PR277 commit843363c9c7a5acf4b09deb04a2ae4248ff050235 saves the existing
+prompt/ledger/session, preserving foreign prompt bytes and old records. Programme
+issue276 comment6116064684 carries the same bounded state. Both require a follow-up
+with this terminal evidence and the protocol-only candidate's actual new handles.
+The full goal remains ACTIVE. Real provider/private/customer acceptance, editor
+owner correction, a complete correctly cited independent review and protected
+production qualification remain open, alongside the whole platform/business goal.
