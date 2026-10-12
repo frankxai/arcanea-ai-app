@@ -394,6 +394,28 @@ test("lost direct-upload acknowledgement is reconciled without a second put or n
   assert.equal(new Set(identities).size, 1);
   assert.deepEqual(new Uint8Array(await original.arrayBuffer()), bytes);
 });
+
+test("a lost completion transport retains the original and stops before another upload", async () => {
+  let puts = 0;
+  await assert.rejects(
+    uploadDocumentImage(
+      new File([bytes], "map.png", { type: "image/png" }),
+      scope,
+      {
+        current: () => true,
+        fetch: async () => {
+          throw new TypeError("Failed to fetch");
+        },
+        upload: async () => {
+          puts++;
+        },
+      },
+    ),
+    (error) =>
+      error.status === 503 && /original file.*retry/.test(error.message),
+  );
+  assert.equal(puts, 0);
+});
 test("uncertain finalization and storage denial stop before any new put", async () => {
   for (const status of [503, 507, 401, 409]) {
     let puts = 0;
@@ -473,15 +495,19 @@ test("portable reader bounds actual bytes and rejects a different asset's receip
   );
 });
 
-function editorHarness(onImageUpload) {
+function editorHarness(onImageUpload, overrides = {}) {
   const appRequire = createRequire(
     path.resolve(__dirname, "../../apps/web/package.json"),
   );
   const React = appRequire("react");
   const { renderToStaticMarkup } = appRequire("react-dom/server");
   let upload;
-  const Wrapper = ({ children }) => React.createElement("div", null, children);
-  const extension = { configure: () => ({}) };
+  let extensions;
+  const Wrapper = (props) => {
+    if (props.extensions) extensions = props.extensions;
+    return React.createElement("div", null, props.children);
+  };
+  const extension = { configure: () => ({}), extend: () => extension };
   const novel = new Proxy(
     {
       createImageUpload: (options) => {
@@ -489,6 +515,7 @@ function editorHarness(onImageUpload) {
         return () => {};
       },
       createSuggestionItems: (items) => items,
+      ...overrides,
     },
     {
       get: (target, name) =>
@@ -517,8 +544,129 @@ function editorHarness(onImageUpload) {
   const html = renderToStaticMarkup(
     React.createElement(module.exports.DocEditor, { onImageUpload }),
   );
-  return { html, upload };
+  return { html, upload, extensions };
 }
+
+test("actual editor installs the real Novel upload plugin and inserts a verified image without losing its placeholder state", async () => {
+  const filename = fs.realpathSync(
+    path.resolve("apps/web/node_modules/novel/dist/index.js"),
+  );
+  const novelRequire = createRequire(filename);
+  const source = fs.readFileSync(filename, "utf8");
+  const parsed = ts.createSourceFile(
+    filename,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.JS,
+  );
+  const variables = new Map(),
+    functions = [],
+    exports = new Map();
+  for (const statement of parsed.statements) {
+    if (ts.isVariableStatement(statement))
+      for (const node of statement.declarationList.declarations)
+        variables.set(
+          node.name.getText(parsed),
+          node.initializer?.getText(parsed),
+        );
+    if (ts.isFunctionDeclaration(statement))
+      functions.push(statement.getText(parsed));
+    if (
+      ts.isExportDeclaration(statement) &&
+      statement.exportClause &&
+      ts.isNamedExports(statement.exportClause)
+    )
+      for (const entry of statement.exportClause.elements)
+        exports.set(
+          entry.name.text,
+          entry.propertyName?.text ?? entry.name.text,
+        );
+  }
+  const key = [...variables].find(([, value]) =>
+    value?.startsWith('new PluginKey("upload-image")'),
+  );
+  assert.ok(key, "Use the installed library's actual upload key");
+  const plugin = exports.get("UploadImagesPlugin"),
+    upload = exports.get("createImageUpload");
+  const helper = functions.find((fn) => fn.includes(`${key[0]}.getState(`));
+  assert.ok(plugin && upload && helper);
+  const { Plugin, PluginKey, EditorState } = novelRequire("@tiptap/pm/state");
+  const { DecorationSet, Decoration } = novelRequire("@tiptap/pm/view");
+  const { Schema } = novelRequire("@tiptap/pm/model");
+  class Reader {
+    readAsDataURL() {
+      this.result = "data:image/png;base64,AQID";
+      queueMicrotask(() => this.onload?.());
+    }
+  }
+  const pipeline = new Function(
+    "Plugin",
+    "PluginKey",
+    "DecorationSet",
+    "Decoration",
+    "document",
+    "FileReader",
+    `const ${key[0]}=${key[1]}; const ${plugin}=${variables.get(plugin)}; ${helper}; const ${upload}=${variables.get(upload)}; return {plugin:${plugin},upload:${upload},key:${key[0]}};`,
+  )(
+    Plugin,
+    PluginKey,
+    DecorationSet,
+    Decoration,
+    { createElement: () => ({ setAttribute() {}, appendChild() {} }) },
+    Reader,
+  );
+  const image = novelRequire("@tiptap/extension-image").default;
+  const { extensions } = editorHarness(async () => "unused", {
+    TiptapImage: image,
+    UploadImagesPlugin: pipeline.plugin,
+  });
+  const imageExtension = extensions.find(
+    (extension) => extension.name === "image",
+  );
+  assert.equal(
+    typeof imageExtension.config.addProseMirrorPlugins,
+    "function",
+    "Image uploads require the real plugin in the editor, not only an image node",
+  );
+  const plugins = imageExtension.config.addProseMirrorPlugins.call({
+    parent: () => [],
+  });
+  const schema = new Schema({
+    nodes: {
+      doc: { content: "block+" },
+      paragraph: { group: "block", content: "inline*" },
+      text: { group: "inline" },
+      image: { group: "block", attrs: { src: {} } },
+    },
+  });
+  const view = {
+    state: EditorState.create({ schema, plugins }),
+    dispatch(transaction) {
+      this.state = this.state.apply(transaction);
+    },
+  };
+  assert.ok(pipeline.key.getState(view.state));
+  let finish;
+  const pending = new Promise((resolve) => {
+    finish = resolve;
+  });
+  pipeline.upload({ validateFn: () => true, onUpload: () => pending })(
+    new File([bytes], "map.png", { type: "image/png" }),
+    view,
+    view.state.selection.from,
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(pipeline.key.getState(view.state).find().length, 1);
+  finish(media.documentMediaUrl(scope, assetId));
+  await new Promise((resolve) => setImmediate(resolve));
+  const images = [];
+  view.state.doc.descendants((node) => {
+    if (node.type.name === "image") images.push(node.attrs.src);
+  });
+  assert.deepEqual(images, [media.documentMediaUrl(scope, assetId)]);
+  assert.equal(pipeline.key.getState(view.state).find().length, 0);
+});
 test("actual editor exposes private image input and keeps original identity after a failed upload", async () => {
   let attempts = 0;
   const original = new File([bytes], "map.png", { type: "image/png" });

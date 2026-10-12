@@ -172,13 +172,22 @@ export async function uploadDocumentImage(
   const endpoint = `/api/projects/${scope.projectId}/docs/${scope.docId}/media`;
   async function complete(): Promise<string | null> {
     requireCurrent(options.current);
-    const response = await fetcher(endpoint, {
-      method: "POST",
-      cache: "no-store",
-      signal,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "complete", claim }),
-    });
+    let response: Response;
+    try {
+      response = await fetcher(endpoint, {
+        method: "POST",
+        cache: "no-store",
+        signal,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "complete", claim }),
+      });
+    } catch {
+      requireCurrent(options.current);
+      throw new DocumentMediaError(
+        503,
+        "Image saving was not confirmed. Keep the original file and retry the same image.",
+      );
+    }
     requireCurrent(options.current);
     const body = await readEnvelope(response);
     requireCurrent(options.current);

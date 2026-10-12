@@ -32,6 +32,7 @@ import {
   CharacterCount,
   GlobalDragHandle,
   ImageResizer,
+  UploadImagesPlugin,
   handleImageDrop,
   handleImagePaste,
   createImageUpload,
@@ -287,7 +288,16 @@ function documentSuggestionItems(
 const extensions = [
   StarterKit,
   TiptapLink.configure({ openOnClick: false }),
-  TiptapImage.configure({ allowBase64: false }),
+  TiptapImage.extend({
+    addProseMirrorPlugins() {
+      return [
+        ...(this.parent?.() ?? []),
+        UploadImagesPlugin({
+          imageClass: "rounded-lg border border-[var(--arc-cosmic-border)]",
+        }),
+      ];
+    },
+  }).configure({ allowBase64: false }),
   TiptapUnderline,
   TaskList,
   TaskItem.configure({ nested: true }),
