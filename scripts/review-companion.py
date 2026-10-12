@@ -58,6 +58,9 @@ WORLD_PATHS = frozenset({
     "scripts/review-companion.py", "scripts/tests/test_review_companion.py",
     ".github/workflows/companion.yml",
     "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md",
+    "apps/web/app/worlds/loading.tsx", "apps/web/app/worlds/create/loading.tsx",
+    "apps/web/app/worlds/[slug]/loading.tsx", "apps/web/app/worlds/[slug]/page.tsx",
+    "apps/web/app/worlds/worlds-client.tsx", "scripts/tests/world-landmarks.test.cjs",
 })
 WORLD_CONTEXTS = tuple(sorted(set(CONTEXTS) | WORLD_PATHS | {
     "apps/web/app/layout.tsx",
@@ -73,6 +76,10 @@ WORLD_CONTEXTS = tuple(sorted(set(CONTEXTS) | WORLD_PATHS | {
     "apps/web/components/worlds/world-model-settings.tsx", "apps/web/components/worlds/world-art-brief.tsx",
     "apps/web/lib/supabase/server.ts", "apps/web/lib/async-deadline.ts",
     "apps/web/lib/gateway/credential-policy.mjs", ".github/workflows/ci.yml",
+    "apps/web/app/worlds/layout.tsx", "apps/web/app/worlds/page-transition.tsx",
+    "apps/web/app/worlds/create/layout.tsx", "apps/web/app/worlds/[slug]/layout.tsx",
+    "apps/web/lib/worlds/read-result.ts", "apps/web/lib/worlds/elements.ts",
+    "apps/web/lib/supabase/public.ts", "apps/web/lib/supabase/cached-auth.ts",
 }))
 
 
@@ -285,9 +292,13 @@ def modules(changed, content, branch=BRANCH):
         server = {"apps/web/app/api/worlds/generate/route.ts", "apps/web/lib/worlds/generation.ts",
                   "scripts/test-world-generation.cjs"}
         browser = {"scripts/verify-companion-browser.cjs"}
+        navigation = {"apps/web/app/worlds/loading.tsx", "apps/web/app/worlds/create/loading.tsx",
+                      "apps/web/app/worlds/[slug]/loading.tsx", "apps/web/app/worlds/[slug]/page.tsx",
+                      "apps/web/app/worlds/worlds-client.tsx", "scripts/tests/world-landmarks.test.cjs"}
         primary = {"world-client": set(changed) & client, "world-server": set(changed) & server,
                    "world-browser": set(changed) & browser,
-                   "world-review": set(changed) - client - server - browser}
+                   "world-navigation": set(changed) & navigation,
+                   "world-review": set(changed) - client - server - browser - navigation}
         common = {"AGENTS.md", "TASTE.md", "DESIGN.md", ".arcanea/prompts/luminor-engineering-kernel.md"}
         identity = {"apps/web/lib/auth/context.tsx", "apps/web/lib/ai/provider-preferences.ts",
                     "apps/web/lib/supabase/client.ts", "apps/web/lib/gateway/credential-policy.mjs",
@@ -310,12 +321,24 @@ def modules(changed, content, branch=BRANCH):
                 "scripts/tests/chat-world-handoff.test.cjs"},
             "world-browser": common | identity | handoff | creator | {
                 "apps/web/app/layout.tsx",
+                "apps/web/app/worlds/layout.tsx", "apps/web/app/worlds/page-transition.tsx",
+                "apps/web/app/worlds/loading.tsx", "apps/web/app/worlds/worlds-client.tsx",
+                "apps/web/app/worlds/create/layout.tsx", "apps/web/app/worlds/create/loading.tsx",
+                "scripts/tests/world-landmarks.test.cjs",
                 "apps/web/components/saga/chapter-reader.tsx",
                 "apps/web/components/saga/reading-toolbar.tsx",
                 "apps/web/components/saga/reading-toolbar.module.css",
                 "apps/web/app/chat/page.tsx", "apps/web/components/chat/chat-area.tsx",
                 "apps/web/components/chat/agent-header.tsx", "packages/design-system/src/tokens.css",
                 "packages/design-system/src/companion.module.css"},
+            "world-navigation": common | navigation | {
+                "apps/web/app/layout.tsx", "apps/web/app/worlds/layout.tsx",
+                "apps/web/app/worlds/page-transition.tsx", "apps/web/app/worlds/create/layout.tsx",
+                "apps/web/app/worlds/create/page.tsx", "apps/web/app/worlds/[slug]/layout.tsx",
+                "apps/web/lib/supabase/server.ts", "apps/web/lib/supabase/public.ts",
+                "apps/web/lib/supabase/cached-auth.ts", "apps/web/lib/worlds/read-result.ts",
+                "apps/web/lib/worlds/elements.ts", "apps/web/lib/async-deadline.ts",
+                "scripts/verify-companion-browser.cjs", "packages/design-system/src/tokens.css"},
             "world-review": common | {".github/workflows/ci.yml", ".github/workflows/companion.yml",
                                       "apps/web/package.json"},
         }

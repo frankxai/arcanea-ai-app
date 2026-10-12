@@ -401,3 +401,84 @@ new local build, model, server, browser or agent was started. Real Google output
 private authenticated save/reopen, customer usefulness, production verification
 and the full platform/Queen/memory/canvas/commerce/community/publishing/client
 programme remain open. Goal01a1269f remains ACTIVE; both application PRs stay draft.
+
+## Worlds landmark repair and corrected ownership, 12 October 2026
+
+The previous goal turn was a requested status summary: no implementation progress.
+This continuation revalidated the clean checkout, draft PR602 and all terminal
+d7d2b177 jobs. CI/build/types/lint and compiled four-mode recovery passed at that
+revision. Independent review failed on a finding whose quote does not match the
+cited source; its complete final response also labels findings as a pass. No
+independent verdict was accepted. The retained lead reconciliation is a separate
+assessment, not an independent approval or a rewritten provider response.
+
+The current stable arcanea.ai deployment is READY at accepted main8936b140,
+deployment dpl_5YRvq6etyVEVU5BkiXFr3pjfdvLa. This binds the production alias
+and source; it does not prove a real customer/provider outcome or deploy this PR.
+
+The earlier nested-landmark attribution to the occupied creator page is corrected.
+At current d7 source that page uses a div, and its source plus world-draft-editor
+are identical to the other owner's c38ebdb3 revision. The retained faed failure
+shows a second main with the class of the parent Worlds loading fallback during
+navigation. All three Worlds loading fallbacks contain a nested main, as do the
+loaded world browser and detail page. The root app layout already owns the
+persistent main-content landmark and skip-link target.
+
+Scope: retain one main landmark through Worlds loading, discovery, detail and
+creator navigation, preserving the existing visual composition and skip target.
+Owner: codex-provider-account-20261011, native lease ops-e9fe428396c3413bf4e6.
+Files: the three apps/web/app/worlds loading.tsx files; worlds/worlds-client.tsx;
+worlds/[slug]/page.tsx; scripts/tests/world-landmarks.test.cjs;
+scripts/verify-companion-browser.cjs; scripts/review-companion.py;
+scripts/tests/test_review_companion.py; .github/workflows/companion.yml; this file.
+Non-goals: no overlapping creator/editor edits, visual redesign, authentication
+change, provider change, database migration, billing or production promotion.
+Acceptance criteria: actual fallbacks rendered inside the inherited main expose
+one main; loaded Worlds pages introduce no alternate main; hosted discovery and
+creator navigation retain one main with id main-content in all four modes.
+Verification: six native landmark checks, existing thirteen review-admission
+checks, changed-source syntax/format/whitespace checks, followed by hosted
+build/types/lint and compiled four-mode recovery at the new exact revision.
+Rollback: revert this bounded commit through a reviewed branch; retain all
+earlier generation/recovery/editor-transfer work and failed evidence.
+
+Five regressions failed against the actual candidate before changing app source:
+three real React-rendered loading fallbacks produced two main landmarks, and
+two loaded-page TSX source checks found an additional main. All six native
+landmark checks pass after replacing only the five wrapper tags with divs. Local
+rendering uses existing read-only React dependencies from the retained billing
+worktree; source comes from this checkout. No install or browser was started.
+An initial dependency lookup in the canonical checkout failed before tests ran;
+that environment failure is not counted as reproduction of the product defect.
+
+The compiled verifier now requires the unique main landmark at world discovery
+and both creator transfers, and records those assertions per mode. Its source
+bindings include the real world layouts, fallbacks, loaded pages and native test.
+The hosted workflow runs the native landmark regression before building and
+retains all existing recovery, account, request-count, export and mode assertions.
+
+The complete review contract adds the six navigation paths and their real layout
+and read-helper context. One fifth module owns the navigation changes; changed
+paths remain singly assigned and complete context remains covered across modules.
+Thirteen no-network review-admission tests pass. No price/context/citation gate,
+independent-review requirement, model or retry rule is weakened. Full source/cost
+preflight and all new hosted results remain pending until the commit exists.
+
+Current review-lite admission is HOLD: 5503MB free against 6144MB required,
+27 task runtimes. Fresh disk reading is 85726158848 bytes, above both hard floors.
+No local agent fanout, reviewer, build, browser, server or model is admitted.
+Ordinary edits and small tests proceeded. Header-obscured editor headings remain
+in the occupied editor lane and need owner correction; the wrapper repair does
+not establish premium acceptance of the whole editor. Real provider output,
+private authenticated save/reopen, stronger independent review, production
+verification and the full Queen/memory/canvas/commerce/community/publishing/client
+programme remain open. The full goal remains ACTIVE.
+
+Uncommitted no-inference preparation accounts for all73 complete sources and
+all19 changed paths across five modules. Encoded requests are434401,291065,
+475406,285872 and484144 bytes, each within512000 including its unchanged finite
+output reserve. This is preparation only; current catalog/price scanning at the
+committed public candidate remains required. Main advanced to680901563775853b51df3aa58ae658c23d632ec6
+while working: accepted PR608 changes five World SDK/memory-boundary paths and
+does not overlap this repair. Integrate those exact accepted blobs before the
+single hosted-validation push; no owner branch is assumed complete by its merge.

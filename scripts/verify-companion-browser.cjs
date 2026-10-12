@@ -56,6 +56,16 @@ const source = [
   "apps/web/lib/worlds/generation.ts",
   "apps/web/app/api/worlds/generate/route.ts",
   "apps/web/app/worlds/create/page.tsx",
+  "apps/web/app/worlds/layout.tsx",
+  "apps/web/app/worlds/page-transition.tsx",
+  "apps/web/app/worlds/loading.tsx",
+  "apps/web/app/worlds/worlds-client.tsx",
+  "apps/web/app/worlds/create/layout.tsx",
+  "apps/web/app/worlds/create/loading.tsx",
+  "apps/web/app/worlds/[slug]/layout.tsx",
+  "apps/web/app/worlds/[slug]/loading.tsx",
+  "apps/web/app/worlds/[slug]/page.tsx",
+  "scripts/tests/world-landmarks.test.cjs",
   "apps/web/components/worlds/world-draft-editor.tsx",
   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md",
 ];
@@ -500,7 +510,9 @@ async function main() {
     await open.focus();
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(/\/worlds\/create\?resume=1$/);
-    await expect(page.locator("#main-content")).toBeVisible();
+    await expect(page.getByRole("main")).toHaveCount(1);
+    await expect(page.getByRole("main")).toHaveAttribute("id", "main-content");
+    await expect(page.getByRole("main")).toBeVisible();
     await authenticateCreator();
     const edit = page.getByRole("button", {
       name: "Edit world draft",
@@ -527,6 +539,8 @@ async function main() {
     await expect(page.getByLabel("World name", { exact: true })).toHaveValue(
       "Tide Ledger revised",
     );
+    await expect(page.getByRole("main")).toHaveCount(1);
+    await expect(page.getByRole("main")).toHaveAttribute("id", "main-content");
     await capturePage(page, `world-editor-${mode.name}`);
     assert.equal(
       attempts,
@@ -536,6 +550,7 @@ async function main() {
     await context.unroute("**/api/worlds/generate");
     return {
       attempts,
+      creatorMainLandmarkVerified: true,
       unknownConsentRestored: true,
       sourceDownloadVerified: true,
       fullDraftDownloadVerified: true,
@@ -668,6 +683,11 @@ async function main() {
       });
       await page.goto(`${base}/worlds`);
       await page.getByRole("button", { name: "Skip", exact: true }).click();
+      await expect(page.getByRole("main")).toHaveCount(1);
+      await expect(page.getByRole("main")).toHaveAttribute(
+        "id",
+        "main-content",
+      );
       const opener = page.getByRole("button", {
         name: "Open Arcanea companion",
         exact: true,
@@ -976,6 +996,7 @@ async function main() {
         shortcutsHeadingVisible: true,
         shortcutsFocusContainedAndRestored: true,
         worldHandoff,
+        worldsMainLandmarkVerified: true,
         startersImmediatelyReadable: true,
         geometry,
         pageErrors,

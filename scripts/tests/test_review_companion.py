@@ -104,12 +104,15 @@ class ReviewAdmission(unittest.TestCase):
                    "scripts/test-world-generation.cjs", "scripts/verify-companion-browser.cjs",
                    "scripts/review-companion.py", "scripts/tests/test_review_companion.py",
                    ".github/workflows/companion.yml",
-                   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md"]
+                   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md",
+                   "apps/web/app/worlds/loading.tsx", "apps/web/app/worlds/create/loading.tsx",
+                   "apps/web/app/worlds/[slug]/loading.tsx", "apps/web/app/worlds/[slug]/page.tsx",
+                   "apps/web/app/worlds/worlds-client.tsx", "scripts/tests/world-landmarks.test.cjs"]
         contexts = getattr(REVIEW, "WORLD_CONTEXTS", REVIEW.CONTEXTS)
         content = {path: "Complete source" for path in set(changed) | set(contexts)}
         branch = "agent/codex/chat-world-handoff-20261011"
         primary, planned = REVIEW.modules(changed, content, branch=branch)
-        self.assertEqual(set(primary), {"world-client", "world-server", "world-browser", "world-review"})
+        self.assertEqual(set(primary), {"world-client", "world-server", "world-browser", "world-navigation", "world-review"})
         self.assertEqual(set().union(*primary.values()), set(changed))
         self.assertEqual(sum(len(paths) for paths in primary.values()), len(changed))
         self.assertEqual(set().union(*(set(paths) for paths in planned.values())), set(content))
@@ -129,6 +132,14 @@ class ReviewAdmission(unittest.TestCase):
                   "apps/web/components/saga/reading-toolbar.module.css"}
         self.assertTrue(reader <= set(planned["world-browser"]))
         self.assertFalse(reader & set(planned["world-review"]))
+        navigation = {"apps/web/app/worlds/loading.tsx", "apps/web/app/worlds/create/loading.tsx",
+                      "apps/web/app/worlds/[slug]/loading.tsx", "apps/web/app/worlds/[slug]/page.tsx",
+                      "apps/web/app/worlds/worlds-client.tsx", "scripts/tests/world-landmarks.test.cjs"}
+        self.assertEqual(primary["world-navigation"], navigation)
+        self.assertTrue(navigation | {"apps/web/app/layout.tsx", "apps/web/app/worlds/layout.tsx",
+                                     "apps/web/app/worlds/create/layout.tsx",
+                                     "apps/web/app/worlds/[slug]/layout.tsx"}
+                        <= set(planned["world-navigation"]))
         for path in required:
             incomplete = {key: value for key, value in content.items() if key != path}
             with self.subTest(path=path), self.assertRaises(REVIEW.Denied):

@@ -304,7 +304,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
 
   return (
     <LazyMotion features={domAnimation}>
-      <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
         {/* ── Hero ──────────────────────────────────────────────── */}
         <section className="relative pt-32 pb-16 overflow-hidden">
           <CosmicParticles />
@@ -547,7 +547,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
             </m.div>
           </div>
         </section>
-      </main>
+      </div>
 
       {/* First-visit onboarding overlay */}
       <WorldsOnboarding />

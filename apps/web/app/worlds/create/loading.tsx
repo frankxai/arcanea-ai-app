@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 export default function CreateWorldLoading() {
   return (
-    <main className="min-h-screen bg-[var(--arc-cosmic-void)] flex items-center justify-center">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] flex items-center justify-center">
       <div className="text-center space-y-6">
         {/* Pulsing orb */}
         <div className="relative mx-auto w-20 h-20">
@@ -15,6 +15,6 @@ export default function CreateWorldLoading() {
           <div className="h-4 w-64 mx-auto rounded bg-white/[0.03] animate-pulse" />
         </div>
       </div>
-    </main>
+    </div>
   );
 }

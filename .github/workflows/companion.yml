@@ -21,6 +21,7 @@ on:
       - apps/web/lib/worlds/**
       - apps/web/app/api/worlds/generate/route.ts
       - apps/web/app/worlds/create/page.tsx
+      - apps/web/app/worlds/**
       - apps/web/components/worlds/world-draft-editor.tsx
       - apps/web/lib/luminors/config.ts
       - apps/web/lib/ai/provider-preferences.ts
@@ -31,6 +32,7 @@ on:
       - scripts/tests/companion-chat-instance.test.cjs
       - scripts/tests/chat-stop-control.test.cjs
       - scripts/tests/chat-world-handoff.test.cjs
+      - scripts/tests/world-landmarks.test.cjs
       - scripts/test-world-generation.cjs
       - scripts/capture-sovereign-built-app.cjs
       - scripts/verify-author-draft-browser.cjs
@@ -75,6 +77,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Verify useful safe errors
         run: node --test scripts/tests/chat-error-message.test.cjs
+      - name: Verify loading and loaded world landmark ownership
+        run: node --test --test-timeout=10000 scripts/tests/world-landmarks.test.cjs
       - name: Verify account lifetime and real SDK cancellation
         run: |
           node scripts/tests/companion-chat-instance.test.cjs
