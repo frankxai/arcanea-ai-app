@@ -25,6 +25,7 @@ import {
   COLLECTIONS,
 } from "../../../../lib/content";
 import { ReadingTracker } from "../../reading-tracker";
+import { ReadingCompanion } from "@/components/lumina/lumina-bubble";
 
 interface Props {
   params: Promise<{ collection: string; text: string }>;
@@ -234,6 +235,9 @@ export default async function TextPage({ params }: Props) {
                       </span>
                     </div>
                   )}
+              </div>
+              <div className="mt-6 min-h-11">
+                <ReadingCompanion />
               </div>
             </header>
 

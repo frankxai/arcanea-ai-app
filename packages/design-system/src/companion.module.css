@@ -36,6 +36,24 @@
   height: 100%;
   object-fit: cover;
 }
+.inlineTrigger {
+  position: static;
+  display: inline-flex;
+  gap: var(--companion-gap);
+  width: fit-content;
+  min-height: var(--companion-control);
+  height: var(--companion-control);
+  padding: 0 var(--companion-gap);
+  border-radius: var(--arc-radius-lg);
+  background: var(--arc-cosmic-surface);
+  box-shadow: none;
+  z-index: auto;
+  font-size: var(--companion-small);
+}
+.inlineTrigger img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
 .panel {
   width: 24rem;
   height: 36rem;

@@ -7,6 +7,8 @@ on:
       - apps/web/hooks/use-reading-progress.ts
       - apps/web/app/library/reading-tracker.tsx
       - apps/web/app/library/**
+      - apps/web/components/lumina/**
+      - packages/design-system/src/companion.module.css
       - scripts/tests/reading-progress-account.test.cjs
       - scripts/verify-reading-progress-browser.cjs
       - scripts/verify-reading-progress-auth-browser.cjs
@@ -18,12 +20,15 @@ on:
       - .github/workflows/reading-progress.yml
       - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS.md
       - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS_AUTH.md
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_COMPANION.md
   push:
     branches: [main]
     paths:
       - apps/web/hooks/use-reading-progress.ts
       - apps/web/app/library/reading-tracker.tsx
       - apps/web/app/library/**
+      - apps/web/components/lumina/**
+      - packages/design-system/src/companion.module.css
       - scripts/tests/reading-progress-account.test.cjs
       - scripts/verify-reading-progress-browser.cjs
       - scripts/verify-reading-progress-auth-browser.cjs
@@ -35,6 +40,7 @@ on:
       - .github/workflows/reading-progress.yml
       - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS.md
       - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS_AUTH.md
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_COMPANION.md
 
 permissions:
   contents: read
