@@ -1,6 +1,13 @@
+import { generateImage } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { OperationPendingError } from "../billing/operations";
+import {
+  getModel,
+  DEFAULT_IMAGE_MODEL_ID,
+  getGatewayFallbackChain,
+} from "../models/registry";
 
-export type ImageProvider = "grok" | "openrouter" | "gemini";
+export type ImageProvider = "grok" | "openrouter" | "gemini" | "gateway";
 export interface ImageGenerationResult {
   images: Array<{ url: string; revisedPrompt?: string }>;
   provider: ImageProvider;
@@ -12,6 +19,7 @@ export interface ImageGenerationOptions {
   count?: number;
   forceProvider?: ImageProvider;
   openrouterModel?: string;
+  modelId?: string;
 }
 /** Only the admitted route supplies a durable operation and checkpoint. */
 export interface ImageRuntime {
@@ -23,9 +31,9 @@ export interface ImageRuntime {
   budgetMs?: number;
 }
 export type ImageJob = {
-  provider: "grok";
+  provider: "grok" | "gateway";
   requestId: string;
-  model: "grok-imagine-image-2.0";
+  model: string;
   count: number;
 };
 const GROK_MODEL = "grok-imagine-image-2.0";
@@ -106,10 +114,8 @@ export const OPENROUTER_IMAGE_MODELS = [
   },
 ] as const;
 
-/** Default OpenRouter model — best balance of quality, speed, cost */
 const DEFAULT_OPENROUTER_MODEL = "google/gemini-3.1-flash-image-preview";
 
-/** A response and its body share one deadline; redirects never receive credentials. */
 function channel(runtime: ImageRuntime) {
   const now = runtime.now ?? Date.now;
   const deadline =
@@ -125,6 +131,7 @@ function channel(runtime: ImageRuntime) {
       key: string,
       body?: Record<string, unknown>,
       google = false,
+      extraHeaders?: Record<string, string>,
     ) {
       const remaining = deadline - now();
       if (remaining <= 0) throw pending();
@@ -134,19 +141,22 @@ function channel(runtime: ImageRuntime) {
         Math.min(remaining, 15_000),
       );
       try {
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+          ...(google
+            ? { "x-goog-api-key": key }
+            : key
+              ? { Authorization: `Bearer ${key}` }
+              : {}),
+          ...extraHeaders,
+        };
         const response = await (runtime.transport ?? fetch)(url, {
           method: body ? "POST" : "GET",
-          headers: {
-            "Content-Type": "application/json",
-            ...(google
-              ? { "x-goog-api-key": key }
-              : { Authorization: `Bearer ${key}` }),
-          },
+          headers,
           body: body ? JSON.stringify(body) : undefined,
           redirect: "error",
           signal: controller.signal,
         });
-        // A rejection before job acceptance is definite. A gateway/timeout is not.
         if (!response.ok) {
           if (body && [400, 401, 403, 404, 422, 429].includes(response.status))
             throw new ProviderRejectedError(response.status);
@@ -176,6 +186,7 @@ function channel(runtime: ImageRuntime) {
     },
   };
 }
+
 class ProviderRejectedError extends Error {
   constructor(status: number) {
     super(`Image provider rejected the request (${status})`);
@@ -199,6 +210,7 @@ function imageUrl(value: unknown, pending: () => Error): string {
   }
   throw pending();
 }
+
 function result(
   images: unknown[],
   provider: ImageProvider,
@@ -221,16 +233,21 @@ function result(
   };
 }
 
-/** Resume a saved job with GET only. Never trust a stored URL or choose another provider. */
 export async function resumeImages(
   value: unknown,
   runtime: ImageRuntime,
 ): Promise<ImageGenerationResult> {
   const wire = channel(runtime);
   const job = record(value);
+
+  const isGrok = job.provider === "grok" && job.model === GROK_MODEL;
+  const isGateway =
+    job.provider === "gateway" &&
+    typeof job.model === "string" &&
+    Boolean(getModel(job.model));
+
   if (
-    job.provider !== "grok" ||
-    job.model !== GROK_MODEL ||
+    (!isGrok && !isGateway) ||
     typeof job.requestId !== "string" ||
     !/^[A-Za-z0-9_-]{1,200}$/.test(job.requestId) ||
     !Number.isInteger(job.count) ||
@@ -239,18 +256,19 @@ export async function resumeImages(
   )
     throw wire.pending();
   const key = process.env.XAI_API_KEY;
-  if (!key) throw wire.pending();
+  if (!key && job.provider === "grok") throw wire.pending();
   while (wire.now() < wire.deadline) {
-    const data = await wire.request(
-      `https://api.x.ai/v1/images/${job.requestId}`,
-      key,
-    );
+    const pollUrl =
+      job.provider === "gateway"
+        ? `${process.env.AI_GATEWAY_URL || "https://ai-gateway.vercel.sh"}/v1/images/${job.requestId}`
+        : `https://api.x.ai/v1/images/${job.requestId}`;
+    const data = await wire.request(pollUrl, key || "");
     if (data.status === "failed")
       throw new Error("Image generation failed at the provider");
     if (data.status === "done") {
       const images = items(data.data);
       if (images.length > Number(job.count)) throw wire.pending();
-      return result(images, "grok", GROK_MODEL, wire);
+      return result(images, job.provider, String(job.model), wire);
     }
     if (data.status !== "pending") throw wire.pending();
     await wire.sleep(Math.min(2000, Math.max(0, wire.deadline - wire.now())));
@@ -258,7 +276,6 @@ export async function resumeImages(
   throw wire.pending();
 }
 
-/** Select once before paid work. Loss of an acknowledgement preserves admission. */
 export async function generateImages(
   options: ImageGenerationOptions,
   runtime?: ImageRuntime,
@@ -271,6 +288,7 @@ export async function generateImages(
     count = 1,
     forceProvider,
     openrouterModel,
+    modelId,
   } = options;
   if (
     !prompt.trim() ||
@@ -279,35 +297,91 @@ export async function generateImages(
     count > 4 ||
     !RATIOS.includes(aspectRatio) ||
     (forceProvider !== undefined &&
-      !["grok", "openrouter", "gemini"].includes(forceProvider)) ||
+      !["grok", "openrouter", "gemini", "gateway"].includes(forceProvider)) ||
     (openrouterModel !== undefined &&
       !OPENROUTER_IMAGE_MODELS.some((entry) => entry.id === openrouterModel))
   )
     throw new Error("Invalid image generation settings");
+
+  const gatewayUrl =
+    process.env.AI_GATEWAY_URL || "https://ai-gateway.vercel.sh";
+
   const provider =
     forceProvider ??
-    (process.env.OPENROUTER_API_KEY
-      ? "openrouter"
-      : process.env.XAI_API_KEY
-        ? "grok"
-        : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY
-          ? "gemini"
-          : null);
+    (process.env.AI_GATEWAY_TOKEN || process.env.VERCEL_OIDC_TOKEN
+      ? "gateway"
+      : process.env.OPENROUTER_API_KEY
+        ? "openrouter"
+        : process.env.XAI_API_KEY
+          ? "grok"
+          : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY
+            ? "gemini"
+            : null);
+
   const key =
-    provider === "openrouter"
-      ? process.env.OPENROUTER_API_KEY
-      : provider === "grok"
-        ? process.env.XAI_API_KEY
-        : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-  if (!provider || !key)
+    provider === "gateway"
+      ? process.env.AI_GATEWAY_TOKEN || process.env.VERCEL_OIDC_TOKEN || ""
+      : provider === "openrouter"
+        ? process.env.OPENROUTER_API_KEY
+        : provider === "grok"
+          ? process.env.XAI_API_KEY
+          : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+
+  if (!provider || (provider !== "gateway" && !key))
     throw new Error(
       "No image generation API configured for the selected provider",
     );
+
   const wire = channel(runtime);
+
+  if (provider === "gateway") {
+    const selectedModelDef =
+      getModel(modelId || DEFAULT_IMAGE_MODEL_ID) ||
+      getModel(DEFAULT_IMAGE_MODEL_ID)!;
+    const targetGatewayId = selectedModelDef.gatewayId;
+    const fallbacks = getGatewayFallbackChain(selectedModelDef.id);
+
+    const gatewayClient = createOpenAI({
+      baseURL: `${gatewayUrl}/v1`,
+      apiKey: key || "gateway-oidc",
+      headers: fallbacks.length
+        ? { "x-gateway-models": JSON.stringify(fallbacks) }
+        : undefined,
+      fetch: runtime.transport,
+    });
+
+    try {
+      const generated = await generateImage({
+        model: gatewayClient.image(targetGatewayId),
+        prompt,
+        n: count,
+        providerOptions: {
+          gateway: {
+            models: fallbacks,
+          },
+        },
+      });
+
+      return {
+        provider: "gateway",
+        model: selectedModelDef.id,
+        images: generated.images.map((img) => ({
+          url: imageUrl(
+            img.base64 ? `data:image/png;base64,${img.base64}` : img.url,
+            wire.pending,
+          ),
+        })),
+      };
+    } catch (error) {
+      if (error instanceof ProviderRejectedError) throw error;
+      throw wire.pending();
+    }
+  }
+
   if (provider === "grok") {
     const accepted = await wire.request(
       "https://api.x.ai/v1/images/generations",
-      key,
+      key!,
       {
         model: GROK_MODEL,
         prompt,
@@ -333,11 +407,11 @@ export async function generateImages(
     } catch {
       throw wire.pending();
     }
-    // Submission consumed part of the route's budget; recovery receives only the remainder.
     const remaining = wire.deadline - wire.now();
     if (remaining <= 0) throw wire.pending();
     return resumeImages(job, { ...runtime, budgetMs: remaining });
   }
+
   const model =
     provider === "gemini"
       ? GEMINI_MODEL
@@ -350,7 +424,7 @@ export async function generateImages(
     if (provider === "openrouter") {
       const data = await wire.request(
         "https://openrouter.ai/api/v1/chat/completions",
-        key,
+        key!,
         {
           model,
           messages: [{ role: "user", content: variation }],
@@ -365,7 +439,7 @@ export async function generateImages(
       if (message.refusal || choice.finish_reason === "content_filter")
         throw new Error("The image provider declined this prompt");
       let urls = items(message.images).map(
-        (image) => record(record(image).image_url).url,
+        (imageItem) => record(record(imageItem).image_url).url,
       );
       if (!urls.length && typeof message.content === "string")
         urls =
@@ -382,7 +456,7 @@ export async function generateImages(
     }
     const data = await wire.request(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
-      key,
+      key!,
       {
         contents: [{ parts: [{ text: variation }] }],
         generationConfig: {
