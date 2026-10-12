@@ -1223,6 +1223,26 @@ async function main() {
         const newsletter = publicFooter.getByRole("textbox", {
           name: "Email address for newsletter",
         });
+        const inspectNewsletter = () =>
+          newsletter.evaluate((element) => {
+            const bounds = element.getBoundingClientRect();
+            const hit = document.elementFromPoint(
+              bounds.x + bounds.width / 2,
+              bounds.y + bounds.height / 2,
+            );
+            return {
+              passed: hit !== null && element.contains(hit),
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: bounds.height,
+              viewportWidth: window.innerWidth,
+              viewportHeight: window.innerHeight,
+              scrollY: window.scrollY,
+              documentHeight: document.documentElement.scrollHeight,
+              hitTag: hit?.tagName || null,
+            };
+          });
         stage = "public-marketing-footer-newsletter-scroll";
         await newsletter.evaluate((element) =>
           element.scrollIntoView({ block: "center", behavior: "instant" }),
@@ -1230,25 +1250,7 @@ async function main() {
         stage = "public-marketing-footer-newsletter-hit-test";
         await expect
           .poll(async () => {
-            const sample = await newsletter.evaluate((element) => {
-              const bounds = element.getBoundingClientRect();
-              const hit = document.elementFromPoint(
-                bounds.x + bounds.width / 2,
-                bounds.y + bounds.height / 2,
-              );
-              return {
-                passed: hit !== null && element.contains(hit),
-                x: bounds.x,
-                y: bounds.y,
-                width: bounds.width,
-                height: bounds.height,
-                viewportWidth: window.innerWidth,
-                viewportHeight: window.innerHeight,
-                scrollY: window.scrollY,
-                documentHeight: document.documentElement.scrollHeight,
-                hitTag: hit?.tagName || null,
-              };
-            });
+            const sample = await inspectNewsletter();
             // Geometry only: never put account or entered newsletter text in receipts.
             result.newsletterHitTest = sample;
             return sample.passed;
@@ -1264,7 +1266,22 @@ async function main() {
           "project-footer-touch-keyboard-public-newsletter-preserved",
         );
         stage = "public-marketing-footer-capture";
-        await capture("public-footer", { locator: publicFooter });
+        await expect(newsletter).toBeInViewport({ ratio: 1 });
+        const beforeCapture = await inspectNewsletter();
+        // Capture the tested viewport. Re-scrolling an entire tall footer for a
+        // locator screenshot previously produced blank desktop captures.
+        await capture("public-footer", { fullPage: false });
+        stage = "public-marketing-footer-capture-still-hit-tested";
+        const afterCapture = await inspectNewsletter();
+        result.newsletterCapture = {
+          scope: "current-newsletter-viewport",
+          before: beforeCapture,
+          after: afterCapture,
+        };
+        assert.equal(beforeCapture.passed, true);
+        assert.equal(afterCapture.passed, true);
+        assert.ok(Math.abs(afterCapture.y - beforeCapture.y) <= 1);
+        await expect(newsletter).toBeInViewport({ ratio: 1 });
         assert.equal(result.pageErrors, 0);
         result.passed = true;
       } catch (error) {
