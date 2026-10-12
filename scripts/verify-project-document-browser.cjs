@@ -1206,6 +1206,24 @@ async function main() {
         );
         stage = "public-marketing-footer-navigation";
         await page.goto(config.base);
+        stage = "public-marketing-homepage-content-ready";
+        await expect(
+          page.getByRole("heading", {
+            level: 1,
+            name: "Build living worlds with AI agents.",
+            exact: true,
+          }),
+        ).toBeVisible();
+        // The below-fold chunk replaces its short placeholder after navigation.
+        // Its final CTA must exist before measuring or scrolling the footer.
+        await expect(
+          page.getByRole("heading", {
+            level: 2,
+            name: "Your world is waiting.",
+            exact: true,
+          }),
+        ).toBeAttached();
+        result.publicHomepageReady = "final-below-fold-cta-present";
         const publicFooter = page.getByRole("contentinfo");
         stage = "public-marketing-footer-newsletter-visible";
         await expect(
