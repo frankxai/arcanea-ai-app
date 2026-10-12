@@ -330,6 +330,7 @@ async function main() {
         return page;
       };
       const page = attach(await context.newPage());
+      let signedInSession;
       const login = async (tab, account) => {
         result.loginStep = "open-login";
         await tab.goto(
@@ -346,9 +347,29 @@ async function main() {
           has: tab.getByLabel("Email", { exact: true }),
         });
         await expect(form).toHaveCount(1);
+        const tokenResponse = tab.waitForResponse(
+          (response) =>
+            response
+              .url()
+              .startsWith("http://127.0.0.1:54321/auth/v1/token?") &&
+            response.request().method() === "POST" &&
+            response.status() === 200,
+        );
         await form
           .getByRole("button", { name: "Sign In", exact: true })
           .click();
+        const response = await tokenResponse;
+        const session = await response.json();
+        assert.equal(session.user.id, account.id);
+        signedInSession = {
+          accessToken: session.access_token,
+          publicKey: response.request().headers().apikey,
+        };
+        assert.match(
+          signedInSession.accessToken,
+          /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/,
+        );
+        assert.ok(signedInSession.publicKey);
         result.loginStep = "wait-destination";
         await tab.waitForURL((url) => url.pathname === "/settings/providers");
         result.loginStep = "verify-account-settings";
@@ -735,7 +756,17 @@ async function main() {
         );
         assert.match(mediaHtml, /img src="data:image\/png;base64,/);
         assert.ok(Buffer.byteLength(mediaHtml) < 30 * 1024 * 1024);
-        const offline = attach(await context.newPage());
+        const offlineContext = await browser.newContext({
+          viewport: { width: mode.width, height: mode.height },
+          reducedMotion: mode.motion,
+          bypassCSP: false,
+        });
+        let offlineRequests = 0;
+        await offlineContext.route("**/*", (route) => {
+          offlineRequests++;
+          return route.abort();
+        });
+        const offline = attach(await offlineContext.newPage());
         await offline.setContent(mediaHtml);
         await expect
           .poll(() =>
@@ -763,25 +794,54 @@ async function main() {
           Math.abs(offlineImageBounds.width / offlineImageBounds.height - 1.5) <
             0.05,
         );
-        await offline.close();
-        const counters = await fetch(
-          `${config.supabaseUrl}/rest/v1/imagine_storage_accounts?user_id=eq.${config.accounts[0].id}&select=used_bytes,reserved_bytes`,
+        const offlinePolicy = await offline.evaluate(async () => {
+          const script = document.createElement("script");
+          script.textContent = "window.__arcaneaOfflineScriptProbe = true;";
+          document.body.appendChild(script);
+          let blockedFetch = false;
+          try {
+            await fetch("https://example.invalid/offline-csp-probe");
+          } catch {
+            blockedFetch = true;
+          }
+          return {
+            inlineScriptBlocked: window.__arcaneaOfflineScriptProbe !== true,
+            networkFetchBlocked: blockedFetch,
+          };
+        });
+        assert.equal(offlinePolicy.inlineScriptBlocked, true);
+        assert.equal(offlinePolicy.networkFetchBlocked, true);
+        assert.equal(offlineRequests, 0);
+        await offlineContext.close();
+        // Query through the actual password-login session and owner RLS. No
+        // private-file admin key or configurable destination enters this request.
+        const counters = await page.request.get(
+          "http://127.0.0.1:54321/rest/v1/imagine_storage_accounts?select=user_id,used_bytes,reserved_bytes",
           {
             headers: {
-              apikey: config.admin,
-              Authorization: `Bearer ${config.admin}`,
+              apikey: signedInSession.publicKey,
+              Authorization: `Bearer ${signedInSession.accessToken}`,
             },
-            signal: AbortSignal.timeout(10000),
+            maxRedirects: 0,
+            timeout: 10000,
           },
         );
-        assert.equal(counters.status, 200);
-        const [account] = await counters.json();
+        assert.equal(counters.status(), 200);
+        const accounts = await counters.json();
+        assert.equal(accounts.length, 1);
+        const [account] = accounts;
+        assert.equal(account.user_id, config.accounts[0].id);
         assert.equal(
           account.used_bytes,
           (evidence.modes.length + 1) * 10485760,
         );
         assert.equal(account.reserved_bytes, 0);
         result.image = {
+          offlinePolicy: {
+            ...offlinePolicy,
+            bypassCSP: false,
+            externalRequests: offlineRequests,
+          },
           byteSize: readBytes.length,
           sha256: originalDigest,
           naturalWidth: 1536,

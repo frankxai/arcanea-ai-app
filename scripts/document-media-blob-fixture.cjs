@@ -251,7 +251,26 @@ function installDocumentBlobFixture(config) {
     },
   };
 }
-module.exports = { createDocumentBlobStore, installDocumentBlobFixture };
+function readPrivateConfiguration(filename) {
+  const descriptor = fs.openSync(
+    filename,
+    fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW,
+  );
+  try {
+    const info = fs.fstatSync(descriptor);
+    assert.equal(info.isFile(), true);
+    assert.equal(info.mode & 0o777, 0o600);
+    assert.ok(info.size > 0 && info.size <= 65536);
+    return JSON.parse(fs.readFileSync(descriptor, "utf8"));
+  } finally {
+    fs.closeSync(descriptor);
+  }
+}
+module.exports = {
+  createDocumentBlobStore,
+  installDocumentBlobFixture,
+  readPrivateConfiguration,
+};
 if (process.env.DOCUMENT_MEDIA_BLOB_FIXTURE) {
   assert.equal(process.env.GITHUB_ACTIONS, "true");
   assert.equal(process.env.GITHUB_REPOSITORY, "frankxai/arcanea-ai-app");
@@ -269,8 +288,7 @@ if (process.env.DOCUMENT_MEDIA_BLOB_FIXTURE) {
     `project-document-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}.private.json`,
   );
   assert.equal(process.env.DOCUMENT_MEDIA_BLOB_FIXTURE, filename);
-  assert.equal(fs.statSync(filename).mode & 0o777, 0o600);
-  const config = JSON.parse(fs.readFileSync(filename, "utf8"));
+  const config = readPrivateConfiguration(filename);
   assert.equal(config.head, process.env.GITHUB_SHA);
   assert.equal(config.output, "screenshots/project-document-service");
   assert.equal(config.supabaseUrl, "http://127.0.0.1:54321");
