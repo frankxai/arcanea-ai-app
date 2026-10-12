@@ -300,8 +300,12 @@ export function createCritiqueRunner(
       if (!text(output))
         throw new CouncilExecutionError("Empty critique response");
       const encodedKey = JSON.stringify(config.apiKey).slice(1, -1);
+      // Normalize valid JSON escapes before redacting the selected literal credential.
+      const normalizedOutput = JSON.stringify(JSON.parse(output));
       const critique = validateCritique(
-        JSON.parse(output.replaceAll(encodedKey, "[redacted credential]")),
+        JSON.parse(
+          normalizedOutput.replaceAll(encodedKey, "[redacted credential]"),
+        ),
         author,
       );
       critiques.push(critique);

@@ -305,6 +305,44 @@ test("a provider cannot echo the selected credential into a retained critique", 
   assert.ok(!JSON.stringify(record).includes("fixture-openai-credential"));
 });
 
+for (const provider of ["openai", "anthropic"]) {
+  test(`Unicode-escaped ${provider} credential echoes cannot survive retained JSON`, async () => {
+    configure({ ARCANEA_COUNCIL_PROVIDER: provider });
+    const selected =
+      provider === "openai"
+        ? "fixture-openai-credential"
+        : "fixture-other-credential";
+    const escaped = [...selected]
+      .map((c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}`)
+      .join("");
+    behavior = async (_, __, body) => {
+      const data = await reply(body, (v) => ({
+        ...v,
+        concerns: [selected],
+      })).json();
+      const output = body.system ? data.content[0] : data.choices[0].message;
+      const field = body.system ? "text" : "content";
+      output[field] = output[field].replaceAll(selected, escaped);
+      data.id = selected;
+      data.model = selected;
+      return new Response(JSON.stringify(data).replaceAll(selected, escaped));
+    };
+    const { result, record } = await deliberate();
+    assert.ok(!result.isError);
+    assert.ok(
+      record.critiques.every((c) => c.concerns[0] === "[redacted credential]"),
+    );
+    assert.ok(
+      record.execution.attempts.every(
+        (a) =>
+          a.responseId === "[redacted credential]" &&
+          a.returnedModel === "[redacted credential]",
+      ),
+    );
+    assert.ok(!JSON.stringify(record).includes(selected));
+  });
+}
+
 test("usage metadata cannot inject credential labels or invented financial fields", async () => {
   configure();
   behavior = async (_, __, body) => {
