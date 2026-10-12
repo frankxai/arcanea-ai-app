@@ -10,14 +10,14 @@ The existing council builds craft-analysis prompts and review candidates. Its ag
 
 `deliberate` supports the existing OpenAI and Anthropic adapters. It requires all four choices below and the selected provider's credential in the server environment. No credential is accepted through manuscript text or tool arguments.
 
-| Environment variable | Required choice |
-| --- | --- |
-| `ARCANEA_COUNCIL_PROVIDER` | `openai` or `anthropic` |
-| `ARCANEA_COUNCIL_MODEL` | Your selected provider model ID; there is no default model |
-| `ARCANEA_COUNCIL_MAX_CALLS` | Integer 1–24 for the entire council attempt |
-| `ARCANEA_COUNCIL_MAX_OUTPUT_TOKENS` | Integer 1–4096 per request |
-| `ARCANEA_COUNCIL_TIMEOUT_MS` | Optional integer 1–60000; default 30000 |
-| `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` | Only the selected provider's key |
+| Environment variable                    | Required choice                                            |
+| --------------------------------------- | ---------------------------------------------------------- |
+| `ARCANEA_COUNCIL_PROVIDER`              | `openai` or `anthropic`                                    |
+| `ARCANEA_COUNCIL_MODEL`                 | Your selected provider model ID; there is no default model |
+| `ARCANEA_COUNCIL_MAX_CALLS`             | Integer 1–24 for the entire council attempt                |
+| `ARCANEA_COUNCIL_MAX_OUTPUT_TOKENS`     | Integer 1–4096 per request                                 |
+| `ARCANEA_COUNCIL_TIMEOUT_MS`            | Optional integer 1–60000; default 30000                    |
+| `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` | Only the selected provider's key                           |
 
 Choose an eligible model that supports this adapter's request format. Unsupported requests fail rather than changing models or downgrading the format. OpenAI uses JSON mode with runtime shape validation and `max_completion_tokens`; Anthropic uses Messages with `max_tokens`. These caps do not establish a dollar budget or reconcile a provider invoice. Use separately authorized, provider-limited funding for live execution.
 
@@ -36,6 +36,10 @@ arcanea-orchestrator author-council ./my-book chapters/01.md --mcp-entry /absolu
 The monorepo default resolves the existing sibling build. `--mcp-entry` supports an explicit installed entry without downloading or registering a global server. It is an operator-controlled executable path, never a value loaded from chapter text or book configuration. The command forwards only the selected provider credential and the council choices.
 
 Each run saves a distinct Markdown audit in the book's `council-audits/`, bound to the exact chapter SHA256. Earlier audits and the chapter remain unchanged. Failed attempts return failure after saving their available record; a later retry creates a new audit. Every audit keeps `review_status: human_review_required`, `blocker: true`, `blocker_count: null`, `publication_allowed: false` and `canon_approved: false`. `blocker_threshold` remains recorded configuration; the critique contract has no severity field, so the command cannot infer a passing release gate from it.
+
+Chapter files must be valid UTF-8. BOM and CRLF bytes are retained and included in the file hash; invalid encoding refuses before provider dispatch. The orchestrator launcher forwards selected values without importing a sibling package's build output; the configured server performs the policy validation.
+
+The tool RPC wait covers the configured call cap times the per-call timeout, plus 10 seconds for cleanup. This prevents the SDK's shorter default from cancelling a valid multi-seat run. Invalid limits still refuse in the server and use a bounded launcher timeout.
 
 The current record is retained after an ordinary provider failure. It is not a durable workflow journal for a killed process, disk failure or interrupted financial reconciliation. Those production recovery gates remain separate.
 

@@ -238,10 +238,10 @@ export function createCritiqueRunner(
           `Provider HTTP ${response.status}; no fallback attempted`,
         );
       }
-      const body = await response.text();
+      const body = Buffer.from(await response.arrayBuffer());
       received = true;
       attempt.responseSha256 = createHash("sha256").update(body).digest("hex");
-      const data: unknown = JSON.parse(body);
+      const data: unknown = JSON.parse(body.toString("utf8"));
       if (!object(data))
         throw new CouncilExecutionError("Invalid provider response");
       if (text(data.id)) attempt.responseId = redact(data.id).slice(0, 200);
@@ -250,7 +250,19 @@ export function createCritiqueRunner(
       if (object(data.usage)) {
         attempt.usage = Object.fromEntries(
           Object.entries(data.usage).filter(
-            ([, v]) => typeof v === "number" && Number.isFinite(v) && v >= 0,
+            ([name, v]) =>
+              [
+                "prompt_tokens",
+                "completion_tokens",
+                "total_tokens",
+                "input_tokens",
+                "output_tokens",
+                "cache_creation_input_tokens",
+                "cache_read_input_tokens",
+              ].includes(name) &&
+              typeof v === "number" &&
+              Number.isSafeInteger(v) &&
+              v >= 0,
           ),
         ) as Record<string, number>;
       }

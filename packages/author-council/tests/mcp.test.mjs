@@ -304,6 +304,45 @@ test("a provider cannot echo the selected credential into a retained critique", 
   );
   assert.ok(!JSON.stringify(record).includes("fixture-openai-credential"));
 });
+
+test("usage metadata cannot inject credential labels or invented financial fields", async () => {
+  configure();
+  behavior = async (_, __, body) => {
+    const data = await reply(body).json();
+    data.usage["fixture-openai-credential"] = 1;
+    data.usage.cost = 95;
+    return new Response(JSON.stringify(data));
+  };
+  const { result, record } = await deliberate();
+  assert.ok(!result.isError);
+  assert.ok(!JSON.stringify(record).includes("fixture-openai-credential"));
+  assert.ok(
+    record.execution.attempts.every(
+      (a) =>
+        a.usage.completion_tokens === 80 && !Object.hasOwn(a.usage, "cost"),
+    ),
+  );
+});
+
+test("rejected response hash binds body bytes including a UTF-8 BOM", async () => {
+  configure();
+  const hashes = [];
+  behavior = async (_, __, body) => {
+    const bytes = Buffer.concat([
+      Buffer.from([0xef, 0xbb, 0xbf]),
+      Buffer.from(await reply(body).text()),
+    ]);
+    hashes.push(createHash("sha256").update(bytes).digest("hex"));
+    return new Response(bytes);
+  };
+  const { result, record } = await deliberate();
+  assert.equal(result.isError, true);
+  assert.deepEqual(
+    record.execution.attempts.map((a) => a.responseSha256),
+    hashes,
+  );
+  assert.deepEqual(record.execution.critiques, []);
+});
 test("parallel dispatch reserves the call cap before starting additional requests", async () => {
   configure({ ARCANEA_COUNCIL_MAX_CALLS: "1" });
   const { result, record } = await deliberate();
