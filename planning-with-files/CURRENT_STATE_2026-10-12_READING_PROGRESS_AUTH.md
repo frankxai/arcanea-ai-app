@@ -43,5 +43,14 @@ No manuscript text, customer row, live policy, publishing approval, paid model
 call or managed API/commercial right is supplied by this slice. The selected
 Dragonborne manuscript remains privately held and unapproved for publication.
 
+Initial source `629b1d30cce500d02104e31681d5d05e0916a340` passed hosted
+Linux/Windows account/admission checks and the rendered leaf. Real Auth run
+`38253886760` verified both GoTrue identities and effective non-bypass database
+roles, then failed because the unscoped login selector matched the header and
+form Sign In buttons. Native failure receipts and the static PASS0 review are
+retained. The refinement selects the login form explicitly; authenticated
+recovery and the suspected hidden mobile tracker still need runtime proof.
+Cleanup reported no errors and removed the exclusive private configuration.
+
 Rollback is a normal revert of the six named fixture/workflow/pickup files;
 application behavior, customer data and production RLS are unchanged.

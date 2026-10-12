@@ -133,9 +133,13 @@ async function main() {
     await target.goto(
       `${config.base}/auth/login?next=${encodeURIComponent(article)}`,
     );
-    await target.getByLabel("Email", { exact: true }).fill(account.email);
-    await target.getByLabel("Password", { exact: true }).fill(account.password);
-    await button(target, "Sign In").click();
+    const form = target.locator("form").filter({
+      has: target.getByLabel("Email", { exact: true }),
+    });
+    await expect(form).toHaveCount(1);
+    await form.getByLabel("Email", { exact: true }).fill(account.email);
+    await form.getByLabel("Password", { exact: true }).fill(account.password);
+    await form.getByRole("button", { name: "Sign In", exact: true }).click();
     await target.waitForURL((url) => url.pathname === article);
     await expect(target.locator("#main-content")).toBeVisible();
     assert.ok(
