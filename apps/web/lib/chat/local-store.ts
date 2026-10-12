@@ -2,7 +2,8 @@
 /**
  * localStorage-based chat persistence
  *
- * Stores up to MAX_SESSIONS chat sessions in localStorage.
+ * Keeps a bounded cache of acknowledged cloud copies, while retaining pinned
+ * conversations and work that has no confirmed cloud copy.
  * Each session holds its messages, title, and timestamps.
  * When Supabase auth is configured, the persistence hook can
  * be upgraded to sync with the server — this module stays as
@@ -105,6 +106,27 @@ function normalizeSession(session: ChatSession): ChatSession {
   };
 }
 
+function canEvictFromCache(session: ChatSession): boolean {
+  return (
+    !session.pinned &&
+    session.cloudDirty === false &&
+    /^[0-9a-f]{64}$/.test(session.cloudRevision ?? "")
+  );
+}
+
+function retainRecoverableSessions(sessions: ChatSession[]): ChatSession[] {
+  const protectedCount = sessions.filter(
+    (session) => !canEvictFromCache(session),
+  ).length;
+  let cacheSlots = Math.max(0, MAX_SESSIONS - protectedCount);
+  return sessions.filter((session) => {
+    if (!canEvictFromCache(session)) return true;
+    if (cacheSlots === 0) return false;
+    cacheSlots -= 1;
+    return true;
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -128,7 +150,7 @@ export function generateSessionTitle(messages: ChatMessage[]): string {
 
 /**
  * Save (create or update) a chat session.
- * Enforces MAX_SESSIONS limit with FIFO eviction.
+ * Only evicts unpinned acknowledged cloud copies beyond the cache budget.
  */
 export function saveChatSession(
   id: string,
@@ -198,10 +220,11 @@ export function saveChatSession(
     (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
   );
 
-  // FIFO eviction — drop oldest beyond MAX_SESSIONS, but protect pinned sessions
+  // Pins and unacknowledged manuscripts must survive the cache budget. A real
+  // browser quota failure returns false without claiming this save is durable.
   const pinned = sessions.filter((s) => s.pinned);
   const unpinned = sessions.filter((s) => !s.pinned);
-  const trimmed = [...pinned, ...unpinned].slice(0, MAX_SESSIONS);
+  const trimmed = retainRecoverableSessions([...pinned, ...unpinned]);
 
   return writeSessions(trimmed, scope);
 }
@@ -295,12 +318,12 @@ export function replaceChatSessions(
     deduped.set(session.id, normalizeSession(session));
   }
 
-  const normalized = Array.from(deduped.values())
-    .sort(
+  const normalized = retainRecoverableSessions(
+    Array.from(deduped.values()).sort(
       (a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
-    )
-    .slice(0, MAX_SESSIONS);
+    ),
+  );
 
   writeSessions(normalized, scope);
 }
@@ -338,13 +361,20 @@ export function mergeChatSessions(
       new Date(normalized.updatedAt).getTime() >=
       new Date(existing.updatedAt).getTime()
     ) {
-      merged.set(normalized.id, {
+      const next = {
         ...normalized,
+        pinned: existing.pinned ?? false,
         messages: normalized.messages.length
           ? normalized.messages
           : existing.messages,
         projectId: normalized.projectId ?? existing.projectId ?? null,
-      });
+      };
+      // A metadata-only response is not an acknowledgement of messages or
+      // project context retained from the device's complete copy.
+      next.cloudDirty =
+        normalized.cloudDirty !== false ||
+        chatSnapshotContentKey(next) !== chatSnapshotContentKey(normalized);
+      merged.set(normalized.id, next);
     }
   }
 

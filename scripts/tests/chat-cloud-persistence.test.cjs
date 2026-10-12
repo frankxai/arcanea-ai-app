@@ -56,6 +56,119 @@ test("hydration cannot replace an unsaved local edit with another device's copy"
   );
 });
 
+test("saving past the history cache budget preserves every unsynced manuscript", () => {
+  const f = fixture();
+  const scope = f.scope(actor);
+  const store = f.load("lib/chat/local-store.ts");
+  for (let index = 0; index < 51; index++) {
+    assert.equal(
+      store.saveChatSession(`draft-${index}`, messages, undefined, scope),
+      true,
+    );
+  }
+  assert.equal(store.listChatSessions(scope).length, 51);
+  assert.equal(
+    store.loadChatSession("draft-0", scope).messages[0].content,
+    messages[0].content,
+  );
+});
+
+function acknowledgedHistory(count, pinned = false) {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `cloud-${index}`,
+    title: `Saved world ${index}`,
+    messages,
+    pinned,
+    cloudDirty: false,
+    cloudRevision: "a".repeat(64),
+    createdAt: new Date(Date.UTC(2030, 0, 1, 0, index)).toISOString(),
+    updatedAt: new Date(Date.UTC(2030, 0, 1, 0, index)).toISOString(),
+  }));
+}
+
+test("cloud hydration prunes acknowledged cache entries while retaining older unsynced work", () => {
+  const { scope, store } = setup();
+  store.mergeChatSessions(acknowledgedHistory(50), scope);
+  assert.equal(
+    store.loadChatSession(id, scope).messages[0].content,
+    messages[0].content,
+  );
+  assert.equal(store.listChatSessions(scope).length, 50);
+  assert.equal(store.loadChatSession("cloud-0", scope), null);
+  assert.ok(store.loadChatSession("cloud-49", scope));
+});
+
+test("pinned history cannot make a new save report success while discarding its manuscript", () => {
+  const f = fixture();
+  const scope = f.scope(actor);
+  const store = f.load("lib/chat/local-store.ts");
+  store.replaceChatSessions(acknowledgedHistory(50, true), scope);
+  assert.equal(store.saveChatSession(id, messages, undefined, scope), true);
+  assert.equal(
+    store.loadChatSession(id, scope).messages[0].content,
+    messages[0].content,
+  );
+  assert.equal(
+    store.listChatSessions(scope).filter((session) => session.pinned).length,
+    50,
+  );
+});
+
+test("history replacement preserves pins and copies without a trustworthy cloud acknowledgement", () => {
+  const f = fixture();
+  const scope = f.scope(actor);
+  const store = f.load("lib/chat/local-store.ts");
+  const history = acknowledgedHistory(52);
+  history[0].cloudRevision = undefined;
+  history[1].cloudRevision = "unconfirmed";
+  for (const session of history.slice(2)) session.pinned = true;
+  store.replaceChatSessions(history, scope);
+  assert.equal(store.listChatSessions(scope).length, 52);
+});
+
+test("metadata hydration cannot classify a retained complete manuscript as cloud-saved", () => {
+  const { f, scope, store } = setup();
+  const local = store.loadChatSession(id, scope);
+  const key = f
+    .load("lib/chat/cloud-snapshot.ts")
+    .chatSnapshotContentKey(local);
+  store.acknowledgeChatSnapshot(id, "a".repeat(64), key, scope);
+  store.mergeChatSessions(
+    [
+      {
+        ...local,
+        messages: [],
+        cloudDirty: false,
+        cloudRevision: "b".repeat(64),
+        updatedAt: "2030-01-01T00:00:00.000Z",
+      },
+    ],
+    scope,
+  );
+  const retained = store.loadChatSession(id, scope);
+  assert.equal(retained.messages[0].content, messages[0].content);
+  assert.equal(retained.cloudDirty, true);
+});
+
+test("cloud hydration preserves a creator's device-local history pin", () => {
+  const { scope, store } = setup();
+  store.togglePinSession(id, scope);
+  const local = store.loadChatSession(id, scope);
+  store.mergeChatSessions(
+    [
+      {
+        ...local,
+        pinned: false,
+        cloudDirty: false,
+        cloudRevision: "a".repeat(64),
+        updatedAt: "2030-01-01T00:00:00.000Z",
+      },
+    ],
+    scope,
+  );
+  assert.equal(store.loadChatSession(id, scope).pinned, true);
+});
+
 test("cloud save sends the complete snapshot atomically with actor and base revision", async () => {
   const f = fixture();
   const scope = f.scope(actor);
