@@ -238,23 +238,33 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
-    // A closing drawer can obscure a fully painted chat log. Wait for finite
-    // transitions across the document, not just animations inside the log.
-    await expect
-      .poll(() =>
-        page.evaluate(
-          () =>
-            document
-              .getAnimations()
-              .filter(
-                (animation) =>
-                  Number.isFinite(
-                    animation.effect?.getComputedTiming().iterations,
-                  ) && animation.playState === "running",
-              ).length,
-        ),
+    // A closing drawer can obscure a fully painted chat log. Verify its own
+    // transitions; unrelated Worlds activity is outside this recovery gate.
+    if (new URL(page.url()).pathname === "/chat") {
+      const sidebar = page.getByLabel(/^(Chat sidebar|Sidebar)$/);
+      await expect(sidebar).toHaveCount(1);
+      await expect
+        .poll(() =>
+          sidebar.evaluate(
+            (element) =>
+              element
+                .getAnimations({ subtree: true })
+                .filter(
+                  (animation) =>
+                    Number.isFinite(
+                      animation.effect?.getComputedTiming().iterations,
+                    ) && animation.playState === "running",
+                ).length,
+          ),
+        )
+        .toBe(0);
+      if (
+        await page.evaluate(
+          () => matchMedia("(prefers-reduced-motion: reduce)").matches,
+        )
       )
-      .toBe(0);
+        await expect(sidebar).toHaveCSS("transition-duration", "0s");
+    }
     let recoveryGeometry;
     if (name.startsWith("full-chat-removal-") && !name.includes("recovered")) {
       const recovery = page.locator("[data-chat-storage-status]");
@@ -1000,6 +1010,8 @@ async function main() {
         removalKeyboardRetryAndComposerFocus: true,
         removalIntentConfirmedAndCacheRemoved: true,
         removedActiveConversationCleared: true,
+        recoveryControlsUnobscured: true,
+        reducedMotionSidebar: mode.reducedMotion === "reduce",
         removalContrast,
         pendingRemovalVisibleAndUnavailableRetryRetained: true,
         pendingRemovalRetiredOnSignOut: true,

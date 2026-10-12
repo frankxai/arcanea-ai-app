@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 // ---------------------------------------------------------------------------
 // Sidebar context — lets any descendant toggle the sidebar
@@ -42,7 +48,12 @@ interface ChatLayoutProps {
   onToggleSidebar: () => void;
 }
 
-export function ChatLayout({ sidebar, children, sidebarExpanded, onToggleSidebar }: ChatLayoutProps) {
+export function ChatLayout({
+  sidebar,
+  children,
+  sidebarExpanded,
+  onToggleSidebar,
+}: ChatLayoutProps) {
   const [isMobile, setIsMobile] = useState(false);
   const touchStartX = useRef(0);
 
@@ -52,22 +63,24 @@ export function ChatLayout({ sidebar, children, sidebarExpanded, onToggleSidebar
       setIsMobile(window.innerWidth < MD_BREAKPOINT);
     }
     check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   // Close mobile overlay on Escape
   useEffect(() => {
     if (!isMobile || !sidebarExpanded) return;
     function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onToggleSidebar();
+      if (e.key === "Escape") onToggleSidebar();
     }
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
   }, [isMobile, sidebarExpanded, onToggleSidebar]);
 
   return (
-    <SidebarContext.Provider value={{ expanded: sidebarExpanded, toggle: onToggleSidebar }}>
+    <SidebarContext.Provider
+      value={{ expanded: sidebarExpanded, toggle: onToggleSidebar }}
+    >
       <div className="flex h-[calc(100dvh-var(--nav-h,64px))] bg-cosmic-void overflow-hidden">
         {/* ----------------------------------------------------------------- */}
         {/* Sidebar — desktop: inline column, mobile: fixed overlay           */}
@@ -78,23 +91,28 @@ export function ChatLayout({ sidebar, children, sidebarExpanded, onToggleSidebar
             {/* Backdrop */}
             {sidebarExpanded && (
               <div
-                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm animate-fade-in"
+                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm animate-fade-in motion-reduce:animate-none"
                 onClick={onToggleSidebar}
                 aria-hidden="true"
               />
             )}
             {/* Slide-over sidebar */}
             <aside
-              className="fixed inset-y-0 left-0 z-50 flex flex-col border-r border-cosmic-border bg-cosmic-deep/95 backdrop-blur-xl transition-transform duration-200 ease-out"
+              className="fixed inset-y-0 left-0 z-50 flex flex-col border-r border-cosmic-border bg-cosmic-deep/95 backdrop-blur-xl transition-transform duration-200 ease-out motion-reduce:transition-none"
               style={{
                 width: SIDEBAR_EXPANDED_WIDTH,
-                transform: sidebarExpanded ? 'translateX(0)' : `translateX(-${SIDEBAR_EXPANDED_WIDTH}px)`,
+                transform: sidebarExpanded
+                  ? "translateX(0)"
+                  : `translateX(-${SIDEBAR_EXPANDED_WIDTH}px)`,
               }}
               role="complementary"
               aria-label="Chat sidebar"
-              onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+              onTouchStart={(e) => {
+                touchStartX.current = e.touches[0].clientX;
+              }}
               onTouchEnd={(e) => {
-                const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+                const deltaX =
+                  e.changedTouches[0].clientX - touchStartX.current;
                 if (deltaX < -80) onToggleSidebar();
               }}
             >
@@ -104,8 +122,12 @@ export function ChatLayout({ sidebar, children, sidebarExpanded, onToggleSidebar
         ) : (
           /* Desktop inline sidebar with animated width */
           <aside
-            className="flex flex-col shrink-0 border-r border-cosmic-border bg-cosmic-deep/95 backdrop-blur-xl overflow-hidden transition-[width] duration-200 ease-out"
-            style={{ width: sidebarExpanded ? SIDEBAR_EXPANDED_WIDTH : SIDEBAR_COLLAPSED_WIDTH }}
+            className="flex flex-col shrink-0 border-r border-cosmic-border bg-cosmic-deep/95 backdrop-blur-xl overflow-hidden transition-[width] duration-200 ease-out motion-reduce:transition-none"
+            style={{
+              width: sidebarExpanded
+                ? SIDEBAR_EXPANDED_WIDTH
+                : SIDEBAR_COLLAPSED_WIDTH,
+            }}
             aria-label="Sidebar"
           >
             {sidebar}
