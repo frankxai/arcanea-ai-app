@@ -1,12 +1,9 @@
-// Evolution engine — the lived-in moat. Memories (tooling, .arcanea/) accumulate privately.
-// Distill produces salience-weighted summary (deterministic core; LLM optional for prose).
-// Evolve writes character delta + new public canonLevel-2 lore so the world visibly changes and contentHash moves.
+// Private world memories and deterministic salience-weighted summaries.
+// Legacy evolution entry points reject: a memory is not approval to publish canon.
 
 import { promises as fs } from "node:fs";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
-import { readWorld, writeFiles, parseFrontmatter } from "./fs-world.mjs";
-import { slugify } from "./manifest.mjs";
 
 const MEM_DIR = ".arcanea/memories";
 
@@ -68,30 +65,18 @@ export function distillOffline(memories, { max = 3 } = {}) {
   return scored.map((m) => m.content).join(" · ");
 }
 
-export async function evolveCharacter(
-  dir,
-  characterSlug,
-  { summary, ts = new Date().toISOString() } = {},
-) {
-  const charPath = `characters/${characterSlug}.md`;
-  const full = path.join(dir, charPath);
-  let body = "";
-  try {
-    body = await fs.readFile(full, "utf8");
-  } catch {
-    body = `---\nname: ${characterSlug}\n---\n\n# ${characterSlug}\n`;
-  }
-  const { data, body: rest } = parseFrontmatter(body);
-  const evoBlock = `\n\n## Evolution\n\n**Transformed by lived moments** (${ts.slice(0, 10)})\n\n${summary || "The world changed them."}\n`;
-  const updated = body.trimEnd() + evoBlock;
-  await writeFiles(dir, [{ path: charPath, bytes: updated }]);
+function canonPromotionError() {
+  const error = new Error(
+    "Legacy evolution is disabled: private memories cannot publish canon. " +
+      "Use scene start/revise/export for private drafts; canon promotion requires a separate human-approved workflow.",
+  );
+  error.code = "ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED";
+  return error;
+}
 
-  const loreTitle = `Echoes of ${data.name || characterSlug}`;
-  const loreBody = `---\nvisibility: public\ncanonLevel: 2\n---\n\n# ${loreTitle}\n\n${summary || "What was lived became canon."}\n\n*Written by no one. Earned by everyone.*\n`;
-  const lorePath = `canon/${slugify(loreTitle)}.md`;
-  await writeFiles(dir, [{ path: lorePath, bytes: loreBody }]);
-
-  return { character: charPath, lore: lorePath };
+/** @deprecated Always rejects before reading arguments or accessing the filesystem. */
+export async function evolveCharacter() {
+  throw canonPromotionError();
 }
 
 export async function remember(dir, content, opts = {}) {
@@ -101,21 +86,7 @@ export async function remember(dir, content, opts = {}) {
   return { record: rec, distilled: summary };
 }
 
-export async function evolve(dir, characterSlug, opts = {}) {
-  const mems = await listMemories(dir);
-  const summary =
-    opts.summary ||
-    distillOffline(mems, { max: 4 }) ||
-    "Moments accumulated and the character shifted.";
-  const res = await evolveCharacter(dir, characterSlug, {
-    summary,
-    ts: opts.ts,
-  });
-  const w = await readWorld(dir);
-  return {
-    ...res,
-    summary,
-    newHashWillDiffer: true,
-    world: { id: w.manifest.id, name: w.manifest.name },
-  };
+/** @deprecated Always rejects; caller-supplied approval flags cannot enable promotion. */
+export async function evolve() {
+  throw canonPromotionError();
 }
