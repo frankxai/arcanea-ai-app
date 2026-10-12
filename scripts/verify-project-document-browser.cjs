@@ -6,6 +6,38 @@ const { createRequire } = require("node:module");
 const appRequire = createRequire(path.resolve("apps/web/package.json"));
 const { chromium, expect } = appRequire("@playwright/test");
 
+async function largeOriginalPng() {
+  const png = await appRequire("sharp")({
+    create: { width: 2, height: 2, channels: 3, background: "#446688" },
+  })
+    .png()
+    .toBuffer();
+  const length = 10485760 - png.length - 12;
+  const body = Buffer.concat([
+    Buffer.from("tEXt"),
+    Buffer.from("Fixture\0"),
+    Buffer.alloc(length - 8, 65),
+  ]);
+  let crc = 0xffffffff;
+  for (const byte of body) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit++)
+      crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+  }
+  const chunk = Buffer.alloc(body.length + 8);
+  chunk.writeUInt32BE(length, 0);
+  body.copy(chunk, 4);
+  chunk.writeUInt32BE((crc ^ 0xffffffff) >>> 0, chunk.length - 4);
+  const result = Buffer.concat([
+    png.subarray(0, png.length - 12),
+    chunk,
+    png.subarray(png.length - 12),
+  ]);
+  assert.equal(result.length, 10485760);
+  await appRequire("sharp")(result, { failOn: "warning" }).stats();
+  return result;
+}
+
 async function main() {
   assert.equal(process.env.GITHUB_ACTIONS, "true");
   assert.equal(process.env.GITHUB_REPOSITORY, "frankxai/arcanea-ai-app");
@@ -29,6 +61,10 @@ async function main() {
   assert.equal(config.supabaseUrl, "http://127.0.0.1:54321");
   assert.equal(config.output, "screenshots/project-document-service");
   assert.equal(config.accounts.length, 2);
+  const originalImage = await largeOriginalPng();
+  const originalDigest = createHash("sha256")
+    .update(originalImage)
+    .digest("hex");
   assert.ok(
     config.accounts.every((a) =>
       /^document-[01]@example\.invalid$/.test(a.email),
@@ -74,6 +110,10 @@ async function main() {
       let loseAcknowledgement = false;
       let holdAcknowledgement = false;
       let held;
+      let imageUploaded = false,
+        loseImageCompletion = false,
+        imagePutRequests = 0;
+      let imageAsset, imageAddress, imageClaim;
       let releaseHeld;
       const hold = new Promise((resolve) => {
         releaseHeld = resolve;
@@ -81,8 +121,36 @@ async function main() {
       await context.route("**/*", async (route) => {
         const request = route.request();
         const url = new URL(request.url());
+        if (
+          url.origin === "https://vercel.com" &&
+          url.pathname === "/api/blob/" &&
+          request.method() === "PUT"
+        ) {
+          assert.ok(request.postDataBuffer().length <= 10485760);
+          const response = await route.fetch({
+            url: `http://127.0.0.1:54324/${url.search}`,
+          });
+          assert.equal(response.status(), 200);
+          imagePutRequests++;
+          imageUploaded = true;
+          return route.fulfill({ response });
+        }
         if (url.origin !== config.base && url.origin !== config.supabaseUrl)
           return route.abort();
+        if (
+          imageUploaded &&
+          loseImageCompletion &&
+          request.method() === "POST" &&
+          /\/media$/.test(url.pathname) &&
+          request.postDataJSON().action === "complete"
+        ) {
+          loseImageCompletion = false;
+          const response = await route.fetch();
+          assert.equal(response.status(), 200);
+          imageClaim = request.postDataJSON().claim;
+          imageAsset = (await response.json()).asset;
+          return route.abort();
+        }
         if (
           url.origin === config.base &&
           /^\/api\/(?:ai|generate|imagine|voice|credits)(?:\/|$)/.test(
@@ -267,13 +335,15 @@ async function main() {
       const title = page.getByLabel("Document title", { exact: true });
       const recovery = page.getByRole("region", { name: "Document recovery" });
       const flush = () => page.keyboard.press("Control+s");
-      const download = async (button) => {
+      const download = async (button, binary = false) => {
         const pending = page.waitForEvent("download");
         await button.click();
         const stream = await (await pending).createReadStream();
         const chunks = [];
         for await (const chunk of stream) chunks.push(chunk);
-        return Buffer.concat(chunks).toString("utf8");
+        return binary
+          ? Buffer.concat(chunks)
+          : Buffer.concat(chunks).toString("utf8");
       };
       const capture = async (label, { locator, fullPage = true } = {}) => {
         const file = `${config.output}/document-${mode.name}-${label}.png`;
@@ -503,6 +573,154 @@ async function main() {
         result.checks.push(
           "actual-portable-text-document-download-preserves-rich-json",
         );
+
+        stage = "actual-private-original-lost-completion";
+        const imageCreation = await page.request.post(
+          `${config.base}/api/projects/${project.id}/docs`,
+          { data: { title: "Private original document", doc_type: "note" } },
+        );
+        assert.equal(imageCreation.status(), 201);
+        const imageDoc = (await imageCreation.json()).data.doc;
+        imageAddress = `/api/projects/${project.id}/docs/${imageDoc.id}/media`;
+        const imageDocAddress = `/api/projects/${project.id}/docs/${imageDoc.id}`;
+        await page.goto(
+          `${config.base}/projects/${project.id}/docs/${imageDoc.id}`,
+        );
+        await expect(title).toHaveValue("Private original document");
+        loseImageCompletion = true;
+        await page.locator('input[type="file"]').setInputFiles({
+          name: "private-map.png",
+          mimeType: "image/png",
+          buffer: originalImage,
+        });
+        const imageRecovery = page.getByRole("region", {
+          name: "Image recovery",
+        });
+        await expect(imageRecovery.getByRole("alert")).toBeVisible();
+        const retained = await download(
+          imageRecovery.getByRole("button", {
+            name: "Download original image",
+            exact: true,
+          }),
+          true,
+        );
+        assert.equal(
+          createHash("sha256").update(retained).digest("hex"),
+          originalDigest,
+        );
+        assert.equal(imagePutRequests, 1);
+        assert.equal(imageAsset.byteSize, 10485760);
+        assert.equal(imageAsset.sha256, originalDigest);
+        await capture("image-recovery");
+        await imageRecovery
+          .getByRole("button", { name: "Retry image", exact: true })
+          .click();
+        await expect(imageRecovery).toHaveCount(0);
+        assert.equal(
+          imagePutRequests,
+          1,
+          "Retry must reconcile the ready original without another PUT",
+        );
+        await expect(editor.locator("img")).toHaveCount(1);
+        await expect
+          .poll(() =>
+            editor
+              .locator("img")
+              .evaluate((img) => img.complete && img.naturalWidth === 2),
+          )
+          .toBe(true);
+        await flush();
+        await expect
+          .poll(async () =>
+            JSON.stringify((await get(imageDocAddress)).content.content_json),
+          )
+          .toContain(`/media/${imageAsset.assetId}`);
+        await page.reload();
+        await expect(editor.locator("img")).toHaveCount(1);
+        await expect
+          .poll(() =>
+            editor
+              .locator("img")
+              .evaluate((img) => img.complete && img.naturalWidth === 2),
+          )
+          .toBe(true);
+        const privateUrl = `${imageAddress}/${imageAsset.assetId}`;
+        const bytesResponse = await page.request.get(
+          `${config.base}${privateUrl}`,
+        );
+        assert.equal(bytesResponse.status(), 200);
+        assert.match(
+          bytesResponse.headers()["cache-control"],
+          /private.*no-store/,
+        );
+        const readBytes = await bytesResponse.body();
+        assert.equal(readBytes.length, 10485760);
+        assert.equal(
+          createHash("sha256").update(readBytes).digest("hex"),
+          originalDigest,
+        );
+        const mediaHtml = await download(
+          page.getByRole("button", { name: "Export document", exact: true }),
+        );
+        const mediaManifest = JSON.parse(
+          mediaHtml.match(/id="arcanea-document">([\s\S]*?)<\/script>/)[1],
+        );
+        assert.equal(mediaManifest.doc_id, imageDoc.id);
+        assert.equal(mediaManifest.project_id, project.id);
+        assert.deepEqual(
+          mediaManifest.content_json,
+          (await get(imageDocAddress)).content.content_json,
+        );
+        const exported = mediaManifest.assets[imageAsset.assetId];
+        assert.equal(exported.byteSize, 10485760);
+        assert.equal(
+          createHash("sha256")
+            .update(Buffer.from(exported.imageData, "base64"))
+            .digest("hex"),
+          originalDigest,
+        );
+        assert.match(mediaHtml, /img src="data:image\/png;base64,/);
+        assert.ok(Buffer.byteLength(mediaHtml) < 30 * 1024 * 1024);
+        const offline = attach(await context.newPage());
+        await offline.setContent(mediaHtml);
+        await expect
+          .poll(() =>
+            offline
+              .locator("img")
+              .evaluate((img) => img.complete && img.naturalWidth === 2),
+          )
+          .toBe(true);
+        await offline.close();
+        const counters = await fetch(
+          `${config.supabaseUrl}/rest/v1/imagine_storage_accounts?user_id=eq.${config.accounts[0].id}&select=used_bytes,reserved_bytes`,
+          {
+            headers: {
+              apikey: config.admin,
+              Authorization: `Bearer ${config.admin}`,
+            },
+            signal: AbortSignal.timeout(10000),
+          },
+        );
+        assert.equal(counters.status, 200);
+        const [account] = await counters.json();
+        assert.equal(
+          account.used_bytes,
+          (evidence.modes.length + 1) * 10485760,
+        );
+        assert.equal(account.reserved_bytes, 0);
+        result.image = {
+          byteSize: readBytes.length,
+          sha256: originalDigest,
+          putRequests: imagePutRequests,
+          usedBytes: account.used_bytes,
+          reservedBytes: account.reserved_bytes,
+        };
+        result.checks.push(
+          "actual-client-token-private-sdk-10mib-original-save-reopen-export-lost-ack-single-charge",
+        );
+        await capture("image-reopened");
+        await page.goto(documentUrl);
+        await expect(title).toHaveValue("Continuity document");
 
         stage = "lost-acknowledgement-reload-replay";
         loseAcknowledgement = true;
@@ -753,6 +971,33 @@ async function main() {
           { data: { title: "Must be denied" } },
         );
         assert.equal(foreignCreation.status(), 404);
+        assert.equal(
+          (
+            await second.request.get(
+              `${config.base}${imageAddress}/${imageAsset.assetId}`,
+            )
+          ).status(),
+          404,
+        );
+        assert.equal(
+          (
+            await second.request.get(
+              `${config.base}${imageAddress}/${imageAsset.assetId}?metadata=1`,
+            )
+          ).status(),
+          404,
+        );
+        assert.equal(
+          (
+            await second.request.post(`${config.base}${imageAddress}`, {
+              data: { action: "complete", claim: imageClaim },
+            })
+          ).status(),
+          404,
+        );
+        result.checks.push(
+          "foreign-account-private-original-metadata-bytes-completion-denied",
+        );
         const bProjectResponse = await second.request.post(
           `${config.base}/api/projects`,
           { data: { title: "Account B project" } },

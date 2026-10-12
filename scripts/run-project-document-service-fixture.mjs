@@ -11,6 +11,7 @@ import {
   closeSync,
 } from "node:fs";
 import { join, isAbsolute } from "node:path";
+import { createRequire } from "node:module";
 import { setTimeout as pause } from "node:timers/promises";
 
 // Reuses the accepted provider-account runner bootstrap at e07d568.
@@ -47,11 +48,22 @@ for (const name of [
   "FAL_KEY",
   "POLAR_ACCESS_TOKEN",
   "STRIPE_SECRET_KEY",
+  "BLOB_READ_WRITE_TOKEN",
+  "PRIVATE_IMAGINE_BLOB_READ_WRITE_TOKEN",
 ])
   if (process.env[name])
     throw Error("Hosted credentials are prohibited in document acceptance.");
 if (process.env.NEXT_PUBLIC_SUPABASE_URL)
   throw Error("An inherited Supabase project is prohibited in this fixture.");
+for (const name of [
+  "PRIVATE_IMAGINE_STORAGE_ENABLED",
+  "DOCUMENT_MEDIA_BLOB_FIXTURE",
+  "VERCEL_BLOB_API_URL",
+  "NEXT_PUBLIC_VERCEL_BLOB_API_URL",
+  "NODE_OPTIONS",
+])
+  if (process.env[name])
+    throw Error("Inherited storage or preload configuration is prohibited.");
 
 const output = "screenshots/project-document-service";
 mkdirSync(output, { recursive: true });
@@ -101,6 +113,16 @@ const receipt = {
 for (const file of [
   "scripts/run-project-document-service-fixture.mjs",
   "scripts/verify-project-document-browser.cjs",
+  "scripts/document-media-blob-fixture.cjs",
+  "scripts/tests/document-media-blob-fixture.test.cjs",
+  "apps/web/lib/docs/media.ts",
+  "apps/web/lib/docs/media-client.ts",
+  "apps/web/lib/docs/media-server.ts",
+  "apps/web/lib/docs/portable-export.ts",
+  "apps/web/app/api/projects/[id]/docs/[docId]/media/route.ts",
+  "apps/web/app/api/projects/[id]/docs/[docId]/media/[assetId]/route.ts",
+  "supabase/migrations/20261011000001_private_imagine_assets.sql",
+  "supabase/migrations/20261012000001_project_doc_media.sql",
   "scripts/tests/provider-fixture-private-config.test.cjs",
   "supabase/tests/world-creator-service-fixture.sql",
   "apps/web/app/projects/[id]/docs/[docId]/page.tsx",
@@ -178,6 +200,7 @@ const env = {
   NEXT_PUBLIC_SUPABASE_ANON_KEY: anon,
   PROJECT_DOCUMENT_FIXTURE: configPath,
 };
+const blobToken = `vercel_blob_rw_arcaneafixture_${randomBytes(24).toString("hex")}`;
 async function run(command, args, timeoutMs) {
   const child = spawn(command, args, { env, stdio: "ignore", detached: true });
   children.add(child);
@@ -281,6 +304,18 @@ try {
     ),
   );
   // Explicit client grants and the actual migration's RLS/functions are exercised.
+  docker(
+    ["exec", "-i", db, "psql", "-U", "postgres", "-v", "ON_ERROR_STOP=1"],
+    "create or replace function auth.role() returns text language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claim.role', true), ''), nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'role') $$;",
+  );
+  for (const migration of [
+    "supabase/migrations/20261011000001_private_imagine_assets.sql",
+    "supabase/migrations/20261012000001_project_doc_media.sql",
+  ])
+    docker(
+      ["exec", "-i", db, "psql", "-U", "postgres", "-v", "ON_ERROR_STOP=1"],
+      readFileSync(migration, "utf8"),
+    );
   container(
     "rest",
     "postgrest/postgrest:v14.17",
@@ -373,6 +408,17 @@ try {
       `insert into public.profiles(id,username,full_name) values ('${account.id}','fixture-${index}','Fixture ${index}');`,
     ]);
     accounts.push(account);
+    docker([
+      "exec",
+      db,
+      "psql",
+      "-U",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-c",
+      `insert into public.imagine_storage_accounts(user_id,capacity_bytes) values ('${account.id}',67108864);`,
+    ]);
   }
   privateConfiguration.write({
     head,
@@ -380,6 +426,8 @@ try {
     supabaseUrl: "http://127.0.0.1:54321",
     accounts,
     output,
+    admin,
+    blob: { token: blobToken },
   });
   phase = "compiled-app-build";
   await run("pnpm", ["turbo", "run", "build", "--filter=@arcanea/web"], 600000);
@@ -398,20 +446,32 @@ try {
     120000,
   );
   phase = "app-readiness";
+  // Only the app child receives disposable admin/storage credentials. Browser
+  // login still uses real isolated Auth, and all app authorization stays active.
+  const serverEnv = {
+    ...env,
+    SUPABASE_SERVICE_ROLE_KEY: admin,
+    PRIVATE_IMAGINE_STORAGE_ENABLED: "true",
+    PRIVATE_IMAGINE_BLOB_READ_WRITE_TOKEN: blobToken,
+    VERCEL_BLOB_API_URL: "https://blob-fixture.invalid",
+    DOCUMENT_MEDIA_BLOB_FIXTURE: configPath,
+  };
   const server = spawn(
-    "pnpm",
+    process.execPath,
     [
-      "--dir",
-      "apps/web",
-      "exec",
-      "next",
+      "--require",
+      join(process.cwd(), "scripts/document-media-blob-fixture.cjs"),
+      createRequire(join(process.cwd(), "apps/web/package.json")).resolve(
+        "next/dist/bin/next",
+      ),
       "start",
+      "apps/web",
       "-H",
       "127.0.0.1",
       "-p",
       "3001",
     ],
-    { env, stdio: "ignore", detached: true },
+    { env: serverEnv, stdio: "ignore", detached: true },
   );
   children.add(server);
   await ready("http://localhost:3001/auth/login");
@@ -428,6 +488,20 @@ try {
   )
     throw Error("The document receipt did not earn exact-source acceptance.");
   receipt.acceptance = acceptance;
+  const transport = JSON.parse(
+    readFileSync(`${output}/blob-transport-receipt.json`, "utf8"),
+  );
+  if (
+    transport.puts !== 3 ||
+    transport.productionWrites !== 0 ||
+    transport.invalidRequests !== 0 ||
+    !transport.objects.every((object) => object.size === 10485760) ||
+    transport.reads < 9
+  )
+    throw Error(
+      "The actual client/private SDK transport did not earn acceptance.",
+    );
+  receipt.blobTransport = transport;
   receipt.passed = true;
 } catch {
   receipt.failurePhase = phase;
