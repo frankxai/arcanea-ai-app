@@ -10,21 +10,21 @@
  * 4. Accessibility - Proper heading hierarchy, skip links, scroll-mt anchors
  */
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import type React from 'react';
-import ReactMarkdown from 'react-markdown';
+import { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type React from "react";
+import ReactMarkdown from "react-markdown";
 import {
   getText,
   getTextsInCollection,
   getRelatedTexts,
   getCollection,
   COLLECTIONS,
-} from '../../../../lib/content';
-import { ReadingTracker } from '../../reading-tracker';
+} from "../../../../lib/content";
+import { ReadingTracker } from "../../reading-tracker";
 
 interface Props {
   params: Promise<{ collection: string; text: string }>;
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const text = await getText(fullSlug);
 
   if (!text) {
-    return { title: 'Text Not Found' };
+    return { title: "Text Not Found" };
   }
 
   return {
@@ -64,32 +64,52 @@ export default async function TextPage({ params }: Props) {
 
   // Find current text index for prev/next navigation
   const currentIndex = textsInCollection.findIndex((t) => t.slug === text.slug);
-  const prevText = currentIndex > 0 ? textsInCollection[currentIndex - 1] : null;
-  const nextText = currentIndex < textsInCollection.length - 1 ? textsInCollection[currentIndex + 1] : null;
+  const prevText =
+    currentIndex > 0 ? textsInCollection[currentIndex - 1] : null;
+  const nextText =
+    currentIndex < textsInCollection.length - 1
+      ? textsInCollection[currentIndex + 1]
+      : null;
 
   // Filter headings to show only h2 and h3 for table of contents
-  const tocHeadings = text.headings.filter((h) => h.level === 2 || h.level === 3);
+  const tocHeadings = text.headings.filter(
+    (h) => h.level === 2 || h.level === 3,
+  );
 
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
+    "@context": "https://schema.org",
+    "@type": "Article",
     headline: text.frontmatter.title,
     description: text.frontmatter.excerpt,
     wordCount: text.frontmatter.wordCount,
     url: `https://arcanea.ai/library/${fullSlug}`,
-    author: { '@type': 'Organization', name: 'Arcanea' },
-    publisher: { '@type': 'Organization', name: 'Arcanea', url: 'https://arcanea.ai' },
+    author: { "@type": "Organization", name: "Arcanea" },
+    publisher: {
+      "@type": "Organization",
+      name: "Arcanea",
+      url: "https://arcanea.ai",
+    },
     isPartOf: {
-      '@type': 'CollectionPage',
+      "@type": "CollectionPage",
       name: collection?.name,
       url: `https://arcanea.ai/library/${collectionSlug}`,
     },
     breadcrumb: {
-      '@type': 'BreadcrumbList',
+      "@type": "BreadcrumbList",
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Library', item: 'https://arcanea.ai/library' },
-        { '@type': 'ListItem', position: 2, name: collection?.name, item: `https://arcanea.ai/library/${collectionSlug}` },
-        { '@type': 'ListItem', position: 3, name: text.frontmatter.title },
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Library",
+          item: "https://arcanea.ai/library",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: collection?.name,
+          item: `https://arcanea.ai/library/${collectionSlug}`,
+        },
+        { "@type": "ListItem", position: 3, name: text.frontmatter.title },
       ],
     },
   };
@@ -111,16 +131,29 @@ export default async function TextPage({ params }: Props) {
       {/* Header Bar */}
       <header className="sticky top-0 z-40 border-b border-cosmic-border bg-cosmic-deep/90 backdrop-blur-lg">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <nav className="flex items-center gap-2 text-sm text-text-muted" aria-label="Breadcrumb">
-            <Link href="/library" className="hover:text-atlantean-teal transition-colors">
+          <nav
+            className="flex items-center gap-2 text-sm text-text-muted"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              href="/library"
+              className="hover:text-atlantean-teal transition-colors"
+            >
               Library
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href={`/library/${collectionSlug}`} className="hidden sm:inline hover:text-atlantean-teal transition-colors">
+            <Link
+              href={`/library/${collectionSlug}`}
+              className="hidden sm:inline hover:text-atlantean-teal transition-colors"
+            >
               {collection?.name}
             </Link>
-            <span className="hidden sm:inline" aria-hidden="true">/</span>
-            <span className="text-text-primary truncate max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">{text.frontmatter.title}</span>
+            <span className="hidden sm:inline" aria-hidden="true">
+              /
+            </span>
+            <span className="text-text-primary truncate max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">
+              {text.frontmatter.title}
+            </span>
           </nav>
 
           <div className="hidden sm:flex items-center gap-4 text-xs text-text-muted">
@@ -134,7 +167,7 @@ export default async function TextPage({ params }: Props) {
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-12 lg:grid-cols-[1fr_280px]">
           {/* Main Content */}
-          <main id="main-content" className="min-w-0">
+          <div className="min-w-0">
             {/* Text Header */}
             <header className="mb-12 max-w-[720px]">
               <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -159,8 +192,13 @@ export default async function TextPage({ params }: Props) {
 
               {/* Mobile metadata */}
               <div className="mt-4 flex items-center gap-3 text-xs text-text-muted sm:hidden">
-                <span>{text.frontmatter.wordCount?.toLocaleString()} words</span>
-                <span className="h-3 w-px bg-cosmic-border" aria-hidden="true" />
+                <span>
+                  {text.frontmatter.wordCount?.toLocaleString()} words
+                </span>
+                <span
+                  className="h-3 w-px bg-cosmic-border"
+                  aria-hidden="true"
+                />
                 <span>{text.frontmatter.readingTime} min read</span>
               </div>
 
@@ -180,18 +218,22 @@ export default async function TextPage({ params }: Props) {
 
               {/* Elements & Luminors */}
               <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-text-muted">
-                {text.frontmatter.elements && text.frontmatter.elements.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-atlantean-teal">Elements:</span>
-                    <span>{text.frontmatter.elements.join(', ')}</span>
-                  </div>
-                )}
-                {text.frontmatter.luminors && text.frontmatter.luminors.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-gold-bright">Luminors:</span>
-                    <span className="capitalize">{text.frontmatter.luminors.join(', ')}</span>
-                  </div>
-                )}
+                {text.frontmatter.elements &&
+                  text.frontmatter.elements.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-atlantean-teal">Elements:</span>
+                      <span>{text.frontmatter.elements.join(", ")}</span>
+                    </div>
+                  )}
+                {text.frontmatter.luminors &&
+                  text.frontmatter.luminors.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-gold-bright">Luminors:</span>
+                      <span className="capitalize">
+                        {text.frontmatter.luminors.join(", ")}
+                      </span>
+                    </div>
+                  )}
               </div>
             </header>
 
@@ -201,12 +243,15 @@ export default async function TextPage({ params }: Props) {
                 <summary className="cursor-pointer px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] text-atlantean-teal">
                   Table of Contents
                 </summary>
-                <nav className="border-t border-cosmic-border px-6 py-4" aria-label="Table of contents">
+                <nav
+                  className="border-t border-cosmic-border px-6 py-4"
+                  aria-label="Table of contents"
+                >
                   <ul className="space-y-2">
                     {tocHeadings.map((heading) => (
                       <li
                         key={heading.slug}
-                        className={heading.level === 3 ? 'ml-4' : ''}
+                        className={heading.level === 3 ? "ml-4" : ""}
                       >
                         <a
                           href={`#${heading.slug}`}
@@ -222,12 +267,15 @@ export default async function TextPage({ params }: Props) {
             )}
 
             {/* Content — styled by .prose-arcanea in globals.css */}
-            <article className="prose-arcanea">
+            <article id="library-reading-text" className="prose-arcanea">
               <ReactMarkdown
                 components={{
                   h2: ({ children }: { children?: React.ReactNode }) => {
                     const headingText = String(children);
-                    const slug = headingText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    const slug = headingText
+                      .toLowerCase()
+                      .replace(/[^\w\s-]/g, "")
+                      .replace(/\s+/g, "-");
                     return (
                       <h2 id={slug} className="scroll-mt-24">
                         {children}
@@ -236,7 +284,10 @@ export default async function TextPage({ params }: Props) {
                   },
                   h3: ({ children }: { children?: React.ReactNode }) => {
                     const headingText = String(children);
-                    const slug = headingText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    const slug = headingText
+                      .toLowerCase()
+                      .replace(/[^\w\s-]/g, "")
+                      .replace(/\s+/g, "-");
                     return (
                       <h3 id={slug} className="scroll-mt-24">
                         {children}
@@ -256,7 +307,9 @@ export default async function TextPage({ params }: Props) {
                   href={`/library/${prevText.slug}`}
                   className="group flex-1 rounded-xl border border-cosmic-border bg-cosmic-surface p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(0,188,212,0.1)]"
                 >
-                  <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Previous</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">
+                    Previous
+                  </p>
                   <p className="font-display font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">
                     {prevText.frontmatter.title}
                   </p>
@@ -270,7 +323,9 @@ export default async function TextPage({ params }: Props) {
                   href={`/library/${nextText.slug}`}
                   className="group flex-1 rounded-xl border border-cosmic-border bg-cosmic-surface p-6 text-right transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(0,188,212,0.1)]"
                 >
-                  <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Next</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">
+                    Next
+                  </p>
                   <p className="font-display font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">
                     {nextText.frontmatter.title}
                   </p>
@@ -285,12 +340,22 @@ export default async function TextPage({ params }: Props) {
               href={`/library/${collectionSlug}`}
               className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-cosmic-border bg-cosmic-surface p-4 text-sm text-text-muted hover:border-atlantean-teal/50 hover:text-atlantean-teal transition-all lg:hidden"
             >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               Back to {collection?.name}
             </Link>
-          </main>
+          </div>
 
           {/* Sidebar */}
           <aside>
@@ -306,7 +371,7 @@ export default async function TextPage({ params }: Props) {
                       {tocHeadings.map((heading) => (
                         <li
                           key={heading.slug}
-                          className={heading.level === 3 ? 'ml-4' : ''}
+                          className={heading.level === 3 ? "ml-4" : ""}
                         >
                           <a
                             href={`#${heading.slug}`}
@@ -329,7 +394,9 @@ export default async function TextPage({ params }: Props) {
                   </h2>
                   <ul className="space-y-3">
                     {relatedTexts.map((related) => {
-                      const relatedCollection = COLLECTIONS.find(c => c.slug === related.frontmatter.collection);
+                      const relatedCollection = COLLECTIONS.find(
+                        (c) => c.slug === related.frontmatter.collection,
+                      );
                       return (
                         <li key={related.slug}>
                           <Link
@@ -340,7 +407,8 @@ export default async function TextPage({ params }: Props) {
                               {related.frontmatter.title}
                             </p>
                             <p className="text-xs text-text-muted mt-1">
-                              {relatedCollection?.name || related.frontmatter.collection}
+                              {relatedCollection?.name ||
+                                related.frontmatter.collection}
                             </p>
                           </Link>
                         </li>
@@ -358,20 +426,28 @@ export default async function TextPage({ params }: Props) {
                 <dl className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <dt className="text-text-muted">Words</dt>
-                    <dd className="font-semibold text-text-primary">{text.frontmatter.wordCount?.toLocaleString()}</dd>
+                    <dd className="font-semibold text-text-primary">
+                      {text.frontmatter.wordCount?.toLocaleString()}
+                    </dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-text-muted">Reading time</dt>
-                    <dd className="font-semibold text-text-primary">{text.frontmatter.readingTime} min</dd>
+                    <dd className="font-semibold text-text-primary">
+                      {text.frontmatter.readingTime} min
+                    </dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-text-muted">Format</dt>
-                    <dd className="font-semibold text-text-primary capitalize">{text.frontmatter.format}</dd>
+                    <dd className="font-semibold text-text-primary capitalize">
+                      {text.frontmatter.format}
+                    </dd>
                   </div>
                   {text.frontmatter.difficulty && (
                     <div className="flex justify-between">
                       <dt className="text-text-muted">Difficulty</dt>
-                      <dd className="font-semibold text-text-primary capitalize">{text.frontmatter.difficulty}</dd>
+                      <dd className="font-semibold text-text-primary capitalize">
+                        {text.frontmatter.difficulty}
+                      </dd>
                     </div>
                   )}
                 </dl>
@@ -388,8 +464,18 @@ export default async function TextPage({ params }: Props) {
                 href={`/library/${collectionSlug}`}
                 className="hidden items-center gap-2 rounded-xl border border-cosmic-border bg-cosmic-surface p-4 text-sm text-text-muted hover:border-atlantean-teal/50 hover:text-atlantean-teal transition-all lg:flex"
               >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
                 </svg>
                 Back to {collection?.name}
               </Link>

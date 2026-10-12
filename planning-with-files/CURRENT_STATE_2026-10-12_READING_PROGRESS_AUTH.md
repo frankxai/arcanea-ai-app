@@ -6,7 +6,7 @@ The full founder programme remains active.
 
 Base: `ee9c1526a50a9764a83d5d525f4849952eacddea`; owner
 `codex:01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`; branch
-`agent/codex/reading-progress-auth-20261012`. Seven explicit files are owned.
+`agent/codex/reading-progress-auth-20261012`. Nine explicit files are owned.
 Root instructions SHA256:
 `36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`.
 Explicit instruction reads do not reload native startup instructions or enforce
@@ -91,5 +91,34 @@ The native failure, three original captures and this source's strictly bound
 static PASS0 review remain retained. Cleanup again removed owned configuration
 and reported no errors. Mobile touch-save recovery remains pending.
 
-Rollback is a normal revert of the seven named page/fixture/workflow/pickup files;
+Source `fe246618ce772c9e3c8c6a4bb63d58b98ea7da69` in run `38258210971`
+passed mobile automatic save, lost acknowledgement and touch retry into the same
+B row while preserving A. Its final anonymous-page check exposed two
+`main-content` IDs and nested main landmarks. Inspection also showed that the
+tracker selected the app-wide main region, so that run's automatic completion
+proved visibility at the document boundary rather than the article end.
+The refinement gives the article its own unique target, removes the nested main
+region, and updates both browser fixtures to use that article. Actual login and
+guest checks now require one main landmark and one skip-link target. Diagnostic
+receipts track the current browser page separately from scenario execution.
+All native failed sources, captures and cleanup receipts are retained.
+That run recorded a 571px layout width in a 375px browser viewport. Its original
+overflow assertion compared document width with that expanded width and did not
+prove a 375px layout. The refined check compares document and client width with
+the configured viewport and records bounded offending element geometry.
+
+The exact-head Dots review reported a P1 about stale pages, lost diagnostics and
+continued execution after failure. Its source quote bound correctly; inspection
+shows that the catch preserves the original error and stage, throws immediately,
+and closes each context once. The page-path diagnostic could refer to an earlier
+tab and is refined here. A second free review failed the complete-file coverage
+contract and is unaccepted. Neither review establishes runtime or creative quality.
+
+Full CI on `fe246618` also failed changed-file formatting for the legacy reader
+page. The touched page and leaf fixture are formatted with the pinned existing
+formatter; the check remains enabled. A prior local pnpm shim unexpectedly began
+dependency setup and was interrupted; its evidence is retained. Direct Node
+formatter calls avoid that launcher. No local browser or app server was started.
+
+Rollback is a normal revert of the nine named page/fixture/workflow/pickup files;
 customer data, production RLS and manuscript/publication approvals are unchanged.

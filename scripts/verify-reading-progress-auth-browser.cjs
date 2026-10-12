@@ -26,6 +26,7 @@ const sourceFiles = [
   "apps/web/lib/auth/context.tsx",
   "apps/web/lib/supabase/client.ts",
   "apps/web/app/auth/login/page.tsx",
+  "apps/web/app/layout.tsx",
   "apps/web/app/globals.css",
   "TASTE.md",
 ];
@@ -82,6 +83,7 @@ async function main() {
   const browser = await chromium.launch();
   const contexts = [];
   let page,
+    diagnosticPage,
     stage = "real-sdk-identities";
   const sdk = () =>
     createClient(config.supabaseUrl, config.anon, {
@@ -130,6 +132,7 @@ async function main() {
   const button = (target, name) =>
     target.getByRole("button", { name, exact: true });
   async function login(target, account) {
+    diagnosticPage = target;
     await target.goto(
       `${config.base}/auth/login?next=${encodeURIComponent(article)}`,
     );
@@ -141,7 +144,10 @@ async function main() {
     await form.getByLabel("Password", { exact: true }).fill(account.password);
     await form.getByRole("button", { name: "Sign In", exact: true }).click();
     await target.waitForURL((url) => url.pathname === article);
+    await expect(target.locator("#main-content")).toHaveCount(1);
+    await expect(target.getByRole("main")).toHaveCount(1);
     await expect(target.locator("#main-content")).toBeVisible();
+    await expect(target.locator("article#library-reading-text")).toBeVisible();
     assert.ok(
       (await target.context().cookies(config.base)).some(
         (cookie) =>
@@ -306,9 +312,11 @@ async function main() {
     await expect(readStatus(page)).toBeVisible();
     assert.equal(saves.length, 2);
     const fresh = await context.newPage();
+    diagnosticPage = fresh;
     await fresh.goto(config.base + article);
     await expect(readStatus(fresh)).toBeVisible();
     const collection = await context.newPage();
+    diagnosticPage = collection;
     await collection.goto(`${config.base}/library/${collectionSlug}`);
     await expect(
       collection
@@ -320,6 +328,7 @@ async function main() {
       "Reload, fresh tab and collection badge recover completion through real authenticated GETs without another save",
     );
     stage = "non-bypass-rls-denial";
+    diagnosticPage = null;
     for (const client of [clients[1], anonymous]) {
       const read = await client
         .from("reading_progress")
@@ -400,6 +409,7 @@ async function main() {
     await login(switchTab, config.accounts[1]);
     await expect(readStatus(switchTab)).toHaveCount(0);
     await expect(button(switchTab, "Mark as read")).toBeEnabled();
+    diagnosticPage = page;
     await expect(readStatus(page)).toHaveCount(0);
     await expect(button(page, "Mark as read")).toBeEnabled();
     assert.equal(saves.length, 2);
@@ -475,10 +485,10 @@ async function main() {
     // The actual end-of-article sentinel, rather than a mocked observer, starts
     // completion when the mobile reader reaches the bottom.
     receipt.mobileArticleEnd = await mobileRetry.evaluate(() => {
-      const main = document.getElementById("main-content");
-      main.scrollIntoView({ block: "end" });
+      const text = document.getElementById("library-reading-text");
+      text.scrollIntoView({ block: "end" });
       return {
-        bottom: main.getBoundingClientRect().bottom,
+        bottom: text.getBoundingClientRect().bottom,
         viewportHeight: innerHeight,
       };
     });
@@ -514,18 +524,42 @@ async function main() {
     assert.equal((await checkedRows()).id, firstRow.id);
     const mobileGeometry = await mobileRetry.evaluate(() => ({
       width: innerWidth,
+      clientWidth: document.documentElement.clientWidth,
       documentWidth: document.documentElement.scrollWidth,
+      visualViewportWidth: visualViewport?.width,
+      overflowElements: Array.from(document.querySelectorAll("body *"))
+        .filter((element) => {
+          const rect = element.getBoundingClientRect();
+          return (
+            rect.width > 0 &&
+            (rect.left < -1 ||
+              rect.right > document.documentElement.clientWidth + 1)
+          );
+        })
+        .slice(0, 12)
+        .map((element) => ({
+          tag: element.tagName,
+          id: element.id,
+          classes: element.getAttribute("class")?.slice(0, 200),
+          left: element.getBoundingClientRect().left,
+          right: element.getBoundingClientRect().right,
+        })),
     }));
-    assert.ok(mobileGeometry.documentWidth <= mobileGeometry.width);
     receipt.mobileSaves = mobileSaves;
     receipt.mobileGeometry = mobileGeometry;
+    assert.equal(mobileGeometry.clientWidth, 375);
+    assert.ok(mobileGeometry.documentWidth <= mobileGeometry.clientWidth + 1);
     receipt.checks.push(
       "The single mobile tracker uses real IntersectionObserver completion; lost acknowledgement exposes a 44px touch retry, one B row is confirmed and A remains unchanged",
     );
     const guestContext = await makeContext(true);
     const guest = await guestContext.newPage();
+    diagnosticPage = guest;
     await guest.goto(config.base + article);
+    await expect(guest.locator("#main-content")).toHaveCount(1);
+    await expect(guest.getByRole("main")).toHaveCount(1);
     await expect(guest.locator("#main-content")).toBeVisible();
+    await expect(guest.locator("article#library-reading-text")).toBeVisible();
     await expect(button(guest, "Mark as read")).toHaveCount(0);
     await expect(readStatus(guest)).toHaveCount(0);
     receipt.checks.push(
@@ -538,7 +572,9 @@ async function main() {
   } catch (error) {
     receipt.stage = stage;
     receipt.error = redact(error.stack || error.message).slice(0, 2200);
-    receipt.path = page ? new URL(page.url()).pathname : null;
+    receipt.path = diagnosticPage
+      ? new URL(diagnosticPage.url()).pathname
+      : null;
     throw Error(
       "Real reading-progress acceptance failed; inspect the bounded receipt.",
     );
