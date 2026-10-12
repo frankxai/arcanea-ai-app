@@ -270,6 +270,16 @@ export default async function TextPage({ params }: Props) {
             <article id="library-reading-text" className="prose-arcanea">
               <ReactMarkdown
                 components={{
+                  pre: ({ children }) => (
+                    <pre
+                      role="region"
+                      tabIndex={0}
+                      aria-label="Equation or code block"
+                      className="max-w-full overflow-x-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal"
+                    >
+                      {children}
+                    </pre>
+                  ),
                   h2: ({ children }: { children?: React.ReactNode }) => {
                     const headingText = String(children);
                     const slug = headingText

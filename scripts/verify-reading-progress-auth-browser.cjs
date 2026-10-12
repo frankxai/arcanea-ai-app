@@ -527,6 +527,14 @@ async function main() {
       clientWidth: document.documentElement.clientWidth,
       documentWidth: document.documentElement.scrollWidth,
       visualViewportWidth: visualViewport?.width,
+      codeBlocks: Array.from(
+        document.querySelectorAll("#library-reading-text pre"),
+      ).map((element) => ({
+        width: element.clientWidth,
+        scrollWidth: element.scrollWidth,
+        overflowX: getComputedStyle(element).overflowX,
+        tabindex: element.tabIndex,
+      })),
       overflowElements: Array.from(document.querySelectorAll("body *"))
         .filter((element) => {
           const rect = element.getBoundingClientRect();
@@ -549,8 +557,30 @@ async function main() {
     receipt.mobileGeometry = mobileGeometry;
     assert.equal(mobileGeometry.clientWidth, 375);
     assert.ok(mobileGeometry.documentWidth <= mobileGeometry.clientWidth + 1);
+    const longCodeIndex = mobileGeometry.codeBlocks.findIndex(
+      (block) => block.scrollWidth > block.width,
+    );
+    assert.ok(longCodeIndex >= 0);
+    const longCode = mobileRetry
+      .getByRole("region", { name: "Equation or code block", exact: true })
+      .nth(longCodeIndex);
+    await longCode.focus();
+    await expect(longCode).toBeFocused();
+    const beforeScroll = await longCode.evaluate(
+      (element) => element.scrollLeft,
+    );
+    await mobileRetry.keyboard.press("ArrowRight");
+    await expect
+      .poll(() => longCode.evaluate((element) => element.scrollLeft))
+      .toBeGreaterThan(beforeScroll);
+    await capture(
+      mobileRetry,
+      "mobile-equation-scroll",
+      "A long original equation stays inside the 375px Library page; its focused region scrolls with the keyboard.",
+      longCode,
+    );
     receipt.checks.push(
-      "The single mobile tracker uses real IntersectionObserver completion; lost acknowledgement exposes a 44px touch retry, one B row is confirmed and A remains unchanged",
+      "The single mobile tracker uses real article-end IntersectionObserver completion; lost acknowledgement exposes a 44px touch retry, one B row is confirmed and A remains unchanged; 375px layout and keyboard-scrolling equation are verified",
     );
     const guestContext = await makeContext(true);
     const guest = await guestContext.newPage();

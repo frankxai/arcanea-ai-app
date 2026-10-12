@@ -4,7 +4,7 @@ A signed-in reader needs confirmed completion to survive reload without exposing
 it to another account. This acceptance slice belongs to [release issue 280](https://github.com/frankxai/arcanea-ai-app/issues/280).
 The full founder programme remains active.
 
-Base: `ee9c1526a50a9764a83d5d525f4849952eacddea`; owner
+Current accepted base: `795953011c4fa44e8d1078539182ed7ee66a1cfd`; owner
 `codex:01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`; branch
 `agent/codex/reading-progress-auth-20261012`. Nine explicit files are owned.
 Root instructions SHA256:
@@ -106,6 +106,22 @@ That run recorded a 571px layout width in a 375px browser viewport. Its original
 overflow assertion compared document width with that expanded width and did not
 prove a 375px layout. The refined check compares document and client width with
 the configured viewport and records bounded offending element geometry.
+
+Source `b20c2a58718fadcbae8e5985eb6fe0a65f40b280` in run `38260986718`
+passed the unique main checks, actual article-end automatic completion and mobile
+touch retry, then failed the stronger overflow assertion: client width 375px,
+document width 571px. Long equation blocks are given bounded horizontal scrolling
+and keyboard focus; original equation text remains unchanged. The fresh check
+also records each code block's viewport/content width and scrolling behavior.
+The full supplied 21-file independent static review passed with exact source
+binding and reported zero cost. It did not prove this later refinement.
+
+The normal expected-head GitHub base update raced another accepted change.
+The parent assertion stopped at that mismatch; recovery verified both accepted
+PR523 and PR624, all nine unchanged owned files and all six incoming file hashes
+before a clean fast-forward. The incoming review router and MCP package files
+were preserved without claiming them or invoking publication. Fresh source
+review and native hosted acceptance are required on the resulting candidate.
 
 The exact-head Dots review reported a P1 about stale pages, lost diagnostics and
 continued execution after failure. Its source quote bound correctly; inspection
