@@ -482,3 +482,50 @@ committed public candidate remains required. Main advanced to680901563775853b51d
 while working: accepted PR608 changes five World SDK/memory-boundary paths and
 does not overlap this repair. Integrate those exact accepted blobs before the
 single hosted-validation push; no owner branch is assumed complete by its merge.
+
+## Explicit independent-review alternative
+
+Landmark repair commit15516835b22e302bbc3cb57b8b27e1e996daf7bc is followed by
+normal merge37998f99c596a5c83d38891abbbfcdb39d856294 of accepted main68090156.
+All five incoming staged Git blobs were compared to that exact main and match.
+Native ownership and staged-secret hooks passed for both commits. No SDK owner's
+checkout, creator/editor source, live data or locked canon was changed here.
+
+The live Kilo catalog also exposes nvidia/nemotron-3-ultra-550b-a55b:free with
+1,000,000 context,65,536 completion capacity and exactly zero listed prices.
+Its catalog does not advertise provider-side structured output. It is an
+explicit alternative to the failed DOTS review, never an automatic fallback.
+Current primary gateway guidance confirms anonymous free access and requires
+public, non-confidential trial inputs: https://kilo.ai/docs/gateway/models-and-providers.
+Deep reasoning controls: https://openrouter.ai/docs/guides/best-practices/reasoning-tokens.
+Catalog/price checks must be refreshed immediately before each hosted dispatch.
+
+Scope/owner/files: extend the admitted review script, its tests, companion workflow
+and this existing record under the same native owner. The world PR explicitly
+selects Nemotron Ultra with high reasoning; PR597 retains its original DOTS
+provider-schema route. Other branches, model IDs, auto routes, paid pricing,
+missing capabilities and insufficient context/completion remain denied. No
+tools, credentials, redirects, retries, fallback or private artifacts are sent.
+All inputs must already exist at the pinned public commit and pass secret scanning.
+
+The alternative supplies the complete same JSON report schema in the prompt
+and requires strict post-response validation. This is not a claim of native
+structured-output support. Both routes require exact hashes/revisions, every
+complete file, literal lines/quotes, observations of changed source, finite
+output/deadlines and an untruncated final response. Pass with findings remains
+invalid. Findings require independent lead reconciliation and cannot approve
+customer outcomes or release. The alternate route is restricted to PR602.
+
+Adding the route exposed a post-validator gap previously covered only by the
+DOTS provider schema: unexpected nested finding/observation keys and empty or
+oversized limit strings were accepted. A native regression reproduced that gap;
+the validator now checks those exact fields and bounds for both models. Sixteen
+no-network checks pass after that repair; the added legacy-lane denial test must
+also pass before commit. All original failed reviewer evidence remains intact.
+No model call has been made for this alternative; its useful complete review
+and exact-source hosted/browser/production/customer acceptance remain unproven.
+
+Rollback: revert the explicit alternative through a reviewed branch, retain the
+strict validator repair, UI landmark fix, complete source partitions and all
+failed evidence. No paid provider authorization is inferred from the Node24 reply.
+The broader creator/platform/community/commercial goal remains ACTIVE.

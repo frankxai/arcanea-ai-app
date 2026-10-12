@@ -58,6 +58,80 @@ class ReviewAdmission(unittest.TestCase):
                 self.assertTrue(all("chat/completions" not in x.args[0]
                                     for x in network.call_args_list))
 
+    def test_nemotron_requires_explicit_selection_and_verified_zero_price_capacity(self):
+        model_id = "nvidia/nemotron-3-ultra-550b-a55b:free"
+        model = {"id": model_id, "pricing": {"prompt": "0", "completion": "0", "discount": 0},
+                 "context_length": 1_000_000, "top_provider": {"max_completion_tokens": 65_536},
+                 "supported_parameters": ["reasoning", "reasoning_effort", "max_tokens", "temperature"]}
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.zero_price(model, 475_000)
+        REVIEW.zero_price(model, 475_000, expected_model=model_id)
+        for changes in ({"id": model_id.removesuffix(":free")},
+                        {"pricing": {"prompt": "0", "completion": "0.01"}},
+                        {"pricing": {"prompt": "0", "completion": "0", "request": "1"}},
+                        {"context_length": 490_000},
+                        {"top_provider": {"max_completion_tokens": 1000}},
+                        {"supported_parameters": ["max_tokens", "temperature"]}):
+            with self.subTest(changes=changes), self.assertRaises(REVIEW.Denied):
+                REVIEW.zero_price({**model, **changes}, 475_000, expected_model=model_id)
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.zero_price(model, 1000, expected_model="kilo-auto/free")
+
+    def test_nemotron_request_preserves_strict_report_contract_without_native_schema_claim(self):
+        model_id = "nvidia/nemotron-3-ultra-550b-a55b:free"
+        content = {KERNEL: "Accepted kernel", "a.ts": "return false;"}
+        request = json.loads(REVIEW.request_for("world-client", HEAD, BASE, "c" * 64,
+                                               content, {path: "hash" for path in content},
+                                               "Changed a.ts", model_id=model_id))
+        self.assertEqual(request["model"], model_id)
+        self.assertNotIn("response_format", request)
+        self.assertEqual(request["tools"], [])
+        self.assertEqual(request["reasoning"], {"effort": "high", "exclude": True})
+        self.assertEqual(request["max_tokens"], REVIEW.WORLD_CLIENT_OUTPUT)
+        prompt = request["messages"][0]["content"]
+        self.assertIn('"additionalProperties":false', prompt)
+        self.assertIn('"observations"', prompt)
+        self.assertIn("Copy the binding values exactly", prompt)
+        response = {"model": model_id, "choices": [{"finish_reason": "stop", "message": {
+            "content": json.dumps(self.valid_review())}}]}
+        parsed = REVIEW.parse_response(response, model_id=model_id)
+        REVIEW.validate(parsed, HEAD, BASE, "manifest", {"a.ts": "// guard\nreturn false;\n", "context.ts": "Context\n"})
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.parse_response(response)
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.parse_response({**response, "choices": [{"finish_reason": "length", "message": {
+                "content": json.dumps(self.valid_review())}}]}, model_id=model_id)
+
+    def test_post_validation_enforces_nested_schema_and_text_bounds_for_every_model(self):
+        content = {"a.ts": "// guard\nreturn false;\n", "context.ts": "Context\n"}
+        for mutate in (
+            lambda report: report["observations"][0].update(unexpectedApproval=True),
+            lambda report: report["limitations"].append(""),
+            lambda report: report["acceptanceGaps"].append("x" * 3001),
+        ):
+            report = self.valid_review()
+            mutate(report)
+            with self.assertRaises(REVIEW.Denied):
+                REVIEW.validate(report, HEAD, BASE, "manifest", content)
+        report = {**self.valid_review(), "verdict": "warn", "findings": [{
+            "priority": "P2", "path": "a.ts", "line": 2, "quote": "return false;",
+            "title": "Guard", "scenario": "Concrete failure", "fix": "Check actor",
+            "unexpectedApproval": True}]}
+        with self.assertRaises(REVIEW.Denied):
+            REVIEW.validate(report, HEAD, BASE, "manifest", content)
+
+    def test_alternative_model_cannot_dispatch_from_legacy_or_unowned_lane(self):
+        env = {"GITHUB_ACTIONS": "true", "GITHUB_REPOSITORY": REVIEW.REPOSITORY,
+               "GITHUB_ACTOR": "frankxai"}
+        args = [str(SCRIPT), "--head", HEAD, "--base", BASE, "--pull-request", "597",
+                "--model", "nvidia/nemotron-3-ultra-550b-a55b:free"]
+        with patch.dict(REVIEW.os.environ, env, clear=True), \
+             patch.object(REVIEW.sys, "argv", args), \
+             patch.object(REVIEW, "public_pin", return_value=REVIEW.BRANCH), \
+             patch.object(REVIEW, "network") as network, self.assertRaises(REVIEW.Denied):
+            REVIEW.main()
+        network.assert_not_called()
+
     def valid_review(self):
         return {"head": HEAD, "base": BASE, "manifestSha256": "manifest",
                 "coveredFiles": ["a.ts", "context.ts"], "verdict": "pass", "findings": [],

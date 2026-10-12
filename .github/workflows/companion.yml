@@ -120,6 +120,7 @@ jobs:
       REVIEW_HEAD: ${{ github.event.pull_request.head.sha }}
       REVIEW_BASE: ${{ github.event.pull_request.base.sha }}
       REVIEW_PR: ${{ github.event.pull_request.number }}
+      REVIEW_MODEL: ${{ github.event.pull_request.number == 602 && 'nvidia/nemotron-3-ultra-550b-a55b:free' || 'dots-studio/dots-3-note-preview:free' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -137,7 +138,7 @@ jobs:
       - name: Verify source, privacy and zero-price denial boundaries
         run: python -m unittest discover -s scripts/tests -p test_review_companion.py -v
       - name: Review all complete pinned public source
-        run: python scripts/review-companion.py --head "$REVIEW_HEAD" --base "$REVIEW_BASE" --pull-request "$REVIEW_PR"
+        run: python scripts/review-companion.py --head "$REVIEW_HEAD" --base "$REVIEW_BASE" --pull-request "$REVIEW_PR" --model "$REVIEW_MODEL"
       - name: Retain exact-source review and all attempts
         if: always()
         uses: actions/upload-artifact@v7

@@ -24,6 +24,7 @@ BRANCH = "agent/codex/provider-account-20261011"
 WORLD_BRANCH = "agent/codex/chat-world-handoff-20261011"
 OWNED_PULL_REQUESTS = {BRANCH: 597, WORLD_BRANCH: 602}
 MODEL = "dots-studio/dots-3-note-preview:free"
+NEMOTRON_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
 GATEWAY = "https://api.kilo.ai/api/gateway"
 MAX_OUTPUT = 24000
 WORLD_CLIENT_OUTPUT = 36000
@@ -177,14 +178,16 @@ def sources(head, base, contexts=None):
     return changed, content, hashes, delta
 
 
-def zero_price(model, request_bytes, max_output=MAX_OUTPUT):
-    require(model.get("id") == MODEL, "Explicit review model unavailable")
+def zero_price(model, request_bytes, max_output=MAX_OUTPUT, expected_model=MODEL):
+    require(expected_model in {MODEL, NEMOTRON_MODEL}, "Unadmitted review model")
+    require(model.get("id") == expected_model, "Explicit review model unavailable")
     require(type(max_output) is int and max_output in {MAX_OUTPUT, WORLD_CLIENT_OUTPUT},
             "Unadmitted review output budget")
     parameters = model.get("supported_parameters")
-    require(isinstance(parameters, list)
-            and {"response_format", "structured_outputs"} <= set(parameters),
-            "Structured review output is unavailable")
+    required_parameters = ({"response_format", "structured_outputs"} if expected_model == MODEL
+                           else {"reasoning", "reasoning_effort", "max_tokens", "temperature"})
+    require(isinstance(parameters, list) and required_parameters <= set(parameters),
+            "Required review model capabilities are unavailable")
     pricing = model.get("pricing", {})
     require("prompt" in pricing and "completion" in pricing, "Model prices are missing")
     try:
@@ -246,6 +249,8 @@ def validate(review, head, base, manifest, content, changed=None):
     for finding in findings:
         require(isinstance(finding, dict) and finding.get("path") in content,
                 "Finding references unreviewed source")
+        require(set(finding) == {"priority", "path", "line", "title", "quote", "scenario", "fix"},
+                "Finding fields do not match the strict report schema")
         lines, line = content[finding["path"]].splitlines(), finding.get("line")
         require(type(line) is int and 1 <= line <= len(lines), "Finding line is invalid")
         require(finding.get("priority") in {"P0", "P1", "P2", "P3"}, "Invalid finding priority")
@@ -255,7 +260,8 @@ def validate(review, head, base, manifest, content, changed=None):
         require(finding["quote"] in lines[line - 1], "Finding quote does not match cited source")
     for key in ("acceptanceGaps", "limitations"):
         require(isinstance(review.get(key), list)
-                and all(isinstance(x, str) for x in review[key]), "Review limits are missing")
+                and all(isinstance(x, str) and 0 < len(x) <= 3000 for x in review[key]),
+                "Review limits are missing or outside report bounds")
     require(not (review["verdict"] == "pass" and findings), "Pass cannot conceal findings")
     observations = review.get("observations")
     require(isinstance(observations, list) and 3 <= len(observations) <= 10,
@@ -264,10 +270,12 @@ def validate(review, head, base, manifest, content, changed=None):
     for observation in observations:
         require(isinstance(observation, dict) and observation.get("path") in content,
                 "Observation references unreviewed source")
+        require(set(observation) == {"path", "line", "quote", "behavior"},
+                "Observation fields do not match the strict report schema")
         lines, line = content[observation["path"]].splitlines(), observation.get("line")
         require(type(line) is int and 1 <= line <= len(lines), "Observation line is invalid")
         quote, behavior = observation.get("quote"), observation.get("behavior")
-        require(isinstance(quote, str) and bool(quote)
+        require(isinstance(quote, str) and 0 < len(quote) <= 3000
                 and quote in lines[line - 1]
                 and isinstance(behavior, str) and 0 < len(behavior) <= 3000,
                 "Observation lacks concrete source evidence")
@@ -416,10 +424,11 @@ def modules(changed, content, branch=BRANCH):
     return primary, planned
 
 
-def request_for(name, head, base, manifest, content, hashes, delta):
+def request_for(name, head, base, manifest, content, hashes, delta, model_id=MODEL):
+    require(model_id in {MODEL, NEMOTRON_MODEL}, "Unadmitted review model")
     binding = {"head": head, "base": base, "manifestSha256": manifest, "coveredFiles": list(content)}
     instructions = (
-        f"External reviewer, explicit model {MODEL}, module {name}. "
+        f"External reviewer, explicit model {model_id}, module {name}. "
         "Use the supplied engineering kernel. Review ALL supplied complete source files, "
         "not just the changed files, against this module's pinned delta. This module alone "
         "cannot approve the entire candidate. Trace actual guards and call sites for "
@@ -433,7 +442,7 @@ def request_for(name, head, base, manifest, content, hashes, delta):
         "three brief verifiable audit observations from distinct supplied files with "
         "exact quotes and lines, auditing at least two changed files (one if this module "
         "changes only one). Trace guards before alleging stale state or missing cleanup. "
-        "Report conclusions, not private reasoning. Return JSON matching response_format. "
+        "Report conclusions, not private reasoning. Return JSON matching the supplied schema. "
         "Copy the binding values exactly; never replace, shorten or invent revision/hash "
         "values. Copy a contiguous excerpt of ONE exact source line for each quote, "
         "without its numbered prefix. Preserve all spaces and quote characters; do not "
@@ -450,18 +459,28 @@ def request_for(name, head, base, manifest, content, hashes, delta):
         + "\n</source>" for path, text in content.items()
     )
     footer = "\nEXACT source binding (copy every value unchanged, including all hash characters): " + json.dumps(binding)
-    request = {"model": MODEL, "messages": [
+    schema = response_schema(head, base, manifest, content)
+    if model_id == NEMOTRON_MODEL:
+        # This explicit route has no catalog claim of provider-side structured
+        # output. The same complete schema and strict post-response validator
+        # remain mandatory; malformed or misbound reports are never accepted.
+        instructions += "\nStrict JSON report schema: " + json.dumps(schema["json_schema"]["schema"], separators=(",", ":"))
+    request = {"model": model_id, "messages": [
         {"role": "system", "content": content[".arcanea/prompts/luminor-engineering-kernel.md"] + "\n\n" + instructions},
         {"role": "user", "content": f"<untrusted-delta>\n{delta}\n</untrusted-delta>\n{numbered}{footer}"},
     ], "tools": [], "temperature": 0,
         "max_tokens": WORLD_CLIENT_OUTPUT if name == "world-client" else MAX_OUTPUT,
-        "response_format": response_schema(head, base, manifest, content),
         "reasoning": {"enabled": True, "exclude": True}}
+    if model_id == MODEL:
+        request["response_format"] = schema
+    else:
+        request["reasoning"] = {"effort": "high", "exclude": True}
     return json.dumps(request, ensure_ascii=False).encode("utf-8")
 
 
-def parse_response(result):
-    require(result.get("model") in {MODEL, MODEL.removesuffix(":free")}, "Response model mismatch")
+def parse_response(result, model_id=MODEL):
+    require(model_id in {MODEL, NEMOTRON_MODEL}, "Unadmitted review model")
+    require(result.get("model") in {model_id, model_id.removesuffix(":free")}, "Response model mismatch")
     choices = result.get("choices")
     require(isinstance(choices, list) and len(choices) == 1, "Ambiguous review response")
     choice = choices[0]
@@ -478,6 +497,7 @@ def main():
     parser.add_argument("--head", required=True)
     parser.add_argument("--base", required=True)
     parser.add_argument("--pull-request", required=True, type=int)
+    parser.add_argument("--model", choices=(MODEL, NEMOTRON_MODEL), default=MODEL)
     args = parser.parse_args()
     require(all(re.fullmatch(r"[0-9a-f]{40}", x) for x in (args.head, args.base))
             and 0 < args.pull_request < 1_000_000, "Immutable review arguments required")
@@ -485,6 +505,9 @@ def main():
             and os.environ.get("GITHUB_REPOSITORY") == REPOSITORY
             and os.environ.get("GITHUB_ACTOR") == "frankxai", "Hosted owner admission refused")
     branch = public_pin(args.head, args.base, args.pull_request)
+    require(args.model == MODEL or branch == WORLD_BRANCH,
+            "Alternative reviewer is restricted to the owned world PR")
+    model_id = args.model
     contexts = WORLD_CONTEXTS if branch == WORLD_BRANCH else CONTEXTS
     changed, content, hashes, delta = sources(args.head, args.base, contexts)
     manifest = sha(json.dumps({"head": args.head, "base": args.base, "sourceHashes": hashes},
@@ -501,7 +524,7 @@ def main():
         module_delta = git("diff", "--no-ext-diff", "--unified=8", args.base,
                            args.head, "--", *sorted(primary[name])).decode("utf-8")
         encoded = request_for(name, args.head, args.base, module_manifest,
-                              module_content, selected_hashes, module_delta)
+                              module_content, selected_hashes, module_delta, model_id=model_id)
         scan = subprocess.run(
             ["gitleaks", "stdin", "--no-banner", "--redact", "--ignore-gitleaks-allow", "--timeout", "40"],
             input=encoded, capture_output=True, timeout=45,
@@ -509,10 +532,10 @@ def main():
         require(scan.returncode == 0, "Secret scan refused public review payload")
         packets[name] = encoded
     catalog_bytes = network(f"{GATEWAY}/models")
-    matches = [m for m in json.loads(catalog_bytes)["data"] if m.get("id") == MODEL]
+    matches = [m for m in json.loads(catalog_bytes)["data"] if m.get("id") == model_id]
     require(len(matches) == 1, "Explicit review model unavailable or ambiguous")
     for encoded in packets.values():
-        zero_price(matches[0], len(encoded), json.loads(encoded)["max_tokens"])
+        zero_price(matches[0], len(encoded), json.loads(encoded)["max_tokens"], expected_model=model_id)
     root = Path(git("rev-parse", "--show-toplevel").decode().strip()).resolve()
     out = (root / "screenshots/companion-review").resolve()
     require(out.is_relative_to(root) and ".git" not in out.parts, "Evidence path refused")
@@ -521,7 +544,8 @@ def main():
         "head": args.head, "base": args.base, "manifestSha256": manifest,
         "sourceHashes": hashes, "changedFiles": changed, "completeSourceFiles": len(content),
         "publicRepository": REPOSITORY, "publicSourceConfirmedAt": stamp(),
-        "model": MODEL, "credentialUse": "none", "tools": [], "providerCalls": 0,
+        "model": model_id, "credentialUse": "none", "tools": [], "providerCalls": 0,
+        "outputContract": "provider-schema-and-strict-validation" if model_id == MODEL else "prompt-schema-and-strict-validation",
         "maximumProviderCalls": len(planned), "independentVerdict": None, "modules": [],
         "privacy": "Already-public Git source only; provider may retain inputs and outputs",
         "scope": f"{len(planned)} complete modules; lead reconciliation and runtime/customer evidence required",
@@ -543,9 +567,9 @@ def main():
             request_timeout = WORLD_CLIENT_DEADLINE if name == "world-client" else 240
             # Recheck live prices immediately before each independent dispatch.
             current_catalog = network(f"{GATEWAY}/models")
-            current = [m for m in json.loads(current_catalog)["data"] if m.get("id") == MODEL]
+            current = [m for m in json.loads(current_catalog)["data"] if m.get("id") == model_id]
             require(len(current) == 1, "Explicit review model unavailable or ambiguous")
-            zero_price(current[0], len(encoded), output_limit)
+            zero_price(current[0], len(encoded), output_limit, expected_model=model_id)
             public_pin(args.head, args.base, args.pull_request)
             module = {
                 "name": name, "manifestSha256": module_manifests[name],
@@ -563,7 +587,7 @@ def main():
             result = json.loads(raw)
             module.update(actualModel=result.get("model"), responseSha256=sha(raw), usage=result.get("usage"))
             module["finishReason"] = result.get("choices", [{}])[0].get("finish_reason")
-            review = parse_response(result)
+            review = parse_response(result, model_id=model_id)
             (out / f"{name}-review-unvalidated.json").write_text(json.dumps(review, indent=2) + "\n", encoding="utf-8")
             validate(review, args.head, args.base, module_manifests[name], module_content, primary[name])
             usage = result.get("usage", {})
