@@ -104,6 +104,75 @@ This SDK does not implement the separate human canon-promotion workflow.
 node --test tests/*.test.mjs
 ```
 
+## Realm continuity and change impact
+
+The local Realm Graph reads the immutable `.arcanea/lore/CANON_LOCKED.md` Git
+blob at a full commit. Its v0 source pin projects only the explicit
+primordial-duality and Ten Gates tables: 32 entities and 44 facts. Other locked
+sections, staging sections and the historical approval log are outside this
+projection. Source drift refuses until a reviewed compiler update changes the
+pin. Neither a supplied hash nor a serialized graph establishes canon authority.
+
+A staging JSON overlay links characters, places, factions, creatures, artifacts,
+world rules, events, timelines, series, works, scenes, quests, assets and releases.
+It contains metadata and short assertions, with source paths/hashes; keep
+manuscript bodies in AuthorOS. Candidate citations are declarations, not verified
+source evidence. Only `STAGING` and `CANDIDATE` assertions are accepted. There is
+no promotion or canon-write API, and proposed supersessions retain locked facts.
+
+```js
+import {
+  openRealmGraph,
+  realmContinuity,
+  realmImpact,
+  exportRealmGraph,
+} from "@arcanea/world-sdk";
+
+const graph = await openRealmGraph(arcaneaRepo, fullSourceCommit, staging);
+const context = realmContinuity(graph, characterId, sceneId);
+const impact = realmImpact(graph, proposedAssertionId);
+const saved = exportRealmGraph(graph);
+// Reload re-verifies Git canon; serialized LOCKED fields are never imported.
+const restored = await openRealmGraph(
+  arcaneaRepo,
+  saved.canonSource.commit,
+  saved.staging,
+);
+```
+
+Continuity requires a declared participant and uses the scene's ordinal moment
+on its named timeline. Validity is `[from, to)`; `null` is timeless or an unbounded
+end. It returns the character's locked facts and their directly named canon
+entities, applicable candidate assertions and conflicts for single-valued
+predicates. It compares declared values, not prose meaning. A many-valued
+relationship permits several values unless the same group also has a
+single-valued constraint. Timeless canon is retained across scenes; candidates
+cannot overwrite it or remove it by naming it in `supersedes`.
+
+Impact follows only declared dependency and affected-artifact links. It returns
+scenes, books/works, assets, quests, series and releases, with a deterministic
+shortest path per artifact. Cycles terminate. Missing links remain missing
+coverage; the traversal does not infer every affected work from narrative prose.
+
+The existing CLI provides the same read-only operations:
+
+```text
+arcanea-world realm continuity <repo> <full-commit> <staging.json> <character-id> <scene-id>
+arcanea-world realm impact <repo> <full-commit> <staging.json> <change-id>
+arcanea-world realm export <repo> <full-commit> <staging.json>
+```
+
+Export JSON to a creator-chosen destination and preserve the input overlay for
+editing/retry. The bundled test fixture is synthetic and uses `ARC-REL-001` only
+as a release-lane identifier. Its scenes/proposals are not Dragonborne manuscript
+facts or approvals. Shape documentation is `src/realm-graph.schema.json`; runtime
+also verifies references, interval ordering, 1 MB/depth bounds and actual pinned
+Git bytes. Invalid inputs fail before any repository, graph or canon writes.
+
+This is a local SDK/CLI read boundary. The calling host owns repository access
+and tenant authorization. It does not verify human signatures, grant rights,
+publish a package, authorize model/provider use or constrain arbitrary Node code.
+
 ## Source-linked scenes
 
 Memory records now use distinct UUID filenames with exclusive creation. Two

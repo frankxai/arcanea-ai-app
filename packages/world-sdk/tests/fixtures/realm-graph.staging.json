@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "realm.arcanea.graph.v0",
+  "releaseId": "ARC-REL-001",
+  "description": "Synthetic workflow fixture. Release ID names the selected lane; these scenes and proposals are not manuscript facts or approved canon.",
+  "entities": [
+    {
+      "id": "work:dragonborne-book-01",
+      "type": "work",
+      "label": "Dragonborne: The Last Clutch"
+    },
+    {
+      "id": "timeline:fixture",
+      "type": "timeline",
+      "label": "Synthetic ordinal timeline"
+    },
+    {
+      "id": "scene:early",
+      "type": "scene",
+      "label": "Synthetic early canon check",
+      "workId": "work:dragonborne-book-01",
+      "timelineId": "timeline:fixture",
+      "moment": 2,
+      "participants": ["character:lyria"]
+    },
+    {
+      "id": "scene:late",
+      "type": "scene",
+      "label": "Synthetic later canon check",
+      "workId": "work:dragonborne-book-01",
+      "timelineId": "timeline:fixture",
+      "moment": 6,
+      "participants": ["character:lyria"]
+    },
+    {
+      "id": "asset:cover",
+      "type": "asset",
+      "label": "Unapproved cover dependency"
+    },
+    {
+      "id": "quest:fixture",
+      "type": "quest",
+      "label": "Synthetic quest dependency"
+    },
+    {
+      "id": "release:arc-rel-001",
+      "type": "release",
+      "label": "Unapproved release dependency"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "proposal:bond",
+      "subjectId": "character:lyria",
+      "predicate": "bondedGodbeast",
+      "value": "creature:sol",
+      "cardinality": "one",
+      "status": "CANDIDATE",
+      "confidence": 0.5,
+      "validity": { "timelineId": "timeline:fixture", "from": 2, "to": 5 },
+      "source": {
+        "path": "fixtures/proposals.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "affectedArtifacts": ["scene:early"],
+      "supersedes": ["fact:character:lyria:bondedGodbeast"]
+    },
+    {
+      "id": "proposal:location",
+      "subjectId": "character:lyria",
+      "predicate": "location",
+      "value": "a proposed location",
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 0.5,
+      "validity": { "timelineId": "timeline:fixture", "from": 5, "to": null },
+      "source": {
+        "path": "fixtures/proposals.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "affectedArtifacts": ["scene:late"],
+      "supersedes": []
+    }
+  ],
+  "dependencies": [
+    { "dependsOn": "character:lyria", "artifactId": "scene:early" },
+    {
+      "dependsOn": "fact:character:lyria:bondedGodbeast",
+      "artifactId": "scene:early"
+    },
+    { "dependsOn": "scene:early", "artifactId": "work:dragonborne-book-01" },
+    { "dependsOn": "work:dragonborne-book-01", "artifactId": "asset:cover" },
+    { "dependsOn": "scene:early", "artifactId": "quest:fixture" },
+    { "dependsOn": "asset:cover", "artifactId": "release:arc-rel-001" },
+    { "dependsOn": "quest:fixture", "artifactId": "release:arc-rel-001" }
+  ]
+}
