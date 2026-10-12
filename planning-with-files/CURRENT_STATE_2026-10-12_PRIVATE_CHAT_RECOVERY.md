@@ -59,7 +59,7 @@ only. The older persistence hook delegates to the same account-bound hook.
 Project entry points use the authenticated account scope. A keyed chat subtree
 retires all local chat UI state together.
 
-The expanded native suite currently passes 14 cases. A temporary hook-test shim
+The expanded native suite currently passes 15 cases. A temporary hook-test shim
 incorrectly invoked useCallback functions during registration; its three
 harness errors were corrected without treating them as product defects.
 
@@ -110,3 +110,5 @@ Production database activation remains human-gated. The original Queen/SIS,
 creator-platform, community, revenue, publishing and client objective stays active.
 
 Local verification: all 14 native cases and the four existing project-store tests pass. TypeScript 5.9.3 parses all nine changed app modules; pinned Prettier 3.9.9 formats the changed source. A normal pnpm exec attempted its configured dependency verification and refused the sparse checkout because a patch file was absent; it did not supply a formatter. Subsequent checks read existing dependency packages from the source-guides checkout, whose root instructions have the same hash and whose ESLint config is byte-identical. No dependency installation or foreign repository write was made by those subsequent checks. Hosted pinned lint/typecheck/build remain required.
+
+Entry refinement: the first candidate mounted prompt-consuming chat state while account loading was still pending. An actual entry-function case reproduced that admission failure after its JSX-only test transformation was corrected. The page now reuses the existing loading component until an actor is resolved, then mounts the keyed chat state. The native suite passes 15 cases; the entry case uses inert element records and does not establish rendered React behavior or actual URL recovery. Hosted 40af5b47 native history and compiled companion jobs passed; its TypeScript/lint jobs passed and its build was still running at that observation. Independent review was skipped and is unearned. A final source revision needs its own hosted checks.

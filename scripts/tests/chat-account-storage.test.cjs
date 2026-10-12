@@ -459,3 +459,42 @@ test("the actual credential-scope factory rejects pending auth and A to B to A l
   );
   assert.equal(store.loadChatSession("retired", current), null);
 });
+
+test("the actual page entry waits for auth before mounting prompt-consuming chat state", () => {
+  const source = fs.readFileSync(
+    path.resolve(__dirname, "../../apps/web/app/chat/page.tsx"),
+    "utf8",
+  );
+  const start = source.indexOf("export default function ChatPage()");
+  const end = source.indexOf("function ChatPageContent()", start);
+  assert.ok(start >= 0 && end > start);
+  // Evaluate the actual entry decision with inert element records. This covers
+  // auth admission and React keys, not mounting, effects or rendered pixels.
+  const entry = source
+    .slice(start, end)
+    .replace("export default ", "")
+    .replace(
+      /<(ChatLoading|ChatPageContent)([^>]*?)\/>/g,
+      (_, name, attributes) => {
+        const key = attributes.match(/key=\{([\s\S]+)\}/);
+        return `element(${JSON.stringify(name)}, ${key ? key[1] : "undefined"})`;
+      },
+    );
+  let token = { actor: null, revision: 0 };
+  const component = new Function(
+    "useAuth",
+    "element",
+    `${entry}\nreturn ChatPage;`,
+  )(
+    () => ({ credentialScope: { get: () => token } }),
+    (name, key) => ({ name, key }),
+  );
+  assert.equal(component().name, "ChatLoading");
+  token = { actor: A, revision: 1 };
+  const first = component();
+  assert.equal(first.name, "ChatPageContent");
+  token = { actor: B, revision: 2 };
+  assert.notEqual(component().key, first.key);
+  token = { actor: A, revision: 3 };
+  assert.notEqual(component().key, first.key);
+});
