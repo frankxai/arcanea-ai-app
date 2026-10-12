@@ -27,6 +27,63 @@ function fixture() {
   let queryWait;
   let rpcResult;
   let queryResult;
+  let hookCursor = null;
+  let renderRequested = false;
+  const hookCells = [];
+  const effects = [];
+  const sameDeps = (previous, next) =>
+    previous &&
+    next &&
+    previous.length === next.length &&
+    previous.every((value, index) => Object.is(value, next[index]));
+  const react = {
+    useState(initial) {
+      if (hookCursor === null)
+        return [typeof initial === "function" ? initial() : initial, () => {}];
+      const index = hookCursor++;
+      if (!hookCells[index])
+        hookCells[index] = {
+          value: typeof initial === "function" ? initial() : initial,
+        };
+      const cell = hookCells[index];
+      return [
+        cell.value,
+        (next) => {
+          const value = typeof next === "function" ? next(cell.value) : next;
+          if (!Object.is(value, cell.value)) {
+            cell.value = value;
+            if (hookCursor !== null) renderRequested = true;
+          }
+        },
+      ];
+    },
+    useMemo(fn, deps) {
+      if (hookCursor === null) return fn();
+      const index = hookCursor++;
+      if (!sameDeps(hookCells[index]?.deps, deps))
+        hookCells[index] = { deps, value: fn() };
+      return hookCells[index].value;
+    },
+    useCallback(fn, deps) {
+      return react.useMemo(() => fn, deps);
+    },
+    useRef(value) {
+      return react.useMemo(() => ({ current: value }), []);
+    },
+    useEffect(fn, deps) {
+      if (hookCursor === null) return;
+      const index = hookCursor++;
+      if (!sameDeps(hookCells[index]?.deps, deps)) {
+        const previous = hookCells[index];
+        const cell = { deps };
+        hookCells[index] = cell;
+        effects.push(() => {
+          previous?.cleanup?.();
+          cell.cleanup = fn();
+        });
+      }
+    },
+  };
   const client = {
     rpc(name, args) {
       calls.push({ rpc: name, args });
@@ -116,17 +173,7 @@ function fixture() {
     const sandbox = {
       exports,
       require(specifier) {
-        if (specifier === "react")
-          return {
-            useState: (value) => [
-              typeof value === "function" ? value() : value,
-              () => {},
-            ],
-            useMemo: (fn) => fn(),
-            useCallback: (fn) => fn,
-            useRef: (value) => ({ current: value }),
-            useEffect: () => {},
-          };
+        if (specifier === "react") return react;
         if (specifier === "@/lib/auth/context")
           return { useAuth: () => ({ credentialScope }) };
         if (specifier === "@/lib/analytics/events")
@@ -138,7 +185,11 @@ function fixture() {
           : path.posix.join(path.posix.dirname(relative), specifier);
         return load(`${target}.ts`);
       },
-      window: { localStorage: storage },
+      window: {
+        localStorage: storage,
+        addEventListener() {},
+        removeEventListener() {},
+      },
       localStorage: storage,
       setTimeout: (fn) => {
         timers.set(++timerId, fn);
@@ -177,6 +228,24 @@ function fixture() {
     calls,
     load,
     scope,
+    // Deterministic hook-state shim, not a mounted React or Auth fixture.
+    renderHook(fn) {
+      let result;
+      for (let attempt = 0; attempt < 10; attempt++) {
+        renderRequested = false;
+        hookCursor = 0;
+        try {
+          result = fn();
+        } finally {
+          hookCursor = null;
+        }
+        if (!renderRequested) return result;
+      }
+      throw new Error("Hook render did not settle");
+    },
+    flushEffects() {
+      for (const effect of effects.splice(0)) effect();
+    },
     flushTimers: () => {
       for (const fn of timers.values()) fn();
       timers.clear();
@@ -205,6 +274,88 @@ function fixture() {
 const A = "user:aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const B = "user:bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 const message = [{ id: "m1", role: "user", content: "Private original world" }];
+
+test("removal refusal is visible and retry preserves the original until intent is stored", async () => {
+  const f = fixture();
+  const scope = f.scope(A);
+  const store = f.load("lib/chat/local-store.ts");
+  store.saveChatSession("remove-a", message, {}, scope);
+  const useHistory = f.load("hooks/use-chat-sessions.ts").useChatSessions;
+  let history = f.renderHook(useHistory);
+  const write = f.storage.setItem;
+  f.storage.setItem = (key, value) => {
+    if (key.startsWith("arcanea_chat_deletion:"))
+      throw new Error("Storage refused");
+    return write(key, value);
+  };
+  history.deleteSession("remove-a");
+  history = f.renderHook(useHistory);
+  assert.equal(history.deletionFailed, true);
+  assert.equal(history.failedDeletionId, "remove-a");
+  assert.equal(
+    store.loadChatSession("remove-a", scope).messages[0].content,
+    message[0].content,
+  );
+  assert.equal(f.calls.filter((call) => call.deleted).length, 0);
+  f.storage.setItem = write;
+  await history.retryDeletion();
+  history = f.renderHook(useHistory);
+  assert.equal(history.deletionFailed, false);
+  assert.equal(history.failedDeletionId, null);
+  assert.equal(store.loadChatSession("remove-a", scope), null);
+  await new Promise(setImmediate);
+  assert.equal(f.calls.filter((call) => call.deleted).length, 1);
+});
+
+test("old-account removal errors and retry callbacks retire across A to B to A", () => {
+  const f = fixture();
+  const scope = f.scope(A);
+  const store = f.load("lib/chat/local-store.ts");
+  store.saveChatSession("remove-a", message, {}, scope);
+  const useHistory = f.load("hooks/use-chat-sessions.ts").useChatSessions;
+  const write = f.storage.setItem;
+  f.storage.setItem = () => {
+    throw new Error("Storage refused");
+  };
+  f.renderHook(useHistory).deleteSession("remove-a");
+  const failed = f.renderHook(useHistory);
+  assert.equal(failed.deletionFailed, true);
+  f.scope(B);
+  assert.equal(f.renderHook(useHistory).deletionFailed, false);
+  assert.equal(f.renderHook(useHistory).failedDeletionId, null);
+  const returned = f.scope(A);
+  assert.equal(f.renderHook(useHistory).deletionFailed, false);
+  f.storage.setItem = write;
+  failed.retryDeletion();
+  assert.equal(store.loadChatSession("remove-a", returned).messages.length, 1);
+  assert.equal(f.calls.length, 0);
+});
+
+test("pending account removals are hidden until mount and clear after acknowledged retry", async () => {
+  const f = fixture();
+  const scope = f.scope(A);
+  const store = f.load("lib/chat/local-store.ts");
+  store.saveChatSession("remove-a", message, {}, scope);
+  store.deleteChatSession("remove-a", scope);
+  f.setQueryResult({ data: null, error: { message: "Offline" } });
+  const useHistory = f.load("hooks/use-chat-sessions.ts").useChatSessions;
+  assert.equal(f.renderHook(useHistory).pendingDeletionCount, 0);
+  f.flushEffects();
+  await new Promise(setImmediate);
+  let history = f.renderHook(useHistory);
+  assert.equal(history.pendingDeletionCount, 1);
+  assert.equal(await history.retryDeletion(), false);
+  history = f.renderHook(useHistory);
+  assert.equal(history.pendingDeletionCount, 1);
+  assert.equal(history.isRetryingDeletion, false);
+  f.setQueryResult({ data: null, error: null });
+  const retry = history.retryDeletion();
+  assert.equal(f.renderHook(useHistory).isRetryingDeletion, true);
+  assert.equal(await retry, true);
+  history = f.renderHook(useHistory);
+  assert.equal(history.pendingDeletionCount, 0);
+  assert.equal(history.isRetryingDeletion, false);
+});
 
 test("private messages, search, pin, active session and deletion stay with their account", () => {
   const f = fixture();

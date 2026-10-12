@@ -11,6 +11,7 @@ import {
   getActiveChatSessionId,
   generateSessionTitle,
   listChatSessions,
+  listPendingChatDeletions,
   loadChatSession,
   mergeChatSessions,
   newSessionId,
@@ -80,6 +81,11 @@ export interface UseChatSessionsReturn {
   searchQuery: string;
   isHydrating: boolean;
   saveStatus: ChatSaveStatus;
+  deletionFailed: boolean;
+  failedDeletionId: string | null;
+  pendingDeletionCount: number;
+  isRetryingDeletion: boolean;
+  retryDeletion: () => Promise<boolean>;
   retryCloudSave: () => void;
   saveSeparateCopy: () => void;
   setSearchQuery: (query: string) => void;
@@ -96,7 +102,7 @@ export interface UseChatSessionsReturn {
     },
   ) => void;
   newSession: () => string;
-  deleteSession: (id: string) => void;
+  deleteSession: (id: string) => boolean;
   renameSession: (id: string, title: string) => void;
   togglePin: (id: string) => void;
   createProject: (title: string) => ChatProject | null;
@@ -126,6 +132,13 @@ export function useChatSessions(): UseChatSessionsReturn {
   // Keep the server and first client render independent of device-only caches.
   const [hasMounted, setHasMounted] = useState(false);
   const [refreshTick, setRefreshTick] = useState(0);
+  const [deletionFailure, setDeletionFailure] = useState<{
+    scope: typeof storageScope;
+    id: string;
+  } | null>(null);
+  const [deletionRetryScope, setDeletionRetryScope] = useState<
+    typeof storageScope | null
+  >(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const saveEpochRef = useRef(0);
   const pendingSnapshotRef = useRef<ChatSession | null>(null);
@@ -145,6 +158,8 @@ export function useChatSessions(): UseChatSessionsReturn {
     setSearchQuery("");
     setIsHydrating(true);
     setSaveState({ id: "", status: "idle" });
+    setDeletionFailure(null);
+    setDeletionRetryScope(null);
   }
   const activeSessionId = selection.sessionId;
   const activeProjectId = selection.projectId;
@@ -423,11 +438,22 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const deleteSession = useCallback(
     (id: string) => {
-      if (!storageScope.isCurrent()) return;
-      if (!deleteChatSession(id, storageScope)) return;
+      if (!storageScope.isCurrent()) return false;
+      if (!deleteChatSession(id, storageScope)) {
+        setDeletionFailure({ scope: storageScope, id });
+        refreshSessions();
+        return false;
+      }
+      setDeletionFailure((previous) =>
+        previous?.scope === storageScope && previous.id === id
+          ? null
+          : previous,
+      );
       if (id === activeSessionId && debounceRef.current)
         clearTimeout(debounceRef.current);
-      void deleteCloudSession(id, storageScope);
+      void deleteCloudSession(id, storageScope)
+        .then(refreshSessions)
+        .catch(() => {});
 
       if (id === activeSessionId) {
         pendingSnapshotRef.current = null;
@@ -438,9 +464,43 @@ export function useChatSessions(): UseChatSessionsReturn {
       }
 
       refreshSessions();
+      return true;
     },
     [activeSessionId, refreshSessions, storageScope],
   );
+
+  const retryDeletion = useCallback(async () => {
+    if (!storageScope.isCurrent() || deletionRetryScope === storageScope)
+      return false;
+    if (deletionFailure?.scope === storageScope) {
+      return deleteSession(deletionFailure.id);
+    }
+    setDeletionRetryScope(storageScope);
+    // Use the same bounded reconciliation as mount/focus/online recovery.
+    try {
+      await syncCloudSessions();
+      return (
+        storageScope.isCurrent() &&
+        listPendingChatDeletions(storageScope).length === 0
+      );
+    } catch {
+      return false;
+    } finally {
+      if (storageScope.isCurrent()) {
+        setDeletionRetryScope((previous) =>
+          previous === storageScope ? null : previous,
+        );
+        refreshSessions();
+      }
+    }
+  }, [
+    storageScope,
+    deletionRetryScope,
+    deletionFailure,
+    deleteSession,
+    syncCloudSessions,
+    refreshSessions,
+  ]);
 
   const renameSession = useCallback(
     (id: string, title: string) => {
@@ -558,7 +618,21 @@ export function useChatSessions(): UseChatSessionsReturn {
     [hasMounted, activeProjectId, refreshTick, storageScope],
   );
 
+  const pendingDeletionCount = useMemo(() => {
+    void refreshTick;
+    return hasMounted ? listPendingChatDeletions(storageScope).length : 0;
+  }, [hasMounted, refreshTick, storageScope]);
+
   return {
+    deletionFailed:
+      storageScope.isCurrent() && deletionFailure?.scope === storageScope,
+    failedDeletionId:
+      storageScope.isCurrent() && deletionFailure?.scope === storageScope
+        ? deletionFailure.id
+        : null,
+    pendingDeletionCount,
+    isRetryingDeletion: deletionRetryScope === storageScope,
+    retryDeletion,
     saveStatus: !hasMounted
       ? "idle"
       : saveState.id === activeSessionId

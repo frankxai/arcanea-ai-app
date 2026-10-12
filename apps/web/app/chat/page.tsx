@@ -215,6 +215,18 @@ function ChatPageContent() {
     textareaRef.current?.focus();
   }, [conversation, chatSessions]);
 
+  const handleDeleteSession = useCallback(
+    (id: string) => {
+      if (!chatSessions.deleteSession(id)) return false;
+      if (id === chatSessions.activeSessionId) {
+        void conversation.handleStop();
+        conversation.startNewChat();
+      }
+      return true;
+    },
+    [chatSessions, conversation],
+  );
+
   const lastSessionTitle =
     chatSessions.sessions.length > 0 &&
     chatSessions.sessions[0].title !== "New Chat"
@@ -269,7 +281,7 @@ function ChatPageContent() {
             activeSessionId={chatSessions.activeSessionId}
             onNewChat={handleNewChat}
             onSelectSession={handleLoadSession}
-            onDeleteSession={chatSessions.deleteSession}
+            onDeleteSession={handleDeleteSession}
             onRenameSession={chatSessions.renameSession}
             onTogglePin={chatSessions.togglePin}
             onSelectProject={chatSessions.setActiveProject}
@@ -343,6 +355,18 @@ function ChatPageContent() {
           onRetry={chatSessions.retryCloudSave}
           onSaveCopy={chatSessions.saveSeparateCopy}
           onExport={() => setShowExport(true)}
+          deletionFailed={chatSessions.deletionFailed}
+          pendingDeletionCount={chatSessions.pendingDeletionCount}
+          isRetryingDeletion={chatSessions.isRetryingDeletion}
+          onRetryDeletion={async () => {
+            if (chatSessions.failedDeletionId) {
+              if (handleDeleteSession(chatSessions.failedDeletionId))
+                textareaRef.current?.focus();
+              return;
+            }
+            if (await chatSessions.retryDeletion())
+              textareaRef.current?.focus();
+          }}
         />
         <ChatNotices
           conversation={conversation}
