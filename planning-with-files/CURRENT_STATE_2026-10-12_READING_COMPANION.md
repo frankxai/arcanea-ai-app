@@ -60,3 +60,13 @@ main. Both now include this exact new owned companion branch, with a regression
 that denies a different repository or actor, missing mode and service-role key
 before bootstrap. The original modes remain admitted as before. Exact-source
 hosted Auth acceptance and fresh independent review are required.
+
+Source `0a5d36752448ab97908c70a03e6c193c981fef3e` passes 30 local cases.
+Its raw public review is retained as WARN with three findings; citation integrity
+rejected the supplied spans, so it supplies no release approval. Lead inspection
+finds that `min-h-11` reserves height with empty children, and a strict count of
+one prevents a duplicate trigger from passing. The suggested post-close geometry
+check is useful additional evidence. Acceptance now measures header/article and
+control positions before/open/Escape/Close, and loads the actual server-rendered
+mobile page without JavaScript to verify its empty 44px placeholder. This refinement
+needs new exact-source hosted execution, captures and independent review.

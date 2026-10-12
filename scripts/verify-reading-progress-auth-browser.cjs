@@ -103,7 +103,7 @@ async function main() {
     });
   const clients = [sdk(), sdk()];
   const anonymous = sdk();
-  const makeContext = async (mobile = false) => {
+  const makeContext = async (mobile = false, javaScriptEnabled = true) => {
     const context = await browser.newContext({
       viewport: mobile
         ? { width: 375, height: 900 }
@@ -111,6 +111,7 @@ async function main() {
       hasTouch: mobile,
       isMobile: mobile,
       reducedMotion: "reduce",
+      javaScriptEnabled,
       bypassCSP: true,
     });
     contexts.push(context);
@@ -247,6 +248,43 @@ async function main() {
       trigger,
       false,
     );
+    const geometry = (control) =>
+      control.evaluate((element) => {
+        const rect = element.getBoundingClientRect();
+        const header = element.closest("header").getBoundingClientRect();
+        const article = document
+          .getElementById("library-reading-text")
+          .getBoundingClientRect();
+        return {
+          top: rect.top + scrollY,
+          height: rect.height,
+          headerTop: header.top + scrollY,
+          headerHeight: header.height,
+          articleTop: article.top + scrollY,
+          insideProse: !!element.closest("article#library-reading-text"),
+        };
+      });
+    const before = await geometry(trigger);
+    assert.equal(before.insideProse, false);
+    const unchanged = async (control, phase) => {
+      const actual = await geometry(control);
+      assert.equal(actual.insideProse, false);
+      for (const key of [
+        "top",
+        "height",
+        "headerTop",
+        "headerHeight",
+        "articleTop",
+      ])
+        assert.ok(
+          Math.abs(actual[key] - before[key]) <= 1,
+          `${phase}: ${key} shifted`,
+        );
+      receipt.companionGeometry = [
+        ...(receipt.companionGeometry || []),
+        { mobile, phase, before, actual },
+      ];
+    };
     if (mobile) await trigger.tap();
     else {
       await trigger.focus();
@@ -254,6 +292,7 @@ async function main() {
     }
     const dialog = companionDialog(target);
     await expect(dialog).toBeVisible();
+    await unchanged(button(target, "Close Arcanea companion"), "open");
     const prompt = dialog.getByLabel("Your message", { exact: true });
     await expect(prompt).toBeFocused();
     await expect(prompt).toHaveValue("");
@@ -272,6 +311,7 @@ async function main() {
     await expect(dialog).toBeHidden();
     await expect(companionTrigger(target)).toBeFocused();
     await expect(companionTrigger(target)).toHaveCSS("position", "static");
+    await unchanged(companionTrigger(target), "escape");
     if (mobile) await companionTrigger(target).tap();
     else await target.keyboard.press("Enter");
     await expect(prompt).toHaveValue(
@@ -282,6 +322,7 @@ async function main() {
       .click();
     await expect(dialog).toBeHidden();
     await expect(companionTrigger(target)).toBeFocused();
+    await unchanged(companionTrigger(target), "close");
     receipt.checks.push(
       `${mobile ? "Mobile touch" : "Desktop keyboard"} opens one in-flow companion; draft survives close/reopen, Escape and Close restore focus, and the closed trigger cannot float over prose`,
     );
@@ -748,6 +789,22 @@ async function main() {
     await expect(companionTrigger(guest)).toHaveCSS("position", "static");
     receipt.checks.push(
       "Anonymous mobile Library keeps its in-flow companion; collection retains the floating entry, and actual client navigation back to the article leaves one static trigger",
+    );
+    const serverOnlyContext = await makeContext(true, false);
+    const serverOnly = await serverOnlyContext.newPage();
+    diagnosticPage = serverOnly;
+    await serverOnly.goto(config.base + article);
+    const placeholder = serverOnly.locator("#main-content header > .min-h-11");
+    await expect(placeholder).toHaveCount(1);
+    await expect(placeholder).toHaveCSS("min-height", "44px");
+    assert.ok((await placeholder.boundingBox()).height >= 44);
+    assert.equal(
+      await placeholder.evaluate((element) => element.childElementCount),
+      0,
+    );
+    await expect(companionTrigger(serverOnly)).toHaveCount(0);
+    receipt.checks.push(
+      "Actual server-rendered mobile header reserves 44px before companion hydration; closed/open/Escape/Close keep article and header geometry within one pixel",
     );
     receipt.checks.push(
       "Mobile password login restores Read; signed-out Library exposes no completion action or private progress",
