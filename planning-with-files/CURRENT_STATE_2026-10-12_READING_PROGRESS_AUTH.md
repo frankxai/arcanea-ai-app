@@ -81,5 +81,15 @@ Emil design engineering and existing TASTE/DESIGN instructions are applied to th
 responsive change; exact-source hosted captures and fresh independent review are
 still required. These policy reads do not establish runtime or customer acceptance.
 
+Source `c275d138f267d997db03d53c41bcebbae582fca6` in run `38256998003`
+restored real authenticated mobile Read and retained all earlier desktop/RLS/load
+passes. Its added automatic-completion check failed after jumping to the bottom
+of the whole document, without establishing visibility of the article boundary.
+The refined test scrolls to the actual main-content end and asserts that its
+bottom aligns with the viewport before checking the real observer/save/retry.
+The native failure, three original captures and this source's strictly bound
+static PASS0 review remain retained. Cleanup again removed owned configuration
+and reported no errors. Mobile touch-save recovery remains pending.
+
 Rollback is a normal revert of the seven named page/fixture/workflow/pickup files;
 customer data, production RLS and manuscript/publication approvals are unchanged.

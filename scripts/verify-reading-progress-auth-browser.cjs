@@ -474,8 +474,19 @@ async function main() {
     await expect(button(mobileRetry, "Mark as read")).toBeEnabled();
     // The actual end-of-article sentinel, rather than a mocked observer, starts
     // completion when the mobile reader reaches the bottom.
-    await mobileRetry.evaluate(() =>
-      window.scrollTo(0, document.documentElement.scrollHeight),
+    receipt.mobileArticleEnd = await mobileRetry.evaluate(() => {
+      const main = document.getElementById("main-content");
+      main.scrollIntoView({ block: "end" });
+      return {
+        bottom: main.getBoundingClientRect().bottom,
+        viewportHeight: innerHeight,
+      };
+    });
+    assert.ok(
+      Math.abs(
+        receipt.mobileArticleEnd.bottom -
+          receipt.mobileArticleEnd.viewportHeight,
+      ) <= 2,
     );
     await expect(button(mobileRetry, "Try saving again")).toBeEnabled();
     await expect(readStatus(mobileRetry)).toHaveCount(0);

@@ -294,7 +294,7 @@ export default async function TextPage({ params }: Props) {
 
           {/* Sidebar */}
           <aside>
-            <div className="space-y-8 lg:sticky lg:top-24">
+            <div className="lg:sticky lg:top-24 lg:space-y-8">
               {/* Table of Contents */}
               {tocHeadings.length > 0 && (
                 <div className="hidden rounded-xl border border-cosmic-border bg-cosmic-surface p-6 lg:block">
