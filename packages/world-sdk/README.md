@@ -182,5 +182,52 @@ changes can still interrupt a batch after earlier files have been written.
 
 World files remain editable through the general APIs. Containment does not
 approve canon, authorize a tenant, constrain an arbitrary Node process, or
-implement signed human promotion. Tracked/source-declared hashing, exact Git
-staging, commit-failure handling and the remaining work in issue #283 are open.
+implement signed human promotion. Tracked/source-declared hashing, extension
+validation and the remaining graph/promotion work in issue #283 are open.
+
+## Scoped local commits
+
+`harnessContext(...).commit(message)` selects only the paths successfully written
+by that context's character, lore and quest tools since its previous successful
+commit. Calls within one context run in order, including concurrent calls across
+a commit boundary. Failed writes never enter its scope. A failed commit retains
+the pending scope; correct the Git or hook error and retry. A context with no
+writes leaves unrelated staging alone.
+
+For direct calls, supply exact existing file paths:
+
+```js
+const receipt = await commitWorld(worldDir, "Revise Sera", {
+  paths: ["characters/sera.md"],
+});
+```
+
+The old implicit whole-repository commit is removed. Missing scope throws
+`ERR_ARCANEA_GIT_SCOPE_REQUIRED`. Paths use the same portable containment checks
+as the writer; Git metadata and redirected/non-regular files cannot be selected.
+`checkWorldFiles(dir, paths)` exposes this read-only validation and returns the
+canonical root and deduplicated paths. The world must be its own Git root;
+a folder inside another repository fails with `ERR_ARCANEA_GIT_ROOT`.
+
+Git interprets paths literally, so brackets and leading dashes do not expand the
+scope. A partial commit takes the selected working files and preserves unrelated
+staged, unstaged and untracked work. Existing staged changes on a selected file
+fail with `ERR_ARCANEA_GIT_STAGED_CONFLICT` before staging changes. New files use
+intent-to-add, then `git commit --only`; signing and hooks remain active. Selected
+files with assume-unchanged or skip-worktree flags fail with
+`ERR_ARCANEA_GIT_INDEX_FLAGS`; the SDK leaves those flags intact. Ignored
+files are not force-added. Inherited Git repository/index routing variables are
+removed from these subprocesses; normal Git configuration is retained.
+
+The receipt reports `committed` with the SHA and paths, `unchanged` when selected
+files have no changes, or `not-a-repository` for a non-Git folder. Other Git errors
+throw `ERR_ARCANEA_GIT_COMMIT` with the failed operation and exit code, without
+returning private hook output. After a failed attempt, new files may retain their
+intent-to-add index entry; their draft bytes remain available for retry. The SDK
+does not remove index locks, push commits, disable hooks or discard drafts.
+
+This contract assumes trusted Git configuration/hooks and a single filesystem
+writer. Hooks can run arbitrary code, and a hostile process can race these path
+checks. A commit followed by a receipt-read failure may already exist in history;
+inspect local history before retrying. Scoped local commits do not grant tenant
+authorization, approve canon or publish an edition.

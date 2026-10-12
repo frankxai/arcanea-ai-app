@@ -152,6 +152,31 @@ function alreadyExists() {
   );
 }
 
+/** Check existing regular files without creating directories or changing bytes. */
+export async function checkWorldFiles(dir, paths) {
+  if (typeof dir !== "string" || !dir.trim()) {
+    throw pathError("Select a nonempty world directory.");
+  }
+  if (!Array.isArray(paths)) throw new TypeError("paths must be an array.");
+  const selectedPaths = [...new Set(paths.map(safeRelative))];
+  if (
+    selectedPaths.some((file) =>
+      file.split("/").some((part) => part.toLowerCase() === ".git"),
+    )
+  ) {
+    throw pathError("Git metadata cannot be selected as world content.");
+  }
+  const selected = path.resolve(dir);
+  directory(await fs.lstat(selected));
+  const root = await fs.realpath(selected);
+  for (const file of selectedPaths) {
+    const checked = await destination(root, file);
+    if (!checked.entry)
+      throw pathError("Select an existing regular world file.");
+  }
+  return { dir: root, paths: selectedPaths };
+}
+
 /** Confined writes in a creator-owned, single-writer folder; not an OS sandbox. */
 export async function writeFiles(dir, files, { exclusive = false } = {}) {
   if (typeof dir !== "string" || !dir.trim()) {
