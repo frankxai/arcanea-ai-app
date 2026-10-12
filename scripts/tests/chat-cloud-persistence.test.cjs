@@ -98,6 +98,21 @@ function setup() {
   };
 }
 
+test("initial hydration renders no browser-cache-dependent history or save label", () => {
+  const { f, scope, store } = setup();
+  store.setActiveChatSessionId(id, scope);
+  f.load("lib/chat/project-store.ts").createChatProject(
+    { title: "Private world" },
+    scope,
+  );
+  const hook = f.load("hooks/use-chat-sessions.ts").useChatSessions();
+  assert.equal(hook.saveStatus, "idle");
+  assert.equal(hook.allSessions.length, 0);
+  assert.equal(hook.projects.length, 0);
+  assert.equal(hook.activeProject, null);
+  assert.equal(hook.activeProjectId, null);
+});
+
 test("old account-scoped IDs map to stable actor-specific UUIDs without rekeying old work", async () => {
   const f = fixture();
   const helper = f.load("lib/chat/cloud-snapshot.ts");

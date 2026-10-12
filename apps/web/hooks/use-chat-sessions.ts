@@ -123,6 +123,8 @@ export function useChatSessions(): UseChatSessionsReturn {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [isHydrating, setIsHydrating] = useState(true);
+  // Keep the server and first client render independent of device-only caches.
+  const [hasMounted, setHasMounted] = useState(false);
   const [refreshTick, setRefreshTick] = useState(0);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const saveEpochRef = useRef(0);
@@ -177,6 +179,7 @@ export function useChatSessions(): UseChatSessionsReturn {
   }, [storageScope]);
 
   useEffect(() => {
+    setHasMounted(true);
     try {
       const stored = localStorage.getItem(SIDEBAR_KEY);
       if (stored !== null) {
@@ -523,10 +526,11 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const allSessions = useMemo<ChatSessionSummary[]>(() => {
     void refreshTick;
+    if (!hasMounted) return [];
     return searchQuery.trim()
       ? searchSessions(searchQuery, storageScope)
       : listChatSessions(storageScope);
-  }, [refreshTick, searchQuery, storageScope]);
+  }, [hasMounted, refreshTick, searchQuery, storageScope]);
 
   const stableSessions = useMemo<ChatSessionSummary[]>(() => {
     return activeProjectId
@@ -536,18 +540,22 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const stableProjects = useMemo<ChatProject[]>(() => {
     void refreshTick;
+    if (!hasMounted) return [];
     return listChatProjects(storageScope);
-  }, [refreshTick, storageScope]);
+  }, [hasMounted, refreshTick, storageScope]);
 
   const activeProject = useMemo(
     () =>
-      activeProjectId ? loadChatProject(activeProjectId, storageScope) : null,
-    [activeProjectId, refreshTick, storageScope],
+      hasMounted && activeProjectId
+        ? loadChatProject(activeProjectId, storageScope)
+        : null,
+    [hasMounted, activeProjectId, refreshTick, storageScope],
   );
 
   return {
-    saveStatus:
-      saveState.id === activeSessionId
+    saveStatus: !hasMounted
+      ? "idle"
+      : saveState.id === activeSessionId
         ? saveState.status
         : loadChatSession(activeSessionId, storageScope)?.cloudDirty
           ? "local"
@@ -560,7 +568,7 @@ export function useChatSessions(): UseChatSessionsReturn {
     sessions: stableSessions,
     projects: stableProjects,
     activeProject,
-    activeProjectId,
+    activeProjectId: hasMounted ? activeProjectId : null,
     activeSessionId,
     isSidebarExpanded,
     searchQuery,

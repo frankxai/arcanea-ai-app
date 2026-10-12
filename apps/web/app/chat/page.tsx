@@ -334,7 +334,9 @@ function ChatPageContent() {
         </div>
 
         <ChatStorageStatus
-          status={chatSessions.saveStatus}
+          status={
+            conversation.messages.length ? chatSessions.saveStatus : "idle"
+          }
           onRetry={chatSessions.retryCloudSave}
           onSaveCopy={chatSessions.saveSeparateCopy}
           onExport={() => setShowExport(true)}
