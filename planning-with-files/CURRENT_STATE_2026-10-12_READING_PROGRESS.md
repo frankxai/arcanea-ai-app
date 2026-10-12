@@ -33,21 +33,38 @@ their production application has not been established by these fixtures.
 | Failed saves gave no feedback                          | Loading, saving, confirmed Read and visible retry                      | Make the save outcome clear and recoverable                  |
 | Zero-height sentinel and a permanent local marked flag | 1px sentinel scoped to account/text; confirmation required             | Keep automatic completion recoverable across account changes |
 | Small button without a defined focus treatment         | 44px minimum button, visible keyboard focus, reduced-motion transition | Make completion usable with keyboard and touch               |
+| Muted recovery text                                    | Existing secondary-text token without busy-state opacity               | Keep save failure and retry text readable                    |
 
 End-of-article visibility is a completion signal, not evidence of comprehension.
 
 ## Verification and acceptance
 
 The first local run passed 21 controlled lifecycle/transport cases with no failures
-or skips. Hosted Linux/Windows checks and an actual React/Chromium leaf fixture
-are required before accepting this candidate. The leaf uses synthetic Auth and
+or skips. The refined hook passes 22 cases, including a retired callback after
+load retry. Hosted Linux/Windows checks and an actual React/Chromium leaf fixture
+are required for the refined source before acceptance. The leaf uses synthetic Auth and
 table responses with the same-source production CSS/fonts; it is not a signed-in
 production Supabase/RLS/customer test. Native captures need visual inspection and
 canonical sidecar-schema validation remains unverified.
 
+Initial source `c1f2528482007b5c4fb410ad2550d2360660ad29` passed hosted Linux
+and Windows tests and application TypeScript. Reading-progress run `38240750536`
+failed its reduced-motion duration assertion: the existing global rule uses
+`0.01ms`, while the assertion required `0s`. Application run `38240750512`
+failed ESLint's warning about synchronous state reset inside an effect. The
+refinement resets account/load state before commit and checks the existing
+reduced-motion bound numerically. Original failed evidence remains retained;
+earlier passes do not approve this later source.
+
+The first external review's raw PASS contained three working safeguards as
+findings and failed literal citation binding. It is not accepted. Another route
+returned HTTP 429 without a usable review; fresh source review is still required.
+
 Independent exact-source review, full application checks, normal protected merge,
 receiving checks and production source binding remain required. Local heavy work
-remains held by machine admission; no new worktree, local browser, server or swarm
-was started. Private manuscript, paid model screen and commercial approvals are
+is subject to machine admission; no new worktree, local browser, server or swarm
+was started. A bounded window at 11:14 UTC was reversed by the print renderer's
+immediate check at 4870/8192 MB, before rendering began. Private manuscript,
+paid model screen and commercial approvals are
 unchanged. No customer acceptance, managed API readiness or full programme completion
 is claimed. Rollback is a normal revert of these six named files.

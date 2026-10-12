@@ -162,6 +162,8 @@ async function runMode(mode, base) {
   const context = await browser.newContext({
     viewport: mode.viewport,
     reducedMotion: mode.motion,
+    isMobile: mode.viewport.width === 375,
+    hasTouch: mode.viewport.width === 375,
   });
   const page = await context.newPage();
   const record = {
@@ -254,6 +256,30 @@ async function runMode(mode, base) {
     await ack(denied, "denied");
     await visible(button("Try saving again"));
     await visible(page.getByRole("alert"));
+    const errorContrast = await page.getByRole("alert").evaluate((node) => {
+      const luminance = (rgb) => {
+        const [r, g, b] = rgb
+          .match(/[\d.]+/g)
+          .slice(0, 3)
+          .map((value) => {
+            const channel = Number(value) / 255;
+            return channel <= 0.04045
+              ? channel / 12.92
+              : ((channel + 0.055) / 1.055) ** 2.4;
+          });
+        return r * 0.2126 + g * 0.7152 + b * 0.0722;
+      };
+      const text = luminance(getComputedStyle(node).color);
+      const background = luminance(
+        getComputedStyle(node.parentElement).backgroundColor,
+      );
+      return (
+        (Math.max(text, background) + 0.05) /
+        (Math.min(text, background) + 0.05)
+      );
+    });
+    assert.ok(errorContrast >= 4.5, "Save recovery text must remain readable");
+    record.errorContrast = errorContrast;
     await capture(
       page,
       mode.name + "-save-retry",
@@ -389,11 +415,19 @@ async function runMode(mode, base) {
       ),
       true,
     );
-    assert.equal(
-      await button("Mark as read").evaluate(
-        (node) => getComputedStyle(node).transitionDuration,
+    const durations = await button("Mark as read").evaluate((node) =>
+      getComputedStyle(node)
+        .transitionDuration.split(",")
+        .map((value) => parseFloat(value)),
+    );
+    // globals.css uses 0.01ms !important for reduced motion; verify the
+    // computed seconds numerically rather than requiring the spelling "0s".
+    assert.ok(
+      durations.every(
+        (seconds) =>
+          Number.isFinite(seconds) &&
+          (mode.motion === "reduce" ? seconds <= 0.00001 : seconds === 0.15),
       ),
-      mode.motion === "reduce" ? "0s" : "0.15s",
     );
     record.styles = await button("Mark as read").evaluate((node) => ({
       font: getComputedStyle(node).fontFamily,

@@ -504,3 +504,21 @@ console.log(
     privateProviderCalls: 0,
   }),
 );
+
+test("retired load-generation callbacks stay unavailable after a successful retry", async (t) => {
+  const f = fixture(t);
+  await f.ready();
+  const retired = f.result.markComplete;
+  f.result.retry();
+  await f.flush();
+  f.latest("load").resolve({ data: [], error: null });
+  await f.flush();
+  assert.equal(
+    await retired("synthetic-text", "synthetic-collection"),
+    "unavailable",
+  );
+  assert.equal(f.requests.filter((r) => r.kind === "save").length, 0);
+  const current = await f.save();
+  current.request.resolve({ data: { ...current.request.body }, error: null });
+  assert.equal(await current.promise, "saved");
+});

@@ -34,6 +34,7 @@ interface ProgressClient {
 }
 interface Snapshot {
   owner: string | null;
+  revision: number;
   phase: "loading" | "ready" | "error";
   progress: Record<string, ReadingProgress>;
   pending: string[];
@@ -43,6 +44,7 @@ interface Snapshot {
 type SaveResult = "saved" | "unavailable" | "cancelled" | "unconfirmed";
 interface Session {
   owner: string;
+  revision: number;
   active: boolean;
   ready: boolean;
   controllers: Set<AbortController>;
@@ -55,6 +57,18 @@ const EMPTY_PROGRESS: Record<string, ReadingProgress> = Object.freeze({});
 const LOAD_ERROR = "We couldn’t load your reading progress. Try again.";
 const SAVE_ERROR = "We couldn’t confirm that save. Try again.";
 const REQUEST_TIMEOUT_MS = 10_000;
+
+function emptySnapshot(owner: string | null, revision: number): Snapshot {
+  return {
+    owner,
+    revision,
+    phase: owner ? "loading" : "ready",
+    progress: EMPTY_PROGRESS,
+    pending: [],
+    loadError: null,
+    saveError: null,
+  };
+}
 
 function validRow(value: unknown, owner: string): value is ReadingProgress {
   if (!value || typeof value !== "object") return false;
@@ -104,45 +118,29 @@ async function request(
 }
 
 export function useReadingProgress(userId: string | null) {
-  const [snapshot, setSnapshot] = useState<Snapshot>({
-    owner: null,
-    phase: "loading",
-    progress: EMPTY_PROGRESS,
-    pending: [],
-    loadError: null,
-    saveError: null,
-  });
+  const [snapshot, setSnapshot] = useState<Snapshot>(() =>
+    emptySnapshot(userId, 0),
+  );
   const [loadRevision, setLoadRevision] = useState(0);
   const sessionRef = useRef<Session | null>(null);
 
+  // Reset this component's state when its account/load input changes, before
+  // React commits children. The effect owns requests, not input-derived state.
+  if (snapshot.owner !== userId || snapshot.revision !== loadRevision) {
+    setSnapshot(emptySnapshot(userId, loadRevision));
+  }
+
   useEffect(() => {
-    if (!userId) {
-      setSnapshot({
-        owner: null,
-        phase: "ready",
-        progress: EMPTY_PROGRESS,
-        pending: [],
-        loadError: null,
-        saveError: null,
-      });
-      return;
-    }
+    if (!userId) return;
     const session: Session = {
       owner: userId,
+      revision: loadRevision,
       active: true,
       ready: false,
       controllers: new Set(),
       saves: new Map(),
     };
     sessionRef.current = session;
-    setSnapshot({
-      owner: userId,
-      phase: "loading",
-      progress: EMPTY_PROGRESS,
-      pending: [],
-      loadError: null,
-      saveError: null,
-    });
     const controller = new AbortController();
     session.controllers.add(controller);
     const current = () => session.active && sessionRef.current === session;
@@ -174,6 +172,7 @@ export function useReadingProgress(userId: string | null) {
         session.ready = true;
         setSnapshot({
           owner: userId,
+          revision: loadRevision,
           phase: "ready",
           progress,
           pending: [],
@@ -184,6 +183,7 @@ export function useReadingProgress(userId: string | null) {
         if (current())
           setSnapshot({
             owner: userId,
+            revision: loadRevision,
             phase: "error",
             progress: EMPTY_PROGRESS,
             pending: [],
@@ -203,7 +203,10 @@ export function useReadingProgress(userId: string | null) {
   }, [userId, loadRevision]);
 
   // A new account renders before effect cleanup. Hide the old snapshot now.
-  const owned = userId !== null && snapshot.owner === userId;
+  const owned =
+    userId !== null &&
+    snapshot.owner === userId &&
+    snapshot.revision === loadRevision;
   const progress = owned ? snapshot.progress : EMPTY_PROGRESS;
   const isLoading = userId !== null && (!owned || snapshot.phase === "loading");
   const loadError = owned ? snapshot.loadError : null;
@@ -219,7 +222,9 @@ export function useReadingProgress(userId: string | null) {
         !session.active ||
         !session.ready ||
         session.owner !== userId ||
+        session.revision !== loadRevision ||
         snapshot.owner !== userId ||
+        snapshot.revision !== loadRevision ||
         snapshot.phase !== "ready" ||
         !textSlug.trim() ||
         !collectionSlug.trim()
@@ -300,7 +305,7 @@ export function useReadingProgress(userId: string | null) {
       });
       return save;
     },
-    [userId, snapshot.owner, snapshot.phase],
+    [userId, loadRevision, snapshot.owner, snapshot.phase, snapshot.revision],
   );
 
   const isComplete = useCallback(

@@ -80,7 +80,7 @@ export function ReadingTracker({
 
   if (!user) return null;
   const buttonClass =
-    "flex min-h-11 w-full items-center gap-2 rounded-lg border border-cosmic-border px-3 py-2 text-sm text-text-muted transition-colors hover:border-atlantean-teal/50 hover:text-atlantean-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal disabled:cursor-wait disabled:opacity-60 motion-reduce:transition-none";
+    "flex min-h-11 w-full items-center gap-2 rounded-lg border border-cosmic-border px-3 py-2 text-sm text-text-secondary transition-colors hover:border-atlantean-teal/50 hover:text-atlantean-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal disabled:cursor-wait motion-reduce:transition-none";
 
   return (
     <div
@@ -101,7 +101,7 @@ export function ReadingTracker({
         </div>
       ) : loadError ? (
         <>
-          <p role="alert" className="mb-3 text-sm text-text-muted">
+          <p role="alert" className="mb-3 text-sm text-text-secondary">
             {loadError}
           </p>
           <button type="button" onClick={retry} className={buttonClass}>
@@ -130,7 +130,7 @@ export function ReadingTracker({
             </span>
           </button>
           {saveError && (
-            <p role="alert" className="mt-3 text-sm text-text-muted">
+            <p role="alert" className="mt-3 text-sm text-text-secondary">
               {saveError}
             </p>
           )}
