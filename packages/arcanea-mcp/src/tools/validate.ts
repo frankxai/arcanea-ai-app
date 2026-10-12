@@ -64,7 +64,7 @@ export async function validateCanon(
 
   const guardianNames = Object.keys(guardianGateMap).join("|");
   const forward = new RegExp(
-    `\\b(${guardianNames})\\b(?:\\s*,\\s*|\\s+)(?:(?:is|was|serves\\s+as)\\s+)?(?:the\\s+)?guardian\\s+of\\s+(?:the\\s+)?(?:gate\\s+(\\d{1,3})\\b|(\\d{1,3})(?:st|nd|rd|th)\\s+gate\\b)`,
+    `\\b(${guardianNames})\\b(?:\\s*,\\s*|\\s+)(?:(?:(?:is|was|serves\\s+as)\\s+)?(?:the\\s+)?guardian\\s+of|guards)\\s+(?:the\\s+)?(?:gate\\s+(\\d{1,3})\\b|(\\d{1,3})(?:st|nd|rd|th)\\s+gate\\b)`,
     "gi",
   );
   const reverse = new RegExp(

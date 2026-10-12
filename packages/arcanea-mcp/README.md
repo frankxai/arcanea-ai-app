@@ -59,9 +59,9 @@ Core world generation, graph storage and planning need no provider key. Other co
 
 ## Canon screening
 
-`validate_canon` screens configured terminology and explicit Guardian/Gate declarations. It distinguishes Gate 10 from Gate 1, checks repeated declarations and recognizes cardinal, ordinal and reverse forms such as `Shinkami is Guardian of Gate 10`, `Shinkami is Guardian of the 10th Gate` and `Gate 10 is guarded by Shinkami`. Merely visiting a Gate or mentioning another character's villainy does not assign guardianship or make Nero evil.
+`validate_canon` screens configured terminology and explicit Guardian/Gate declarations. It distinguishes Gate 10 from Gate 1, checks repeated declarations and recognizes cardinal, ordinal, active and reverse forms such as `Shinkami is Guardian of Gate 10`, `Shinkami is Guardian of the 10th Gate`, `Shinkami guards Gate 10` and `Gate 10 is guarded by Shinkami`. Merely visiting a Gate or mentioning another character's villainy does not assign guardianship or make Nero evil.
 
-`valid: true` means the configured heuristics found no errors. Every result includes `validationScope`, `checkedAssociations`, `canonApproval: false` and `humanReviewRequired: true`. Findings include character offsets for the matched declaration. Arbitrary prose, quoted assertions, negation across clauses, implicit relationships and complete manuscript continuity still require source-aware editorial review. The screen does not promote canon or issue release approval.
+`valid: true` means the configured heuristics found no errors. Every result includes `validationScope`, `checkedAssociations`, `canonApproval: false` and `humanReviewRequired: true`. Findings include JavaScript UTF-16 offsets for the matched declaration, usable with `string.slice(start, end)`. Arbitrary prose, quoted assertions, negation across clauses, implicit relationships and complete manuscript continuity still require source-aware editorial review. The screen does not promote canon or issue release approval.
 
 ## Toolsets
 
