@@ -55,7 +55,7 @@ const base = hubReleaseReview
   : privateImagineReview
     ? "89f9d1fd911407aa3bc8128fecca96f00c7cc6c6"
     : projectDocumentReview
-      ? "b202e45e71e88dde72aaf4e601ffa7fa579ec1d2"
+      ? "8936b1400844f1b48e93bc679e1d0af3e74f9e7e"
       : generationReview
         ? "0661416b66c2674eb63a84a9597ca1163eb2d378"
         : worldCreatorReview

@@ -461,7 +461,13 @@ async function main() {
         });
         result.scrolledControls = scrolledControls;
         assert.equal(scrolledControls.legacy[0].unobstructed, false);
-        assert.equal(scrolledControls.current.length, 4);
+        assert.equal(scrolledControls.current.length, 5);
+        await expect(
+          controls.getByRole("button", {
+            name: "Export document",
+            exact: true,
+          }),
+        ).toBeVisible();
         for (const control of scrolledControls.current) {
           assert.ok(control.top >= control.navBottom);
           assert.equal(control.unobstructed, true);
@@ -471,6 +477,32 @@ async function main() {
         );
         await capture("controls-scrolled", { fullPage: false });
         await capture("saved");
+
+        stage = "portable-text-document-download";
+        const portableHtml = await download(
+          controls.getByRole("button", {
+            name: "Export document",
+            exact: true,
+          }),
+        );
+        assert.ok(Buffer.byteLength(portableHtml) < 2 * 1024 * 1024);
+        assert.match(portableHtml, /^<!doctype html>/);
+        const portableMatch = portableHtml.match(
+          /id="arcanea-document">([\s\S]*?)<\/script>/,
+        );
+        assert.ok(
+          portableMatch,
+          "Portable document must contain its editable JSON",
+        );
+        const portable = JSON.parse(portableMatch[1]);
+        assert.equal(portable.doc_id, doc.id);
+        assert.equal(portable.project_id, project.id);
+        assert.deepEqual(portable.content_json, content.content_json);
+        assert.equal(portable.content_text, content.content_text);
+        assert.deepEqual(portable.assets, {});
+        result.checks.push(
+          "actual-portable-text-document-download-preserves-rich-json",
+        );
 
         stage = "lost-acknowledgement-reload-replay";
         loseAcknowledgement = true;
