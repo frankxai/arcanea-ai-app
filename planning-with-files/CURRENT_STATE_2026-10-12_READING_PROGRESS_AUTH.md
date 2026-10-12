@@ -123,6 +123,24 @@ before a clean fast-forward. The incoming review router and MCP package files
 were preserved without claiming them or invoking publication. Fresh source
 review and native hosted acceptance are required on the resulting candidate.
 
+Source `91abd5584dd71313ed8af9813ff6df048652b2d6` passed local 29-case
+verification, exact 21-file static review and native CodeQL. Hosted run
+`38262607275` failed waiting for desktop save retry before any captures. With the
+correct article target, scrolling the tall sticky sidebar's button into view can
+also trigger automatic completion. The fixture now records the actual visible
+article-end trigger and leaves that first observer save pending without clicking
+a second time. The retry assertion also respects the existing ten-second save
+deadline with a bounded fifteen-second wait. Exact request counts, commit and
+one-row keyboard retry remain required. Cleanup succeeded. The new source still
+requires fresh review and hosted proof; no earlier PASS approves it.
+
+The received Review Router could not start its Claude job. GitHub's actual
+annotation names `anthropics/claude-code-action@v1` as forbidden by the selected
+action policy (GitHub-owned actions and `pnpm/action-setup@*`). This slice preserves
+that policy, workflow and failure. The separate exact-source review is retained;
+activation of the native Claude workflow remains unresolved. The legacy
+AI Exact-Head Review workflow is manually disabled and is not claimed as passed.
+
 The exact-head Dots review reported a P1 about stale pages, lost diagnostics and
 continued execution after failure. Its source quote bound correctly; inspection
 shows that the catch preserves the original error and stage, throws immediately,

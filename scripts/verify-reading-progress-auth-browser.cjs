@@ -253,6 +253,7 @@ async function main() {
       try {
         const payload = route.request().postDataJSON();
         saves.push(payload);
+        receipt.desktopSaveAttempts = saves.length;
         assert.equal(payload.user_id, config.accounts[0].id);
         assert.equal(payload.text_slug, textSlug);
         assert.equal(payload.collection_slug, collectionSlug);
@@ -262,18 +263,43 @@ async function main() {
           throw Error(`Real upsert returned ${response.status()}`);
         if (dropAcknowledgement) {
           dropAcknowledgement = false;
+          receipt.desktopSaveAcknowledgementDropped = true;
           return route.abort("failed");
         }
         await route.fulfill({ response });
       } catch (error) {
         saveFailure = redact(error.message);
+        receipt.desktopSaveTransportFailure = saveFailure;
         await route.abort("failed");
       }
     });
     await login(page, config.accounts[0]);
     await expect(button(page, "Mark as read")).toBeEnabled();
-    await button(page, "Mark as read").click();
-    await expect(button(page, "Try saving again")).toBeEnabled();
+    const articleEnd = page.locator(
+      'article#library-reading-text > div[aria-hidden="true"]',
+    );
+    await expect(articleEnd).toHaveCount(1);
+    await button(page, "Mark as read").scrollIntoViewIfNeeded();
+    // The tall sticky sidebar may reach the article end while its button scrolls
+    // into view. Let that real observer request the first save; a second click
+    // could already be the user's retry after the dropped acknowledgement.
+    const endVisible = await page.evaluate(async () => {
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+      const rect = document
+        .getElementById("library-reading-text")
+        .getBoundingClientRect();
+      return rect.bottom >= 1 && rect.bottom <= innerHeight;
+    });
+    const automaticSave = endVisible || saves.length > 0;
+    receipt.desktopInitialSaveTrigger = automaticSave
+      ? "article-end"
+      : "manual";
+    if (!automaticSave) await button(page, "Mark as read").click();
+    await expect(button(page, "Try saving again")).toBeEnabled({
+      timeout: 15000,
+    });
     await expect(
       page.getByRole("alert").filter({ hasText: /couldn’t confirm that save/ }),
     ).toBeVisible();
