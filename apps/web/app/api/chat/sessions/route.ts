@@ -178,6 +178,18 @@ export async function GET(req: NextRequest) {
           for (const row of counts) {
             countMap.set(row.session_id, row.message_count ?? 0);
           }
+        } else {
+          // Fallback if RPC count_messages_per_session is not present
+          const { data: msgRows } = await supabase
+            .from('chat_messages')
+            .select('session_id')
+            .in('session_id', sessionIds);
+
+          if (msgRows) {
+            for (const row of msgRows) {
+              countMap.set(row.session_id, (countMap.get(row.session_id) ?? 0) + 1);
+            }
+          }
         }
       }
 

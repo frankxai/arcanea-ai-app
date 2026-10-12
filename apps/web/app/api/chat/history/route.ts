@@ -211,6 +211,7 @@ export async function GET(req: NextRequest) {
 
     if (beforeId) {
       const beforeIndex = allMessages.findIndex((msg) => msg.id === beforeId);
+      // Stale cursor must not surface as a 503/500 error; fall back to available message history
       end = beforeIndex >= 0 ? beforeIndex : allMessages.length;
       start = Math.max(0, end - limit);
     } else {

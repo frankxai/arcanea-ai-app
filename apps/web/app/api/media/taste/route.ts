@@ -46,9 +46,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json();
-    const { ids, guardian, tier, limit = 20 } = body;
-    const maxLimit = Math.min(limit, 50);
+    const body = await request.json().catch(() => ({}));
+    const { ids, guardian, tier, limit } = body;
+    const parsedLimit = Number(limit);
+    const maxLimit = Math.max(1, Math.min(Number.isFinite(parsedLimit) ? parsedLimit : 20, 50));
 
     // Fetch entries to analyze
     const params = new URLSearchParams();
@@ -56,12 +57,29 @@ export async function POST(request: NextRequest) {
     params.set('limit', String(maxLimit));
     params.set('order', 'created_at.asc');
 
-    if (ids?.length) {
-      params.set('id', `in.(${ids.join(',')})`);
-    } else if (guardian) {
-      params.set('guardian', `eq.${guardian}`);
-    } else if (tier) {
-      params.set('quality_tier', `eq.${tier}`);
+    if (Array.isArray(ids) && ids.length > 0) {
+      // Validate and sanitize ID strings
+      const sanitizedIds = ids
+        .filter((id): id is string => typeof id === 'string' && /^[a-zA-Z0-9_-]+$/.test(id))
+        .slice(0, 50);
+
+      if (sanitizedIds.length > 0) {
+        params.set('id', `in.(${sanitizedIds.join(',')})`);
+      } else {
+        return NextResponse.json({ error: 'Invalid ids provided' }, { status: 400 });
+      }
+    } else if (typeof guardian === 'string' && guardian.trim()) {
+      const sanitizedGuardian = guardian.replace(/[^a-zA-Z0-9_-]/g, '');
+      if (sanitizedGuardian) {
+        params.set('guardian', `eq.${sanitizedGuardian}`);
+      }
+    } else if (tier !== undefined && tier !== null) {
+      const parsedTier = Number(tier);
+      if (Number.isInteger(parsedTier) && parsedTier >= 1 && parsedTier <= 4) {
+        params.set('quality_tier', `eq.${parsedTier}`);
+      } else {
+        return NextResponse.json({ error: 'Invalid tier provided; expected integer 1-4' }, { status: 400 });
+      }
     }
 
     const fetchRes = await fetch(
@@ -128,6 +146,36 @@ export async function POST(request: NextRequest) {
 
 async function analyzeImage(entry: CatalogEntry) {
   try {
+    // Validate public_url host/scheme, with fallback to Supabase storage URL construction
+    let validUrl: string | null = null;
+    if (typeof entry.public_url === 'string' && entry.public_url.trim()) {
+      try {
+        const parsed = new URL(entry.public_url);
+        if ((parsed.protocol === 'http:' || parsed.protocol === 'https:') && parsed.hostname) {
+          validUrl = entry.public_url;
+        }
+      } catch {
+        validUrl = null;
+      }
+    }
+
+    if (!validUrl && entry.storage_path && SUPABASE_URL) {
+      const fallback = `${SUPABASE_URL}/storage/v1/object/public/arcanea-gallery/${entry.storage_path}`;
+      try {
+        const parsed = new URL(fallback);
+        if ((parsed.protocol === 'http:' || parsed.protocol === 'https:') && parsed.hostname) {
+          validUrl = fallback;
+        }
+      } catch {
+        validUrl = null;
+      }
+    }
+
+    if (!validUrl) {
+      console.warn(`[media/taste] Skipping entry ${entry.id}: invalid public_url and fallback failed`);
+      return null;
+    }
+
     const guardianCtx = entry.guardian
       ? `This image represents ${entry.guardian} (${entry.gate} Gate, ${entry.element} element).`
       : 'No Guardian assigned yet.';
@@ -145,7 +193,7 @@ async function analyzeImage(entry: CatalogEntry) {
         messages: [{
           role: 'user',
           content: [
-            { type: 'image', source: { type: 'url', url: entry.public_url } },
+            { type: 'image', source: { type: 'url', url: validUrl } },
             {
               type: 'text',
               text: `TASTE evaluator for Arcanea fantasy universe. Score this image 0-100 on:

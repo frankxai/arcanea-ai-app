@@ -217,19 +217,24 @@ export async function getMessages(
     .from('chat_messages')
     .select('*')
     .eq('session_id', sessionId)
-    .order('created_at', { ascending: true });
+    .order('created_at', { ascending: true })
+    .order('id', { ascending: true });
 
   if (opts.beforeId) {
-    // Fetch the timestamp of the cursor message so we can page correctly
-    const { data: cursor } = await supabase
+    // Fetch the timestamp and id of the cursor message for unique tie-break
+    const { data: cursor, error: cursorError } = await supabase
       .from('chat_messages')
-      .select('created_at')
+      .select('created_at, id')
       .eq('id', opts.beforeId)
       .maybeSingle();
 
-    if (cursor) {
-      query = query.lt('created_at', cursor.created_at);
+    if (!cursorError && cursor) {
+      // Compound tie-break condition: created_at < cursor.created_at OR (created_at = cursor.created_at AND id < cursor.id)
+      query = query.or(
+        `created_at.lt.${cursor.created_at},and(created_at.eq.${cursor.created_at},id.lt.${cursor.id})`
+      );
     }
+    // Note: If cursor is stale/missing, query proceeds cleanly without failing with 500/503
   }
 
   // Fetch one extra row to determine hasMore

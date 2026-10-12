@@ -42,21 +42,35 @@ export async function POST(request: NextRequest) {
       SUPABASE_URL, SUPABASE_ANON, 'arcanea-gallery', prefixes
     );
 
-    // Phase 2: Get existing entries to skip already-analyzed files
+    // Phase 2: Get existing entries to skip already-analyzed files via ordered pagination
     let existingPaths = new Set<string>();
     if (!force) {
-      const existRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/media_catalog?select=storage_path&limit=2000`,
-        {
-          headers: {
-            apikey: writeKey,
-            Authorization: `Bearer ${writeKey}`,
-          },
+      let offset = 0;
+      const PAGE_SIZE = 1000;
+      let hasMore = true;
+      while (hasMore) {
+        const existRes = await fetch(
+          `${SUPABASE_URL}/rest/v1/media_catalog?select=storage_path&order=created_at.asc&limit=${PAGE_SIZE}&offset=${offset}`,
+          {
+            headers: {
+              apikey: writeKey,
+              Authorization: `Bearer ${writeKey}`,
+            },
+          }
+        );
+        if (existRes.ok) {
+          const existing: Array<{ storage_path: string }> = await existRes.json();
+          for (const e of existing) {
+            existingPaths.add(e.storage_path);
+          }
+          if (existing.length < PAGE_SIZE) {
+            hasMore = false;
+          } else {
+            offset += PAGE_SIZE;
+          }
+        } else {
+          hasMore = false;
         }
-      );
-      if (existRes.ok) {
-        const existing: Array<{ storage_path: string }> = await existRes.json();
-        existingPaths = new Set(existing.map(e => e.storage_path));
       }
     }
 
