@@ -27,6 +27,7 @@ const source = [
   "apps/web/app/chat/page.tsx",
   "apps/web/components/chat/chat-storage-status.tsx",
   "apps/web/components/chat/history-sidebar.tsx",
+  "apps/web/components/chat/chat-layout.tsx",
   "apps/web/hooks/use-chat-sessions.ts",
   "apps/web/lib/chat/storage-scope.ts",
   "apps/web/lib/chat/local-store.ts",
@@ -237,6 +238,62 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
+    // A closing drawer can obscure a fully painted chat log. Wait for finite
+    // transitions across the document, not just animations inside the log.
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () =>
+            document
+              .getAnimations()
+              .filter(
+                (animation) =>
+                  Number.isFinite(
+                    animation.effect?.getComputedTiming().iterations,
+                  ) && animation.playState === "running",
+              ).length,
+        ),
+      )
+      .toBe(0);
+    let recoveryGeometry;
+    if (name.startsWith("full-chat-removal-") && !name.includes("recovered")) {
+      const recovery = page.locator("[data-chat-storage-status]");
+      await expect(recovery).toBeInViewport();
+      const retry = recovery.getByRole("button");
+      await expect(retry).toBeInViewport();
+      await retry.click({ trial: true });
+      recoveryGeometry = await recovery.evaluate((element) => {
+        const targets = [
+          ...element.querySelectorAll(
+            '[role="alert"], [role="status"], button',
+          ),
+        ];
+        return targets.map((target) => {
+          const box = target.getBoundingClientRect();
+          const points = [
+            box.left + 2,
+            box.left + box.width / 2,
+            box.right - 2,
+          ];
+          return {
+            text: target.textContent.trim(),
+            width: box.width,
+            height: box.height,
+            unobscured: points.every((x) => {
+              const hit = document.elementFromPoint(
+                x,
+                box.top + box.height / 2,
+              );
+              return hit === target || target.contains(hit);
+            }),
+          };
+        });
+      });
+      assert.ok(
+        recoveryGeometry.every((target) => target.unobscured),
+        "Recovery text and retry must remain unobscured after history closes",
+      );
+    }
     const surface = name.startsWith("full-chat-")
       ? page.getByRole("log", { name: "Chat messages", exact: true })
       : page.getByRole("dialog", {
@@ -296,6 +353,7 @@ async function main() {
       head,
       sourceHashes,
       surfaceGeometry,
+      recoveryGeometry,
       fixture: true,
       realProviderCalls: 0,
       productionWrites: 0,
