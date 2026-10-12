@@ -29,7 +29,7 @@ export default function WorldDetailLoading() {
                 className="h-10 rounded-t-lg bg-white/[0.04] animate-[shimmer_2s_infinite]"
                 style={{ width: `${tab.length * 10 + 24}px` }}
               />
-            )
+            ),
           )}
         </div>
       </section>

@@ -11,12 +11,14 @@ import argparse
 import datetime as dt
 from decimal import Decimal, InvalidOperation
 import hashlib
+import http.client
 import json
 import os
 from pathlib import Path
 import re
 import subprocess
 import sys
+import time
 import urllib.request
 
 REPOSITORY = "frankxai/arcanea-ai-app"
@@ -132,6 +134,120 @@ def network(url, body=None, timeout=25):
         raw = response.read(8_000_001)
     require(len(raw) <= 8_000_000, "Network response exceeded bound")
     return raw
+
+
+class ReviewStream:
+    """Bounded SSE assembly; a complete report still needs strict validation."""
+
+    def __init__(self, model_id):
+        require(model_id == NEMOTRON_MODEL, "Unadmitted stream review model")
+        self.expected_model = model_id
+        self.model = None
+        self.buffer = b""
+        self.bytes = 0
+        self.content = []
+        self.finish_reason = None
+        self.usage = None
+        self.done = False
+
+    def feed(self, data):
+        self.bytes += len(data)
+        require(self.bytes <= 8_000_000, "Review stream exceeded response bound")
+        self.buffer += data
+        while True:
+            boundary = re.search(rb"\r?\n\r?\n", self.buffer)
+            if boundary is None:
+                break
+            frame, self.buffer = self.buffer[:boundary.start()], self.buffer[boundary.end():]
+            fields = [line[5:].lstrip() for line in frame.splitlines() if line.startswith(b"data:")]
+            if not fields:
+                continue  # SSE comments and keepalives are not report content.
+            require(not self.done, "Review stream continued after completion")
+            payload = b"\n".join(fields)
+            if payload.strip() == b"[DONE]":
+                self.done = True
+                continue
+            chunk = json.loads(payload.decode("utf-8"))
+            require(isinstance(chunk, dict) and not chunk.get("error"), "Provider stream error")
+            model = chunk.get("model")
+            if model is not None:
+                require(model in {self.expected_model, self.expected_model.removesuffix(":free")},
+                        "Stream response model mismatch")
+                require(self.model is None or self.model == model, "Stream model changed")
+                self.model = model
+            choices = chunk.get("choices")
+            require(isinstance(choices, list) and len(choices) <= 1, "Ambiguous stream choices")
+            if choices:
+                choice = choices[0]
+                require(isinstance(choice, dict) and choice.get("index") == 0,
+                        "Unexpected stream choice")
+                delta = choice.get("delta")
+                require(isinstance(delta, dict) and not delta.get("tool_calls")
+                        and not delta.get("function_call"), "Tool-bearing review stream")
+                text = delta.get("content")
+                if text is not None:
+                    require(isinstance(text, str) and (not text or self.finish_reason is None),
+                            "Invalid or late review content")
+                    self.content.append(text)
+                finish = choice.get("finish_reason")
+                if finish is not None:
+                    require(finish == "stop" and self.finish_reason is None,
+                            "Incomplete review stream")
+                    self.finish_reason = finish
+            usage = chunk.get("usage")
+            if usage is not None:
+                require(isinstance(usage, dict) and (self.usage is None or self.usage == usage),
+                        "Ambiguous stream usage")
+                self.usage = usage
+
+    def finish(self):
+        require(not self.buffer.strip() and self.done and self.model is not None
+                and self.finish_reason == "stop" and self.usage is not None,
+                "Review stream lacks complete model, terminal marker or usage")
+        return {"model": self.model, "usage": self.usage, "choices": [{
+            "finish_reason": self.finish_reason,
+            "message": {"content": "".join(self.content)},
+        }]}
+
+
+def stream_completion(body, raw_path, timeout):
+    """One fixed-host call, absolute deadline, raw evidence and no retries."""
+    request = json.loads(body)
+    require(request.get("model") == NEMOTRON_MODEL and request.get("stream") is True
+            and request.get("tools") == [], "Stream request contract refused")
+    decoder = ReviewStream(NEMOTRON_MODEL)
+    connection = http.client.HTTPSConnection("api.kilo.ai", timeout=timeout)
+    deadline = time.monotonic() + timeout
+    try:
+        with Path(raw_path).open("xb") as raw:
+            connection.connect()
+            live_socket = connection.sock
+
+            def remaining():
+                left = deadline - time.monotonic()
+                require(left > 0, "Absolute review stream deadline expired")
+                live_socket.settimeout(left)
+
+            remaining()
+            connection.request("POST", "/api/gateway/chat/completions", body=body, headers={
+                "Accept": "text/event-stream", "Content-Type": "application/json",
+                "User-Agent": "Arcanea-public-source-review",
+            })
+            remaining()
+            response = connection.getresponse()
+            require(response.status == 200, "Review stream HTTP status refused")
+            require(response.headers.get("Content-Type", "").split(";")[0] == "text/event-stream",
+                    "Review stream content type refused")
+            while not decoder.done:
+                remaining()
+                data = response.read1(65_536)
+                require(bool(data), "Review stream closed before completion")
+                raw.write(data[:max(0, 8_000_000 - decoder.bytes)])
+                require(time.monotonic() <= deadline, "Absolute review stream deadline expired")
+                decoder.feed(data)
+            return decoder.finish()
+    finally:
+        connection.close()
 
 
 def public_pin(head, base, pr_number):
@@ -475,6 +591,8 @@ def request_for(name, head, base, manifest, content, hashes, delta, model_id=MOD
         request["response_format"] = schema
     else:
         request["reasoning"] = {"effort": "high", "exclude": True}
+        request["stream"] = True
+        request["stream_options"] = {"include_usage": True}
     return json.dumps(request, ensure_ascii=False).encode("utf-8")
 
 
@@ -582,9 +700,20 @@ def main():
             receipt["modules"].append(module)
             receipt.update(state="dispatched", providerCalls=receipt["providerCalls"] + 1)
             save_receipt()
-            raw = network(f"{GATEWAY}/chat/completions", encoded, timeout=request_timeout)
+            if model_id == NEMOTRON_MODEL:
+                stream_path = out / f"{name}-response.sse"
+                module.update(transport="sse")
+                try:
+                    result = stream_completion(encoded, stream_path, timeout=request_timeout)
+                finally:
+                    if stream_path.exists():
+                        retained = stream_path.read_bytes()
+                        module.update(streamBytes=len(retained), streamSha256=sha(retained))
+                raw = json.dumps(result, ensure_ascii=False).encode("utf-8")
+            else:
+                raw = network(f"{GATEWAY}/chat/completions", encoded, timeout=request_timeout)
+                result = json.loads(raw)
             (out / f"{name}-response.json").write_bytes(raw)
-            result = json.loads(raw)
             module.update(actualModel=result.get("model"), responseSha256=sha(raw), usage=result.get("usage"))
             module["finishReason"] = result.get("choices", [{}])[0].get("finish_reason")
             review = parse_response(result, model_id=model_id)

@@ -529,3 +529,76 @@ Rollback: revert the explicit alternative through a reviewed branch, retain the
 strict validator repair, UI landmark fix, complete source partitions and all
 failed evidence. No paid provider authorization is inferred from the Node24 reply.
 The broader creator/platform/community/commercial goal remains ACTIVE.
+
+## Terminal candidate results and stream repair, 12 October 2026
+
+The requested short status turn made no new implementation progress. This
+continuation verified the current checkout at0158d8b69fc9124aa7ffcb1c5f6ef7a5d49462bd,
+the four-path native lease and draft PR602 before continuing the actual repairs.
+AGENTS.md still hashes to36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5.
+Root/origin/branch and route guard/check pass in the owned worktree. Main remains
+680901563775853b51df3aa58ae658c23d632ec6 at the current GitHub read.
+
+At0158, CI38188623419 is terminal: build and TypeScript pass, lint fails on a
+missing formatter comma in worlds/[slug]/loading.tsx. That actual changed-file
+failure is corrected locally. The skipped authenticated acceptance jobs provide
+no evidence for real provider generation, login, private save/reopen or accounts.
+Vercel reports a successful preview; this is not production promotion.
+
+Companion38188623431 is terminal: compiled recovery passes all four modes;
+independent review fails with RemoteDisconnected. Its retained receipt binds
+73 complete files and records exactly one world-client dispatch, no response
+artifact and no independent verdict. The five prepared inputs are preserved.
+This failed attempt is not retried unchanged or counted as an approval.
+
+The compiled artifact11720379305 and review artifact11720855925 are retained
+privately under .starlight/evidence/arcanea-reading-scene-20261010. The browser
+receipt binds52 source paths and20 captures at0158. All four modes report the
+unique root main at discovery and both creator transfers, two explicit generation
+attempts, uncertainty consent after reload, complete source/draft downloads,
+completed journal recovery and preservation of newer editor changes. These are
+synthetic-auth/intercepted-generation checks with zero real provider calls and
+zero production writes. They do not prove customer or private persistence outcomes.
+
+Seven new world handoff/editor captures were inspected in this continuation:
+desktop, mobile, reduced motion and forced colors. The draft banner and export/edit
+actions remain legible. Editor headings still sit behind the fixed navigation,
+including the mobile World details heading. The earlier source-bound focus patch
+is prepared and passes apply checks only; it remains unapplied in the occupied
+editor lane. Neither the landmark fix nor these captures establishes full premium
+design acceptance.
+
+Scope: repair the actual formatter failure and the independent review transport,
+retaining complete source, citation, privacy, zero-price and finite deadline gates.
+Owner: codex-provider-account-20261011, lease ops-e9fe428396c3413bf4e6.
+Files: worlds/[slug]/loading.tsx, scripts/review-companion.py,
+scripts/tests/test_review_companion.py and this existing execution record.
+Non-goals: no creator/editor overlap, model fallback, private inference, paid call,
+production promotion, secrets, migrations, canon mutation or billing changes.
+
+The explicit PR602 Nemotron route now uses the gateway's documented SSE protocol:
+https://kilo.ai/docs/gateway/streaming. The legacy PR597 DOTS route is unchanged.
+Each call uses one fixed HTTPS host, no credentials/tools/redirects/retries,
+the existing360/240-second deadline and8,000,000-byte response bound. The decoder
+requires a matching actual model, normal stop, usage and terminal marker; truncated
+output, provider errors, tool calls, model drift and late content are rejected.
+Raw streams are retained on success and failure, with their byte count/hash in
+the failure receipt when a stream file exists. A completed normalized response
+must still pass the unchanged strict schema, source and citation validation.
+Closing the connection does not guarantee the upstream provider stops computing.
+
+Verification: 22 no-network review-admission/stream cases and six native landmark
+cases pass. Stream cases include byte-split Unicode, raw success/error retention,
+one request and connection cleanup, bounded responses and a consumed absolute
+deadline. The pinned formatter checks all 13 changed formattable paths successfully;
+browser verifier syntax and whitespace checks pass. Final committed
+source/catalog/secret preflight and new hosted checks remain required.
+Rollback: revert the transport-only repair through a reviewed branch, preserving
+the strict validator, application recovery/landmark changes and all failed evidence.
+
+Next action: validate and commit this four-path repair, perform a no-inference
+preflight at the exact new revision, and push once for new hosted evidence. The
+editor owner fix, independent lead reconciliation, real authenticated/provider
+outcomes, production verification and the full Queen/SIS/graph/memory/canvas,
+commerce/community/publishing/API/client programme remain open. Goal01a1269f
+remains ACTIVE; neither application draft PR is declared complete.

@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import Mock, patch
 
@@ -86,6 +87,8 @@ class ReviewAdmission(unittest.TestCase):
         self.assertEqual(request["model"], model_id)
         self.assertNotIn("response_format", request)
         self.assertEqual(request["tools"], [])
+        self.assertTrue(request["stream"])
+        self.assertEqual(request["stream_options"], {"include_usage": True})
         self.assertEqual(request["reasoning"], {"effort": "high", "exclude": True})
         self.assertEqual(request["max_tokens"], REVIEW.WORLD_CLIENT_OUTPUT)
         prompt = request["messages"][0]["content"]
@@ -131,6 +134,94 @@ class ReviewAdmission(unittest.TestCase):
              patch.object(REVIEW, "network") as network, self.assertRaises(REVIEW.Denied):
             REVIEW.main()
         network.assert_not_called()
+
+    def stream_bytes(self, content="{\"scene\":\"Leyla\"}", finish="stop", usage=True):
+        model = "nvidia/nemotron-3-ultra-550b-a55b:free"
+        chunks = [
+            {"model": model, "choices": [{"index": 0, "delta": {"content": content}, "finish_reason": None}]},
+            {"model": model, "choices": [{"index": 0, "delta": {}, "finish_reason": finish}]},
+        ]
+        if usage:
+            chunks.append({"usage": {"cost": 0, "prompt_tokens": 10, "completion_tokens": 20}, "choices": []})
+        return b": keepalive\r\n\r\n" + b"".join(
+            ("data: " + json.dumps(chunk, ensure_ascii=False) + "\r\n\r\n").encode()
+            for chunk in chunks
+        ) + b"data: [DONE]\r\n\r\n"
+
+    def test_stream_reassembles_split_unicode_and_preserves_actual_model_usage(self):
+        decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
+        raw = self.stream_bytes(content='{"scene":"Thal’Maris"}')
+        for byte in raw:
+            decoder.feed(bytes([byte]))
+        result = decoder.finish()
+        self.assertEqual(result["model"], REVIEW.NEMOTRON_MODEL)
+        self.assertEqual(result["choices"][0]["message"]["content"], '{"scene":"Thal’Maris"}')
+        self.assertEqual(result["choices"][0]["finish_reason"], "stop")
+        self.assertEqual(result["usage"]["cost"], 0)
+
+    def test_stream_cannot_accept_truncation_errors_tools_missing_usage_or_model_drift(self):
+        for raw in (
+            self.stream_bytes(finish="length"), self.stream_bytes(finish="error"),
+            self.stream_bytes(usage=False), self.stream_bytes().replace(b"data: [DONE]\r\n\r\n", b""),
+            self.stream_bytes().replace(REVIEW.NEMOTRON_MODEL.encode(), b"other/model"),
+            b'data: {"error":{"code":502},"choices":[]}\n\n',
+            b'data: {"model":"nvidia/nemotron-3-ultra-550b-a55b:free","choices":[{"index":0,"delta":{"tool_calls":[{"id":"x"}]},"finish_reason":null}]}\n\n',
+        ):
+            with self.subTest(raw=raw[:45]), self.assertRaises(REVIEW.Denied):
+                decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
+                decoder.feed(raw)
+                decoder.finish()
+
+    def test_stream_denies_late_content_and_oversized_response(self):
+        with self.assertRaises(REVIEW.Denied):
+            decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
+            decoder.feed(self.stream_bytes() + b'data: {"choices":[]}\n\n')
+        with self.assertRaises(REVIEW.Denied):
+            decoder = REVIEW.ReviewStream(REVIEW.NEMOTRON_MODEL)
+            decoder.feed(b"x" * 8_000_001)
+
+    def test_stream_network_has_one_absolute_deadline_and_always_closes(self):
+        connection = Mock()
+        response = Mock(status=200)
+        response.headers = {"Content-Type": "text/event-stream; charset=utf-8"}
+        connection.getresponse.return_value = response
+        response.read1.return_value = self.stream_bytes()
+        body = json.dumps({"model": "nvidia/nemotron-3-ultra-550b-a55b:free", "stream": True, "tools": []}).encode()
+        # Connect/send/headers consume part of one deadline; the next read is
+        # refused once it expires, even with a synthetically available response.
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.object(REVIEW.http.client, "HTTPSConnection", return_value=connection), \
+             patch.object(REVIEW.time, "monotonic", side_effect=[0, 1, 2, 11]), \
+             self.assertRaises(REVIEW.Denied):
+            REVIEW.stream_completion(body, Path(directory) / "response.sse", timeout=10)
+        connection.close.assert_called_once()
+        response.read1.assert_not_called()
+
+    def test_stream_transport_retains_raw_success_and_failure_and_closes_without_retry(self):
+        for raw, fails in ((self.stream_bytes(), False),
+                           (b'data: {"error":{"code":502},"choices":[]}\n\n', True)):
+            with self.subTest(fails=fails), tempfile.TemporaryDirectory() as directory:
+                connection = Mock()
+                response = Mock(status=200)
+                response.headers = {"Content-Type": "text/event-stream; charset=utf-8"}
+                response.read1.return_value = raw
+                connection.getresponse.return_value = response
+                body = json.dumps({"model": REVIEW.NEMOTRON_MODEL,
+                                   "stream": True, "tools": []}).encode()
+                target = Path(directory) / "response.sse"
+                with patch.object(REVIEW.http.client, "HTTPSConnection", return_value=connection), \
+                     patch.object(REVIEW.time, "monotonic", return_value=0):
+                    if fails:
+                        with self.assertRaises(REVIEW.Denied):
+                            REVIEW.stream_completion(body, target, timeout=10)
+                    else:
+                        result = REVIEW.stream_completion(body, target, timeout=10)
+                        self.assertEqual(result["model"], REVIEW.NEMOTRON_MODEL)
+                        self.assertEqual(result["usage"]["cost"], 0)
+                self.assertEqual(target.read_bytes(), raw)
+                connection.request.assert_called_once()
+                connection.close.assert_called_once()
+                response.read1.assert_called_once()
 
     def valid_review(self):
         return {"head": HEAD, "base": BASE, "manifestSha256": "manifest",
