@@ -34,18 +34,25 @@ async function fixture(t) {
 async function snapshot(root) {
   const out = [];
   async function visit(relative = "") {
-    const entries = await fs.readdir(path.join(root, relative));
-    for (const name of entries.sort()) {
-      const rel = path.join(relative, name);
+    const entries = await fs.readdir(path.join(root, relative), {
+      withFileTypes: true,
+    });
+    for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+      const rel = path.join(relative, entry.name);
       const file = path.join(root, rel);
-      const stat = await fs.lstat(file);
-      if (stat.isSymbolicLink()) {
+      if (entry.isSymbolicLink()) {
         out.push([rel, "link", await fs.readlink(file)]);
-      } else if (stat.isDirectory()) {
+      } else if (entry.isDirectory()) {
         out.push([rel, "directory"]);
         await visit(rel);
       } else {
-        out.push([rel, "file", (await fs.readFile(file)).toString("base64")]);
+        const handle = await fs.open(file, "r");
+        try {
+          assert.ok((await handle.stat()).isFile());
+          out.push([rel, "file", (await handle.readFile()).toString("base64")]);
+        } finally {
+          await handle.close();
+        }
       }
     }
   }

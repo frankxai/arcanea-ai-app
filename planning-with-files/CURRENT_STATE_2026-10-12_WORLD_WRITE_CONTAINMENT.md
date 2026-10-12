@@ -57,6 +57,22 @@ failures and one explicit Windows file-symlink fixture skip. Hosted Linux/Window
 tests, application build/type/lint/security and exact-source independent review
 remain pending. There are no provider calls in the functional tests.
 
+First candidate 8be342abcf53704784d2260f1a86c27754ca90e2 passed all 35 hosted
+SDK cases on both Linux and Windows, with zero skips, including file symlinks.
+Independent Nemotron Ultra public-source review returned PASS with zero findings;
+the normal strict verifier bound all eighteen complete supplied files and the
+full six-file delta. Reported cost was zero, no caller credential or private
+artifact was supplied, and the upstream payer is unverified.
+
+The CodeQL analysis workflow passed, but its separate Advanced Security check
+114625329632 failed with one high-severity potential filesystem-race annotation
+at test helper line 48. The helper inspected a path with lstat before reading
+that path again. It now checks and reads a regular file through the same open
+handle. The first review and alert are retained as actual prior-source evidence;
+neither approves the corrected revision. Fresh exact-source review, full SDK
+tests and the independent CodeQL check remain required. The initial draft CI was
+cancelled by the ready-for-review event, not counted as a passing run.
+
 Machine: fresh browser-qa admission at 02:57 Europe/Amsterdam was HOLD, with
 5,207 MB free versus 8,192 MB required, 27 task runtimes versus eight and
 parallelism one. No local renderer, application build, additional agent or model
