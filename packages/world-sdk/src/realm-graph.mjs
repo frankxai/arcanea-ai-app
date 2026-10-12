@@ -8,6 +8,15 @@ const CANON_PATH = ".arcanea/lore/CANON_LOCKED.md";
 // A new source pin requires a reviewed compiler change, never an overlay field.
 const CANON_SHA =
   "58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f";
+const GENERATOR_VERSION = "arcanea.locked-canon-projection.v1";
+const LOCKED_SECTIONS = new Map([
+  ["## TIER 1: COSMIC FOUNDATION (LOCKED ✅)", "tier-1"],
+  ["## TIER 2: THE TEN GATES & ARCANEAN GODS (LOCKED ✅)", "tier-2"],
+  ["## TIER 3: THE SEVEN WISDOMS (LOCKED ✅)", "tier-3"],
+  ["## TIER 4: THE DARK LORD (LOCKED ✅)", "tier-4"],
+  ["## TIER 6: THE SEVEN ACADEMY HOUSES (LOCKED ✅)", "tier-6"],
+  ["## EXTENSIBILITY PRINCIPLES (LOCKED ✅)", "extensibility"],
+]);
 const contexts = new WeakMap();
 const TYPES = new Set([
   "character",
@@ -205,11 +214,17 @@ async function lockedProjection(repoRoot, commit) {
     .split(/\r?\n/);
   const canonSource = { path: CANON_PATH, commit, sha256 };
   const entities = [],
-    assertions = [];
+    assertions = [],
+    sourceSegments = [],
+    luminorSources = [];
   let section = "";
   const clean = (cell) => cell.trim().replaceAll("**", "");
-  const addEntity = (type, label) => {
-    const entityId = `${type}:${label.toLowerCase().replaceAll(" ", "-")}`;
+  const addEntity = (
+    type,
+    label,
+    key = label.toLowerCase().replaceAll(" ", "-"),
+  ) => {
+    const entityId = `${type}:${key}`;
     entities.push({ id: entityId, type, label });
     return entityId;
   };
@@ -230,7 +245,54 @@ async function lockedProjection(repoRoot, commit) {
       supersedes: [],
     });
   for (let i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith("## ")) section = lines[i];
+    if (lines[i].startsWith("## ")) {
+      section = lines[i];
+      if (LOCKED_SECTIONS.has(section)) {
+        let end = i + 1;
+        while (end < lines.length && !lines[end].startsWith("## ")) end++;
+        sourceSegments.push({
+          id: `canon:${LOCKED_SECTIONS.get(section)}`,
+          title: section.slice(3),
+          canonTier: LOCKED_SECTIONS.get(section),
+          text: lines.slice(i, end).join("\n"),
+          source: { ...canonSource, lineStart: i + 1, lineEnd: end },
+        });
+      }
+    }
+    if (LOCKED_SECTIONS.get(section) === "tier-4") {
+      const detail =
+        /^- \*\*(Former Name|Former Title|Fall|Current State|Nature):\*\* (.+)$/.exec(
+          lines[i],
+        );
+      if (detail) {
+        if (detail[1] === "Former Name") addEntity("character", "Malachar");
+        const predicates = {
+          "Former Name": "formerName",
+          "Former Title": "formerTitle",
+          Fall: "fall",
+          "Current State": "currentState",
+          Nature: "nature",
+        };
+        addFact(
+          "character:malachar",
+          predicates[detail[1]],
+          detail[2],
+          i + 1,
+          "tier-4",
+        );
+      }
+    }
+    if (LOCKED_SECTIONS.get(section) === "tier-6") {
+      const house = /^\d\. \*\*(House [A-Za-z]+)\*\* - (.+)$/.exec(lines[i]);
+      if (house)
+        addFact(
+          addEntity("faction", house[1]),
+          "domain",
+          house[2],
+          i + 1,
+          "tier-6",
+        );
+    }
     if (!lines[i].startsWith("|")) continue;
     const cells = lines[i].split("|").slice(1, -1).map(clean);
     if (
@@ -241,6 +303,19 @@ async function lockedProjection(repoRoot, commit) {
       const subjectId = addEntity("character", cells[0]);
       addFact(subjectId, "aspect", cells[1], i + 1, "tier-1");
       addFact(subjectId, "nature", cells[2], i + 1, "tier-1");
+    }
+    if (
+      LOCKED_SECTIONS.get(section) === "tier-1" &&
+      cells.length === 3 &&
+      ["Fire", "Water", "Earth", "Wind", "Void/Spirit"].includes(cells[0])
+    ) {
+      const elementId = addEntity(
+        "world-rule",
+        cells[0],
+        `element:${cells[0].toLowerCase().replace("/", "-")}`,
+      );
+      addFact(elementId, "domain", cells[1], i + 1, "tier-1");
+      addFact(elementId, "color", cells[2], i + 1, "tier-1");
     }
     if (
       section === "## TIER 2: THE TEN GATES & ARCANEAN GODS (LOCKED ✅)" &&
@@ -261,17 +336,104 @@ async function lockedProjection(repoRoot, commit) {
       addFact(subjectId, "bondedGodbeast", beastId, i + 1, "tier-2");
       addFact(subjectId, "domain", cells[4], i + 1, "tier-2");
     }
+    if (
+      LOCKED_SECTIONS.get(section) === "tier-2" &&
+      cells.length === 2 &&
+      /^\d+-\d+$/.test(cells[0])
+    ) {
+      const [min, max] = cells[0].split("-").map(Number);
+      const rankId = addEntity(
+        "world-rule",
+        cells[1],
+        `rank:${cells[1].toLowerCase()}`,
+      );
+      addFact(rankId, "openedGates", { min, max }, i + 1, "tier-2");
+      if (cells[1] === "Luminor")
+        luminorSources.push({
+          ...canonSource,
+          lineStart: i + 1,
+          lineEnd: i + 1,
+        });
+    }
+    if (
+      LOCKED_SECTIONS.get(section) === "tier-3" &&
+      cells.length === 4 &&
+      [
+        "Sophron",
+        "Kardia",
+        "Valora",
+        "Eudaira",
+        "Orakis",
+        "Poiesis",
+        "Enduran",
+      ].includes(cells[0])
+    ) {
+      const wisdomId = addEntity(
+        "world-rule",
+        cells[0],
+        `wisdom:${cells[0].toLowerCase()}`,
+      );
+      for (const [index, predicate] of [
+        [1, "archive"],
+        [2, "domain"],
+        [3, "element"],
+      ])
+        addFact(wisdomId, predicate, cells[index], i + 1, "tier-3");
+    }
+    if (
+      section === "## TERMINOLOGY LOCKED ✅" &&
+      cells.length === 3 &&
+      cells[2] === "✅ LOCKED"
+    ) {
+      const key = cells[0].toLowerCase().replaceAll(" ", "-");
+      const termId = addEntity("world-rule", cells[0], `term:${key}`);
+      addFact(termId, "definition", cells[1], i + 1, "terminology");
+      sourceSegments.push({
+        id: `canon:term:${key}`,
+        title: cells[0],
+        canonTier: "terminology",
+        text: lines[i],
+        source: { ...canonSource, lineStart: i + 1, lineEnd: i + 1 },
+      });
+      if (cells[0] === "Luminor")
+        luminorSources.push({
+          ...canonSource,
+          lineStart: i + 1,
+          lineEnd: i + 1,
+        });
+    }
   }
   requireRealm(
-    entities.length === 32 && assertions.length === 44,
-    "pinned canon table projection changed",
+    entities.length === 62 &&
+      assertions.length === 97 &&
+      sourceSegments.length === 11 &&
+      luminorSources.length === 2,
+    "pinned current locked canon projection changed",
+  );
+  requireRealm(
+    new Set(entities.map((entity) => entity.id)).size === entities.length &&
+      new Set(assertions.map((fact) => fact.id)).size === assertions.length,
+    "duplicate compiled canon identifier",
   );
   return {
     canonSource,
     locked: {
       entities: entities.sort(ordered),
       assertions: assertions.sort(ordered),
-      coverage: "primordial-duality-and-ten-gates-tables-only",
+      coverage: "current-locked-sections-and-locked-terminology",
+      generatorVersion: GENERATOR_VERSION,
+      sourceSegments: sourceSegments.sort(
+        (a, b) => a.source.lineStart - b.source.lineStart,
+      ),
+      ambiguities: [
+        {
+          id: "ambiguity:luminor-gates",
+          status: "human-resolution-required",
+          description:
+            "The Magic Ranks table assigns Luminor to 9-10 open Gates; the locked terminology row requires all 10. Both source statements are retained without resolution.",
+          sources: luminorSources,
+        },
+      ],
     },
   };
 }
@@ -533,6 +695,10 @@ export function realmContinuity(graph, characterId, sceneId) {
     lockedFacts,
     candidateFacts,
     conflicts,
+    canonContext: {
+      sourceSegments: graph.locked.sourceSegments,
+      ambiguities: graph.locked.ambiguities,
+    },
     canonPromotionAllowed: false,
   });
 }
