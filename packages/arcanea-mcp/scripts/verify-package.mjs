@@ -52,7 +52,8 @@ export function verifyPackage(directory) {
     !Array.isArray(manifest.files) ||
     !manifest.files.includes("dist/") ||
     manifest.files.some(
-      (file) => !["dist/", "README.md", "LICENSE", "server.json"].includes(file),
+      (file) =>
+        !["dist/", "README.md", "LICENSE", "server.json"].includes(file),
     )
   ) {
     throw new Error(

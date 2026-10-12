@@ -1,6 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+  rmSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,7 +22,10 @@ test("server.json exists and conforms to official MCP registry schema", () => {
   assert.equal(server.name, "io.github.frankxai/arcanea-mcp");
   assert.equal(server.title, "Arcanea MCP Server");
   assert.ok(server.description);
-  assert.equal(server.repository?.url, "https://github.com/frankxai/arcanea-ai-app");
+  assert.equal(
+    server.repository?.url,
+    "https://github.com/frankxai/arcanea-ai-app",
+  );
   assert.equal(server.license, "MIT");
   assert.ok(Array.isArray(server.packages) && server.packages.length > 0);
   assert.equal(server.packages[0].name, "@arcanea/mcp-server");
