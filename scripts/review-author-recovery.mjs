@@ -264,6 +264,15 @@ if (projectDocumentReview) {
     "scripts/tests/document-media-blob-fixture.test.cjs",
     "apps/web/lib/docs/media-outbox.ts",
     "scripts/tests/document-media-outbox.test.cjs",
+    // These were previously included as changed sources. Keep the actual
+    // claim, completion and export dependencies complete when the base moves.
+    "apps/web/lib/docs/media.ts",
+    "apps/web/lib/docs/media-server.ts",
+    "apps/web/lib/docs/portable-export.ts",
+    "apps/web/app/api/projects/[id]/docs/[docId]/media/route.ts",
+    "apps/web/app/api/projects/[id]/docs/[docId]/media/[assetId]/route.ts",
+    "supabase/migrations/20261012000001_project_doc_media.sql",
+    "scripts/tests/document-media.test.cjs",
     "supabase/migrations/20261011000001_private_imagine_assets.sql",
     "scripts/verify-project-document-browser.cjs",
     ".github/workflows/ci.yml",
