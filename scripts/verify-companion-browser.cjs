@@ -25,6 +25,7 @@ const source = [
   "apps/web/components/chat/chat-input-bar.tsx",
   "apps/web/components/chat/agent-header.tsx",
   "apps/web/app/chat/page.tsx",
+  "apps/web/app/globals.css",
   "apps/web/components/chat/chat-storage-status.tsx",
   "apps/web/components/chat/history-sidebar.tsx",
   "apps/web/components/chat/chat-layout.tsx",
@@ -263,7 +264,9 @@ async function main() {
           () => matchMedia("(prefers-reduced-motion: reduce)").matches,
         )
       )
-        await expect(sidebar).toHaveCSS("transition-duration", "0s");
+        // The global reduced-motion reset retains a tiny duration. No property
+        // may transition, regardless of that independent computed duration.
+        await expect(sidebar).toHaveCSS("transition-property", "none");
     }
     let recoveryGeometry;
     if (name.startsWith("full-chat-removal-") && !name.includes("recovered")) {
