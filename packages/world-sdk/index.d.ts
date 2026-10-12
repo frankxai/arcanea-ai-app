@@ -165,6 +165,11 @@ export function contentHash(
   manifest: WorldManifest,
 ): string;
 export function readWorld(dir: string): Promise<World>;
+export function writeFiles(
+  dir: string,
+  files: WorldFile[],
+  options?: { exclusive?: boolean },
+): Promise<void>;
 export function writeManifest(
   dir: string,
   manifest: WorldManifest,
