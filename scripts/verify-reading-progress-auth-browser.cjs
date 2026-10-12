@@ -412,15 +412,20 @@ async function main() {
     const recovery = await loadContext.newPage();
     page = recovery;
     let loadRequests = 0;
+    let interruptLoads = true;
     await loadContext.route("**/rest/v1/reading_progress?**", async (route) => {
       if (route.request().method() !== "GET") return route.continue();
-      loadRequests++;
-      if (loadRequests === 1) return route.abort("failed");
+      receipt.loadRequests = ++loadRequests;
+      // The actual SDK retries GET failures. Keep the transport interrupted
+      // through those attempts; only the user's explicit Retry restores it.
+      if (interruptLoads) return route.abort("failed");
       return route.continue();
     });
     await login(recovery, config.accounts[0]);
-    await expect(button(recovery, "Retry")).toBeEnabled();
+    await expect(button(recovery, "Retry")).toBeEnabled({ timeout: 15000 });
     await expect(readStatus(recovery)).toHaveCount(0);
+    receipt.interruptedLoadAttempts = loadRequests;
+    interruptLoads = false;
     await button(recovery, "Retry").click();
     await expect(readStatus(recovery)).toBeVisible();
     assert.ok(loadRequests >= 2);

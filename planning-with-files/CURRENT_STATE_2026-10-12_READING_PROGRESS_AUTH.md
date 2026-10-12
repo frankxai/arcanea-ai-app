@@ -52,5 +52,17 @@ retained. The refinement selects the login form explicitly; authenticated
 recovery and the suspected hidden mobile tracker still need runtime proof.
 Cleanup reported no errors and removed the exclusive private configuration.
 
+Refined source `d4a1b8a84754157d5770eb4a1998af802a02134e` in hosted run
+`38254912323` verified real form login, committed-save lost-acknowledgement retry
+into one row, reload/fresh-tab/collection badge, effective RLS denial and real
+cross-tab account retirement. It failed the interrupted-load fixture: one aborted
+GET could be recovered by the SDK's automatic idempotent-request retry, so no
+user Retry was exposed within the assertion's default five seconds. The installed
+PostgREST builder enables GET retries. The refinement keeps the initial transport
+interrupted until explicit Retry and permits the hook's existing ten-second
+deadline, with a bounded fifteen-second assertion. Original native receipts and
+two actually inspected desktop captures remain retained. Mobile acceptance is
+still pending; cleanup succeeded without configuration residue.
+
 Rollback is a normal revert of the six named fixture/workflow/pickup files;
 application behavior, customer data and production RLS are unchanged.
