@@ -1,5 +1,137 @@
 // Type surface for @arcanea/world-sdk. Runtime is ESM .mjs; these types are for consumers.
 
+export type JsonValue =
+  null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+
+export type RealmEntityType =
+  | "character"
+  | "place"
+  | "faction"
+  | "creature"
+  | "artifact"
+  | "world-rule"
+  | "event"
+  | "timeline"
+  | "series"
+  | "work"
+  | "scene"
+  | "quest"
+  | "asset"
+  | "release";
+export interface RealmEntity {
+  readonly id: string;
+  readonly type: RealmEntityType;
+  readonly label: string;
+  readonly workId?: string;
+  readonly timelineId?: string;
+  readonly moment?: number;
+  readonly participants?: readonly string[];
+}
+export interface RealmSource {
+  readonly path: string;
+  readonly sha256: string;
+  readonly commit?: string;
+  readonly lineStart?: number;
+  readonly lineEnd?: number;
+}
+export interface RealmCandidateAssertion {
+  readonly id: string;
+  readonly subjectId: string;
+  readonly predicate: string;
+  readonly value: JsonValue;
+  readonly cardinality: "one" | "many";
+  readonly status: "STAGING" | "CANDIDATE";
+  readonly confidence: number;
+  readonly validity: {
+    readonly timelineId: string;
+    readonly from: number;
+    readonly to: number | null;
+  } | null;
+  readonly source: RealmSource;
+  readonly affectedArtifacts: readonly string[];
+  readonly supersedes: readonly string[];
+}
+export interface RealmStaging {
+  readonly schemaVersion: "realm.arcanea.graph.v0";
+  readonly releaseId: string;
+  readonly description?: string;
+  readonly entities: readonly RealmEntity[];
+  readonly assertions: readonly RealmCandidateAssertion[];
+  readonly dependencies: readonly {
+    readonly dependsOn: string;
+    readonly artifactId: string;
+  }[];
+}
+export interface RealmLockedAssertion extends Omit<
+  RealmCandidateAssertion,
+  "status" | "validity"
+> {
+  readonly status: "LOCKED";
+  readonly validity: null;
+  readonly canonTier: "tier-1" | "tier-2";
+  readonly sourceVerification: "git-byte-verified";
+}
+export interface RealmGraphSnapshot {
+  readonly schemaVersion: "realm.arcanea.graph.v0";
+  readonly releaseId: string;
+  readonly canonSource: RealmSource & { readonly commit: string };
+  readonly locked: {
+    readonly coverage: "primordial-duality-and-ten-gates-tables-only";
+    readonly entities: readonly RealmEntity[];
+    readonly assertions: readonly RealmLockedAssertion[];
+  };
+  readonly staging: RealmStaging;
+  readonly canonPromotionAllowed: false;
+}
+declare const realmGraphBrand: unique symbol;
+export interface RealmGraph extends RealmGraphSnapshot {
+  readonly [realmGraphBrand]: true;
+}
+export interface RealmContinuity {
+  readonly schemaVersion: "realm.arcanea.graph.v0";
+  readonly releaseId: string;
+  readonly canonSource: RealmSource & { readonly commit: string };
+  readonly characterId: string;
+  readonly sceneId: string;
+  readonly timelineId: string;
+  readonly moment: number;
+  readonly lockedFacts: readonly RealmLockedAssertion[];
+  readonly candidateFacts: readonly (RealmCandidateAssertion & {
+    readonly canonTier: "proposal";
+    readonly sourceVerification: "declared";
+  })[];
+  readonly conflicts: readonly {
+    readonly subjectId: string;
+    readonly predicate: string;
+    readonly lockedAssertionIds: readonly string[];
+    readonly candidateAssertionIds: readonly string[];
+  }[];
+  readonly canonPromotionAllowed: false;
+}
+export interface RealmImpact {
+  readonly schemaVersion: "realm.arcanea.graph.v0";
+  readonly releaseId: string;
+  readonly canonSource: RealmSource & { readonly commit: string };
+  readonly changeId: string;
+  readonly coverage: "declared-dependencies-only";
+  readonly affected: readonly (RealmEntity & {
+    readonly via: readonly string[];
+  })[];
+  readonly canonPromotionAllowed: false;
+}
+export function openRealmGraph(
+  repoRoot: string,
+  commit: string,
+  staging: unknown,
+): Promise<RealmGraph>;
+export function realmContinuity(
+  graph: RealmGraph,
+  characterId: string,
+  sceneId: string,
+): RealmContinuity;
+export function realmImpact(graph: RealmGraph, changeId: string): RealmImpact;
+export function exportRealmGraph(graph: RealmGraph): RealmGraphSnapshot;
+
 export interface WorldManifest {
   $schema?: string;
   schemaVersion: string;
@@ -36,11 +168,51 @@ export interface WorldManifest {
   visibility?: "public" | "unlisted" | "private";
   hosting?: "repo" | "hosted_private" | "hosted_public";
   snapshot?: { ipfs?: string; arweave?: string };
+  game?: {
+    seedPrompt?: string;
+    genre?:
+      "rpg" | "action" | "adventure" | "strategy" | "simulation" | "hybrid";
+    mechanics?: string[];
+    higgsfieldAssets?: Record<string, JsonValue> & {
+      characterRefs?: string[];
+      environmentPrompts?: string[];
+      cinematicScenes?: string[];
+    };
+    proceduralMap?: Record<string, JsonValue>;
+    memoryInjection?: boolean;
+    lastGenerated?: string;
+    playableUrl?: string;
+  };
+  memory?: {
+    vaults?: string[];
+    embeddingsModel?: string;
+    evolution?: Record<string, JsonValue>[];
+    persistentStates?: Record<string, JsonValue>;
+  };
+  meaning?: {
+    pillars?: string[];
+    coreBeliefs?: string[];
+    emotionalAnchors?: string[];
+    tensions?: string[];
+  };
+  community?: {
+    contributors?: Record<string, JsonValue>[];
+    forks?: string[];
+    contributionPolicy?: string;
+    reputation?: Record<string, JsonValue>;
+    events?: string[];
+  };
+  mapper?: {
+    version?: string;
+    lastRun?: string;
+    harnessesUsed?: string[];
+    outputs?: string[];
+  };
 }
 
 export interface WorldAgent {
   id: string;
-  harness: "claude" | "codex" | "gemini" | "antigravity" | "any";
+  harness: "claude" | "codex" | "gemini" | "antigravity" | "grok" | "any";
   role: string;
   skill?: string;
 }
@@ -126,6 +298,7 @@ export interface World {
 }
 
 export interface WorldSpec {
+  schemaVersion?: string;
   name?: string;
   genesisPrompt?: string;
   premise?: string;
@@ -143,6 +316,11 @@ export interface WorldSpec {
   agents?: WorldAgent[];
   creator?: { handle: string; wallet?: string };
   idSeed?: string;
+  game?: WorldManifest["game"];
+  memory?: WorldManifest["memory"];
+  meaning?: WorldManifest["meaning"];
+  community?: WorldManifest["community"];
+  mapper?: WorldManifest["mapper"];
 }
 
 export interface ChainAdapter {
@@ -156,7 +334,8 @@ export function slugify(name: string): string;
 export function buildManifest(
   spec: WorldSpec & Partial<WorldManifest>,
 ): WorldManifest;
-export function validateManifest(m: WorldManifest): {
+/** Checks JSON shape only. No URI retrieval, permission, rights or canon approval. */
+export function validateManifest(m: unknown): {
   valid: boolean;
   errors: string[];
 };

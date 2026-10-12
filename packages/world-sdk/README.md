@@ -5,6 +5,35 @@ lets every layer read and build it. The repo is the source of truth — this is 
 
 Spec: `arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md` · Schema: `arcanea-ecosystem/schemas/world.arcanea.schema.json`
 
+## Manifest validation
+
+`validateManifest(value)` checks core fields and the optional v1.1 `game`,
+`memory`, `meaning`, `community` and `mapper` sections. It returns field paths
+and errors, without changing data, coercing types, fetching schema URLs or
+applying schema defaults. Unknown fields refuse where the shared contract closes
+an object. Custom content pointers and open JSON state remain supported.
+
+`buildManifest` preserves an explicit `schemaVersion` and supplied extensions;
+its base default remains `1.0.0`. `scaffoldWorld` and `createWorld` refuse an
+invalid emitted manifest with `ERR_ARCANEA_WORLD_MANIFEST` before optional
+world-engine import or destination writes. Repair the input and retry. Existing
+worlds remain readable for inspection and repair; `arcanea-world validate <dir>`
+exits 1 for invalid shape and leaves files unchanged. General `writeManifest`
+is still a local editing primitive; it does not automatically run validation.
+
+The offline schema mirror is pinned to [the shared standard at
+75a31a6](https://github.com/frankxai/arcanea-ecosystem/blob/75a31a6f101b3c8008a9ac958e9314909e67de3f/schemas/world.arcanea.schema.json),
+upstream SHA256
+`a53e183ef8d9538863b33d7a706bd6c16a343489f41362b8f88a8fd486a65d04`.
+The local copy uses repository formatting with identical parsed schema content;
+its SHA256 is
+`f217e054810cecd53a31456c87e2c353f38c2e3d786125083ae5dc153a00f0ef`.
+The zero-dependency evaluator implements only that schema's keywords and refuses
+unsupported schema keywords on load. `format`, including `date-time`, remains
+an annotation under its 2020-12 dialect. Existing SDK checks for nonempty SPDX
+and provenance timestamps and nonempty royalty splits totaling 10,000 bps also
+apply. Validation grants no rights, provider, canon or publication authority.
+
 ## What's inside
 
 | Module        | Role                                                                                                          |
@@ -74,6 +103,75 @@ This SDK does not implement the separate human canon-promotion workflow.
 ```bash
 node --test tests/*.test.mjs
 ```
+
+## Realm continuity and change impact
+
+The local Realm Graph reads the immutable `.arcanea/lore/CANON_LOCKED.md` Git
+blob at a full commit. Its v0 source pin projects only the explicit
+primordial-duality and Ten Gates tables: 32 entities and 44 facts. Other locked
+sections, staging sections and the historical approval log are outside this
+projection. Source drift refuses until a reviewed compiler update changes the
+pin. Neither a supplied hash nor a serialized graph establishes canon authority.
+
+A staging JSON overlay links characters, places, factions, creatures, artifacts,
+world rules, events, timelines, series, works, scenes, quests, assets and releases.
+It contains metadata and short assertions, with source paths/hashes; keep
+manuscript bodies in AuthorOS. Candidate citations are declarations, not verified
+source evidence. Only `STAGING` and `CANDIDATE` assertions are accepted. There is
+no promotion or canon-write API, and proposed supersessions retain locked facts.
+
+```js
+import {
+  openRealmGraph,
+  realmContinuity,
+  realmImpact,
+  exportRealmGraph,
+} from "@arcanea/world-sdk";
+
+const graph = await openRealmGraph(arcaneaRepo, fullSourceCommit, staging);
+const context = realmContinuity(graph, characterId, sceneId);
+const impact = realmImpact(graph, proposedAssertionId);
+const saved = exportRealmGraph(graph);
+// Reload re-verifies Git canon; serialized LOCKED fields are never imported.
+const restored = await openRealmGraph(
+  arcaneaRepo,
+  saved.canonSource.commit,
+  saved.staging,
+);
+```
+
+Continuity requires a declared participant and uses the scene's ordinal moment
+on its named timeline. Validity is `[from, to)`; `null` is timeless or an unbounded
+end. It returns the character's locked facts and their directly named canon
+entities, applicable candidate assertions and conflicts for single-valued
+predicates. It compares declared values, not prose meaning. A many-valued
+relationship permits several values unless the same group also has a
+single-valued constraint. Timeless canon is retained across scenes; candidates
+cannot overwrite it or remove it by naming it in `supersedes`.
+
+Impact follows only declared dependency and affected-artifact links. It returns
+scenes, books/works, assets, quests, series and releases, with a deterministic
+shortest path per artifact. Cycles terminate. Missing links remain missing
+coverage; the traversal does not infer every affected work from narrative prose.
+
+The existing CLI provides the same read-only operations:
+
+```text
+arcanea-world realm continuity <repo> <full-commit> <staging.json> <character-id> <scene-id>
+arcanea-world realm impact <repo> <full-commit> <staging.json> <change-id>
+arcanea-world realm export <repo> <full-commit> <staging.json>
+```
+
+Export JSON to a creator-chosen destination and preserve the input overlay for
+editing/retry. The bundled test fixture is synthetic and uses `ARC-REL-001` only
+as a release-lane identifier. Its scenes/proposals are not Dragonborne manuscript
+facts or approvals. Shape documentation is `src/realm-graph.schema.json`; runtime
+also verifies references, interval ordering, 1 MB/depth bounds and actual pinned
+Git bytes. Invalid inputs fail before any repository, graph or canon writes.
+
+This is a local SDK/CLI read boundary. The calling host owns repository access
+and tenant authorization. It does not verify human signatures, grant rights,
+publish a package, authorize model/provider use or constrain arbitrary Node code.
 
 ## Source-linked scenes
 

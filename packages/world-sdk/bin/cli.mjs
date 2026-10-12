@@ -18,6 +18,7 @@ import {
   distillOffline,
 } from "../src/evolution.mjs";
 import { runSceneCommand } from "./scene-cli.mjs";
+import { runRealmCommand } from "./realm-cli.mjs";
 
 const [cmd, ...rest] = process.argv.slice(2);
 
@@ -27,6 +28,14 @@ function die(msg) {
 }
 
 switch (cmd) {
+  case "realm": {
+    try {
+      console.log(await runRealmCommand(rest));
+    } catch (error) {
+      die(error.message);
+    }
+    break;
+  }
   case "scene": {
     try {
       console.log(await runSceneCommand(rest));
@@ -112,6 +121,6 @@ switch (cmd) {
   }
   default:
     die(
-      'commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir> | remember [char] "moment..." [dir] | evolve <char-slug> [dir] | memories [dir] | scene start|show|prompt|revise|export',
+      'commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir> | remember [char] "moment..." [dir] | evolve <char-slug> [dir] | memories [dir] | scene start|show|prompt|revise|export | realm continuity|impact|export',
     );
 }
