@@ -1,93 +1,152 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-/**
- * ReadingTracker — client component for the text detail page.
- * - Marks a text as read when the user scrolls past 90% of the article.
- * - Provides a manual "Mark as read" button in the sidebar.
- * - Works gracefully when not logged in (no-op).
- */
-
-import { useEffect, useRef, useCallback } from 'react';
-import { CheckCircle } from '@/lib/phosphor-icons';
-import { useAuth } from '@/lib/auth/context';
-import { useReadingProgress } from '@/hooks/use-reading-progress';
+import { useEffect } from "react";
+import { CheckCircle } from "@/lib/phosphor-icons";
+import { useAuth } from "@/lib/auth/context";
+import { useReadingProgress } from "@/hooks/use-reading-progress";
 
 interface ReadingTrackerProps {
   textSlug: string;
   collectionSlug: string;
 }
 
-export function ReadingTracker({ textSlug, collectionSlug }: ReadingTrackerProps) {
+/** End-of-article visibility requests completion; only an acknowledged save
+ * displays Read. Reaching the end does not establish reading comprehension. */
+export function ReadingTracker({
+  textSlug,
+  collectionSlug,
+}: ReadingTrackerProps) {
   const { user } = useAuth();
-  const { markComplete, isComplete } = useReadingProgress(user?.id ?? null);
-  const articleRef = useRef<HTMLElement | null>(null);
-  const markedRef = useRef(false);
+  const userId = user?.id ?? null;
+  const {
+    markComplete,
+    isComplete,
+    isLoading,
+    isSaving,
+    loadError,
+    saveError,
+    retry,
+  } = useReadingProgress(userId);
+  const done = isComplete(textSlug);
 
-  const handleMarkComplete = useCallback(() => {
-    markComplete(textSlug, collectionSlug);
-  }, [markComplete, textSlug, collectionSlug]);
-
-  // Scroll-based auto-mark: fires once when the user has read 90%+ of the article
   useEffect(() => {
-    if (!user) return;
-
-    const article = document.getElementById('main-content');
+    if (!userId || isLoading || loadError || saveError || done) return;
+    const article = document.getElementById("main-content");
     if (!article) return;
-    articleRef.current = article;
-
+    let active = true;
+    let pending = false;
+    let marked = false;
+    const sentinel = document.createElement("div");
+    sentinel.className = "h-px w-full";
+    sentinel.setAttribute("aria-hidden", "true");
+    article.appendChild(sentinel);
     const observer = new IntersectionObserver(
       (entries) => {
-        if (markedRef.current) return;
-        const entry = entries[0];
-        if (entry && entry.intersectionRatio >= 0.9) {
-          markedRef.current = true;
-          markComplete(textSlug, collectionSlug);
-        }
+        if (
+          !active ||
+          pending ||
+          marked ||
+          !entries.some(
+            (entry) => entry.isIntersecting && entry.intersectionRatio >= 0.9,
+          )
+        )
+          return;
+        pending = true;
+        void markComplete(textSlug, collectionSlug).then((result) => {
+          if (active) {
+            marked = result === "saved";
+            pending = false;
+          }
+        });
       },
-      { threshold: 0.9 }
+      { threshold: 0.9 },
     );
-
-    // Observe a sentinel at the bottom of the article
-    const sentinel = document.createElement('div');
-    sentinel.setAttribute('aria-hidden', 'true');
-    article.appendChild(sentinel);
     observer.observe(sentinel);
-
     return () => {
+      active = false;
       observer.disconnect();
       sentinel.remove();
     };
-  }, [user, textSlug, collectionSlug, markComplete]);
-
-  const done = isComplete(textSlug);
+  }, [
+    userId,
+    textSlug,
+    collectionSlug,
+    markComplete,
+    isLoading,
+    loadError,
+    saveError,
+    done,
+  ]);
 
   if (!user) return null;
+  const buttonClass =
+    "flex min-h-11 w-full items-center gap-2 rounded-lg border border-cosmic-border px-3 py-2 text-sm text-text-secondary transition-colors hover:border-atlantean-teal/50 hover:text-atlantean-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal disabled:cursor-wait motion-reduce:transition-none";
 
   return (
-    <div className="rounded-xl border border-cosmic-border bg-cosmic-surface p-4">
+    <div
+      className="rounded-xl border border-cosmic-border bg-cosmic-surface p-4"
+      aria-busy={isLoading || isSaving}
+    >
       {done ? (
-        <div className="flex items-center gap-2 text-sm text-atlantean-teal">
-          <CheckCircle weight="fill" className="h-4 w-4 flex-none" aria-hidden="true" />
+        <div
+          role="status"
+          className="flex items-center gap-2 text-sm text-atlantean-teal"
+        >
+          <CheckCircle
+            weight="fill"
+            className="h-4 w-4 flex-none"
+            aria-hidden="true"
+          />
           <span>Read</span>
         </div>
+      ) : loadError ? (
+        <>
+          <p role="alert" className="mb-3 text-sm text-text-secondary">
+            {loadError}
+          </p>
+          <button type="button" onClick={retry} className={buttonClass}>
+            Retry
+          </button>
+        </>
       ) : (
-        <button
-          onClick={handleMarkComplete}
-          className="flex w-full items-center gap-2 rounded-lg border border-cosmic-border px-3 py-2 text-sm text-text-muted transition-all hover:border-atlantean-teal/50 hover:text-atlantean-teal"
-        >
-          <CheckCircle className="h-4 w-4 flex-none" aria-hidden="true" />
-          <span>Mark as read</span>
-        </button>
+        <>
+          <button
+            type="button"
+            onClick={() => {
+              void markComplete(textSlug, collectionSlug);
+            }}
+            disabled={isLoading || isSaving}
+            className={buttonClass}
+          >
+            <CheckCircle className="h-4 w-4 flex-none" aria-hidden="true" />
+            <span>
+              {isLoading
+                ? "Loading progress…"
+                : isSaving
+                  ? "Saving…"
+                  : saveError
+                    ? "Try saving again"
+                    : "Mark as read"}
+            </span>
+          </button>
+          {saveError && (
+            <p role="alert" className="mt-3 text-sm text-text-secondary">
+              {saveError}
+            </p>
+          )}
+          {(isLoading || isSaving) && (
+            <span role="status" className="sr-only">
+              {isLoading
+                ? "Loading reading progress"
+                : "Saving reading progress"}
+            </span>
+          )}
+        </>
       )}
     </div>
   );
 }
 
-/**
- * ReadBadge — inline badge for collection/listing pages.
- * Rendered only when a text has been completed.
- */
 interface ReadBadgeProps {
   textSlug: string;
   isComplete: boolean;

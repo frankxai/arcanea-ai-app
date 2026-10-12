@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * PageEditor — owner editing surface for a Page.
@@ -9,13 +9,14 @@
  * spectacle — motion is reserved for state changes that benefit from it.
  */
 
-import { useCallback, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { LazyMotion, domAnimation, m, useReducedMotion } from 'framer-motion';
-import ChatMarkdown from '@/components/chat/chat-markdown';
-import { createClient } from '@/lib/supabase/client';
+import { useAuth } from "@/lib/auth/context";
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { LazyMotion, domAnimation, m, useReducedMotion } from "framer-motion";
+import ChatMarkdown from "@/components/chat/chat-markdown";
+import { requestImages } from "@/lib/imagine/request";
 import {
   PhArrowLeft,
   PhCaretUp,
@@ -33,26 +34,64 @@ import {
   PhDotsSixVertical,
   PhCheck,
   PhCircleNotch,
-} from '@/lib/phosphor-icons';
-import type { PageSection, PageView, PageVisibility } from '@/lib/pages/types';
+} from "@/lib/phosphor-icons";
+import type { PageSection, PageView, PageVisibility } from "@/lib/pages/types";
 
-const EDITORIAL = 'var(--font-editorial), var(--font-serif), serif';
-const SPRING = { type: 'spring' as const, stiffness: 380, damping: 32 };
+const EDITORIAL = "var(--font-editorial), var(--font-serif), serif";
+const SPRING = { type: "spring" as const, stiffness: 380, damping: 32 };
 
-const VISIBILITIES: { value: PageVisibility; label: string; hint: string; icon: typeof PhGlobe }[] = [
-  { value: 'public', label: 'Public', hint: 'Listed in Discover and indexed by search engines.', icon: PhGlobe },
-  { value: 'unlisted', label: 'Unlisted', hint: 'Anyone with the link can view. Not indexed.', icon: PhLinkIcon },
-  { value: 'private', label: 'Private', hint: 'Only you can view it.', icon: PhLock },
+const VISIBILITIES: {
+  value: PageVisibility;
+  label: string;
+  hint: string;
+  icon: typeof PhGlobe;
+}[] = [
+  {
+    value: "public",
+    label: "Public",
+    hint: "Listed in Discover and indexed by search engines.",
+    icon: PhGlobe,
+  },
+  {
+    value: "unlisted",
+    label: "Unlisted",
+    hint: "Anyone with the link can view. Not indexed.",
+    icon: PhLinkIcon,
+  },
+  {
+    value: "private",
+    label: "Private",
+    hint: "Only you can view it.",
+    icon: PhLock,
+  },
 ];
 
-export function PageEditor({ slug, initial }: { slug: string; initial: PageView }) {
+export function PageEditor({
+  slug,
+  initial,
+}: {
+  slug: string;
+  initial: PageView;
+}) {
+  const { credentialScope } = useAuth();
+  const currentToken = credentialScope.get();
+  const [editorOwner, setEditorOwner] = useState<typeof currentToken | null>(
+    currentToken.actor?.startsWith("user:") ? currentToken : null,
+  );
+  if (!editorOwner && currentToken.actor?.startsWith("user:"))
+    setEditorOwner(currentToken);
+
   const router = useRouter();
   const reduce = useReducedMotion();
   const [title, setTitle] = useState(initial.title);
-  const [summary, setSummary] = useState(initial.summary ?? '');
+  const [summary, setSummary] = useState(initial.summary ?? "");
   const [sections, setSections] = useState<PageSection[]>(initial.sections);
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(initial.coverImageUrl);
-  const [visibility, setVisibility] = useState<PageVisibility>(initial.visibility);
+  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
+    initial.coverImageUrl,
+  );
+  const [visibility, setVisibility] = useState<PageVisibility>(
+    initial.visibility,
+  );
 
   const [status, setStatus] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -66,9 +105,14 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
     setTimeout(() => setStatus(null), 2500);
   }, []);
 
-  const patchSection = useCallback((id: string, patch: Partial<PageSection>) => {
-    setSections((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
-  }, []);
+  const patchSection = useCallback(
+    (id: string, patch: Partial<PageSection>) => {
+      setSections((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, ...patch } : s)),
+      );
+    },
+    [],
+  );
 
   const moveSection = useCallback((id: string, dir: -1 | 1) => {
     setSections((prev) => {
@@ -96,25 +140,25 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
 
   const reviseSection = useCallback(
     async (id: string) => {
-      const instruction = (instructions[id] || '').trim();
+      const instruction = (instructions[id] || "").trim();
       if (!instruction) return;
       setReviseBusy(id);
       try {
         const res = await fetch(`/api/pages/${slug}/section`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ sectionId: id, instruction }),
         });
         const data = await res.json();
         if (res.ok && data.markdown) {
           patchSection(id, { markdown: data.markdown });
-          setInstructions((prev) => ({ ...prev, [id]: '' }));
-          flash('Section revised');
+          setInstructions((prev) => ({ ...prev, [id]: "" }));
+          flash("Section revised");
         } else {
-          flash(data.error || 'Could not revise section');
+          flash(data.error || "Could not revise section");
         }
       } catch {
-        flash('Could not revise section');
+        flash("Could not revise section");
       } finally {
         setReviseBusy(null);
       }
@@ -123,70 +167,90 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
   );
 
   const regenerateCover = useCallback(async () => {
+    const token = credentialScope.get();
     setCoverBusy(true);
     try {
-      const supabase = createClient();
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
-      const res = await fetch('/api/ai/generate-image', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          prompt: `Editorial cover image for an article titled "${title}". ${summary}`.slice(0, 500),
-          width: 1200,
-          height: 630,
-        }),
-      });
+      // Page covers require a hosted URL; inline bytes cannot be saved by Pages.
+      const res = await requestImages(
+        {
+          prompt:
+            `Editorial cover image for an article titled "${title}". ${summary}`.slice(
+              0,
+              500,
+            ),
+          count: 1,
+          aspectRatio: "16:9",
+          provider: "grok",
+        },
+        { scope: credentialScope, token },
+      );
       const data = await res.json();
-      const url = data?.images?.[0]?.url || data?.images?.[0]?.storageUrl || data?.url;
-      if (res.ok && url) {
+      if (!credentialScope.isCurrent(token)) return;
+      const url = data?.images?.[0]?.url;
+      if (
+        res.ok &&
+        typeof url === "string" &&
+        new URL(url).protocol === "https:"
+      ) {
         setCoverImageUrl(url);
-        flash('Cover regenerated — remember to save');
+        flash("Cover regenerated — remember to save");
       } else {
-        flash(data?.error || 'Could not generate cover');
+        flash(data?.error || "Could not generate cover");
       }
     } catch {
-      flash('Could not generate cover');
+      if (!credentialScope.isCurrent(token)) return;
+      flash("Could not generate cover");
     } finally {
-      setCoverBusy(false);
+      if (credentialScope.isCurrent(token)) setCoverBusy(false);
     }
-  }, [title, summary, flash]);
+  }, [credentialScope, title, summary, flash]);
 
   const save = useCallback(async () => {
     setSaving(true);
     try {
       const res = await fetch(`/api/pages/${slug}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, summary, sections, visibility, coverImageUrl }),
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          summary,
+          sections,
+          visibility,
+          coverImageUrl,
+        }),
       });
       const data = await res.json();
-      flash(res.ok ? 'Saved' : data.error || 'Failed to save');
+      flash(res.ok ? "Saved" : data.error || "Failed to save");
     } catch {
-      flash('Failed to save');
+      flash("Failed to save");
     } finally {
       setSaving(false);
     }
   }, [slug, title, summary, sections, visibility, coverImageUrl, flash]);
 
   const deletePage = useCallback(async () => {
-    if (!window.confirm('Delete this Page permanently?')) return;
+    if (!window.confirm("Delete this Page permanently?")) return;
     try {
-      const res = await fetch(`/api/pages/${slug}`, { method: 'DELETE' });
-      if (res.ok) router.push('/discover/pages');
-      else flash('Failed to delete');
+      const res = await fetch(`/api/pages/${slug}`, { method: "DELETE" });
+      if (res.ok) router.push("/discover/pages");
+      else flash("Failed to delete");
     } catch {
-      flash('Failed to delete');
+      flash("Failed to delete");
     }
   }, [slug, router, flash]);
 
   const inputCls =
-    'w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-white/85 placeholder-white/25 transition-colors focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20';
+    "w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-white/85 placeholder-white/25 transition-colors focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20";
   const iconBtn =
-    'flex h-8 w-8 items-center justify-center rounded-md text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white/80 disabled:opacity-20 disabled:hover:bg-transparent';
+    "flex h-8 w-8 items-center justify-center rounded-md text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white/80 disabled:opacity-20 disabled:hover:bg-transparent";
+
+  if (editorOwner && !credentialScope.isCurrent(editorOwner))
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Your account changed. Reload this page to continue with the current
+        account.
+      </p>
+    );
 
   return (
     <LazyMotion features={domAnimation}>
@@ -194,7 +258,10 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
         {/* Sticky toolbar */}
         <div className="sticky top-0 z-20 border-b border-white/[0.06] bg-[var(--arc-cosmic-void)]/80 backdrop-blur-xl">
           <div className="mx-auto flex max-w-[760px] items-center justify-between gap-3 px-5 py-3 sm:px-8">
-            <Link href={`/p/${slug}`} className="inline-flex items-center gap-1.5 text-xs text-white/40 transition-colors hover:text-white/75">
+            <Link
+              href={`/p/${slug}`}
+              className="inline-flex items-center gap-1.5 text-xs text-white/40 transition-colors hover:text-white/75"
+            >
               <PhArrowLeft className="h-3.5 w-3.5" weight="bold" />
               View page
             </Link>
@@ -212,12 +279,21 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                 type="button"
                 onClick={save}
                 disabled={saving}
-                {...(reduce ? {} : { whileHover: { scale: 1.03 }, whileTap: { scale: 0.97 } })}
+                {...(reduce
+                  ? {}
+                  : { whileHover: { scale: 1.03 }, whileTap: { scale: 0.97 } })}
                 transition={SPRING}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--arc-brand-atlantean-teal)] px-4 py-1.5 text-xs font-semibold text-black transition-shadow hover:shadow-[0_0_22px_-4px_rgba(0,188,212,0.6)] disabled:opacity-50"
               >
-                {saving ? <PhCircleNotch className="h-3.5 w-3.5 animate-spin" weight="bold" /> : <PhCheck className="h-3.5 w-3.5" weight="bold" />}
-                {saving ? 'Saving' : 'Save'}
+                {saving ? (
+                  <PhCircleNotch
+                    className="h-3.5 w-3.5 animate-spin"
+                    weight="bold"
+                  />
+                ) : (
+                  <PhCheck className="h-3.5 w-3.5" weight="bold" />
+                )}
+                {saving ? "Saving" : "Save"}
               </m.button>
             </div>
           </div>
@@ -226,7 +302,9 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
         <div className="mx-auto max-w-[760px] space-y-8 px-5 py-10 sm:px-8">
           {/* Visibility — segmented control */}
           <div>
-            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Visibility</label>
+            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">
+              Visibility
+            </label>
             <div className="inline-flex rounded-xl border border-white/[0.08] bg-white/[0.02] p-1">
               {VISIBILITIES.map((v) => {
                 const Icon = v.icon;
@@ -237,7 +315,7 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                     type="button"
                     onClick={() => setVisibility(v.value)}
                     title={v.hint}
-                    className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200 ${active ? 'border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)]' : 'border border-transparent text-white/45 hover:text-white/75'}`}
+                    className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200 ${active ? "border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)]" : "border border-transparent text-white/45 hover:text-white/75"}`}
                   >
                     <Icon className="h-3.5 w-3.5" weight="duotone" />
                     <span>{v.label}</span>
@@ -245,26 +323,45 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                 );
               })}
             </div>
-            <p className="mt-1.5 text-[11px] text-white/30">{VISIBILITIES.find((v) => v.value === visibility)?.hint}</p>
+            <p className="mt-1.5 text-[11px] text-white/30">
+              {VISIBILITIES.find((v) => v.value === visibility)?.hint}
+            </p>
           </div>
 
           {/* Cover */}
           <div>
             <div className="mb-2 flex items-center justify-between">
-              <label className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">Cover</label>
+              <label className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">
+                Cover
+              </label>
               <button
                 type="button"
                 onClick={regenerateCover}
                 disabled={coverBusy}
                 className="inline-flex items-center gap-1.5 text-xs text-white/45 transition-colors hover:text-[var(--arc-brand-atlantean-teal)] disabled:opacity-50"
               >
-                {coverBusy ? <PhCircleNotch className="h-3.5 w-3.5 animate-spin" /> : <PhMagicWand className="h-3.5 w-3.5" weight="duotone" />}
-                {coverBusy ? 'Generating' : coverImageUrl ? 'Regenerate' : 'Generate cover'}
+                {coverBusy ? (
+                  <PhCircleNotch className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <PhMagicWand className="h-3.5 w-3.5" weight="duotone" />
+                )}
+                {coverBusy
+                  ? "Generating"
+                  : coverImageUrl
+                    ? "Regenerate"
+                    : "Generate cover"}
               </button>
             </div>
             {coverImageUrl ? (
               <div className="relative h-44 overflow-hidden rounded-xl border border-white/[0.06]">
-                <Image src={coverImageUrl} alt="Cover" fill sizes="760px" className="object-cover" />
+                <Image
+                  src={coverImageUrl}
+                  unoptimized
+                  alt="Cover"
+                  fill
+                  sizes="760px"
+                  className="object-cover"
+                />
                 <button
                   type="button"
                   onClick={() => setCoverImageUrl(null)}
@@ -308,22 +405,45 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                   className="group rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
                 >
                   <div className="mb-3 flex items-center gap-2">
-                    <PhDotsSixVertical className="h-4 w-4 shrink-0 text-white/20" weight="bold" aria-hidden />
+                    <PhDotsSixVertical
+                      className="h-4 w-4 shrink-0 text-white/20"
+                      weight="bold"
+                      aria-hidden
+                    />
                     <input
                       value={section.heading}
-                      onChange={(e) => patchSection(section.id, { heading: e.target.value })}
+                      onChange={(e) =>
+                        patchSection(section.id, { heading: e.target.value })
+                      }
                       placeholder="Section heading"
                       className={`${inputCls} font-medium`}
                       style={{ fontFamily: EDITORIAL }}
                     />
                     <div className="flex shrink-0 items-center">
-                      <button type="button" onClick={() => moveSection(section.id, -1)} disabled={i === 0} className={iconBtn} aria-label="Move section up">
+                      <button
+                        type="button"
+                        onClick={() => moveSection(section.id, -1)}
+                        disabled={i === 0}
+                        className={iconBtn}
+                        aria-label="Move section up"
+                      >
                         <PhCaretUp className="h-4 w-4" weight="bold" />
                       </button>
-                      <button type="button" onClick={() => moveSection(section.id, 1)} disabled={i === sections.length - 1} className={iconBtn} aria-label="Move section down">
+                      <button
+                        type="button"
+                        onClick={() => moveSection(section.id, 1)}
+                        disabled={i === sections.length - 1}
+                        className={iconBtn}
+                        aria-label="Move section down"
+                      >
                         <PhCaretDown className="h-4 w-4" weight="bold" />
                       </button>
-                      <button type="button" onClick={() => deleteSection(section.id)} className={`${iconBtn} hover:text-red-400`} aria-label="Delete section">
+                      <button
+                        type="button"
+                        onClick={() => deleteSection(section.id)}
+                        className={`${iconBtn} hover:text-red-400`}
+                        aria-label="Delete section"
+                      >
                         <PhTrash className="h-4 w-4" weight="duotone" />
                       </button>
                     </div>
@@ -336,7 +456,9 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                   ) : (
                     <textarea
                       value={section.markdown}
-                      onChange={(e) => patchSection(section.id, { markdown: e.target.value })}
+                      onChange={(e) =>
+                        patchSection(section.id, { markdown: e.target.value })
+                      }
                       placeholder="Markdown body…"
                       rows={6}
                       className={`${inputCls} font-mono text-[13px] leading-relaxed`}
@@ -349,19 +471,31 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                       onClick={() => togglePreview(section.id)}
                       className="inline-flex items-center gap-1.5 text-[11px] text-white/40 transition-colors hover:text-white/70"
                     >
-                      {preview ? <PhEyeSlash className="h-3.5 w-3.5" weight="duotone" /> : <PhEye className="h-3.5 w-3.5" weight="duotone" />}
-                      {preview ? 'Edit markdown' : 'Preview'}
+                      {preview ? (
+                        <PhEyeSlash className="h-3.5 w-3.5" weight="duotone" />
+                      ) : (
+                        <PhEye className="h-3.5 w-3.5" weight="duotone" />
+                      )}
+                      {preview ? "Edit markdown" : "Preview"}
                     </button>
                   </div>
 
                   {/* AI revise */}
                   <div className="mt-3 flex items-center gap-2 border-t border-white/[0.05] pt-3">
-                    <PhMagicWand className="h-4 w-4 shrink-0 text-[var(--arc-brand-atlantean-teal)]/70" weight="duotone" />
+                    <PhMagicWand
+                      className="h-4 w-4 shrink-0 text-[var(--arc-brand-atlantean-teal)]/70"
+                      weight="duotone"
+                    />
                     <input
-                      value={instructions[section.id] || ''}
-                      onChange={(e) => setInstructions((prev) => ({ ...prev, [section.id]: e.target.value }))}
+                      value={instructions[section.id] || ""}
+                      onChange={(e) =>
+                        setInstructions((prev) => ({
+                          ...prev,
+                          [section.id]: e.target.value,
+                        }))
+                      }
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter') reviseSection(section.id);
+                        if (e.key === "Enter") reviseSection(section.id);
                       }}
                       placeholder="Ask AI to revise this section…"
                       className={`${inputCls} text-xs`}
@@ -369,11 +503,16 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
                     <button
                       type="button"
                       onClick={() => reviseSection(section.id)}
-                      disabled={reviseBusy === section.id || !(instructions[section.id] || '').trim()}
+                      disabled={
+                        reviseBusy === section.id ||
+                        !(instructions[section.id] || "").trim()
+                      }
                       className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-3 py-2 text-xs font-medium text-[var(--arc-brand-atlantean-teal)] transition-colors hover:bg-[var(--arc-brand-atlantean-teal)]/20 disabled:opacity-40"
                     >
-                      {reviseBusy === section.id ? <PhCircleNotch className="h-3.5 w-3.5 animate-spin" /> : null}
-                      {reviseBusy === section.id ? 'Revising' : 'Revise'}
+                      {reviseBusy === section.id ? (
+                        <PhCircleNotch className="h-3.5 w-3.5 animate-spin" />
+                      ) : null}
+                      {reviseBusy === section.id ? "Revising" : "Revise"}
                     </button>
                   </div>
                 </div>
@@ -385,7 +524,12 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
               onClick={() =>
                 setSections((prev) => [
                   ...prev,
-                  { id: Math.random().toString(36).slice(2, 10), heading: 'New section', markdown: '', imageUrl: null },
+                  {
+                    id: Math.random().toString(36).slice(2, 10),
+                    heading: "New section",
+                    markdown: "",
+                    imageUrl: null,
+                  },
                 ])
               }
               className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-white/[0.1] py-3 text-xs text-white/40 transition-colors hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:text-white/70"
@@ -401,7 +545,8 @@ export function PageEditor({ slug, initial }: { slug: string; initial: PageView 
               onClick={deletePage}
               className="inline-flex items-center gap-1.5 text-xs text-red-400/70 transition-colors hover:text-red-400"
             >
-              <PhTrash className="h-3.5 w-3.5" weight="duotone" /> Delete this Page
+              <PhTrash className="h-3.5 w-3.5" weight="duotone" /> Delete this
+              Page
             </button>
           </div>
         </div>

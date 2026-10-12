@@ -1,0 +1,62 @@
+name: Atlas dependencies
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/atlas-dependencies.yml"
+      - "docs/atlas/**"
+      - "scripts/tests/atlas-*.test.cjs"
+      - "scripts/verify-atlas-dependency-lock.cjs"
+      - "package.json"
+      - ".nvmrc"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/atlas-dependencies.yml"
+      - "docs/atlas/**"
+      - "scripts/tests/atlas-*.test.cjs"
+      - "scripts/verify-atlas-dependency-lock.cjs"
+      - "package.json"
+      - ".nvmrc"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-dependencies-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  installed-atlas:
+    name: Frozen Atlas (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      SHARP_IGNORE_GLOBAL_LIBVIPS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Read the immutable pre-migration graph
+        run: git fetch --no-tags --depth=1 origin d2285fb74f296ce783d3f0fed9bdef6959e3f9d9
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+          cache-dependency-path: "docs/atlas/pnpm-lock.yaml"
+      - name: Frozen standalone install without lifecycle scripts
+        run: pnpm --dir docs/atlas install --frozen-lockfile --ignore-scripts
+      - name: Verify the complete preserved graph
+        run: node scripts/verify-atlas-dependency-lock.cjs
+      - name: Verify installed source maps and native SVG decoding
+        run: node --test scripts/tests/atlas-source-map-regressions.test.cjs scripts/tests/atlas-sharp-runtime.test.cjs
+      - name: Build the tracked Atlas configuration
+        run: pnpm --dir docs/atlas build
+      - name: Preserve dependency inputs
+        run: git diff --exit-code -- docs/atlas/package.json docs/atlas/pnpm-lock.yaml docs/atlas/pnpm-workspace.yaml

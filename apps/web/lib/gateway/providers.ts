@@ -19,15 +19,15 @@ import type {
   GatewayConfig,
   ProviderId,
   UsageInfo,
-} from './types';
-import { PROVIDERS } from './models';
+} from "./types";
+import { PROVIDERS } from "./models";
 import {
   proxySSEStream,
   adaptAnthropicStream,
   createSSEResponse,
   sseHeaders,
   generateCompletionId,
-} from './streaming';
+} from "./streaming";
 
 // ─── Provider Key Resolution ─────────────────────────────────────────
 
@@ -43,7 +43,7 @@ export function resolveApiKey(
   config: GatewayConfig,
 ): string | null {
   // 1. Request-level override (most explicit)
-  const headerKey = request.headers.get('x-provider-key');
+  const headerKey = request.headers.get("x-provider-key");
   if (headerKey) return headerKey;
 
   // 2. User's stored BYOK keys
@@ -77,7 +77,7 @@ export async function proxyToOpenAICompatible(
   const url = `${providerBaseUrl}/chat/completions`;
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers,
     body: JSON.stringify({
       ...body,
@@ -86,19 +86,18 @@ export async function proxyToOpenAICompatible(
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
+    await response.body?.cancel();
     return new Response(
       JSON.stringify({
         error: {
-          message: `Provider error: ${response.status} ${response.statusText}`,
-          type: 'provider_error',
+          message: `Provider request failed (${response.status}). Check your provider account and retry.`,
+          type: "provider_error",
           code: response.status,
-          details: errorText,
         },
       }),
       {
         status: response.status,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       },
     );
   }
@@ -110,11 +109,11 @@ export async function proxyToOpenAICompatible(
   }
 
   // Non-streaming: parse, transform, return
-  const data = await response.json() as ChatCompletionResponse;
+  const data = (await response.json()) as ChatCompletionResponse;
   data.model = arcaneaModelId;
 
   return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
 
@@ -132,33 +131,36 @@ export async function proxyToAnthropic(
 ): Promise<Response> {
   // Extract system message
   let systemPrompt: string | undefined;
-  const messages: Array<{ role: 'user' | 'assistant'; content: string | unknown[] }> = [];
+  const messages: Array<{
+    role: "user" | "assistant";
+    content: string | unknown[];
+  }> = [];
 
   for (const msg of body.messages) {
-    if (msg.role === 'system') {
-      systemPrompt = typeof msg.content === 'string' ? msg.content : '';
+    if (msg.role === "system") {
+      systemPrompt = typeof msg.content === "string" ? msg.content : "";
       continue;
     }
 
-    if (msg.role === 'user' || msg.role === 'assistant') {
-      if (typeof msg.content === 'string') {
+    if (msg.role === "user" || msg.role === "assistant") {
+      if (typeof msg.content === "string") {
         messages.push({ role: msg.role, content: msg.content });
       } else if (Array.isArray(msg.content)) {
         // Convert OpenAI content parts to Anthropic format
         const parts = msg.content.map((part) => {
-          if (part.type === 'text') {
-            return { type: 'text', text: part.text || '' };
+          if (part.type === "text") {
+            return { type: "text", text: part.text || "" };
           }
-          if (part.type === 'image_url' && part.image_url) {
+          if (part.type === "image_url" && part.image_url) {
             return {
-              type: 'image',
+              type: "image",
               source: {
-                type: 'url',
+                type: "url",
                 url: part.image_url.url,
               },
             };
           }
-          return { type: 'text', text: '' };
+          return { type: "text", text: "" };
         });
         messages.push({ role: msg.role, content: parts });
       }
@@ -176,7 +178,10 @@ export async function proxyToAnthropic(
   if (systemPrompt) anthropicBody.system = systemPrompt;
   if (body.temperature != null) anthropicBody.temperature = body.temperature;
   if (body.top_p != null) anthropicBody.top_p = body.top_p;
-  if (body.stop) anthropicBody.stop_sequences = Array.isArray(body.stop) ? body.stop : [body.stop];
+  if (body.stop)
+    anthropicBody.stop_sequences = Array.isArray(body.stop)
+      ? body.stop
+      : [body.stop];
 
   // Tools translation
   if (body.tools) {
@@ -187,30 +192,29 @@ export async function proxyToAnthropic(
     }));
   }
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2024-10-22',
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2024-10-22",
     },
     body: JSON.stringify(anthropicBody),
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
+    await response.body?.cancel();
     return new Response(
       JSON.stringify({
         error: {
-          message: `Anthropic error: ${response.status}`,
-          type: 'provider_error',
+          message: `Provider request failed (${response.status}). Check your provider account and retry.`,
+          type: "provider_error",
           code: response.status,
-          details: errorText,
         },
       }),
       {
         status: response.status,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       },
     );
   }
@@ -221,30 +225,32 @@ export async function proxyToAnthropic(
   }
 
   // Non-streaming: translate Anthropic response to OpenAI format
-  const data = await response.json() as Record<string, unknown>;
+  const data = (await response.json()) as Record<string, unknown>;
 
   const content = Array.isArray(data.content)
     ? (data.content as Array<{ type: string; text?: string }>)
-        .filter((c) => c.type === 'text')
-        .map((c) => c.text || '')
-        .join('')
-    : '';
+        .filter((c) => c.type === "text")
+        .map((c) => c.text || "")
+        .join("")
+    : "";
 
   const usage = data.usage as Record<string, number> | undefined;
 
   const openaiResponse: ChatCompletionResponse = {
     id: generateCompletionId(),
-    object: 'chat.completion',
+    object: "chat.completion",
     created: Math.floor(Date.now() / 1000),
     model: arcaneaModelId,
-    choices: [{
-      index: 0,
-      message: {
-        role: 'assistant',
-        content,
+    choices: [
+      {
+        index: 0,
+        message: {
+          role: "assistant",
+          content,
+        },
+        finish_reason: data.stop_reason === "end_turn" ? "stop" : "stop",
       },
-      finish_reason: data.stop_reason === 'end_turn' ? 'stop' : 'stop',
-    }],
+    ],
     usage: {
       prompt_tokens: usage?.input_tokens || 0,
       completion_tokens: usage?.output_tokens || 0,
@@ -253,7 +259,7 @@ export async function proxyToAnthropic(
   };
 
   return new Response(JSON.stringify(openaiResponse), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
 
@@ -273,8 +279,13 @@ export async function dispatchToProvider(
   const providerConfig = PROVIDERS[provider];
   if (!providerConfig) {
     return new Response(
-      JSON.stringify({ error: { message: `Unknown provider: ${provider}`, type: 'invalid_request_error' } }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } },
+      JSON.stringify({
+        error: {
+          message: `Unknown provider: ${provider}`,
+          type: "invalid_request_error",
+        },
+      }),
+      { status: 400, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -282,17 +293,17 @@ export async function dispatchToProvider(
   const requestBody = { ...body, model: providerModelId };
 
   // Anthropic has its own format
-  if (providerConfig.format === 'anthropic') {
+  if (providerConfig.format === "anthropic") {
     return proxyToAnthropic(apiKey, requestBody, arcaneaModelId, streaming);
   }
 
   // All other providers are OpenAI-compatible
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
 
-  if (providerConfig.authHeader === 'Authorization') {
-    headers['Authorization'] = `Bearer ${apiKey}`;
+  if (providerConfig.authHeader === "Authorization") {
+    headers["Authorization"] = `Bearer ${apiKey}`;
   } else {
     headers[providerConfig.authHeader] = apiKey;
   }

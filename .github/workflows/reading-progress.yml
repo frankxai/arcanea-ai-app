@@ -1,0 +1,87 @@
+name: Reading progress
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - apps/web/hooks/use-reading-progress.ts
+      - apps/web/app/library/reading-tracker.tsx
+      - scripts/tests/reading-progress-account.test.cjs
+      - scripts/verify-reading-progress-browser.cjs
+      - .github/workflows/reading-progress.yml
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS.md
+  push:
+    branches: [main]
+    paths:
+      - apps/web/hooks/use-reading-progress.ts
+      - apps/web/app/library/reading-tracker.tsx
+      - scripts/tests/reading-progress-account.test.cjs
+      - scripts/verify-reading-progress-browser.cjs
+      - .github/workflows/reading-progress.yml
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS.md
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reading-progress-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+
+jobs:
+  account-recovery:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: pnpm install --frozen-lockfile
+      - run: node --test scripts/tests/reading-progress-account.test.cjs
+
+  rendered-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: pnpm install --frozen-lockfile
+      - name: Build same-source web CSS and fonts
+        run: pnpm turbo run build --filter=@arcanea/web
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+      - name: Install hosted Chromium
+        run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Verify real React tracker with controlled transport
+        run: node scripts/verify-reading-progress-browser.cjs
+        env:
+          READING_PROGRESS_SOURCE_COMMIT: ${{ env.SOURCE_COMMIT }}
+      - name: Retain exact-source captures and provenance
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reading-progress-${{ env.SOURCE_COMMIT }}-attempt-${{ github.run_attempt }}
+          path: screenshots/reading-progress/
+          retention-days: 7
+          if-no-files-found: error

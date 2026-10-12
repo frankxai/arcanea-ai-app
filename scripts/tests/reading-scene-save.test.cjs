@@ -1,0 +1,438 @@
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const vm = require("node:vm");
+const { test } = require("node:test");
+const ts = require("../../node_modules/typescript");
+const {
+  NextRequest,
+  NextResponse,
+} = require("../../apps/web/node_modules/next/server");
+const { z } = require("../../apps/web/node_modules/zod");
+const sharp = require("../../apps/web/node_modules/sharp");
+const { createHash, randomUUID } = require("node:crypto");
+
+const actor = "00000000-0000-4000-8000-000000000001";
+const scene = {
+  expectedActor: actor,
+  requestKey: randomUUID(),
+  source: {
+    bookId: "book1",
+    bookTitle: "A source book",
+    chapterTitle: "A source chapter",
+    path: "/books/book1/chapter-one",
+    chapterHash: "a".repeat(64),
+    passage: "The river carried a silver bowl.",
+  },
+  brief: "Illustrate the silver bowl in the river.",
+  model: "provider/model",
+  provider: "openrouter",
+  image: {
+    data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWP4////fwAJ+wP9CNHoHgAAAABJRU5ErkJggg==",
+    mimeType: "image/png",
+  },
+};
+
+function subject(user = { id: actor }, fail = false, providerKey = "") {
+  const rows = new Map();
+  const calls = [];
+  let activeUser = user;
+  const client = {
+    auth: { getUser: async () => ({ data: { user: activeUser } }) },
+    from(table) {
+      assert.equal(table, "creations");
+      let insertion;
+      const filters = [];
+      const query = {
+        insert(row) {
+          insertion = row;
+          calls.push(row);
+          return query;
+        },
+        select() {
+          return query;
+        },
+        eq(key, value) {
+          filters.push([key, value]);
+          return query;
+        },
+        contains(key, value) {
+          filters.push([key, value]);
+          return query;
+        },
+        order() {
+          return query;
+        },
+        limit(value) {
+          assert.equal(value, 1);
+          return query;
+        },
+        async single() {
+          if (fail)
+            return { data: null, error: { code: "database-unavailable" } };
+          if (insertion) {
+            if (rows.has(insertion.id))
+              return { data: null, error: { code: "23505" } };
+            rows.set(insertion.id, insertion);
+            return { data: { id: insertion.id }, error: null };
+          }
+          assert.ok(
+            filters.some(
+              ([key, value]) => key === "user_id" && value === activeUser.id,
+            ),
+          );
+          const id = filters.find(([key]) => key === "id")[1];
+          const row = rows.get(id);
+          return {
+            data: row?.user_id === activeUser.id ? row : null,
+            error: null,
+          };
+        },
+        async maybeSingle() {
+          assert.ok(
+            filters.some(
+              ([key, value]) => key === "user_id" && value === activeUser.id,
+            ),
+          );
+          assert.ok(
+            filters.some(
+              ([key, value]) => key === "visibility" && value === "private",
+            ),
+          );
+          const path = filters.find(([key]) => key === "content")[1].source
+            .path;
+          return {
+            data:
+              [...rows.values()].find(
+                (row) =>
+                  row.user_id === activeUser.id &&
+                  row.content.source.path === path,
+              ) ?? null,
+            error: fail ? { code: "database-unavailable" } : null,
+          };
+        },
+      };
+      return query;
+    },
+  };
+  const source = fs.readFileSync(
+    require("node:path").join(
+      __dirname,
+      "../../apps/web/app/api/reading-scenes/route.ts",
+    ),
+    "utf8",
+  );
+  const code = ts.transpileModule(source, {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+      esModuleInterop: true,
+    },
+  }).outputText;
+  const module = { exports: {} };
+  const requireMock = (name) => {
+    if (name === "next/server") return { NextResponse };
+    if (name === "zod") return { z };
+    if (name === "sharp") return sharp;
+    if (name === "node:crypto") return { createHash };
+    if (name === "@/lib/rate-limit/rate-limiter")
+      return { checkRateLimit: () => ({ allowed: true }) };
+    if (name === "@/lib/supabase/server")
+      return { createClient: async () => client };
+    throw Error(`Unexpected route import ${name}`);
+  };
+  vm.runInNewContext(`(function(require,module,exports){${code}\n})`, {
+    Buffer,
+    URL,
+    process: { env: { OPENROUTER_API_KEY: providerKey } },
+  })(requireMock, module, module.exports);
+  return {
+    ...module.exports,
+    calls,
+    setUser(value) {
+      activeUser = value;
+    },
+  };
+}
+function request(body = scene, origin = "https://www.arcanea.ai") {
+  return new NextRequest("https://www.arcanea.ai/api/reading-scenes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Origin: origin },
+    body: JSON.stringify(body),
+  });
+}
+
+test("same-origin save follows the received host after Next normalizes a loopback URL", async () => {
+  const s = subject();
+  const req = new NextRequest("http://localhost:3001/api/reading-scenes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Host: "127.0.0.1:3001",
+      Origin: "http://127.0.0.1:3001",
+    },
+    body: JSON.stringify(scene),
+  });
+  assert.equal((await s.POST(req)).status, 200);
+  assert.equal(s.calls.length, 1);
+});
+
+test("foreign origins and malformed or forwarded authorities cannot authorize a save", async () => {
+  for (const headers of [
+    {
+      Host: "www.arcanea.ai",
+      Origin: "https://foreign.example",
+      "X-Forwarded-Host": "foreign.example",
+    },
+    {
+      Host: "www.arcanea.ai,foreign.example",
+      Origin: "https://www.arcanea.ai",
+    },
+    { Host: "www.arcanea.ai/path", Origin: "https://www.arcanea.ai" },
+    { Host: "user@www.arcanea.ai", Origin: "https://www.arcanea.ai" },
+    { Host: "www.arcanea.ai", Origin: "http://www.arcanea.ai" },
+  ]) {
+    const s = subject();
+    const req = new NextRequest("https://www.arcanea.ai/api/reading-scenes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...headers },
+      body: JSON.stringify(scene),
+    });
+    assert.equal((await s.POST(req)).status, 403);
+    assert.equal(s.calls.length, 0);
+  }
+});
+
+test("a scene from A cannot be saved under B when the shared cookie changes before the SDK notification", async () => {
+  const s = subject({ id: "00000000-0000-4000-8000-000000000002" });
+  const response = await s.POST(request({ ...scene, expectedActor: actor }));
+  assert.equal(response.status, 403);
+  assert.equal((await response.json()).reason, "account_changed");
+  assert.equal(s.calls.length, 0);
+  privateResponse(response);
+});
+
+test("private scene saves require a valid actor assertion without granting it ownership", async () => {
+  for (const expectedActor of [undefined, null, "", "not-an-account"]) {
+    const s = subject();
+    assert.equal(
+      (await s.POST(request({ ...scene, expectedActor }))).status,
+      400,
+    );
+    assert.equal(s.calls.length, 0);
+  }
+});
+function privateResponse(response) {
+  assert.equal(response.headers.get("cache-control"), "private, no-store");
+}
+
+test("incomplete and corrupt raster bytes are rejected before a database write", async () => {
+  for (const image of [
+    { data: "iVBORw0KGgo=", mimeType: "image/png" },
+    {
+      data: Buffer.from([255, 216, 255]).toString("base64"),
+      mimeType: "image/jpeg",
+    },
+    {
+      data: Buffer.from("RIFF0000WEBP").toString("base64"),
+      mimeType: "image/webp",
+    },
+    {
+      data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jUxoAAAAASUVORK5CYII=",
+      mimeType: "image/png",
+    },
+  ]) {
+    const s = subject();
+    const response = await s.POST(request({ ...scene, image }));
+    assert.equal(response.status, 400);
+    assert.equal(s.calls.length, 0);
+    privateResponse(response);
+  }
+});
+
+test("the decoded format must agree with the declared raster MIME type", async () => {
+  const s = subject();
+  const response = await s.POST(
+    request({ ...scene, image: { ...scene.image, mimeType: "image/jpeg" } }),
+  );
+  assert.equal(response.status, 400);
+  assert.equal(s.calls.length, 0);
+});
+
+test("oversized decoded dimensions are rejected without retaining the image", async () => {
+  const bytes = Buffer.from(scene.image.data, "base64");
+  bytes.writeUInt32BE(65535, 16);
+  bytes.writeUInt32BE(65535, 20);
+  bytes.writeUInt32BE(require("node:zlib").crc32(bytes.subarray(12, 29)), 29);
+  const s = subject();
+  const response = await s.POST(
+    request({
+      ...scene,
+      image: { ...scene.image, data: bytes.toString("base64") },
+    }),
+  );
+  assert.equal(response.status, 400);
+  assert.equal(s.calls.length, 0);
+});
+
+test("complete PNG, JPEG and WebP pixels save with their original bytes", async () => {
+  for (const format of ["png", "jpeg", "webp"]) {
+    const bytes = await sharp(Buffer.from(scene.image.data, "base64"))
+      .toFormat(format)
+      .toBuffer();
+    const s = subject();
+    const image = {
+      data: bytes.toString("base64"),
+      mimeType: `image/${format}`,
+    };
+    assert.equal((await s.POST(request({ ...scene, image }))).status, 200);
+    assert.equal(s.calls[0].content.image.data, image.data);
+  }
+});
+
+test("a previewable raster inside the JSON request bound can be saved above the old field limit", async () => {
+  const raw = require("node:crypto").randomBytes(736 * 752 * 4);
+  const bytes = await sharp(raw, {
+    raw: { width: 736, height: 752, channels: 4 },
+  })
+    .png()
+    .toBuffer();
+  const data = bytes.toString("base64");
+  const payload = { ...scene, image: { data, mimeType: "image/png" } };
+  assert.ok(data.length > 2_900_000 && data.length <= 4_000_000);
+  assert.ok(Buffer.byteLength(JSON.stringify(payload)) < 3 * 1024 * 1024);
+  const s = subject();
+  assert.equal((await s.POST(request(payload))).status, 200);
+  assert.equal(s.calls.length, 1);
+  assert.equal(s.calls[0].content.image.data, data);
+});
+
+test("anonymous and cross-origin scene saves are denied before writing", async () => {
+  const s = subject(null);
+  const response = await s.POST(request());
+  assert.equal(response.status, 401);
+  privateResponse(response);
+  assert.equal(
+    (await s.POST(request(scene, "https://attacker.invalid"))).status,
+    403,
+  );
+  assert.equal(s.calls.length, 0);
+});
+test("save derives its actor from authentication and always creates a private draft", async () => {
+  const s = subject();
+  const response = await s.POST(
+    request({
+      ...scene,
+      userId: "foreign-user",
+      visibility: "public",
+      status: "published",
+    }),
+  );
+  assert.equal(response.status, 200);
+  privateResponse(response);
+  assert.equal(s.calls[0].user_id, actor);
+  assert.equal(s.calls[0].visibility, "private");
+  assert.equal(s.calls[0].status, "draft");
+  assert.equal(s.calls[0].content.canonStatus, "personal-interpretation");
+  assert.equal(s.calls[0].content.rightsStatus, "not-reviewed");
+});
+test("lost save acknowledgement retries the same row, while changed content and another actor conflict", async () => {
+  const s = subject();
+  assert.equal((await s.POST(request())).status, 200);
+  assert.equal((await s.POST(request())).status, 200);
+  assert.equal(
+    (
+      await s.POST(
+        request({ ...scene, brief: "A different visual composition." }),
+      )
+    ).status,
+    409,
+  );
+  s.setUser({ id: "00000000-0000-4000-8000-000000000002" });
+  assert.equal((await s.POST(request())).status, 403);
+  assert.equal(
+    (
+      await s.POST(
+        request({
+          ...scene,
+          expectedActor: "00000000-0000-4000-8000-000000000002",
+        }),
+      )
+    ).status,
+    409,
+  );
+});
+test("scene reopening is bound to the account and chapter, with private/no-store responses", async () => {
+  const s = subject();
+  await s.POST(request());
+  const req = new NextRequest(
+    `https://www.arcanea.ai/api/reading-scenes?path=${encodeURIComponent(scene.source.path)}`,
+  );
+  const response = await s.GET(req);
+  privateResponse(response);
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.scene.owner, actor);
+  assert.equal(body.scene.creationId, scene.requestKey);
+  s.setUser({ id: "00000000-0000-4000-8000-000000000002" });
+  assert.equal((await (await s.GET(req)).json()).scene, null);
+  s.setUser(null);
+  assert.equal((await s.GET(req)).status, 401);
+});
+test("invalid, oversized and non-raster data never reaches the database", async () => {
+  const s = subject();
+  assert.equal(
+    (
+      await s.POST(
+        request({
+          ...scene,
+          source: { ...scene.source, path: "/books/../private" },
+        }),
+      )
+    ).status,
+    400,
+  );
+  assert.equal(
+    (
+      await s.POST(
+        request({
+          ...scene,
+          image: { data: "PHN2Zz4=", mimeType: "image/png" },
+        }),
+      )
+    ).status,
+    400,
+  );
+  assert.equal(
+    (await s.POST(request({ data: "x".repeat(3 * 1024 * 1024 + 1) }))).status,
+    413,
+  );
+  assert.equal(s.calls.length, 0);
+});
+test("database failure remains retryable and reveals no provider or database details", async () => {
+  const s = subject({ id: actor }, true);
+  const response = await s.POST(request());
+  assert.equal(response.status, 503);
+  privateResponse(response);
+  assert.doesNotMatch(
+    JSON.stringify(await response.json()),
+    /database-unavailable/,
+  );
+});
+test("authenticated scene reads expose only the provider prerequisite, including failed private reads", async () => {
+  const req = new NextRequest(
+    `https://www.arcanea.ai/api/reading-scenes?path=${encodeURIComponent(scene.source.path)}`,
+  );
+  const absent = await subject().GET(req);
+  privateResponse(absent);
+  assert.equal((await absent.json()).imageGeneration.providerConfigured, false);
+  const providerKey = randomUUID();
+  for (const fail of [false, true]) {
+    const response = await subject({ id: actor }, fail, providerKey).GET(req);
+    const body = await response.json();
+    assert.equal(body.imageGeneration.providerConfigured, true);
+    assert.doesNotMatch(JSON.stringify(body), new RegExp(providerKey));
+  }
+  const anonymous = await subject(null, false, providerKey).GET(req);
+  assert.equal(anonymous.status, 401);
+  assert.equal((await anonymous.json()).imageGeneration, undefined);
+});

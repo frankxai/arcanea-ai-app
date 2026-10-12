@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
-import { middleware } from "../../../middleware";
+import { proxy as middleware } from "../../../proxy";
 import { authenticatedRedirectUrl } from "../../supabase/middleware";
 import { safeAuthNextPath } from "../../auth/safe-next-path";
 

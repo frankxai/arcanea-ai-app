@@ -1,82 +1,134 @@
-// Evolution engine — the lived-in moat. Memories (tooling, .arcanea/) accumulate privately.
-// Distill produces salience-weighted summary (deterministic core; LLM optional for prose).
-// Evolve writes character delta + new public canonLevel-2 lore so the world visibly changes and contentHash moves.
+// Private world memories and deterministic salience-weighted summaries.
+// Legacy evolution entry points reject: a memory is not approval to publish canon.
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { readWorld, writeFiles, parseFrontmatter } from "./fs-world.mjs";
-import { slugify } from "./manifest.mjs";
+import { randomUUID } from "node:crypto";
+import { writeFiles } from "./fs-world.mjs";
+import { readRoot, readDirectory, readFile } from "./world-reads.mjs";
 
 const MEM_DIR = ".arcanea/memories";
 
-async function ensureDir(d) { await fs.mkdir(d, { recursive: true }); }
+function memoryError() {
+  return Object.assign(
+    new Error(
+      "Private memory is invalid; repair or retain the affected record before retrying.",
+    ),
+    { code: "ERR_ARCANEA_MEMORY_INVALID" },
+  );
+}
+function validMemory(record) {
+  if (
+    !record ||
+    typeof record !== "object" ||
+    Array.isArray(record) ||
+    typeof record.ts !== "string" ||
+    !Number.isFinite(Date.parse(record.ts)) ||
+    typeof record.content !== "string" ||
+    (record.characterId !== null && typeof record.characterId !== "string") ||
+    typeof record.salience !== "number" ||
+    !Number.isFinite(record.salience) ||
+    record.salience < 0 ||
+    record.salience > 1
+  )
+    throw memoryError();
+  return record;
+}
 
 export async function recordMemory(dir, mem) {
-  await ensureDir(path.join(dir, MEM_DIR));
+  if (
+    !mem ||
+    typeof mem !== "object" ||
+    Array.isArray(mem) ||
+    (typeof mem.salience === "number" && !Number.isFinite(mem.salience)) ||
+    (mem.ts != null &&
+      (typeof mem.ts !== "string" || !Number.isFinite(Date.parse(mem.ts)))) ||
+    (mem.content != null && typeof mem.content !== "string") ||
+    (mem.characterId != null && typeof mem.characterId !== "string")
+  )
+    throw memoryError();
   const ts = mem.ts || new Date().toISOString();
   const rec = {
     ts,
     characterId: mem.characterId || null,
     content: mem.content || "",
-    salience: typeof mem.salience === "number" ? Math.max(0, Math.min(1, mem.salience)) : 0.5,
+    salience:
+      typeof mem.salience === "number"
+        ? Math.max(0, Math.min(1, mem.salience))
+        : 0.5,
     meaningImpact: mem.meaningImpact || null,
   };
-  const fname = `${ts.replace(/[:.]/g, "-")}.json`;
-  await fs.writeFile(path.join(dir, MEM_DIR, fname), JSON.stringify(rec, null, 2) + "\n");
+  validMemory(rec);
+  // Multiple events can share a timestamp. Keep the timestamp in the record,
+  // not in an overwrite-prone filename; exclusive creation preserves each event.
+  const fname = `${randomUUID()}.json`;
+  await writeFiles(
+    dir,
+    [
+      {
+        path: `${MEM_DIR}/${fname}`,
+        bytes: JSON.stringify(rec, null, 2) + "\n",
+      },
+    ],
+    { exclusive: true },
+  );
   return { path: `${MEM_DIR}/${fname}`, record: rec };
 }
 
 export async function listMemories(dir) {
-  const p = path.join(dir, MEM_DIR);
-  try {
-    const files = await fs.readdir(p);
-    const out = [];
-    for (const f of files.filter((f) => f.endsWith(".json"))) {
-      const raw = await fs.readFile(path.join(p, f), "utf8");
-      out.push(JSON.parse(raw));
+  const root = await readRoot(dir);
+  const files = await readDirectory(root, MEM_DIR);
+  const out = [];
+  for (const file of files.filter((name) => name.endsWith(".json"))) {
+    const raw = await readFile(root, `${MEM_DIR}/${file}`);
+    let record;
+    try {
+      record = JSON.parse(raw.toString("utf8").replace(/^\uFEFF/, ""));
+    } catch {
+      throw memoryError();
     }
-    return out.sort((a, b) => a.ts.localeCompare(b.ts));
-  } catch { return []; }
+    out.push(validMemory(record));
+  }
+  return out.sort((a, b) => a.ts.localeCompare(b.ts));
 }
 
 export function distillOffline(memories, { max = 3 } = {}) {
   if (!memories.length) return "";
   const scored = memories
-    .map((m) => ({ ...m, score: (m.salience || 0.5) + (m.meaningImpact ? 0.2 : 0) + (Date.parse(m.ts) ? (Date.now() - Date.parse(m.ts)) / -1e13 : 0) }))
+    .map((m) => ({
+      ...m,
+      score:
+        (m.salience || 0.5) +
+        (m.meaningImpact ? 0.2 : 0) +
+        (Date.parse(m.ts) ? (Date.now() - Date.parse(m.ts)) / -1e13 : 0),
+    }))
     .sort((a, b) => b.score - a.score)
     .slice(0, max);
   return scored.map((m) => m.content).join(" · ");
 }
 
-export async function evolveCharacter(dir, characterSlug, { summary, ts = new Date().toISOString() } = {}) {
-  const charPath = `characters/${characterSlug}.md`;
-  const full = path.join(dir, charPath);
-  let body = "";
-  try { body = await fs.readFile(full, "utf8"); } catch { body = `---\nname: ${characterSlug}\n---\n\n# ${characterSlug}\n`; }
-  const { data, body: rest } = parseFrontmatter(body);
-  const evoBlock = `\n\n## Evolution\n\n**Transformed by lived moments** (${ts.slice(0,10)})\n\n${summary || "The world changed them."}\n`;
-  const updated = body.trimEnd() + evoBlock;
-  await writeFiles(dir, [{ path: charPath, bytes: updated }]);
+function canonPromotionError() {
+  const error = new Error(
+    "Legacy evolution is disabled: private memories cannot publish canon. " +
+      "Use scene start/revise/export for private drafts; canon promotion requires a separate human-approved workflow.",
+  );
+  error.code = "ERR_ARCANEA_HUMAN_PROMOTION_REQUIRED";
+  return error;
+}
 
-  const loreTitle = `Echoes of ${data.name || characterSlug}`;
-  const loreBody = `---\nvisibility: public\ncanonLevel: 2\n---\n\n# ${loreTitle}\n\n${summary || "What was lived became canon."}\n\n*Written by no one. Earned by everyone.*\n`;
-  const lorePath = `canon/${slugify(loreTitle)}.md`;
-  await writeFiles(dir, [{ path: lorePath, bytes: loreBody }]);
-
-  return { character: charPath, lore: lorePath };
+/** @deprecated Always rejects before reading arguments or accessing the filesystem. */
+export async function evolveCharacter() {
+  throw canonPromotionError();
 }
 
 export async function remember(dir, content, opts = {}) {
+  // Refuse a damaged/redirected store before an append could make a failed retry duplicate an event.
+  await listMemories(dir);
   const rec = await recordMemory(dir, { content, ...opts });
   const mems = await listMemories(dir);
   const summary = distillOffline(mems);
   return { record: rec, distilled: summary };
 }
 
-export async function evolve(dir, characterSlug, opts = {}) {
-  const mems = await listMemories(dir);
-  const summary = opts.summary || distillOffline(mems, { max: 4 }) || "Moments accumulated and the character shifted.";
-  const res = await evolveCharacter(dir, characterSlug, { summary, ts: opts.ts });
-  const w = await readWorld(dir);
-  return { ...res, summary, newHashWillDiffer: true, world: { id: w.manifest.id, name: w.manifest.name } };
+/** @deprecated Always rejects; caller-supplied approval flags cannot enable promotion. */
+export async function evolve() {
+  throw canonPromotionError();
 }

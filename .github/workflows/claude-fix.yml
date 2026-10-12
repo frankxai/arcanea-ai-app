@@ -9,9 +9,13 @@ on:
 jobs:
   claude-fix:
     # Only run on PR comments (not issue comments) containing the trigger phrase
+    # Author gate: only owners, members and collaborators can drive an agent
+    # that holds contents:write and the API key. Anyone can comment on a
+    # public repo; the comment text becomes the agent's prompt below.
     if: |
       github.event.issue.pull_request != null &&
-      contains(github.event.comment.body, '@claude fix')
+      contains(github.event.comment.body, '@claude fix') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
     runs-on: ubuntu-latest
     permissions:
       contents: write

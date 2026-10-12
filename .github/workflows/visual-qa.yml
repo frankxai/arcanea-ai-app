@@ -8,6 +8,7 @@ on:
     types: [opened, ready_for_review]
     paths:
       - ".github/workflows/visual-qa.yml"
+      - "scripts/resolve-visual-preview.mjs"
       - "apps/web/**"
       - "packages/design-system/**"
       - "packages/arcanea-design-preset.js"
@@ -46,53 +47,26 @@ jobs:
           INPUT_PREVIEW_URL: ${{ inputs.preview_url }}
         with:
           script: |
-            let previewUrl = (process.env.INPUT_PREVIEW_URL || '').trim();
-            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-            // The Vercel status target is its inspector, not the live deployment.
-            // Resolve the exact project row from vercel[bot]'s PR comment.
-            if (!previewUrl && context.eventName === 'pull_request') {
-              for (let attempt = 0; attempt < 20 && !previewUrl; attempt++) {
-                const { data: comments } = await github.rest.issues.listComments({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.issue.number,
-                  per_page: 100,
-                });
-                const vercelComment = comments.find(
-                  (comment) =>
-                    comment.user?.login === 'vercel[bot]' &&
-                    comment.body.startsWith('[vc]:'),
-                );
-                const row = vercelComment?.body
-                  .split('\n')
-                  .find(
-                    (line) =>
-                      line.includes('| [arcanea-ai-app](') &&
-                      !line.includes('arcanea-ai-appx'),
-                  );
-                const previewMatch = row?.match(
-                  /\[Preview\]\((https:\/\/[^)]+)\)/,
-                );
-                if (row && /!\[Ready\]/.test(row) && previewMatch) {
-                  previewUrl = previewMatch[1];
-                  break;
-                }
-                core.info(`Preview not ready (${attempt + 1}/20).`);
-                await sleep(15000);
-              }
-            }
-
-            if (previewUrl) {
-              const parsed = new URL(previewUrl);
-              if (parsed.protocol !== 'https:') {
-                throw new Error('Visual QA accepts HTTPS preview URLs only.');
-              }
-              core.info(`Preview host: ${parsed.host}`);
-            } else {
-              core.error('No ready Vercel preview URL could be resolved.');
-            }
-            core.setOutput('url', previewUrl);
+            const fs = require('node:fs');
+            const { pathToFileURL } = require('node:url');
+            const path = require('node:path');
+            const { resolvePreview } = await import(
+              pathToFileURL(path.resolve('scripts/resolve-visual-preview.mjs')).href
+            );
+            const expected = {
+              ...context.repo,
+              sha: context.payload.pull_request?.head.sha || context.sha,
+              prNumber: context.eventName === 'pull_request' ? context.issue.number : undefined,
+            };
+            const binding = await resolvePreview(github, expected, {
+              requestedUrl: process.env.INPUT_PREVIEW_URL || '',
+            });
+            fs.mkdirSync('screenshots', { recursive: true });
+            fs.writeFileSync('screenshots/preview-binding.json', JSON.stringify(binding, null, 2) + '\n');
+            core.setOutput('url', binding.url);
+            core.setOutput('source-sha', binding.source_sha);
+            core.setOutput('deployment-id', binding.deployment_id);
+            core.info(`Verified preview deployment ${binding.deployment_id} for ${binding.source_sha}.`);
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -108,6 +82,8 @@ jobs:
         id: capture
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+          REVIEWED_SOURCE_SHA: ${{ steps.resolve-url.outputs.source-sha }}
+          VERIFIED_DEPLOYMENT_ID: ${{ steps.resolve-url.outputs.deployment-id }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           mkdir -p screenshots
@@ -288,6 +264,8 @@ jobs:
                 {
                   schema_version: 1,
                   preview_url: BASE,
+                  reviewed_source_sha: process.env.REVIEWED_SOURCE_SHA,
+                  github_deployment_id: process.env.VERIFIED_DEPLOYMENT_ID,
                   routes,
                   states,
                   captures,
@@ -476,6 +454,29 @@ jobs:
           print('Gemini verdict: ' + verdict)
           PYEOF
 
+      - name: Confirm preview binding after capture
+        id: confirm-source
+        if: ${{ always() && steps.resolve-url.outcome == 'success' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const { pathToFileURL } = require('node:url');
+            const path = require('node:path');
+            const { resolvePreview } = await import(
+              pathToFileURL(path.resolve('scripts/resolve-visual-preview.mjs')).href
+            );
+            const binding = JSON.parse(fs.readFileSync('screenshots/preview-binding.json', 'utf8'));
+            const current = await resolvePreview(github, {
+              ...context.repo,
+              sha: context.payload.pull_request?.head.sha || context.sha,
+              prNumber: context.eventName === 'pull_request' ? context.issue.number : undefined,
+            }, { requestedUrl: binding.url, attempts: 1 });
+            if (current.deployment_id !== binding.deployment_id || current.source_sha !== binding.source_sha) {
+              throw new Error('Preview binding changed during visual QA.');
+            }
+            core.setOutput('valid', 'true');
+
       - name: Post Visual QA report on PR
         if: ${{ always() && github.event_name == 'pull_request' }}
         uses: actions/github-script@v7
@@ -498,6 +499,9 @@ jobs:
               '## Visual QA Report - Playwright + Gemini Vision',
               '',
               '**Preview:** ${{ steps.resolve-url.outputs.url }}',
+              '**Source SHA:** ${{ steps.resolve-url.outputs.source-sha }}',
+              '**GitHub deployment:** ${{ steps.resolve-url.outputs.deployment-id }}',
+              '**Source binding still valid:** ${{ steps.confirm-source.outputs.valid }}',
               '**Routes:** /, /pricing, /studio/store',
               '**States:** Desktop 1440x900 · Mobile 390x844 · Reduced motion 1440x900',
               `**Deterministic capture gate:** ${captureVerdict}`,
@@ -558,7 +562,13 @@ jobs:
 
       - name: Enforce Visual QA verdict
         if: always()
+        env:
+          SOURCE_BINDING_VALID: ${{ steps.confirm-source.outputs.valid }}
         run: |
+          if [ "$SOURCE_BINDING_VALID" != "true" ]; then
+            echo "::error::Exact-source preview binding is missing or changed."
+            exit 1
+          fi
           capture_verdict="$(cat screenshots/capture-verdict.txt 2>/dev/null || echo FAIL)"
           ai_verdict="$(cat screenshots/ai-verdict.txt 2>/dev/null || echo FAIL)"
           echo "Capture: ${capture_verdict}; Gemini: ${ai_verdict}" >> "$GITHUB_STEP_SUMMARY"

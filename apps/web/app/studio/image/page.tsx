@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
+import { costFor } from "@/lib/billing/catalog";
+import {
+  requestImages,
+  generatedImageSource,
+  generatedImageBlob,
+} from "@/lib/imagine/request";
 import {
   ArrowLeft,
   Sparkle,
@@ -26,37 +32,37 @@ import {
   Minus,
 } from "@/lib/phosphor-icons";
 
-// Premium brand images for simulation & polaroids
-const BRAND_IMAGES = [
-  {
-    url: "/brand/arcanea-collectible-reliquary-premium.png",
-    prompt: "A detailed collectible reliquary chest constructed from black obsidian and floating brass gears, glowing with golden starlight.",
-    style: "fantasy",
-  },
-  {
-    url: "/brand/arcanea-dashboard-hero-premium.png",
-    prompt: "An ethereal deep void indigo canvas showing a glowing gold World Graph, nodes connecting in stellar constellations.",
-    style: "cosmic",
-  },
-  {
-    url: "/brand/arcanea-hero.jpg",
-    prompt: "A massive crystal temple floating in a cosmic nebula, ancient paths winding upwards to the central light.",
-    style: "concept",
-  },
-  {
-    url: "/brand/arcanea-og.jpg",
-    prompt: "The open horizon of Arcanea, high-altitude floating islands, golden clouds, and majestic stone archways.",
-    style: "photorealistic",
-  },
-];
-
 const STYLE_PRESETS = [
-  { id: "fantasy", name: "Fantasy Art", description: "Magical, ethereal, Arcanean gold" },
-  { id: "concept", name: "Concept Art", description: "Game & film concept style" },
-  { id: "anime", name: "Anime Style", description: "Studio Ghibli & anime inspired" },
-  { id: "photorealistic", name: "Photorealistic", description: "Ultra-realistic rendering" },
-  { id: "digital", name: "Digital Painting", description: "Hand-painted digital art feel" },
-  { id: "cosmic", name: "Cosmic Vision", description: "Deep space, stardust, voids" },
+  {
+    id: "fantasy",
+    name: "Fantasy Art",
+    description: "Magical, ethereal, Arcanean gold",
+  },
+  {
+    id: "concept",
+    name: "Concept Art",
+    description: "Game & film concept style",
+  },
+  {
+    id: "anime",
+    name: "Anime Style",
+    description: "Studio Ghibli & anime inspired",
+  },
+  {
+    id: "photorealistic",
+    name: "Photorealistic",
+    description: "Ultra-realistic rendering",
+  },
+  {
+    id: "digital",
+    name: "Digital Painting",
+    description: "Hand-painted digital art feel",
+  },
+  {
+    id: "cosmic",
+    name: "Cosmic Vision",
+    description: "Deep space, stardust, voids",
+  },
 ];
 
 const ASPECT_RATIOS = [
@@ -70,7 +76,8 @@ const POLAROID_INSPIRATIONS = [
   {
     id: "p1",
     url: "/brand/arcanea-collectible-reliquary-premium.png",
-    prompt: "A majestic reliquary of floating brass gears and black obsidian, glowing gold.",
+    prompt:
+      "A majestic reliquary of floating brass gears and black obsidian, glowing gold.",
     author: "FrankX",
     rotation: -3,
     style: "fantasy",
@@ -94,7 +101,8 @@ const POLAROID_INSPIRATIONS = [
   {
     id: "p4",
     url: "/brand/arcanea-og.jpg",
-    prompt: "Majestic stone archways on floating islands surrounded by golden clouds.",
+    prompt:
+      "Majestic stone archways on floating islands surrounded by golden clouds.",
     author: "Aiyami",
     rotation: 4,
     style: "photorealistic",
@@ -111,6 +119,19 @@ interface GeneratedImage {
 }
 
 export default function ImageForgePage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  if (token.actor === null)
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Loading your workspace…
+      </p>
+    );
+  return <ImageForgePageContent key={`${token.actor}:${token.revision}`} />;
+}
+
+function ImageForgePageContent() {
+  const { credentialScope } = useAuth();
   const [prompt, setPrompt] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("fantasy");
   const [selectedRatio, setSelectedRatio] = useState("1:1");
@@ -118,134 +139,78 @@ export default function ImageForgePage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationLogs, setGenerationLogs] = useState<string[]>([]);
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
-  const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(null);
+  const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(
+    null,
+  );
   const [showSettings, setShowSettings] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Toolbar dropdown menus
-  const [activeDropdown, setActiveDropdown] = useState<"style" | "ratio" | "count" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<
+    "style" | "ratio" | "count" | null
+  >(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const simulateLogs = async () => {
-    const logs = [
-      "Parsing semantic tokens...",
-      "Resolving @asset references...",
-      "Routing to Draconia (Nano Banana 2)...",
-      "Injecting style weights: " + selectedStyle + "...",
-      "Computing latents (steps 1/30)...",
-      "Denoising grid structure (steps 15/30)...",
-      "Upscaling and detailing boundaries...",
-      "Writing metadata to local storage catalog...",
-    ];
-    setGenerationLogs([]);
-    for (let i = 0; i < logs.length; i++) {
-      await new Promise((r) => setTimeout(r, 450));
-      setGenerationLogs((prev) => [...prev, logs[i]]);
-    }
-  };
-
   const handleGenerate = async () => {
     if (!prompt.trim() || isGenerating) return;
-
+    const token = credentialScope.get();
     setIsGenerating(true);
     setError(null);
-    setSelectedImage(null);
-
-    // Start logs simulation immediately
-    const logsPromise = simulateLogs();
-
+    setGenerationLogs(["Requesting image generation…"]);
     try {
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session?.access_token) {
-        // Fallback simulation mode (BYOK client warning but allowed)
-        await logsPromise;
-        await new Promise((r) => setTimeout(r, 600));
-
-        // Choose a brand image matching style or random
-        const match = BRAND_IMAGES.find((b) => b.style === selectedStyle) || BRAND_IMAGES[Math.floor(Math.random() * BRAND_IMAGES.length)];
-        
-        const newImages: GeneratedImage[] = Array.from({ length: imageCount }).map((_, idx) => ({
-          id: `sim-${Date.now()}-${idx}`,
-          url: match.url,
+      const response = await requestImages(
+        {
           prompt: prompt.trim(),
           style: selectedStyle,
           aspectRatio: selectedRatio,
-          timestamp: new Date(),
-        }));
-
-        setGeneratedImages((prev) => [...newImages, ...prev]);
-        setSelectedImage(newImages[0]);
-        setIsGenerating(false);
-        return;
-      }
-
-      const ratio = ASPECT_RATIOS.find((r) => r.id === selectedRatio);
-
-      const response = await fetch("/api/ai/generate-image", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({
-          prompt: prompt.trim(),
-          style: selectedStyle,
-          width: ratio?.width ?? 1024,
-          height: ratio?.height ?? 1024,
           count: imageCount,
-          operation: "generate",
-        }),
-      });
-
-      if (!response.ok) {
-        const errBody = await response.json().catch(() => ({}));
-        throw new Error(errBody.error || `Generation failed (${response.status})`);
-      }
-
-      const data = await response.json();
-
-      if (!data.success || !data.images?.length) {
-        throw new Error("No images returned from the API.");
-      }
-
-      await logsPromise;
-
-      const newImages: GeneratedImage[] = data.images.map(
-        (img: { id?: string; url: string; storageUrl?: string }, idx: number) => ({
-          id: img.id || `${Date.now()}-${idx}`,
-          url: img.storageUrl || img.url,
-          prompt: prompt.trim(),
-          style: selectedStyle,
-          aspectRatio: selectedRatio,
-          timestamp: new Date(),
-        })
+        },
+        { scope: credentialScope, token },
       );
-
+      const data = await response.json();
+      if (!credentialScope.isCurrent(token)) return;
+      if (!response.ok)
+        throw new Error(
+          typeof data.error === "string"
+            ? data.error
+            : `Generation unavailable (${response.status})`,
+        );
+      if (
+        data.status !== "completed" ||
+        !Array.isArray(data.images) ||
+        !data.images.length
+      )
+        throw new Error("No generated images were returned.");
+      const newImages: GeneratedImage[] = data.images.map(
+        (image: unknown, index: number) => {
+          const url = generatedImageSource(image);
+          if (!url)
+            throw new Error("The generated image could not be displayed.");
+          return {
+            id: `${data.generationId}-${index}`,
+            url,
+            prompt: prompt.trim(),
+            style: selectedStyle,
+            aspectRatio: selectedRatio,
+            timestamp: new Date(),
+          };
+        },
+      );
       setGeneratedImages((prev) => [...newImages, ...prev]);
       setSelectedImage(newImages[0]);
-    } catch (err) {
-      console.error("Image generation error:", err);
-      // Even on real error, let's gracefully fall back to preview mode so user is never blocked
-      await logsPromise;
-      const match = BRAND_IMAGES[Math.floor(Math.random() * BRAND_IMAGES.length)];
-      const fallbackImg: GeneratedImage = {
-        id: `fallback-${Date.now()}`,
-        url: match.url,
-        prompt: prompt.trim(),
-        style: selectedStyle,
-        aspectRatio: selectedRatio,
-        timestamp: new Date(),
-      };
-      setGeneratedImages((prev) => [fallbackImg, ...prev]);
-      setSelectedImage(fallbackImg);
-      
-      setError("Note: Running in preview simulation. Set up API credentials in settings for raw generation.");
+      setGenerationLogs(["Images returned by the generation service."]);
+    } catch (error) {
+      if (!credentialScope.isCurrent(token)) return;
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Image generation is unavailable. Try again with the same request.",
+      );
+      setGenerationLogs([]);
     } finally {
-      setIsGenerating(false);
+      if (credentialScope.isCurrent(token)) setIsGenerating(false);
     }
   };
 
@@ -260,18 +225,29 @@ export default function ImageForgePage() {
   const handleDownload = async () => {
     if (!selectedImage) return;
     try {
-      const response = await fetch(selectedImage.url);
-      const blob = await response.blob();
+      setError(null);
+      const blob = await generatedImageBlob(selectedImage.url);
+      const extensions: Record<string, string> = {
+        "image/png": "png",
+        "image/jpeg": "jpg",
+        "image/webp": "webp",
+      };
+      const extension = extensions[blob.type.toLowerCase().split(";")[0]];
+      if (!extension) throw new Error("Unsupported image download format");
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `arcanea-${selectedImage.id}.png`;
+      a.download = `arcanea-${selectedImage.id}.${extension}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Download failed:", error);
+      setError(
+        selectedImage.url.startsWith("https://")
+          ? "Direct download is unavailable. Open the original image and save it from your browser."
+          : "The image could not be downloaded. Try again from this image.",
+      );
     }
   };
 
@@ -284,7 +260,7 @@ export default function ImageForgePage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90 font-sans relative pb-32">
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90 font-sans relative pb-72 md:pb-32">
         {/* Header */}
         <header className="border-b border-white/[0.06] backdrop-blur-md sticky top-0 z-40 bg-[var(--arc-cosmic-void)]/80">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -300,8 +276,12 @@ export default function ImageForgePage() {
                   <Flame className="w-5 h-5 text-[var(--arc-brand-arcanean-gold)]" />
                 </div>
                 <div>
-                  <h1 className="font-display text-lg font-semibold tracking-tight">Image Forge</h1>
-                  <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Draconia Core v2.0</p>
+                  <h1 className="font-display text-lg font-semibold tracking-tight">
+                    Image Forge
+                  </h1>
+                  <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">
+                    Draconia Core v2.0
+                  </p>
                 </div>
               </div>
             </div>
@@ -309,7 +289,9 @@ export default function ImageForgePage() {
             <button
               onClick={() => setShowSettings(!showSettings)}
               className={`p-2 rounded-lg transition-colors ${
-                showSettings ? "bg-white/[0.06] text-white" : "hover:bg-white/[0.06] text-white/60"
+                showSettings
+                  ? "bg-white/[0.06] text-white"
+                  : "hover:bg-white/[0.06] text-white/60"
               }`}
             >
               <Gear className="w-5 h-5" />
@@ -328,9 +310,15 @@ export default function ImageForgePage() {
             >
               <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 backdrop-blur-sm grid md:grid-cols-3 gap-6">
                 <div>
-                  <h4 className="text-sm font-semibold mb-2 text-[var(--arc-brand-arcanean-gold)]">Pipeline Settings</h4>
-                  <p className="text-xs text-white/40 mb-4">Select target model and prompt enhancers.</p>
-                  <label className="text-xs text-white/60 block mb-1">Enhancement Mode</label>
+                  <h4 className="text-sm font-semibold mb-2 text-[var(--arc-brand-arcanean-gold)]">
+                    Pipeline Settings
+                  </h4>
+                  <p className="text-xs text-white/40 mb-4">
+                    Select target model and prompt enhancers.
+                  </p>
+                  <label className="text-xs text-white/60 block mb-1">
+                    Enhancement Mode
+                  </label>
                   <select className="w-full bg-black/40 border border-white/[0.08] rounded-xl p-2.5 text-xs text-white focus:outline-none">
                     <option value="none">Standard Latents</option>
                     <option value="upscale">Super-Resolution 2x</option>
@@ -338,8 +326,12 @@ export default function ImageForgePage() {
                   </select>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold mb-2 text-[var(--arc-brand-atlantean-teal)]">Creative Threshold</h4>
-                  <p className="text-xs text-white/40 mb-4">Controls prompt adherence vs latent chaos.</p>
+                  <h4 className="text-sm font-semibold mb-2 text-[var(--arc-brand-atlantean-teal)]">
+                    Creative Threshold
+                  </h4>
+                  <p className="text-xs text-white/40 mb-4">
+                    Controls prompt adherence vs latent chaos.
+                  </p>
                   <input
                     type="range"
                     min="0"
@@ -353,8 +345,12 @@ export default function ImageForgePage() {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold mb-2 text-white/80">Negative Space</h4>
-                  <p className="text-xs text-white/40 mb-4 font-mono">Specify undesirable visual elements.</p>
+                  <h4 className="text-sm font-semibold mb-2 text-white/80">
+                    Negative Space
+                  </h4>
+                  <p className="text-xs text-white/40 mb-4 font-mono">
+                    Specify undesirable visual elements.
+                  </p>
                   <input
                     type="text"
                     placeholder="low quality, deformed hands, blurry"
@@ -381,17 +377,14 @@ export default function ImageForgePage() {
                   <div className="w-24 h-24 rounded-full border border-white/[0.06] border-t-[var(--arc-brand-arcanean-gold)] animate-spin" />
                   <MagicWand className="w-8 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--arc-brand-arcanean-gold)] animate-pulse" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-white/90">Forging Latent Vectors</h3>
+                <h3 className="font-display text-lg font-semibold text-white/90">
+                  Creating your image
+                </h3>
                 <div className="w-64 max-w-full bg-white/[0.04] border border-white/[0.08] h-1.5 rounded-full overflow-hidden mt-4">
-                  <m.div 
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 3.5, ease: "easeInOut" }}
-                    className="h-full bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)]"
-                  />
+                  <div className="h-full w-1/3 animate-pulse motion-reduce:animate-none bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)]" />
                 </div>
-                
-                {/* Simulated live console logs */}
+
+                {/* Current request status */}
                 <div className="w-full max-w-md mt-8 rounded-xl bg-black/50 border border-white/[0.06] p-4 font-mono text-[10px] text-white/50 space-y-1.5 h-36 overflow-y-auto">
                   {generationLogs.map((log, idx) => (
                     <m.p
@@ -400,11 +393,13 @@ export default function ImageForgePage() {
                       animate={{ opacity: 1, x: 0 }}
                       className="flex gap-2"
                     >
-                      <span className="text-[var(--arc-brand-atlantean-teal)]">❯</span>
+                      <span className="text-[var(--arc-brand-atlantean-teal)]">
+                        ❯
+                      </span>
                       <span>{log}</span>
                     </m.p>
                   ))}
-                  {generationLogs.length < 8 && (
+                  {isGenerating && (
                     <span className="inline-block w-1.5 h-3 bg-[var(--arc-brand-arcanean-gold)] animate-pulse ml-1" />
                   )}
                 </div>
@@ -421,17 +416,22 @@ export default function ImageForgePage() {
                 <div className="relative border border-white/[0.08] bg-black/40 rounded-3xl overflow-hidden aspect-[16/10] group">
                   <Image
                     src={selectedImage.url}
+                    unoptimized
                     alt={selectedImage.prompt}
                     fill
                     sizes="(max-width: 1200px) 100vw, 1200px"
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350 flex flex-col justify-end p-6">
-                    <div className="flex items-end justify-between gap-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 transition-opacity duration-350 motion-reduce:transition-none flex flex-col justify-end p-6">
+                    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
                       <div className="max-w-2xl">
-                        <span className="text-[10px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider">Prompt context</span>
-                        <p className="text-sm text-white/80 leading-relaxed font-body mt-1">{selectedImage.prompt}</p>
+                        <span className="text-[10px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider">
+                          Prompt context
+                        </span>
+                        <p className="text-sm text-white/80 leading-relaxed font-body mt-1 line-clamp-3">
+                          {selectedImage.prompt}
+                        </p>
                       </div>
                       <div className="flex gap-2 shrink-0">
                         <button
@@ -439,8 +439,22 @@ export default function ImageForgePage() {
                           className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.12] transition-colors"
                           title="Copy prompt"
                         >
-                          {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+                          {copied ? (
+                            <Check className="w-5 h-5 text-green-400" />
+                          ) : (
+                            <Copy className="w-5 h-5" />
+                          )}
                         </button>
+                        {selectedImage.url.startsWith("https://") && (
+                          <a
+                            href={selectedImage.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="min-h-11 inline-flex items-center rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-deep)] px-3 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                          >
+                            Open original image
+                          </a>
+                        )}
                         <button
                           onClick={handleDownload}
                           className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.12] transition-colors"
@@ -456,7 +470,9 @@ export default function ImageForgePage() {
                 {/* Sub-gallery of current session images */}
                 {generatedImages.length > 0 && (
                   <div>
-                    <h3 className="text-xs font-mono text-white/30 uppercase tracking-widest mb-3">Session generations</h3>
+                    <h3 className="text-xs font-mono text-white/30 uppercase tracking-widest mb-3">
+                      Session generations
+                    </h3>
                     <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none">
                       {generatedImages.map((img) => (
                         <button
@@ -470,6 +486,7 @@ export default function ImageForgePage() {
                         >
                           <Image
                             src={img.url}
+                            unoptimized
                             alt={img.prompt}
                             fill
                             sizes="96px"
@@ -499,7 +516,8 @@ export default function ImageForgePage() {
                   Transform outline to infinite visions
                 </h2>
                 <p className="text-sm text-white/40 max-w-md mb-12">
-                  Select a polaroid below to preload a creative seed, or type your custom vision into the toolbar.
+                  Select a polaroid below to preload a creative seed, or type
+                  your custom vision into the toolbar.
                 </p>
 
                 {/* Polaroid cards grid */}
@@ -530,7 +548,9 @@ export default function ImageForgePage() {
                         </p>
                         <div className="flex justify-between items-center text-[8px] font-mono text-zinc-400 mt-1 uppercase">
                           <span>@{p.author}</span>
-                          <span className="text-[var(--arc-brand-atlantean-teal)] font-bold">{p.style}</span>
+                          <span className="text-[var(--arc-brand-atlantean-teal)] font-bold">
+                            {p.style}
+                          </span>
                         </div>
                       </div>
                     </m.div>
@@ -565,7 +585,7 @@ export default function ImageForgePage() {
         </div>
 
         {/* ── Bottom Floating Toolbar ── */}
-        <div className="fixed bottom-6 inset-x-0 z-30 px-6 pointer-events-none">
+        <div className="fixed bottom-6 inset-x-0 z-30 px-4 sm:px-6 pointer-events-none">
           <m.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -575,6 +595,7 @@ export default function ImageForgePage() {
             {/* Input area */}
             <div className="flex-1 w-full relative">
               <textarea
+                aria-label="Image prompt"
                 ref={textareaRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -594,21 +615,26 @@ export default function ImageForgePage() {
             </div>
 
             {/* Quick config parameters row */}
-            <div className="flex items-center justify-between w-full md:w-auto gap-2 border-t md:border-t-0 md:border-l border-white/[0.06] pt-2 md:pt-0 md:pl-2">
-              <div className="flex items-center gap-1.5 relative">
+            <div className="flex flex-col items-stretch md:flex-row md:items-center md:justify-between w-full md:w-auto gap-2 border-t md:border-t-0 md:border-l border-white/[0.06] pt-2 md:pt-0 md:pl-2">
+              <div className="flex flex-wrap items-center gap-1.5 relative">
                 {/* Style Selector */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveDropdown(activeDropdown === "style" ? null : "style");
+                    setActiveDropdown(
+                      activeDropdown === "style" ? null : "style",
+                    );
                   }}
                   className={`px-3 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] text-[11px] font-mono font-semibold flex items-center gap-1.5 transition-colors ${
-                    activeDropdown === "style" ? "border-[var(--arc-brand-atlantean-teal)] text-[var(--arc-brand-atlantean-teal)]" : "text-white/60"
+                    activeDropdown === "style"
+                      ? "border-[var(--arc-brand-atlantean-teal)] text-[var(--arc-brand-atlantean-teal)]"
+                      : "text-white/60"
                   }`}
                 >
                   <Palette className="w-4 h-4" />
                   <span className="max-w-[80px] truncate">
-                    {STYLE_PRESETS.find((s) => s.id === selectedStyle)?.name || "Style"}
+                    {STYLE_PRESETS.find((s) => s.id === selectedStyle)?.name ||
+                      "Style"}
                   </span>
                   <CaretDown className="w-3.5 h-3.5 opacity-60" />
                 </button>
@@ -643,10 +669,14 @@ export default function ImageForgePage() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveDropdown(activeDropdown === "ratio" ? null : "ratio");
+                    setActiveDropdown(
+                      activeDropdown === "ratio" ? null : "ratio",
+                    );
                   }}
                   className={`px-3 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] text-[11px] font-mono font-semibold flex items-center gap-1.5 transition-colors ${
-                    activeDropdown === "ratio" ? "border-[var(--arc-brand-atlantean-teal)] text-[var(--arc-brand-atlantean-teal)]" : "text-white/60"
+                    activeDropdown === "ratio"
+                      ? "border-[var(--arc-brand-atlantean-teal)] text-[var(--arc-brand-atlantean-teal)]"
+                      : "text-white/60"
                   }`}
                 >
                   <Stack className="w-4 h-4" />
@@ -683,9 +713,10 @@ export default function ImageForgePage() {
                 {/* Count Stepper */}
                 <div className="flex items-center bg-white/[0.03] border border-white/[0.06] rounded-xl p-0.5">
                   <button
+                    aria-label="Fewer images"
                     onClick={() => setImageCount(Math.max(1, imageCount - 1))}
                     disabled={imageCount <= 1}
-                    className="p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                    className="min-h-11 min-w-11 p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
                   >
                     <Minus className="w-3 h-3" />
                   </button>
@@ -693,9 +724,10 @@ export default function ImageForgePage() {
                     {imageCount}
                   </span>
                   <button
+                    aria-label="More images"
                     onClick={() => setImageCount(Math.min(4, imageCount + 1))}
                     disabled={imageCount >= 4}
-                    className="p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                    className="min-h-11 min-w-11 p-2 text-white/40 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
                   >
                     <Plus className="w-3 h-3" />
                   </button>
@@ -706,11 +738,13 @@ export default function ImageForgePage() {
               <button
                 onClick={handleGenerate}
                 disabled={!prompt.trim() || isGenerating}
-                className="py-2.5 px-5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center gap-1.5 transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
+                className="min-h-11 justify-center py-2.5 px-5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center gap-1.5 transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]"
               >
                 <Sparkle className="w-4 h-4 text-black" />
                 <span>Forge</span>
-                <span className="text-[10px] font-mono opacity-50 ml-1">⚡{imageCount}</span>
+                <span className="text-[10px] font-mono opacity-50 ml-1">
+                  {costFor("image.standard", imageCount)} credits
+                </span>
               </button>
             </div>
           </m.div>

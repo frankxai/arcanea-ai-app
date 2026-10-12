@@ -65,7 +65,8 @@ export const CREDIT_PACKS: CreditPack[] = [
 
 // ─── Creation Types & Costs ──────────────────────────────────────────────────
 
-export type CreationType = "image" | "music" | "story" | "character" | "world" | "lore";
+export type CreationType =
+  "image" | "video" | "music" | "story" | "character" | "world" | "lore";
 
 export interface CreationCost {
   type: CreationType;
@@ -81,12 +82,48 @@ export interface CreationCost {
  * pack pricing and Forge subscription margin.
  */
 export const CREATION_COSTS: CreationCost[] = [
-  { type: "image", credits: 1, label: "Image", description: "Generate one original image from a prompt" },
-  { type: "music", credits: 1, label: "Music", description: "Compose one original music track" },
-  { type: "story", credits: 1, label: "Story", description: "Generate one story chapter or lore entry" },
-  { type: "character", credits: 1, label: "Character", description: "Create a character with art and backstory" },
-  { type: "world", credits: 1, label: "World", description: "Generate a world blueprint with lore" },
-  { type: "lore", credits: 1, label: "Lore", description: "Generate a lore article or codex entry" },
+  {
+    type: "image",
+    credits: 1,
+    label: "Image",
+    description: "Generate one original image from a prompt",
+  },
+  {
+    type: "video",
+    credits: 1,
+    label: "Video",
+    description: "Animate one image into a short video clip",
+  },
+  {
+    type: "music",
+    credits: 1,
+    label: "Music",
+    description: "Compose one original music track",
+  },
+  {
+    type: "story",
+    credits: 1,
+    label: "Story",
+    description: "Generate one story chapter or lore entry",
+  },
+  {
+    type: "character",
+    credits: 1,
+    label: "Character",
+    description: "Create a character with art and backstory",
+  },
+  {
+    type: "world",
+    credits: 1,
+    label: "World",
+    description: "Generate a world blueprint with lore",
+  },
+  {
+    type: "lore",
+    credits: 1,
+    label: "Lore",
+    description: "Generate a lore article or codex entry",
+  },
 ];
 
 // ─── User Credit Balance ─────────────────────────────────────────────────────
@@ -112,12 +149,12 @@ export const FREE_DAILY_CREDITS = 5;
 // ─── Transactions ────────────────────────────────────────────────────────────
 
 export type TransactionType =
-  | "purchase"       // Bought a credit pack
-  | "daily_grant"    // Daily free credits granted
-  | "creation"       // Used credits to create something
-  | "refund"         // Refunded for a failed creation
-  | "admin_grant"    // Manually granted by admin
-  | "promo";         // Promotional credits
+  | "purchase" // Bought a credit pack
+  | "daily_grant" // Daily free credits granted
+  | "creation" // Used credits to create something
+  | "refund" // Refunded for a failed creation
+  | "admin_grant" // Manually granted by admin
+  | "promo"; // Promotional credits
 
 export interface CreditTransaction {
   id: string;

@@ -1,0 +1,32 @@
+{
+  "schema": "arcanea.shop.world-starter.v1",
+  "version": "1.0.0",
+  "canonState": "proposal-outside-official-arcanea-canon",
+  "aiAssisted": true,
+  "world": {
+    "handle": "Tide Archive",
+    "promise": "A coastal mystery about what people choose to remember.",
+    "rule": "A damaged memory can be repaired only with an equally specific memory.",
+    "cost": "The repairer loses their lived connection to the memory they give.",
+    "pressure": "An archivist wants to preserve her father for a younger brother.",
+    "visualDirection": [
+      "salt-clouded glass",
+      "copper repairs",
+      "narrow tide stairs",
+      "low morning light"
+    ]
+  },
+  "characterTemplate": {
+    "id": "",
+    "name": "",
+    "desire": "",
+    "constraint": "",
+    "loss": "",
+    "choice": "",
+    "relationshipChanged": ""
+  },
+  "continuity": [],
+  "states": ["accepted", "proposal", "conflict", "rejected"],
+  "source": "https://www.arcanea.ai/shop/sample",
+  "usePermission": "Adapt the sample text and blank templates for personal or commercial original projects. Official Arcanea canon, artwork and trademarks are excluded. No endorsement or exclusive copyright is promised. See the Markdown starter for the full permission note."
+}

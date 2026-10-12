@@ -13,8 +13,9 @@ import {
 
 import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
+import { readWorldElements, worldDisplayPalette } from "@/lib/worlds/elements";
 import { WorldActions } from "@/components/worlds/WorldActions";
-import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
+import { WorldDetailTabs } from "./world-detail-tabs";
 
 // Ceiling well below the 300s platform limit so a pathological world fails
 // fast and visibly instead of holding a function open for five minutes.
@@ -182,8 +183,8 @@ async function getWorld(slug: string) {
 
   return {
     ...world,
-    // Normalize elements from Json to string[]
-    elements: Array.isArray(world.elements) ? (world.elements as string[]) : [],
+    elements: readWorldElements(world.elements).map((element) => element.name),
+    displayElements: readWorldElements(world.elements),
     characters,
     factions,
     locations,
@@ -214,7 +215,7 @@ export default async function WorldDetailPage({ params }: Props) {
     : null;
 
   const elements = world.elements;
-  const palette = extractPalette(elements);
+  const palette = worldDisplayPalette(world.displayElements, world.palette);
 
   return (
     <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
@@ -478,39 +479,4 @@ function ForkButton({ slug }: { slug: string }) {
       Fork
     </Link>
   );
-}
-
-// ── Palette extraction ───────────────────────────────────────────────
-
-const ELEMENT_HEX: Record<string, string> = {
-  Fire: "var(--arc-fire)",
-  Water: "var(--arc-brand-cosmic-blue)",
-  Earth: "var(--arc-wind)",
-  Wind: "var(--arc-text-primary)",
-  Void: "var(--arc-void)",
-  Spirit: "var(--arc-brand-arcanean-gold)",
-};
-
-function extractPalette(elements: string[]): WorldPalette {
-  if (elements.length === 0) {
-    return {
-      gradient:
-        "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-void))",
-      primary: "var(--arc-brand-atlantean-teal)",
-      secondary: "var(--arc-void)",
-    };
-  }
-
-  const colors = elements
-    .map((e) => ELEMENT_HEX[e] || "var(--arc-brand-atlantean-teal)")
-    .slice(0, 3);
-
-  if (colors.length === 1) colors.push("var(--arc-brand-cosmic-blue)");
-  if (colors.length === 2) colors.push("var(--arc-cosmic-void)");
-
-  return {
-    gradient: `linear-gradient(135deg, ${colors.join(", ")})`,
-    primary: colors[0],
-    secondary: colors[1],
-  };
 }

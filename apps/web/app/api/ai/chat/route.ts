@@ -19,6 +19,10 @@ import {
   resolveProviderRoute,
   ProviderRoutingError,
 } from "@/lib/ai/provider-routing";
+import {
+  CredentialPolicyError,
+  validateCustomerKey,
+} from "@/lib/gateway/credential-policy.mjs";
 import { createChatTools } from "@/lib/chat/tools";
 import { buildJarvisTools } from "@/lib/luminors/tools/jarvis";
 import { buildArcaneaRuntimeHeaders } from "@/lib/chat/runtime-metadata";
@@ -215,7 +219,21 @@ export async function POST(req: NextRequest) {
 
   try {
     // --- Parse request ---
-    const body: ChatRequest = await req.json();
+    const parsedBody: unknown = await req.json().catch(() => null);
+    if (
+      parsedBody === null ||
+      typeof parsedBody !== "object" ||
+      Array.isArray(parsedBody)
+    ) {
+      return new Response("Invalid request body.", {
+        status: 400,
+        headers: {
+          "Content-Type": "text/plain",
+          "Cache-Control": "private, no-store",
+        },
+      });
+    }
+    const body = parsedBody as ChatRequest;
     const {
       messages,
       systemPrompt,
@@ -245,14 +263,38 @@ export async function POST(req: NextRequest) {
 
     let route;
     try {
+      if (
+        clientApiKey === undefined ||
+        clientApiKey === null ||
+        (typeof clientApiKey === "string" && clientApiKey.trim() === "")
+      ) {
+        return new Response(
+          "Connect your provider key in Settings → Providers to use chat.",
+          {
+            status: 401,
+            headers: {
+              "Content-Type": "text/plain",
+              "Cache-Control": "private, no-store",
+            },
+          },
+        );
+      }
       route = resolveProviderRoute(
-        { requestedProvider, gatewayModel, clientApiKey },
+        {
+          requestedProvider,
+          gatewayModel,
+          clientApiKey: validateCustomerKey(clientApiKey),
+        },
         { ...PROVIDERS, ...EXTENDED_PROVIDERS },
         GATEWAY_MODELS,
-        process.env,
+        // Public chat is BYOK-only until managed calls have durable authorization.
+        {},
       );
     } catch (error) {
-      if (error instanceof ProviderRoutingError) {
+      if (
+        error instanceof ProviderRoutingError ||
+        error instanceof CredentialPolicyError
+      ) {
         return new Response(error.message, {
           status: error.status,
           headers: {
@@ -262,6 +304,39 @@ export async function POST(req: NextRequest) {
         });
       }
       throw error;
+    }
+
+    if (
+      enabledTools !== undefined &&
+      (!Array.isArray(enabledTools) ||
+        !enabledTools.every((name) => typeof name === "string"))
+    ) {
+      return new Response("Tool selection must be a list of names.", {
+        status: 400,
+        headers: {
+          "Content-Type": "text/plain",
+          "Cache-Control": "private, no-store",
+        },
+      });
+    }
+    // These shared tools use platform credentials or host access without the
+    // durable admission required by this public customer-key route.
+    const blockedTool = enabledTools?.find((name) =>
+      ["image", "search", "research", "think", "jarvis"].includes(name),
+    );
+    if (blockedTool) {
+      return new Response(
+        blockedTool === "image"
+          ? "Image generation in chat is unavailable. Open Imagine to generate images with your account credits."
+          : "This chat tool is unavailable. Continue with text chat using your provider key.",
+        {
+          status: 403,
+          headers: {
+            "Content-Type": "text/plain",
+            "Cache-Control": "private, no-store",
+          },
+        },
+      );
     }
     const resolvedProviderId = route.providerId;
     const providerApiKeySource = route.apiKeySource;
@@ -733,8 +808,6 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const selected: Record<string, any> = { ...autoVault };
-      if (enabledTools.includes("image") && chatToolSet.image_generate)
-        selected.image_generate = chatToolSet.image_generate;
       if (enabledTools.includes("search") && chatToolSet.web_search)
         selected.web_search = chatToolSet.web_search;
       if (
@@ -819,10 +892,15 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       messages: modelMessages,
       temperature: temperature ?? 0.7,
       maxOutputTokens: maxTokens ?? 8192,
+      onError: () => {
+        console.error("Chat provider stream failed.");
+      },
       ...(toolsToUse ? { tools: toolsToUse, maxSteps: 5 } : {}),
     });
 
     const responseHeaders: Record<string, string> = {
+      "Cache-Control": "private, no-store, no-transform",
+      "X-Accel-Buffering": "no",
       "x-arcanea-gates": activeGates.join(","),
       "x-arcanea-coordination": coordinationMode,
       "x-arcanea-lead": leadGuardian || "",
@@ -873,6 +951,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
 
     return result.toUIMessageStreamResponse({
       headers: responseHeaders,
+      onError: () => "Provider request failed.",
       messageMetadata: ({ part }) => {
         if (part.type === "start") {
           return runtimeMetadata;
@@ -882,8 +961,6 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       },
     });
   } catch (error) {
-    console.error("Chat API error:", error);
-
     const message =
       error instanceof Error ? error.message : "Internal server error";
 
@@ -895,13 +972,24 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     ) {
       return new Response(
         "Invalid API key. Check your key in Settings → Providers.",
-        { status: 401, headers: { "Content-Type": "text/plain" } },
+        {
+          status: 401,
+          headers: {
+            "Content-Type": "text/plain",
+            "Cache-Control": "private, no-store, no-transform",
+            "X-Accel-Buffering": "no",
+          },
+        },
       );
     }
 
-    return new Response(message, {
+    return new Response("Provider request failed.", {
       status: 500,
-      headers: { "Content-Type": "text/plain" },
+      headers: {
+        "Content-Type": "text/plain",
+        "Cache-Control": "private, no-store, no-transform",
+        "X-Accel-Buffering": "no",
+      },
     });
   }
 }
@@ -909,15 +997,16 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
 // Health check
 export async function GET() {
   const configured: Record<string, boolean> = {};
-  for (const [id, config] of Object.entries(PROVIDERS)) {
-    configured[id] = config.envKeys.some((k) => Boolean(process.env[k]));
+  for (const id of Object.keys(PROVIDERS)) {
+    configured[id] = false;
   }
-  for (const [id, ext] of Object.entries(EXTENDED_PROVIDERS)) {
-    configured[id] = ext.envKeys.some((k) => Boolean(process.env[k]));
+  for (const id of Object.keys(EXTENDED_PROVIDERS)) {
+    configured[id] = false;
   }
-  const anyConfigured = Object.values(configured).some(Boolean);
   return NextResponse.json({
-    status: anyConfigured ? "ok" : "no-api-key",
+    status: "customer-key-required",
+    credentialMode: "customer-byok",
+    managedInference: "disabled",
     service: "arcanea-intelligence-gateway",
     providers: configured,
     gatewayModels: Object.keys(GATEWAY_MODELS).length,

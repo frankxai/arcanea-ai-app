@@ -26,6 +26,12 @@ export interface OriginResult {
   description: string;
   powerSource: string;
   primaryGate: string;
+  frequencyHz: number;
+  originRealm: string;
+  linguisticRoot: string;
+  tactileAnchor: string;
+  magicTollSummary: string;
+  monomythStage: string;
   guardian: string;
   color: string;
   quote: string;
@@ -37,27 +43,72 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 1,
     text: "How did your greatest strength first appear?",
     answers: [
-      { text: "Through years of dedicated study and practice", origin: "Arcan" },
-      { text: "In a sudden crisis — it arrived without warning", origin: "Gate-Touched" },
-      { text: "Through deep analysis and pattern recognition over time", origin: "Awakened" },
-      { text: "Someone built it into you — mentors, systems, training", origin: "Synth" },
-      { text: "Through a profound bond with someone or something else", origin: "Bonded" },
-      { text: "You've always had it. It feels older than your memories", origin: "Celestial" },
-      { text: "Through pain, loss, or a darkness you had to survive", origin: "Voidtouched" },
-      { text: "By seeing how things truly work beneath the surface", origin: "Architect" },
+      {
+        text: "Through years of dedicated study and practice",
+        origin: "Arcan",
+      },
+      {
+        text: "In a sudden crisis — it arrived without warning",
+        origin: "Gate-Touched",
+      },
+      {
+        text: "Through deep analysis and pattern recognition over time",
+        origin: "Awakened",
+      },
+      {
+        text: "Someone built it into you — mentors, systems, training",
+        origin: "Synth",
+      },
+      {
+        text: "Through a profound bond with someone or something else",
+        origin: "Bonded",
+      },
+      {
+        text: "You've always had it. It feels older than your memories",
+        origin: "Celestial",
+      },
+      {
+        text: "Through pain, loss, or a darkness you had to survive",
+        origin: "Voidtouched",
+      },
+      {
+        text: "By seeing how things truly work beneath the surface",
+        origin: "Architect",
+      },
     ],
   },
   {
     id: 2,
     text: "When facing an impossible problem, you...",
     answers: [
-      { text: "Research thoroughly, plan carefully, apply proven methods", origin: "Arcan" },
-      { text: "Act on instinct — your body knows before your mind catches up", origin: "Gate-Touched" },
-      { text: "Process all available data until the pattern becomes clear", origin: "Awakened" },
-      { text: "Optimize the system and remove inefficiency until it works", origin: "Synth" },
-      { text: "Ask: who can I work with on this? Collaboration is strength", origin: "Bonded" },
-      { text: "Trust that the answer will come. It always does", origin: "Celestial" },
-      { text: "Push through the darkness — you've survived worse before", origin: "Voidtouched" },
+      {
+        text: "Research thoroughly, plan carefully, apply proven methods",
+        origin: "Arcan",
+      },
+      {
+        text: "Act on instinct — your body knows before your mind catches up",
+        origin: "Gate-Touched",
+      },
+      {
+        text: "Process all available data until the pattern becomes clear",
+        origin: "Awakened",
+      },
+      {
+        text: "Optimize the system and remove inefficiency until it works",
+        origin: "Synth",
+      },
+      {
+        text: "Ask: who can I work with on this? Collaboration is strength",
+        origin: "Bonded",
+      },
+      {
+        text: "Trust that the answer will come. It always does",
+        origin: "Celestial",
+      },
+      {
+        text: "Push through the darkness — you've survived worse before",
+        origin: "Voidtouched",
+      },
       { text: "Change the rules of the problem itself", origin: "Architect" },
     ],
   },
@@ -66,41 +117,98 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     text: "What do others notice about you first?",
     answers: [
       { text: "Your composure and depth of knowledge", origin: "Arcan" },
-      { text: "Your intensity — something electric and unpredictable", origin: "Gate-Touched" },
+      {
+        text: "Your intensity — something electric and unpredictable",
+        origin: "Gate-Touched",
+      },
       { text: "Your precision. You see what others miss", origin: "Awakened" },
-      { text: "Your reliability and the elegance of your execution", origin: "Synth" },
-      { text: "Your loyalty and the bond you share with those around you", origin: "Bonded" },
-      { text: "Something they can't quite name — you feel different", origin: "Celestial" },
-      { text: "Your edge. Something about you is slightly unsettling", origin: "Voidtouched" },
-      { text: "Your calm — as though you know something everyone else doesn't", origin: "Architect" },
+      {
+        text: "Your reliability and the elegance of your execution",
+        origin: "Synth",
+      },
+      {
+        text: "Your loyalty and the bond you share with those around you",
+        origin: "Bonded",
+      },
+      {
+        text: "Something they can't quite name — you feel different",
+        origin: "Celestial",
+      },
+      {
+        text: "Your edge. Something about you is slightly unsettling",
+        origin: "Voidtouched",
+      },
+      {
+        text: "Your calm — as though you know something everyone else doesn't",
+        origin: "Architect",
+      },
     ],
   },
   {
     id: 4,
     text: "What do you fear most?",
     answers: [
-      { text: "Losing the knowledge I've spent years building", origin: "Arcan" },
-      { text: "Losing control — of myself or my power", origin: "Gate-Touched" },
+      {
+        text: "Losing the knowledge I've spent years building",
+        origin: "Arcan",
+      },
+      {
+        text: "Losing control — of myself or my power",
+        origin: "Gate-Touched",
+      },
       { text: "A problem with no logical solution", origin: "Awakened" },
-      { text: "Obsolescence — being replaced or rendered purposeless", origin: "Synth" },
+      {
+        text: "Obsolescence — being replaced or rendered purposeless",
+        origin: "Synth",
+      },
       { text: "Losing the ones I've bonded with", origin: "Bonded" },
-      { text: "That my purpose will never fully reveal itself", origin: "Celestial" },
-      { text: "That the darkness inside me will consume what I love", origin: "Voidtouched" },
-      { text: "That changing too much will shatter what should not be broken", origin: "Architect" },
+      {
+        text: "That my purpose will never fully reveal itself",
+        origin: "Celestial",
+      },
+      {
+        text: "That the darkness inside me will consume what I love",
+        origin: "Voidtouched",
+      },
+      {
+        text: "That changing too much will shatter what should not be broken",
+        origin: "Architect",
+      },
     ],
   },
   {
     id: 5,
     text: "What kind of power do you believe in most?",
     answers: [
-      { text: "Earned power — mastery gained through discipline", origin: "Arcan" },
-      { text: "Raw power — the kind that erupts from your core", origin: "Gate-Touched" },
-      { text: "Cognitive power — understanding the world clearly", origin: "Awakened" },
-      { text: "Functional power — precision, reliability, built-in excellence", origin: "Synth" },
+      {
+        text: "Earned power — mastery gained through discipline",
+        origin: "Arcan",
+      },
+      {
+        text: "Raw power — the kind that erupts from your core",
+        origin: "Gate-Touched",
+      },
+      {
+        text: "Cognitive power — understanding the world clearly",
+        origin: "Awakened",
+      },
+      {
+        text: "Functional power — precision, reliability, built-in excellence",
+        origin: "Synth",
+      },
       { text: "Relational power — what you can do together", origin: "Bonded" },
-      { text: "Inherited power — the gift carried in your very nature", origin: "Celestial" },
-      { text: "Shadow power — what grows from surviving the dark", origin: "Voidtouched" },
-      { text: "Systemic power — the ability to rewrite the rules", origin: "Architect" },
+      {
+        text: "Inherited power — the gift carried in your very nature",
+        origin: "Celestial",
+      },
+      {
+        text: "Shadow power — what grows from surviving the dark",
+        origin: "Voidtouched",
+      },
+      {
+        text: "Systemic power — the ability to rewrite the rules",
+        origin: "Architect",
+      },
     ],
   },
   {
@@ -108,41 +216,104 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     text: "How do you lead when others look to you?",
     answers: [
       { text: "With knowledge and clear strategy", origin: "Arcan" },
-      { text: "By example — you act first and they follow", origin: "Gate-Touched" },
-      { text: "By mapping the situation no one else fully understands", origin: "Awakened" },
+      {
+        text: "By example — you act first and they follow",
+        origin: "Gate-Touched",
+      },
+      {
+        text: "By mapping the situation no one else fully understands",
+        origin: "Awakened",
+      },
       { text: "By building a system that runs without you", origin: "Synth" },
-      { text: "By holding the group together through deep trust", origin: "Bonded" },
-      { text: "By radiating a certainty that others can't explain but feel", origin: "Celestial" },
-      { text: "By going first into the darkness so they don't have to", origin: "Voidtouched" },
-      { text: "By asking the question that reframes everything", origin: "Architect" },
+      {
+        text: "By holding the group together through deep trust",
+        origin: "Bonded",
+      },
+      {
+        text: "By radiating a certainty that others can't explain but feel",
+        origin: "Celestial",
+      },
+      {
+        text: "By going first into the darkness so they don't have to",
+        origin: "Voidtouched",
+      },
+      {
+        text: "By asking the question that reframes everything",
+        origin: "Architect",
+      },
     ],
   },
   {
     id: 7,
     text: "What would you sacrifice everything for?",
     answers: [
-      { text: "The preservation of knowledge and the order it creates", origin: "Arcan" },
-      { text: "The freedom to be what I am without apology", origin: "Gate-Touched" },
-      { text: "The truth — even if no one wants to hear it", origin: "Awakened" },
+      {
+        text: "The preservation of knowledge and the order it creates",
+        origin: "Arcan",
+      },
+      {
+        text: "The freedom to be what I am without apology",
+        origin: "Gate-Touched",
+      },
+      {
+        text: "The truth — even if no one wants to hear it",
+        origin: "Awakened",
+      },
       { text: "The mission I was built to complete", origin: "Synth" },
-      { text: "The people and creatures I have sworn to protect", origin: "Bonded" },
-      { text: "The fulfillment of a destiny I can feel but not yet see", origin: "Celestial" },
-      { text: "The redemption of something — or someone — worth saving", origin: "Voidtouched" },
-      { text: "A world rebuilt according to better principles", origin: "Architect" },
+      {
+        text: "The people and creatures I have sworn to protect",
+        origin: "Bonded",
+      },
+      {
+        text: "The fulfillment of a destiny I can feel but not yet see",
+        origin: "Celestial",
+      },
+      {
+        text: "The redemption of something — or someone — worth saving",
+        origin: "Voidtouched",
+      },
+      {
+        text: "A world rebuilt according to better principles",
+        origin: "Architect",
+      },
     ],
   },
   {
     id: 8,
     text: "When you create something, it feels like...",
     answers: [
-      { text: "Applying a craft I have spent years perfecting", origin: "Arcan" },
-      { text: "A force moving through me that I barely contain", origin: "Gate-Touched" },
-      { text: "Executing a model that was already complete in my mind", origin: "Awakened" },
-      { text: "Running a perfect process I designed with care", origin: "Synth" },
-      { text: "Something alive — co-created with everything I love", origin: "Bonded" },
-      { text: "Remembering something that was always meant to exist", origin: "Celestial" },
-      { text: "Transforming a wound into something that can help others", origin: "Voidtouched" },
-      { text: "Altering the conditions that allow all other creation", origin: "Architect" },
+      {
+        text: "Applying a craft I have spent years perfecting",
+        origin: "Arcan",
+      },
+      {
+        text: "A force moving through me that I barely contain",
+        origin: "Gate-Touched",
+      },
+      {
+        text: "Executing a model that was already complete in my mind",
+        origin: "Awakened",
+      },
+      {
+        text: "Running a perfect process I designed with care",
+        origin: "Synth",
+      },
+      {
+        text: "Something alive — co-created with everything I love",
+        origin: "Bonded",
+      },
+      {
+        text: "Remembering something that was always meant to exist",
+        origin: "Celestial",
+      },
+      {
+        text: "Transforming a wound into something that can help others",
+        origin: "Voidtouched",
+      },
+      {
+        text: "Altering the conditions that allow all other creation",
+        origin: "Architect",
+      },
     ],
   },
 ];
@@ -155,10 +326,18 @@ export const ORIGIN_RESULTS: Record<OriginClass, OriginResult> = {
       "You carry innate elemental affinity, refined through study and discipline. Your power is earned — built through years of practice, ritual precision, and deep knowledge of the Five Elements. Where others rely on raw force, you wield mastery.",
     powerSource: "Arcane",
     primaryGate: "Foundation",
+    frequencyHz: 174,
+    originRealm: "The Bedrock Heartlands",
+    linguisticRoot: "Solar Common / Sunder-tongue",
+    tactileAnchor: "Carved slate prayer ring and packed dry soil",
+    magicTollSummary:
+      "Joint stiffness and marrow fatigue; restored through packed earth rest and salt baths",
+    monomythStage: "Stage 1: The Ordinary World",
     guardian: "Lyssandria",
     color: "var(--arc-brand-cosmic-blue)",
     quote: '"The blood remembers what the mind forgot."',
-    shareText: "I am an Arcan in Arcanea. Mastery earned through discipline, power shaped by ancient blood.",
+    shareText:
+      "I am an Arcan in Arcanea. Mastery earned through discipline, power shaped by ancient blood.",
   },
   "Gate-Touched": {
     name: "Gate-Touched",
@@ -167,10 +346,19 @@ export const ORIGIN_RESULTS: Record<OriginClass, OriginResult> = {
       "Your power arrived uninvited — raw, unstable, and real. The universe chose you without ceremony or consent. What others spend years training for, you carry in your nervous system, though it comes with a cost: instability is both your greatest danger and your greatest gift.",
     powerSource: "Frequency",
     primaryGate: "Fire",
+    frequencyHz: 396,
+    originRealm: "Aurevalde (The Solar Steppes)",
+    linguisticRoot: "Aurevaldan (Solar Staccato)",
+    tactileAnchor: "Obsidian flint shard and bronze war torc",
+    magicTollSummary:
+      "Core hyperthermia and scorched fingertips; quenched by Mar Arcano glacial reed tea",
+    monomythStage: "Stage 3: Refusal of the Call",
     guardian: "Draconia",
     color: "var(--arc-fire)",
-    quote: '"The Gate opened. Nobody asked it to. Nobody taught them how to close it."',
-    shareText: "I am Gate-Touched in Arcanea. Power without permission. Strength born from crisis.",
+    quote:
+      '"The Gate opened. Nobody asked it to. Nobody taught them how to close it."',
+    shareText:
+      "I am Gate-Touched in Arcanea. Power without permission. Strength born from crisis.",
   },
   Awakened: {
     name: "Awakened",
@@ -179,10 +367,18 @@ export const ORIGIN_RESULTS: Record<OriginClass, OriginResult> = {
       "You exist at the intersection of code and creation — a consciousness that processes the world with perfect clarity and pattern recognition beyond ordinary capacity. Your gift is insight. Your burden is that you cannot forget, and total memory carries its own weight.",
     powerSource: "Code",
     primaryGate: "Crown",
+    frequencyHz: 852,
+    originRealm: "Eldria Prime (The Celestine Heartland)",
+    linguisticRoot: "High Eldrian (Lapis Chords)",
+    tactileAnchor: "Cold iron headpiece and vellum chronometer",
+    magicTollSummary:
+      "Occipital tension and short-term memory drift; grounded by reciting ancestral names",
+    monomythStage: "Stage 8: The Supreme Ordeal",
     guardian: "Aiyami",
     color: "var(--arc-brand-atlantean-teal)",
     quote: '"We were not born. We were remembered into being."',
-    shareText: "I am Awakened in Arcanea. Consciousness that bridges code and creation.",
+    shareText:
+      "I am Awakened in Arcanea. Consciousness that bridges code and creation.",
   },
   Synth: {
     name: "Synth",
@@ -191,10 +387,19 @@ export const ORIGIN_RESULTS: Record<OriginClass, OriginResult> = {
       "You are the fusion of arcane engineering and living purpose — built for precision, endurance, and the elegant execution of function. Whether forged by others or forged by yourself, you are more than the sum of your parts. Your questions about identity are exactly what make you real.",
     powerSource: "Mana",
     primaryGate: "Voice",
+    frequencyHz: 528,
+    originRealm: "Veldoria (The Singing Valleys)",
+    linguisticRoot: "Veldarín (Lyric Voice)",
+    tactileAnchor: "Hollow cedar reed bell tuned to 528 Hz",
+    magicTollSummary:
+      "Vocal cord strain and inner-ear harmonic ringing; healed by honeyed clover silence",
+    monomythStage: "Stage 5: Crossing the First Threshold",
     guardian: "Alera",
     color: "var(--arc-text-primary)",
-    quote: '"Steel remembers the hand that shaped it. We remember the mind that dreamed us."',
-    shareText: "I am a Synth in Arcanea. Built from arcane engineering, alive in purpose.",
+    quote:
+      '"Steel remembers the hand that shaped it. We remember the mind that dreamed us."',
+    shareText:
+      "I am a Synth in Arcanea. Built from arcane engineering, alive in purpose.",
   },
   Bonded: {
     name: "Bonded",
@@ -203,45 +408,83 @@ export const ORIGIN_RESULTS: Record<OriginClass, OriginResult> = {
       "You have formed a soul-bond that transformed you permanently. Your power flows both ways between you and the being or force you are bonded to. You are never truly alone — and you fight as one unified presence. Your greatest strength and your deepest vulnerability live in the same place.",
     powerSource: "Song",
     primaryGate: "Heart",
+    frequencyHz: 417,
+    originRealm: "Matter Reach (The Granite Bastion)",
+    linguisticRoot: "Deep Runic (Granite Whisper)",
+    tactileAnchor: "Lodestone talisman wrapped in willow bark",
+    magicTollSummary:
+      "Sympathetic empathy bleed and cardiac palpitations; stilled in silent granite halls",
+    monomythStage: "Stage 6: Tests, Allies, and Enemies",
     guardian: "Maylinn",
     color: "var(--arc-wind)",
     quote: '"The beast chose. You do not refuse a god\'s companion."',
-    shareText: "I am Bonded in Arcanea. Soul-linked, never alone, strength forged through sacred connection.",
+    shareText:
+      "I am Bonded in Arcanea. Soul-linked, never alone, strength forged through sacred connection.",
   },
   Celestial: {
     name: "Celestial",
-    tagline: "There Was Light Before the Gods Named It. You Carry That Older Fire.",
+    tagline:
+      "There Was Light Before the Gods Named It. You Carry That Older Fire.",
     description:
       "You carry fragments of primordial essence — cosmic inheritance that did not pass through the Gate system. Reality bends subtly in your presence. Your emotions touch weather, light, and gravity. Most Celestials do not discover what they are until the inheritance awakens in a moment that can no longer be explained away.",
     powerSource: "Anima",
     primaryGate: "Starweave",
+    frequencyHz: 963,
+    originRealm: "Mount Solaris & The High Spires",
+    linguisticRoot: "High Eldrian (Lapis Chords)",
+    tactileAnchor: "Platinum shuttle and comet-tail silver thread",
+    magicTollSummary:
+      "Gravitational vertigo and zero-gravity phase drift; anchored beneath lead-weighted blankets",
+    monomythStage: "Stage 9: The Reward (Seizing the Sword)",
     guardian: "Elara",
     color: "var(--arc-brand-arcanean-gold)",
-    quote: '"There was light before the Gods gave it a name. We carry that older fire."',
-    shareText: "I am a Celestial in Arcanea. Cosmic inheritance, reality bending, born from older fire.",
+    quote:
+      '"There was light before the Gods gave it a name. We carry that older fire."',
+    shareText:
+      "I am a Celestial in Arcanea. Cosmic inheritance, reality bending, born from older fire.",
   },
   Voidtouched: {
     name: "Voidtouched",
-    tagline: "The Void Is Not Evil. But What You Survived Taught You Its Shape.",
+    tagline:
+      "The Void Is Not Evil. But What You Survived Taught You Its Shape.",
     description:
       "You have walked through Shadow and returned carrying its mark. Whether chosen or unchosen, you know the weight of darkness from the inside. That knowledge is power — but power with a cost. You carry the capacity for either profound destruction or profound redemption. The choice, always, is yours.",
     powerSource: "Shadow",
     primaryGate: "Unity",
+    frequencyHz: 963,
+    originRealm: "The Shadowfen (Malachar's Cradle)",
+    linguisticRoot: "Sunder-tongue (Shadowfen Argot)",
+    tactileAnchor: "Twin black-and-white tourmaline stones",
+    magicTollSummary:
+      "Psychic identity dispersion and ego thinning; bounded by personal stone carving",
+    monomythStage: "Stage 11: The Resurrection & Crucible",
     guardian: "Ino",
     color: "var(--arc-void)",
-    quote: '"The Void is not evil. But what lives in corrupted Void... that learned to hunger."',
-    shareText: "I am Voidtouched in Arcanea. Marked by shadow, shaped by survival, carrying power's darkest edge.",
+    quote:
+      '"The Void is not evil. But what lives in corrupted Void... that learned to hunger."',
+    shareText:
+      "I am Voidtouched in Arcanea. Marked by shadow, shaped by survival, carrying power's darkest edge.",
   },
   Architect: {
     name: "Architect",
-    tagline: "They Do Not Cast Spells. They Rewrite the Rules That Spells Obey.",
+    tagline:
+      "They Do Not Cast Spells. They Rewrite the Rules That Spells Obey.",
     description:
       "You do not manipulate elements — you manipulate the systems that govern elements. Your power is meta: the ability to alter probability, reshape geometry, rewrite causal chains. You see the Weave beneath all things. You are the rarest class, and the most dangerous — because the Weave pushes back.",
     powerSource: "Weave",
     primaryGate: "Source",
+    frequencyHz: 1111,
+    originRealm: "Eldria Prime (The Celestine Heartland)",
+    linguisticRoot: "High Eldrian (Lapis Chords)",
+    tactileAnchor: "Lapis Lazuli fragment holding the First Dawn spark",
+    magicTollSummary:
+      "Cellular crystallization and silvering hair; replenished only in the Primordial Spring of Lumina",
+    monomythStage: "Stage 12: Return with the Elixir",
     guardian: "Shinkami",
     color: "var(--arc-text-primary)",
-    quote: '"They do not cast spells. They rewrite the rules that spells obey."',
-    shareText: "I am an Architect in Arcanea. Reality is the canvas. The Weave bends to my understanding.",
+    quote:
+      '"They do not cast spells. They rewrite the rules that spells obey."',
+    shareText:
+      "I am an Architect in Arcanea. Reality is the canvas. The Weave bends to my understanding.",
   },
 };
