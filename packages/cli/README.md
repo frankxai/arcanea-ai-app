@@ -103,7 +103,7 @@ arcanea install opencode --mcp-entry /absolute/path/to/arcanea-mcp/dist/cli.js -
 arcanea install opencode --mcp-entry /absolute/path/to/arcanea-mcp/dist/cli.js --dir ./my-world
 ```
 
-Restart OpenCode in the project and run `opencode mcp list`. Choose models and permissions through OpenCode's existing controls. The generated `.opencode/plugins/arcanea-creator.ts` uses the native config hook to add the `arcanea` MCP entry when that name is absent. An existing entry takes precedence, including `enabled: false`. Existing JSONC comments, model pins, permissions and other plugins stay intact.
+Restart OpenCode in the project and run `opencode mcp list`. Choose models and permissions through OpenCode's existing controls. The generated `.opencode/plugins/arcanea-creator.ts` uses the native config hook to add the `arcanea` MCP entry when that name is absent. An existing entry takes precedence, including `enabled: false`. The installer leaves JSONC bytes, model pins, permissions and other plugins untouched. OpenCode retains its own configuration behavior, including adding a schema to a compact schema-less file at startup; native verification compares that operation with manual configuration without the adapter.
 
 The standard level enables the server's `core,world` toolsets. `--level minimal` enables `core`. Full and Luminor levels are unavailable in this adapter. These are tool selections; they do not add Arcanea lore or a system prompt to your original world. Individual server tools still have their documented Arcanea scope, so review the tool description before using a canon-specific generator or checker.
 

@@ -473,16 +473,33 @@ try {
   }
   receipt.stages.push("installed-sdk-tools-and-restart");
 
-  writeFileSync(
-    configPath,
-    JSON.stringify({
-      autoupdate: false,
-      mcp: {
-        arcanea: { type: "local", command: ["must-not-run"], enabled: false },
-      },
+  const schemaLess = JSON.stringify({
+    autoupdate: false,
+    mcp: {
+      arcanea: { type: "local", command: ["must-not-run"], enabled: false },
+    },
+  });
+  // OpenCode itself adds $schema/formatting to a compact schema-less file.
+  // Compare the adapter against the same native operation without any plugin.
+  const manualProject = join(temporary, "manual configuration");
+  mkdirSync(manualProject);
+  const manualConfigPath = join(manualProject, "opencode.jsonc");
+  writeFileSync(manualConfigPath, schemaLess);
+  const manual = JSON.parse(
+    run("manual-native-explicit-disable", binary, ["debug", "config"], {
+      cwd: manualProject,
+      env,
     }),
   );
-  const disabledBytes = readFileSync(configPath);
+  assert.equal(manual.mcp.arcanea.enabled, false);
+  assert.deepEqual(manual.mcp.arcanea.command, ["must-not-run"]);
+  const disabledBytes = readFileSync(manualConfigPath);
+  receipt.nativeConfigNormalization = {
+    inputSha256: digest(schemaLess),
+    outputSha256: digest(disabledBytes),
+    nativeManualComparison: true,
+  };
+  writeFileSync(configPath, schemaLess);
   const disabled = JSON.parse(
     run("native-explicit-disable", binary, ["debug", "config"], {
       cwd: project,
@@ -492,6 +509,7 @@ try {
   assert.equal(disabled.mcp.arcanea.enabled, false);
   assert.deepEqual(disabled.mcp.arcanea.command, ["must-not-run"]);
   assert.deepEqual(readFileSync(configPath), disabledBytes);
+  receipt.nativeConfigNormalization.adapterMatchesManualBytes = true;
   writeFileSync(
     pluginPath,
     Buffer.concat([originalPlugin, Buffer.from("// User edit\n")]),
