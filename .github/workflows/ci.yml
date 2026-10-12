@@ -206,6 +206,11 @@ jobs:
           pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
           node --test scripts/tests/auth-response-privacy.test.cjs
 
+      - name: Verify ingestion DNS, redirects and native proxy isolation
+        run: |
+          pnpm --dir apps/web test:safe-fetch
+          node --test scripts/tests/safe-fetch-network.test.cjs
+
       - name: Verify author draft ownership, persistence and migration recovery
         env:
           PGPASSWORD: disposable-author-fixture

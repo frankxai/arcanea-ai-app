@@ -187,6 +187,9 @@ function requestOnce(
       {
         method: "GET",
         headers,
+        // Global agents may proxy the target and resolve it remotely, bypassing
+        // guardedLookup. A fresh default agent has no proxy or pooled socket.
+        agent: false,
         lookup: guardedLookup as never,
       },
       (res) => {
