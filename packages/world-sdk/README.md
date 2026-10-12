@@ -23,7 +23,11 @@ is still a local editing primitive; it does not automatically run validation.
 
 The offline schema mirror is pinned to [the shared standard at
 75a31a6](https://github.com/frankxai/arcanea-ecosystem/blob/75a31a6f101b3c8008a9ac958e9314909e67de3f/schemas/world.arcanea.schema.json),
-SHA256 `a53e183ef8d9538863b33d7a706bd6c16a343489f41362b8f88a8fd486a65d04`.
+upstream SHA256
+`a53e183ef8d9538863b33d7a706bd6c16a343489f41362b8f88a8fd486a65d04`.
+The local copy uses repository formatting with identical parsed schema content;
+its SHA256 is
+`f217e054810cecd53a31456c87e2c353f38c2e3d786125083ae5dc153a00f0ef`.
 The zero-dependency evaluator implements only that schema's keywords and refuses
 unsupported schema keywords on load. `format`, including `date-time`, remains
 an annotation under its 2020-12 dialect. Existing SDK checks for nonempty SPDX
