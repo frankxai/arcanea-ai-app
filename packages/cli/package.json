@@ -25,11 +25,13 @@
     "build": "tsc && node build.mjs",
     "build:ts": "tsc",
     "build:bundle": "node build.mjs",
+    "prepack": "tsc && node build.mjs",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "start": "node dist/arcanea.cjs",
     "prepublishOnly": "npm run build",
     "test": "node --test tests/*.test.mjs",
+    "test:opencode-delivery": "node ../../scripts/verify-opencode-delivery.mjs",
     "type-check": "tsc --noEmit"
   },
   "keywords": [
@@ -70,6 +72,8 @@
     "node": ">=18.0.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist/package",
+    "linkDirectory": false
   }
 }

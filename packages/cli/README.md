@@ -1,6 +1,6 @@
 # @arcanea/cli
 
-> **Overlay any AI tool with arcane intelligence.** 10 commands. One binary. Works everywhere.
+Arcanea's command-line tools and project adapters. The OpenCode adapter described below is a source release candidate; a previously published registry version may not include it.
 
 [![npm version](https://badge.fury.io/js/%40arcanea%2Fcli.svg)](https://www.npmjs.com/package/@arcanea/cli)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -18,22 +18,24 @@ npm install -g @arcanea/cli
 
 ## Commands
 
-| Command | Description |
-|:--------|:------------|
-| `arcanea init` | Initialize Arcanea in a project (creates `.arcanea/`) |
-| `arcanea auth` | Authenticate with arcanea.ai |
-| `arcanea status` | Show current Guardian, Gate, Element, and session state |
-| `arcanea install <overlay>` | Install an overlay (claude, chatgpt, gemini, copilot, opencode) |
-| `arcanea update` | Update Arcanea to latest version |
-| `arcanea route <description>` | Route a task to the optimal Guardian |
-| `arcanea voice <text> [--fix]` | Check text against Voice Bible v2.0 |
-| `arcanea tokens [--format] [--colors]` | Export design tokens (CSS, Tailwind, JSON) |
-| `arcanea world` | Launch worldbuilding session |
-| `arcanea create` | Create a new Arcanea project |
+| Command                                | Description                                                            |
+| :------------------------------------- | :--------------------------------------------------------------------- |
+| `arcanea init`                         | Initialize Arcanea in a project (creates `.arcanea/`)                  |
+| `arcanea auth`                         | Authenticate with arcanea.ai                                           |
+| `arcanea status`                       | Show current Guardian, Gate, Element, and session state                |
+| `arcanea install <overlay>`            | Install an overlay (claude, openai, gemini, copilot, cursor, opencode) |
+| `arcanea update`                       | Update Arcanea to latest version                                       |
+| `arcanea route <description>`          | Classify a task using Guardian keywords                                |
+| `arcanea voice <text> [--fix]`         | Check text against Voice Bible v2.0                                    |
+| `arcanea tokens [--format] [--colors]` | Export design tokens (CSS, Tailwind, JSON)                             |
+| `arcanea world`                        | Write a starter worldbuilding template                                 |
+| `arcanea create`                       | Create a new Arcanea project                                           |
 
 ## Examples
 
 ### Route a task to a Guardian
+
+This command uses keyword rules. Its scores are classification output, not measured model quality or model dispatch.
 
 ```bash
 $ arcanea route "help me design a database schema for user profiles"
@@ -80,32 +82,57 @@ $ arcanea tokens --format css --colors
 
 ## Overlays
 
-Install Arcanea intelligence into any AI tool:
+Install the existing adapters:
 
 ```bash
 arcanea install claude     # Claude Code / Claude Desktop
-arcanea install chatgpt    # ChatGPT
+arcanea install openai     # ChatGPT overlay
 arcanea install gemini     # Gemini / AI Studio
 arcanea install copilot    # GitHub Copilot
-arcanea install opencode   # OpenCode
+arcanea install cursor    # Cursor
 ```
 
-Each overlay adds Guardian routing, voice enforcement, design tokens, and Arcanea lore to your existing AI workflow.
+The five existing overlays provide their own Arcanea instructions and assets. OpenCode uses the separate tool adapter below.
+
+### OpenCode project adapter
+
+Use an already-installed Arcanea MCP server entry point. The adapter does not download a server, choose a model, copy credentials or rewrite `opencode.json(c)`.
+
+```bash
+arcanea install opencode --mcp-entry /absolute/path/to/arcanea-mcp/dist/cli.js --dir ./my-world --dry-run
+arcanea install opencode --mcp-entry /absolute/path/to/arcanea-mcp/dist/cli.js --dir ./my-world
+```
+
+Restart OpenCode in the project and run `opencode mcp list`. Choose models and permissions through OpenCode's existing controls. The generated `.opencode/plugins/arcanea-creator.ts` uses the native config hook to add the `arcanea` MCP entry when that name is absent. An existing entry takes precedence, including `enabled: false`. Existing JSONC comments, model pins, permissions and other plugins stay intact.
+
+The standard level enables the server's `core,world` toolsets. `--level minimal` enables `core`. Full and Luminor levels are unavailable in this adapter. These are tool selections; they do not add Arcanea lore or a system prompt to your original world. Individual server tools still have their documented Arcanea scope, so review the tool description before using a canon-specific generator or checker.
+
+The adapter uses the Node executable that runs the CLI and the exact server entry you supply. Choose a Node version supported by that installed server. The current source MCP requires Node 20.18.1–20.x or 22+. Paths with spaces are passed as separate arguments. Project graphs use `.arcanea/data`; an existing server entry retains its own storage settings.
+
+To remove the unchanged adapter, repeat the same entry, project and level with `--remove`:
+
+```bash
+arcanea install opencode --mcp-entry /absolute/path/to/arcanea-mcp/dist/cli.js --dir ./my-world --remove
+```
+
+Removal keeps saved worlds, other plugins and settings. Identical reinstallation performs no write. Changed options or customized plugin bytes cause a refusal so you can review the file; the CLI does not infer ownership from a comment. Linked roots, symlink/junction plugin directories and foreign files are refused. Preview creates no file. A complete plugin is installed atomically without replacing an existing file.
+
+Native delivery checks target OpenCode 1.18.35 on hosted Linux and Windows. The workflow records configuration, connection and installed-SDK tool/restart checks separately. Model inference, narrative quality, creator acceptance and npm publication require their own evidence.
 
 ## Technical
 
-- **Bundle**: Single 247KB CJS file with shebang
-- **Runtime**: Node.js 18+
-- **Dependencies**: `@arcanea/os` (intelligence engine), `commander`, `picocolors`
-- **Tests**: 17/17 passing
+- The CLI builds a standalone CJS executable with its Node shebang.
+- Development uses the repository's frozen dependencies and pinned pnpm. `publishConfig.directory` packs a generated standalone manifest without runtime dependencies; it preserves the workspace manifest and shared lockfile.
+- CLI runtime: Node.js 18+. Use the installed MCP server's stricter runtime requirement when attaching its tools.
+- From the monorepo, build core and CLI, then run `pnpm --dir packages/cli test:opencode-delivery`. The check builds and packs both real packages, installs a fresh consumer and verifies a pinned native OpenCode without model inference. It does not publish packages.
 
 ## Ecosystem
 
-| Package | Purpose |
-|:--------|:--------|
-| [`@arcanea/os`](https://github.com/frankxai/arcanea/tree/main/packages/core) | Intelligence engine |
-| [`@arcanea/mcp-server`](https://github.com/frankxai/arcanea/tree/main/packages/arcanea-mcp) | 30 MCP tools |
-| [`arcanea.ai`](https://arcanea.ai) | Live web platform |
+| Package                                                                                            | Purpose                                            |
+| :------------------------------------------------------------------------------------------------- | :------------------------------------------------- |
+| [`@arcanea/core`](https://github.com/frankxai/arcanea-ai-app/tree/main/packages/core)              | Core types and intelligence engine                 |
+| [`@arcanea/mcp-server`](https://github.com/frankxai/arcanea-ai-app/tree/main/packages/arcanea-mcp) | Local worldbuilding tools with selectable toolsets |
+| [`arcanea.ai`](https://arcanea.ai)                                                                 | Live web platform                                  |
 
 ## License
 

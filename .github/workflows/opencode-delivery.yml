@@ -1,0 +1,61 @@
+name: OpenCode creator tool delivery
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "packages/cli/**"
+      - "packages/core/**"
+      - "packages/arcanea-mcp/**"
+      - "scripts/verify-opencode-delivery.mjs"
+      - ".github/workflows/opencode-delivery.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packages/cli/**"
+      - "packages/core/**"
+      - "packages/arcanea-mcp/**"
+      - "scripts/verify-opencode-delivery.mjs"
+      - ".github/workflows/opencode-delivery.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  consumer:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Install only the existing CLI and MCP dependencies
+        run: pnpm --filter @arcanea/cli... --filter @arcanea/mcp-server install --frozen-lockfile
+      - name: Build the existing core and CLI
+        run: pnpm --filter @arcanea/core --filter @arcanea/cli run build
+      - name: Verify source and emitted installer behavior
+        run: node --test packages/cli/tests/opencode.test.mjs
+      - name: Verify emitted installer behavior
+        env:
+          ARCANEA_OPENCODE_INSTALLER: dist/installers/opencode.js
+        run: node --test packages/cli/tests/opencode.test.mjs
+      - name: Verify the fresh packages in native OpenCode without model inference
+        run: pnpm --dir packages/cli test:opencode-delivery
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: opencode-consumer-${{ matrix.os }}
+          path: screenshots/opencode-consumer
+          if-no-files-found: warn
