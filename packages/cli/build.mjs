@@ -47,7 +47,8 @@ if (!existsSync(entryPoint)) {
 console.log("  Bundling @arcanea/cli...\n");
 
 try {
-  buildSync({
+  const result = buildSync({
+    absWorkingDir: __dirname,
     entryPoints: [entryPoint],
     outfile: outFile,
     bundle: true,
@@ -55,8 +56,20 @@ try {
     target: "node18",
     format: "cjs",
     packages: "bundle",
+    alias: { "@arcanea/core": resolve(__dirname, "../core/dist/index.js") },
+    metafile: true,
     logLevel: "info",
   });
+  const inputs = Object.keys(result.metafile.inputs);
+  if (inputs.some((path) => /@arcanea(?:\+|\/)core@/.test(path))) {
+    throw new Error(
+      "The standalone CLI must bundle the workspace core, not a stale registry copy.",
+    );
+  }
+  writeFileSync(
+    resolve(distDir, "bundle-metadata.json"),
+    JSON.stringify(result.metafile, null, 2) + "\n",
+  );
 } catch (err) {
   console.error("\n  Bundle failed:\n");
   console.error(err.stderr || err.message);

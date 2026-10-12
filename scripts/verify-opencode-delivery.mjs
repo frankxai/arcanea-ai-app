@@ -93,6 +93,22 @@ try {
     `pnpm@${run("pnpm-version", pnpm[0], [...pnpm.slice(1), "--version"]).trim()}`,
     metadata.packageManager,
   );
+  const bundled = JSON.parse(
+    readFileSync(join(root, "packages/cli/dist/bundle-metadata.json"), "utf8"),
+  );
+  const inputs = Object.keys(bundled.inputs);
+  assert.ok(
+    inputs.some((path) =>
+      path.replaceAll("\\", "/").includes("../core/dist/index.js"),
+    ),
+  );
+  assert.equal(
+    inputs.some((path) => /@arcanea(?:\+|\/)core@/.test(path)),
+    false,
+  );
+  receipt.workspaceCoreInputs = inputs.filter((path) =>
+    path.replaceAll("\\", "/").startsWith("../core/dist/"),
+  );
 
   // Execute the immutable original installer module in the actual compiled CLI.
   // This is an installer baseline, not a claim of a whole historical runtime.
