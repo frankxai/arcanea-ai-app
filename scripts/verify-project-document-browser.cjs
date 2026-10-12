@@ -1204,14 +1204,34 @@ async function main() {
         result.checks.push(
           "actual-a-b-a-auth-stale-form-and-late-response-isolation",
         );
-        stage = "public-marketing-footer-preserved";
+        stage = "public-marketing-footer-navigation";
         await page.goto(config.base);
+        stage = "public-marketing-homepage-content-ready";
+        await expect(
+          page.getByRole("heading", {
+            level: 1,
+            name: "Build living worlds with AI agents.",
+            exact: true,
+          }),
+        ).toBeVisible();
+        // The below-fold chunk replaces its short placeholder after navigation.
+        // Its final CTA must exist before measuring or scrolling the footer.
+        await expect(
+          page.getByRole("heading", {
+            level: 2,
+            name: "Your world is waiting.",
+            exact: true,
+          }),
+        ).toBeAttached();
+        result.publicHomepageReady = "final-below-fold-cta-present";
         const publicFooter = page.getByRole("contentinfo");
+        stage = "public-marketing-footer-newsletter-visible";
         await expect(
           publicFooter.getByRole("textbox", {
             name: "Email address for newsletter",
           }),
         ).toBeVisible();
+        stage = "public-marketing-footer-subscribe-visible";
         await expect(
           publicFooter.getByRole("button", {
             name: "Subscribe",
@@ -1221,21 +1241,40 @@ async function main() {
         const newsletter = publicFooter.getByRole("textbox", {
           name: "Email address for newsletter",
         });
+        const inspectNewsletter = () =>
+          newsletter.evaluate((element) => {
+            const bounds = element.getBoundingClientRect();
+            const hit = document.elementFromPoint(
+              bounds.x + bounds.width / 2,
+              bounds.y + bounds.height / 2,
+            );
+            return {
+              passed: hit !== null && element.contains(hit),
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: bounds.height,
+              viewportWidth: window.innerWidth,
+              viewportHeight: window.innerHeight,
+              scrollY: window.scrollY,
+              documentHeight: document.documentElement.scrollHeight,
+              hitTag: hit?.tagName || null,
+            };
+          });
+        stage = "public-marketing-footer-newsletter-scroll";
         await newsletter.evaluate((element) =>
           element.scrollIntoView({ block: "center", behavior: "instant" }),
         );
+        stage = "public-marketing-footer-newsletter-hit-test";
         await expect
-          .poll(() =>
-            newsletter.evaluate((element) => {
-              const bounds = element.getBoundingClientRect();
-              const hit = document.elementFromPoint(
-                bounds.x + bounds.width / 2,
-                bounds.y + bounds.height / 2,
-              );
-              return hit !== null && element.contains(hit);
-            }),
-          )
+          .poll(async () => {
+            const sample = await inspectNewsletter();
+            // Geometry only: never put account or entered newsletter text in receipts.
+            result.newsletterHitTest = sample;
+            return sample.passed;
+          })
           .toBe(true);
+        stage = "public-marketing-footer-workspace-links-absent";
         await expect(
           page.getByRole("navigation", {
             name: "Workspace links",
@@ -1244,7 +1283,23 @@ async function main() {
         result.checks.push(
           "project-footer-touch-keyboard-public-newsletter-preserved",
         );
-        await capture("public-footer", { locator: publicFooter });
+        stage = "public-marketing-footer-capture";
+        await expect(newsletter).toBeInViewport({ ratio: 1 });
+        const beforeCapture = await inspectNewsletter();
+        // Capture the tested viewport. Re-scrolling an entire tall footer for a
+        // locator screenshot previously produced blank desktop captures.
+        await capture("public-footer", { fullPage: false });
+        stage = "public-marketing-footer-capture-still-hit-tested";
+        const afterCapture = await inspectNewsletter();
+        result.newsletterCapture = {
+          scope: "current-newsletter-viewport",
+          before: beforeCapture,
+          after: afterCapture,
+        };
+        assert.equal(beforeCapture.passed, true);
+        assert.equal(afterCapture.passed, true);
+        assert.ok(Math.abs(afterCapture.y - beforeCapture.y) <= 1);
+        await expect(newsletter).toBeInViewport({ ratio: 1 });
         assert.equal(result.pageErrors, 0);
         result.passed = true;
       } catch (error) {
