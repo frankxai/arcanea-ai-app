@@ -53,8 +53,11 @@ import ChatLoading from "./loading";
 export default function ChatPage() {
   const { credentialScope } = useAuth();
   const token = credentialScope.get();
-  // Keep the URL prompt intact while AuthProvider resolves the initial account.
-  if (!token.actor) return <ChatLoading />;
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => setHasMounted(true), []);
+  // Parent auth can resolve before this subtree hydrates. Keep its first render
+  // identical to the server, and preserve URL prompts until both are ready.
+  if (!hasMounted || !token.actor) return <ChatLoading />;
   // Retire messages, artifacts, search and callbacks together when auth changes.
   // The scope guards also reject work between the auth event and this render.
   return (

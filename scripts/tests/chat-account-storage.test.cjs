@@ -491,7 +491,7 @@ test("the actual credential-scope factory rejects pending auth and A to B to A l
   assert.equal(store.loadChatSession("retired", current), null);
 });
 
-test("the actual page entry waits for auth before mounting prompt-consuming chat state", () => {
+test("the actual page entry stays consistent before mounting and waits for auth", () => {
   const source = fs.readFileSync(
     path.resolve(__dirname, "../../apps/web/app/chat/page.tsx"),
     "utf8",
@@ -512,14 +512,28 @@ test("the actual page entry waits for auth before mounting prompt-consuming chat
       },
     );
   let token = { actor: null, revision: 0 };
+  let mounted = false;
   const component = new Function(
     "useAuth",
     "element",
+    "useState",
+    "useEffect",
     `${entry}\nreturn ChatPage;`,
   )(
     () => ({ credentialScope: { get: () => token } }),
     (name, key) => ({ name, key }),
+    () => [mounted, () => {}],
+    () => {},
   );
+  assert.equal(component().name, "ChatLoading");
+  token = { actor: A, revision: 1 };
+  assert.equal(
+    component().name,
+    "ChatLoading",
+    "Parent auth may resolve before this subtree hydrates",
+  );
+  mounted = true;
+  token = { actor: null, revision: 0 };
   assert.equal(component().name, "ChatLoading");
   token = { actor: A, revision: 1 };
   const first = component();
