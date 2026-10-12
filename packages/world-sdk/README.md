@@ -5,6 +5,31 @@ lets every layer read and build it. The repo is the source of truth — this is 
 
 Spec: `arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md` · Schema: `arcanea-ecosystem/schemas/world.arcanea.schema.json`
 
+## Manifest validation
+
+`validateManifest(value)` checks core fields and the optional v1.1 `game`,
+`memory`, `meaning`, `community` and `mapper` sections. It returns field paths
+and errors, without changing data, coercing types, fetching schema URLs or
+applying schema defaults. Unknown fields refuse where the shared contract closes
+an object. Custom content pointers and open JSON state remain supported.
+
+`buildManifest` preserves an explicit `schemaVersion` and supplied extensions;
+its base default remains `1.0.0`. `scaffoldWorld` and `createWorld` refuse an
+invalid emitted manifest with `ERR_ARCANEA_WORLD_MANIFEST` before optional
+world-engine import or destination writes. Repair the input and retry. Existing
+worlds remain readable for inspection and repair; `arcanea-world validate <dir>`
+exits 1 for invalid shape and leaves files unchanged. General `writeManifest`
+is still a local editing primitive; it does not automatically run validation.
+
+The offline schema mirror is pinned to [the shared standard at
+75a31a6](https://github.com/frankxai/arcanea-ecosystem/blob/75a31a6f101b3c8008a9ac958e9314909e67de3f/schemas/world.arcanea.schema.json),
+SHA256 `a53e183ef8d9538863b33d7a706bd6c16a343489f41362b8f88a8fd486a65d04`.
+The zero-dependency evaluator implements only that schema's keywords and refuses
+unsupported schema keywords on load. `format`, including `date-time`, remains
+an annotation under its 2020-12 dialect. Existing SDK checks for nonempty SPDX
+and provenance timestamps and nonempty royalty splits totaling 10,000 bps also
+apply. Validation grants no rights, provider, canon or publication authority.
+
 ## What's inside
 
 | Module        | Role                                                                                                          |

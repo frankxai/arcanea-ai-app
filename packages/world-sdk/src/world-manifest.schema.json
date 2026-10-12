@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arcanea.ai/schemas/world.arcanea.schema.json",
+  "title": "Arcanea World Manifest",
+  "description": "The contract every Arcanea world repo conforms to. The repo is the source of truth; the index/render/marketplace/proof layers are derived from this manifest. See docs/WORLD_REPO_STANDARD.md.",
+  "type": "object",
+  "required": ["schemaVersion", "id", "name", "creator", "content"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$", "description": "Semver of the World Repo Standard this world targets." },
+    "id": { "type": "string", "pattern": "^wld_[0-9A-HJKMNP-TV-Z]{26}$", "description": "Stable world id (wld_<ULID>); also the onchain identity." },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+    "tagline": { "type": "string", "maxLength": 200 },
+    "genesisPrompt": { "type": "string", "maxLength": 500, "description": "The original one-sentence seed." },
+    "premise": { "type": "string", "maxLength": 2000 },
+    "laws": { "type": "array", "items": { "type": "string" }, "maxItems": 7, "description": "The immutable rules of the world." },
+    "mood": { "type": "string", "enum": ["fantasy", "sci-fi", "horror", "steampunk", "mythological", "cosmic", "other"] },
+    "visualDna": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "palette": { "type": "array", "items": { "type": "string", "pattern": "^#?[0-9a-fA-F]{3,8}$" } },
+        "style": { "type": "string" },
+        "motifs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "audio": { "type": "string" }, "prompt": { "type": "string" } }
+    },
+    "cover": { "type": "string", "description": "Path into media/ for the key-frame." },
+    "creator": {
+      "type": "object",
+      "required": ["handle"],
+      "additionalProperties": false,
+      "properties": {
+        "handle": { "type": "string" },
+        "wallet": { "type": "string", "description": "Embedded-wallet pubkey; filled invisibly at claim time. Optional." }
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": ["spdx"],
+      "additionalProperties": false,
+      "properties": {
+        "spdx": { "type": "string", "description": "SPDX id or 'PROPRIETARY'." },
+        "pointer": { "type": "string", "description": "Path to licenses/LICENSE.md." },
+        "commercial": { "type": "boolean", "default": false },
+        "remix": { "type": "string", "enum": ["allow", "allow-attribution", "deny"], "default": "allow-attribution" }
+      }
+    },
+    "royalty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy": { "type": "string", "description": "Path to licenses/royalty.json." },
+        "splits": {
+          "type": "array",
+          "description": "Basis-point splits; the sum across entries must equal 10000.",
+          "items": {
+            "type": "object",
+            "required": ["to", "bps"],
+            "additionalProperties": false,
+            "properties": {
+              "to": { "type": "string", "description": "Wallet pubkey or reserved id ('arcanea')." },
+              "bps": { "type": "integer", "minimum": 0, "maximum": 10000 }
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "description": "Pointers to the canonical section folders.",
+      "additionalProperties": { "type": "string" },
+      "properties": {
+        "canon": { "type": "string" },
+        "characters": { "type": "string" },
+        "locations": { "type": "string" },
+        "quests": { "type": "string" },
+        "books": { "type": "string" },
+        "media": { "type": "string" },
+        "agents": { "type": "string" },
+        "game": { "type": "string" }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "description": "The build crew — how coding agents orchestrate this world.",
+      "items": {
+        "type": "object",
+        "required": ["id", "harness", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "harness": { "type": "string", "enum": ["claude", "codex", "gemini", "antigravity", "grok", "any"] },
+          "role": { "type": "string" },
+          "skill": { "type": "string" }
+        }
+      }
+    },
+    "index": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "embeddingModel": { "type": "string", "default": "gemini-text-embedding-004" },
+        "dim": { "type": "integer", "default": 768 }
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "description": "Append-only, multi-chain proof records. Excluded from contentHash computation.",
+      "items": {
+        "type": "object",
+        "required": ["contentHash", "chain", "timestamp"],
+        "additionalProperties": false,
+        "properties": {
+          "contentHash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "chain": { "type": "string", "enum": ["solana", "polygon", "base", "other"] },
+          "standard": { "type": "string", "description": "e.g. metaplex-core, bubblegum, erc-721." },
+          "ref": { "type": "string", "description": "Mint address / tx signature." },
+          "schemaVersion": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "visibility": { "type": "string", "enum": ["public", "unlisted", "private"], "default": "public" },
+    "hosting": { "type": "string", "enum": ["repo", "hosted_private", "hosted_public"], "default": "repo" },
+    "snapshot": {
+      "type": "object",
+      "description": "Permanent storage pointers — finalized PUBLIC releases only. Never for private content.",
+      "additionalProperties": false,
+      "properties": {
+        "ipfs": { "type": "string" },
+        "arweave": { "type": "string" }
+      }
+    },
+    "game": {
+      "type": "object",
+      "description": "Game creation mapping layer. Seeds Higgsfield Games / Fable 5 + Higgsfield MCP for playable games with assets from the world. The 'mapper' uses memory + meaning to make games living (persistent NPC states, evolving quests).",
+      "additionalProperties": false,
+      "properties": {
+        "seedPrompt": { "type": "string", "description": "Rich prompt for Fable 5: full story from canon/books/characters + lore-consistent mechanics." },
+        "genre": { "type": "string", "enum": ["rpg", "action", "adventure", "strategy", "simulation", "hybrid"] },
+        "mechanics": { "type": "array", "items": { "type": "string" }, "description": "Mapped from laws, quests, power dynamics, belief/meaning pillars (e.g. 'memory as currency', 'gate progression unlocks abilities')." },
+        "higgsfieldAssets": {
+          "type": "object",
+          "properties": {
+            "characterRefs": { "type": "array", "items": { "type": "string" } },
+            "environmentPrompts": { "type": "array", "items": { "type": "string" } },
+            "cinematicScenes": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "proceduralMap": { "type": "object", "description": "Params for procedural generation consistent with geography/history/meaning." },
+        "memoryInjection": { "type": "boolean", "default": true, "description": "Inject character evolution_state, memories, emotional anchors into game NPCs/saves for persistence across sessions." },
+        "lastGenerated": { "type": "string", "format": "date-time" },
+        "playableUrl": { "type": "string", "description": "Deployed Higgsfield game link if created." }
+      }
+    },
+    "memory": {
+      "type": "object",
+      "description": "Persistent memory layer for the world and its inhabitants. Ties to Arcanea memory-mcp / Starlight Vaults / hybrid-memory / guardian-memory. Characters and world evolve with lived events.",
+      "additionalProperties": false,
+      "properties": {
+        "vaults": { "type": "array", "items": { "type": "string" }, "description": "e.g. lore, character-states, events, community-contributions, horizon-wishes" },
+        "embeddingsModel": { "type": "string" },
+        "evolution": { "type": "array", "items": { "type": "object" }, "description": "Append-only evolution events (character_id, delta, timestamp, meaning_impact)." },
+        "persistentStates": { "type": "object", "description": "Current aggregated states for characters/world (cross-session, cross-product)." }
+      }
+    },
+    "meaning": {
+      "type": "object",
+      "description": "Meaning / belief / emotional architecture layer. Maps to Seven Pillars (esp. Belief & Meaning, History as Memory). Enables coherent evolution and 'why' behind actions/lore. Used by mapper for deep game integration and Luminor-style coaching.",
+      "additionalProperties": false,
+      "properties": {
+        "pillars": { "type": "array", "items": { "type": "string" }, "description": "Geography, History/Time (memory), Cultures, Magic/Tech, Economy, Power/Politics, Belief/Meaning." },
+        "coreBeliefs": { "type": "array", "items": { "type": "string" } },
+        "emotionalAnchors": { "type": "array", "items": { "type": "string" }, "description": "Preserved emotional states (like Depth Scrolls) that drive character/world evolution and NPC responses in games/products." },
+        "tensions": { "type": "array", "items": { "type": "string" }, "description": "Meaningful conflicts that generate story/gameplay (tradition vs progress, etc.)." }
+      }
+    },
+    "community": {
+      "type": "object",
+      "description": "Community co-creation and ownership layer. Worlds live on GitHub; contributions via PRs/forks evolve memory/meaning. Governance, reputation, shared products.",
+      "additionalProperties": false,
+      "properties": {
+        "contributors": { "type": "array", "items": { "type": "object" } },
+        "forks": { "type": "array", "items": { "type": "string" }, "description": "GH fork URLs as living instances." },
+        "contributionPolicy": { "type": "string", "description": "Path to CONTRIBUTING.md or rules (e.g. 'meaning-preserving PRs only; evolution logs required')." },
+        "reputation": { "type": "object", "description": "Skill/mastery scores, Luminor-rank for governance on this world." },
+        "events": { "type": "array", "items": { "type": "string" }, "description": "Community events that write to memory/meaning (e.g. 'player choice in shared instance updated canon')." }
+      }
+    },
+    "mapper": {
+      "type": "object",
+      "description": "The superintelligence mapper: Arcanea as the intelligent translator between rich persistent worlds (memory + meaning + lore) and digital products (Higgsfield Games, books, experiences, AI agents). Versioned so agents/harnesses know how to map.",
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "string", "default": "1.1.0" },
+        "lastRun": { "type": "string", "format": "date-time" },
+        "harnessesUsed": { "type": "array", "items": { "type": "string" }, "description": "e.g. ['grok', 'claude-fable', 'higgsfield-mcp', 'arcanea-mcp']" },
+        "outputs": { "type": "array", "items": { "type": "string" }, "description": "game, book-v2, ai-companion, web-experience, etc." }
+      }
+    }
+  }
+}

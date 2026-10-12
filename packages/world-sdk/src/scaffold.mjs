@@ -4,6 +4,7 @@
 import { buildManifest, slugify } from "./manifest.mjs";
 import { writeManifest, writeFiles } from "./fs-world.mjs";
 import { genesis } from "./genesis.mjs";
+import { validateManifest } from "./validate.mjs";
 
 async function maybeWorldEngine() {
   try {
@@ -78,6 +79,14 @@ function licenseDoc(manifest) {
  * @param {object} spec  a WorldSpec (from genesis() or hand-authored)
  */
 export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
+  const manifest = buildManifest({ ...spec, agents: spec.agents });
+  if (!validateManifest(manifest).valid) {
+    const error = new Error(
+      "Invalid world manifest. Check validateManifest field errors and repair the input before retrying.",
+    );
+    error.code = "ERR_ARCANEA_WORLD_MANIFEST";
+    throw error;
+  }
   const we = useWorldEngine ? await maybeWorldEngine() : null;
 
   // Reuse world-engine for richer characters/locations when the workspace link is present.
@@ -92,8 +101,6 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
       }
     });
   }
-
-  const manifest = buildManifest({ ...spec, agents: spec.agents });
 
   const files = [
     { path: "README.md", bytes: readme(manifest) },

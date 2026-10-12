@@ -41,9 +41,15 @@ export const DEFAULT_CONTENT = {
 export function buildManifest(spec) {
   const name = spec.name || "Untitled World";
   const seed = spec.idSeed || spec.genesisPrompt || name;
+  const extensions = {};
+  for (const key of ["game", "memory", "meaning", "community", "mapper"]) {
+    if (Object.hasOwn(spec, key) && spec[key] !== undefined)
+      extensions[key] = spec[key];
+  }
   return {
     $schema: SCHEMA_URL,
-    schemaVersion: SCHEMA_VERSION,
+    schemaVersion:
+      spec.schemaVersion === undefined ? SCHEMA_VERSION : spec.schemaVersion,
     id: spec.id || worldId(seed),
     slug: spec.slug || slugify(name),
     name,
@@ -76,6 +82,7 @@ export function buildManifest(spec) {
     visibility: spec.visibility || "public",
     hosting: spec.hosting || "repo",
     snapshot: spec.snapshot || {},
+    ...extensions,
   };
 }
 

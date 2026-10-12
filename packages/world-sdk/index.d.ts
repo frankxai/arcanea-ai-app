@@ -1,5 +1,8 @@
 // Type surface for @arcanea/world-sdk. Runtime is ESM .mjs; these types are for consumers.
 
+export type JsonValue =
+  null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+
 export interface WorldManifest {
   $schema?: string;
   schemaVersion: string;
@@ -36,11 +39,51 @@ export interface WorldManifest {
   visibility?: "public" | "unlisted" | "private";
   hosting?: "repo" | "hosted_private" | "hosted_public";
   snapshot?: { ipfs?: string; arweave?: string };
+  game?: {
+    seedPrompt?: string;
+    genre?:
+      "rpg" | "action" | "adventure" | "strategy" | "simulation" | "hybrid";
+    mechanics?: string[];
+    higgsfieldAssets?: Record<string, JsonValue> & {
+      characterRefs?: string[];
+      environmentPrompts?: string[];
+      cinematicScenes?: string[];
+    };
+    proceduralMap?: Record<string, JsonValue>;
+    memoryInjection?: boolean;
+    lastGenerated?: string;
+    playableUrl?: string;
+  };
+  memory?: {
+    vaults?: string[];
+    embeddingsModel?: string;
+    evolution?: Record<string, JsonValue>[];
+    persistentStates?: Record<string, JsonValue>;
+  };
+  meaning?: {
+    pillars?: string[];
+    coreBeliefs?: string[];
+    emotionalAnchors?: string[];
+    tensions?: string[];
+  };
+  community?: {
+    contributors?: Record<string, JsonValue>[];
+    forks?: string[];
+    contributionPolicy?: string;
+    reputation?: Record<string, JsonValue>;
+    events?: string[];
+  };
+  mapper?: {
+    version?: string;
+    lastRun?: string;
+    harnessesUsed?: string[];
+    outputs?: string[];
+  };
 }
 
 export interface WorldAgent {
   id: string;
-  harness: "claude" | "codex" | "gemini" | "antigravity" | "any";
+  harness: "claude" | "codex" | "gemini" | "antigravity" | "grok" | "any";
   role: string;
   skill?: string;
 }
@@ -126,6 +169,7 @@ export interface World {
 }
 
 export interface WorldSpec {
+  schemaVersion?: string;
   name?: string;
   genesisPrompt?: string;
   premise?: string;
@@ -143,6 +187,11 @@ export interface WorldSpec {
   agents?: WorldAgent[];
   creator?: { handle: string; wallet?: string };
   idSeed?: string;
+  game?: WorldManifest["game"];
+  memory?: WorldManifest["memory"];
+  meaning?: WorldManifest["meaning"];
+  community?: WorldManifest["community"];
+  mapper?: WorldManifest["mapper"];
 }
 
 export interface ChainAdapter {
@@ -156,7 +205,8 @@ export function slugify(name: string): string;
 export function buildManifest(
   spec: WorldSpec & Partial<WorldManifest>,
 ): WorldManifest;
-export function validateManifest(m: WorldManifest): {
+/** Checks JSON shape only. No URI retrieval, permission, rights or canon approval. */
+export function validateManifest(m: unknown): {
   valid: boolean;
   errors: string[];
 };
