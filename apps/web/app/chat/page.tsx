@@ -16,6 +16,7 @@ import { ChatLayout } from "@/components/chat/chat-layout";
 import { ChatArea } from "@/components/chat/chat-area";
 import { HistorySidebar } from "@/components/chat/history-sidebar";
 import { ChatInputBar } from "@/components/chat/chat-input-bar";
+import { ChatStorageStatus } from "@/components/chat/chat-storage-status";
 import { ChatNotices } from "@/components/chat/chat-notices";
 import { ChatOverlays } from "@/components/chat/chat-overlays";
 import { AgentHeader } from "@/components/chat/agent-header";
@@ -332,6 +333,12 @@ function ChatPageContent() {
           </div>
         </div>
 
+        <ChatStorageStatus
+          status={chatSessions.saveStatus}
+          onRetry={chatSessions.retryCloudSave}
+          onSaveCopy={chatSessions.saveSeparateCopy}
+          onExport={() => setShowExport(true)}
+        />
         <ChatNotices
           conversation={conversation}
           worldCharInit={worldCharInit}

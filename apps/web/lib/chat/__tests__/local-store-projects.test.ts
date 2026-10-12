@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { strict as assert } from 'node:assert';
+import { strict as assert } from "node:assert";
 import {
+  acknowledgeChatSnapshot,
   assignSessionToProject,
   clearProjectFromSessions,
   getActiveChatSessionId,
@@ -10,7 +11,9 @@ import {
   saveChatSession,
   setActiveChatSessionId,
   type ChatSession,
-} from '../local-store';
+} from "../local-store";
+import { chatSnapshotContentKey } from "../cloud-snapshot";
+import { guestChatStorageScope } from "../storage-scope";
 
 let passed = 0;
 let failed = 0;
@@ -57,12 +60,12 @@ class MemoryStorage {
 
 const localStorageStub = new MemoryStorage();
 
-Object.defineProperty(globalThis, 'window', {
+Object.defineProperty(globalThis, "window", {
   value: { localStorage: localStorageStub },
   configurable: true,
 });
 
-Object.defineProperty(globalThis, 'localStorage', {
+Object.defineProperty(globalThis, "localStorage", {
   value: localStorageStub,
   configurable: true,
 });
@@ -71,91 +74,132 @@ function resetStorage() {
   localStorageStub.clear();
 }
 
-test('saveChatSession persists projectId and active session identity', () => {
+test("saveChatSession persists projectId and active session identity", () => {
   resetStorage();
 
-  saveChatSession('chat_1', [
-    { id: 'm1', role: 'user', content: 'Build the Atlas lore bible' },
-  ], {
-    projectId: 'project_atlas',
-    luminorId: 'alera',
-    modelId: 'claude-sonnet-4',
-  });
-  setActiveChatSessionId('chat_1');
+  saveChatSession(
+    "chat_1",
+    [{ id: "m1", role: "user", content: "Build the Atlas lore bible" }],
+    {
+      projectId: "project_atlas",
+      luminorId: "alera",
+      modelId: "claude-sonnet-4",
+    },
+  );
+  setActiveChatSessionId("chat_1");
 
-  const session = loadChatSession('chat_1');
-  assert.equal(session?.projectId, 'project_atlas');
-  assert.equal(getActiveChatSessionId(), 'chat_1');
+  const session = loadChatSession("chat_1");
+  assert.equal(session?.projectId, "project_atlas");
+  assert.equal(getActiveChatSessionId(), "chat_1");
 });
 
-test('assignSessionToProject rewires an existing chat into a different project', () => {
+test("assignSessionToProject rewires an existing chat into a different project", () => {
   resetStorage();
 
-  saveChatSession('chat_1', [
-    { id: 'm1', role: 'user', content: 'Build the Atlas lore bible' },
-  ], {
-    projectId: 'project_atlas',
-  });
+  saveChatSession(
+    "chat_1",
+    [{ id: "m1", role: "user", content: "Build the Atlas lore bible" }],
+    {
+      projectId: "project_atlas",
+    },
+  );
 
-  assignSessionToProject('chat_1', 'project_relic');
+  assignSessionToProject("chat_1", "project_relic");
 
-  const session = loadChatSession('chat_1');
-  assert.equal(session?.projectId, 'project_relic');
+  const session = loadChatSession("chat_1");
+  assert.equal(session?.projectId, "project_relic");
 });
 
-test('clearProjectFromSessions removes deleted project assignments across summaries', () => {
+test("clearProjectFromSessions removes deleted project assignments across summaries", () => {
   resetStorage();
 
-  saveChatSession('chat_1', [
-    { id: 'm1', role: 'user', content: 'Build the Atlas lore bible' },
-  ], {
-    projectId: 'project_atlas',
-  });
-  saveChatSession('chat_2', [
-    { id: 'm2', role: 'user', content: 'Draft the relic engine codex' },
-  ], {
-    projectId: 'project_relic',
-  });
+  saveChatSession(
+    "chat_1",
+    [{ id: "m1", role: "user", content: "Build the Atlas lore bible" }],
+    {
+      projectId: "project_atlas",
+    },
+  );
+  saveChatSession(
+    "chat_2",
+    [{ id: "m2", role: "user", content: "Draft the relic engine codex" }],
+    {
+      projectId: "project_relic",
+    },
+  );
 
-  clearProjectFromSessions('project_atlas');
+  clearProjectFromSessions("project_atlas");
 
   const sessions = listChatSessions();
-  const atlas = sessions.find((session) => session.id === 'chat_1');
-  const relic = sessions.find((session) => session.id === 'chat_2');
+  const atlas = sessions.find((session) => session.id === "chat_1");
+  const relic = sessions.find((session) => session.id === "chat_2");
 
   assert.equal(atlas?.projectId, null);
-  assert.equal(relic?.projectId, 'project_relic');
+  assert.equal(relic?.projectId, "project_relic");
 });
 
-test('mergeChatSessions preserves newer cloud project assignments', () => {
+test("mergeChatSessions preserves newer cloud project assignments", () => {
   resetStorage();
 
-  saveChatSession('chat_1', [
-    { id: 'm1', role: 'user', content: 'Local Atlas draft' },
-  ], {
-    projectId: 'project_local',
-  });
+  saveChatSession(
+    "chat_1",
+    [{ id: "m1", role: "user", content: "Local Atlas draft" }],
+    {
+      projectId: "project_local",
+    },
+  );
+  const saved = loadChatSession("chat_1")!;
+  // A newer remote projection may replace a confirmed clean copy, not an
+  // unacknowledged local draft merely because its timestamp is later.
+  acknowledgeChatSnapshot(
+    "chat_1",
+    "a".repeat(64),
+    chatSnapshotContentKey(saved),
+    guestChatStorageScope,
+  );
 
   const cloudSession: ChatSession = {
-    id: 'chat_1',
-    title: 'Cloud Atlas draft',
+    id: "chat_1",
+    title: "Cloud Atlas draft",
     messages: [
-      { id: 'm1', role: 'user', content: 'Cloud Atlas draft' },
-      { id: 'm2', role: 'assistant', content: 'Let us refine the world.' },
+      { id: "m1", role: "user", content: "Cloud Atlas draft" },
+      { id: "m2", role: "assistant", content: "Let us refine the world." },
     ],
-    projectId: 'project_cloud',
-    luminorId: 'alera',
-    modelId: 'gpt-5',
+    projectId: "project_cloud",
+    luminorId: "alera",
+    modelId: "gpt-5",
     pinned: false,
-    createdAt: '2099-03-29T10:00:00.000Z',
-    updatedAt: '2099-03-29T12:00:00.000Z',
+    createdAt: "2099-03-29T10:00:00.000Z",
+    updatedAt: "2099-03-29T12:00:00.000Z",
   };
 
   mergeChatSessions([cloudSession]);
 
-  const session = loadChatSession('chat_1');
-  assert.equal(session?.projectId, 'project_cloud');
-  assert.equal(session?.title, 'Cloud Atlas draft');
+  const session = loadChatSession("chat_1");
+  assert.equal(session?.projectId, "project_cloud");
+  assert.equal(session?.title, "Cloud Atlas draft");
+});
+
+test("mergeChatSessions preserves an unsaved local project and manuscript", () => {
+  resetStorage();
+  saveChatSession(
+    "chat_pending",
+    [{ id: "m1", role: "user", content: "Unsaved original" }],
+    { projectId: "project_local" },
+  );
+  mergeChatSessions([
+    {
+      id: "chat_pending",
+      title: "Remote copy",
+      projectId: "project_remote",
+      messages: [{ id: "m1", role: "user", content: "Remote edit" }],
+      createdAt: "2099-01-01",
+      updatedAt: "2099-01-02",
+    },
+  ]);
+  const retained = loadChatSession("chat_pending");
+  assert.equal(retained?.projectId, "project_local");
+  assert.equal(retained?.messages[0].content, "Unsaved original");
 });
 
 finish();

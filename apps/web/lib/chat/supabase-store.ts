@@ -3,6 +3,8 @@
 
 import { createClient } from "@/lib/supabase/client";
 import type { ChatMessage, ChatSession } from "@/lib/chat/local-store";
+import { acknowledgeChatSnapshot, loadChatSession } from "./local-store";
+import { chatSnapshotCloudId, chatSnapshotContentKey } from "./cloud-snapshot";
 import {
   chatUserId,
   guestChatStorageScope,
@@ -19,6 +21,42 @@ export interface CloudSession {
   project_id: string | null;
   created_at: string;
   updated_at: string;
+  revision?: string;
+  cloud_id?: string;
+}
+
+export type ChatCloudSaveStatus =
+  "synced" | "conflict" | "unavailable" | "failed" | "retired";
+export interface ChatCloudSaveResult {
+  status: ChatCloudSaveStatus;
+}
+interface CloudSnapshotInput {
+  id: string;
+  title: string;
+  messages: Record<string, unknown>[];
+  luminorId: string | null;
+  modelId: string | null;
+  projectId?: string | null;
+}
+const cloudQueues = new Map<string, Promise<unknown>>();
+const deletedSessions = new Set<string>();
+const confirmedRevisions = new WeakMap<
+  object,
+  Map<string, { baseRevision: string | null; revision: string }>
+>();
+
+async function serializeCloudWork<T>(
+  key: string,
+  action: () => Promise<T>,
+): Promise<T> {
+  const previous = cloudQueues.get(key) ?? Promise.resolve();
+  const next = previous.catch(() => {}).then(action);
+  cloudQueues.set(key, next);
+  try {
+    return await next;
+  } finally {
+    if (cloudQueues.get(key) === next) cloudQueues.delete(key);
+  }
 }
 
 function normalizeCloudMessage(
@@ -56,51 +94,120 @@ function normalizeCloudMessage(
   return normalized;
 }
 
-/**
- * Save a chat session to Supabase (upsert).
- * Silently fails if not authenticated or table doesn't exist.
- */
+export async function saveChatSnapshotToCloud(
+  session: CloudSnapshotInput,
+  scope: ChatStorageScope = guestChatStorageScope,
+): Promise<ChatCloudSaveResult> {
+  const userId = chatUserId(scope);
+  if (!userId) return { status: "retired" };
+  if (
+    !Array.isArray(session.messages) ||
+    session.messages.some(
+      (message) =>
+        !message ||
+        typeof message.id !== "string" ||
+        !message.id ||
+        message.id.length > 200 ||
+        (message.role !== "user" && message.role !== "assistant") ||
+        typeof message.content !== "string" ||
+        (message.parts !== undefined &&
+          (!Array.isArray(message.parts) ||
+            message.parts.some(
+              (part) =>
+                !part ||
+                typeof part !== "object" ||
+                typeof part.type !== "string" ||
+                (part.text !== undefined && typeof part.text !== "string") ||
+                Object.keys(part).some(
+                  (key) => key !== "type" && key !== "text",
+                ),
+            ))),
+    )
+  )
+    return { status: "failed" };
+  const messages = session.messages.map(normalizeCloudMessage);
+  if (
+    messages.some((message) => message === null) ||
+    messages.length > 1000 ||
+    new Set(messages.map((message) => message?.id)).size !== messages.length ||
+    new TextEncoder().encode(JSON.stringify(session)).length > 1024 * 1024
+  )
+    return { status: "failed" };
+  // Capture immutable content at admission; queued work must not read a later
+  // mutable message array and mislabel its acknowledgement.
+  const snapshot = { ...session, messages: messages as ChatMessage[] };
+  const contentKey = chatSnapshotContentKey(snapshot);
+  const queueKey = `${userId}:${session.id}`;
+  return serializeCloudWork<ChatCloudSaveResult>(queueKey, async () => {
+    if (!scope.isCurrent() || deletedSessions.has(queueKey))
+      return { status: "retired" };
+    try {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!scope.isCurrent() || user?.id !== userId)
+        return { status: "retired" };
+      const cloudId = await chatSnapshotCloudId(snapshot.id, userId);
+      if (!scope.isCurrent() || deletedSessions.has(queueKey))
+        return { status: "retired" };
+      const localBase =
+        loadChatSession(snapshot.id, scope)?.cloudRevision ?? null;
+      const lifetime = scope.lifetime ?? scope;
+      const checkpoint = confirmedRevisions.get(lifetime)?.get(snapshot.id);
+      const expectedRevision =
+        checkpoint?.baseRevision === localBase
+          ? checkpoint.revision
+          : localBase;
+      const { data, error } = await supabase
+        .rpc("save_chat_snapshot", {
+          p_session_id: cloudId,
+          p_client_session_id: snapshot.id,
+          p_expected_user_id: userId,
+          p_expected_revision: expectedRevision,
+          p_title: snapshot.title,
+          p_luminor_id: snapshot.luminorId || "lumina",
+          p_model_id: snapshot.modelId,
+          p_project_id: snapshot.projectId ?? null,
+          p_messages: snapshot.messages,
+        })
+        .abortSignal(AbortSignal.timeout(20_000));
+      if (!scope.isCurrent()) return { status: "retired" };
+      if (error) {
+        if (error.message === "chat_revision_conflict")
+          return { status: "conflict" };
+        if (["PGRST202", "42P01", "42703", "42883"].includes(error.code))
+          return { status: "unavailable" };
+        return { status: "failed" };
+      }
+      if (
+        !data ||
+        typeof data.revision !== "string" ||
+        !/^[0-9a-f]{64}$/i.test(data.revision)
+      )
+        return { status: "failed" };
+      let checkpoints = confirmedRevisions.get(lifetime);
+      if (!checkpoints) {
+        checkpoints = new Map();
+        confirmedRevisions.set(lifetime, checkpoints);
+      }
+      checkpoints.set(snapshot.id, {
+        baseRevision: localBase,
+        revision: data.revision,
+      });
+      acknowledgeChatSnapshot(snapshot.id, data.revision, contentKey, scope);
+      return { status: "synced" };
+    } catch {
+      return { status: "failed" };
+    }
+  });
+}
+
 export async function saveSessionToCloud(
-  session: {
-    id: string;
-    title: string;
-    messages: Record<string, unknown>[];
-    luminorId: string | null;
-    modelId: string | null;
-    projectId?: string | null;
-  },
+  session: CloudSnapshotInput,
   scope: ChatStorageScope = guestChatStorageScope,
 ): Promise<boolean> {
-  const userId = chatUserId(scope);
-  if (!userId) return false;
-  try {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!scope.isCurrent() || user?.id !== userId) return false;
-
-    const { error } = await supabase.from("chat_sessions").upsert(
-      {
-        id: session.id,
-        user_id: userId,
-        title: session.title,
-        luminor_id: session.luminorId || "lumina",
-        updated_at: new Date().toISOString(),
-      } as any,
-      { onConflict: "id" },
-    );
-
-    if (error) {
-      // Table might not exist yet — silently fail
-      if (error.code === "42P01") return false; // relation does not exist
-      console.warn("[cloud-sync] Save failed:", error.message);
-      return false;
-    }
-    return scope.isCurrent();
-  } catch {
-    return false;
-  }
+  return (await saveChatSnapshotToCloud(session, scope)).status === "synced";
 }
 
 /**
@@ -119,11 +226,10 @@ export async function loadCloudSessions(
     if (!scope.isCurrent() || user?.id !== userId) return [];
 
     const { data, error } = await supabase
-      .from("chat_sessions")
-      .select("*")
-      .eq("user_id", userId)
-      .order("updated_at", { ascending: false })
-      .limit(50);
+      .rpc("load_chat_snapshots", {
+        p_expected_user_id: userId,
+      })
+      .abortSignal(AbortSignal.timeout(20_000));
 
     if (!scope.isCurrent() || error || !data) return [];
     return data as unknown as CloudSession[];
@@ -141,21 +247,27 @@ export async function deleteCloudSession(
 ): Promise<boolean> {
   const userId = chatUserId(scope);
   if (!userId) return false;
-  try {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!scope.isCurrent() || user?.id !== userId) return false;
-    const { error } = await supabase
-      .from("chat_sessions")
-      .delete()
-      .eq("id", sessionId)
-      .eq("user_id", userId);
-    return scope.isCurrent() && !error;
-  } catch {
-    return false;
-  }
+  const queueKey = `${userId}:${sessionId}`;
+  deletedSessions.add(queueKey);
+  return serializeCloudWork(queueKey, async () => {
+    try {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!scope.isCurrent() || user?.id !== userId) return false;
+      const cloudId = await chatSnapshotCloudId(sessionId, userId);
+      if (!scope.isCurrent()) return false;
+      const { error } = await supabase
+        .from("chat_sessions")
+        .delete()
+        .eq("id", cloudId)
+        .eq("user_id", userId);
+      return scope.isCurrent() && !error;
+    } catch {
+      return false;
+    }
+  });
 }
 
 /**
@@ -166,23 +278,18 @@ export async function renameCloudSession(
   title: string,
   scope: ChatStorageScope = guestChatStorageScope,
 ): Promise<boolean> {
-  const userId = chatUserId(scope);
-  if (!userId) return false;
-  try {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!scope.isCurrent() || user?.id !== userId) return false;
-    const { error } = await supabase
-      .from("chat_sessions")
-      .update({ title, updated_at: new Date().toISOString() })
-      .eq("id", sessionId)
-      .eq("user_id", userId);
-    return scope.isCurrent() && !error;
-  } catch {
-    return false;
-  }
+  const session = loadChatSession(sessionId, scope);
+  if (!session) return false;
+  return saveSessionToCloud(
+    {
+      ...session,
+      title,
+      messages: session.messages as unknown as Record<string, unknown>[],
+      luminorId: session.luminorId ?? null,
+      modelId: session.modelId ?? null,
+    },
+    scope,
+  );
 }
 
 /**
@@ -211,5 +318,7 @@ export function cloudSessionToLocalSession(cloud: CloudSession): ChatSession {
     projectId: cloud.project_id ?? null,
     createdAt: cloud.created_at,
     updatedAt: cloud.updated_at,
+    cloudRevision: cloud.revision,
+    cloudDirty: false,
   };
 }

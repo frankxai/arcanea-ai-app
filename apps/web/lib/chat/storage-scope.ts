@@ -5,6 +5,7 @@ import type {
 
 export interface ChatStorageScope {
   readonly actor: ProviderActor;
+  readonly lifetime?: object;
   isCurrent(): boolean;
 }
 
@@ -21,6 +22,7 @@ export function createChatStorageScope(
 ): ChatStorageScope {
   return Object.freeze({
     actor: token.actor,
+    lifetime: token,
     isCurrent: () => credentialScope.isCurrent(token),
   });
 }

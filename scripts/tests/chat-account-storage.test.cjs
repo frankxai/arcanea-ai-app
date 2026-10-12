@@ -21,7 +21,20 @@ function fixture() {
   let cloudRows = [];
   let authWait;
   let queryWait;
+  let rpcResult;
   const client = {
+    rpc(name, args) {
+      calls.push({ rpc: name, args });
+      return {
+        abortSignal() {
+          return this;
+        },
+        async then(resolve) {
+          if (queryWait) await queryWait;
+          return resolve(rpcResult ?? { data: cloudRows, error: null });
+        },
+      };
+    },
     auth: {
       getUser: async () => {
         if (authWait) await authWait;
@@ -125,6 +138,8 @@ function fixture() {
       },
       clearTimeout: (id) => timers.delete(id),
       crypto: globalThis.crypto,
+      TextEncoder,
+      AbortSignal,
       console,
       Date,
       Map,
@@ -163,6 +178,9 @@ function fixture() {
     },
     setRows: (value) => {
       cloudRows = value;
+    },
+    setRpcResult: (value) => {
+      rpcResult = value;
     },
     delayAuth: (value) => {
       authWait = value;
@@ -401,16 +419,29 @@ test("cloud rename and delete pin their filters to the originating actor", async
   const f = fixture();
   const a = f.scope(A);
   const store = f.load("lib/chat/supabase-store.ts");
-  await store.renameCloudSession("id", "Title", a);
-  await store.deleteCloudSession("id", a);
-  for (const call of f.calls) {
+  const sessionId = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
+  f.load("lib/chat/local-store.ts").saveChatSession(
+    sessionId,
+    message,
+    undefined,
+    a,
+  );
+  f.setRpcResult({ data: { revision: "a".repeat(64) }, error: null });
+  await store.renameCloudSession(sessionId, "Title", a);
+  await store.deleteCloudSession(sessionId, a);
+  assert.equal(f.calls[0].rpc, "save_chat_snapshot");
+  assert.equal(f.calls[0].args.p_expected_user_id, A.slice(5));
+  assert.equal(f.calls[0].args.p_session_id, sessionId);
+  for (const call of f.calls.slice(1)) {
     assert.ok(
       call.filters.some(
         ([column, value]) => column === "user_id" && value === A.slice(5),
       ),
     );
     assert.ok(
-      call.filters.some(([column, value]) => column === "id" && value === "id"),
+      call.filters.some(
+        ([column, value]) => column === "id" && value === sessionId,
+      ),
     );
   }
   assert.equal(f.calls.length, 2);

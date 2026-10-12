@@ -14,6 +14,7 @@ import {
   guestChatStorageScope,
   type ChatStorageScope,
 } from "./storage-scope";
+import { chatSnapshotContentKey } from "./cloud-snapshot";
 
 const STORAGE_KEY = "arcanea_chat_sessions";
 const ACTIVE_SESSION_KEY = "arcanea_active_chat_session";
@@ -43,6 +44,8 @@ export interface ChatSession {
   pinned?: boolean;
   createdAt: string;
   updatedAt: string;
+  cloudRevision?: string;
+  cloudDirty?: boolean;
 }
 
 export interface ChatSessionSummary {
@@ -75,14 +78,19 @@ function readSessions(scope: ChatStorageScope): ChatSession[] {
   }
 }
 
-function writeSessions(sessions: ChatSession[], scope: ChatStorageScope): void {
-  if (typeof window === "undefined") return;
+function writeSessions(
+  sessions: ChatSession[],
+  scope: ChatStorageScope,
+): boolean {
+  if (typeof window === "undefined") return false;
   const key = chatStorageKey(STORAGE_KEY, scope);
-  if (!key) return;
+  if (!key) return false;
   try {
-    localStorage.setItem(key, JSON.stringify(sessions));
+    const encoded = JSON.stringify(sessions);
+    localStorage.setItem(key, encoded);
+    return localStorage.getItem(key) === encoded;
   } catch {
-    // localStorage full or blocked — silently fail
+    return false;
   }
 }
 
@@ -132,7 +140,7 @@ export function saveChatSession(
     title?: string;
   },
   scope: ChatStorageScope = guestChatStorageScope,
-): void {
+): boolean {
   const sessions = readSessions(scope);
   const now = new Date().toISOString();
 
@@ -167,7 +175,17 @@ export function saveChatSession(
     pinned: existingIdx >= 0 ? sessions[existingIdx].pinned : false,
     createdAt: existingIdx >= 0 ? sessions[existingIdx].createdAt : now,
     updatedAt: now,
+    cloudRevision:
+      existingIdx >= 0 ? sessions[existingIdx].cloudRevision : undefined,
+    cloudDirty: true,
   };
+
+  if (
+    existingIdx >= 0 &&
+    chatSnapshotContentKey(session) ===
+      chatSnapshotContentKey(sessions[existingIdx])
+  )
+    session.cloudDirty = sessions[existingIdx].cloudDirty ?? true;
 
   if (existingIdx >= 0) {
     sessions[existingIdx] = session;
@@ -185,7 +203,7 @@ export function saveChatSession(
   const unpinned = sessions.filter((s) => !s.pinned);
   const trimmed = [...pinned, ...unpinned].slice(0, MAX_SESSIONS);
 
-  writeSessions(trimmed, scope);
+  return writeSessions(trimmed, scope);
 }
 
 /**
@@ -311,6 +329,12 @@ export function mergeChatSessions(
     }
 
     if (
+      existing.cloudDirty &&
+      chatSnapshotContentKey(existing) !== chatSnapshotContentKey(normalized)
+    )
+      continue;
+
+    if (
       new Date(normalized.updatedAt).getTime() >=
       new Date(existing.updatedAt).getTime()
     ) {
@@ -388,6 +412,7 @@ export function renameChatSession(
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.title = title;
+  session.cloudDirty = true;
   session.updatedAt = new Date().toISOString();
   writeSessions(sessions, scope);
 }
@@ -432,6 +457,7 @@ export function assignSessionToProject(
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.projectId = projectId;
+  session.cloudDirty = true;
   session.updatedAt = new Date().toISOString();
   writeSessions(sessions, scope);
 }
@@ -453,5 +479,20 @@ export function clearProjectFromSessions(
  * Generate a new unique session ID.
  */
 export function newSessionId(): string {
-  return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  return crypto.randomUUID();
+}
+
+export function acknowledgeChatSnapshot(
+  id: string,
+  revision: string,
+  savedContentKey: string,
+  scope: ChatStorageScope,
+): boolean {
+  const sessions = readSessions(scope);
+  const session = sessions.find((item) => item.id === id);
+  // Late acknowledgements must not resurrect a deleted browser conversation.
+  if (!session) return false;
+  session.cloudRevision = revision;
+  session.cloudDirty = chatSnapshotContentKey(session) !== savedContentKey;
+  return writeSessions(sessions, scope);
 }
