@@ -26,7 +26,6 @@ test(
         ).outputText,
       ]),
     );
-    const script = `(() => { const sources = ${JSON.stringify(sources)}; const cache = {}; function load(name) { if(cache[name]) return cache[name].exports; const module = {exports:{}}; cache[name]=module; new Function('exports','require','module',sources[name])(module.exports,load,module); return module.exports; } window.outbox = load('./media-outbox'); window.client = load('./media-client'); window.media = load('./media'); })();`;
     const temporaryRoot = path.resolve(os.tmpdir());
     const profile = fs.mkdtempSync(
       path.join(temporaryRoot, "arcanea-doc-outbox-"),
@@ -44,7 +43,27 @@ test(
       );
       const page = await context.newPage();
       await page.goto("http://127.0.0.1:4177/");
-      await page.addScriptTag({ content: script });
+      // Pass compiler output as structured data, never interpolate serialized
+      // source into the JavaScript that initializes the browser fixture.
+      await page.evaluate((sources) => {
+        const cache = new Map();
+        function load(name) {
+          if (!Object.hasOwn(sources, name))
+            throw Error("Only the three reviewed local modules may be loaded.");
+          if (cache.has(name)) return cache.get(name).exports;
+          const module = { exports: {} };
+          cache.set(name, module);
+          new Function("exports", "require", "module", sources[name])(
+            module.exports,
+            load,
+            module,
+          );
+          return module.exports;
+        }
+        window.outbox = load("./media-outbox");
+        window.client = load("./media-client");
+        window.media = load("./media");
+      }, sources);
       await page.evaluate(() => {
         window.scope = {
           ownerId: "11111111-1111-4111-8111-111111111111",
