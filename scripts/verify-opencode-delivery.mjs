@@ -10,11 +10,19 @@ import {
   readdirSync,
   realpathSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
-import { dirname, isAbsolute, join, relative, resolve } from "node:path";
+import {
+  basename,
+  dirname,
+  isAbsolute,
+  join,
+  relative,
+  resolve,
+} from "node:path";
 import { pathToFileURL } from "node:url";
 
 const root = resolve(import.meta.dirname, "..");
@@ -372,10 +380,15 @@ try {
     "--toolsets",
     "core,world",
   ]);
-  assert.equal(
-    effective.mcp.arcanea.environment.ARCANEA_DATA_DIR,
-    join(project, ".arcanea", "data"),
-  );
+  const dataDirectory = effective.mcp.arcanea.environment.ARCANEA_DATA_DIR;
+  assert.equal(basename(dataDirectory), "data");
+  assert.equal(basename(dirname(dataDirectory)), ".arcanea");
+  // Bun can expand Windows 8.3 names while Node keeps the caller's spelling.
+  // Match the existing physical project, before the data directory is created.
+  const dataProject = statSync(resolve(dataDirectory, "..", ".."));
+  const expectedProject = statSync(project);
+  assert.equal(dataProject.dev, expectedProject.dev);
+  assert.equal(dataProject.ino, expectedProject.ino);
   const statuses = run("native-mcp-connection", binary, ["mcp", "list"], {
     cwd: project,
     env,
