@@ -40,4 +40,6 @@ Reviewed Registry main `3415e72e25a44c55250048a69c15c8e1a290604d` and its five p
 
 Require hosted consumer and native build/lint/type/security checks, exact-revision independent review and receiving checks before promotion. Compare real installation/recovery against manual MCP configuration before claiming savings. Continue the actual creative workflow and funded model/harness comparisons when their dependencies are admitted. Dragonborne is the selected ARC-REL-001 candidate; human manuscript, canon, rights and publication approvals remain pending.
 
+The newly executed legacy command suite at `414cd007` passes 16/17 on each OS. Its existing Cursor status fixture never installs an overlay, while the status command reports installed overlays rather than listing every possible provider. The fixture now installs Cursor before checking the same `Cursor IDE` assertion; that assertion is retained. This changes test setup, not production status behavior. The complete command suite and native consumer remain required at the final source.
+
 Rollback the CLI adapter, standalone packaging and checks together through a reviewed revert. Scoped removal preserves saved worlds and settings. Keep all failing attempts, other writers and unfinished programme work; record the accepted slice in the hub and issue 630.

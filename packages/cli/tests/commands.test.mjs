@@ -135,9 +135,10 @@ describe("CLI — status", () => {
     }
   });
 
-  it("should show Cursor IDE in providers", () => {
+  it("should identify an installed Cursor overlay", () => {
     const dir = freshDir();
     try {
+      run(["install", "cursor", "--level", "standard", "--dir", dir]);
       const output = run(["status", "--dir", dir]);
       assert.ok(
         output.includes("Cursor IDE"),
