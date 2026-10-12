@@ -25,6 +25,13 @@ const source = [
   "apps/web/components/chat/chat-input-bar.tsx",
   "apps/web/components/chat/agent-header.tsx",
   "apps/web/app/chat/page.tsx",
+  "apps/web/components/chat/chat-storage-status.tsx",
+  "apps/web/hooks/use-chat-sessions.ts",
+  "apps/web/lib/chat/storage-scope.ts",
+  "apps/web/lib/chat/local-store.ts",
+  "apps/web/lib/chat/project-store.ts",
+  "apps/web/lib/chat/cloud-snapshot.ts",
+  "apps/web/lib/chat/supabase-store.ts",
   "apps/web/lib/chat/error-message.ts",
   "packages/design-system/src/companion.module.css",
   "packages/design-system/src/tokens.css",
@@ -371,7 +378,18 @@ async function main() {
       page.setDefaultTimeout(15000);
       const pageErrors = [];
       receipt.currentPageErrors = pageErrors;
-      page.on("pageerror", (error) => pageErrors.push(error.message));
+      const errorLocations = [];
+      receipt.currentErrorLocations = errorLocations;
+      let phase = "worlds";
+      page.on("pageerror", (error) => {
+        pageErrors.push(error.message);
+        errorLocations.push({
+          phase,
+          path: new URL(page.url()).pathname,
+          message: error.message,
+          stack: error.stack?.slice(0, 6000),
+        });
+      });
       receipt.failedRequests = [];
       page.on("requestfailed", (request) => {
         const url = new URL(request.url());
@@ -626,6 +644,12 @@ async function main() {
       await expect(input).toHaveValue("");
       await expect(log).not.toContainText("A door opens");
       await expect(log).not.toContainText("Previous account");
+      assert.deepEqual(
+        pageErrors,
+        [],
+        "Worlds must render without page errors",
+      );
+      phase = "chat";
       await page.goto(`${base}/chat`);
       await expect(opener).toBeHidden();
       const fullChatHeading = page.getByRole("heading", { level: 1 });
@@ -685,6 +709,8 @@ async function main() {
       await page.keyboard.press("Escape");
       await expect(shortcutsDialog).toBeHidden();
       await expect(starterButtons.first()).toBeFocused();
+      assert.deepEqual(pageErrors, [], "Chat must render without page errors");
+      phase = "home";
       await page.goto(base);
       await expect(opener).toBeHidden();
       assert.deepEqual(pageErrors, []);
@@ -711,6 +737,7 @@ async function main() {
         startersImmediatelyReadable: true,
         geometry,
         pageErrors,
+        errorLocations,
       });
       await context.close();
     }
