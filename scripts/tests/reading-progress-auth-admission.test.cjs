@@ -54,6 +54,20 @@ test("owned progress PR and main admit only exact fixture source", () => {
     /exact checked-out source/,
   );
 });
+test("owned companion lane retains mode, actor and credential admission", () => {
+  const lane = { GITHUB_HEAD_REF: "agent/codex/reading-companion-20261012" };
+  assert.equal(admit(lane), 1);
+  for (const override of [
+    { READING_PROGRESS_AUTH: undefined },
+    { GITHUB_REPOSITORY: "fork/arcanea-ai-app" },
+    { GITHUB_ACTOR: "another-actor" },
+    { SUPABASE_SERVICE_ROLE_KEY: "synthetic-admin-value" },
+  ])
+    assert.throws(
+      () => admit({ ...lane, ...override }),
+      /owned disposable hosted lane/,
+    );
+});
 test("untrusted repository, actor, lane and service-role credential fail before bootstrap", () => {
   for (const override of [
     { GITHUB_ACTIONS: "false" },

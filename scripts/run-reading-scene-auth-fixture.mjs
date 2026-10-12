@@ -20,7 +20,11 @@ if (process.env.READING_PROGRESS_AUTH && !progressMode)
   throw Error("Use the explicit reading-progress acceptance mode.");
 const admittedBranches = new Set(
   progressMode
-    ? ["agent/codex/reading-progress-auth-20261012", "main"]
+    ? [
+        "agent/codex/reading-progress-auth-20261012",
+        "agent/codex/reading-companion-20261012",
+        "main",
+      ]
     : [
         "agent/codex/reading-scene-20261010",
         "agent/codex/provider-account-20261011",

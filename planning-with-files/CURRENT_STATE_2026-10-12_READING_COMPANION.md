@@ -8,9 +8,10 @@ The full founder programme remains active.
 
 Base: `aabf262e5864b7a0290cf0e4a9b6fefae1716ef7`. Owner:
 `codex:01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`. Branch:
-`agent/codex/reading-companion-20261012`. Six files are owned: the companion
+`agent/codex/reading-companion-20261012`. Eight files are owned: the companion
 component, its design-system stylesheet, Library article page, existing real
-Auth browser acceptance, reading workflow and this record. Four active foreign
+Auth browser acceptance, reading workflow, fixture runner, admission regression
+and this record. Four active foreign
 lanes have no overlapping files. The existing free worktree is reused.
 
 Acceptance: one in-flow article-header entry with a 44px touch target; keyboard
@@ -50,3 +51,12 @@ independent review must pass. Protected merge, receiving checks and canonical
 production source binding are still pending. Customer sign-in, production CSP,
 founder taste and buyer acceptance remain separate. Rollback restores the three
 presentation files through a protected revert while preserving reading recovery.
+
+Initial source `c71b1e0eb012da17d1235b6716b07dc6e443e26d` passed 29 local
+cases and received a zero-cost public static PASS with no findings. That review
+does not cover the following refinement. Its Auth job was skipped because both
+workflow and runner admitted only the earlier owned reading-progress branch and
+main. Both now include this exact new owned companion branch, with a regression
+that denies a different repository or actor, missing mode and service-role key
+before bootstrap. The original modes remain admitted as before. Exact-source
+hosted Auth acceptance and fresh independent review are required.
