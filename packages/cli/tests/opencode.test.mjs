@@ -33,6 +33,18 @@ function fixture() {
   };
 }
 
+function snapshot(path) {
+  const fd = fs.openSync(path, "r");
+  try {
+    return {
+      content: fs.readFileSync(fd, "utf8"),
+      mtimeMs: fs.fstatSync(fd).mtimeMs,
+    };
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
 test("preview performs no writes and requires an explicit installed entry", async () => {
   const f = fixture();
   const before = fs.readdirSync(f.project);
@@ -65,14 +77,12 @@ test("installation preserves JSONC bytes and other plugins and is idempotent", a
     (await f.installer.install(f.project, "standard")).filesCreated,
     [f.target],
   );
-  const stat = fs.statSync(f.target);
-  const installed = fs.readFileSync(f.target, "utf8");
+  const installed = snapshot(f.target);
   assert.deepEqual(
     (await f.installer.install(f.project, "standard")).filesCreated,
     [],
   );
-  assert.equal(fs.statSync(f.target).mtimeMs, stat.mtimeMs);
-  assert.equal(fs.readFileSync(f.target, "utf8"), installed);
+  assert.deepEqual(snapshot(f.target), installed);
   assert.equal(
     fs.readFileSync(join(f.project, "opencode.jsonc"), "utf8"),
     config,
@@ -156,6 +166,34 @@ test("foreign and modified files are preserved during preview, install and remov
       /Preserving/,
     );
   assert.deepEqual(fs.readFileSync(f.target), content);
+
+  const racing = fixture();
+  await racing.installer.install(racing.project, "standard");
+  const expected = fs.readFileSync(racing.target);
+  const prior = join(racing.root, "prior-plugin.ts");
+  const originalRead = fs.readFileSync;
+  let replaced = false;
+  fs.readFileSync = (path, ...options) => {
+    if (!replaced && (path === racing.target || typeof path === "number")) {
+      replaced = true;
+      fs.renameSync(racing.target, prior);
+      fs.writeFileSync(racing.target, expected);
+    }
+    return originalRead(path, ...options);
+  };
+  syncBuiltinESMExports();
+  try {
+    await assert.rejects(
+      racing.installer.preview(racing.project, "standard"),
+      /Preserving/,
+    );
+  } finally {
+    fs.readFileSync = originalRead;
+    syncBuiltinESMExports();
+  }
+  assert.equal(replaced, true);
+  assert.deepEqual(fs.readFileSync(racing.target), expected);
+  assert.deepEqual(fs.readFileSync(prior), expected);
 });
 
 test("changing an entry or level does not overwrite an existing installation", async () => {

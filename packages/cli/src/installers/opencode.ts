@@ -1,6 +1,7 @@
 import {
   closeSync,
   existsSync,
+  fstatSync,
   fsyncSync,
   linkSync,
   lstatSync,
@@ -99,17 +100,32 @@ export default async function ArcaneaCreator() {
       }
     }
     try {
-      const stat = lstatSync(target);
-      if (
-        !stat.isFile() ||
-        stat.isSymbolicLink() ||
-        readFileSync(target, "utf8") !== expected
-      ) {
-        throw new Error(
-          `Preserving an existing or modified ${PLUGIN_PATH}; review it before changing installation options.`,
-        );
+      const fd = openSync(target, "r");
+      try {
+        const opened = fstatSync(fd, { bigint: true });
+        const matchesOpenedFile = () => {
+          const named = lstatSync(target, { bigint: true });
+          return (
+            named.isFile() &&
+            !named.isSymbolicLink() &&
+            named.dev === opened.dev &&
+            named.ino === opened.ino
+          );
+        };
+        if (
+          !opened.isFile() ||
+          !matchesOpenedFile() ||
+          readFileSync(fd, "utf8") !== expected ||
+          !matchesOpenedFile()
+        ) {
+          throw new Error(
+            `Preserving an existing or modified ${PLUGIN_PATH}; review it before changing installation options.`,
+          );
+        }
+        return true;
+      } finally {
+        closeSync(fd);
       }
-      return true;
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
       return false;

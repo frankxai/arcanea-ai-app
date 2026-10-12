@@ -6,7 +6,7 @@
 
 import { describe, it, before, after } from "node:test";
 import { strict as assert } from "node:assert";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import {
   mkdtempSync,
   rmSync,
@@ -22,7 +22,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const CLI = join(__dirname, "..", "dist", "arcanea.cjs");
 
 function run(args, opts = {}) {
-  return execSync(`node ${CLI} ${args}`, {
+  return execFileSync(process.execPath, [CLI, ...args], {
     encoding: "utf-8",
     timeout: 15000,
     env: { ...process.env, NO_COLOR: "1" },
@@ -31,12 +31,12 @@ function run(args, opts = {}) {
 }
 
 function freshDir() {
-  return mkdtempSync(join(tmpdir(), "arcanea-cli-test-"));
+  return mkdtempSync(join(tmpdir(), "arcanea cli & test "));
 }
 
 describe("CLI — help", () => {
   it("should show version", () => {
-    const output = run("--version");
+    const output = run(["--version"]);
     const manifest = JSON.parse(
       readFileSync(join(__dirname, "..", "package.json"), "utf8"),
     );
@@ -44,7 +44,7 @@ describe("CLI — help", () => {
   });
 
   it("should list all 7 commands", () => {
-    const output = run("--help");
+    const output = run(["--help"]);
     const commands = [
       "init",
       "auth",
@@ -67,7 +67,7 @@ describe("CLI — install", () => {
   it("install claude --level minimal creates 2 files", () => {
     const dir = freshDir();
     try {
-      run(`install claude --level minimal --dir ${dir}`);
+      run(["install", "claude", "--level", "minimal", "--dir", dir]);
       assert.ok(existsSync(join(dir, ".claude", "CLAUDE.md")));
       assert.ok(existsSync(join(dir, ".arcanea", "overlay-manifest.json")));
     } finally {
@@ -78,7 +78,7 @@ describe("CLI — install", () => {
   it("install claude --level standard creates skills and agents", () => {
     const dir = freshDir();
     try {
-      run(`install claude --level standard --dir ${dir}`);
+      run(["install", "claude", "--level", "standard", "--dir", dir]);
       const skills = readdirSync(join(dir, ".claude", "skills")).filter((f) =>
         f.endsWith(".md"),
       );
@@ -95,7 +95,7 @@ describe("CLI — install", () => {
   it("install claude --level luminor has deepest content", () => {
     const dir = freshDir();
     try {
-      run(`install claude --level luminor --dir ${dir}`);
+      run(["install", "claude", "--level", "luminor", "--dir", dir]);
       const canon = readFileSync(
         join(dir, ".claude", "skills", "arcanea-canon.md"),
         "utf-8",
@@ -113,7 +113,7 @@ describe("CLI — install", () => {
   it("install cursor generates .cursorrules", () => {
     const dir = freshDir();
     try {
-      run(`install cursor --level standard --dir ${dir}`);
+      run(["install", "cursor", "--level", "standard", "--dir", dir]);
       assert.ok(existsSync(join(dir, ".cursorrules")), "Missing .cursorrules");
       assert.ok(existsSync(join(dir, ".arcanea", "overlay-manifest.json")));
     } finally {
@@ -126,8 +126,8 @@ describe("CLI — status", () => {
   it("should show status for installed overlay", () => {
     const dir = freshDir();
     try {
-      run(`install claude --level standard --dir ${dir}`);
-      const output = run(`status --dir ${dir}`);
+      run(["install", "claude", "--level", "standard", "--dir", dir]);
+      const output = run(["status", "--dir", dir]);
       assert.ok(output.includes("Claude"));
       assert.ok(output.includes("standard"));
     } finally {
@@ -138,7 +138,7 @@ describe("CLI — status", () => {
   it("should show Cursor IDE in providers", () => {
     const dir = freshDir();
     try {
-      const output = run(`status --dir ${dir}`);
+      const output = run(["status", "--dir", dir]);
       assert.ok(
         output.includes("Cursor IDE"),
         'Should show "Cursor IDE" not "OpenCode"',
@@ -153,7 +153,7 @@ describe("CLI — world", () => {
   it("world --all generates 7 pillar files", () => {
     const dir = freshDir();
     try {
-      run(`world --all --name TestRealm --dir ${dir}`);
+      run(["world", "--all", "--name", "TestRealm", "--dir", dir]);
       const worldDir = join(dir, ".arcanea", "worlds", "testrealm");
       assert.ok(existsSync(worldDir));
       const files = readdirSync(worldDir).filter((f) => f.endsWith(".md"));
@@ -166,7 +166,7 @@ describe("CLI — world", () => {
   it("world geography generates single pillar", () => {
     const dir = freshDir();
     try {
-      run(`world geography --name TestRealm --dir ${dir}`);
+      run(["world", "geography", "--name", "TestRealm", "--dir", dir]);
       const worldDir = join(dir, ".arcanea", "worlds", "testrealm");
       const files = readdirSync(worldDir).filter((f) => f.endsWith(".md"));
       assert.equal(files.length, 1);
@@ -179,7 +179,7 @@ describe("CLI — world", () => {
   it("pillar content includes realm name", () => {
     const dir = freshDir();
     try {
-      run(`world geography --name "Dragon Peaks" --dir ${dir}`);
+      run(["world", "geography", "--name", "Dragon Peaks", "--dir", dir]);
       const content = readFileSync(
         join(dir, ".arcanea", "worlds", "dragon-peaks", "geography.md"),
         "utf-8",
@@ -195,7 +195,7 @@ describe("CLI — create", () => {
   it("create character generates template", () => {
     const dir = freshDir();
     try {
-      run(`create character "Elena Stormweaver" --dir ${dir}`);
+      run(["create", "character", "Elena Stormweaver", "--dir", dir]);
       const filePath = join(
         dir,
         ".arcanea",
@@ -214,7 +214,7 @@ describe("CLI — create", () => {
   it("create scene generates template", () => {
     const dir = freshDir();
     try {
-      run(`create scene "The Final Battle" --dir ${dir}`);
+      run(["create", "scene", "The Final Battle", "--dir", dir]);
       const filePath = join(dir, ".arcanea", "scenes", "the-final-battle.md");
       assert.ok(existsSync(filePath));
       const content = readFileSync(filePath, "utf-8");
@@ -228,7 +228,7 @@ describe("CLI — create", () => {
   it("create magic-system generates template", () => {
     const dir = freshDir();
     try {
-      run(`create magic-system "Crystalmancy" --dir ${dir}`);
+      run(["create", "magic-system", "Crystalmancy", "--dir", dir]);
       const filePath = join(dir, ".arcanea", "magic", "crystalmancy.md");
       assert.ok(existsSync(filePath));
       const content = readFileSync(filePath, "utf-8");
@@ -244,8 +244,8 @@ describe("CLI — update", () => {
   it("update --dry-run shows files to update", () => {
     const dir = freshDir();
     try {
-      run(`install claude --level standard --dir ${dir}`);
-      const output = run(`update --dry-run --dir ${dir}`);
+      run(["install", "claude", "--level", "standard", "--dir", dir]);
+      const output = run(["update", "--dry-run", "--dir", dir]);
       assert.ok(output.includes("claude"));
     } finally {
       rmSync(dir, { recursive: true, force: true });
@@ -257,7 +257,7 @@ describe("CLI — security", () => {
   it("should sanitize path traversal in world name", () => {
     const dir = freshDir();
     try {
-      run(`world geography --name "../../../etc" --dir ${dir}`);
+      run(["world", "geography", "--name", "../../../etc", "--dir", dir]);
       // Traversal dots stripped — becomes "etc" slug
       const safePath = join(dir, ".arcanea", "worlds", "etc", "geography.md");
       assert.ok(
@@ -277,7 +277,7 @@ describe("CLI — security", () => {
   it("should reject path traversal in create name", () => {
     const dir = freshDir();
     try {
-      run(`create character "../../etc/passwd" --dir ${dir}`);
+      run(["create", "character", "../../etc/passwd", "--dir", dir]);
       assert.ok(!existsSync("/etc/passwd.md"));
     } finally {
       rmSync(dir, { recursive: true, force: true });

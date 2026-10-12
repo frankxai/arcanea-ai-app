@@ -45,6 +45,8 @@ jobs:
         run: pnpm --filter @arcanea/cli... --filter @arcanea/mcp-server install --frozen-lockfile
       - name: Build the existing core and CLI
         run: pnpm --filter @arcanea/core --filter @arcanea/cli run build
+      - name: Verify existing commands without shell parsing
+        run: node --test packages/cli/tests/commands.test.mjs
       - name: Verify source and emitted installer behavior
         run: node --test packages/cli/tests/opencode.test.mjs
       - name: Verify emitted installer behavior

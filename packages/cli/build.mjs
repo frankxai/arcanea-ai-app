@@ -15,7 +15,6 @@ import {
   copyFileSync,
   existsSync,
   mkdirSync,
-  statSync,
   readFileSync,
   writeFileSync,
 } from "node:fs";
@@ -77,16 +76,11 @@ try {
 }
 
 // ── Verify ──────────────────────────────────────────────────────────
-if (!existsSync(outFile)) {
-  console.error("  ERROR: Output file was not created.");
-  process.exit(1);
-}
-
-const stats = statSync(outFile);
-const sizeKb = (stats.size / 1024).toFixed(1);
+const bundle = readFileSync(outFile);
+const sizeKb = (bundle.byteLength / 1024).toFixed(1);
 
 // Verify shebang
-const head = readFileSync(outFile, "utf-8").slice(0, 100);
+const head = bundle.toString("utf8").slice(0, 100);
 const hasShebang = head.startsWith("#!/usr/bin/env node");
 if (!hasShebang)
   throw new Error("The standalone CLI requires its Node shebang.");
@@ -100,7 +94,7 @@ const { dependencies, devDependencies, scripts, publishConfig, ...metadata } =
   sourceManifest;
 const packageDir = resolve(distDir, "package");
 mkdirSync(resolve(packageDir, "dist"), { recursive: true });
-copyFileSync(outFile, resolve(packageDir, "dist/arcanea.cjs"));
+writeFileSync(resolve(packageDir, "dist/arcanea.cjs"), bundle);
 copyFileSync(
   resolve(distDir, "index.d.ts"),
   resolve(packageDir, "dist/index.d.ts"),
