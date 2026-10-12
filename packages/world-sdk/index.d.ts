@@ -165,6 +165,10 @@ export function contentHash(
   manifest: WorldManifest,
 ): string;
 export function readWorld(dir: string): Promise<World>;
+export function checkWorldFiles(
+  dir: string,
+  paths: string[],
+): Promise<{ dir: string; paths: string[] }>;
 export function writeFiles(
   dir: string,
   files: WorldFile[],
@@ -201,6 +205,14 @@ export function assignmentsFor(
   manifest: WorldManifest,
   harness: string,
 ): WorldAgent[];
+export type WorldCommitResult =
+  | { status: "committed"; sha: string; paths: string[] }
+  | { status: "unchanged" | "not-a-repository"; paths: string[] };
+export function commitWorld(
+  dir: string,
+  message: string,
+  options: { paths: string[] },
+): Promise<WorldCommitResult>;
 export function harnessContext(args: {
   dir: string;
   harness: string;
@@ -215,7 +227,7 @@ export function harnessContext(args: {
     canonLevel?: number;
   }): Promise<string>;
   addQuest(q: { title: string; body: string }): Promise<string>;
-  commit(msg: string): Promise<{ sha: string } | null>;
+  commit(msg: string): Promise<WorldCommitResult>;
 };
 export function buildIndex(world: World): {
   worldId: string;
