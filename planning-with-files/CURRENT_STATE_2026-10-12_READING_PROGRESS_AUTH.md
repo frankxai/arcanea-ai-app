@@ -141,6 +141,18 @@ that policy, workflow and failure. The separate exact-source review is retained;
 activation of the native Claude workflow remains unresolved. The legacy
 AI Exact-Head Review workflow is manually disabled and is not claimed as passed.
 
+Source `e844f2fae13c7dfee5264b3e6dc123b6138d40bc` in run `38264272143`
+passed all six preceding real Auth/desktop/save/load/denial/account checks, then
+failed waiting for the mobile observer save. The article boundary was recorded
+at 899.9375px in a 900px viewport, but that alone does not prove the real marker's
+intersection after layout settles. The fixture now waits for the real font set
+and actual marker, scrolls that marker fully into view, and records its geometry
+and actual save attempts. The marker and database transport remain unmocked;
+committed-save/touch-retry/one-row/375px/keyboard checks remain required.
+Native cleanup succeeded and three captures remain retained. Independent review
+attempts returned an HTTP400 and an invalid response envelope; neither is an
+accepted review. Those raw responses remain preserved without a paid fallback.
+
 The exact-head Dots review reported a P1 about stale pages, lost diagnostics and
 continued execution after failure. Its source quote bound correctly; inspection
 shows that the catch preserves the original error and stage, throws immediately,

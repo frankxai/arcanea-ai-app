@@ -492,39 +492,57 @@ async function main() {
         if (route.request().method() !== "POST") return route.continue();
         try {
           mobileSaves++;
+          receipt.mobileSaveAttempts = mobileSaves;
           assert.equal(
             route.request().postDataJSON().user_id,
             config.accounts[1].id,
           );
           const response = await route.fetch({ timeout: 10000, maxRetries: 0 });
           assert.ok([200, 201].includes(response.status()));
-          if (mobileSaves === 1) return route.abort("failed");
+          if (mobileSaves === 1) {
+            receipt.mobileSaveAcknowledgementDropped = true;
+            return route.abort("failed");
+          }
           await route.fulfill({ response });
         } catch (error) {
           mobileSaveFailure = redact(error.message);
+          receipt.mobileSaveTransportFailure = mobileSaveFailure;
           await route.abort("failed");
         }
       },
     );
     await login(mobileRetry, config.accounts[1]);
     await expect(button(mobileRetry, "Mark as read")).toBeEnabled();
+    await mobileRetry.evaluate(async () => {
+      await document.fonts.ready;
+    });
+    const mobileEnd = mobileRetry.locator(
+      'article#library-reading-text > div[aria-hidden="true"]',
+    );
+    await expect(mobileEnd).toHaveCount(1);
     // The actual end-of-article sentinel, rather than a mocked observer, starts
     // completion when the mobile reader reaches the bottom.
-    receipt.mobileArticleEnd = await mobileRetry.evaluate(() => {
-      const text = document.getElementById("library-reading-text");
-      text.scrollIntoView({ block: "end" });
+    receipt.mobileArticleEnd = await mobileEnd.evaluate((element) => {
+      element.scrollIntoView({ block: "center", behavior: "instant" });
+      const rect = element.getBoundingClientRect();
       return {
-        bottom: text.getBoundingClientRect().bottom,
+        top: rect.top,
+        bottom: rect.bottom,
+        height: rect.height,
+        width: rect.width,
         viewportHeight: innerHeight,
       };
     });
+    assert.ok(receipt.mobileArticleEnd.height > 0);
+    assert.ok(receipt.mobileArticleEnd.width > 0);
     assert.ok(
-      Math.abs(
-        receipt.mobileArticleEnd.bottom -
+      receipt.mobileArticleEnd.top >= 0 &&
+        receipt.mobileArticleEnd.bottom <=
           receipt.mobileArticleEnd.viewportHeight,
-      ) <= 2,
     );
-    await expect(button(mobileRetry, "Try saving again")).toBeEnabled();
+    await expect(button(mobileRetry, "Try saving again")).toBeEnabled({
+      timeout: 15000,
+    });
     await expect(readStatus(mobileRetry)).toHaveCount(0);
     const mobileButton = button(mobileRetry, "Try saving again");
     assert.ok((await mobileButton.boundingBox()).height >= 44);
