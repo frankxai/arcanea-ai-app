@@ -210,6 +210,7 @@ jobs:
         run: |
           pnpm --dir apps/web test:safe-fetch
           node --test scripts/tests/safe-fetch-network.test.cjs
+          node --test scripts/tests/studio-ingest-cache.test.cjs
 
       - name: Verify author draft ownership, persistence and migration recovery
         env:
