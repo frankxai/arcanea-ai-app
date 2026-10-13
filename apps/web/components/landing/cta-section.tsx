@@ -17,7 +17,11 @@ const ORBITING_GUARDIANS = [
   { name: "Alera", image: "/guardians/v3/alera-hero-v3.webp", angle: 72 },
   { name: "Leyla", image: "/guardians/v3/leyla-hero-v3.webp", angle: 144 },
   { name: "Maylinn", image: "/guardians/v3/maylinn-hero-v3.webp", angle: 216 },
-  { name: "Draconia", image: "/guardians/v3/draconia-hero-v3.webp", angle: 288 },
+  {
+    name: "Draconia",
+    image: "/guardians/v3/draconia-hero-v3.webp",
+    angle: 288,
+  },
 ];
 
 export function CTASection() {
@@ -52,24 +56,19 @@ export function CTASection() {
                 </h2>
 
                 <p className="text-lg text-white/50 mb-8 leading-relaxed">
-                  A complete creation ecosystem — not a thin AI wrapper.
-                  Type one sentence and watch a universe unfold.
+                  A complete creation ecosystem — not a thin AI wrapper. Type
+                  one sentence and watch a universe unfold.
                 </p>
 
                 <ul className="space-y-3 mb-10">
                   {BENEFITS.map((benefit) => (
-                    <li
-                      key={benefit}
-                      className="flex items-center gap-3"
-                    >
+                    <li key={benefit} className="flex items-center gap-3">
                       <div className="w-5 h-5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/35 flex items-center justify-center flex-shrink-0">
                         <span className="text-[11px] text-[var(--arc-brand-atlantean-teal)]">
                           ✓
                         </span>
                       </div>
-                      <span className="text-white/50 text-sm">
-                        {benefit}
-                      </span>
+                      <span className="text-white/50 text-sm">{benefit}</span>
                     </li>
                   ))}
                 </ul>
@@ -122,7 +121,7 @@ export function CTASection() {
                             height={48}
                             sizes="48px"
                             className="w-full h-full object-cover object-top"
-                           />
+                          />
                         </div>
                       </div>
                     );

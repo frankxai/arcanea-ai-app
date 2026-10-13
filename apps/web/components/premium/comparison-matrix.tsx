@@ -95,7 +95,10 @@ function CellIcon({ value }: { value: Cell }) {
   if (value === true) {
     return (
       <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/30">
-        <Check className="w-3 h-3 text-[var(--arc-brand-atlantean-teal)]" weight="bold" />
+        <Check
+          className="w-3 h-3 text-[var(--arc-brand-atlantean-teal)]"
+          weight="bold"
+        />
       </span>
     );
   }
@@ -152,9 +155,15 @@ export function ComparisonMatrix() {
 
         {/* Legend */}
         <div className="flex items-center gap-5 px-6 py-2.5 border-b border-white/[0.04] text-[11px] text-white/40">
-          <span className="inline-flex items-center gap-1.5"><CellIcon value={true} /> Built in</span>
-          <span className="inline-flex items-center gap-1.5"><CellIcon value={"partial"} /> Partial</span>
-          <span className="inline-flex items-center gap-1.5"><CellIcon value={false} /> Not offered</span>
+          <span className="inline-flex items-center gap-1.5">
+            <CellIcon value={true} /> Built in
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <CellIcon value={"partial"} /> Partial
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <CellIcon value={false} /> Not offered
+          </span>
         </div>
 
         {/* Rows */}
@@ -168,9 +177,13 @@ export function ComparisonMatrix() {
             className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr] border-b border-white/[0.04] last:border-b-0 hover:bg-white/[0.015] transition-colors"
           >
             <div className="px-6 py-5">
-              <div className="text-sm font-medium text-white/75">{feat.label}</div>
+              <div className="text-sm font-medium text-white/75">
+                {feat.label}
+              </div>
               {feat.note && (
-                <div className="text-[11px] text-white/35 mt-1">{feat.note}</div>
+                <div className="text-[11px] text-white/35 mt-1">
+                  {feat.note}
+                </div>
               )}
             </div>
             {COLUMNS.map((col) => (
