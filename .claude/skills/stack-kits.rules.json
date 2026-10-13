@@ -11,7 +11,7 @@
     ],
     "aliases": {}
   },
-  "_precedence": "DESIGN.md, TASTE.md outrank every skill listed here. Kit examples use placeholder colors and fonts; use this repo's tokens instead.",
+  "_precedence": "DESIGN.md, TASTE.md, docs/experience-brief.md outrank every skill listed here. Kit examples use placeholder colors and fonts; use this repo's tokens instead.",
   "version": "1.0",
   "skills": {
     "nextjs": {
