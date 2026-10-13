@@ -10,11 +10,11 @@ Get a creator from **one sentence** to a **named world that remembers**, then br
 
 ## Who it is for
 
-| | Who | What they have today | What they fear |
-|---|---|---|---|
+|             | Who                                                                                                        | What they have today                       | What they fear                 |
+| ----------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ------------------------------ |
 | **Primary** | Solo world-builders: novelists, game and TTRPG designers, showrunners, already prompting ChatGPT or Claude | A world spread across chats that forget it | Losing continuity and their IP |
-| Secondary | AI-native developers (MCP, CLI, agent tooling) | Their own keys and editors | Lock-in, black boxes |
-| Not for | People who want a generic chatbot, or a game to play | — | — |
+| Secondary   | AI-native developers (MCP, CLI, agent tooling)                                                             | Their own keys and editors                 | Lock-in, black boxes           |
+| Not for     | People who want a generic chatbot, or a game to play                                                       | —                                          | —                              |
 
 ## The one conversion
 
@@ -23,7 +23,7 @@ Get a creator from **one sentence** to a **named world that remembers**, then br
 - Retention loop: return to a named world. A world that is not reopened has not converted.
 - Capture fallback: the footer newsletter (`/api/subscribe` → Supabase `subscribers`).
 
-**The biggest leak is the key wall.** The hero promises "type one sentence", and the final CTA says "Free to start". The first send to `/api/ai/chat` returns 401 *Connect your provider key* when no key is set (`route.ts:266-281`). Creating a world also needs sign-in plus a key. Either the first world is funded, or the hero says plainly that you bring a key. No other fix on this page moves activation as much. **This is Frank's call; see Decisions.**
+**The biggest leak is the key wall.** The hero promises "type one sentence", and the final CTA says "Free to start". The first send to `/api/ai/chat` returns 401 _Connect your provider key_ when no key is set (`route.ts:266-281`). Creating a world also needs sign-in plus a key. Either the first world is funded, or the hero says plainly that you bring a key. No other fix on this page moves activation as much. **This is Frank's call; see Decisions.**
 
 ## Explain in this order
 
@@ -34,7 +34,7 @@ TASTE Gate 5 sets the sequence. Each step answers one question the visitor is al
 3. **How does it work?** Three steps: prompt, world graph, specialists working on the same state.
 4. **Why not just ChatGPT?** "When chat forgets, worlds drift", plus the comparison table. Keep only rows the code supports.
 5. **Is it for me?** Three personas, not five: Novelists, Game designers, Developers.
-6. **What is the world like?** Guardians and lore as *content*, in one section. The chrome stays AI-lab restrained.
+6. **What is the world like?** Guardians and lore as _content_, in one section. The chrome stays AI-lab restrained.
 7. **What can I use today?** The Live / Preview / Roadmap status block. It is the most honest section on the page; keep it.
 8. **What do I keep?** Keys, data and IP, stated as the code does them (see Gaps 1).
 9. FAQ, then the final CTA.
@@ -43,23 +43,23 @@ Today the page renders about 20 sections (`v3-below-fold.tsx:1285`). Target: **9
 
 ## CTA hierarchy
 
-| Rank | Label (today) | Destination | Rule |
-|---|---|---|---|
-| Primary | Prompt box + send ("Start creating in chat") | `/chat?prompt=` (prefill only) | One primary per viewport. The send button must look enabled, at 44 px. |
-| Secondary | Chips: Map a world, Write a scene, Design visuals, Plan agents | `/worlds/create?prompt=` or `/chat?prompt=` | Each chip ≥ 44 px, AA contrast |
-| Header | Get Started / Sign In (auth modal) | modal | ≥ 44 px |
-| Exit | Final CTA "Start Creating" → `/chat`; "Explore the Library" → `/library` | | Every page needs an exit ramp (TASTE Gate 5) |
+| Rank      | Label (today)                                                            | Destination                                 | Rule                                                                   |
+| --------- | ------------------------------------------------------------------------ | ------------------------------------------- | ---------------------------------------------------------------------- |
+| Primary   | Prompt box + send ("Start creating in chat")                             | `/chat?prompt=` (prefill only)              | One primary per viewport. The send button must look enabled, at 44 px. |
+| Secondary | Chips: Map a world, Write a scene, Design visuals, Plan agents           | `/worlds/create?prompt=` or `/chat?prompt=` | Each chip ≥ 44 px, AA contrast                                         |
+| Header    | Get Started / Sign In (auth modal)                                       | modal                                       | ≥ 44 px                                                                |
+| Exit      | Final CTA "Start Creating" → `/chat`; "Explore the Library" → `/library` |                                             | Every page needs an exit ramp (TASTE Gate 5)                           |
 
 Every homepage CTA emits a `home_*` event, so the funnel from viewport to world created is measurable.
 
 ## Emotion arc
 
-| Moment | Feel | Earned by | Broken by |
-|---|---|---|---|
-| 0–5 s | **Wonder, restrained** | Aquamarine on cosmic dark, one composed hero | Busy video behind the text, low-contrast input |
-| 5–30 s | **Competence: "this remembers"** | A real world graph, specific numbers from `lib/facts.ts` | Abstract claims ("compute magic like code") |
-| Decision | **Safety** | True statements about keys, data and IP | Claims the code contradicts (Gaps 1) |
-| After | **Momentum** | A named world and an obvious next move | A 401 on the first send |
+| Moment   | Feel                             | Earned by                                                | Broken by                                      |
+| -------- | -------------------------------- | -------------------------------------------------------- | ---------------------------------------------- |
+| 0–5 s    | **Wonder, restrained**           | Aquamarine on cosmic dark, one composed hero             | Busy video behind the text, low-contrast input |
+| 5–30 s   | **Competence: "this remembers"** | A real world graph, specific numbers from `lib/facts.ts` | Abstract claims ("compute magic like code")    |
+| Decision | **Safety**                       | True statements about keys, data and IP                  | Claims the code contradicts (Gaps 1)           |
+| After    | **Momentum**                     | A named world and an obvious next move                   | A 401 on the first send                        |
 
 ## Mobile contract (375 first: 75 % of first visits are mobile, TASTE Gate 5)
 
