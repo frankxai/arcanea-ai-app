@@ -13,7 +13,7 @@
  */
 
 import { generateObject } from 'ai';
-import { createAnthropic } from '@ai-sdk/anthropic';
+import { createAnthropic, type AnthropicProviderOptions } from '@ai-sdk/anthropic';
 import { z } from 'zod';
 import { LUMINORS } from '@/lib/luminors/config';
 import { classifyIntent } from './router';
@@ -95,10 +95,14 @@ export async function planSwarm(ctx: PlannerContext): Promise<SwarmPlan> {
       .join('\n');
 
     const { object } = await generateObject({
-      model: anthropic('claude-haiku-4-5-20251001'),
+      model: anthropic('claude-haiku-5-5'),
       schema: plannerSchema,
-      temperature: 0.2,
-      maxOutputTokens: 512,
+      // Haiku 5.5 rejects sampling parameters and thinks by default; thinking
+      // counts toward maxOutputTokens, so effort is low and the cap has headroom.
+      providerOptions: {
+        anthropic: { effort: 'low' } satisfies AnthropicProviderOptions,
+      },
+      maxOutputTokens: 1024,
       system: `You are the swarm planner for Arcanea.
 Your job: look at the creator's request and decide whether ONE Luminor can handle it (solo) or multiple Luminors should collaborate (swarm).
 

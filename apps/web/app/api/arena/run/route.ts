@@ -82,9 +82,9 @@ export async function POST(request: Request) {
   const anthropic = createAnthropic({ apiKey });
 
   // Sonnet for the Luminor under test (representative quality)
-  const testModel = anthropic('claude-sonnet-4-6');
+  const testModel = anthropic('claude-sonnet-5-5');
   // Opus for the judge (highest quality evaluation)
-  const judgeModel = anthropic('claude-opus-4-6');
+  const judgeModel = anthropic('claude-opus-5-5');
 
   // Run all tasks in parallel for speed
   const taskResults = await Promise.all(
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
         model: testModel,
         system: luminor.systemPrompt,
         prompt: task.prompt,
-        temperature: 0.7,
+        // No temperature: Claude 5.5 models reject sampling parameters with a 400.
       });
 
       // 2. Judge the response
@@ -118,7 +118,6 @@ ${task.prompt}
 ${response.text}
 
 ## Your Evaluation (JSON only)`,
-        temperature: 0.2,
       });
 
       // Parse judge output

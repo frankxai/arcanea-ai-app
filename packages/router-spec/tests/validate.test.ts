@@ -33,17 +33,31 @@ test("every surface.taskOverrides references declared tasks", () => {
   }
 });
 
+test("Claude 5.5 models are declared alongside the earlier Claude entries", () => {
+  const spec = loadSpec();
+  for (const id of [
+    "claude-opus-5-5",
+    "claude-sonnet-5-5",
+    "claude-haiku-5-5",
+    "claude-opus-4-7",
+    "claude-sonnet-4-6",
+    "claude-haiku-4-5",
+  ]) {
+    assert.ok(spec.models[id], `models.${id} must be declared`);
+  }
+});
+
 test("resolveTask returns valid candidates for known task+surface", () => {
   const spec = loadSpec();
   const candidates = resolveTask("world.canon", "claude-arcanea", spec);
   assert.ok(candidates.length > 0);
-  assert.ok(candidates.includes("claude-opus-4-7"));
+  assert.ok(candidates.includes("claude-opus-5-5"));
 });
 
 test("pickModel returns first non-deprecated model", () => {
   const spec = loadSpec();
-  const picked = pickModel(["claude-opus-4-7", "claude-sonnet-4-6"], spec);
-  assert.equal(picked, "claude-opus-4-7");
+  const picked = pickModel(["claude-opus-5-5", "claude-sonnet-5-5"], spec);
+  assert.equal(picked, "claude-opus-5-5");
 });
 
 test("pickModel skips deprecated and picks next", () => {

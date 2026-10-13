@@ -89,6 +89,26 @@ test("customer credential stays bound to OpenAI and caller tier is ignored", asy
   assert.equal((await response.json()).model, model.id);
 });
 
+test("Anthropic compatibility chat drops sampling parameters for Claude 5.5", async () => {
+  const response = await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        temperature: 0.4,
+        top_p: 0.9,
+        messages: [{ role: "user", content: "Draft a scene." }],
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, "https://api.anthropic.com/v1/messages");
+  assert.equal(calls[0].body.model, "claude-sonnet-5-5");
+  assert.equal(calls[0].body.temperature, undefined);
+  assert.equal(calls[0].body.top_p, undefined);
+});
+
 test("malformed credential maps fail before provider execution", async () => {
   for (const packed of [
     "{",
@@ -444,6 +464,10 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
       new Headers(init?.headers).get("x-api-key"),
       "test-ui-customer-key",
     );
+    const sent = JSON.parse(String(init?.body)) as Record<string, unknown>;
+    assert.equal(sent.model, "claude-sonnet-5-5");
+    // Claude 5.5 models reject sampling parameters with a 400.
+    assert.equal(sent.temperature, undefined);
     const events = [
       {
         type: "message_start",
@@ -452,7 +476,7 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
           type: "message",
           role: "assistant",
           content: [],
-          model: "claude-sonnet-4-6",
+          model: "claude-sonnet-5-5",
           stop_reason: null,
           stop_sequence: null,
           usage: { input_tokens: 3, output_tokens: 0 },

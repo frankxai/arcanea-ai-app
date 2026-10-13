@@ -12,6 +12,7 @@
  */
 
 import { generateText } from 'ai';
+import type { AnthropicProviderOptions } from '@ai-sdk/anthropic';
 import { executeSearch, type SearchResponse } from '@/lib/search/providers';
 
 // ---------------------------------------------------------------------------
@@ -116,6 +117,11 @@ async function generateSubQueries(
       'You decompose research questions into specific, focused web-search queries. ' +
       'Return ONLY a JSON array of strings. No explanation, no markdown fences.',
     prompt: `Break this into ${count} focused search queries that together cover the topic comprehensively:\n\n"${question}"`,
+    // Applies only when the fast tier falls back to Claude Sonnet 5.5, whose
+    // thinking counts toward maxOutputTokens; other providers ignore it.
+    providerOptions: {
+      anthropic: { effort: 'low' } satisfies AnthropicProviderOptions,
+    },
     maxOutputTokens: 500,
   });
 
@@ -221,7 +227,7 @@ async function getModel(tier: 'fast' | 'quality') {
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
   if (anthropicKey) {
     const { createAnthropic } = await import('@ai-sdk/anthropic');
-    return createAnthropic({ apiKey: anthropicKey })('claude-sonnet-4-6');
+    return createAnthropic({ apiKey: anthropicKey })('claude-sonnet-5-5');
   }
   const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
   if (googleKey) {

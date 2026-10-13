@@ -90,11 +90,11 @@ export async function planCommand(
     return;
   }
 
-  console.error(kleur.dim(`  [arcanea] planning via claude -p (haiku-4-5) …`));
+  console.error(kleur.dim(`  [arcanea] planning via claude -p (haiku-5-5) …`));
 
   const res = await execa(
     'claude',
-    ['-p', prompt, '--model', 'claude-haiku-4-5'],
+    ['-p', prompt, '--model', 'claude-haiku-5-5'],
     { reject: false, timeout: 90_000, stdin: 'ignore' },
   );
 

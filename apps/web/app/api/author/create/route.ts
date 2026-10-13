@@ -80,7 +80,7 @@ ${descLine}authors:
 
 ai_transparency:
   models_used:
-    - id: claude-opus-4-6
+    - id: claude-opus-5-5
       provider: anthropic
       role: co-author
   human_contribution: 50%

@@ -140,8 +140,11 @@ async function analyzeImage(entry: CatalogEntry) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 200,
+        model: 'claude-haiku-5-5',
+        // Haiku 5.5 thinks by default and thinking counts toward max_tokens:
+        // low effort plus headroom keeps the short JSON reply from being cut off.
+        max_tokens: 1024,
+        output_config: { effort: 'low' },
         messages: [{
           role: 'user',
           content: [
@@ -165,7 +168,10 @@ Reply ONLY with JSON: {"canon":N,"design":N,"emotion":N,"technical":N,"uniquenes
     if (!response.ok) return null;
 
     const data = await response.json();
-    const text = data.content?.[0]?.text ?? '';
+    // The reply can start with a thinking block, so find the text block by type.
+    const text =
+      (data.content as Array<{ type: string; text?: string }> | undefined)
+        ?.find((block) => block.type === 'text')?.text ?? '';
     const match = text.match(/\{[^}]+\}/);
     if (!match) return null;
 

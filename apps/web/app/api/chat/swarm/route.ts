@@ -27,7 +27,7 @@
 
 import { NextRequest } from 'next/server';
 import { streamText } from 'ai';
-import { createAnthropic } from '@ai-sdk/anthropic';
+import { createAnthropic, type AnthropicProviderOptions } from '@ai-sdk/anthropic';
 import { LUMINORS } from '@/lib/luminors/config';
 import { planSwarm, type SwarmPlan } from '@/lib/ai/planner';
 import { LUMINOR_HINTS } from '@/lib/ai/guardian-swarm';
@@ -185,10 +185,14 @@ You are one of ${plan.luminors.length} Luminors responding to the same creator r
 ${luminor.reason}`;
 
               const result = streamText({
-                model: anthropic('claude-haiku-4-5-20251001'),
+                model: anthropic('claude-haiku-5-5'),
                 system: swarmSystemPrompt,
                 prompt: input,
-                temperature: 0.7,
+                // Haiku 5.5 rejects sampling parameters and thinks by default;
+                // thinking counts toward maxOutputTokens, so keep effort low.
+                providerOptions: {
+                  anthropic: { effort: 'low' } satisfies AnthropicProviderOptions,
+                },
                 maxOutputTokens: 1200,
                 ...(Object.keys(tools).length > 0 ? { tools, maxSteps: 3 } : {}),
               });
@@ -299,8 +303,12 @@ ${luminor.reason}`;
               .join('\n\n---\n\n');
 
             const synthResult = streamText({
-              model: anthropic('claude-sonnet-4-6'),
-              temperature: 0.6,
+              model: anthropic('claude-sonnet-5-5'),
+              // Sonnet 5.5 rejects sampling parameters; low effort keeps thinking
+              // from consuming the 1500-token output budget.
+              providerOptions: {
+                anthropic: { effort: 'low' } satisfies AnthropicProviderOptions,
+              },
               maxOutputTokens: 1500,
               system: `You are Lumina, meta-orchestrator of the Luminor swarm.
 

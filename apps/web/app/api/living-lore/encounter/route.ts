@@ -73,12 +73,15 @@ export async function POST(req: NextRequest) {
     const anthropicKey = process.env.ANTHROPIC_API_KEY;
 
     let model;
+    let sendTemperature = true;
     if (googleKey) {
       const google = createGoogleGenerativeAI({ apiKey: googleKey });
       model = google('gemini-2.0-flash');
     } else if (anthropicKey) {
       const anthropic = createAnthropic({ apiKey: anthropicKey });
-      model = anthropic('claude-sonnet-4-20250514');
+      model = anthropic('claude-sonnet-5-5');
+      // Claude Sonnet 5.5 rejects sampling parameters with a 400.
+      sendTemperature = false;
     } else {
       return new Response(
         JSON.stringify({ error: 'No AI provider configured' }),
@@ -93,7 +96,7 @@ export async function POST(req: NextRequest) {
         role: m.role as 'user' | 'assistant',
         content: m.content,
       })),
-      temperature: 0.85,
+      ...(sendTemperature ? { temperature: 0.85 } : {}),
       maxOutputTokens: 2048,
     });
 

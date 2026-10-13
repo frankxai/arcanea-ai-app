@@ -21,6 +21,7 @@ import type {
   UsageInfo,
 } from "./types";
 import { PROVIDERS } from "./models";
+import { claudeRejectsSamplingParams } from "./catalog";
 import {
   proxySSEStream,
   adaptAnthropicStream,
@@ -176,8 +177,12 @@ export async function proxyToAnthropic(
   };
 
   if (systemPrompt) anthropicBody.system = systemPrompt;
-  if (body.temperature != null) anthropicBody.temperature = body.temperature;
-  if (body.top_p != null) anthropicBody.top_p = body.top_p;
+  // Claude 5.x (and Opus 4.7/4.8) return a 400 for non-default sampling
+  // parameters, so OpenAI-style temperature/top_p are dropped for them.
+  if (!claudeRejectsSamplingParams(String(body.model))) {
+    if (body.temperature != null) anthropicBody.temperature = body.temperature;
+    if (body.top_p != null) anthropicBody.top_p = body.top_p;
+  }
   if (body.stop)
     anthropicBody.stop_sequences = Array.isArray(body.stop)
       ? body.stop

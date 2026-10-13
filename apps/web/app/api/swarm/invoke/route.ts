@@ -164,7 +164,7 @@ async function runLuminor(
   const parentTeam = hint?.team ?? 'unknown';
 
   // Haiku for swarm members (cheap, fast, they produce partial views)
-  const model = anthropic('claude-haiku-4-5-20251001');
+  const model = anthropic('claude-haiku-5-5');
 
   const swarmPrompt = `${config.systemPrompt}
 
@@ -175,7 +175,7 @@ You are one of multiple Luminors responding to this task. Keep your response foc
     model,
     system: swarmPrompt,
     prompt: input,
-    temperature: 0.7,
+    // No temperature: Claude 5.5 models reject sampling parameters with a 400.
   });
 
   return {
@@ -207,7 +207,7 @@ async function synthesizeContributions(
   }
 
   // Sonnet for synthesis — higher quality merge
-  const model = anthropic('claude-sonnet-4-6');
+  const model = anthropic('claude-sonnet-5-5');
 
   const perspectives = validContributions
     .map((c) => `### ${c.luminorName} (${c.guardian})\n${c.response}`)
@@ -234,7 +234,6 @@ The swarm responded:
 ${perspectives}
 
 Synthesize.`,
-    temperature: 0.6,
   });
 
   return text;
@@ -252,12 +251,11 @@ async function runLuminaFallback(
     return NextResponse.json({ error: 'Lumina not available' }, { status: 503 });
   }
 
-  const model = anthropic('claude-sonnet-4-6');
+  const model = anthropic('claude-sonnet-5-5');
   const result = await generateText({
     model,
     system: lumina.systemPrompt,
     prompt: input,
-    temperature: 0.7,
   });
 
   const contribution: Contribution = {

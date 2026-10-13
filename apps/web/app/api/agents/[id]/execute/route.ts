@@ -26,7 +26,11 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { CATALOG_BY_ID } from '@/lib/agents/marketplace/catalog';
-import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
+import {
+  GATEWAY_MODELS,
+  EXTENDED_PROVIDERS,
+  claudeRejectsSamplingParams,
+} from '@/lib/gateway/catalog';
 import { LUMINORS } from '@/lib/luminors/config';
 
 export const runtime = 'edge';
@@ -47,7 +51,7 @@ const PROVIDERS: Record<string, ProviderConfig> = {
   },
   anthropic: {
     envKeys: ['ANTHROPIC_API_KEY'],
-    defaultModel: 'claude-haiku-4-5-20251001',
+    defaultModel: 'claude-haiku-5-5',
   },
   openai: {
     envKeys: ['OPENAI_API_KEY'],
@@ -475,6 +479,8 @@ export async function POST(
 
   const { model, label } = resolved;
   const temperature = agent.spec?.temperature ?? 0.7;
+  // Claude 5.x rejects sampling parameters with a 400; AI SDK models expose modelId.
+  const sendTemperature = !claudeRejectsSamplingParams(String(model.modelId ?? ''));
 
   // ── 7. Resolve tools for this Luminor ─────────────────────────────────────
   // Dynamic import for edge compatibility — tool-resolver pulls in zod + ai/tool
@@ -501,7 +507,7 @@ export async function POST(
     model,
     system: systemPrompt,
     messages: [{ role: 'user', content: input }],
-    temperature,
+    ...(sendTemperature ? { temperature } : {}),
     maxOutputTokens: 4096,
     ...(luminorTools ? { tools: luminorTools, maxSteps: 5 } : {}),
     onFinish: ({ text }) => {

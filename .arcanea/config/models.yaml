@@ -1,6 +1,6 @@
 # Arcanea Model Routing Configuration
 # Extracted from: lib/gateway/catalog.ts, lib/imagine/generate.ts, api routes
-# Last updated: 2026-03-30
+# Last updated: 2026-10-13
 
 # === INTELLIGENCE GATEWAY ===
 # Arcanea's unified model catalog — curated best-in-class across providers.
@@ -10,22 +10,22 @@ gateway:
   # --- Frontier Reasoning ---
   arcanea-opus:
     provider: anthropic
-    model_id: "claude-opus-4-7"
-    label: "Opus 4.7"
+    model_id: "claude-opus-5-5"
+    label: "Opus 5.5"
     tier: premium
     use: "Complex reasoning, architecture, security, creative writing"
 
   arcanea-sonnet:
     provider: anthropic
-    model_id: "claude-sonnet-4-6"
-    label: "Sonnet 4.6"
+    model_id: "claude-sonnet-5-5"
+    label: "Sonnet 5.5"
     tier: quality
     use: "Balanced reasoning, coding, analysis"
 
   arcanea-haiku:
     provider: anthropic
-    model_id: "claude-haiku-4-5-20251001"
-    label: "Haiku 4.5"
+    model_id: "claude-haiku-5-5"
+    label: "Haiku 5.5"
     tier: fast
     use: "Simple tasks, classification, low-latency"
 
@@ -125,8 +125,8 @@ legacy_defaults:
     label: "Gemini 3 Flash"
     env_keys: ["GOOGLE_GENERATIVE_AI_API_KEY", "GEMINI_API_KEY"]
   anthropic:
-    model: "claude-sonnet-4-6"
-    label: "Claude Sonnet 4.6"
+    model: "claude-sonnet-5-5"
+    label: "Claude Sonnet 5.5"
     env_key: "ANTHROPIC_API_KEY"
   openai:
     model: "gpt-5-mini"
@@ -264,9 +264,9 @@ speech:
 
 # === CLAUDE CODE ROUTING (Development) ===
 claude_code:
-  primary: "claude-opus-4-7"
-  fast: "claude-sonnet-4-6"
-  haiku: "claude-haiku-4-5"
+  primary: "claude-opus-5-5"
+  fast: "claude-sonnet-5-5"
+  haiku: "claude-haiku-5-5"
 
 # === 3-TIER MODEL ROUTING (ADR-026) ===
 routing:
@@ -281,11 +281,11 @@ routing:
     latency: "~500ms"
     cost: "$0.0002"
     use: "Simple tasks, low complexity (<30%)"
-    model: "claude-haiku-4-5-20251001"
+    model: "claude-haiku-5-5"
 
   tier3_opus:
     handler: "Sonnet/Opus"
     latency: "2-5s"
     cost: "$0.003-$0.015"
     use: "Complex reasoning, architecture, security (>30%)"
-    models: ["claude-sonnet-4-6", "claude-opus-4-7"]
+    models: ["claude-sonnet-5-5", "claude-opus-5-5"]
