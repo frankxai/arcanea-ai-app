@@ -77,19 +77,29 @@ Every homepage CTA emits a `home_*` event, so the funnel from viewport to world 
 
 ## Verified gaps, ranked
 
-1. **False claims, live (trust and legal risk):**
-   - "We have no servers to log your inputs": chat runs through the Edge route plus Supabase tables.
+Status as of this branch. **Fixed** means fixed here and verified locally.
+
+1. **Claims the code contradicted (trust and legal risk). Fixed.** Rewritten to match the code:
+   - "We have no servers to log your inputs": chat runs through the Edge route, and chats and memory are saved to the account.
    - "Compiled locally to SQLite": worlds live in Supabase `worlds`.
-   - "Runs entirely on keys stored in your browser": Imagine and world-service use platform keys.
-   - "Built-in Gumroad, Whop and Stripe": none exist for creators.
-2. Key wall on the first action (see The one conversion).
-3. About 20 sections against a target of 9. Everything below the fold is `ssr:false`, so none of the "why" narrative is in the server HTML that search and AI crawlers read.
-4. Text extraction bug in the h1 and "Built in the open".
-5. Hero contrast and tap targets below AA / 44 px.
-6. No CTA events. `lib/analytics/events.ts` targets PostHog, which is never loaded.
-7. Glyphs used as icons: "✓" bullets and two-letter integration monograms. TASTE :44 and :182 conflict on the monograms; that needs resolving.
-8. Logged-out visitors are bounced to sign-in by `/studio/image` lane links (`proxy.ts:54`).
-9. "Read the sovereignty promise" links to `/pricing`.
+   - "Runs entirely on keys stored in your browser": keys do live in browser `localStorage`, but Imagine uses account credits.
+   - "Built-in Gumroad, Whop and Stripe": there is no creator storefront yet.
+   - "10 modules / 16 runtimes": now sourced from `FACTS`.
+   - The voice tile said keys "never" reach our servers.
+2. **Claims still unchecked, open:**
+   - FAQ "How do I publish my work?" (one-click deployment, X threads, webhooks).
+   - FAQ "Gates … unlock developer permissions".
+   - Final CTA "Free to start … immediately", which collides with the key wall.
+   - "Absolute data sovereignty" in "Built in the open".
+   - Comparison row "Text + image + music integrated".
+3. Key wall on the first action (see The one conversion).
+4. About 20 sections against a target of 9. Everything below the fold is `ssr:false`, so none of the "why" narrative is in the server HTML that search and AI crawlers read.
+5. **Fixed:** text extraction in the h1 and "Built in the open". SplitText now emits word spans with real spaces.
+6. **Fixed:** hero contrast and tap targets. Placeholder went from ~2.0:1 to 5.0:1, chips from ~3.2:1 to 7.9:1, and chips, send and Sign In are all 44 px.
+7. **Fixed:** CTA events `home_hero_submit`, `home_hero_chip` and `home_final_cta` now fire via `@vercel/analytics`. None carries prompt text.
+8. Glyphs used as icons. **Fixed:** the "✓" bullets. **Open:** two-letter integration monograms (TASTE :44 and :182 conflict) and `&rarr;` text arrows.
+9. Logged-out visitors are bounced to sign-in by `/studio/image` lane links (`proxy.ts:54`).
+10. **Fixed:** "Read the sovereignty promise" now reads "Read the privacy policy" and goes to `/privacy`.
 
 ## Skill chain (what the router loads, in order)
 
