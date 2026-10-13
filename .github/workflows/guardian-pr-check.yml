@@ -37,7 +37,7 @@ jobs:
       deletions: ${{ steps.diff.outputs.deletions }}
       sacred_touched: ${{ steps.diff.outputs.sacred_touched }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -119,7 +119,7 @@ jobs:
     if: (github.event_name != 'pull_request' || github.event.pull_request.draft == false) && needs.classify.outputs.tier == 'BLOCKED'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - name: Check for override tags
@@ -145,7 +145,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - name: Queue single-Guardian review
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -167,7 +167,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - name: Convene Council with cost cap
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

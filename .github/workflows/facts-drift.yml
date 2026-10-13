@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - name: Check for hardcoded platform numbers
         run: node apps/web/scripts/check-facts-drift.mjs

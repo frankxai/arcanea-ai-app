@@ -48,7 +48,7 @@ jobs:
       NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
       COMPANION_EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
@@ -105,7 +105,7 @@ jobs:
       REVIEW_BASE: ${{ github.event.pull_request.base.sha }}
       REVIEW_PR: ${{ github.event.pull_request.number }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0

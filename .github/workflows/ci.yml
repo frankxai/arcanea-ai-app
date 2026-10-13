@@ -64,7 +64,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
@@ -119,7 +119,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           # The formatter needs the PR base or previous push commit. Fetch
@@ -296,7 +296,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
@@ -336,7 +336,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
@@ -518,7 +518,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@v4
@@ -560,7 +560,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           # Exact-source review hashes require the immutable base revision.
           fetch-depth: 0
@@ -600,7 +600,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -616,7 +616,7 @@ jobs:
           node --input-type=module -e 'for (const key of ["REVIEW_HUB_HEAD", "REVIEW_HUB_BASE"]) { if (!/^[a-f0-9]{40}$/.test(process.env[key] || "")) throw Error("Full pinned handover hashes required"); }'
       - name: Read the exact public release handover for independent review
         if: (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           repository: frankxai/agentic-ops-hub
           ref: ${{ github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_head || '5326dc36c78f324ad7c47573d875c7b9689e8ecb' }}
@@ -662,7 +662,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           # Exact-source review hashes require the immutable base revision.
           fetch-depth: 0
@@ -700,7 +700,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@v4
@@ -734,7 +734,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@v4
@@ -768,7 +768,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@v4
