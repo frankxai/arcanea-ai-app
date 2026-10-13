@@ -66,11 +66,11 @@ import {
 const FAQ_ITEMS = [
   {
     q: "What is a Luminor?",
-    a: "A specialized AI agent runtime built to construct worlds, write code, compose music, and design structures. Arcanea currently ships 13 configured Luminor specialists that coordinate through shared context and creator-owned project memory.",
+    a: `A specialized AI agent runtime built to construct worlds, write code, compose music, and design structures. Arcanea currently ships ${FACTS.luminors} configured Luminor specialists that coordinate through shared context and creator-owned project memory.`,
   },
   {
     q: "What makes the Living Worlds engine different?",
-    a: "Stateless chats forget who you are after a few thousand words. Arcanea compiles your entire universe into a persistent relational graph (backed by local SQLite databases and strict schemas). Characters remember their history, magic laws remain rigid, and lore never drifts. You own the SQLite file; fork it, query it, or deploy it locally.",
+    a: "A chat loses the thread after a few thousand words. Arcanea stores your world as a structured graph of characters, locations, factions, and events in your Arcanea account (Postgres), so history and rules stay attached to the world between sessions. A new world draft downloads as JSON.",
   },
   {
     q: "How do the Luminors work?",
@@ -86,19 +86,19 @@ const FAQ_ITEMS = [
   },
   {
     q: "How does BYOK work?",
-    a: "Bring Your Own Keys. Standard platforms lock you into subscription markups. Arcanea runs entirely on API keys stored locally in your browser. You pay Anthropic, Google, and OpenAI directly at cost. Zero markup. Zero middleman. Complete sovereign control over your compute costs.",
+    a: "Chat runs on your own provider key, and world drafts run on your Gemini key. Keys are saved in your browser, not in your Arcanea account, and travel with each request through Arcanea's servers to the provider. You pay the provider directly; Arcanea adds no markup. Image generation in Imagine uses account credits.",
   },
   {
-    q: "Do you train on my data or log my inputs?",
-    a: "Never. Your keys, your database, your IP. Because all API calls route directly from your local browser context to the model provider, we have no servers to log your inputs or steal your lore. We don't train models on your dreams.",
+    q: "Do you train on my work or store my chats?",
+    a: "Arcanea does not train AI models on your work without your explicit consent. Requests pass through Arcanea's servers to the provider you choose, and that provider's terms apply. When you are signed in, chats and world memory are saved to your account so they persist across sessions. The privacy policy has the details.",
   },
   {
     q: "Can I sell what I create?",
-    a: "Absolutely. You build it, you own it. We claim 0% of your IP or royalties. Publish templates, distribute worlds, or sell premium agent kits directly to the community via built-in Gumroad, Whop, and Stripe integrations.",
+    a: "Yes. You own what you make, and Arcanea takes no share of it. There is no built-in storefront yet: storefronts, memberships, and remix royalties are on the roadmap.",
   },
   {
     q: "What integrations does Arcanea support?",
-    a: "Arcanea hooks directly into your workflow: from local CLI tools, Vercel, and Claude Code to Git, SQLite, and ElevenLabs. Check our /integrations grid to see the exact state (production, beta, roadmap) of every bridge we support.",
+    a: "The integrations page lists every connection with its status: live, beta, or planned. Claude Code, for example, connects today through the Arcanea MCP server.",
   },
   {
     q: "How do I publish my work?",
@@ -219,7 +219,7 @@ function ProductPillarsGrid() {
           {PRODUCT_PILLARS.map((pillar, i) => {
             const Icon = pillar.Icon;
             return (
-              <a key={pillar.title} href={pillar.href} className="block">
+              <Link key={pillar.title} href={pillar.href} className="block">
                 <FeatureCard
                   glowColor={pillar.glowColor}
                   delay={i * 0.08}
@@ -238,7 +238,7 @@ function ProductPillarsGrid() {
                     {pillar.description}
                   </p>
                 </FeatureCard>
-              </a>
+              </Link>
             );
           })}
         </div>
@@ -706,9 +706,9 @@ function GuardianCouncilSection() {
             </p>
             <div className="mt-8 grid grid-cols-3 gap-3">
               {[
-                { value: "10", label: "modules" },
-                { value: "10", label: "guardians" },
-                { value: "16", label: "runtimes" },
+                { value: FACTS.luminors, label: "Luminors" },
+                { value: FACTS.guardians, label: "Guardians" },
+                { value: FACTS.gates, label: "Gates" },
               ].map((stat) => (
                 <div
                   key={stat.label}
@@ -1010,16 +1010,16 @@ function SovereigntySection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="Sovereign Posture"
-          title="Absolute creator sovereignty"
+          title="What you keep"
           subtitle={
             <>
-              Keep your keys. Keep your IP. Run your graphs locally via SQLite.
-              Arcanea is built on local-first localStorage keys and MIT-licensed
-              clients.{" "}
+              Provider keys stay in your browser and travel with each request.
+              Worlds live in your Arcanea account, and chats export as Markdown
+              or JSON.{" "}
               <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
-                Zero vendor lock-in
+                You own what you make
               </span>
-              . Zero training on your creations.
+              , and Arcanea does not train models on it without your consent.
             </>
           }
           accent="gold"
@@ -1029,10 +1029,10 @@ function SovereigntySection() {
           <div className="mt-12 text-center">
             <Magnetic>
               <Link
-                href="/pricing"
+                href="/privacy"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-atlantean-teal)]/25 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:from-[var(--arc-brand-atlantean-teal)]/25 hover:to-[var(--arc-brand-arcanean-gold)]/15 transition-colors"
               >
-                Read the sovereignty promise
+                Read the privacy policy
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>
@@ -1205,7 +1205,7 @@ function VoicePresenceSection() {
               },
               {
                 label: "BYOK presence room",
-                body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.",
+                body: "Groq Whisper STT · ElevenLabs TTS · keys saved in your browser and sent with each request.",
                 color: brand.atlanteanTeal,
                 Icon: Microphone,
               },
@@ -1596,7 +1596,7 @@ export function V3BelowFold({
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 2b. Luminor team preview — 13 specialists made visible */}
+        {/* 2b. Luminor team preview — the specialists made visible */}
         <LuminorTeamSection />
 
         <AtmosphericDivider variant="purple" />

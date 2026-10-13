@@ -235,7 +235,7 @@ function HeroPortal() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <span className="block">Build living worlds</span>
+              <span className="block">Build living worlds</span>{" "}
               <span className="block">with AI agents.</span>
             </m.h1>
 

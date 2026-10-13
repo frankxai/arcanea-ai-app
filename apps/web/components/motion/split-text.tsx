@@ -8,7 +8,7 @@ import {
   useReducedMotion,
   type Easing,
 } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { EASE } from "@/lib/motion";
 
 interface Props {
@@ -31,7 +31,6 @@ export function SplitText({
   stagger = 0.03,
   as = "span",
 }: Props) {
-  const chars = text.split("");
   const Tag: "h1" | "h2" | "h3" | "p" | "span" = as;
 
   // Gate reduced-motion behind mount to avoid hydration mismatch
@@ -50,34 +49,52 @@ export function SplitText({
     );
   }
 
+  // framer-motion v12 has strict HTMLMotionProps inference — cast span
+  // to the element itself to bypass the Omit<..., "ref"> check.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const MSpan = m.span as any;
+
+  // Words are separate inline-block spans joined by real text-node spaces, so
+  // copy, crawlers and text extraction read "Built in the open." rather than
+  // "Builtintheopen.", and a line can only wrap between words. Each character
+  // keeps its index in the full string, so the stagger timing is unchanged.
+  let offset = 0;
+  const words = text.split(" ").map((word) => {
+    const start = offset;
+    offset += word.length + 1;
+    return { word, start };
+  });
+
   return (
     <LazyMotion features={domAnimation}>
       <Tag className={className} aria-label={text}>
-        {chars.map((char, i) => {
-          // framer-motion v12 has strict HTMLMotionProps inference — cast span
-          // to the element itself to bypass the Omit<..., "ref"> check.
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const MSpan = m.span as any;
-          return (
-            <MSpan
-              key={i}
-              aria-hidden="true"
-              initial={{ opacity: 1, y: "0.3em", filter: "blur(0px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{
-                duration: 0.4,
-                ease: EASE.smooth as Easing,
-                delay: delay + i * stagger,
-              }}
-              style={{
-                display: "inline-block",
-                whiteSpace: char === " " ? "pre" : "normal",
-              }}
-            >
-              {char}
-            </MSpan>
-          );
-        })}
+        {words.map(({ word, start }, w) => (
+          <Fragment key={start}>
+            {w > 0 ? " " : null}
+            {word ? (
+              <span
+                aria-hidden="true"
+                style={{ display: "inline-block", whiteSpace: "nowrap" }}
+              >
+                {word.split("").map((char, i) => (
+                  <MSpan
+                    key={i}
+                    initial={{ opacity: 1, y: "0.3em", filter: "blur(0px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.4,
+                      ease: EASE.smooth as Easing,
+                      delay: delay + (start + i) * stagger,
+                    }}
+                    style={{ display: "inline-block" }}
+                  >
+                    {char}
+                  </MSpan>
+                ))}
+              </span>
+            ) : null}
+          </Fragment>
+        ))}
       </Tag>
     </LazyMotion>
   );

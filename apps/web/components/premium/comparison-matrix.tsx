@@ -48,18 +48,20 @@ const FEATURES: Feature[] = [
     character: false,
   },
   {
-    label: "BYOK — your keys, no markup",
+    label: "Bring your own key for chat",
     arcanea: true,
     chatgpt: false,
     claude: false,
     character: false,
+    note: "No markup on your provider key. Image generation uses account credits.",
   },
   {
-    label: "Export everything as markdown/JSON",
+    label: "Export chats as Markdown or JSON",
     arcanea: true,
     chatgpt: "partial",
     claude: "partial",
     character: false,
+    note: "World drafts download as JSON",
   },
   {
     label: "Open source (MIT) + forkable",
@@ -76,7 +78,8 @@ const FEATURES: Feature[] = [
     character: true,
   },
   {
-    label: "No data used for training",
+    label: "Platform does not train on your work",
+    note: "Not without your explicit consent. Requests sent with your key follow that provider's terms.",
     arcanea: true,
     chatgpt: "partial",
     claude: "partial",

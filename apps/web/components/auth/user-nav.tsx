@@ -45,7 +45,7 @@ export function UserNav() {
         <div className="flex items-center gap-2">
           <button
             onClick={openLogin}
-            className="text-sm text-text-secondary hover:text-white transition-colors px-3 py-2"
+            className="inline-flex min-h-[44px] items-center text-sm text-text-secondary hover:text-white transition-colors px-3 py-2"
           >
             Sign In
           </button>
