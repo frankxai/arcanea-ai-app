@@ -184,7 +184,16 @@ image:
     endpoint: "https://api.x.ai/v1/images/generations"
     env_key: "XAI_API_KEY"
     max_count: 10
-    supported_sizes: ["1024x1024", "1792x1024", "1024x1792", "1024x768", "768x1024", "1536x1024", "1024x1536"]
+    supported_sizes:
+      [
+        "1024x1024",
+        "1792x1024",
+        "1024x1792",
+        "1024x768",
+        "768x1024",
+        "1536x1024",
+        "1024x1536",
+      ]
 
   openrouter:
     default_model: "google/gemini-3.1-flash-image-preview"

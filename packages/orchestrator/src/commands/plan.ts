@@ -1,8 +1,8 @@
-import { execa } from 'execa';
-import { writeFileSync } from 'node:fs';
-import { loadSpec } from '@arcanea/router-spec';
-import { loadConfig } from '../config.js';
-import kleur from 'kleur';
+import { execa } from "execa";
+import { writeFileSync } from "node:fs";
+import { loadSpec } from "@arcanea/router-spec";
+import { loadConfig } from "../config.js";
+import kleur from "kleur";
 
 interface Options {
   surface?: string;
@@ -32,7 +32,7 @@ GOAL:
 ${goal}
 
 AVAILABLE TASK CLASSES (pick from these, one per sub-task):
-${taskClasses.map((t) => `- ${t}`).join('\n')}
+${taskClasses.map((t) => `- ${t}`).join("\n")}
 
 OUTPUT REQUIREMENTS:
 - Return VALID JSON only. No prose, no markdown fences.
@@ -48,8 +48,8 @@ function stripJson(raw: string): string {
   const fenceMatch = raw.match(/```(?:json)?\s*\n([\s\S]*?)\n```/);
   if (fenceMatch) return fenceMatch[1];
   // Or include preamble — grab from first { to last }.
-  const start = raw.indexOf('{');
-  const end = raw.lastIndexOf('}');
+  const start = raw.indexOf("{");
+  const end = raw.lastIndexOf("}");
   if (start >= 0 && end > start) return raw.slice(start, end + 1);
   return raw;
 }
@@ -58,9 +58,13 @@ export async function planCommand(
   goalParts: string[],
   opts: Options,
 ): Promise<void> {
-  const goal = goalParts.join(' ').trim();
+  const goal = goalParts.join(" ").trim();
   if (!goal) {
-    console.error(kleur.red('Provide a goal, e.g. `arcanea-orchestrator plan "build a landing page"`'));
+    console.error(
+      kleur.red(
+        'Provide a goal, e.g. `arcanea-orchestrator plan "build a landing page"`',
+      ),
+    );
     process.exit(1);
   }
 
@@ -78,28 +82,31 @@ export async function planCommand(
       tasks: [
         {
           id: 1,
-          task: 'plan',
+          task: "plan",
           prompt:
-            '(claude CLI not available or --dry-run) — this is a template. Fill in concrete prompts manually.',
-          why: 'Planner requires claude -p; install claude CLI or run without --dry-run.',
+            "(claude CLI not available or --dry-run) — this is a template. Fill in concrete prompts manually.",
+          why: "Planner requires claude -p; install claude CLI or run without --dry-run.",
         },
       ],
     };
     console.log(JSON.stringify(template, null, 2));
-    if (opts.out) writeFileSync(opts.out, JSON.stringify(template, null, 2), 'utf8');
+    if (opts.out)
+      writeFileSync(opts.out, JSON.stringify(template, null, 2), "utf8");
     return;
   }
 
   console.error(kleur.dim(`  [arcanea] planning via claude -p (haiku-5-5) …`));
 
   const res = await execa(
-    'claude',
-    ['-p', prompt, '--model', 'claude-haiku-5-5'],
-    { reject: false, timeout: 90_000, stdin: 'ignore' },
+    "claude",
+    ["-p", prompt, "--model", "claude-haiku-5-5"],
+    { reject: false, timeout: 90_000, stdin: "ignore" },
   );
 
   if (res.exitCode !== 0) {
-    console.error(kleur.red(`  [arcanea] planner failed (exit ${res.exitCode}). stderr:`));
+    console.error(
+      kleur.red(`  [arcanea] planner failed (exit ${res.exitCode}). stderr:`),
+    );
     console.error(res.stderr.slice(0, 500));
     process.exit(res.exitCode ?? 1);
   }
@@ -110,7 +117,7 @@ export async function planCommand(
     plan = JSON.parse(jsonText);
   } catch (err) {
     console.error(kleur.red(`  [arcanea] planner returned invalid JSON.`));
-    console.error(kleur.dim('  Raw output:'));
+    console.error(kleur.dim("  Raw output:"));
     console.error(res.stdout.slice(0, 800));
     process.exit(1);
   }
@@ -130,13 +137,23 @@ export async function planCommand(
   console.log(JSON.stringify(plan, null, 2));
 
   if (opts.out) {
-    writeFileSync(opts.out, JSON.stringify(plan, null, 2), 'utf8');
+    writeFileSync(opts.out, JSON.stringify(plan, null, 2), "utf8");
     console.error(kleur.dim(`  [arcanea] wrote plan to ${opts.out}`));
   }
 
   if (opts.execute) {
-    console.error(kleur.dim('\n  [arcanea] --execute not yet wired. Save plan and pipe to swarm:'));
-    console.error(kleur.dim(`  arcanea-orchestrator plan "${goal}" --out plan.json`));
-    console.error(kleur.dim(`  # then manually: for each task in plan.json, arcanea-orchestrator run ...`));
+    console.error(
+      kleur.dim(
+        "\n  [arcanea] --execute not yet wired. Save plan and pipe to swarm:",
+      ),
+    );
+    console.error(
+      kleur.dim(`  arcanea-orchestrator plan "${goal}" --out plan.json`),
+    );
+    console.error(
+      kleur.dim(
+        `  # then manually: for each task in plan.json, arcanea-orchestrator run ...`,
+      ),
+    );
   }
 }

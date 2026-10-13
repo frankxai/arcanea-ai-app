@@ -20,14 +20,14 @@
  *   }
  */
 
-import { NextResponse } from 'next/server';
-import { generateText } from 'ai';
-import { createAnthropic } from '@ai-sdk/anthropic';
-import { LUMINORS } from '@/lib/luminors/config';
-import { BENCHMARKS } from '@/lib/eval/benchmarks';
+import { NextResponse } from "next/server";
+import { generateText } from "ai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { LUMINORS } from "@/lib/luminors/config";
+import { BENCHMARKS } from "@/lib/eval/benchmarks";
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 interface ArenaRequest {
@@ -53,14 +53,14 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   const luminor = LUMINORS[body.luminorId];
   if (!luminor) {
     return NextResponse.json(
       { error: `Luminor "${body.luminorId}" not found` },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
@@ -68,23 +68,23 @@ export async function POST(request: Request) {
   if (!benchmark) {
     return NextResponse.json(
       { error: `Benchmark "${body.benchmarkId}" not found` },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'ANTHROPIC_API_KEY not configured' },
-      { status: 503 }
+      { error: "ANTHROPIC_API_KEY not configured" },
+      { status: 503 },
     );
   }
   const anthropic = createAnthropic({ apiKey });
 
   // Sonnet for the Luminor under test (representative quality)
-  const testModel = anthropic('claude-sonnet-5-5');
+  const testModel = anthropic("claude-sonnet-5-5");
   // Opus for the judge (highest quality evaluation)
-  const judgeModel = anthropic('claude-opus-5-5');
+  const judgeModel = anthropic("claude-opus-5-5");
 
   // Run all tasks in parallel for speed
   const taskResults = await Promise.all(
@@ -122,11 +122,14 @@ ${response.text}
 
       // Parse judge output
       let score = 0;
-      let judgeNotes = 'Judge failed to return valid JSON';
+      let judgeNotes = "Judge failed to return valid JSON";
       try {
         const match = judgment.text.match(/\{[\s\S]*?\}/);
         if (match) {
-          const parsed = JSON.parse(match[0]) as { score: number; notes: string };
+          const parsed = JSON.parse(match[0]) as {
+            score: number;
+            notes: string;
+          };
           score = Math.min(100, Math.max(0, parsed.score));
           judgeNotes = parsed.notes;
         }
@@ -144,16 +147,16 @@ ${response.text}
         tokensIn: response.usage?.inputTokens ?? 0,
         tokensOut: response.usage?.outputTokens ?? 0,
       } satisfies TaskResult;
-    })
+    }),
   );
 
   const overallScore = Math.round(
-    taskResults.reduce((sum, r) => sum + r.score, 0) / taskResults.length
+    taskResults.reduce((sum, r) => sum + r.score, 0) / taskResults.length,
   );
 
   const tokensUsed = taskResults.reduce(
     (sum, r) => sum + r.tokensIn + r.tokensOut,
-    0
+    0,
   );
 
   return NextResponse.json({

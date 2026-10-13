@@ -12,18 +12,21 @@
  * Keep plans tight — this gate controls latency for every swarm request.
  */
 
-import { generateObject } from 'ai';
-import { createAnthropic, type AnthropicProviderOptions } from '@ai-sdk/anthropic';
-import { z } from 'zod';
-import { LUMINORS } from '@/lib/luminors/config';
-import { classifyIntent } from './router';
-import { resolveSwarm, LUMINOR_HINTS } from './guardian-swarm';
+import { generateObject } from "ai";
+import {
+  createAnthropic,
+  type AnthropicProviderOptions,
+} from "@ai-sdk/anthropic";
+import { z } from "zod";
+import { LUMINORS } from "@/lib/luminors/config";
+import { classifyIntent } from "./router";
+import { resolveSwarm, LUMINOR_HINTS } from "./guardian-swarm";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-export type PlanMode = 'solo' | 'swarm';
+export type PlanMode = "solo" | "swarm";
 
 export interface PlannedLuminor {
   id: string;
@@ -36,7 +39,7 @@ export interface SwarmPlan {
   luminors: PlannedLuminor[];
   rationale: string;
   /** Which path produced the plan. */
-  source: 'llm' | 'heuristic' | 'fallback';
+  source: "llm" | "heuristic" | "fallback";
   /** Duration the planner spent. */
   planMs: number;
 }
@@ -45,7 +48,7 @@ export interface PlannerContext {
   /** The user message driving the plan. */
   input: string;
   /** Recent turns for continuity (last 3 is plenty). */
-  history?: Array<{ role: 'user' | 'assistant'; content: string }>;
+  history?: Array<{ role: "user" | "assistant"; content: string }>;
   /** Cap the swarm size. Sensible default of 4. */
   maxLuminors?: number;
   /** Skip the LLM planner and use heuristics only. */
@@ -57,12 +60,12 @@ export interface PlannerContext {
 // ---------------------------------------------------------------------------
 
 const LUMINOR_CATALOG = Object.values(LUMINORS)
-  .filter((l) => l.id !== 'lumina') // Lumina orchestrates, doesn't answer
+  .filter((l) => l.id !== "lumina") // Lumina orchestrates, doesn't answer
   .map((l) => `${l.id}: ${l.specialty}`)
-  .join('\n');
+  .join("\n");
 
 const plannerSchema = z.object({
-  mode: z.enum(['solo', 'swarm']),
+  mode: z.enum(["solo", "swarm"]),
   luminors: z
     .array(
       z.object({
@@ -84,23 +87,25 @@ export async function planSwarm(ctx: PlannerContext): Promise<SwarmPlan> {
 
   // Heuristic-only mode OR no API key → use keyword rules
   if (ctx.heuristicOnly || !process.env.ANTHROPIC_API_KEY) {
-    return heuristicPlan(ctx.input, maxLuminors, started, 'heuristic');
+    return heuristicPlan(ctx.input, maxLuminors, started, "heuristic");
   }
 
   try {
-    const anthropic = createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const anthropic = createAnthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
     const historyText = (ctx.history ?? [])
       .slice(-3)
       .map((m) => `${m.role}: ${m.content.slice(0, 240)}`)
-      .join('\n');
+      .join("\n");
 
     const { object } = await generateObject({
-      model: anthropic('claude-haiku-5-5'),
+      model: anthropic("claude-haiku-5-5"),
       schema: plannerSchema,
       // Haiku 5.5 rejects sampling parameters and thinks by default; thinking
       // counts toward maxOutputTokens, so effort is low and the cap has headroom.
       providerOptions: {
-        anthropic: { effort: 'low' } satisfies AnthropicProviderOptions,
+        anthropic: { effort: "low" } satisfies AnthropicProviderOptions,
       },
       maxOutputTokens: 1024,
       system: `You are the swarm planner for Arcanea.
@@ -116,7 +121,7 @@ Rules:
 Luminors available:
 ${LUMINOR_CATALOG}`,
       prompt: `Recent conversation:
-${historyText || '(new conversation)'}
+${historyText || "(new conversation)"}
 
 Creator's request:
 "${ctx.input}"
@@ -126,14 +131,14 @@ Plan the response.`,
 
     // Validate the picks — filter to known Luminor ids
     const validLuminors = object.luminors
-      .filter((l) => LUMINORS[l.id] && l.id !== 'lumina')
+      .filter((l) => LUMINORS[l.id] && l.id !== "lumina")
       .slice(0, maxLuminors);
 
     if (validLuminors.length === 0) {
-      return heuristicPlan(ctx.input, maxLuminors, started, 'fallback');
+      return heuristicPlan(ctx.input, maxLuminors, started, "fallback");
     }
 
-    const mode: PlanMode = validLuminors.length === 1 ? 'solo' : 'swarm';
+    const mode: PlanMode = validLuminors.length === 1 ? "solo" : "swarm";
 
     return {
       mode,
@@ -143,13 +148,16 @@ Plan the response.`,
         reason: l.reason,
       })),
       rationale: object.rationale,
-      source: 'llm',
+      source: "llm",
       planMs: Date.now() - started,
     };
   } catch (err) {
     // LLM planner failed — degrade to heuristics gracefully
-    console.warn('[planner] LLM planner failed, falling back:', (err as Error).message);
-    return heuristicPlan(ctx.input, maxLuminors, started, 'fallback');
+    console.warn(
+      "[planner] LLM planner failed, falling back:",
+      (err as Error).message,
+    );
+    return heuristicPlan(ctx.input, maxLuminors, started, "fallback");
   }
 }
 
@@ -161,7 +169,7 @@ function heuristicPlan(
   input: string,
   maxLuminors: number,
   started: number,
-  source: 'heuristic' | 'fallback',
+  source: "heuristic" | "fallback",
 ): SwarmPlan {
   const intent = classifyIntent(input);
   const swarm = resolveSwarm(intent.weights, Object.keys(intent.weights));
@@ -172,33 +180,38 @@ function heuristicPlan(
   if (picks.length === 0) {
     // Very ambiguous input → default to Lumina (single authoritative voice)
     return {
-      mode: 'solo',
+      mode: "solo",
       luminors: [
         {
-          id: 'lumina',
-          name: LUMINORS.lumina?.name ?? 'Lumina',
-          reason: 'Broad or ambiguous request; Lumina orchestrates a coherent response.',
+          id: "lumina",
+          name: LUMINORS.lumina?.name ?? "Lumina",
+          reason:
+            "Broad or ambiguous request; Lumina orchestrates a coherent response.",
         },
       ],
-      rationale: 'Request spans many domains — Lumina will synthesize the response.',
+      rationale:
+        "Request spans many domains — Lumina will synthesize the response.",
       source,
       planMs: Date.now() - started,
     };
   }
 
-  const mode: PlanMode = picks.length === 1 ? 'solo' : 'swarm';
+  const mode: PlanMode = picks.length === 1 ? "solo" : "swarm";
 
   return {
     mode,
     luminors: picks.map((p) => ({
       id: p.id,
       name: LUMINORS[p.id]?.name ?? p.id,
-      reason: LUMINOR_HINTS[p.id]?.hint ?? p.hint ?? 'Domain fit from intent classifier',
+      reason:
+        LUMINOR_HINTS[p.id]?.hint ??
+        p.hint ??
+        "Domain fit from intent classifier",
     })),
     rationale:
-      mode === 'solo'
+      mode === "solo"
         ? `Routing to ${LUMINORS[picks[0].id]?.name ?? picks[0].id} — single-domain fit.`
-        : `Swarming ${picks.map((p) => LUMINORS[p.id]?.name ?? p.id).join(' + ')} — request spans domains.`,
+        : `Swarming ${picks.map((p) => LUMINORS[p.id]?.name ?? p.id).join(" + ")} — request spans domains.`,
     source,
     planMs: Date.now() - started,
   };
