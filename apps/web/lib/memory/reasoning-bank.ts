@@ -21,12 +21,13 @@
 // Edge-compatible: uses dynamic imports internally so this module can be
 // imported from both node and edge runtimes without pulling in supabase at
 // module-load time.
-import type { SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { AnthropicProviderOptions } from "@ai-sdk/anthropic";
 
 export interface MemoryItem {
   id: string;
   content: string;
-  source: 'win' | 'failure' | 'neutral';
+  source: "win" | "failure" | "neutral";
   relevance_score: number;
   similarity: number;
 }
@@ -57,16 +58,17 @@ export async function retrieveMemoryItems(params: {
     const supabase = await getAdminClient();
     if (!supabase) return [];
 
-    const { embedAgent, toPgVector } = await import('@/lib/embeddings/generate');
+    const { embedAgent, toPgVector } =
+      await import("@/lib/embeddings/generate");
 
     // Generate query embedding
     const queryEmbedding = await embedAgent({
-      id: 'query',
-      name: 'query',
+      id: "query",
+      name: "query",
       description: params.queryText,
     });
 
-    const { data, error } = await supabase.rpc('match_memory_items', {
+    const { data, error } = await supabase.rpc("match_memory_items", {
       p_luminor_id: params.luminorId,
       p_user_id: params.userId ?? null,
       query_embedding: toPgVector(queryEmbedding),
@@ -77,7 +79,7 @@ export async function retrieveMemoryItems(params: {
     if (error || !data) return [];
     return data as MemoryItem[];
   } catch (err) {
-    console.error('[reasoning-bank] retrieve failed:', err);
+    console.error("[reasoning-bank] retrieve failed:", err);
     return [];
   }
 }
@@ -93,14 +95,15 @@ export async function retrieveMemoryItems(params: {
  * remembered) or a FAILURE (something that went wrong and should be avoided).
  */
 export async function distillPrinciple(
-  input: DistillInput
-): Promise<{ content: string; source: 'win' | 'failure' | 'neutral' } | null> {
+  input: DistillInput,
+): Promise<{ content: string; source: "win" | "failure" | "neutral" } | null> {
   try {
-    const { generateText } = await import('ai');
-    const { anthropic } = await import('@ai-sdk/anthropic');
-    const judgeModel = anthropic('claude-haiku-4-5-20251001'); // cheap, fast judge
+    const { generateText } = await import("ai");
+    const { anthropic } = await import("@ai-sdk/anthropic");
+    const { isRefusal } = await import("@/lib/ai/claude-safeguards");
+    const judgeModel = anthropic("claude-haiku-5-5"); // cheap, fast judge
 
-    const { text } = await generateText({
+    const { text, finishReason } = await generateText({
       model: judgeModel,
       system: `You are a memory distillation agent for a Luminor's ReasoningBank.
 
@@ -126,8 +129,16 @@ Agent response:
 ${input.agentOutput.slice(0, 2000)}
 
 Distill the principle:`,
-      temperature: 0.3,
+      // Haiku 5.5 rejects sampling parameters and thinks by default; thinking
+      // counts toward maxOutputTokens, so effort is low and the cap has headroom.
+      providerOptions: {
+        anthropic: { effort: "low" } satisfies AnthropicProviderOptions,
+      },
+      maxOutputTokens: 1024,
     });
+
+    // A declined exchange has nothing to distill (Haiku has no server fallback).
+    if (isRefusal(finishReason)) return null;
 
     // Parse the judge output
     const match = text.match(/\{[\s\S]*?\}/);
@@ -138,19 +149,19 @@ Distill the principle:`,
       principle: string;
     };
 
-    if (parsed.classification === 'skip') return null;
+    if (parsed.classification === "skip") return null;
     if (!parsed.principle || parsed.principle.length < 10) return null;
 
-    const source: 'win' | 'failure' | 'neutral' =
-      parsed.classification === 'win'
-        ? 'win'
-        : parsed.classification === 'failure'
-          ? 'failure'
-          : 'neutral';
+    const source: "win" | "failure" | "neutral" =
+      parsed.classification === "win"
+        ? "win"
+        : parsed.classification === "failure"
+          ? "failure"
+          : "neutral";
 
     return { content: parsed.principle.trim(), source };
   } catch (err) {
-    console.error('[reasoning-bank] distill failed:', err);
+    console.error("[reasoning-bank] distill failed:", err);
     return null;
   }
 }
@@ -165,42 +176,43 @@ export async function consolidateMemoryItem(params: {
   luminorId: string;
   userId?: string | null;
   content: string;
-  source: 'win' | 'failure' | 'neutral';
+  source: "win" | "failure" | "neutral";
 }): Promise<string | null> {
   try {
     const supabase = await getAdminClient();
     if (!supabase) return null;
 
-    const { embedAgent, toPgVector } = await import('@/lib/embeddings/generate');
+    const { embedAgent, toPgVector } =
+      await import("@/lib/embeddings/generate");
 
     // Generate embedding for the distilled principle
     const embedding = await embedAgent({
       id: `memory-${Date.now()}`,
-      name: 'memory-item',
+      name: "memory-item",
       description: params.content,
     });
 
     const { data, error } = await supabase
-      .from('luminor_memory_items')
-       
+      .from("luminor_memory_items")
+
       .insert({
         luminor_id: params.luminorId,
         user_id: params.userId ?? null,
         content: params.content,
         source: params.source,
         embedding: toPgVector(embedding),
-        relevance_score: params.source === 'win' ? 0.7 : 0.8, // failures get slightly higher base
+        relevance_score: params.source === "win" ? 0.7 : 0.8, // failures get slightly higher base
       } as any)
-      .select('id')
+      .select("id")
       .single();
 
     if (error || !data) {
-      console.error('[reasoning-bank] consolidate failed:', error?.message);
+      console.error("[reasoning-bank] consolidate failed:", error?.message);
       return null;
     }
     return (data as { id: string }).id;
   } catch (err) {
-    console.error('[reasoning-bank] consolidate error:', err);
+    console.error("[reasoning-bank] consolidate error:", err);
     return null;
   }
 }
@@ -223,7 +235,7 @@ export async function learnFromExchange(input: DistillInput): Promise<void> {
       source: principle.source,
     });
   } catch (err) {
-    console.error('[reasoning-bank] learn loop failed:', err);
+    console.error("[reasoning-bank] learn loop failed:", err);
   }
 }
 
@@ -235,22 +247,22 @@ export async function learnFromExchange(input: DistillInput): Promise<void> {
  */
 export async function loadMemoryBlock(
   luminorId: string,
-  userId: string
+  userId: string,
 ): Promise<string> {
   try {
     const supabase = await getAdminClient();
-    if (!supabase) return '';
+    if (!supabase) return "";
 
     const { data } = await supabase
-      .from('luminor_memory_blocks')
-      .select('content')
-      .eq('luminor_id', luminorId)
-      .eq('user_id', userId)
+      .from("luminor_memory_blocks")
+      .select("content")
+      .eq("luminor_id", luminorId)
+      .eq("user_id", userId)
       .maybeSingle();
 
-    return (data as { content?: string } | null)?.content ?? '';
+    return (data as { content?: string } | null)?.content ?? "";
   } catch {
-    return '';
+    return "";
   }
 }
 
@@ -264,7 +276,7 @@ async function getAdminClient(): Promise<SupabaseClient | null> {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceKey) return null;
 
-  const { createClient } = await import('@supabase/supabase-js');
+  const { createClient } = await import("@supabase/supabase-js");
   cachedAdmin = createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
@@ -276,14 +288,15 @@ async function getAdminClient(): Promise<SupabaseClient | null> {
  * Used by the executor to inject relevant memory into the Luminor's context.
  */
 export function formatMemoryItemsForPrompt(items: MemoryItem[]): string {
-  if (items.length === 0) return '';
+  if (items.length === 0) return "";
 
   const lines = items.map((item) => {
-    const marker = item.source === 'win' ? '✓' : item.source === 'failure' ? '✗' : '·';
+    const marker =
+      item.source === "win" ? "✓" : item.source === "failure" ? "✗" : "·";
     return `${marker} ${item.content}`;
   });
 
   return `\n## Relevant Learned Principles
-${lines.join('\n')}
+${lines.join("\n")}
 `;
 }
