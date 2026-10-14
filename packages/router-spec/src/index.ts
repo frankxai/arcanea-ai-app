@@ -86,7 +86,9 @@ export function isModelEligible(
     task &&
     surface &&
     !model.deprecated &&
-    surface.authContext.includes(model.tier) &&
+    (surface.authContext.length === 0 ||
+      surface.authContext.every((context) => context === "display-only") ||
+      surface.authContext.includes(model.tier)) &&
     model.context >= (task.contextMin ?? 0),
   );
 }

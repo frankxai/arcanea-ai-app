@@ -44,8 +44,7 @@ program
   .description("Show which model+runtime will run a task for a given surface.")
   .option(
     "-s, --surface <surface>",
-    "Surface to resolve against",
-    "claude-arcanea",
+    "Surface to resolve against (saved default, otherwise claude-arcanea)",
   )
   .action(explainCommand);
 
@@ -78,6 +77,10 @@ program
   .description("Run the Author Council deliberation over a chapter.")
   .argument("<bookDir>", "Directory of the book")
   .argument("<chapterPath>", "Relative path to the chapter markdown file")
+  .option(
+    "--mcp-entry <path>",
+    "Trusted already-installed Author Council MCP JavaScript entry",
+  )
   .action(authorCouncilCommand);
 
 program
@@ -136,7 +139,10 @@ program
   .description(
     "Show baseline vs adaptive routing for a task, using ~/.arcanea/history.jsonl.",
   )
-  .option("-s, --surface <surface>", "Surface to analyze", "claude-arcanea")
+  .option(
+    "-s, --surface <surface>",
+    "Surface to analyze (saved default, otherwise claude-arcanea)",
+  )
   .action(learnCommand);
 
 const workflow = program

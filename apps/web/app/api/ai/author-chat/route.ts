@@ -416,10 +416,10 @@ export async function POST(req: NextRequest) {
     const anthropic = createAnthropic({ apiKey: effectiveApiKey });
     const modelId =
       requestedModel === "opus"
-        ? "claude-opus-4-6"
+        ? "claude-opus-5-5"
         : requestedModel === "sonnet"
-          ? "claude-sonnet-4-6"
-          : "claude-haiku-4-5-20251001";
+          ? "claude-sonnet-5-5"
+          : "claude-haiku-5-5";
     // --- Tools ---
     const tools = {
       score_draft: tool({
@@ -459,7 +459,7 @@ export async function POST(req: NextRequest) {
       model: anthropic(modelId),
       system: AUTHOR_SYSTEM_PROMPT + bookContext,
       messages: normalizedMessages,
-      temperature: 0.7,
+      // No temperature: Claude 5.5 models reject sampling parameters with a 400.
       maxOutputTokens: 8192,
       tools,
       maxRetries: 0,

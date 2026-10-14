@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
+import type { createCredentialScope } from "@/lib/ai/provider-preferences";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -290,6 +292,24 @@ function PersonaCard({
 // ─── Main Page ──────────────────────────────────────────────────────────────
 
 export default function VoicePage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  return (
+    <VoicePageSession
+      key={token.revision}
+      credentialScope={credentialScope}
+      credentialToken={token}
+    />
+  );
+}
+
+function VoicePageSession({
+  credentialScope,
+  credentialToken,
+}: {
+  credentialScope: ReturnType<typeof createCredentialScope>;
+  credentialToken: ReturnType<ReturnType<typeof createCredentialScope>["get"]>;
+}) {
   const [activePersona, setActivePersona] = useState<string>("lumina");
   const [isListening, setIsListening] = useState(false);
   const [demoText, setDemoText] = useState("");
@@ -301,6 +321,7 @@ export default function VoicePage() {
   const demoUrlRef = useRef<string | null>(null);
 
   const handlePlayDemo = useCallback(async (personaId: string) => {
+    if (!credentialScope.isCurrent(credentialToken)) return;
     if (demoAbortRef.current) {
       demoAbortRef.current?.abort();
       demoAbortRef.current = null;
@@ -337,7 +358,7 @@ export default function VoicePage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...voiceCredentialHeaders(),
+          ...voiceCredentialHeaders(credentialToken.actor),
         },
         signal: controller.signal,
         body: JSON.stringify({
@@ -347,7 +368,11 @@ export default function VoicePage() {
       });
       if (!res.ok) throw new Error(await voiceResponseMessage(res));
       const blob = await res.blob();
-      if (controller.signal.aborted) return;
+      if (
+        controller.signal.aborted ||
+        !credentialScope.isCurrent(credentialToken)
+      )
+        return;
       const url = URL.createObjectURL(blob);
       demoUrlRef.current = url;
       const audio = new Audio(url);
@@ -355,7 +380,11 @@ export default function VoicePage() {
       audioRef.current = audio;
       setAudioEl(audio);
       audio.onended = () => {
-        if (controller.signal.aborted) return;
+        if (
+          controller.signal.aborted ||
+          !credentialScope.isCurrent(credentialToken)
+        )
+          return;
         demoAbortRef.current = null;
         setIsPlaying(false);
         audioRef.current = null;
@@ -364,7 +393,11 @@ export default function VoicePage() {
         demoUrlRef.current = null;
       };
       audio.onerror = () => {
-        if (controller.signal.aborted) return;
+        if (
+          controller.signal.aborted ||
+          !credentialScope.isCurrent(credentialToken)
+        )
+          return;
         demoAbortRef.current = null;
         setVoiceError("Voice audio could not be played. Try again.");
         setIsPlaying(false);
@@ -376,7 +409,11 @@ export default function VoicePage() {
       await audio.play();
       setDemoText(demoTexts[personaId] || "");
     } catch (error) {
-      if (controller.signal.aborted) return;
+      if (
+        controller.signal.aborted ||
+        !credentialScope.isCurrent(credentialToken)
+      )
+        return;
       demoAbortRef.current = null;
       setVoiceError(
         error instanceof Error

@@ -1,5 +1,5 @@
-import { loadSpec, resolveTask } from "@arcanea/router-spec";
-import { loadConfig, applyPreference } from "../config.js";
+import { loadSpec } from "@arcanea/router-spec";
+import { loadConfig } from "../config.js";
 import { readHistory } from "../history.js";
 import {
   adaptiveRerank,
@@ -8,9 +8,10 @@ import {
 } from "../adaptive.js";
 import { runtimeFor } from "../runtimes.js";
 import kleur from "kleur";
+import { resolveRunnableCandidates } from "./run.js";
 
 interface Options {
-  surface: string;
+  surface?: string;
 }
 
 function runtimeLabel(model: Parameters<typeof runtimeFor>[0]): string {
@@ -24,6 +25,7 @@ function runtimeLabel(model: Parameters<typeof runtimeFor>[0]): string {
 export function learnCommand(taskId: string, opts: Options): void {
   const spec = loadSpec();
   const config = loadConfig();
+  const surfaceId = opts.surface ?? config.defaultSurface ?? "claude-arcanea";
   const events = readHistory();
 
   if (!spec.tasks[taskId]) {
@@ -31,13 +33,17 @@ export function learnCommand(taskId: string, opts: Options): void {
     process.exit(1);
   }
 
-  const candidates = resolveTask(taskId, opts.surface, spec);
-  const tierMap = new Map(
-    candidates
-      .map((id) => [id, spec.models[id]?.tier])
-      .filter(([, t]) => !!t) as [string, "free" | "sub" | "byok"][],
+  if (!spec.surfaces[surfaceId]) {
+    console.error(kleur.red(`Unknown surface: ${surfaceId}`));
+    process.exit(1);
+  }
+  const preferred = resolveRunnableCandidates(
+    taskId,
+    surfaceId,
+    spec,
+    config,
+    false,
   );
-  const preferred = applyPreference(candidates, tierMap, config.preference);
   const adapted = adaptiveRerank(preferred, events, taskId);
 
   const adaptiveActive = shouldApplyAdaptive(
@@ -49,7 +55,7 @@ export function learnCommand(taskId: string, opts: Options): void {
   console.log();
   console.log(kleur.bold(`  arcanea-orchestrator learn — ${taskId}`));
   console.log();
-  console.log(kleur.dim(`  surface:       ${opts.surface}`));
+  console.log(kleur.dim(`  surface:       ${surfaceId}`));
   console.log(kleur.dim(`  preference:    ${config.preference}`));
   console.log(
     kleur.dim(`  adaptive mode: ${config.adaptiveRouting ?? "auto"}`),
@@ -61,6 +67,16 @@ export function learnCommand(taskId: string, opts: Options): void {
   );
   console.log();
 
+  if (preferred.length === 0) {
+    console.log(
+      kleur.dim(
+        "  No executable route for this surface and runtime availability.",
+      ),
+    );
+    console.log();
+    return;
+  }
+
   console.log(kleur.bold(`  Baseline (preference + surface):`));
   for (const [i, m] of preferred.entries()) {
     const rt = runtimeLabel(spec.models[m]);
@@ -71,7 +87,9 @@ export function learnCommand(taskId: string, opts: Options): void {
   }
   console.log();
 
-  console.log(kleur.bold(`  Adaptive (after history-weighted re-rank):`));
+  console.log(
+    kleur.bold(`  Adaptive preview (after history-weighted re-rank):`),
+  );
   for (const [i, m] of adapted.entries()) {
     const rt = runtimeLabel(spec.models[m]);
     const rec = stats.get(m);

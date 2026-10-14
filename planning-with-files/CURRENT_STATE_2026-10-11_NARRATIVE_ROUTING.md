@@ -104,7 +104,64 @@ instruction hashes verified. Lease `ops-36af7fc0dbcaa75d05ca` is private machine
 state. Re-run the ownership gate before commit; do not disable it or secret hooks.
 This hook governs commits, not every file edit or product runtime action.
 
+## Review correction at the routing candidate
+
+Initial candidate `3376708c9f16aea1687ec430495aaa2428904590` is preserved in
+[PR569](https://github.com/frankxai/arcanea-ai-app/pull/569). Its hosted
+CI38111634801 passes build, types, lint and CI Status; CodeQL38111634807 passes
+actual analysis. Earlier draft CI38111617380 was cancelled by the ready transition
+and retained with its failed aggregate. The two package/review workflows were
+found manually disabled on GitHub; no workflow setting was altered.
+
+A tool-free anonymous NVIDIA Ultra review covered all eleven changed files and
+eight complete source contexts at that exact head, returned PASS with no findings
+and reported US$0. Its public-source manifest is
+`f2058c4a92bd7115ee7688243ed2645dd647f19818e4ac586c598eee75202d35`.
+GitHub's separate code review then found three supported defects that this PASS
+missed: unsupported explain selections, lost display-surface resolution and the
+retired Gemini Pro identifier. The initial PASS cannot approve the correction.
+
+Five new regression cases failed before correction. Execution and explain now
+share preference/runtime/adaptive selection. Catalog display retains eligible
+candidates, while execution refuses display-only surfaces even with a model pin.
+Retired Gemini pins are rejected with the replacement named; Gemini Pro routes
+use the native `gemini-3.1-pro-preview` identifier. Google's model and deprecation
+references were read on11 October; actual account access and prose remain
+untested. This changes that route's catalog default, without claiming a model
+quality promotion or refreshing every other historical model entry.
+
+Renewed two-package build admission is BOUNDED:7757MB free,5120MB required,
+CPU61%, one workload and no new parallel agents. Both compilers and all86 selected
+tests pass; the tests keep config/history and no-op runtime execution isolated.
+All source must be frozen and reviewed again at the new head before normal merge.
+The claim extension initially refused without `--adopt`; the existing same-owner
+lease was then refreshed through the supported CLI with the full original scope
+plus models.yaml. No lease was removed, rewritten directly or taken from a peer.
+
 ## Full objective: evidence still needed
+
+Final GitHub review at a4d2f3d3 found two remaining diagnostics gaps missed by
+the independent PASS: learn still selected display/unsupported routes and
+explain ignored the saved default surface. Four new compiled-CLI regressions
+reproduced all four failures before source correction. Learn now shares runnable
+eligibility for its baseline and labels its adaptive simulation as a preview;
+explain and learn resolve explicit/saved/default surfaces just like run. No
+review at the previous head approves this correction. Required current checks
+and exact-source independent review remain mandatory before normal merge.
+
+Integration receipt: GitHub now records initial PR569 as merged at04:42:24UTC,
+receiving main233013ca5c73745b456c0f924392d2001fee846e. Its complete package
+trees equal the reviewed initial3376708 source. The correction atbbcb6375
+received a second zero-price NVIDIA PASS (61,292 input/695 output tokens; no
+findings). That review is retained against its actual head, not transferred to
+a later integration head.
+
+A proposed branch transition was refused by the existing checkout lease, so
+the writer returned to the admitted branch. No lease was bypassed or deleted.
+Merging current main produced seven conflicts because the initial PR had been
+squashed. After verifying main's scoped tree equals3376708 exactly, those seven
+paths were resolved to the reviewed correction atbbcb6375. All code source is
+preserved; the follow-up is reviewed and checked separately before normal merge.
 
 | Required outcome                                      | Owning record and evidence                                                                                                | Current disposition                                                                                     |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -122,3 +179,21 @@ This hook governs commits, not every file edit or product runtime action.
 The active founder goal remains intact. Advance independent authorized work when
 one gate waits; do not substitute unit tests for creator acceptance or close the
 programme based on this lane.
+
+## Diagnostic repair verification and integration
+
+PR570 was normally merged on GitHub at 05:15:21 UTC into
+`a131c1e9dfa2a2e6b8d93e1be4bd32c43794afc1`. Its two complete package trees equal
+the prior reviewed `a4d2f3d3cdbf34a4e8eea9b0805bb97999715edb` source. That merge
+does not contain the later learn/default-surface repair described above.
+
+Both package compilers passed with the repair. The full local selection ran
+90 cases: 89 passed and one failed because the new learn assertion omitted the
+existing numbered output (`→ 1. model`). The actual saved Gemini route was
+correct. After correcting the assertion, the isolated compiled-CLI case passed.
+The full 90-case selection has not been rerun locally after that assertion edit.
+Renewed PP admission returned HOLD with 3352 MB free against 5120 MB required;
+heavy local work stays stopped. The reader integration adds both package builds,
+spec validation and the entire routing selection to the required hosted CI job.
+Exact-source independent review and hosted verification remain pending for this
+new diagnostic repair; earlier PASS verdicts do not approve it.

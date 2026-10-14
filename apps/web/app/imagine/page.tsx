@@ -1,21 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
 import { requestImages, requestAnimation } from "@/lib/imagine/request";
-import { useState, useCallback, useRef, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+  useSyncExternalStore,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { PromptInput } from "@/components/imagine/PromptInput";
 import { ImageCard } from "@/components/imagine/ImageCard";
+import { FavoritesPanel } from "@/components/imagine/FavoritesPanel";
 import {
   getFavorites,
-  removeFavorite,
-  getFavoriteCount,
+  loadFavoritePage,
+  addFavorite,
+  type FavoriteCursor,
   type FavoriteImage,
 } from "@/lib/imagine-favorites";
-import { Heart, X, Trash, Download } from "@/lib/phosphor-icons";
+import { Heart, X } from "@/lib/phosphor-icons";
+import { AuthModal } from "@/components/auth/auth-modal";
 
 // ---------------------------------------------------------------------------
 // Featured Templates — Arcanean style presets as clickable cards (like Grok)
@@ -106,6 +116,7 @@ interface GeneratedImage {
   prompt: string;
   data?: string;
   mimeType?: string;
+  videoUrl?: string;
 }
 
 interface GenerationRow {
@@ -121,11 +132,41 @@ interface GenerationRow {
 // Page
 // ---------------------------------------------------------------------------
 
+const subscribeHydration = () => () => {};
+const clientHydrated = () => true;
+const serverHydrated = () => false;
+
 export default function ImaginePage() {
+  const { credentialScope } = useAuth();
+  // Auth may resolve before this streamed page hydrates. Keep its first
+  // document identical to the server, then use the current account scope.
+  const hydrated = useSyncExternalStore(
+    subscribeHydration,
+    clientHydrated,
+    serverHydrated,
+  );
+  const token = credentialScope.get();
+  if (!hydrated || token.actor === null)
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Loading your workspace…
+      </p>
+    );
+  return <ImaginePageContent key={`${token.actor}:${token.revision}`} />;
+}
+
+function ImaginePageContent() {
+  const { credentialScope } = useAuth();
+  const favoriteToken = credentialScope.get();
+  const favoriteAuthority = useMemo(
+    () => ({ scope: credentialScope, token: favoriteToken }),
+    [credentialScope, favoriteToken],
+  );
   const searchParams = useSearchParams();
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState("");
   const [currentAspectRatio, setCurrentAspectRatio] = useState("1:1");
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false);
@@ -141,7 +182,17 @@ export default function ImaginePage() {
   // Favorites
   const [showFavorites, setShowFavorites] = useState(false);
   const [favorites, setFavorites] = useState<FavoriteImage[]>([]);
-  const [favCount, setFavCount] = useState(0);
+  const favCount = favorites.length;
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [favoriteError, setFavoriteError] = useState<string | null>(null);
+  const [favoriteWarning, setFavoriteWarning] = useState<string | null>(null);
+  const [favoriteCursor, setFavoriteCursor] = useState<FavoriteCursor | null>(
+    null,
+  );
+  const [cloudFavoritesLoaded, setCloudFavoritesLoaded] = useState(false);
+  const favoriteOpenerRef = useRef<HTMLElement | null>(null);
+  const favoriteRequestRef = useRef(0);
+  const favoriteAbortRef = useRef<AbortController | null>(null);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const gridTopRef = useRef<HTMLDivElement>(null);
@@ -153,10 +204,6 @@ export default function ImaginePage() {
   const currentModelRef = useRef<string | undefined>(undefined);
   const currentEnhanceRef = useRef<boolean | undefined>(undefined);
   const currentNegativePromptRef = useRef<string | undefined>(undefined);
-
-  useEffect(() => {
-    setFavCount(getFavoriteCount());
-  }, []);
 
   // Prompt handoff from homepage showcase card (?prompt=...)
   const promptConsumed = useRef(false);
@@ -170,10 +217,99 @@ export default function ImaginePage() {
     }
   }, [searchParams]);
 
-  const refreshFavorites = useCallback(() => {
-    setFavorites(getFavorites());
-    setFavCount(getFavoriteCount());
-  }, []);
+  const refreshFavorites = useCallback(
+    async (
+      cursor: FavoriteCursor | null = null,
+      append = false,
+      mutationWarning: string | null = null,
+    ) => {
+      if (!credentialScope.isCurrent(favoriteAuthority.token)) return;
+      const requestId = ++favoriteRequestRef.current;
+      favoriteAbortRef.current?.abort();
+      const controller = new AbortController();
+      favoriteAbortRef.current = controller;
+      const current = () =>
+        credentialScope.isCurrent(favoriteAuthority.token) &&
+        favoriteRequestRef.current === requestId &&
+        !controller.signal.aborted;
+      setFavoriteLoading(true);
+      setFavoriteError(null);
+      let cached: FavoriteImage[] = [];
+      let warning = mutationWarning;
+      try {
+        cached = getFavorites(favoriteAuthority);
+      } catch {
+        warning =
+          "Browser bookmarks could not be read. Their data is preserved; account favorites can still sync.";
+      }
+      try {
+        const page = await loadFavoritePage(
+          favoriteAuthority,
+          cursor,
+          controller.signal,
+        );
+        if (!current()) return;
+        const legacy = cached.filter((image) => !image.assetId);
+        setFavorites((previous) => {
+          const combined = append
+            ? [
+                ...previous.filter((image) => image.assetId),
+                ...page.images,
+                ...legacy,
+              ]
+            : [...page.images, ...legacy];
+          const seen = new Set<string>();
+          return combined.filter((image) => {
+            const key = image.assetId
+              ? `cloud:${image.assetId}`
+              : `browser:${image.id}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+        });
+        setFavoriteCursor(page.next);
+        setCloudFavoritesLoaded(true);
+        setFavoriteWarning(warning);
+      } catch (failure) {
+        if (!current()) return;
+        if (!append) setFavorites(cached);
+        setCloudFavoritesLoaded(false);
+        setFavoriteWarning(
+          warning ??
+            (cached.length
+              ? "Showing browser bookmarks while account sync is unavailable."
+              : null),
+        );
+        setFavoriteError(
+          failure instanceof Error
+            ? failure.message
+            : "Account favorites could not be synced. Retry to reopen them.",
+        );
+      } finally {
+        if (current()) setFavoriteLoading(false);
+      }
+    },
+    [credentialScope, favoriteAuthority],
+  );
+
+  useEffect(() => {
+    if (favoriteAuthority.token.actor?.startsWith("user:"))
+      void refreshFavorites();
+    return () => {
+      ++favoriteRequestRef.current;
+      favoriteAbortRef.current?.abort();
+    };
+  }, [favoriteAuthority, refreshFavorites]);
+
+  const openFavorites = () => {
+    favoriteOpenerRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    setShowFavorites(true);
+    void refreshFavorites();
+  };
 
   // Generate a single row of images
   const generateRow = useCallback(
@@ -185,20 +321,45 @@ export default function ImaginePage() {
       model?: string,
       enhance?: boolean,
     ): Promise<GenerationRow | null> => {
+      const token = credentialScope.get();
       const id = rowId || `row_${Date.now()}_${generationCounterRef.current++}`;
-      const res = await requestImages({
-        prompt,
-        count: 4,
-        aspectRatio,
-        style,
-        model,
-        enhance,
-      });
+      const res = await requestImages(
+        {
+          prompt,
+          count: 4,
+          aspectRatio,
+          style,
+          model,
+          enhance,
+        },
+        { scope: credentialScope, token },
+      );
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Generation failed");
+        let errMessage = "Generation failed";
+        try {
+          const data = await res.json();
+          if (res.status === 401) {
+            errMessage = "Sign in to generate.";
+          } else if (typeof data === "string") {
+            errMessage = data;
+          } else if (data?.error) {
+            errMessage =
+              typeof data.error === "string"
+                ? data.error
+                : data.error.message || "Generation failed";
+          } else if (data?.message) {
+            errMessage = data.message;
+          }
+        } catch {
+          errMessage =
+            res.status === 401
+              ? "Sign in to generate."
+              : `Request failed with status ${res.status}`;
+        }
+        throw new Error(errMessage);
       }
       const data = await res.json();
+      if (!credentialScope.isCurrent(token)) return null;
       const images: GeneratedImage[] = (data.images || []).map(
         (
           img: {
@@ -406,43 +567,64 @@ export default function ImaginePage() {
     async (imageId: string, imageUrl: string) => {
       setAnimatingIds((prev) => new Set(prev).add(imageId));
       setError(null);
+      const token = credentialScope.get();
       try {
         let urlForAnimation = imageUrl;
         if (imageUrl.startsWith("data:")) {
-          const [header, data] = imageUrl.split(",");
-          const mimeType = header.match(/data:(.*?);/)?.[1] || "image/png";
-          const saveRes = await fetch("/api/imagine/save", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              imageData: data,
-              mimeType,
-              prompt: "animation source",
-            }),
-          });
-          if (saveRes.ok) {
-            const saveData = await saveRes.json();
-            if (saveData.url) {
-              urlForAnimation = saveData.url;
-              setRows((rows) =>
-                rows.map((row) => ({
-                  ...row,
-                  images: row.images.map((image) =>
-                    image.id === imageId
-                      ? { ...image, url: saveData.url }
-                      : image,
-                  ),
-                })),
-              );
-            }
-          }
+          const image = rows
+            .flatMap((row) => row.images)
+            .find((image) => image.id === imageId);
+          if (!image)
+            throw Error(
+              "This image is no longer available. Reopen it before animating.",
+            );
+          const authority = { scope: credentialScope, token };
+          const saved = await addFavorite(
+            { ...image, url: imageUrl },
+            authority,
+          );
+          if (!credentialScope.isCurrent(token)) return;
+          urlForAnimation = saved.blobUrl;
+          setRows((previous) =>
+            previous.map((row) => ({
+              ...row,
+              images: row.images.map((current) =>
+                current.id === imageId
+                  ? { ...current, url: saved.blobUrl }
+                  : current,
+              ),
+            })),
+          );
+          void refreshFavorites(null, false, saved.cacheWarning ?? null);
         }
-        const res = await requestAnimation({ imageUrl: urlForAnimation });
+        const res = await requestAnimation(
+          { imageUrl: urlForAnimation },
+          { scope: credentialScope, token },
+        );
         if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error || "Animation failed");
+          let errMessage = "Animation failed";
+          try {
+            const data = await res.json();
+            if (res.status === 401) {
+              errMessage = "Sign in to generate.";
+            } else if (typeof data === "string") {
+              errMessage = data;
+            } else if (data?.error) {
+              errMessage =
+                typeof data.error === "string"
+                  ? data.error
+                  : data.error.message || "Animation failed";
+            }
+          } catch {
+            errMessage =
+              res.status === 401
+                ? "Sign in to generate."
+                : `Request failed with status ${res.status}`;
+          }
+          throw new Error(errMessage);
         }
         const data = await res.json();
+        if (!credentialScope.isCurrent(token)) return;
         if (data.videoUrl) {
           setRows((prev) =>
             prev.map((row) => ({
@@ -454,16 +636,18 @@ export default function ImaginePage() {
           );
         }
       } catch (err) {
+        if (!credentialScope.isCurrent(token)) return;
         setError(err instanceof Error ? err.message : "Animation failed");
       } finally {
-        setAnimatingIds((prev) => {
-          const next = new Set(prev);
-          next.delete(imageId);
-          return next;
-        });
+        if (credentialScope.isCurrent(token))
+          setAnimatingIds((prev) => {
+            const next = new Set(prev);
+            next.delete(imageId);
+            return next;
+          });
       }
     },
-    [],
+    [credentialScope, rows, refreshFavorites],
   );
 
   // Vary: pre-fill prompt
@@ -614,14 +798,12 @@ export default function ImaginePage() {
                   </button>
                 )}
                 <button
-                  onClick={() => {
-                    refreshFavorites();
-                    setShowFavorites(true);
-                  }}
+                  onClick={openFavorites}
+                  aria-label="Open favorites"
                   className="flex items-center gap-1.5 px-3 py-2 min-h-[44px] rounded-lg text-xs text-pink-300/60 hover:text-pink-300 hover:bg-pink-500/10 transition-colors"
                 >
                   <Heart size={12} weight="fill" className="text-pink-400" />
-                  {favCount > 0 && favCount}
+                  {favCount > 0 && `${favCount}${favoriteCursor ? "+" : ""}`}
                 </button>
               </div>
             </div>
@@ -640,7 +822,14 @@ export default function ImaginePage() {
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
                 <span className="truncate">{error}</span>
                 <div className="flex items-center gap-2 ml-3 flex-shrink-0">
-                  {currentPrompt && (
+                  {error === "Sign in to generate." ? (
+                    <button
+                      onClick={() => setShowAuthModal(true)}
+                      className="px-3 py-1 text-xs rounded-lg bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep font-semibold hover:shadow-[0_0_12px_rgba(0,188,212,0.3)] transition-all"
+                    >
+                      Sign in
+                    </button>
+                  ) : currentPrompt ? (
                     <button
                       onClick={() => {
                         setError(null);
@@ -658,7 +847,7 @@ export default function ImaginePage() {
                     >
                       Retry
                     </button>
-                  )}
+                  ) : null}
                   <button
                     onClick={() => setError(null)}
                     className="text-red-400 hover:text-red-300 p-1"
@@ -679,14 +868,14 @@ export default function ImaginePage() {
                 Discover
               </h2>
               <button
-                onClick={() => {
-                  refreshFavorites();
-                  setShowFavorites(true);
-                }}
-                className="flex items-center gap-1.5 text-xs text-pink-300/40 hover:text-pink-300 transition-colors"
+                onClick={openFavorites}
+                aria-label="Open favorites"
+                className="flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-xs text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               >
                 <Heart size={11} />
-                {favCount > 0 ? `${favCount} Saved` : "Favorites"}
+                {favCount > 0
+                  ? `${favCount}${favoriteCursor ? "+" : ""} saved`
+                  : "Favorites"}
               </button>
             </div>
           </div>
@@ -739,6 +928,7 @@ export default function ImaginePage() {
                   row.images.map((img, i) => (
                     <div key={img.id} className="break-inside-avoid mb-2">
                       <ImageCard
+                        authority={favoriteAuthority}
                         id={img.id}
                         src={img.url}
                         prompt={img.prompt}
@@ -748,8 +938,21 @@ export default function ImaginePage() {
                         index={i}
                         onAnimate={handleAnimate}
                         onVary={handleVary}
-                        onFavoriteChange={refreshFavorites}
+                        favorite={
+                          favorites.find(
+                            (favorite) => favorite.id === img.id,
+                          ) ??
+                          (cloudFavoritesLoaded &&
+                          !favoriteCursor &&
+                          !favoriteError
+                            ? null
+                            : undefined)
+                        }
+                        onFavoriteChange={(warning) =>
+                          void refreshFavorites(null, false, warning ?? null)
+                        }
                         isAnimating={animatingIds.has(img.id)}
+                        videoUrl={img.videoUrl}
                       />
                     </div>
                   )),
@@ -792,105 +995,36 @@ export default function ImaginePage() {
           generationProgress={generationProgress}
         />
 
-        {/* ═══ Favorites Drawer ═══ */}
-        <AnimatePresence>
-          {showFavorites && (
-            <>
-              <m.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-                onClick={() => setShowFavorites(false)}
-              />
-              <m.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-lg bg-[var(--arc-cosmic-void)]/95 backdrop-blur-xl border-l border-white/[0.08] flex flex-col"
-              >
-                <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06]">
-                  <div className="flex items-center gap-3">
-                    <Heart size={18} weight="fill" className="text-pink-400" />
-                    <h2 className="text-base font-semibold text-white/90">
-                      Favorites
-                    </h2>
-                    {favorites.length > 0 && (
-                      <span className="text-xs text-white/30 bg-white/[0.04] px-2 py-0.5 rounded-full">
-                        {favorites.length}
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setShowFavorites(false)}
-                    className="p-2 rounded-xl hover:bg-white/[0.06] transition-all text-white/40 hover:text-white/80"
-                  >
-                    <X size={18} />
-                  </button>
-                </div>
-                <div className="flex-1 overflow-y-auto p-4">
-                  {favorites.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-full text-center py-16">
-                      <p className="text-white/30 text-sm mb-1">
-                        No favorites yet
-                      </p>
-                      <p className="text-xs text-white/15 max-w-[240px]">
-                        Heart images you love and they&apos;ll be saved here
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-2 gap-2">
-                      {favorites.map((fav) => (
-                        <m.div
-                          key={fav.id}
-                          layout
-                          className="group relative rounded-xl overflow-hidden"
-                        >
-                          <Image
-                            src={fav.blobUrl}
-                            alt={fav.prompt}
-                            width={200}
-                            height={200}
-                            className="w-full aspect-square object-cover"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                              <p className="text-[10px] text-white/60 line-clamp-2 mb-2">
-                                {fav.prompt}
-                              </p>
-                              <div className="flex gap-1.5">
-                                <button
-                                  onClick={() => {
-                                    removeFavorite(fav.id);
-                                    refreshFavorites();
-                                  }}
-                                  className="p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400"
-                                  title="Remove"
-                                >
-                                  <Trash size={12} />
-                                </button>
-                                <a
-                                  href={fav.blobUrl}
-                                  download={`arcanea-fav-${fav.id}.png`}
-                                  className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white"
-                                  title="Download"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  <Download size={12} />
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </m.div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </m.div>
-            </>
-          )}
-        </AnimatePresence>
+        <FavoritesPanel
+          open={showFavorites}
+          onOpenChange={setShowFavorites}
+          authority={favoriteAuthority}
+          images={favorites}
+          loading={favoriteLoading}
+          error={favoriteError}
+          warning={favoriteWarning}
+          hasMore={Boolean(favoriteCursor)}
+          onRefresh={() => void refreshFavorites()}
+          onLoadMore={() => {
+            if (favoriteCursor) void refreshFavorites(favoriteCursor, true);
+          }}
+          onRemoved={(image, warning) => {
+            setFavorites((previous) =>
+              previous.filter((row) =>
+                image.assetId
+                  ? row.assetId !== image.assetId
+                  : row.id !== image.id,
+              ),
+            );
+            void refreshFavorites(null, false, warning);
+          }}
+          returnFocusRef={favoriteOpenerRef}
+        />
+
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+        />
       </div>
     </LazyMotion>
   );

@@ -15,6 +15,7 @@ async function isolatedRun(
   args: string[],
   config: Record<string, unknown> = {},
   executeFixture = false,
+  command = "run",
 ) {
   const temporaryRoot = resolve(tmpdir());
   const home = await mkdtemp(resolve(temporaryRoot, "arcanea-routing-"));
@@ -35,7 +36,15 @@ async function isolatedRun(
     }
     const res = await execa(
       "node",
-      [CLI, "run", ...args, ...(executeFixture ? [] : ["--dry-run"]), "hello"],
+      command === "run"
+        ? [
+            CLI,
+            command,
+            ...args,
+            ...(executeFixture ? [] : ["--dry-run"]),
+            "hello",
+          ]
+        : [CLI, command, ...args],
       {
         reject: false,
         env: {
@@ -77,18 +86,19 @@ test("cli list-models prints models", async () => {
 });
 
 test("cli explain shows routing decision", async () => {
-  const res = await execa("node", [CLI, "explain", "world.canon"], {
-    reject: false,
-  });
+  const res = await isolatedRun(["world.canon"], {}, false, "explain");
   assert.equal(res.exitCode, 0);
   assert.match(res.stdout, /Task: world\.canon/);
-  assert.match(res.stdout, /claude-opus-4-7/);
+  assert.match(res.stdout, /claude-opus-5-5/);
 });
 
 test("cli explain with unknown task exits non-zero", async () => {
-  const res = await execa("node", [CLI, "explain", "totally.not.a.real.task"], {
-    reject: false,
-  });
+  const res = await isolatedRun(
+    ["totally.not.a.real.task"],
+    {},
+    false,
+    "explain",
+  );
   assert.notEqual(res.exitCode, 0);
   assert.match(res.stderr, /Unknown task/);
 });
@@ -97,17 +107,109 @@ test("cli run --dry-run shows exec plan without invoking runtime", async () => {
   const res = await isolatedRun(["--task", "nav.fast"]);
   assert.equal(res.exitCode, 0);
   assert.match(res.stderr, /dry-run/);
-  assert.match(res.stderr, /claude-haiku-4-5/);
+  assert.match(res.stderr, /claude-haiku-5-5/);
 });
 
 test("explain labels an unsupported provider without routing it to Claude", async () => {
-  const res = await execa(
-    "node",
-    [CLI, "explain", "research.quick", "--surface", "grok-sis"],
-    { reject: false },
+  const res = await isolatedRun(
+    ["research.quick", "--surface", "grok-sis"],
+    {},
+    false,
+    "explain",
   );
   assert.equal(res.exitCode, 0);
   assert.match(res.stdout, /grok-4\s+unsupported/);
+  assert.doesNotMatch(res.stdout, /→\s+grok-4/);
+  assert.match(res.stdout, /→\s+gpt-5/);
+});
+
+test("explain never selects an unavailable runtime", async () => {
+  const res = await isolatedRun(
+    ["research.quick", "--surface", "grok-sis"],
+    { auth: { codex: { installed: false } } },
+    false,
+    "explain",
+  );
+  assert.equal(res.exitCode, 0);
+  assert.doesNotMatch(res.stdout, /→/);
+});
+
+test("explain uses the same saved default surface as run", async () => {
+  const config = { defaultSurface: "gemini-arcanea" };
+  const explanation = await isolatedRun(
+    ["world.expand"],
+    config,
+    false,
+    "explain",
+  );
+  const dispatch = await isolatedRun(["--task", "world.expand"], config);
+  assert.equal(explanation.exitCode, 0);
+  assert.equal(dispatch.exitCode, 0);
+  assert.match(explanation.stdout, /Surface: gemini-arcanea/);
+  assert.match(explanation.stdout, /→\s+gemini-3\.1-pro-preview/);
+  assert.match(dispatch.stderr, /--model gemini-3\.1-pro-preview/);
+});
+
+test("learn refuses to select a route on a display-only surface", async () => {
+  const res = await isolatedRun(
+    ["world.expand", "--surface", "web.models-page"],
+    {},
+    false,
+    "learn",
+  );
+  assert.equal(res.exitCode, 0);
+  assert.doesNotMatch(res.stdout, /→/);
+  assert.match(res.stdout, /No executable route/);
+});
+
+test("learn uses the saved default surface", async () => {
+  const res = await isolatedRun(
+    ["world.expand"],
+    { defaultSurface: "gemini-arcanea" },
+    false,
+    "learn",
+  );
+  assert.equal(res.exitCode, 0);
+  assert.match(res.stdout, /surface:\s+gemini-arcanea/);
+  assert.match(res.stdout, /→\s+1\.\s+gemini-3\.1-pro-preview/);
+});
+
+test("learn excludes unsupported and recorded-uninstalled runtimes", async () => {
+  const res = await isolatedRun(
+    ["research.quick", "--surface", "grok-sis"],
+    { auth: { codex: { installed: false } } },
+    false,
+    "learn",
+  );
+  assert.equal(res.exitCode, 0);
+  assert.doesNotMatch(res.stdout, /→/);
+});
+
+test("Gemini dispatch uses the declared current native Pro identifier", async () => {
+  const res = await isolatedRun([
+    "--task",
+    "world.expand",
+    "--surface",
+    "gemini-arcanea",
+  ]);
+  assert.equal(res.exitCode, 0);
+  assert.match(
+    res.stderr,
+    /gemini --model gemini-3\.1-pro-preview --prompt hello/,
+  );
+});
+
+test("a pin to the retired Gemini Pro stays refused", async () => {
+  const res = await isolatedRun([
+    "--task",
+    "world.expand",
+    "--surface",
+    "gemini-arcanea",
+    "--model",
+    "gemini-3-pro",
+  ]);
+  assert.equal(res.exitCode, 1);
+  assert.doesNotMatch(res.stderr, /would exec/);
 });
 
 test("a pinned model still obeys surface tier restrictions", async () => {
@@ -174,6 +276,20 @@ test("display-only surfaces cannot execute tasks", async () => {
     "web.models-page",
   ]);
   assert.equal(res.exitCode, 1);
+  assert.doesNotMatch(res.stderr, /would exec/);
+});
+
+test("a model pin cannot enable a display-only surface", async () => {
+  const res = await isolatedRun([
+    "--task",
+    "code.debug",
+    "--surface",
+    "web.models-page",
+    "--model",
+    "gpt-5",
+  ]);
+  assert.equal(res.exitCode, 1);
+  assert.match(res.stderr, /display-only/);
   assert.doesNotMatch(res.stderr, /would exec/);
 });
 

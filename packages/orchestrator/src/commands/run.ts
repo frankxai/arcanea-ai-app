@@ -3,10 +3,11 @@ import {
   resolveTask,
   pickModel,
   isModelEligible,
+  type RouterSpec,
 } from "@arcanea/router-spec";
 import { execa } from "execa";
 import { runtimeFor, getRuntime } from "../runtimes.js";
-import { loadConfig, applyPreference } from "../config.js";
+import { loadConfig, applyPreference, type UserConfig } from "../config.js";
 import { appendHistory, readHistory } from "../history.js";
 import { adaptiveRerank, shouldApplyAdaptive } from "../adaptive.js";
 import kleur from "kleur";
@@ -17,6 +18,42 @@ interface Options {
   model?: string;
   dryRun?: boolean;
   history?: boolean;
+}
+
+/** Shared by execution and diagnostics so the selected route cannot disagree. */
+export function resolveRunnableCandidates(
+  taskId: string,
+  surface: string,
+  spec: RouterSpec,
+  config: UserConfig,
+  withAdaptive = true,
+): string[] {
+  if (
+    !spec.surfaces[surface].authContext.some(
+      (context) => context !== "display-only",
+    )
+  )
+    return [];
+  const candidates = resolveTask(taskId, surface, spec);
+  const tierMap = new Map(
+    candidates.map((id) => [id, spec.models[id].tier]) as [
+      string,
+      "free" | "sub" | "byok",
+    ][],
+  );
+  const preferred = applyPreference(candidates, tierMap, config.preference);
+  const available = preferred.filter((id) => {
+    try {
+      return config.auth[runtimeFor(spec.models[id])]?.installed !== false;
+    } catch {
+      return false;
+    }
+  });
+  if (!withAdaptive) return available;
+  const events = readHistory();
+  return shouldApplyAdaptive(config.adaptiveRouting, events.length)
+    ? adaptiveRerank(available, events, taskId)
+    : available;
 }
 
 export async function runCommand(
@@ -41,6 +78,18 @@ export async function runCommand(
     console.error(kleur.red(`Unknown surface: ${surface}`));
     process.exit(1);
   }
+  if (
+    !spec.surfaces[surface].authContext.some(
+      (context) => context !== "display-only",
+    )
+  ) {
+    console.error(
+      kleur.red(
+        `Surface ${surface} is display-only and cannot dispatch tasks.`,
+      ),
+    );
+    process.exit(1);
+  }
 
   let modelId: string | null;
   if (opts.model) {
@@ -51,36 +100,17 @@ export async function runCommand(
     if (!isModelEligible(opts.model, opts.task, surface, spec)) {
       console.error(
         kleur.red(
-          `Model ${opts.model} is not eligible for task=${opts.task} surface=${surface}.`,
+          `Model ${opts.model} is not eligible for task=${opts.task} surface=${surface}.${spec.models[opts.model].deprecated ? ` ${spec.models[opts.model].deprecated}` : ""}`,
         ),
       );
       process.exit(1);
     }
     modelId = opts.model;
   } else {
-    const candidates = resolveTask(opts.task, surface, spec);
-    // Re-rank by user's tier preference, then filter by installed runtimes.
-    const tierMap = new Map(
-      candidates
-        .map((id) => [id, spec.models[id]?.tier])
-        .filter(([, t]) => !!t) as [string, "free" | "sub" | "byok"][],
+    modelId = pickModel(
+      resolveRunnableCandidates(opts.task, surface, spec, config),
+      spec,
     );
-    const preferred = applyPreference(candidates, tierMap, config.preference);
-    const available = preferred.filter((id) => {
-      try {
-        const rt = runtimeFor(spec.models[id]);
-        return config.auth[rt]?.installed !== false;
-      } catch {
-        return false;
-      }
-    });
-    // Phase 8: adaptive routing — re-rank by local success history
-    let finalCandidates = available;
-    const events = readHistory();
-    if (shouldApplyAdaptive(config.adaptiveRouting, events.length)) {
-      finalCandidates = adaptiveRerank(finalCandidates, events, opts.task);
-    }
-    modelId = pickModel(finalCandidates, spec);
   }
 
   if (!modelId) {

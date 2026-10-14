@@ -6,3 +6,13 @@ pnpm-lock.yaml
 .claude/ci/estate-guard-scan.mjs
 .claude/ci/estate-guard/
 .claude/skills/estate-guard/
+
+# stack-kits pack — vendored from claude-skills-library (kits verbatim from
+# blencorp/claude-code-kit); reformatting here would make every re-install
+# see local edits and set the kits aside
+.claude/hooks/skill-activation-prompt.mjs
+.claude/skills/nextjs/
+.claude/skills/react/
+.claude/skills/tailwindcss/
+.claude/skills/shadcn/
+.claude/skills/stack-kits.rules.json

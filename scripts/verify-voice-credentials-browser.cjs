@@ -171,7 +171,7 @@ async function verifyChatRecovery(browser, mode) {
     );
     await page.addInitScript(() => {
       localStorage.setItem(
-        "arcanea-provider-keys",
+        "arcanea-provider-keys:v2:guest",
         JSON.stringify({ groq: "test-customer-groq" }),
       );
       localStorage.setItem(
@@ -407,7 +407,10 @@ async function verifyRoomRecovery(browser, mode) {
         .catch(() => {});
     });
     await page.addInitScript(() =>
-      localStorage.setItem("arcanea-voice-groq-key", "test-customer-groq"),
+      localStorage.setItem(
+        "arcanea-provider-keys:v2:guest",
+        JSON.stringify({ groq: "test-customer-groq" }),
+      ),
     );
     const reply =
       "The lighthouse keeper carefully unfolds the chart, marks the shoals, and returns to the signal room. ".repeat(
@@ -564,6 +567,266 @@ async function verifyRoomRecovery(browser, mode) {
   }
 }
 
+async function verifyAccountCredentials(browser, mode) {
+  const context = await browser.newContext({
+    viewport: { width: mode.width, height: mode.height },
+    reducedMotion: mode.motion,
+  });
+  let releasePending;
+  let page;
+  try {
+    // Real compiled Supabase subscribers receive synthetic cross-tab events.
+    // No credentials, login, database writes or provider execution are real.
+    await context.addInitScript(() => {
+      const NativeChannel = window.BroadcastChannel;
+      window.__nativeAuthChannel = NativeChannel;
+      window.__authChannelNames = [];
+      window.BroadcastChannel = class extends NativeChannel {
+        constructor(name) {
+          super(name);
+          if (/^sb-.*-auth-token$/.test(name))
+            window.__authChannelNames.push(name);
+        }
+      };
+      if (!localStorage.getItem("fixture-account-credentials-seeded")) {
+        for (const [actor, keys, provider, model] of [
+          [
+            "guest",
+            { openrouter: "fixture-guest-key" },
+            "openrouter",
+            "arcanea-auto",
+          ],
+          [
+            "user:fixture-account-a",
+            { google: "fixture-account-a-key" },
+            "google",
+            "arcanea-gemini-pro",
+          ],
+          [
+            "user:fixture-account-b",
+            { openai: "fixture-account-b-key" },
+            "openai",
+            "arcanea-gpt5",
+          ],
+        ]) {
+          const suffix = `:v2:${encodeURIComponent(actor)}`;
+          localStorage.setItem(
+            `arcanea-provider-keys${suffix}`,
+            JSON.stringify(keys),
+          );
+          localStorage.setItem(`arcanea-active-provider${suffix}`, provider);
+          localStorage.setItem(`arcanea-active-model${suffix}`, model);
+        }
+        localStorage.setItem(
+          "arcanea-provider-keys",
+          JSON.stringify({ google: "fixture-unassigned-key" }),
+        );
+        localStorage.setItem("fixture-account-credentials-seeded", "true");
+      }
+      const nativeFetch = window.fetch;
+      window.__accountChatAborts = 0;
+      window.fetch = function (input, init) {
+        if (input === "/api/ai/chat")
+          init?.signal?.addEventListener(
+            "abort",
+            () => window.__accountChatAborts++,
+            { once: true },
+          );
+        return nativeFetch.call(this, input, init);
+      };
+    });
+    page = await context.newPage();
+    page.setDefaultTimeout(15000);
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.route("**/api/conversations**", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ conversations: [] }),
+      }),
+    );
+    await page.route("https://*.supabase.co/**", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: "[]",
+      }),
+    );
+    const posts = [];
+    let pending = false;
+    await page.route("**/api/ai/chat", async (route) => {
+      if (route.request().method() === "GET") {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({ status: "unconfigured" }),
+        });
+        return;
+      }
+      assert.equal(route.request().method(), "POST");
+      posts.push(route.request().postDataJSON());
+      if (pending)
+        await new Promise((resolve) => {
+          releasePending = resolve;
+        });
+      await route
+        .fulfill({
+          status: 401,
+          contentType: "application/json",
+          body: JSON.stringify({ error: "Fixture account request denied." }),
+        })
+        .catch(() => {});
+    });
+    async function event(actor, name = actor ? "SIGNED_IN" : "SIGNED_OUT") {
+      await expect
+        .poll(() => page.evaluate(() => window.__authChannelNames?.length || 0))
+        .toBeGreaterThan(0);
+      await page.evaluate(
+        ({ actor, name }) => {
+          const channel = new window.__nativeAuthChannel(
+            window.__authChannelNames[0],
+          );
+          const session = actor
+            ? {
+                access_token: "synthetic-access-token",
+                refresh_token: "synthetic-refresh-token",
+                token_type: "bearer",
+                expires_in: 3600,
+                expires_at: Math.floor(Date.now() / 1000) + 3600,
+                user: {
+                  id: actor,
+                  aud: "authenticated",
+                  role: "authenticated",
+                  email: `${actor}@example.invalid`,
+                  app_metadata: {},
+                  user_metadata: {},
+                  created_at: "2026-10-11T00:00:00Z",
+                },
+              }
+            : null;
+          channel.postMessage({ event: name, session });
+          setTimeout(() => channel.close(), 50);
+        },
+        { actor, name },
+      );
+    }
+    await page.goto(base + "/settings/providers", {
+      waitUntil: "domcontentloaded",
+    });
+    // A browser-only session event cannot authorize a protected server route.
+    // Keep that denial; authenticated settings need the approved real fixture.
+    await expect(page).toHaveURL(
+      /\/auth\/login\?next=%2Fsettings%2Fproviders$/,
+    );
+
+    await page.goto(base + "/chat", { waitUntil: "domcontentloaded" });
+    const input = page.getByRole("textbox", {
+      name: "Message input",
+      exact: true,
+    });
+    await expect(input).toBeVisible();
+    await event("fixture-account-a");
+    // AgentHeader renders this picker; CompactModelPicker is currently unused.
+    const modelButton = (label) =>
+      page.locator('button, [role="menuitemradio"]').filter({
+        has: page.locator("span").filter({ hasText: new RegExp(`^${label}$`) }),
+      });
+    // Distinct initial models wait for the actual account-specific state.
+    await expect(modelButton("Gemini Pro")).toBeVisible();
+    await modelButton("Gemini Pro").click();
+    await modelButton("Flash").click();
+    await expect(modelButton("Flash")).toBeVisible();
+    await input.fill("Same-account draft fixture");
+    await event("fixture-account-a", "TOKEN_REFRESHED");
+    await expect(input).toHaveValue("Same-account draft fixture");
+    pending = true;
+    await input.fill("Account A private fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(1);
+    assert.equal(posts[0].clientApiKey, "fixture-account-a-key");
+    assert.equal(posts[0].gatewayModel, "arcanea-gemini-flash");
+    await event("fixture-account-b");
+    await expect(modelButton("GPT-5")).toBeVisible();
+    await expect
+      .poll(() => page.evaluate(() => window.__accountChatAborts))
+      .toBe(1);
+    releasePending();
+    pending = false;
+    await expect(input).toHaveValue("");
+    await expect(
+      page.getByText("Account A private fixture request", { exact: true }),
+    ).toHaveCount(0);
+    await input.fill("Account B fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(2);
+    assert.equal(posts[1].clientApiKey, "fixture-account-b-key");
+    assert.equal(posts[1].gatewayModel, "arcanea-gpt5");
+    await event("fixture-account-a");
+    await expect(modelButton("Flash")).toBeVisible();
+    await event(null);
+    await expect(modelButton("Auto")).toBeVisible();
+    await input.fill("Guest fixture request");
+    await page
+      .getByRole("button", { name: "Send message", exact: true })
+      .click();
+    await expect.poll(() => posts.length).toBe(3);
+    assert.equal(posts[2].clientApiKey, "fixture-guest-key");
+    assert.equal(posts[2].provider, "openrouter");
+    assert.equal(
+      await page.evaluate(
+        () => JSON.parse(localStorage.getItem("arcanea-provider-keys")).google,
+      ),
+      "fixture-unassigned-key",
+    );
+    assert.deepEqual(errors, []);
+    return {
+      accountCredentialIsolation: true,
+      sameActorRefreshKeepsDraft: true,
+      guestSettingsServerDenied: true,
+      authenticatedSettingsUiChecked: false,
+      accountReturnRestoresModel: true,
+      legacyCredentialsPreservedUnused: true,
+      accountSwitchCancelsChat: true,
+      accountChatCredentialSelection: true,
+      syntheticAuthEvents: true,
+      realLogin: false,
+      providerRequests: 0,
+    };
+  } catch (error) {
+    if (page) {
+      await fs.mkdir("screenshots", { recursive: true });
+      await fs
+        .writeFile(
+          `screenshots/account-credentials-${mode.name}-failure.json`,
+          JSON.stringify(
+            {
+              sourceCommit: process.env.GITHUB_SHA || null,
+              mode: mode.name,
+              url: page.url(),
+              error: error.message,
+              snapshot: await page.locator("body").ariaSnapshot(),
+              syntheticAuthEvents: true,
+              realLogin: false,
+              providerRequests: 0,
+            },
+            null,
+            2,
+          ),
+        )
+        .catch(() => {});
+    }
+    throw error;
+  } finally {
+    releasePending?.();
+    await context.close();
+  }
+}
+
 async function main() {
   const browser = await chromium.launch();
   const evidence = [];
@@ -660,7 +923,7 @@ async function main() {
         });
         await page.evaluate(() =>
           localStorage.setItem(
-            "arcanea-provider-keys",
+            "arcanea-provider-keys:v2:guest",
             JSON.stringify({
               groq: "test-customer-groq",
               openai: "sk-test-key",
@@ -729,6 +992,7 @@ async function main() {
         mode: mode.name,
         ...(await verifyChatRecovery(browser, mode)),
         ...(await verifyRoomRecovery(browser, mode)),
+        ...(await verifyAccountCredentials(browser, mode)),
       });
     }
   } finally {

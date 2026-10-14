@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
+import type { createCredentialScope } from "@/lib/ai/provider-preferences";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -60,7 +62,27 @@ type CognitionPacket = {
   packet_id?: string;
 };
 
-export function RoomClient({ persona: initial }: { persona: PersonaId }) {
+export function RoomClient(props: { persona: PersonaId }) {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  return (
+    <RoomSession
+      key={token.revision}
+      {...props}
+      credentialScope={credentialScope}
+      credentialToken={token}
+    />
+  );
+}
+function RoomSession({
+  persona: initial,
+  credentialScope,
+  credentialToken,
+}: {
+  persona: PersonaId;
+  credentialScope: ReturnType<typeof createCredentialScope>;
+  credentialToken: ReturnType<ReturnType<typeof createCredentialScope>["get"]>;
+}) {
   const [personaId, setPersonaId] = useState<PersonaId>(initial);
   const [state, setState] = useState<RoomState>("idle");
   const [transcript, setTranscript] = useState("");
@@ -132,10 +154,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
   const refreshVoiceKeys = useCallback(() => {
     try {
-      const keys = voiceCredentialHeaders();
+      const keys = voiceCredentialHeaders(credentialToken.actor);
       setHasBYOK(
         Boolean(
-          keys["x-groq-key"] || keys["x-openai-key"] || getStoredKeys().eleven,
+          keys["x-groq-key"] ||
+          keys["x-openai-key"] ||
+          getStoredKeys(credentialToken.actor).eleven,
         ),
       );
     } catch {
@@ -227,7 +251,10 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           autoGainControl: true,
         },
       });
-      if (!roomMountedRef.current) {
+      if (
+        !roomMountedRef.current ||
+        !credentialScope.isCurrent(credentialToken)
+      ) {
         stream.getTracks().forEach((track) => track.stop());
         return false;
       }
@@ -443,6 +470,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
   const converse = useCallback(
     async (blob: Blob, mime: string) => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
       busyRef.current = true;
       latencyT0Ref.current = performance.now();
       logStage("mic_stop");
@@ -450,9 +478,22 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       setTranscript("");
       setReply("");
       const ctl = new AbortController();
+      const customerFetch = async (
+        input: RequestInfo | URL,
+        init: RequestInit,
+      ) => {
+        if (!credentialScope.isCurrent(credentialToken) || ctl.signal.aborted)
+          throw new DOMException("Account changed", "AbortError");
+        const response = await fetch(input, init);
+        if (!credentialScope.isCurrent(credentialToken) || ctl.signal.aborted) {
+          await response.body?.cancel().catch(() => {});
+          throw new DOMException("Account changed", "AbortError");
+        }
+        return response;
+      };
       abortRef.current = ctl;
       try {
-        const keys = getStoredKeys();
+        const keys = getStoredKeys(credentialToken.actor);
         const ext = mime.includes("webm")
           ? "webm"
           : mime.includes("mp4")
@@ -461,10 +502,10 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
         // Customer audio keys travel only to the same-origin server routes.
         // Canonical settings take priority over the legacy room key.
-        const audioHeaders = voiceCredentialHeaders();
+        const audioHeaders = voiceCredentialHeaders(credentialToken.actor);
         const form = new FormData();
         form.append("audio", blob, `mic.${ext}`);
-        const r = await fetch("/api/ai/transcribe", {
+        const r = await customerFetch("/api/ai/transcribe", {
           method: "POST",
           headers: audioHeaders,
           body: form,
@@ -496,7 +537,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         // The private bridge retains its own admission. Public room chat uses
         // the existing customer-key route without unavailable host tools.
         if (useBridge) {
-          const cogRes = await fetch("/api/voice/cognition", {
+          const cogRes = await customerFetch("/api/voice/cognition", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({
@@ -538,7 +579,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
             packet_id: cog.packet_id,
           });
         } else {
-          const chatRes = await fetch("/api/ai/chat", {
+          const chatRes = await customerFetch("/api/ai/chat", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({
@@ -631,17 +672,20 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         // 3 — speak
         let audioBlob: Blob;
         if (keys.eleven) {
+          if (!credentialScope.isCurrent(credentialToken) || ctl.signal.aborted)
+            return;
           audioBlob = await speakWithElevenLabs({
+            signal: ctl.signal,
             text: full.slice(0, 4000),
             voiceId: voiceIdForPersona(persona.voiceKey),
             apiKey: keys.eleven,
           });
         } else {
-          const ttsRes = await fetch("/api/ai/speak", {
+          const ttsRes = await customerFetch("/api/ai/speak", {
             method: "POST",
             headers: {
               "content-type": "application/json",
-              ...voiceCredentialHeaders(),
+              ...voiceCredentialHeaders(credentialToken.actor),
             },
             body: JSON.stringify({ text: full, persona: persona.voiceKey }),
             signal: ctl.signal,
@@ -653,6 +697,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           audioBlob = await ttsRes.blob();
         }
 
+        if (!credentialScope.isCurrent(credentialToken) || ctl.signal.aborted)
+          return;
         logStage("tts_ready");
         const url = URL.createObjectURL(audioBlob);
         const audio = new Audio();
@@ -713,7 +759,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   );
 
   const startRecording = useCallback(async () => {
-    if (busyRef.current || recordingRef.current || !roomMountedRef.current)
+    if (
+      !credentialScope.isCurrent(credentialToken) ||
+      busyRef.current ||
+      recordingRef.current ||
+      !roomMountedRef.current
+    )
       return;
     try {
       if (!micStreamRef.current) {
@@ -730,7 +781,11 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           await micCtxRef.current.resume();
         } catch {}
       }
-      if (!roomMountedRef.current) return;
+      if (
+        !roomMountedRef.current ||
+        !credentialScope.isCurrent(credentialToken)
+      )
+        return;
 
       const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
         ? "audio/webm;codecs=opus"

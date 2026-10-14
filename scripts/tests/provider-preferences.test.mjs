@@ -75,18 +75,18 @@ test("a selected model receives only its own provider key", () => {
   assert.equal(getModelKey({ openai: "only-openai" }, "openai"), "only-openai");
 });
 test("saving provider preferences clears an overriding model selection", () => {
-  const s = storage({ "arcanea-active-model": "old-model" });
-  saveProviderPreferences(s, { openai: "test-only" }, "openai");
-  assert.equal(s.getItem("arcanea-active-model"), null);
-  assert.deepEqual(readProviderPreferences(s), {
+  const s = storage({ "arcanea-active-model:v2:guest": "old-model" });
+  saveProviderPreferences(s, { openai: "test-only" }, "openai", "guest");
+  assert.equal(s.getItem("arcanea-active-model:v2:guest"), null);
+  assert.deepEqual(readProviderPreferences(s, "guest"), {
     keys: { openai: "test-only" },
     activeId: "openai",
   });
 });
 test("blocked storage reports failure and does not pretend to save", () => {
   const s = storage({
-    "arcanea-provider-keys": '{"google":"original"}',
-    "arcanea-active-provider": "google",
+    "arcanea-provider-keys:v2:guest": '{"google":"original"}',
+    "arcanea-active-provider:v2:guest": "google",
   });
   const write = s.setItem;
   let calls = 0;
@@ -94,30 +94,33 @@ test("blocked storage reports failure and does not pretend to save", () => {
     if (++calls === 2) throw new Error("Quota exceeded");
     return write(k, v);
   };
-  assert.throws(() => saveProviderPreferences(s, { openai: "new" }, "openai"));
-  assert.deepEqual(readProviderPreferences(s), {
+  assert.throws(() =>
+    saveProviderPreferences(s, { openai: "new" }, "openai", "guest"),
+  );
+  assert.deepEqual(readProviderPreferences(s, "guest"), {
     keys: { google: "original" },
     activeId: "google",
   });
 });
 test("a stale form cannot restore a key removed in another tab", () => {
   const s = storage({
-    "arcanea-provider-keys": '{"openai":"removed-key"}',
-    "arcanea-active-provider": "openai",
+    "arcanea-provider-keys:v2:guest": '{"openai":"removed-key"}',
+    "arcanea-active-provider:v2:guest": "openai",
   });
-  const expectedState = JSON.stringify(readProviderPreferences(s));
-  s.setItem("arcanea-provider-keys", "{}");
+  const expectedState = JSON.stringify(readProviderPreferences(s, "guest"));
+  s.setItem("arcanea-provider-keys:v2:guest", "{}");
   assert.throws(
     () =>
       saveProviderPreferences(
         s,
         { openai: "removed-key" },
         "openai",
+        "guest",
         expectedState,
       ),
     /another tab/,
   );
-  assert.deepEqual(readProviderPreferences(s).keys, {});
+  assert.deepEqual(readProviderPreferences(s, "guest").keys, {});
 });
 
 test("arena model copy carries no rankings or unsourced benchmark figures", () => {

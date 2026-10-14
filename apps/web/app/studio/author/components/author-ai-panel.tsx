@@ -6,6 +6,9 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { readProviderPreferences } from "@/lib/ai/provider-preferences";
 import { validateCustomerKey } from "@/lib/gateway/credential-policy.mjs";
+import { useAuth } from "@/lib/auth/context";
+import type { createCredentialScope } from "@/lib/ai/provider-preferences";
+type CredentialScope = ReturnType<typeof createCredentialScope>;
 
 type ModelTier = "haiku" | "sonnet" | "opus";
 interface AuthorAIPanelProps {
@@ -30,12 +33,31 @@ function messageText(msg: { parts?: Array<{ type: string; text?: string }> }) {
       .join("") || ""
   );
 }
-export function AuthorAIPanel({
+export function AuthorAIPanel(props: AuthorAIPanelProps) {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  if (!token.actor) return <p role="status">Loading your account…</p>;
+  return (
+    <AuthorAIPanelSession
+      key={token.revision}
+      {...props}
+      credentialScope={credentialScope}
+      credentialToken={token}
+    />
+  );
+}
+
+function AuthorAIPanelSession({
   bookSlug,
   currentChapter,
   getEditorText,
   draftReady = true,
-}: AuthorAIPanelProps) {
+  credentialScope,
+  credentialToken,
+}: AuthorAIPanelProps & {
+  credentialScope: CredentialScope;
+  credentialToken: ReturnType<CredentialScope["get"]>;
+}) {
   const [input, setInput] = useState("");
   const inputRef = useRef("");
   const sentRef = useRef("");
@@ -49,10 +71,10 @@ export function AuthorAIPanel({
         api: "/api/ai/author-chat",
         headers: () => {
           try {
+            if (!credentialScope.isCurrent(credentialToken)) throw new Error();
             const store = window.localStorage;
-            const key =
-              readProviderPreferences(store).keys.anthropic ||
-              store.getItem("arcanea-author-api-key");
+            const key = readProviderPreferences(store, credentialToken.actor)
+              .keys.anthropic;
             if (!key) throw new Error();
             return { "x-anthropic-key": validateCustomerKey(key) };
           } catch {
@@ -62,6 +84,10 @@ export function AuthorAIPanel({
           }
         },
         fetch: async (url, options) => {
+          if (!credentialScope.isCurrent(credentialToken))
+            throw new AuthorRecoveryError(
+              "Your account changed. Retry from your current account.",
+            );
           const response = await fetch(url, options);
           if (!response.ok) {
             await response.body?.cancel().catch(() => {});
@@ -82,6 +108,7 @@ export function AuthorAIPanel({
   const { messages, sendMessage, status, stop, clearError } = useChat({
     transport,
     onError: (error) => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
       sendingRef.current = false;
       setRecovery(
         error instanceof AuthorRecoveryError
@@ -90,6 +117,7 @@ export function AuthorAIPanel({
       );
     },
     onFinish: ({ isAbort, isError }) => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
       sendingRef.current = false;
       if (!isAbort && !isError && inputRef.current === sentRef.current) {
         inputRef.current = "";
@@ -108,6 +136,7 @@ export function AuthorAIPanel({
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
   const submit = useCallback(() => {
+    if (!credentialScope.isCurrent(credentialToken)) return;
     if (!draftReady || busy || sendingRef.current || !inputRef.current.trim())
       return;
     sendingRef.current = true;
@@ -125,6 +154,7 @@ export function AuthorAIPanel({
         },
       },
     ).catch(() => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
       sendingRef.current = false;
       setRecovery(
         "Author request failed. Your question is still here; retry or check Settings → Providers.",
@@ -139,6 +169,8 @@ export function AuthorAIPanel({
     getEditorText,
     draftReady,
     busy,
+    credentialScope,
+    credentialToken,
   ]);
   const control =
     "min-h-11 rounded-lg border border-white/15 px-3 text-sm text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40";

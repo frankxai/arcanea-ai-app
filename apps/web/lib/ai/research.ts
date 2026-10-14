@@ -11,8 +11,9 @@
  *   const result = await conductResearch('How does WebGPU compare to WebGL?');
  */
 
-import { generateText } from 'ai';
-import { executeSearch, type SearchResponse } from '@/lib/search/providers';
+import { generateText } from "ai";
+import type { AnthropicProviderOptions } from "@ai-sdk/anthropic";
+import { executeSearch, type SearchResponse } from "@/lib/search/providers";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -20,12 +21,12 @@ import { executeSearch, type SearchResponse } from '@/lib/search/providers';
 
 export interface ResearchEvent {
   step:
-    | 'planning'
-    | 'searching'
-    | 'reading'
-    | 'synthesizing'
-    | 'complete'
-    | 'error';
+    | "planning"
+    | "searching"
+    | "reading"
+    | "synthesizing"
+    | "complete"
+    | "error";
   detail: string;
   progress?: number;
   data?: unknown;
@@ -67,7 +68,7 @@ interface SearchBucket {
  */
 export async function conductResearch(
   question: string,
-  maxSearches: number = 5
+  maxSearches: number = 5,
 ): Promise<ResearchResult> {
   const clampedMax = Math.min(Math.max(maxSearches, 1), 10);
 
@@ -90,7 +91,7 @@ export async function conductResearch(
       sources.push({
         title: r.title,
         url: r.url,
-        snippet: (r.content || '').slice(0, 200),
+        snippet: (r.content || "").slice(0, 200),
       });
       if (sources.length >= 20) break;
     }
@@ -106,16 +107,21 @@ export async function conductResearch(
 
 async function generateSubQueries(
   question: string,
-  count: number
+  count: number,
 ): Promise<string[]> {
-  const model = await getModel('fast');
+  const model = await getModel("fast");
 
   const { text } = await generateText({
     model,
     system:
-      'You decompose research questions into specific, focused web-search queries. ' +
-      'Return ONLY a JSON array of strings. No explanation, no markdown fences.',
+      "You decompose research questions into specific, focused web-search queries. " +
+      "Return ONLY a JSON array of strings. No explanation, no markdown fences.",
     prompt: `Break this into ${count} focused search queries that together cover the topic comprehensively:\n\n"${question}"`,
+    // Applies only when the fast tier falls back to Claude Sonnet 5.5, whose
+    // thinking counts toward maxOutputTokens; other providers ignore it.
+    providerOptions: {
+      anthropic: { effort: "low" } satisfies AnthropicProviderOptions,
+    },
     maxOutputTokens: 500,
   });
 
@@ -123,22 +129,22 @@ async function generateSubQueries(
     const match = text.match(/\[[\s\S]*\]/);
     if (match) {
       const parsed = JSON.parse(match[0]) as string[];
-      return parsed.filter((q) => typeof q === 'string' && q.length > 3).slice(0, count);
+      return parsed
+        .filter((q) => typeof q === "string" && q.length > 3)
+        .slice(0, count);
     }
   } catch {
     // Fallback: split lines
   }
 
   return text
-    .split('\n')
-    .map((l) => l.replace(/^\d+[.)]\s*/, '').trim())
+    .split("\n")
+    .map((l) => l.replace(/^\d+[.)]\s*/, "").trim())
     .filter((l) => l.length > 5)
     .slice(0, count);
 }
 
-async function runParallelSearches(
-  queries: string[]
-): Promise<SearchBucket[]> {
+async function runParallelSearches(queries: string[]): Promise<SearchBucket[]> {
   const promises = queries.map(async (query): Promise<SearchBucket> => {
     try {
       const response: SearchResponse = await executeSearch(query, {
@@ -163,23 +169,24 @@ async function runParallelSearches(
 
 async function synthesizeReport(
   question: string,
-  searchResults: SearchBucket[]
+  searchResults: SearchBucket[],
 ): Promise<string> {
-  const model = await getModel('quality');
+  const model = await getModel("quality");
 
   // Build context from search results
   const context = searchResults
     .map(({ query, results }) => {
-      if (results.length === 0) return `### Search: "${query}"\nNo results found.`;
+      if (results.length === 0)
+        return `### Search: "${query}"\nNo results found.`;
       const snippets = results
         .map(
           (s, i) =>
-            `[${i + 1}] "${s.title}" (${s.url})\n${s.content || '(no content)'}`
+            `[${i + 1}] "${s.title}" (${s.url})\n${s.content || "(no content)"}`,
         )
-        .join('\n\n');
+        .join("\n\n");
       return `### Search: "${query}"\n${snippets}`;
     })
-    .join('\n\n---\n\n');
+    .join("\n\n---\n\n");
 
   const { text } = await generateText({
     model,
@@ -202,39 +209,41 @@ Be thorough, accurate, and always cite your sources with links. If results are c
 // Model selection — dynamic imports to avoid bundle bloat
 // ---------------------------------------------------------------------------
 
-async function getModel(tier: 'fast' | 'quality') {
-  if (tier === 'fast') {
+async function getModel(tier: "fast" | "quality") {
+  if (tier === "fast") {
     // Prefer Google Gemini Flash for speed/cost
     const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     if (googleKey) {
-      const { createGoogleGenerativeAI } = await import('@ai-sdk/google');
-      return createGoogleGenerativeAI({ apiKey: googleKey })('gemini-2.5-flash');
+      const { createGoogleGenerativeAI } = await import("@ai-sdk/google");
+      return createGoogleGenerativeAI({ apiKey: googleKey })(
+        "gemini-2.5-flash",
+      );
     }
     const openaiKey = process.env.OPENAI_API_KEY;
     if (openaiKey) {
-      const { createOpenAI } = await import('@ai-sdk/openai');
-      return createOpenAI({ apiKey: openaiKey })('gpt-4o-mini');
+      const { createOpenAI } = await import("@ai-sdk/openai");
+      return createOpenAI({ apiKey: openaiKey })("gpt-4o-mini");
     }
   }
 
   // Quality tier — prefer Anthropic, then Google, then OpenAI
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
   if (anthropicKey) {
-    const { createAnthropic } = await import('@ai-sdk/anthropic');
-    return createAnthropic({ apiKey: anthropicKey })('claude-sonnet-4-6');
+    const { createAnthropic } = await import("@ai-sdk/anthropic");
+    return createAnthropic({ apiKey: anthropicKey })("claude-sonnet-5-5");
   }
   const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
   if (googleKey) {
-    const { createGoogleGenerativeAI } = await import('@ai-sdk/google');
-    return createGoogleGenerativeAI({ apiKey: googleKey })('gemini-2.5-flash');
+    const { createGoogleGenerativeAI } = await import("@ai-sdk/google");
+    return createGoogleGenerativeAI({ apiKey: googleKey })("gemini-2.5-flash");
   }
   const openaiKey = process.env.OPENAI_API_KEY;
   if (openaiKey) {
-    const { createOpenAI } = await import('@ai-sdk/openai');
-    return createOpenAI({ apiKey: openaiKey })('gpt-4o');
+    const { createOpenAI } = await import("@ai-sdk/openai");
+    return createOpenAI({ apiKey: openaiKey })("gpt-4o");
   }
 
   throw new Error(
-    'No AI provider configured for research. Set GOOGLE_GENERATIVE_AI_API_KEY, ANTHROPIC_API_KEY, or OPENAI_API_KEY.'
+    "No AI provider configured for research. Set GOOGLE_GENERATIVE_AI_API_KEY, ANTHROPIC_API_KEY, or OPENAI_API_KEY.",
   );
 }
