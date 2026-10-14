@@ -107,6 +107,106 @@ test("Anthropic compatibility chat drops sampling parameters for Claude 5.5", as
   assert.equal(calls[0].body.model, "claude-sonnet-5-5");
   assert.equal(calls[0].body.temperature, undefined);
   assert.equal(calls[0].body.top_p, undefined);
+  assert.equal(calls[0].headers.get("anthropic-version"), "2023-06-01");
+  // Sonnet 5.5 opts into server-side refusal fallback.
+  assert.equal(calls[0].body.fallbacks, "default");
+  assert.equal(
+    calls[0].headers.get("anthropic-beta"),
+    "server-side-fallback-2026-07-01",
+  );
+});
+
+test("Anthropic compatibility chat sends no fallback for Haiku 5.5", async () => {
+  const response = await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-haiku",
+        messages: [{ role: "user", content: "Draft a scene." }],
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].body.model, "claude-haiku-5-5");
+  assert.equal(calls[0].headers.get("anthropic-version"), "2023-06-01");
+  assert.equal(calls[0].body.fallbacks, undefined);
+  assert.equal(calls[0].headers.get("anthropic-beta"), null);
+});
+
+test("Anthropic refusal maps to content_filter instead of stop", async () => {
+  globalThis.fetch = async () =>
+    Response.json({
+      id: "msg_refusal",
+      type: "message",
+      role: "assistant",
+      content: [],
+      model: "claude-sonnet-5-5",
+      stop_reason: "refusal",
+      stop_details: { type: "refusal", category: "cyber" },
+      usage: { input_tokens: 3, output_tokens: 0 },
+    });
+  const response = await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        messages: [{ role: "user", content: "Draft a scene." }],
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  const body = (await response.json()) as {
+    choices: Array<{ message: { content: string }; finish_reason: string }>;
+  };
+  assert.equal(body.choices[0].message.content, "");
+  assert.equal(body.choices[0].finish_reason, "content_filter");
+});
+
+test("Anthropic streaming refusal ends once with content_filter", async () => {
+  const events = [
+    {
+      type: "message_start",
+      message: {
+        id: "msg_stream_refusal",
+        type: "message",
+        role: "assistant",
+        content: [],
+        model: "claude-sonnet-5-5",
+        stop_reason: null,
+        usage: { input_tokens: 3, output_tokens: 0 },
+      },
+    },
+    {
+      type: "message_delta",
+      delta: { stop_reason: "refusal", stop_sequence: null },
+      usage: { output_tokens: 0 },
+    },
+    { type: "message_stop" },
+  ];
+  globalThis.fetch = async () =>
+    new Response(
+      events
+        .map(
+          (event) => `event: ${event.type}\ndata: ${JSON.stringify(event)}\n\n`,
+        )
+        .join(""),
+      { headers: { "content-type": "text/event-stream" } },
+    );
+  const response = await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        messages: [{ role: "user", content: "Draft a scene." }],
+        stream: true,
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  const text = await response.text();
+  assert.match(text, /"finish_reason":"content_filter"/);
+  assert.equal(text.match(/\[DONE\]/g)?.length, 1);
 });
 
 test("malformed credential maps fail before provider execution", async () => {
@@ -468,6 +568,11 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
     assert.equal(sent.model, "claude-sonnet-5-5");
     // Claude 5.5 models reject sampling parameters with a 400.
     assert.equal(sent.temperature, undefined);
+    assert.equal(sent.fallbacks, "default");
+    assert.match(
+      new Headers(init?.headers).get("anthropic-beta") ?? "",
+      /server-side-fallback-2026-07-01/,
+    );
     const events = [
       {
         type: "message_start",
@@ -532,6 +637,56 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
     "private, no-store, no-transform",
   );
   assert.equal(response.headers.get("x-accel-buffering"), "no");
+});
+
+test("UI chat shows a notice when Claude declines after the fallback", async () => {
+  const ui = await import("../../../app/api/ai/chat/route");
+  const { REFUSAL_NOTICE } = await import("../../ai/claude-safeguards");
+  globalThis.fetch = async () => {
+    const events = [
+      {
+        type: "message_start",
+        message: {
+          id: "msg_refusal",
+          type: "message",
+          role: "assistant",
+          content: [],
+          model: "claude-sonnet-5-5",
+          stop_reason: null,
+          stop_sequence: null,
+          usage: { input_tokens: 3, output_tokens: 0 },
+        },
+      },
+      {
+        type: "message_delta",
+        delta: { stop_reason: "refusal", stop_sequence: null },
+        usage: { output_tokens: 0 },
+      },
+      { type: "message_stop" },
+    ];
+    return new Response(
+      events
+        .map(
+          (event) => `event: ${event.type}\ndata: ${JSON.stringify(event)}\n\n`,
+        )
+        .join(""),
+      { headers: { "content-type": "text/event-stream" } },
+    );
+  };
+  const response = await ui.POST(
+    request(
+      {},
+      {
+        provider: "anthropic",
+        clientApiKey: "test-ui-customer-key",
+        messages: [{ role: "user", content: "Draft a scene." }],
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  const content = await response.text();
+  assert.ok(content.includes(REFUSAL_NOTICE));
+  assert.match(content, /"finishReason":"content-filter"/);
 });
 
 test("UI provider failures after returning the response have a fixed private stream error", async () => {

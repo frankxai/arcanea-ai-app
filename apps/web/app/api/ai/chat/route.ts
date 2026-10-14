@@ -15,6 +15,10 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { createArcanea } from "@/lib/ai/arcanea-intelligence";
 import {
+  claudeFallbackOptions,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
+import {
   GATEWAY_MODELS,
   EXTENDED_PROVIDERS,
   claudeRejectsSamplingParams,
@@ -902,6 +906,8 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
         ? {}
         : { temperature: temperature ?? 0.7 }),
       maxOutputTokens: maxTokens ?? 8192,
+      providerOptions: { anthropic: claudeFallbackOptions(resolvedModelId) },
+      experimental_transform: refusalNoticeTransform(),
       onError: () => {
         console.error("Chat provider stream failed.");
       },

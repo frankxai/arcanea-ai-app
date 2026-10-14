@@ -25,6 +25,7 @@ import { generateText } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { LUMINORS } from "@/lib/luminors/config";
 import { BENCHMARKS } from "@/lib/eval/benchmarks";
+import { claudeFallbackOptions, isRefusal } from "@/lib/ai/claude-safeguards";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -82,9 +83,11 @@ export async function POST(request: Request) {
   const anthropic = createAnthropic({ apiKey });
 
   // Sonnet for the Luminor under test (representative quality)
-  const testModel = anthropic("claude-sonnet-5-5");
+  const testModelId = "claude-sonnet-5-5";
+  const testModel = anthropic(testModelId);
   // Opus for the judge (highest quality evaluation)
-  const judgeModel = anthropic("claude-opus-5-5");
+  const judgeModelId = "claude-opus-5-5";
+  const judgeModel = anthropic(judgeModelId);
 
   // Run all tasks in parallel for speed
   const taskResults = await Promise.all(
@@ -97,7 +100,22 @@ export async function POST(request: Request) {
         system: luminor.systemPrompt,
         prompt: task.prompt,
         // No temperature: Claude 5.5 models reject sampling parameters with a 400.
+        providerOptions: { anthropic: claudeFallbackOptions(testModelId) },
       });
+
+      // A refusal that survived the server-side fallback has no answer to judge.
+      if (isRefusal(response.finishReason)) {
+        return {
+          taskId: task.id,
+          prompt: task.prompt,
+          response: "",
+          score: 0,
+          judgeNotes: "Declined by the model's safety checks; not judged.",
+          durationMs: Date.now() - taskStarted,
+          tokensIn: response.usage?.inputTokens ?? 0,
+          tokensOut: response.usage?.outputTokens ?? 0,
+        } satisfies TaskResult;
+      }
 
       // 2. Judge the response
       const judgment = await generateText({
@@ -118,6 +136,7 @@ ${task.prompt}
 ${response.text}
 
 ## Your Evaluation (JSON only)`,
+        providerOptions: { anthropic: claudeFallbackOptions(judgeModelId) },
       });
 
       // Parse judge output

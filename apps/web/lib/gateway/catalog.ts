@@ -28,6 +28,21 @@ export function claudeRejectsSamplingParams(modelId: string): boolean {
   );
 }
 
+/** The only Messages API version Anthropic documents. */
+export const ANTHROPIC_API_VERSION = "2023-06-01";
+
+/** Beta header that gates `fallbacks: "default"` on the Messages API. */
+export const CLAUDE_SERVER_FALLBACK_BETA = "server-side-fallback-2026-07-01";
+
+/**
+ * True for bare Claude API model IDs that accept server-side refusal
+ * fallback (`fallbacks: "default"`). Haiku 5.5 has none; OpenRouter slugs
+ * never reach the Claude API, so they never match.
+ */
+export function claudeSupportsServerFallback(modelId: string): boolean {
+  return /^claude-(?:opus-5(?:-5)?|sonnet-5-5|fable-5-1)$/.test(modelId);
+}
+
 export const GATEWAY_MODELS: Record<string, GatewayModel> = {
   "arcanea-opus": {
     provider: "anthropic",

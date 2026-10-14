@@ -21,10 +21,16 @@ import type {
   UsageInfo,
 } from "./types";
 import { PROVIDERS } from "./models";
-import { claudeRejectsSamplingParams } from "./catalog";
+import {
+  ANTHROPIC_API_VERSION,
+  CLAUDE_SERVER_FALLBACK_BETA,
+  claudeRejectsSamplingParams,
+  claudeSupportsServerFallback,
+} from "./catalog";
 import {
   proxySSEStream,
   adaptAnthropicStream,
+  mapAnthropicStopReason,
   createSSEResponse,
   sseHeaders,
   generateCompletionId,
@@ -197,13 +203,21 @@ export async function proxyToAnthropic(
     }));
   }
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "x-api-key": apiKey,
+    "anthropic-version": ANTHROPIC_API_VERSION,
+  };
+  // A declined request re-runs server-side on Anthropic's recommended model
+  // for that refusal category instead of coming back empty.
+  if (claudeSupportsServerFallback(String(body.model))) {
+    anthropicBody.fallbacks = "default";
+    headers["anthropic-beta"] = CLAUDE_SERVER_FALLBACK_BETA;
+  }
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2024-10-22",
-    },
+    headers,
     body: JSON.stringify(anthropicBody),
   });
 
@@ -253,7 +267,7 @@ export async function proxyToAnthropic(
           role: "assistant",
           content,
         },
-        finish_reason: data.stop_reason === "end_turn" ? "stop" : "stop",
+        finish_reason: mapAnthropicStopReason(data.stop_reason),
       },
     ],
     usage: {

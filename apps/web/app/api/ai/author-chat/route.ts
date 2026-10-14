@@ -19,6 +19,10 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit/rate-limiter";
 import { getBookRoot } from "@/lib/content/book-path";
+import {
+  claudeFallbackOptions,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
 import { createClient } from "@/lib/supabase/server";
 import { isBookPublic } from "@/lib/content/book-visibility";
 import {
@@ -461,6 +465,8 @@ export async function POST(req: NextRequest) {
       messages: normalizedMessages,
       // No temperature: Claude 5.5 models reject sampling parameters with a 400.
       maxOutputTokens: 8192,
+      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+      experimental_transform: refusalNoticeTransform(),
       tools,
       maxRetries: 0,
       abortSignal: req.signal,

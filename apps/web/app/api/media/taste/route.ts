@@ -191,6 +191,9 @@ Reply ONLY with JSON: {"canon":N,"design":N,"emotion":N,"technical":N,"uniquenes
     if (!response.ok) return null;
 
     const data = await response.json();
+    // A safety refusal is HTTP 200 with no usable text; Haiku 5.5 has no
+    // server-side fallback, so the image simply goes unscored.
+    if (data.stop_reason === "refusal") return null;
     // The reply can start with a thinking block, so find the text block by type.
     const text =
       (

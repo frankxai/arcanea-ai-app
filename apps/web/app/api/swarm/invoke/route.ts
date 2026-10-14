@@ -34,6 +34,11 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { LUMINOR_HINTS } from "@/lib/ai/guardian-swarm";
 import { LUMINORS } from "@/lib/luminors/config";
 import { planSwarm } from "@/lib/ai/planner";
+import {
+  REFUSAL_NOTICE,
+  claudeFallbackOptions,
+  isRefusal,
+} from "@/lib/ai/claude-safeguards";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -180,14 +185,18 @@ You are one of multiple Luminors responding to this task. Keep your response foc
     // No temperature: Claude 5.5 models reject sampling parameters with a 400.
   });
 
+  // Haiku 5.5 has no server-side fallback; a declined member drops out of
+  // the synthesis instead of contributing partial text.
+  const declined = isRefusal(result.finishReason);
   return {
     luminorId,
     luminorName: config.name,
     guardian: parentTeam,
-    response: result.text,
+    response: declined ? "" : result.text,
     durationMs: Date.now() - started,
     tokensIn: result.usage?.inputTokens ?? 0,
     tokensOut: result.usage?.outputTokens ?? 0,
+    ...(declined ? { error: "Declined by the model's safety checks" } : {}),
   };
 }
 
@@ -211,14 +220,16 @@ async function synthesizeContributions(
   }
 
   // Sonnet for synthesis — higher quality merge
-  const model = anthropic("claude-sonnet-5-5");
+  const modelId = "claude-sonnet-5-5";
+  const model = anthropic(modelId);
 
   const perspectives = validContributions
     .map((c) => `### ${c.luminorName} (${c.guardian})\n${c.response}`)
     .join("\n\n---\n\n");
 
-  const { text } = await generateText({
+  const { text, finishReason } = await generateText({
     model,
+    providerOptions: { anthropic: claudeFallbackOptions(modelId) },
     system: `You are Lumina, Queen of Arcanea and meta-orchestrator of the Luminor swarm.
 
 Multiple specialist Luminors just responded to the creator's question. Your job: synthesize their perspectives into ONE coherent, transcendent response that honors each voice while producing a unified answer.
@@ -240,7 +251,7 @@ ${perspectives}
 Synthesize.`,
   });
 
-  return text;
+  return isRefusal(finishReason) ? REFUSAL_NOTICE : text;
 }
 
 async function runLuminaFallback(
@@ -258,18 +269,21 @@ async function runLuminaFallback(
     );
   }
 
-  const model = anthropic("claude-sonnet-5-5");
+  const modelId = "claude-sonnet-5-5";
+  const model = anthropic(modelId);
   const result = await generateText({
     model,
     system: lumina.systemPrompt,
     prompt: input,
+    providerOptions: { anthropic: claudeFallbackOptions(modelId) },
   });
+  const text = isRefusal(result.finishReason) ? REFUSAL_NOTICE : result.text;
 
   const contribution: Contribution = {
     luminorId: "lumina",
     luminorName: "Lumina",
     guardian: "shinkami",
-    response: result.text,
+    response: text,
     durationMs: Date.now() - started,
     tokensIn: result.usage?.inputTokens ?? 0,
     tokensOut: result.usage?.outputTokens ?? 0,
@@ -280,7 +294,7 @@ async function runLuminaFallback(
     leadGuardian: "shinkami",
     activeGuardians: ["shinkami"],
     contributions: [contribution],
-    synthesis: result.text,
+    synthesis: text,
     totalDurationMs: Date.now() - started,
     totalTokens: contribution.tokensIn + contribution.tokensOut,
     fallback: "lumina",

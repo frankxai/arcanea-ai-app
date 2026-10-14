@@ -35,6 +35,12 @@ import { LUMINORS } from "@/lib/luminors/config";
 import { planSwarm, type SwarmPlan } from "@/lib/ai/planner";
 import { LUMINOR_HINTS } from "@/lib/ai/guardian-swarm";
 import { buildLuminorTools } from "@/lib/luminors/tools";
+import {
+  REFUSAL_NOTICE,
+  claudeFallbackOptions,
+  isRefusal,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
@@ -232,6 +238,7 @@ ${luminor.reason}`;
               let fullText = "";
               let tokensIn = 0;
               let tokensOut = 0;
+              let declined = false;
               const toolCalls: Array<{
                 toolName: string;
                 input: unknown;
@@ -279,6 +286,7 @@ ${luminor.reason}`;
                   ).totalUsage;
                   tokensIn = usage?.inputTokens ?? 0;
                   tokensOut = usage?.outputTokens ?? 0;
+                  declined = isRefusal(chunk.finishReason);
                 } else if (chunk.type === "error") {
                   const msg = (chunk as { error?: unknown }).error;
                   emit({
@@ -291,6 +299,18 @@ ${luminor.reason}`;
                     luminorId: luminor.id,
                   });
                 }
+              }
+
+              // Haiku 5.5 has no server-side fallback; a declined member
+              // drops out of the synthesis instead of contributing partial text.
+              if (declined) {
+                fullText = "";
+                emit({
+                  type: "error",
+                  message: REFUSAL_NOTICE,
+                  scope: "luminor",
+                  luminorId: luminor.id,
+                });
               }
 
               totalTokens += tokensIn + tokensOut;
@@ -355,8 +375,12 @@ ${luminor.reason}`;
               // Sonnet 5.5 rejects sampling parameters; low effort keeps thinking
               // from consuming the 1500-token output budget.
               providerOptions: {
-                anthropic: { effort: "low" } satisfies AnthropicProviderOptions,
+                anthropic: {
+                  effort: "low",
+                  ...claudeFallbackOptions("claude-sonnet-5-5"),
+                } satisfies AnthropicProviderOptions,
               },
+              experimental_transform: refusalNoticeTransform(),
               maxOutputTokens: 1500,
               system: `You are Lumina, meta-orchestrator of the Luminor swarm.
 

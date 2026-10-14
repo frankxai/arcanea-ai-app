@@ -14,6 +14,11 @@
 import { generateText } from "ai";
 import type { AnthropicProviderOptions } from "@ai-sdk/anthropic";
 import { executeSearch, type SearchResponse } from "@/lib/search/providers";
+import {
+  REFUSAL_NOTICE,
+  claudeFallbackOptions,
+  isRefusal,
+} from "./claude-safeguards";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -120,7 +125,10 @@ async function generateSubQueries(
     // Applies only when the fast tier falls back to Claude Sonnet 5.5, whose
     // thinking counts toward maxOutputTokens; other providers ignore it.
     providerOptions: {
-      anthropic: { effort: "low" } satisfies AnthropicProviderOptions,
+      anthropic: {
+        effort: "low",
+        ...claudeFallbackOptions(model.modelId),
+      } satisfies AnthropicProviderOptions,
     },
     maxOutputTokens: 500,
   });
@@ -188,8 +196,9 @@ async function synthesizeReport(
     })
     .join("\n\n---\n\n");
 
-  const { text } = await generateText({
+  const { text, finishReason } = await generateText({
     model,
+    providerOptions: { anthropic: claudeFallbackOptions(model.modelId) },
     system: `You are a research analyst synthesizing web search results into a well-structured report. Use markdown formatting:
 
 1. **Executive Summary** - 2-3 sentences answering the core question
@@ -202,7 +211,7 @@ Be thorough, accurate, and always cite your sources with links. If results are c
     maxOutputTokens: 4000,
   });
 
-  return text;
+  return isRefusal(finishReason) ? REFUSAL_NOTICE : text;
 }
 
 // ---------------------------------------------------------------------------

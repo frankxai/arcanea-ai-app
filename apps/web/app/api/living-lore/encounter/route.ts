@@ -11,6 +11,10 @@ import { NextRequest } from "next/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { streamText } from "ai";
+import {
+  claudeFallbackOptions,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
 import { CREW_SYSTEM_PROMPTS } from "@/lib/living-lore/crew-prompts";
 import { CREW } from "@/lib/living-lore/crew-data";
 
@@ -79,13 +83,15 @@ export async function POST(req: NextRequest) {
     const anthropicKey = process.env.ANTHROPIC_API_KEY;
 
     let model;
+    let modelId = "";
     let sendTemperature = true;
     if (googleKey) {
       const google = createGoogleGenerativeAI({ apiKey: googleKey });
       model = google("gemini-2.0-flash");
     } else if (anthropicKey) {
       const anthropic = createAnthropic({ apiKey: anthropicKey });
-      model = anthropic("claude-sonnet-5-5");
+      modelId = "claude-sonnet-5-5";
+      model = anthropic(modelId);
       // Claude Sonnet 5.5 rejects sampling parameters with a 400.
       sendTemperature = false;
     } else {
@@ -104,6 +110,8 @@ export async function POST(req: NextRequest) {
       })),
       ...(sendTemperature ? { temperature: 0.85 } : {}),
       maxOutputTokens: 2048,
+      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+      experimental_transform: refusalNoticeTransform(),
     });
 
     return result.toTextStreamResponse();

@@ -32,6 +32,10 @@ import {
   claudeRejectsSamplingParams,
 } from "@/lib/gateway/catalog";
 import { LUMINORS } from "@/lib/luminors/config";
+import {
+  claudeFallbackOptions,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
 
 export const runtime = "edge";
 
@@ -515,10 +519,9 @@ export async function POST(
 
     const { model, label } = resolved;
     const temperature = agent.spec?.temperature ?? 0.7;
-    // Claude 5.x rejects sampling parameters with a 400; AI SDK models expose modelId.
-    const sendTemperature = !claudeRejectsSamplingParams(
-      String(model.modelId ?? ""),
-    );
+    // AI SDK models expose modelId; Claude 5.x rejects sampling parameters with a 400.
+    const modelId = String(model.modelId ?? "");
+    const sendTemperature = !claudeRejectsSamplingParams(modelId);
 
     // ── 7. Resolve tools for this Luminor ─────────────────────────────────────
     // Dynamic import for edge compatibility — tool-resolver pulls in zod + ai/tool
@@ -547,6 +550,8 @@ export async function POST(
       messages: [{ role: "user", content: input }],
       ...(sendTemperature ? { temperature } : {}),
       maxOutputTokens: 4096,
+      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+      experimental_transform: refusalNoticeTransform(),
       ...(luminorTools ? { tools: luminorTools, maxSteps: 5 } : {}),
       onFinish: ({ text }) => {
         // ── 8. Deduct credits after completion ──────────────────────────────
