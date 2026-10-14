@@ -31,6 +31,7 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
+  { href: "/shop", label: "Shop", also: [] },
   {
     href: "/worlds",
     label: "Worlds",
@@ -42,6 +43,18 @@ const navLinks: NavLink[] = [
           { href: "/worlds", label: "Worlds", desc: "Build universes" },
           { href: "/canvas", label: "Canvas", desc: "Node workflows" },
           { href: "/forge/companion", label: "Forge", desc: "Create agents" },
+        ],
+      },
+      {
+        title: "Agents",
+        items: [
+          {
+            href: "/agent",
+            label: "Arcanea Agent",
+            desc: "Desktop app + profile",
+          },
+          { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
+          { href: "/forge/companion", label: "Forge", desc: "Create your own" },
         ],
       },
       {
@@ -65,6 +78,7 @@ const navLinks: NavLink[] = [
     href: "/gallery",
     label: "Explore",
     also: [
+      "/atlas",
       "/discover",
       "/library",
       "/lore",
@@ -98,6 +112,11 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
+          {
+            href: "/atlas",
+            label: "Multiverse Atlas",
+            desc: "Realms, corridors & dialects",
+          },
           {
             href: "/story",
             label: "The First Light",
@@ -578,7 +597,7 @@ export function Navbar() {
                     <NotificationBell />
                   </div>
                   <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2">
-                    <UserNav />
+                    <UserNav onAuthOpen={() => setMobileMenuOpen(false)} />
                   </div>
                 </m.div>
               </div>

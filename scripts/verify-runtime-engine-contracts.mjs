@@ -125,9 +125,9 @@ async function verifyActionsHttpClientCompatibility() {
   const { HttpClient } = httpClientRequire("@actions/http-client");
   const undiciManifest = httpClientRequire("undici/package.json");
 
-  if (!semver.satisfies(undiciManifest.version, ">=6.28.0 <7")) {
+  if (!semver.satisfies(undiciManifest.version, ">=6.28.1 <7")) {
     throw new Error(
-      `@actions/http-client must resolve the patched Undici 6 boundary; received ${undiciManifest.version}.`,
+      `@actions/http-client must resolve the patched Undici 6 boundary (>=6.28.1 <7, GHSA-rfgv-xxqx-mfg5); received ${undiciManifest.version}.`,
     );
   }
 

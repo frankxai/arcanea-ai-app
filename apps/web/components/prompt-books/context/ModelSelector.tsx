@@ -1,112 +1,145 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client'
+"use client";
 
-import { useState, useRef, useEffect } from 'react'
-import { PhCaretDown, PhCheck } from '@/lib/phosphor-icons'
-import { cn } from '@/lib/utils'
+import { useState, useRef, useEffect } from "react";
+import { PhCaretDown, PhCheck } from "@/lib/phosphor-icons";
+import { cn } from "@/lib/utils";
 
 // =====================================================================
 // Model Definitions — Grouped by Provider
 // =====================================================================
 
 interface ModelOption {
-  id: string
-  name: string
-  description: string
+  id: string;
+  name: string;
+  description: string;
 }
 
 interface ModelGroup {
-  provider: string
-  models: ModelOption[]
+  provider: string;
+  models: ModelOption[];
 }
 
 const MODEL_GROUPS: ModelGroup[] = [
   {
-    provider: 'Anthropic',
+    provider: "Anthropic",
     models: [
-      { id: 'claude-opus-4-6', name: 'Claude Opus 4.6', description: 'Most capable, deep reasoning' },
-      { id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', description: 'Fast + intelligent balance' },
-      { id: 'claude-haiku-4-5', name: 'Claude Haiku 4.5', description: 'Fastest, cost-efficient' },
+      {
+        id: "claude-opus-4-6",
+        name: "Claude Opus 4.6",
+        description: "Deep reasoning",
+      },
+      {
+        id: "claude-sonnet-4-6",
+        name: "Claude Sonnet 4.6",
+        description: "Fast + intelligent balance",
+      },
+      {
+        id: "claude-haiku-4-5",
+        name: "Claude Haiku 4.5",
+        description: "Fast, cost-efficient",
+      },
     ],
   },
   {
-    provider: 'Google',
+    provider: "Google",
     models: [
-      { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', description: 'Advanced reasoning, 1M context' },
-      { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Fast, multimodal, cost-effective' },
+      {
+        id: "gemini-2.5-pro",
+        name: "Gemini 2.5 Pro",
+        description: "Advanced reasoning, 1M context",
+      },
+      {
+        id: "gemini-2.5-flash",
+        name: "Gemini 2.5 Flash",
+        description: "Fast, multimodal, cost-effective",
+      },
     ],
   },
   {
-    provider: 'OpenAI',
+    provider: "OpenAI",
     models: [
-      { id: 'gpt-4o', name: 'GPT-4o', description: 'Flagship multimodal model' },
-      { id: 'gpt-4o-mini', name: 'GPT-4o Mini', description: 'Small, fast, affordable' },
-      { id: 'o1', name: 'o1', description: 'Deep reasoning chain-of-thought' },
-      { id: 'o3-mini', name: 'o3 Mini', description: 'Efficient reasoning model' },
+      { id: "gpt-4o", name: "GPT-4o", description: "Multimodal model" },
+      {
+        id: "gpt-4o-mini",
+        name: "GPT-4o Mini",
+        description: "Small, fast, affordable",
+      },
+      { id: "o1", name: "o1", description: "Deep reasoning chain-of-thought" },
+      {
+        id: "o3-mini",
+        name: "o3 Mini",
+        description: "Efficient reasoning model",
+      },
     ],
   },
-]
+];
 
 // =====================================================================
 // Component
 // =====================================================================
 
 interface ModelSelectorProps {
-  value: string
-  onChange: (model: string) => void
-  className?: string
+  value: string;
+  onChange: (model: string) => void;
+  className?: string;
 }
 
-export function ModelSelector({ value, onChange, className }: ModelSelectorProps) {
-  const [open, setOpen] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
+export function ModelSelector({
+  value,
+  onChange,
+  className,
+}: ModelSelectorProps) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
   useEffect(() => {
-    if (!open) return
+    if (!open) return;
     const handler = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setOpen(false)
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
       }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [open])
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
 
   // Close on Escape
   useEffect(() => {
-    if (!open) return
+    if (!open) return;
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
-    }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [open])
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open]);
 
   // Find current model display info
-  const currentModel = MODEL_GROUPS
-    .flatMap((g) => g.models)
-    .find((m) => m.id === value)
+  const currentModel = MODEL_GROUPS.flatMap((g) => g.models).find(
+    (m) => m.id === value,
+  );
 
   return (
-    <div ref={containerRef} className={cn('relative', className)}>
+    <div ref={containerRef} className={cn("relative", className)}>
       {/* Trigger */}
       <button
         type="button"
         onClick={() => setOpen(!open)}
         className={cn(
-          'w-full flex items-center justify-between gap-2',
-          'px-3 py-2 rounded-lg',
-          'liquid-glass border border-white/[0.04] hover:border-white/[0.08]',
-          'text-sm font-sans text-text-primary',
-          'transition-all duration-150',
-          'focus:outline-none focus:ring-1 focus:ring-brand-accent/40',
+          "w-full flex items-center justify-between gap-2",
+          "px-3 py-2 rounded-lg",
+          "liquid-glass border border-white/[0.04] hover:border-white/[0.08]",
+          "text-sm font-sans text-text-primary",
+          "transition-all duration-150",
+          "focus:outline-none focus:ring-1 focus:ring-brand-accent/40",
         )}
       >
         <div className="flex flex-col items-start min-w-0">
-          <span className="truncate">
-            {currentModel?.name ?? value}
-          </span>
+          <span className="truncate">{currentModel?.name ?? value}</span>
           {currentModel?.description && (
             <span className="text-[10px] text-text-muted truncate">
               {currentModel.description}
@@ -115,8 +148,8 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
         </div>
         <PhCaretDown
           className={cn(
-            'w-4 h-4 text-text-muted shrink-0 transition-transform duration-150',
-            open && 'rotate-180',
+            "w-4 h-4 text-text-muted shrink-0 transition-transform duration-150",
+            open && "rotate-180",
           )}
         />
       </button>
@@ -125,11 +158,11 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
       {open && (
         <div
           className={cn(
-            'absolute z-50 top-full left-0 right-0 mt-1',
-            'liquid-glass border border-white/[0.06] rounded-lg',
-            'shadow-xl shadow-black/20',
-            'max-h-72 overflow-y-auto scrollbar-thin',
-            'py-1',
+            "absolute z-50 top-full left-0 right-0 mt-1",
+            "liquid-glass border border-white/[0.06] rounded-lg",
+            "shadow-xl shadow-black/20",
+            "max-h-72 overflow-y-auto scrollbar-thin",
+            "py-1",
           )}
         >
           {MODEL_GROUPS.map((group) => (
@@ -141,27 +174,29 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
 
               {/* Models */}
               {group.models.map((model) => {
-                const isSelected = model.id === value
+                const isSelected = model.id === value;
                 return (
                   <button
                     key={model.id}
                     type="button"
                     onClick={() => {
-                      onChange(model.id)
-                      setOpen(false)
+                      onChange(model.id);
+                      setOpen(false);
                     }}
                     className={cn(
-                      'w-full flex items-center gap-2 px-3 py-2',
-                      'text-left text-sm font-sans',
-                      'hover:bg-white/[0.04] transition-colors',
-                      isSelected && 'bg-brand-accent/[0.06]',
+                      "w-full flex items-center gap-2 px-3 py-2",
+                      "text-left text-sm font-sans",
+                      "hover:bg-white/[0.04] transition-colors",
+                      isSelected && "bg-brand-accent/[0.06]",
                     )}
                   >
                     <div className="flex flex-col min-w-0 flex-1">
                       <span
                         className={cn(
-                          'truncate',
-                          isSelected ? 'text-brand-accent' : 'text-text-primary',
+                          "truncate",
+                          isSelected
+                            ? "text-brand-accent"
+                            : "text-text-primary",
                         )}
                       >
                         {model.name}
@@ -174,12 +209,12 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
                       <PhCheck className="w-3.5 h-3.5 text-brand-accent shrink-0" />
                     )}
                   </button>
-                )
+                );
               })}
             </div>
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }

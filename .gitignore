@@ -167,6 +167,12 @@ arcanea-opencode-fork/
 !.claude/skills/visual-proof/
 !.claude/skills/web-design-guidelines/
 !.claude/skills/web-release-gate/
+# stack-kits pack — framework kits + prompt router, committed for the same reason
+!.claude/skills/nextjs/
+!.claude/skills/react/
+!.claude/skills/tailwindcss/
+!.claude/skills/shadcn/
+!.claude/hooks/skill-activation-prompt.mjs
 .codex/
 .codacy/
 .cursor/

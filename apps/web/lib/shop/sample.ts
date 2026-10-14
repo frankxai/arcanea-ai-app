@@ -1,0 +1,7 @@
+export const SAMPLE_SCENE = [
+  "At low tide, the archive's windows rang like drinking glasses. Mara set her father's photograph beneath the repair lamp and watched the sea eat another corner of his face.",
+  "The keeper placed a copper dish beside it. 'One memory for one memory,' she said. 'Choose something you can bear to lose.' Mara offered the winter she had spent counting ferry departures. Nothing happened. The photograph did not want a season. It wanted a person.",
+  "Outside, the tide bell struck. Her younger brother was coming up the stairs with the last of their father's letters. He had never learned to swim; their father had carried him through every flooded street. Mara could still hear the laughter, and that was when the lamp began to warm.",
+  "She put both hands over the photograph. The glass filled with a summer afternoon: the harbor steps, her brother's wet hair, their father's shoes held above the water. His face returned to the paper, ordinary and tired and unmistakable. At the same moment, the afternoon emptied out of her. She remembered that it had happened. She could no longer remember being there.",
+  "Her brother reached the door. 'You saved him,' he said. Mara looked at the restored face and then at the boy who expected her to smile. 'Tell me about the harbor steps,' she said. He sat beside her. For the first time, she listened to the story as someone who had never heard it.",
+] as const;

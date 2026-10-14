@@ -40,15 +40,15 @@ overrides:
   devalue@<5.6.4: '>=5.6.4'
   devalue@<=5.6.3: '>=5.6.4'
   flatted@<3.4.0: '>=3.4.0'
-  undici@>=5.0.0 <6.0.0: 6.28.0
-  undici@>=6.0.0 <6.28.0: 6.28.0
+  undici@>=5.0.0 <6.0.0: 6.29.0
+  undici@>=6.0.0 <6.29.0: 6.29.0
   undici@>=7.0.0 <7.29.0: 7.29.0
   undici@>=8.0.0 <8.9.0: 8.9.0
   next@>=16.0.0-beta.0 <16.1.7: '>=16.1.7'
   next@>=16.0.1 <16.1.7: '>=16.1.7'
   flatted@<=3.4.1: '>=3.4.2'
   handlebars@>=4.0.0 <=4.7.8: '>=4.7.9'
-  brace-expansion@<5.0.9: 5.0.9
+  brace-expansion@<5.0.12: 5.0.12
   handlebars@>=4.0.0 <4.7.9: '>=4.7.9'
   picomatch@<2.3.2: '>=2.3.2'
   picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
@@ -57,7 +57,7 @@ overrides:
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
   lodash@<=4.17.23: '>=4.18.0'
   '@xmldom/xmldom@<0.8.13': '>=0.8.13'
-  fast-uri@<3.1.6: 3.1.7
+  'fast-uri@>=3.0.0 <3.1.8': 3.1.8
   postcss@<8.5.10: '>=8.5.10'
   hono@<4.12.25: '>=4.12.25'
   ajv@>=8.0.0 <8.18.0: '>=8.18.0'
@@ -231,6 +231,9 @@ importers:
       '@arcanea/publishing-house':
         specifier: workspace:^
         version: link:../../packages/publishing-house
+      '@arcanea/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@arcanea/world-engine':
         specifier: workspace:^
         version: link:../../packages/world-engine
@@ -836,6 +839,34 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/create-world:
+    dependencies:
+      chalk:
+        specifier: ^5.3.0
+        version: 5.6.2
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+      ora:
+        specifier: ^8.1.0
+        version: 8.2.0
+      prompts:
+        specifier: ^2.4.2
+        version: 2.4.2
+    devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.43
+      '@types/prompts':
+        specifier: ^2.4.9
+        version: 2.4.9
+      tsx:
+        specifier: ^4.22.3
+        version: 4.23.15
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/creative-pipeline:
     devDependencies:
       '@types/node':
@@ -1160,6 +1191,15 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/peak-performance:
+    devDependencies:
+      tsx:
+        specifier: ^4.19.0
+        version: 4.23.15
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
   packages/presence:
     dependencies:
       framer-motion:
@@ -1252,6 +1292,19 @@ importers:
       tsx:
         specifier: ^4.23.15
         version: 4.23.15
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/schemas:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.43
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1349,6 +1402,10 @@ importers:
         version: 5.9.3
 
   packages/world-engine:
+    dependencies:
+      '@arcanea/schemas':
+        specifier: workspace:*
+        version: link:../schemas
     devDependencies:
       '@types/node':
         specifier: ^20.19.43
@@ -5346,8 +5403,8 @@ packages:
   boundary@2.0.0:
     resolution: {integrity: sha512-rJKn5ooC9u8q13IMCrW0RSp31pxBCHE3y9V/tp3TdWSLf8Em3p6Di4NBpfzbJge9YjjFEsD0RtFEjtvHL5VyEA==}
 
-  brace-expansion@5.0.9:
-    resolution: {integrity: sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==}
+  brace-expansion@5.0.12:
+    resolution: {integrity: sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==}
     engines: {node: 20 || >=22}
 
   braces@3.0.3:
@@ -6146,8 +6203,8 @@ packages:
   fast-string-width@3.0.2:
     resolution: {integrity: sha512-gX8LrtNEI5hq8DVUfRQMbr5lpaS4nMIWV+7XEbXk2b8kiQIizgnlr12B4dA3ZEx3308ze0O4Q1R+cHts8kyUJg==}
 
-  fast-uri@3.1.7:
-    resolution: {integrity: sha512-dOvZVzjdZdz7phd9v6jCbwxrBW3fK6n8Rc0CtdmM4bumzMnxywBYhuph6J819RRw/ku+rLbelwfMunktuzVVHg==}
+  fast-uri@3.1.8:
+    resolution: {integrity: sha512-GZMtZUTNRpOVIECoXwLNZS5xUGE+mVNbTB8h/7Rwh2TFWcBQiPzTgyZi05BF9UMZKkLJv8XBRJTlU7zg8+ZfMg==}
 
   fast-wrap-ansi@0.2.2:
     resolution: {integrity: sha512-7F2Fl+TjRSenLqlU3UjSH0iyqopqoZIu7eZVpEirP2g1GtWa2G/ecEmBdgz31+Mxr+ELclgg6sokpSFIQiZ02Q==}
@@ -8874,10 +8931,6 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  undici@6.28.0:
-    resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
-    engines: {node: '>=18.17'}
-
   undici@6.29.0:
     resolution: {integrity: sha512-R+RODBqp6i2pPflGdq+xIOUkl+RNfGgHwoinecKu/JCuf2uO06cOKoDbI2P7Dn6KcswdKwrczbU6IYJ6K8X+wg==}
     engines: {node: '>=18.17'}
@@ -9312,12 +9365,12 @@ snapshots:
   '@actions/http-client@2.2.3':
     dependencies:
       tunnel: 0.0.6
-      undici: 6.28.0
+      undici: 6.29.0
 
   '@actions/http-client@4.0.1':
     dependencies:
       tunnel: 0.0.6
-      undici: 6.28.0
+      undici: 6.29.0
 
   '@actions/io@1.1.3': {}
 
@@ -12550,7 +12603,7 @@ snapshots:
 
   '@types/better-sqlite3@7.6.13':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
 
   '@types/chai@5.2.3':
     dependencies:
@@ -12564,7 +12617,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
 
   '@types/d3-array@3.2.2': {}
 
@@ -12664,7 +12717,7 @@ snapshots:
 
   '@types/memcached@2.2.10':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
 
   '@types/ms@2.1.0': {}
 
@@ -12693,7 +12746,7 @@ snapshots:
 
   '@types/pg@8.15.6':
     dependencies:
-      '@types/node': 22.20.5
+      '@types/node': 20.19.43
       pg-protocol: 1.16.1
       pg-types: 2.2.0
 
@@ -12929,7 +12982,7 @@ snapshots:
       is-buffer: 2.0.5
       is-node-process: 1.2.0
       throttleit: 2.1.0
-      undici: 6.28.0
+      undici: 6.29.0
 
   '@vercel/cli-config@0.3.1':
     dependencies:
@@ -13148,7 +13201,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.7
+      fast-uri: 3.1.8
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -13339,7 +13392,7 @@ snapshots:
 
   boundary@2.0.0: {}
 
-  brace-expansion@5.0.9:
+  brace-expansion@5.0.12:
     dependencies:
       balanced-match: 4.0.4
 
@@ -14326,7 +14379,7 @@ snapshots:
     dependencies:
       fast-string-truncated-width: 3.0.3
 
-  fast-uri@3.1.7: {}
+  fast-uri@3.1.8: {}
 
   fast-wrap-ansi@0.2.2:
     dependencies:
@@ -15668,11 +15721,11 @@ snapshots:
 
   minimatch@10.2.6:
     dependencies:
-      brace-expansion: 5.0.9
+      brace-expansion: 5.0.12
 
   minimatch@3.1.5(patch_hash=5919ebd23ebe4ae69b5b2827069f23b2816c0ae39d85e2359a232a039f4dc8f5):
     dependencies:
-      brace-expansion: 5.0.9
+      brace-expansion: 5.0.12
 
   minimist@1.2.8: {}
 
@@ -17496,8 +17549,6 @@ snapshots:
   undici-types@5.26.5: {}
 
   undici-types@6.21.0: {}
-
-  undici@6.28.0: {}
 
   undici@6.29.0: {}
 
