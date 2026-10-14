@@ -350,3 +350,4 @@ link-checker-report.txt
 !.claude/hooks/
 !.claude/skills/
 !.claude/skills/estate-guard/
+.claude/skills/**/__pycache__/
