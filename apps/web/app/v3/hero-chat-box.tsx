@@ -5,7 +5,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
-import { m } from "framer-motion";
 import {
   PhPaperPlane,
   PhPencil,
@@ -157,12 +156,7 @@ export function HeroChatBox() {
       </div>
 
       {/* Starter cards — 4 creation modes */}
-      <m.div
-        className="mt-5 grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.4 }}
-      >
+      <div className="mt-5 grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2">
         {STARTER_CARDS.map((card) => {
           const Icon = card.icon;
           const handleClick = () => {
@@ -187,7 +181,7 @@ export function HeroChatBox() {
             </button>
           );
         })}
-      </m.div>
+      </div>
     </div>
   );
 }

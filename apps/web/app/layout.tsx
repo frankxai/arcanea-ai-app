@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { cosmic } from "@arcanea/design-system/tokens";
 import "./globals.css";
 import "@fontsource-variable/newsreader";
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import { JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -13,11 +13,12 @@ import { Navbar, Footer } from "@/components/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { CosmicBackground } from "@/lib/arcanea-ui/CosmicBackground";
-import { GlobalGlowTrackerLazy } from "@/components/ui/global-glow-tracker-lazy";
+import {
+  DeferredBackground,
+  DeferredGlowTracker,
+  DeferredOverlays,
+} from "@/components/layout/deferred-globals";
 import { Toaster } from "@/components/ui/sonner";
-import { LuminaBubble } from "@/components/lumina/lumina-bubble";
-import { CommandPalette } from "@/components/command-palette";
-
 
 function CosmicBackgroundFallback() {
   return (
@@ -124,18 +125,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      style={{ colorScheme: "dark", "--font-serif": "'Newsreader Variable', serif" } as React.CSSProperties}
-            className={cn(
-              GeistSans.variable,
-              GeistMono.variable,
-              jetbrainsMono.variable,
-              instrumentSerif.variable,
-              "font-sans",
-            )}
+      style={
+        {
+          colorScheme: "dark",
+          "--font-serif": "'Newsreader Variable', serif",
+        } as React.CSSProperties
+      }
+      className={cn(
+        GeistSans.variable,
+        GeistMono.variable,
+        jetbrainsMono.variable,
+        instrumentSerif.variable,
+        "font-sans",
+      )}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
           type="application/ld+json"
@@ -143,27 +153,28 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              "name": "Arcanea",
-              "url": "https://www.arcanea.ai",
-              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
-              "applicationCategory": "CreativeWork",
-              "operatingSystem": "Web",
-              "offers": {
+              name: "Arcanea",
+              url: "https://www.arcanea.ai",
+              description:
+                "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
+              applicationCategory: "CreativeWork",
+              operatingSystem: "Web",
+              offers: {
                 "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "description": "Free to start"
+                price: "0",
+                priceCurrency: "USD",
+                description: "Free to start",
               },
-              "creator": {
+              creator: {
                 "@type": "Organization",
-                "name": "Arcanea",
-                "url": "https://www.arcanea.ai"
+                name: "Arcanea",
+                url: "https://www.arcanea.ai",
               },
-              "featureList": [
+              featureList: [
                 "Living world builder with auto-linking",
-                "Quest and faction generation"
-              ]
-            })
+                "Quest and faction generation",
+              ],
+            }),
           }}
         />
       </head>
@@ -186,18 +197,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             Skip to main content
           </a>
           <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
-            <Suspense fallback={<CosmicBackgroundFallback />}>
+            {/* Base colour (bg-cosmic-void) and the fallback gradient are
+                server-rendered; the texture layer fades in after idle. */}
+            <DeferredBackground fallback={<CosmicBackgroundFallback />}>
               <CosmicBackground />
-            </Suspense>
-            <GlobalGlowTrackerLazy />
+            </DeferredBackground>
+            <DeferredGlowTracker />
             <Navbar />
             <main id="main-content" className="relative pt-[var(--nav-h)]">
               {children}
             </main>
             <Footer />
           </div>
-          <LuminaBubble />
-          <CommandPalette />
+          <DeferredOverlays />
           <Toaster />
           <SpeedInsights />
           <Analytics />
