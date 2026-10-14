@@ -428,16 +428,16 @@ export function CreateHub() {
               text="What are you"
               as="span"
               className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent"
-              delay={0.05}
-              stagger={0.022}
+              delay={0}
+              stagger={0}
             />
             <br />{" "}
             <SplitText
               text="making today?"
               as="span"
               className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent"
-              delay={0.35}
-              stagger={0.022}
+              delay={0}
+              stagger={0}
             />
           </h1>
 

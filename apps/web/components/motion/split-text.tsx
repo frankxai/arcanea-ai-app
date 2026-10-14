@@ -62,7 +62,7 @@ export function SplitText({
             <MSpan
               key={i}
               aria-hidden="true"
-              initial={{ opacity: 1, y: "0.3em", filter: "blur(0px)" }}
+              initial={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
                 duration: 0.4,
