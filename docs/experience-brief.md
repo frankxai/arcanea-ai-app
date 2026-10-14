@@ -50,7 +50,7 @@ Today the page renders about 20 sections (`v3-below-fold.tsx:1285`). Target: **9
 | Header    | Get Started / Sign In (auth modal)                                       | modal                                       | ≥ 44 px                                                                |
 | Exit      | Final CTA "Start Creating" → `/chat`; "Explore the Library" → `/library` |                                             | Every page needs an exit ramp (TASTE Gate 5)                           |
 
-Every homepage CTA emits a `home_*` event, so the funnel from viewport to world created is measurable.
+Target: every homepage CTA emits a `home_*` event, and saving a first world emits an activation event, so the funnel from viewport to world created is measurable. Today three homepage events fire: `home_hero_submit`, `home_hero_chip` and `home_final_cta`. The header Get Started and Sign In buttons, the product-pillar links and the world-created activation event are not instrumented yet, so visitors who start from those paths do not appear in the funnel.
 
 ## Emotion arc
 
@@ -96,7 +96,7 @@ Status as of this branch. **Fixed** means fixed here and verified locally.
 4. About 20 sections against a target of 9. Everything below the fold is `ssr:false`, so none of the "why" narrative is in the server HTML that search and AI crawlers read.
 5. **Fixed:** text extraction in the h1 and "Built in the open". SplitText now emits word spans with real spaces.
 6. **Fixed:** hero contrast and tap targets. Placeholder went from ~2.0:1 to 5.0:1, chips from ~3.2:1 to 7.9:1, and chips, send and Sign In are all 44 px.
-7. **Fixed:** CTA events `home_hero_submit`, `home_hero_chip` and `home_final_cta` now fire via `@vercel/analytics`. None carries prompt text.
+7. **Partly fixed:** CTA events `home_hero_submit`, `home_hero_chip` and `home_final_cta` now fire via `@vercel/analytics`. None carries prompt text. **Open:** events for the header Get Started and Sign In buttons, the product-pillar links, and world-created activation.
 8. Glyphs used as icons. **Fixed:** the "✓" bullets. **Open:** two-letter integration monograms (TASTE :44 and :182 conflict) and `&rarr;` text arrows.
 9. Logged-out visitors are bounced to sign-in by `/studio/image` lane links (`proxy.ts:54`).
 10. **Fixed:** "Read the sovereignty promise" now reads "Read the privacy policy" and goes to `/privacy`.

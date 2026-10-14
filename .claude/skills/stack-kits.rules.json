@@ -48,7 +48,8 @@
           "add.*error.*boundary",
           "implement.*dynamic.*route"
         ]
-      }
+      },
+      "stage": "framework"
     },
     "react": {
       "type": "domain",
@@ -96,7 +97,8 @@
           "implement.*react.*(forwardRef|memo)",
           "add.*react.*portal"
         ]
-      }
+      },
+      "stage": "framework"
     },
     "tailwindcss": {
       "type": "domain",
@@ -119,7 +121,8 @@
           "customize.*theme",
           "add.*dark.*mode"
         ]
-      }
+      },
+      "stage": "framework"
     },
     "shadcn": {
       "type": "domain",
@@ -145,7 +148,8 @@
           "style.*component.*shadcn",
           "use.*shadcn"
         ]
-      }
+      },
+      "stage": "framework"
     },
     "web-release-gate": {
       "type": "guardrail",
