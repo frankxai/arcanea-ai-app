@@ -551,7 +551,9 @@ test("image request with 401 returns unauthorized response with nested error pay
   });
   globalThis.fetch = async () => {
     return new Response(
-      JSON.stringify({ error: { message: "Unauthorized", code: "AUTH_REQUIRED" } }),
+      JSON.stringify({
+        error: { message: "Unauthorized", code: "AUTH_REQUIRED" },
+      }),
       {
         status: 401,
         headers: { "Content-Type": "application/json" },
@@ -571,4 +573,3 @@ test("image request with 401 returns unauthorized response with nested error pay
     else Reflect.deleteProperty(globalThis, "sessionStorage");
   }
 });
-
