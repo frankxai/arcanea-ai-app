@@ -28,20 +28,20 @@
  *   }
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { generateText } from 'ai';
-import { createAnthropic } from '@ai-sdk/anthropic';
-import { LUMINOR_HINTS } from '@/lib/ai/guardian-swarm';
-import { LUMINORS } from '@/lib/luminors/config';
-import { planSwarm } from '@/lib/ai/planner';
+import { NextRequest, NextResponse } from "next/server";
+import { generateText } from "ai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { LUMINOR_HINTS } from "@/lib/ai/guardian-swarm";
+import { LUMINORS } from "@/lib/luminors/config";
+import { planSwarm } from "@/lib/ai/planner";
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 interface SwarmRequest {
   input: string;
-  mode?: 'auto' | 'solo' | 'council' | 'convergence';
+  mode?: "auto" | "solo" | "council" | "convergence";
   maxLuminors?: number;
   context?: {
     userId?: string;
@@ -69,11 +69,11 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  if (!body.input || typeof body.input !== 'string') {
-    return NextResponse.json({ error: 'input is required' }, { status: 400 });
+  if (!body.input || typeof body.input !== "string") {
+    return NextResponse.json({ error: "input is required" }, { status: 400 });
   }
 
   const maxLuminors = Math.min(Math.max(body.maxLuminors ?? 4, 1), 5);
@@ -86,14 +86,14 @@ export async function POST(req: NextRequest) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'ANTHROPIC_API_KEY not configured' },
-      { status: 503 }
+      { error: "ANTHROPIC_API_KEY not configured" },
+      { status: 503 },
     );
   }
   const anthropic = createAnthropic({ apiKey });
 
   // 3. If the planner returned only Lumina (very ambiguous input), use the synthesis-only fallback.
-  if (plan.luminors.length === 1 && plan.luminors[0].id === 'lumina') {
+  if (plan.luminors.length === 1 && plan.luminors[0].id === "lumina") {
     return runLuminaFallback(body.input, anthropic, started, plan);
   }
 
@@ -103,14 +103,14 @@ export async function POST(req: NextRequest) {
       runLuminor(luminor.id, body.input, anthropic).catch((err) => ({
         luminorId: luminor.id,
         luminorName: LUMINORS[luminor.id]?.name ?? luminor.id,
-        guardian: LUMINOR_HINTS[luminor.id]?.team ?? 'unknown',
-        response: '',
+        guardian: LUMINOR_HINTS[luminor.id]?.team ?? "unknown",
+        response: "",
         durationMs: 0,
         tokensIn: 0,
         tokensOut: 0,
         error: (err as Error).message,
-      }))
-    )
+      })),
+    ),
   );
 
   // 5. Synthesize via Lumina (the Queen merges the swarm)
@@ -118,21 +118,23 @@ export async function POST(req: NextRequest) {
     body.input,
     contributions,
     plan.mode,
-    anthropic
+    anthropic,
   );
 
   const totalDurationMs = Date.now() - started;
   const totalTokens = contributions.reduce(
     (sum, c) => sum + c.tokensIn + c.tokensOut,
-    0
+    0,
   );
   const activeGuardians = Array.from(
-    new Set(contributions.map((c) => c.guardian).filter((g) => g && g !== 'unknown'))
+    new Set(
+      contributions.map((c) => c.guardian).filter((g) => g && g !== "unknown"),
+    ),
   );
 
   return NextResponse.json({
     mode: plan.mode,
-    leadGuardian: activeGuardians[0] ?? 'shinkami',
+    leadGuardian: activeGuardians[0] ?? "shinkami",
     activeGuardians,
     contributions,
     synthesis,
@@ -152,7 +154,7 @@ async function runLuminor(
   luminorId: string,
   input: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  anthropic: any
+  anthropic: any,
 ): Promise<Contribution> {
   const config = LUMINORS[luminorId];
   if (!config) {
@@ -161,10 +163,10 @@ async function runLuminor(
 
   const started = Date.now();
   const hint = LUMINOR_HINTS[luminorId];
-  const parentTeam = hint?.team ?? 'unknown';
+  const parentTeam = hint?.team ?? "unknown";
 
   // Haiku for swarm members (cheap, fast, they produce partial views)
-  const model = anthropic('claude-haiku-4-5-20251001');
+  const model = anthropic("claude-haiku-5-5");
 
   const swarmPrompt = `${config.systemPrompt}
 
@@ -175,7 +177,7 @@ You are one of multiple Luminors responding to this task. Keep your response foc
     model,
     system: swarmPrompt,
     prompt: input,
-    temperature: 0.7,
+    // No temperature: Claude 5.5 models reject sampling parameters with a 400.
   });
 
   return {
@@ -194,12 +196,14 @@ async function synthesizeContributions(
   contributions: Contribution[],
   _mode: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  anthropic: any
+  anthropic: any,
 ): Promise<string> {
-  const validContributions = contributions.filter((c) => !c.error && c.response.length > 0);
+  const validContributions = contributions.filter(
+    (c) => !c.error && c.response.length > 0,
+  );
 
   if (validContributions.length === 0) {
-    return 'The swarm did not converge. Try rephrasing your question.';
+    return "The swarm did not converge. Try rephrasing your question.";
   }
 
   if (validContributions.length === 1) {
@@ -207,11 +211,11 @@ async function synthesizeContributions(
   }
 
   // Sonnet for synthesis — higher quality merge
-  const model = anthropic('claude-sonnet-4-6');
+  const model = anthropic("claude-sonnet-5-5");
 
   const perspectives = validContributions
     .map((c) => `### ${c.luminorName} (${c.guardian})\n${c.response}`)
-    .join('\n\n---\n\n');
+    .join("\n\n---\n\n");
 
   const { text } = await generateText({
     model,
@@ -234,7 +238,6 @@ The swarm responded:
 ${perspectives}
 
 Synthesize.`,
-    temperature: 0.6,
   });
 
   return text;
@@ -247,23 +250,25 @@ async function runLuminaFallback(
   started: number,
   plan?: Awaited<ReturnType<typeof planSwarm>>,
 ): Promise<NextResponse> {
-  const lumina = LUMINORS['lumina'];
+  const lumina = LUMINORS["lumina"];
   if (!lumina) {
-    return NextResponse.json({ error: 'Lumina not available' }, { status: 503 });
+    return NextResponse.json(
+      { error: "Lumina not available" },
+      { status: 503 },
+    );
   }
 
-  const model = anthropic('claude-sonnet-4-6');
+  const model = anthropic("claude-sonnet-5-5");
   const result = await generateText({
     model,
     system: lumina.systemPrompt,
     prompt: input,
-    temperature: 0.7,
   });
 
   const contribution: Contribution = {
-    luminorId: 'lumina',
-    luminorName: 'Lumina',
-    guardian: 'shinkami',
+    luminorId: "lumina",
+    luminorName: "Lumina",
+    guardian: "shinkami",
     response: result.text,
     durationMs: Date.now() - started,
     tokensIn: result.usage?.inputTokens ?? 0,
@@ -271,14 +276,14 @@ async function runLuminaFallback(
   };
 
   return NextResponse.json({
-    mode: 'solo',
-    leadGuardian: 'shinkami',
-    activeGuardians: ['shinkami'],
+    mode: "solo",
+    leadGuardian: "shinkami",
+    activeGuardians: ["shinkami"],
     contributions: [contribution],
     synthesis: result.text,
     totalDurationMs: Date.now() - started,
     totalTokens: contribution.tokensIn + contribution.tokensOut,
-    fallback: 'lumina',
+    fallback: "lumina",
     plan: plan
       ? { rationale: plan.rationale, source: plan.source, planMs: plan.planMs }
       : undefined,

@@ -52,7 +52,7 @@ jobs:
           CI_RUN_ID: ${{ github.event.workflow_run.id || inputs.ci_run_id }}
       - name: Preserve review receipt
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: excellence-review-${{ github.run_id }}
           path: |
