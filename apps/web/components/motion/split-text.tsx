@@ -79,7 +79,7 @@ export function SplitText({
                 {word.split("").map((char, i) => (
                   <MSpan
                     key={i}
-                    initial={{ opacity: 1, y: "0.3em", filter: "blur(0px)" }}
+                    initial={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     transition={{
                       duration: 0.4,
