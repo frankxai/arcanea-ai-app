@@ -12,7 +12,7 @@ The homepage's job is to get a solo world-builder from one sentence to a named w
 - Hero contrast and 44 px tap targets for the chips, send button and Sign In. Accessible text now reads with real spaces: the h1 has a space between its lines, and `SplitText` emits word spans. #640's fail-open start position (`y: 0`) is kept.
 - Three analytics events: `home_hero_submit`, `home_hero_chip` and `home_final_cta`. None carries prompt text.
 - **Shared operating rule:** a `UserPromptSubmit` hook, `.claude/hooks/skill-activation-prompt.mjs`, now runs on every Claude Code prompt in this repo.
-  - It injects an ordered list of skills: `web-release-gate` first, then the framework kits, then specialists. The kits are `nextjs`, `react`, `tailwindcss` and `shadcn`, vendored from claude-skills-library `packs/stack-kits` (upstream blencorp/claude-code-kit, MIT).
+  - It injects an ordered list of skills: `web-release-gate` first, then the framework kits, then specialists. The kits are `nextjs`, `react` and `shadcn`, vendored from claude-skills-library `packs/stack-kits` (upstream blencorp/claude-code-kit, MIT). The upstream `tailwindcss` kit teaches Tailwind v4, and `apps/web` is on `^3.4.9`, so it was retired here on 14 October.
   - The list ends with a precedence line ranking `DESIGN.md`, `TASTE.md` and the brief above every skill.
   - It never blocks a prompt.
   - Upgrade it by re-running the pack's `install.sh`. Remove it by deleting its entry in `.claude/settings.json`.

@@ -103,7 +103,7 @@ Status as of this branch. **Fixed** means fixed here and verified locally.
 
 ## Skill chain (what the router loads, in order)
 
-`web-release-gate` → `tailwindcss` · `nextjs` · `react` · `shadcn` (framework) → `web-design-guidelines` (audit) → `emil-design-eng` / `review-animations` (motion) → `core-web-vitals` → `visual-proof`. Add `canon-check` for any copy that names Guardians, Gates or godbeasts. Agents: `design-architect` locks the brief before a section is rebuilt, and `design-verifier` runs before merge.
+`web-release-gate` → `nextjs` · `react` · `shadcn` (framework; no Tailwind kit, because the only one is written for v4 and `apps/web` is on Tailwind 3) → `web-design-guidelines` (audit) → `emil-design-eng` / `review-animations` (motion) → `core-web-vitals` → `visual-proof`. Add `canon-check` for any copy that names Guardians, Gates or godbeasts. Agents: `design-architect` locks the brief before a section is rebuilt, and `design-verifier` runs before merge.
 
 ## Decisions that are Frank's
 
