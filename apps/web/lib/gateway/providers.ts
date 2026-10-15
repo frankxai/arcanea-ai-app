@@ -127,7 +127,9 @@ export async function proxyToOpenAICompatible(
 
 // ─── Anthropic Adapter ───────────────────────────────────────────────
 
-function openAIContentToText(content: ChatMessage["content"] | null | undefined): string {
+function openAIContentToText(
+  content: ChatMessage["content"] | null | undefined,
+): string {
   if (typeof content === "string") return content;
   if (!Array.isArray(content)) return "";
   return content
@@ -139,7 +141,9 @@ function openAIContentToText(content: ChatMessage["content"] | null | undefined)
 function parseToolArguments(raw: string): unknown {
   try {
     const parsed = JSON.parse(raw || "{}");
-    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? parsed
+      : {};
   } catch {
     return {};
   }

@@ -4,6 +4,8 @@ import { NextRequest } from "next/server";
 import { GET, POST } from "../../../app/api/v1/chat/completions/route";
 import { CURATED_MODELS } from "../models";
 
+type ToolDelta = { index?: number; function?: { arguments?: string } };
+
 const originalFetch = globalThis.fetch;
 const originalServerKey = process.env.OPENAI_API_KEY;
 const model = CURATED_MODELS.find(
@@ -220,7 +222,10 @@ test("a follow-up request carries the tool call and its result to Anthropic as t
               {
                 id: "toolu_1",
                 type: "function",
-                function: { name: "lookup_realm", arguments: '{"realm":"Aether"}' },
+                function: {
+                  name: "lookup_realm",
+                  arguments: '{"realm":"Aether"}',
+                },
               },
               {
                 id: "toolu_2",
@@ -229,7 +234,11 @@ test("a follow-up request carries the tool call and its result to Anthropic as t
               },
             ],
           },
-          { role: "tool", tool_call_id: "toolu_1", content: "Aether is the sky realm." },
+          {
+            role: "tool",
+            tool_call_id: "toolu_1",
+            content: "Aether is the sky realm.",
+          },
           { role: "tool", tool_call_id: "toolu_2", content: "No such realm." },
         ],
       },
@@ -241,15 +250,28 @@ test("a follow-up request carries the tool call and its result to Anthropic as t
     {
       role: "assistant",
       content: [
-        { type: "tool_use", id: "toolu_1", name: "lookup_realm", input: { realm: "Aether" } },
+        {
+          type: "tool_use",
+          id: "toolu_1",
+          name: "lookup_realm",
+          input: { realm: "Aether" },
+        },
         { type: "tool_use", id: "toolu_2", name: "lookup_realm", input: {} },
       ],
     },
     {
       role: "user",
       content: [
-        { type: "tool_result", tool_use_id: "toolu_1", content: "Aether is the sky realm." },
-        { type: "tool_result", tool_use_id: "toolu_2", content: "No such realm." },
+        {
+          type: "tool_result",
+          tool_use_id: "toolu_1",
+          content: "Aether is the sky realm.",
+        },
+        {
+          type: "tool_result",
+          tool_use_id: "toolu_2",
+          content: "No such realm.",
+        },
       ],
     },
   ]);
@@ -345,10 +367,12 @@ test("streaming Anthropic reply emits tool call deltas and the serving model", a
     function: { name: "lookup_realm", arguments: "" },
   });
   assert.equal(
-    toolDeltas.map((delta: any) => delta.function?.arguments ?? "").join(""),
+    toolDeltas
+      .map((delta: ToolDelta) => delta.function?.arguments ?? "")
+      .join(""),
     '{"realm":"Aether"}',
   );
-  assert.ok(toolDeltas.every((delta: any) => delta.index === 0));
+  assert.ok(toolDeltas.every((delta: ToolDelta) => delta.index === 0));
   const finish = chunks[chunks.length - 1];
   assert.equal(finish.choices[0].finish_reason, "tool_calls");
   assert.equal(finish.served_model, "claude-opus-5-5");
