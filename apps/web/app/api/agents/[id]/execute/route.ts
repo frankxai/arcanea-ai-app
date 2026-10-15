@@ -218,7 +218,11 @@ export async function POST(
 
     // ── 1. Kill switch, rate limit, body validation and caps ─────────────────
     if (!meteredCallsAllowed()) {
-      return deny(503, "Agent execution is temporarily unavailable.", "kill_switch");
+      return deny(
+        503,
+        "Agent execution is temporarily unavailable.",
+        "kill_switch",
+      );
     }
 
     const ipLimit = checkRateLimit(
@@ -384,16 +388,11 @@ export async function POST(
     }
 
     if (credits.status === "insufficient") {
-      return deny(
-        402,
-        "Insufficient credits",
-        "insufficient_credits",
-        {
-          required: agent.priceCredits,
-          balance: credits.balance,
-          message: "Purchase more credits to run this agent.",
-        },
-      );
+      return deny(402, "Insufficient credits", "insufficient_credits", {
+        required: agent.priceCredits,
+        balance: credits.balance,
+        message: "Purchase more credits to run this agent.",
+      });
     }
 
     // ── 5. Build system prompt ───────────────────────────────────────────────
@@ -489,7 +488,9 @@ export async function POST(
       // No provider-side fallback is requested: a refusal or error ends the
       // call instead of silently re-running on another (billable) model.
       experimental_transform: refusalNoticeTransform(),
-      ...(luminorTools ? { tools: luminorTools, maxSteps: EXECUTE_LIMITS.maxToolSteps } : {}),
+      ...(luminorTools
+        ? { tools: luminorTools, maxSteps: EXECUTE_LIMITS.maxToolSteps }
+        : {}),
       onFinish: ({ text, usage, finishReason }) => {
         logExecute({
           event: "finished",

@@ -63,10 +63,15 @@ test("input caps reject empty, oversized input and oversized context", () => {
     status: 400,
     error: "input is required and must be a non-empty string",
   });
-  const tooLong = checkInputCaps("x".repeat(EXECUTE_LIMITS.maxInputChars + 1), {});
+  const tooLong = checkInputCaps(
+    "x".repeat(EXECUTE_LIMITS.maxInputChars + 1),
+    {},
+  );
   assert.equal(tooLong.ok, false);
   assert.equal(!tooLong.ok && tooLong.status, 413);
-  const bigContext = checkInputCaps("hi", { a: "y".repeat(EXECUTE_LIMITS.maxContextChars) });
+  const bigContext = checkInputCaps("hi", {
+    a: "y".repeat(EXECUTE_LIMITS.maxContextChars),
+  });
   assert.equal(bigContext.ok, false);
   const ok = checkInputCaps("  hi  ", [1, 2]);
   assert.deepEqual(ok, { ok: true, input: "hi", context: {} });
@@ -75,18 +80,24 @@ test("input caps reject empty, oversized input and oversized context", () => {
 test("model resolution uses one declared model and never falls through", () => {
   // Only an OpenAI key is set: the default (Gemini) model must be refused,
   // not silently replaced by a paid OpenAI one.
-  const refused = resolveDeclaredModel(undefined, { OPENAI_API_KEY: "sk-test" });
+  const refused = resolveDeclaredModel(undefined, {
+    OPENAI_API_KEY: "sk-test",
+  });
   assert.equal(refused.ok, false);
 
   const gemini = resolveDeclaredModel(undefined, { GEMINI_API_KEY: "k" });
   assert.equal(gemini.ok, true);
   assert.equal(gemini.ok && gemini.gatewayId, DEFAULT_EXECUTE_MODEL);
 
-  const unknown = resolveDeclaredModel("does-not-exist", { GEMINI_API_KEY: "k" });
+  const unknown = resolveDeclaredModel("does-not-exist", {
+    GEMINI_API_KEY: "k",
+  });
   assert.equal(unknown.ok, false);
 
   // An agent that names a model whose key is missing is refused too.
-  const missing = resolveDeclaredModel("arcanea-haiku", { GEMINI_API_KEY: "k" });
+  const missing = resolveDeclaredModel("arcanea-haiku", {
+    GEMINI_API_KEY: "k",
+  });
   assert.equal(missing.ok, false);
 });
 
@@ -107,12 +118,18 @@ test("credits check allows a sufficient balance and denies an insufficient one",
 
 test("credits check fails closed on a query error, a thrown error and a bad balance", async () => {
   const queryError = await checkCreditsFailClosed(
-    creditsClient({ select: { data: null, error: { code: "42P01", message: "no table" } } }),
+    creditsClient({
+      select: { data: null, error: { code: "42P01", message: "no table" } },
+    }),
     "u1",
     0,
   );
   assert.deepEqual(queryError, { status: "unavailable" });
-  const thrown = await checkCreditsFailClosed(creditsClient({ select: "throw" }), "u1", 0);
+  const thrown = await checkCreditsFailClosed(
+    creditsClient({ select: "throw" }),
+    "u1",
+    0,
+  );
   assert.deepEqual(thrown, { status: "unavailable" });
   const bad = await checkCreditsFailClosed(
     creditsClient({ select: { data: { balance: "lots" }, error: null } }),

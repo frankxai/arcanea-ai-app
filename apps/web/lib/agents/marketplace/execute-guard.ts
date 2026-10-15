@@ -203,6 +203,10 @@ export interface ExecuteLogEvent {
 /** One JSON line per decision so spend can be audited from the host logs. */
 export function logExecute(event: ExecuteLogEvent): void {
   console.info(
-    JSON.stringify({ route: "agents.execute", at: new Date().toISOString(), ...event }),
+    JSON.stringify({
+      route: "agents.execute",
+      at: new Date().toISOString(),
+      ...event,
+    }),
   );
 }
