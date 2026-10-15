@@ -8,7 +8,9 @@
 #   - A task-class maps to an ordered list of model candidates.
 #   - The harness picks the first available candidate given its auth context
 #     (Claude Max sub? OpenCode Zen? BYOK?).
-#   - `tier: free` costs $0 tokens. `tier: sub` is paid via subscription.
+#   - Tier/pricing entries are routing metadata, not billing authorization.
+#     Provider accounts and current vendor limits determine actual charges.
+#   - `tier: free` labels a historical free route; `tier: sub` a subscription.
 #     `tier: byok` is user-provided API key. `tier: premium` is metered.
 #
 # When you change this file:
@@ -17,22 +19,49 @@
 #   3. Run `pnpm --filter @arcanea/router-spec build` (syncs to web + CLIs).
 #   4. /models page + blog auto-regenerate on next build.
 
-version: 1.0.0
-lastUpdated: 2026-04-17
+version: 1.1.0
+lastUpdated: 2026-10-13
 maintainer: frankxai
 
 # ─── Model catalog ──────────────────────────────────────────────────────────
 
 models:
-
   # ── Frontier (paid / sub) ─────────────────────────────────────────────────
+
+  claude-opus-5-5:
+    provider: anthropic
+    family: claude
+    context: 1000000
+    tier: sub # Actual plan access and limits are enforced by Claude Code/account.
+    byokPrice: { input: 4, output: 20 }
+    strengths: [orchestration, extended-thinking, long-context, agentic]
+    aliases: ["opus-5.5", "opus-5-5"]
+
+  claude-sonnet-5-5:
+    provider: anthropic
+    family: claude
+    context: 1000000
+    tier: sub
+    byokPrice: { input: 2, output: 10 }
+    strengths: [coding, refactor, balanced-reasoning]
+    aliases: [sonnet-5.5]
+
+  claude-haiku-5-5:
+    provider: anthropic
+    family: claude
+    context: 1000000
+    tier: sub
+    byokPrice: { input: 0.1, output: 0.5 }
+    strengths: [fast, cheap, nav, transforms]
+    aliases: [haiku-5.5]
+    notes: "BYOK price applies to prompts up to 100K tokens; longer prompts bill at $0.50 / $2.50 per MTok."
 
   claude-opus-4-7:
     provider: anthropic
     family: claude
     context: 1000000
     sweBench: 80.3
-    tier: sub            # Claude Max $200/mo covers unlimited in Claude Code
+    tier: sub # Actual plan access and limits are enforced by Claude Code/account.
     byokPrice: { input: 15, output: 75 }
     strengths: [orchestration, extended-thinking, long-context, agentic]
     aliases: ["opus-4.7", "opus-4-7", "claude-opus-4-7[1m]"]
@@ -74,6 +103,15 @@ models:
     tier: byok
     byokPrice: { input: 2.5, output: 10 }
     strengths: [multimodal, long-context, grounding]
+    deprecated: "Gemini 3 Pro preview shut down 2026-03-09; select gemini-3.1-pro-preview explicitly."
+
+  gemini-3.1-pro-preview:
+    provider: google
+    family: gemini
+    context: 1048576
+    tier: byok
+    strengths: [multimodal, long-context, reasoning]
+    notes: "Native identifier verified in Google's model/deprecation references on 2026-10-11. Preview, account access and narrative quality untested. Other catalog entries remain historical snapshots."
 
   # ── OpenCode Zen free tier (bulk worker pool) ─────────────────────────────
 
@@ -120,7 +158,7 @@ models:
     family: nemotron
     upstream: nvidia/nemotron-3-super
     context: 1000000
-    sweBench: 85.6   # PinchBench (not SWE-Bench)
+    sweBench: 85.6 # PinchBench (not SWE-Bench)
     tier: free
     strengths: [throughput, rapid-agent-tasks, 5x-speed]
 
@@ -144,7 +182,7 @@ models:
 
   big-pickle:
     provider: opencode-zen
-    family: glm      # stealth rebrand of GLM-4.6
+    family: glm # stealth rebrand of GLM-4.6
     upstream: zhipu/glm-4.6
     context: 200000
     sweBench: 70.0
@@ -159,6 +197,30 @@ models:
     tier: free
     strengths: [very-fast, lightweight, quick-transforms]
 
+  grok-4:
+    provider: xai
+    family: grok
+    context: 128000
+    tier: byok
+    strengths: [fast, shell-automation, real-time-reasoning]
+    aliases: [grok-2, grok-beta]
+
+  grok-4.3:
+    provider: xai
+    family: grok
+    context: 128000
+    tier: byok
+    strengths: [creative-reasoning, worldbuilding, fast-turns]
+    aliases: [grok-4-3, grok4.3]
+
+  grok-build:
+    provider: xai
+    family: grok
+    context: 128000
+    tier: byok
+    strengths: [image-gen, video-gen, creative-media, build-cli]
+    aliases: [grok-build-cli, grok-imagine]
+
 # ─── Task-class routing ─────────────────────────────────────────────────────
 #
 # Each class declares a prioritized candidate list. First match wins in the
@@ -166,72 +228,71 @@ models:
 # unavailable or over quota.
 
 tasks:
-
   # ── Orchestration & planning ──────────────────────────────────────────────
 
   orchestrate:
     description: Multi-agent coordination, task decomposition, dispatch
-    primary: [claude-opus-4-7, qwen3.6-plus-free]
-    fallback: [claude-sonnet-4-6, gemini-3-pro]
+    primary: [claude-opus-5-5, qwen3.6-plus-free]
+    fallback: [claude-sonnet-5-5, gemini-3.1-pro-preview]
     contextMin: 200000
     rationale: Needs long context + agentic reasoning. Opus on Max sub, Qwen 3.6 for free-tier fallback.
 
   plan:
     description: Sprint planning, roadmap synthesis, multi-file architecture
-    primary: [claude-opus-4-7, qwen3.6-plus-free]
-    fallback: [claude-sonnet-4-6]
+    primary: [claude-opus-5-5, qwen3.6-plus-free]
+    fallback: [claude-sonnet-5-5]
     rationale: Planning benefits from extended thinking. Opus preferred.
 
   # ── Coding ────────────────────────────────────────────────────────────────
 
   code.implement:
     description: Feature implementation, TDD green phase
-    primary: [claude-sonnet-4-6, minimax-m2.5-free]
-    fallback: [claude-opus-4-7, mimo-v2-pro-free]
+    primary: [claude-sonnet-5-5, minimax-m2.5-free]
+    fallback: [claude-opus-5-5, mimo-v2-pro-free]
     rationale: Sonnet is cheap-and-fast for bulk. MiniMax M2.5 has highest SWE-Bench in free tier.
 
   code.debug:
     description: Bug reproduction, root-cause analysis, regression tests
-    primary: [claude-opus-4-7, minimax-m2.5-free]
-    fallback: [claude-sonnet-4-6]
+    primary: [claude-opus-5-5, minimax-m2.5-free]
+    fallback: [claude-sonnet-5-5]
     rationale: Debugging benefits from Opus extended thinking. Free fallback is MiniMax.
 
   code.review:
     description: PR review, security/perf audit, nitpicks
-    primary: [claude-sonnet-4-6, minimax-m2.5-free]
+    primary: [claude-sonnet-5-5, minimax-m2.5-free]
     fallback: [big-pickle, glm-5-free]
     rationale: Review is pattern-matching. Sonnet or MiniMax both strong.
 
   code.refactor:
     description: Large refactors, rename-across-files, modernization
-    primary: [claude-sonnet-4-6, mimo-v2-pro-free]
-    fallback: [claude-opus-4-7]
+    primary: [claude-sonnet-5-5, mimo-v2-pro-free]
+    fallback: [claude-opus-5-5]
     rationale: Refactor needs structural understanding + speed.
 
   code.frontend:
     description: React/Next components, CSS, a11y, design-token work
-    primary: [claude-sonnet-4-6, kimi-k2.5-free]
-    fallback: [claude-opus-4-7]
+    primary: [claude-sonnet-5-5, kimi-k2.5-free]
+    fallback: [claude-opus-5-5]
     rationale: Kimi is optimized for frontend patterns.
 
   # ── Research & docs ───────────────────────────────────────────────────────
 
   research.deep:
     description: Cross-source synthesis, competitive analysis, long-form report
-    primary: [claude-opus-4-7, qwen3.6-plus-free]
-    fallback: [gemini-3-pro, glm-5-free]
+    primary: [claude-opus-5-5, qwen3.6-plus-free]
+    fallback: [gemini-3.1-pro-preview, glm-5-free]
     contextMin: 500000
     rationale: Deep research needs massive context + reasoning.
 
   research.quick:
     description: Single-question lookups, doc extraction
-    primary: [claude-haiku-4-5, gpt-5-nano]
+    primary: [claude-haiku-5-5, gpt-5-nano]
     fallback: [glm-5-free]
     rationale: Speed matters more than depth for quick queries.
 
   docs.write:
     description: User-facing docs, guides, blog posts
-    primary: [claude-sonnet-4-6, qwen3.6-plus-free]
+    primary: [claude-sonnet-5-5, qwen3.6-plus-free]
     fallback: [glm-5-free]
     rationale: Docs need voice consistency — Sonnet is tuned for it.
 
@@ -239,39 +300,51 @@ tasks:
 
   world.canon:
     description: Canon-locked lore writing, character voice, mythology
-    primary: [claude-opus-4-7]
-    fallback: [claude-sonnet-4-6, qwen3.6-plus-free]
+    primary: [claude-opus-5-5]
+    fallback: [claude-sonnet-5-5, qwen3.6-plus-free]
     rationale: Canon violations are expensive to unwind. Opus has best instruction-following.
 
   world.expand:
     description: New locations, factions, cultures within existing canon
-    primary: [claude-opus-4-7, qwen3.6-plus-free]
-    fallback: [claude-sonnet-4-6]
+    primary: [claude-opus-5-5, qwen3.6-plus-free]
+    fallback: [claude-sonnet-5-5]
     rationale: World expansion needs creative reasoning + consistency.
 
   world.character:
     description: Character psychology, arcs, dialogue
-    primary: [claude-opus-4-7]
-    fallback: [claude-sonnet-4-6, qwen3.6-plus-free]
+    primary: [claude-opus-5-5]
+    fallback: [claude-sonnet-5-5, qwen3.6-plus-free]
     rationale: Character voice is a taste-sensitive task — Opus wins.
 
   creative.draft:
     description: First-draft prose, brainstorming, wild ideation
-    primary: [claude-sonnet-4-6, qwen3.6-plus-free]
+    primary: [claude-sonnet-5-5, qwen3.6-plus-free]
     fallback: [kimi-k2.5-free]
     rationale: Drafting tolerates imperfection — favor speed.
+
+  media.image:
+    description: Book covers, PFPs, faction art, marketing visuals
+    primary: [grok-build]
+    fallback: [grok-4.3, grok-4]
+    rationale: Grok Build CLI is the default creative image lane for Arcanea desktop.
+
+  media.video:
+    description: Short-form promos, motion cards, social clips
+    primary: [grok-build]
+    fallback: [grok-4.3]
+    rationale: Grok Build handles video generation in the desktop creative stack.
 
   # ── Fast utility ──────────────────────────────────────────────────────────
 
   nav.fast:
     description: File navigation, symbol lookup, quick greps
-    primary: [claude-haiku-4-5, gpt-5-nano]
+    primary: [claude-haiku-5-5, gpt-5-nano]
     fallback: [nemotron-3-super-free]
     rationale: Pure throughput. Nemotron is fastest in free tier.
 
   transform.bulk:
     description: Format conversion, mechanical edits, codemods
-    primary: [claude-haiku-4-5, nemotron-3-super-free]
+    primary: [claude-haiku-5-5, nemotron-3-super-free]
     fallback: [mimo-v2-pro-free]
     rationale: Deterministic work — cheapest wins.
 
@@ -280,16 +353,15 @@ tasks:
 # How each Arcanea surface consumes this spec.
 
 surfaces:
-
   claude-arcanea:
-    description: Claude Code overlay. Opus 4.7 is always available via Max sub.
+    description: Claude Code overlay. Opus 5.5 is always available via Max sub.
     prefer: sub
     authContext: [sub, byok]
     taskOverrides:
       # In Claude Code, default to Opus for everything not explicitly downgraded,
       # because the sub amortizes.
-      code.implement: [claude-sonnet-4-6, claude-opus-4-7]   # Sonnet for speed, Opus fallback
-      transform.bulk: [claude-haiku-4-5]
+      code.implement: [claude-sonnet-5-5, claude-opus-5-5] # Sonnet for speed, Opus fallback
+      transform.bulk: [claude-haiku-5-5]
 
   oh-my-arcanea:
     description: OpenCode overlay. Zen free-tier first.
@@ -319,6 +391,7 @@ surfaces:
     prefer: byok
     authContext: [byok]
     taskOverrides:
+      research.quick: [gpt-5]
       code.review: [gpt-5]
       code.debug: [gpt-5]
 
@@ -327,28 +400,58 @@ surfaces:
     prefer: byok
     authContext: [byok]
     taskOverrides:
-      research.deep: [gemini-3-pro]
-      world.expand: [gemini-3-pro]
+      research.deep: [gemini-3.1-pro-preview]
+      world.expand: [gemini-3.1-pro-preview]
 
   web.models-page:
     description: Public /models arena on arcanea.ai. Reads catalog + tasks for display.
     prefer: display-only
     authContext: []
 
+  grok-sis:
+    description: Grok CLI overlay for Starlight Intelligence System. xAI BYOK / OAuth.
+    prefer: byok
+    authContext: [byok]
+    taskOverrides:
+      research.quick: [grok-4, gpt-5]
+      code.debug: [grok-4]
+      nav.fast: [grok-4]
+
+  grok-arcanea:
+    description: Grok CLI overlay. xAI reasoning lane for quick tasks + shell automation.
+    prefer: byok
+    authContext: [byok]
+    taskOverrides:
+      research.quick: [grok-4]
+      nav.fast: [grok-4]
+
+  arcanea-desktop:
+    description: Arcanea Agent desktop (Hermes fork + arcanea-agent profile). Grok-first creative flows.
+    prefer: byok
+    authContext: [byok, sub]
+    taskOverrides:
+      research.quick: [grok-4.3, grok-4]
+      creative.draft: [grok-4.3, claude-sonnet-5-5]
+      world.canon: [claude-opus-5-5, grok-4.3]
+      world.character: [claude-opus-5-5, grok-4.3]
+      media.image: [grok-build]
+      media.video: [grok-build]
+      code.implement: [grok-build, grok-4.3]
+
 # ─── Delegation topology ────────────────────────────────────────────────────
 #
-# When Claude Code (Opus 4.7) delegates to external CLIs via Bash, which
+# When Claude Code (Opus 5.5) delegates to external CLIs via Bash, which
 # tasks route where:
 
 delegation:
   codex-cli:
     binary: codex
-    useFor: [code.review, code.debug]        # second opinion
+    useFor: [code.review, code.debug] # second opinion
     rationale: OpenAI's Codex provides independent perspective on complex code.
 
   gemini-cli:
     binary: gemini
-    useFor: [research.deep, world.expand]   # multimodal + long context
+    useFor: [research.deep, world.expand] # multimodal + long context
     rationale: Gemini's 2M context + grounding suits long research.
 
   opencode:
@@ -361,3 +464,8 @@ delegation:
     port: 4200
     useFor: [multi-session-coordination]
     rationale: Composio AO spawns tmux sessions + git worktrees with dashboard.
+
+  grok-cli:
+    binary: grok
+    useFor: [research.quick, nav.fast]
+    rationale: Grok CLI for fast status checks and shell automation via -p headless mode.

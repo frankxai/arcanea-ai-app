@@ -1,0 +1,39 @@
+name: Narrative screen
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/narrative-screen.yml"
+      - "scripts/narrative-evals/**"
+      - "scripts/tests/narrative-screen.test.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/narrative-screen.yml"
+      - "scripts/narrative-evals/**"
+      - "scripts/tests/narrative-screen.test.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: narrative-screen-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-runner:
+    name: Offline runner (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+      - name: Authorization, capped funding and interruption recovery
+        run: python -O scripts/tests/narrative-screen.test.py

@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import {
   SHOP_EDITIONS,
   editionReleased,
   editionDescription,
+  editionPageCopy,
+  isArtEdition,
   productStructuredData,
 } from "../catalog";
 import {
@@ -184,4 +189,89 @@ test("HTTP checkout enforces origin, byte limits and non-cacheable unavailabilit
     ).status,
     413,
   );
+});
+
+const webRoot = join(dirname(fileURLToPath(import.meta.url)), "../../..");
+
+// Claims the Estate Editor failed on the live shop (#542): the art masters are
+// not accepted yet, and the linked gallery is not a sample of the paid files.
+const forbiddenClaims = [
+  /\baccepted\b/i,
+  /finished art/i,
+  /selected and reviewed/i,
+  /explore the sample/i,
+  /linked sample is free/i,
+];
+const kitCopy = [
+  /existing writing and production/i,
+  /governs the kit/i,
+  /sample does not establish/i,
+];
+
+function renderedText(edition: (typeof SHOP_EDITIONS)[number]): string {
+  const copy = editionPageCopy(edition);
+  return [
+    edition.outcome,
+    edition.description,
+    editionDescription(edition),
+    JSON.stringify(productStructuredData(edition)),
+    ...edition.includes,
+    `Explore the ${copy.previewNoun}`,
+    copy.previewDelivery,
+    copy.previewScope,
+    copy.tools ?? "",
+    copy.rights ?? "",
+  ].join("\n");
+}
+
+test("art editions carry no acceptance, review or sample claims", () => {
+  const artEditions = SHOP_EDITIONS.filter(isArtEdition);
+  assert.ok(artEditions.length > 0);
+  for (const edition of artEditions) {
+    const text = renderedText(edition);
+    for (const claim of [...forbiddenClaims, ...kitCopy]) {
+      assert.doesNotMatch(text, claim, `${edition.slug}: ${claim}`);
+    }
+    const copy = editionPageCopy(edition);
+    assert.equal(copy.previewNoun, "gallery");
+    assert.equal(copy.tools, null);
+    assert.equal(copy.rights, null);
+  }
+});
+
+test("no edition description, metadata or JSON-LD claims accepted or finished art", () => {
+  for (const edition of SHOP_EDITIONS) {
+    for (const value of [
+      edition.outcome,
+      edition.description,
+      editionDescription(edition),
+      JSON.stringify(productStructuredData(edition)),
+      ...edition.includes,
+    ]) {
+      assert.doesNotMatch(value, /accepted artworks/i);
+      assert.doesNotMatch(value, /selected and reviewed/i);
+      assert.doesNotMatch(value, /finished art/i);
+    }
+  }
+});
+
+test("creator kits keep their kit copy and sample link", () => {
+  for (const edition of SHOP_EDITIONS.filter((e) => !isArtEdition(e))) {
+    const copy = editionPageCopy(edition);
+    assert.equal(copy.previewNoun, "sample");
+    assert.match(copy.tools ?? "", /existing writing and production tools/);
+    assert.match(copy.rights ?? "", /governs the kit and its examples/);
+  }
+});
+
+test("edition page and action render type-dependent copy only via the catalog", () => {
+  for (const file of [
+    "app/shop/[slug]/page.tsx",
+    "components/shop/checkout-action.tsx",
+  ]) {
+    const source = readFileSync(join(webRoot, file), "utf8");
+    for (const claim of [...forbiddenClaims, ...kitCopy]) {
+      assert.doesNotMatch(source, claim, `${file}: ${claim}`);
+    }
+  }
 });

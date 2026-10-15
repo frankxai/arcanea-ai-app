@@ -1,0 +1,132 @@
+name: Companion
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+    paths:
+      - apps/web/components/lumina/**
+      - apps/web/components/chat/chat-area.tsx
+      - apps/web/components/chat/chat-input-bar.tsx
+      - apps/web/components/chat/agent-header.tsx
+      - apps/web/components/chat/chat-notices.tsx
+      - apps/web/components/chat/chat-overlays.tsx
+      - apps/web/components/chat/chat-welcome.tsx
+      - apps/web/app/chat/page.tsx
+      - apps/web/lib/chat/error-message.ts
+      - apps/web/hooks/use-provider.ts
+      - apps/web/hooks/use-conversation.ts
+      - apps/web/lib/ai/provider-preferences.ts
+      - apps/web/lib/auth/context.tsx
+      - packages/design-system/**
+      - scripts/verify-companion-browser.cjs
+      - scripts/tests/chat-error-message.test.cjs
+      - scripts/tests/companion-chat-instance.test.cjs
+      - scripts/tests/chat-stop-control.test.cjs
+      - scripts/capture-sovereign-built-app.cjs
+      - scripts/verify-author-draft-browser.cjs
+      - scripts/verify-reading-scene-browser.cjs
+      - scripts/review-companion.py
+      - scripts/tests/test_review_companion.py
+      - .github/workflows/companion.yml
+      - planning-with-files/CURRENT_STATE_2026-10-11_CHAT_COMPANION.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: companion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  companion:
+    name: Compiled companion recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+      COMPANION_EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Verify useful safe errors
+        run: node --test scripts/tests/chat-error-message.test.cjs
+      - name: Verify account lifetime and real SDK cancellation
+        run: |
+          node scripts/tests/companion-chat-instance.test.cjs
+          node --test --test-timeout=10000 scripts/tests/chat-stop-control.test.cjs scripts/tests/provider-chat-instance.test.cjs
+      - name: Build the actual web application
+        run: pnpm turbo run build --filter=@arcanea/web
+      - name: Install hosted browser
+        run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Exercise provider, stream, keyboard and account lifetime
+        run: |
+          node apps/web/node_modules/next/dist/bin/next start apps/web --hostname 127.0.0.1 -p 3001 > "$RUNNER_TEMP/companion-next.log" 2>&1 &
+          companion_server_pid=$!
+          trap 'kill "$companion_server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --max-time 2 http://127.0.0.1:3001/worlds > /dev/null; then ready=true; break; fi
+            sleep 1
+          done
+          if [ "$ready" != true ]; then echo "Compiled app did not become ready"; exit 1; fi
+          timeout 240 node scripts/verify-companion-browser.cjs
+      - name: Keep revision-bound captures and safe fixture receipts
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: companion-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_attempt }}
+          path: screenshots/companion/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  independent-source-review:
+    name: Independent public-source review
+    # This bounded lane already exposes its source publicly. No repository or
+    # provider secrets are made available; forks and other lanes do not dispatch.
+    if: github.event_name == 'pull_request' && github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'agent/codex/provider-account-20261011'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      REVIEW_HEAD: ${{ github.event.pull_request.head.sha }}
+      REVIEW_BASE: ${{ github.event.pull_request.base.sha }}
+      REVIEW_PR: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install the pinned payload scanner
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --max-time 40 -L https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o "$RUNNER_TEMP/gitleaks.tar.gz"
+          printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$RUNNER_TEMP/gitleaks.tar.gz" | sha256sum --check -
+          mkdir "$RUNNER_TEMP/companion-scanner"
+          tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP/companion-scanner" gitleaks
+          echo "$RUNNER_TEMP/companion-scanner" >> "$GITHUB_PATH"
+      - name: Verify source, privacy and zero-price denial boundaries
+        run: python -m unittest discover -s scripts/tests -p test_review_companion.py -v
+      - name: Review all complete pinned public source
+        run: python scripts/review-companion.py --head "$REVIEW_HEAD" --base "$REVIEW_BASE" --pull-request "$REVIEW_PR"
+      - name: Retain exact-source review and all attempts
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: companion-review-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: screenshots/companion-review/
+          if-no-files-found: warn
+          retention-days: 7

@@ -3,16 +3,12 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import ChatMarkdown from "@/components/chat/chat-markdown";
 import { useRouter } from "next/navigation";
 import { ReadingToolbar } from "./reading-toolbar";
-
-const ChatMarkdown = dynamic(() => import("@/components/chat/chat-markdown"), {
-  ssr: false,
-  loading: () => (
-    <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />
-  ),
-});
+import styles from "./reading-toolbar.module.css";
+import { SceneVisualizer } from "./scene-visualizer";
+import { getReaderContent } from "@/lib/content/reader-presentation";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
@@ -126,21 +122,6 @@ function getThemeStyles(theme: ReadingTheme) {
   }
 }
 
-function getFontSizeClass(size: FontSize): string {
-  switch (size) {
-    case 14:
-      return "text-sm";
-    case 18:
-      return "text-lg";
-    case 22:
-      return "text-xl";
-    case 26:
-      return "text-2xl";
-    case 30:
-      return "text-3xl";
-  }
-}
-
 function getLineHeightClass(lh: LineHeight): string {
   switch (lh) {
     case "compact":
@@ -203,7 +184,24 @@ interface ReaderPrefs {
 function loadPrefs(): ReaderPrefs {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as ReaderPrefs;
+    if (raw) {
+      const parsed: unknown = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        const prefs = parsed as Record<string, unknown>;
+        return {
+          theme: THEME_CYCLE.includes(prefs.theme as ReadingTheme)
+            ? (prefs.theme as ReadingTheme)
+            : "dark",
+          fontSize: FONT_SIZES.includes(prefs.fontSize as FontSize)
+            ? (prefs.fontSize as FontSize)
+            : 18,
+          fontFamily: prefs.fontFamily === "sans" ? "sans" : "serif",
+          lineHeight: LINE_HEIGHT_CYCLE.includes(prefs.lineHeight as LineHeight)
+            ? (prefs.lineHeight as LineHeight)
+            : "normal",
+        };
+      }
+    }
   } catch {
     /* ignore */
   }
@@ -254,7 +252,15 @@ export function ChapterReader({
   // TOC
   const [showToc, setShowToc] = useState(false);
   const [activeHeading, setActiveHeading] = useState("");
-  const tocHeadings = useMemo(() => extractHeadings(content), [content]);
+  const readingContent = useMemo(
+    () => getReaderContent(content, bookTitle, title),
+    [content, bookTitle, title],
+  );
+  const tocHeadings = useMemo(
+    () => extractHeadings(readingContent),
+    [readingContent],
+  );
+  const readingRef = useRef<HTMLDivElement | null>(null);
 
   // Notes (existing functionality preserved)
   const [showNotes, setShowNotes] = useState(false);
@@ -388,6 +394,7 @@ export function ChapterReader({
 
   const handleTouchEnd = useCallback(
     (e: React.TouchEvent) => {
+      if (window.getSelection()?.toString().trim()) return;
       const dx = e.changedTouches[0].clientX - touchStartX.current;
       const dy = e.changedTouches[0].clientY - touchStartY.current;
 
@@ -402,6 +409,7 @@ export function ChapterReader({
 
   const handleTap = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (window.getSelection()?.toString().trim()) return;
       // Only process clicks directly on the overlay div, not bubbled events from interactive elements
       if ((e.target as HTMLElement).closest("a,button,textarea,input")) return;
       const x = e.clientX;
@@ -505,7 +513,6 @@ export function ChapterReader({
   /* ---------------------------------------------------------------- */
 
   const s = getThemeStyles(theme);
-  const fontSizeClass = getFontSizeClass(fontSize);
   const lineHeightClass = getLineHeightClass(lineHeight);
   const fontFamilyClass = fontFamily === "serif" ? "font-serif" : "font-sans";
   const wordsRead = Math.round((progress / 100) * wordCount);
@@ -518,7 +525,7 @@ export function ChapterReader({
 
   return (
     <div
-      className={`min-h-screen ${s.bg} ${s.text} transition-colors duration-300`}
+      className={`${styles.surface} min-h-screen ${s.bg} ${s.text}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={handleTap}
@@ -571,10 +578,19 @@ export function ChapterReader({
       <div className="max-w-[680px] mx-auto flex gap-0">
         <article className="flex-1 px-6 py-10 min-w-0">
           <div
-            className={`${s.prose} ${fontSizeClass} ${lineHeightClass} ${fontFamilyClass}`}
+            ref={readingRef}
+            className={`${styles.reading} ${s.prose} ${lineHeightClass} ${fontFamilyClass}`}
+            style={{ fontSize }}
           >
-            <ChatMarkdown content={content} />
+            <ChatMarkdown content={readingContent} />
           </div>
+          <SceneVisualizer
+            bookId={bookId}
+            bookTitle={bookTitle}
+            chapterTitle={title}
+            sourceText={content}
+            readingRef={readingRef}
+          />
         </article>
       </div>
 
