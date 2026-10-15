@@ -238,3 +238,14 @@ test("a negative or non-finite price is refused before the balance is read", asy
     balance: 50,
   });
 });
+
+test("the arcanea-auto sentinel resolves to the single default model", () => {
+  const auto = resolveDeclaredModel("arcanea-auto", { GEMINI_API_KEY: "k" });
+  assert.equal(auto.ok, true);
+  assert.equal(auto.ok && auto.gatewayId, DEFAULT_EXECUTE_MODEL);
+  // With only a paid OpenAI key set, auto is still refused, not rerouted.
+  assert.equal(
+    resolveDeclaredModel("arcanea-auto", { OPENAI_API_KEY: "sk-test" }).ok,
+    false,
+  );
+});

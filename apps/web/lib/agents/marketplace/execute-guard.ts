@@ -209,7 +209,12 @@ export function resolveDeclaredModel(
   preferredGatewayId: string | undefined,
   env: Env = process.env,
 ): DeclaredModel {
-  const gatewayId = preferredGatewayId || DEFAULT_EXECUTE_MODEL;
+  // `arcanea-auto` is a supported "let the platform choose" sentinel. Here it
+  // means the one default model, never a search across paid providers.
+  const gatewayId =
+    !preferredGatewayId || preferredGatewayId === "arcanea-auto"
+      ? DEFAULT_EXECUTE_MODEL
+      : preferredGatewayId;
   const gw = GATEWAY_MODELS[gatewayId];
   if (!gw) return { ok: false, reason: `unknown model ${gatewayId}` };
 
