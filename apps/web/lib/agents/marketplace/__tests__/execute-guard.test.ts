@@ -222,3 +222,19 @@ test("the composed prompt is capped, not only the request fields", () => {
     false,
   );
 });
+
+test("a negative or non-finite price is refused before the balance is read", async () => {
+  const client = creditsClient({
+    select: { data: { balance: 50 }, error: null },
+  });
+  assert.deepEqual(await checkCreditsFailClosed(client, "u1", -5), {
+    status: "unavailable",
+  });
+  assert.deepEqual(await checkCreditsFailClosed(client, "u1", Number.NaN), {
+    status: "unavailable",
+  });
+  assert.deepEqual(await checkCreditsFailClosed(client, "u1", 0), {
+    status: "ok",
+    balance: 50,
+  });
+});

@@ -35,7 +35,7 @@ import { NextRequest } from "next/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { stepCountIs, streamText } from "ai";
 import { CATALOG_BY_ID } from "@/lib/agents/marketplace/catalog";
 import { claudeRejectsSamplingParams } from "@/lib/gateway/catalog";
 import { LUMINORS } from "@/lib/luminors/config";
@@ -406,6 +406,12 @@ export async function POST(
 
     let systemPrompt = agentSystemPrompt;
 
+    // Refuse an oversized prompt before any paid retrieval runs; it is checked
+    // again below once memory and creator context are added.
+    if (!checkPromptCap(systemPrompt, input)) {
+      return deny(413, "The agent prompt is too large to run.", "prompt_cap");
+    }
+
     // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response.
     // Off unless AGENT_EXECUTE_LEARNING=true: retrieval embeds the input through
     // a paid provider. If retrieval fails, we proceed without memory.
@@ -487,7 +493,10 @@ export async function POST(
       // call instead of silently re-running on another (billable) model.
       experimental_transform: refusalNoticeTransform(),
       ...(luminorTools
-        ? { tools: luminorTools, maxSteps: EXECUTE_LIMITS.maxToolSteps }
+        ? {
+            tools: luminorTools,
+            stopWhen: stepCountIs(EXECUTE_LIMITS.maxToolSteps),
+          }
         : {}),
       onFinish: ({ text, usage, finishReason }) => {
         logExecute({

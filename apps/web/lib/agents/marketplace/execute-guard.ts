@@ -248,6 +248,10 @@ export async function checkCreditsFailClosed(
   userId: string,
   required: number,
 ): Promise<CreditCheck> {
+  // A creator-set price must be a finite, non-negative number. A negative price
+  // would read as "sufficient" and the fallback debit would add credits.
+  if (!Number.isFinite(required) || required < 0)
+    return { status: "unavailable" };
   try {
     const { data, error } = await supabase
       .from("credits")
