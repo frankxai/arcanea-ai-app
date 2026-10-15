@@ -17,6 +17,8 @@ import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from "@/lib/gateway/catalog";
 export const EXECUTE_LIMITS = {
   maxInputChars: 8_000,
   maxContextChars: 2_000,
+  /** Whole composed prompt: agent system prompt, memory block and user input. */
+  maxPromptChars: 24_000,
   maxOutputTokens: 2_048,
   maxToolSteps: 3,
   perUser: { maxRequests: 10, windowMs: 60_000 },
@@ -44,9 +46,101 @@ export function meteredCallsAllowed(env: Env = process.env): boolean {
   return env.AI_METERED_ALLOWED !== "false";
 }
 
-/** ReasoningBank distillation makes a second provider call per request. */
+/**
+ * ReasoningBank is opt-in. Retrieval embeds the input through a paid provider
+ * and distillation makes a second model call, so neither runs by default.
+ */
 export function learningEnabled(env: Env = process.env): boolean {
   return env.AGENT_EXECUTE_LEARNING === "true";
+}
+
+/** Tools that call a paid provider with a server key, outside the flat credit price. */
+export const PAID_TOOL_NAMES = [
+  "web_search",
+  "deep_research",
+  "image_generate",
+];
+
+export function withoutPaidTools<T>(
+  tools: Record<string, T>,
+): Record<string, T> | undefined {
+  const kept = Object.fromEntries(
+    Object.entries(tools).filter(([name]) => !PAID_TOOL_NAMES.includes(name)),
+  );
+  return Object.keys(kept).length > 0 ? kept : undefined;
+}
+
+/** The composed prompt, not only the request fields, must stay inside the cap. */
+export function checkPromptCap(systemPrompt: string, input: string): boolean {
+  return systemPrompt.length + input.length <= EXECUTE_LIMITS.maxPromptChars;
+}
+
+function decodeBase64Url(value: string): string {
+  const padded = value.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(padded + "=".repeat((4 - (padded.length % 4)) % 4));
+  return new TextDecoder().decode(
+    Uint8Array.from(binary, (c) => c.charCodeAt(0)),
+  );
+}
+
+function tokenFromCookieValue(raw: string): string | null {
+  let value = raw;
+  try {
+    value = decodeURIComponent(value);
+  } catch {
+    // keep the raw value
+  }
+  if (value.startsWith("base64-")) {
+    try {
+      value = decodeBase64Url(value.slice("base64-".length));
+    } catch {
+      return null;
+    }
+  }
+  try {
+    const parsed = JSON.parse(value);
+    if (typeof parsed?.access_token === "string") return parsed.access_token;
+    if (Array.isArray(parsed) && typeof parsed[0]?.access_token === "string") {
+      return parsed[0].access_token;
+    }
+    return null;
+  } catch {
+    // not JSON: accept only something shaped like a JWT
+  }
+  return /^[\w-]+\.[\w-]+\.[\w-]+$/.test(value) ? value : null;
+}
+
+/**
+ * Pull the Supabase access token out of a Cookie header. Handles what
+ * @supabase/ssr writes (base64url with a "base64-" prefix, split into numbered
+ * chunks) as well as the older JSON and raw-JWT forms.
+ */
+export function extractAccessToken(cookieHeader: string): string | null {
+  const jar = new Map<string, string>();
+  for (const part of cookieHeader.split(";")) {
+    const at = part.indexOf("=");
+    if (at < 0) continue;
+    jar.set(part.slice(0, at).trim(), part.slice(at + 1).trim());
+  }
+  const bases = new Set<string>();
+  for (const name of jar.keys()) {
+    const match = /^(sb-.+-auth-token)(?:\.\d+)?$/.exec(name);
+    if (match) bases.add(match[1]);
+  }
+  for (const base of bases) {
+    let raw = jar.get(base);
+    if (raw === undefined) {
+      const chunks: string[] = [];
+      for (let i = 0; jar.has(`${base}.${i}`); i++) {
+        chunks.push(jar.get(`${base}.${i}`) as string);
+      }
+      if (chunks.length === 0) continue;
+      raw = chunks.join("");
+    }
+    const token = tokenFromCookieValue(raw);
+    if (token) return token;
+  }
+  return null;
 }
 
 export type InputCheck =

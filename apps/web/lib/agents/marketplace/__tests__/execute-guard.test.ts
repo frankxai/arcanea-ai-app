@@ -4,8 +4,12 @@ import {
   EXECUTE_LIMITS,
   DEFAULT_EXECUTE_MODEL,
   checkCreditsFailClosed,
+  PAID_TOOL_NAMES,
   checkInputCaps,
+  checkPromptCap,
+  extractAccessToken,
   learningEnabled,
+  withoutPaidTools,
   meteredCallsAllowed,
   resolveDeclaredModel,
 } from "../execute-guard";
@@ -155,4 +159,66 @@ test("a new user gets the starter balance only if it can be stored", async () =>
     10,
   );
   assert.deepEqual(insertFails, { status: "unavailable" });
+});
+
+const JWT = "aaa.bbb.ccc";
+const b64url = (value: string) =>
+  Buffer.from(value, "utf8").toString("base64url");
+
+test("session cookie: base64url value written by @supabase/ssr", () => {
+  const value =
+    "base64-" +
+    b64url(JSON.stringify({ access_token: JWT, refresh_token: "r" }));
+  assert.equal(
+    extractAccessToken(`theme=dark; sb-abc-auth-token=${value}`),
+    JWT,
+  );
+});
+
+test("session cookie: value split into numbered chunks is rejoined in order", () => {
+  const value =
+    "base64-" +
+    b64url(JSON.stringify({ access_token: JWT, note: "é".repeat(40) }));
+  const cut = Math.floor(value.length / 2);
+  const header = `sb-abc-auth-token.1=${value.slice(cut)}; sb-abc-auth-token.0=${value.slice(0, cut)}`;
+  assert.equal(extractAccessToken(header), JWT);
+});
+
+test("session cookie: legacy JSON, array and raw JWT forms still work", () => {
+  const json = encodeURIComponent(JSON.stringify({ access_token: JWT }));
+  assert.equal(extractAccessToken(`sb-x-auth-token=${json}`), JWT);
+  const array = encodeURIComponent(JSON.stringify([{ access_token: JWT }]));
+  assert.equal(extractAccessToken(`sb-x-auth-token=${array}`), JWT);
+  assert.equal(extractAccessToken(`sb-x-auth-token=${JWT}`), JWT);
+});
+
+test("session cookie: garbage and unrelated cookies give no token", () => {
+  assert.equal(extractAccessToken(""), null);
+  assert.equal(extractAccessToken("a=b; c=d"), null);
+  assert.equal(extractAccessToken("sb-x-auth-token=not a token"), null);
+  assert.equal(extractAccessToken("sb-x-auth-token=base64-!!!"), null);
+});
+
+test("paid tools are stripped from the tool set", () => {
+  const tools = {
+    handoff_to_luminor: 1,
+    web_search: 2,
+    deep_research: 3,
+    image_generate: 4,
+  };
+  assert.deepEqual(withoutPaidTools(tools), { handoff_to_luminor: 1 });
+  assert.equal(withoutPaidTools({ web_search: 1 }), undefined);
+  assert.deepEqual([...PAID_TOOL_NAMES].sort(), [
+    "deep_research",
+    "image_generate",
+    "web_search",
+  ]);
+});
+
+test("the composed prompt is capped, not only the request fields", () => {
+  assert.equal(checkPromptCap("s".repeat(3_300), "i".repeat(8_000)), true);
+  assert.equal(
+    checkPromptCap("s".repeat(EXECUTE_LIMITS.maxPromptChars), "x"),
+    false,
+  );
 });

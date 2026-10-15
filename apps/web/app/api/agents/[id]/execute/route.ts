@@ -48,10 +48,13 @@ import {
   EXECUTE_LIMITS,
   checkCreditsFailClosed,
   checkInputCaps,
+  checkPromptCap,
+  extractAccessToken,
   learningEnabled,
   logExecute,
   meteredCallsAllowed,
   resolveDeclaredModel,
+  withoutPaidTools,
 } from "@/lib/agents/marketplace/execute-guard";
 
 export const runtime = "edge";
@@ -97,26 +100,8 @@ async function resolveSession(req: NextRequest) {
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!supabaseUrl || !supabaseAnonKey) return null;
 
-    const cookieHeader = req.headers.get("cookie") ?? "";
-    const accessToken = cookieHeader
-      .split(";")
-      .map((c) => c.trim())
-      .find((c) => c.startsWith("sb-") && c.includes("-auth-token"))
-      ?.split("=")
-      .slice(1)
-      .join("=");
-
-    if (!accessToken) return null;
-
-    let jwt = accessToken;
-    try {
-      const decoded = JSON.parse(decodeURIComponent(accessToken));
-      if (decoded?.access_token) jwt = decoded.access_token;
-      else if (Array.isArray(decoded) && decoded[0]?.access_token)
-        jwt = decoded[0].access_token;
-    } catch {
-      // Already a raw JWT
-    }
+    const jwt = extractAccessToken(req.headers.get("cookie") ?? "");
+    if (!jwt) return null;
 
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -395,16 +380,37 @@ export async function POST(
       });
     }
 
-    // ── 5. Build system prompt ───────────────────────────────────────────────
+    // ── 5. Resolve the model first, so a missing key is refused before any
+    //      paid retrieval, embedding or tool call runs ───────────────────
+    const preferredGatewayId = agent.spec?.preferredModel ?? undefined;
+    const resolved = buildModel(preferredGatewayId);
+
+    if ("error" in resolved) {
+      return deny(
+        503,
+        "No AI provider is configured for this agent.",
+        `model_unavailable: ${resolved.error}`,
+      );
+    }
+
+    const { model, label } = resolved;
+    const temperature = agent.spec?.temperature ?? 0.7;
+    // AI SDK models expose modelId; Claude 5.x rejects sampling parameters with a 400.
+    const modelId = String(model.modelId ?? "");
+    const sendTemperature = !claudeRejectsSamplingParams(modelId);
+
+    // ── 6. Build system prompt ───────────────────────────────────────────────
     const agentSystemPrompt =
       agent.spec?.systemPrompt ??
       `You are ${agent.name}, ${agent.title}. ${agent.description}`;
 
     let systemPrompt = agentSystemPrompt;
 
-    // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response
-    // Non-blocking fallback: if retrieval fails, we proceed without memory.
+    // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response.
+    // Off unless AGENT_EXECUTE_LEARNING=true: retrieval embeds the input through
+    // a paid provider. If retrieval fails, we proceed without memory.
     try {
+      if (!learningEnabled()) throw new Error("memory disabled");
       const { retrieveMemoryItems, formatMemoryItemsForPrompt } =
         await import("@/lib/memory/reasoning-bank");
       const memoryItems = await retrieveMemoryItems({
@@ -440,23 +446,14 @@ export async function POST(
       systemPrompt = `${contextBlock}${systemPrompt}`;
     }
 
-    // ── 6. Resolve model ─────────────────────────────────────────────────────
-    const preferredGatewayId = agent.spec?.preferredModel ?? undefined;
-    const resolved = buildModel(preferredGatewayId);
-
-    if ("error" in resolved) {
+    if (!checkPromptCap(systemPrompt, input)) {
       return deny(
-        503,
-        "No AI provider is configured for this agent.",
-        `model_unavailable: ${resolved.error}`,
+        413,
+        "The agent prompt is too large to run.",
+        "prompt_cap",
+        {},
       );
     }
-
-    const { model, label } = resolved;
-    const temperature = agent.spec?.temperature ?? 0.7;
-    // AI SDK models expose modelId; Claude 5.x rejects sampling parameters with a 400.
-    const modelId = String(model.modelId ?? "");
-    const sendTemperature = !claudeRejectsSamplingParams(modelId);
 
     // ── 7. Resolve tools for this Luminor ─────────────────────────────────────
     // Dynamic import for edge compatibility — tool-resolver pulls in zod + ai/tool
@@ -473,7 +470,8 @@ export async function POST(
         userId: session?.userId ?? null,
         authenticated: !!session,
       });
-      luminorTools = Object.keys(resolved).length > 0 ? resolved : undefined;
+      // Tools that call a paid provider with a server key are not offered here.
+      luminorTools = withoutPaidTools(resolved);
     } catch {
       // Fail-open: if tool resolution fails, proceed without tools
     }
