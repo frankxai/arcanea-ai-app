@@ -206,11 +206,14 @@ test("paid tools are stripped from the tool set", () => {
     deep_research: 3,
     image_generate: 4,
   };
-  assert.deepEqual(withoutPaidTools(tools), { handoff_to_luminor: 1 });
+  // image_generate is a zero-cost /imagine handoff and stays available.
+  assert.deepEqual(withoutPaidTools(tools), {
+    handoff_to_luminor: 1,
+    image_generate: 4,
+  });
   assert.equal(withoutPaidTools({ web_search: 1 }), undefined);
   assert.deepEqual([...PAID_TOOL_NAMES].sort(), [
     "deep_research",
-    "image_generate",
     "web_search",
   ]);
 });

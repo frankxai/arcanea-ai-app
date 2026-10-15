@@ -19,6 +19,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
   const [status, setStatus] = useState<RunStatus>("idle");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [needsSignIn, setNeedsSignIn] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);
 
   const creditBalance = 100;
@@ -32,6 +33,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
     if (!input.trim() || !agent) return;
     setStatus("streaming");
     setOutput("");
+    setNeedsSignIn(false);
 
     try {
       const response = await fetch(`/api/agents/${agent.id}/execute`, {
@@ -41,6 +43,9 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
       });
 
       if (!response.ok) {
+        // 401: the route requires a signed-in session. Prompt for sign-in
+        // instead of showing a generic failure.
+        if (response.status === 401) setNeedsSignIn(true);
         setStatus("error");
         return;
       }
@@ -76,6 +81,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
     setStatus("idle");
     setOutput("");
     setInput("");
+    setNeedsSignIn(false);
   };
 
   if (!agent) {
@@ -392,7 +398,19 @@ function OutputArea({
             <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-sm">Something went wrong. Please try again.</p>
+            {needsSignIn ? (
+              <p className="text-sm">
+                Sign in to run agents.{" "}
+                <Link
+                  href={`/auth/login?next=${encodeURIComponent(`/agents/${agent.id}`)}`}
+                  className="underline text-[var(--arc-brand-atlantean-teal)]"
+                >
+                  Sign in
+                </Link>
+              </p>
+            ) : (
+              <p className="text-sm">Something went wrong. Please try again.</p>
+            )}
           </div>
         ) : (
           <div className="font-mono text-sm text-white/80 leading-relaxed whitespace-pre-wrap">

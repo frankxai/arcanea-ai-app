@@ -498,15 +498,18 @@ export async function POST(
             stopWhen: stepCountIs(EXECUTE_LIMITS.maxToolSteps),
           }
         : {}),
-      onFinish: ({ text, usage, finishReason }) => {
+      onFinish: ({ text, usage, totalUsage, finishReason }) => {
+        // `usage` is the last step only; `totalUsage` sums every step of a
+        // multi-step tool run.
+        const aggregateUsage = totalUsage ?? usage;
         logExecute({
           event: "finished",
           agentId: agent.id,
           userId: session.userId,
           model: label,
           finishReason,
-          inputTokens: usage?.inputTokens,
-          outputTokens: usage?.outputTokens,
+          inputTokens: aggregateUsage?.inputTokens,
+          outputTokens: aggregateUsage?.outputTokens,
           durationMs: Date.now() - requestStarted,
         });
 
@@ -584,11 +587,11 @@ export async function POST(
                 process.env.SUPABASE_SERVICE_ROLE_KEY ?? supabaseAnonKey;
               const admin = createClient(supabaseUrl, serviceKey);
 
-              // Approximate token count from text length (Vercel AI SDK edge
-              // doesn't always surface usage; ~4 chars per token is a safe estimate)
-              const estimatedTokens = Math.ceil(
-                (input.length + text.length) / 4,
-              );
+              // Prefer the SDK's aggregate usage across all steps; fall back to
+              // a ~4 chars per token estimate when the provider reports none.
+              const estimatedTokens =
+                aggregateUsage?.totalTokens ??
+                Math.ceil((input.length + text.length) / 4);
               const durationMs = Date.now() - requestStarted;
 
               // 1. usage_events — every invocation

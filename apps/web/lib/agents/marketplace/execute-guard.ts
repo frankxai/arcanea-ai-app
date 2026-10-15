@@ -54,12 +54,12 @@ export function learningEnabled(env: Env = process.env): boolean {
   return env.AGENT_EXECUTE_LEARNING === "true";
 }
 
-/** Tools that call a paid provider with a server key, outside the flat credit price. */
-export const PAID_TOOL_NAMES = [
-  "web_search",
-  "deep_research",
-  "image_generate",
-];
+/**
+ * Tools that call a paid provider with a server key, outside the flat credit
+ * price. `image_generate` is not listed: it only returns a reviewed /imagine
+ * handoff and performs no generation or credit spend.
+ */
+export const PAID_TOOL_NAMES = ["web_search", "deep_research"];
 
 export function withoutPaidTools<T>(
   tools: Record<string, T>,
