@@ -205,6 +205,56 @@ test("non-streaming Anthropic reply returns tool calls and the serving model", a
   ]);
 });
 
+test("a follow-up request carries the tool call and its result to Anthropic as tool_use and tool_result", async () => {
+  await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        messages: [
+          { role: "user", content: "Where is Aether?" },
+          {
+            role: "assistant",
+            content: null,
+            tool_calls: [
+              {
+                id: "toolu_1",
+                type: "function",
+                function: { name: "lookup_realm", arguments: '{"realm":"Aether"}' },
+              },
+              {
+                id: "toolu_2",
+                type: "function",
+                function: { name: "lookup_realm", arguments: "not json" },
+              },
+            ],
+          },
+          { role: "tool", tool_call_id: "toolu_1", content: "Aether is the sky realm." },
+          { role: "tool", tool_call_id: "toolu_2", content: "No such realm." },
+        ],
+      },
+    ),
+  );
+  assert.equal(calls.length, 1);
+  assert.deepEqual(calls[0].body.messages, [
+    { role: "user", content: "Where is Aether?" },
+    {
+      role: "assistant",
+      content: [
+        { type: "tool_use", id: "toolu_1", name: "lookup_realm", input: { realm: "Aether" } },
+        { type: "tool_use", id: "toolu_2", name: "lookup_realm", input: {} },
+      ],
+    },
+    {
+      role: "user",
+      content: [
+        { type: "tool_result", tool_use_id: "toolu_1", content: "Aether is the sky realm." },
+        { type: "tool_result", tool_use_id: "toolu_2", content: "No such realm." },
+      ],
+    },
+  ]);
+});
+
 test("streaming Anthropic reply emits tool call deltas and the serving model", async () => {
   const events: Array<[string, unknown]> = [
     [

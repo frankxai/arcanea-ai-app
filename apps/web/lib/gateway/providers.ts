@@ -127,6 +127,24 @@ export async function proxyToOpenAICompatible(
 
 // ─── Anthropic Adapter ───────────────────────────────────────────────
 
+function openAIContentToText(content: ChatMessage["content"] | null | undefined): string {
+  if (typeof content === "string") return content;
+  if (!Array.isArray(content)) return "";
+  return content
+    .filter((part) => part.type === "text")
+    .map((part) => part.text ?? "")
+    .join("\n");
+}
+
+function parseToolArguments(raw: string): unknown {
+  try {
+    const parsed = JSON.parse(raw || "{}");
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
 /**
  * Translate OpenAI-format request to Anthropic's Messages API format,
  * then translate the response back.
@@ -148,6 +166,48 @@ export async function proxyToAnthropic(
   for (const msg of body.messages) {
     if (msg.role === "system") {
       systemPrompt = typeof msg.content === "string" ? msg.content : "";
+      continue;
+    }
+
+    // OpenAI tool round trip: an assistant message carrying `tool_calls`, then
+    // `role: "tool"` results. Anthropic needs these as `tool_use` blocks on the
+    // assistant turn and `tool_result` blocks in the next user turn.
+    if (msg.role === "assistant" && msg.tool_calls?.length) {
+      const blocks: unknown[] = [];
+      const text = openAIContentToText(msg.content);
+      if (text) blocks.push({ type: "text", text });
+      for (const call of msg.tool_calls) {
+        blocks.push({
+          type: "tool_use",
+          id: call.id,
+          name: call.function.name,
+          input: parseToolArguments(call.function.arguments),
+        });
+      }
+      messages.push({ role: "assistant", content: blocks });
+      continue;
+    }
+
+    if (msg.role === "tool") {
+      const block = {
+        type: "tool_result",
+        tool_use_id: msg.tool_call_id,
+        content: openAIContentToText(msg.content),
+      };
+      const previous = messages[messages.length - 1];
+      if (
+        previous?.role === "user" &&
+        Array.isArray(previous.content) &&
+        previous.content.length > 0 &&
+        previous.content.every(
+          (part) => (part as { type?: string }).type === "tool_result",
+        )
+      ) {
+        // Results for one assistant turn share a single user message.
+        previous.content.push(block);
+      } else {
+        messages.push({ role: "user", content: [block] });
+      }
       continue;
     }
 
