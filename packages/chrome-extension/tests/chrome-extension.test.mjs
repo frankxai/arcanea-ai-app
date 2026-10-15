@@ -30,7 +30,7 @@ const PROVIDER_NAMES = {
 };
 
 const PROVIDER_MODELS = {
-  anthropic: 'claude-opus-4-6',
+  anthropic: 'claude-opus-5-5',
   google: 'gemini-2.0-flash-exp',
   openai: 'gpt-4o',
 };
@@ -141,8 +141,8 @@ describe('getProviderName', () => {
 });
 
 describe('getProviderModel', () => {
-  it('returns claude-opus-4-6 for anthropic', () => {
-    assert.equal(getProviderModel('anthropic'), 'claude-opus-4-6');
+  it('returns claude-opus-5-5 for anthropic', () => {
+    assert.equal(getProviderModel('anthropic'), 'claude-opus-5-5');
   });
 
   it('returns gemini-2.0-flash-exp for google', () => {
