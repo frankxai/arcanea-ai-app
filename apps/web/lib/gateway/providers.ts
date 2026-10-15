@@ -18,6 +18,7 @@ import type {
   ChatMessage,
   GatewayConfig,
   ProviderId,
+  ToolCall,
   UsageInfo,
 } from "./types";
 import { PROVIDERS } from "./models";
@@ -135,6 +136,7 @@ export async function proxyToAnthropic(
   body: ChatCompletionRequest,
   arcaneaModelId: string,
   streaming: boolean,
+  options: { fallbackConsent?: boolean } = {},
 ): Promise<Response> {
   // Extract system message
   let systemPrompt: string | undefined;
@@ -208,9 +210,14 @@ export async function proxyToAnthropic(
     "x-api-key": apiKey,
     "anthropic-version": ANTHROPIC_API_VERSION,
   };
-  // A declined request re-runs server-side on Anthropic's recommended model
-  // for that refusal category instead of coming back empty.
-  if (claudeSupportsServerFallback(String(body.model))) {
+  // A declined request can re-run server-side on Anthropic's recommended
+  // model for that refusal category. That second attempt is billed to the
+  // caller's key, possibly at another model's rate, so it only runs when the
+  // caller explicitly opted in. Off by default.
+  if (
+    options.fallbackConsent === true &&
+    claudeSupportsServerFallback(String(body.model))
+  ) {
     anthropicBody.fallbacks = "default";
     headers["anthropic-beta"] = CLAUDE_SERVER_FALLBACK_BETA;
   }
@@ -246,12 +253,30 @@ export async function proxyToAnthropic(
   // Non-streaming: translate Anthropic response to OpenAI format
   const data = (await response.json()) as Record<string, unknown>;
 
-  const content = Array.isArray(data.content)
-    ? (data.content as Array<{ type: string; text?: string }>)
-        .filter((c) => c.type === "text")
-        .map((c) => c.text || "")
-        .join("")
-    : "";
+  const blocks = Array.isArray(data.content)
+    ? (data.content as Array<{
+        type: string;
+        text?: string;
+        id?: string;
+        name?: string;
+        input?: unknown;
+      }>)
+    : [];
+  const content = blocks
+    .filter((c) => c.type === "text")
+    .map((c) => c.text || "")
+    .join("");
+  const toolCalls: ToolCall[] = blocks
+    .filter((c) => c.type === "tool_use")
+    .map((c) => ({
+      id: String(c.id ?? ""),
+      type: "function" as const,
+      function: {
+        name: String(c.name ?? ""),
+        arguments: JSON.stringify(c.input ?? {}),
+      },
+    }));
+  const servedModel = typeof data.model === "string" ? data.model : undefined;
 
   const usage = data.usage as Record<string, number> | undefined;
 
@@ -266,6 +291,7 @@ export async function proxyToAnthropic(
         message: {
           role: "assistant",
           content,
+          ...(toolCalls.length > 0 ? { tool_calls: toolCalls } : {}),
         },
         finish_reason: mapAnthropicStopReason(data.stop_reason),
       },
@@ -275,10 +301,16 @@ export async function proxyToAnthropic(
       completion_tokens: usage?.output_tokens || 0,
       total_tokens: (usage?.input_tokens || 0) + (usage?.output_tokens || 0),
     },
+    ...(servedModel ? { served_model: servedModel } : {}),
   };
 
+  const responseHeaders: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (servedModel) responseHeaders["X-Arcanea-Served-Model"] = servedModel;
+
   return new Response(JSON.stringify(openaiResponse), {
-    headers: { "Content-Type": "application/json" },
+    headers: responseHeaders,
   });
 }
 
@@ -294,6 +326,7 @@ export async function dispatchToProvider(
   body: ChatCompletionRequest,
   arcaneaModelId: string,
   streaming: boolean,
+  options: { fallbackConsent?: boolean } = {},
 ): Promise<Response> {
   const providerConfig = PROVIDERS[provider];
   if (!providerConfig) {
@@ -313,7 +346,13 @@ export async function dispatchToProvider(
 
   // Anthropic has its own format
   if (providerConfig.format === "anthropic") {
-    return proxyToAnthropic(apiKey, requestBody, arcaneaModelId, streaming);
+    return proxyToAnthropic(
+      apiKey,
+      requestBody,
+      arcaneaModelId,
+      streaming,
+      options,
+    );
   }
 
   // All other providers are OpenAI-compatible

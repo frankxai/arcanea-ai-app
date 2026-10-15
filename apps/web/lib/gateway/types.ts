@@ -130,6 +130,8 @@ export interface ChatCompletionResponse {
   choices: ChatCompletionChoice[];
   usage: UsageInfo;
   system_fingerprint?: string;
+  /** Provider model that actually produced the answer (differs after a fallback). */
+  served_model?: string;
 }
 
 export interface ChatCompletionChoice {
@@ -157,6 +159,16 @@ export interface ChatCompletionChunk {
   model: string;
   choices: StreamChoice[];
   usage?: UsageInfo;
+  /** Provider model that actually produced the answer, sent on the finish chunk. */
+  served_model?: string;
+}
+
+/** Streaming tool-call delta, OpenAI shape: `index` ties argument fragments together. */
+export interface ToolCallDelta {
+  index: number;
+  id?: string;
+  type?: 'function';
+  function?: { name?: string; arguments?: string };
 }
 
 export interface StreamChoice {
@@ -164,7 +176,7 @@ export interface StreamChoice {
   delta: {
     role?: 'assistant';
     content?: string;
-    tool_calls?: Partial<ToolCall>[];
+    tool_calls?: ToolCallDelta[];
   };
   finish_reason: 'stop' | 'length' | 'tool_calls' | 'content_filter' | null;
 }
