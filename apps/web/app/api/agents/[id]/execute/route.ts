@@ -4,18 +4,29 @@
  *
  * POST /api/agents/:id/execute
  *   Body: { input: string, context?: Record<string, unknown> }
- *   Headers: Cookie (Supabase session — optional, anonymous allowed)
+ *   Headers: Cookie (Supabase session — required)
  *   Returns: Streaming text response (Vercel AI SDK format)
  *
+ * Every call that reaches a provider is billable, so the route is guarded
+ * (see lib/agents/marketplace/execute-guard.ts):
+ *   - signed-in users only; anonymous requests are refused with 401
+ *   - per-IP and per-user rate limits
+ *   - hard caps on input, context, output tokens and tool steps
+ *   - credits checked fail-closed: an error reading them denies the call
+ *   - one declared model, no fall-through to other paid providers
+ *   - provider-side fallbacks are not requested
+ *   - ReasoningBank distillation (a second model call) is opt-in
+ *   - AI_METERED_ALLOWED=false turns the route off without a deploy
+ *   - one JSON log line per denial, start and finish
+ *
  * Pipeline:
- *   1. Parse and validate request body
- *   2. Resolve user session (optional — anonymous gets limited credits)
- *   3. Look up agent spec in catalog (falls back to marketplace_agents table)
- *   4. Check credit balance if authenticated
- *   5. Build system prompt from agent spec + optional user context
- *   6. Resolve model using the same gateway pattern as /api/ai/chat
- *   7. Stream response via Vercel AI SDK streamText
- *   8. Deduct credits on stream completion (best-effort, non-blocking)
+ *   1. Kill switch, rate limits, body validation and caps
+ *   2. Look up agent spec in catalog (falls back to marketplace_agents table)
+ *   3. Resolve user session (required) and check credits (fail-closed)
+ *   4. Build system prompt from agent spec + user context
+ *   5. Resolve the one declared model
+ *   6. Stream response via Vercel AI SDK streamText
+ *   7. Deduct credits on stream completion (best-effort, non-blocking)
  *
  * Uses Edge runtime for low-latency streaming.
  */
@@ -26,148 +37,54 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { CATALOG_BY_ID } from "@/lib/agents/marketplace/catalog";
-import {
-  GATEWAY_MODELS,
-  EXTENDED_PROVIDERS,
-  claudeRejectsSamplingParams,
-} from "@/lib/gateway/catalog";
+import { claudeRejectsSamplingParams } from "@/lib/gateway/catalog";
 import { LUMINORS } from "@/lib/luminors/config";
+import { refusalNoticeTransform } from "@/lib/ai/claude-safeguards";
 import {
-  claudeFallbackOptions,
-  refusalNoticeTransform,
-} from "@/lib/ai/claude-safeguards";
+  getClientIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit/rate-limiter";
+import {
+  EXECUTE_LIMITS,
+  checkCreditsFailClosed,
+  checkInputCaps,
+  learningEnabled,
+  logExecute,
+  meteredCallsAllowed,
+  resolveDeclaredModel,
+} from "@/lib/agents/marketplace/execute-guard";
 
 export const runtime = "edge";
 
 // ---------------------------------------------------------------------------
-// Provider config — mirrors /api/ai/chat/route.ts
+// Model resolution — one declared model, never a fall-through
 // ---------------------------------------------------------------------------
-
-interface ProviderConfig {
-  envKeys: string[];
-  defaultModel: string;
-}
-
-const PROVIDERS: Record<string, ProviderConfig> = {
-  google: {
-    envKeys: ["GOOGLE_GENERATIVE_AI_API_KEY", "GEMINI_API_KEY"],
-    defaultModel: "gemini-2.0-flash",
-  },
-  anthropic: {
-    envKeys: ["ANTHROPIC_API_KEY"],
-    defaultModel: "claude-haiku-5-5",
-  },
-  openai: {
-    envKeys: ["OPENAI_API_KEY"],
-    defaultModel: "gpt-4o-mini",
-  },
-  openrouter: {
-    envKeys: ["OPENROUTER_API_KEY"],
-    defaultModel: "google/gemini-2.5-flash",
-  },
-};
-
-function resolveApiKey(config: ProviderConfig): string | undefined {
-  for (const key of config.envKeys) {
-    if (process.env[key]) return process.env[key];
-  }
-  return undefined;
-}
-
-// ---------------------------------------------------------------------------
-// Model resolution — prefer cheap + capable for agent tasks
-// Auto-routing priority: Gemini Flash > Haiku > Bolt > Lightning
-// ---------------------------------------------------------------------------
-
-const AGENT_AUTO_PRIORITY = [
-  "arcanea-gemini-flash",
-  "arcanea-haiku",
-  "arcanea-bolt",
-  "arcanea-lightning",
-  "arcanea-deepseek",
-] as const;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function resolveModel(
+function buildModel(
   preferredGatewayId?: string,
-): { model: any; label: string } | null {
-  // Try preferred model first if specified
-  const candidates = preferredGatewayId
-    ? [preferredGatewayId, ...AGENT_AUTO_PRIORITY]
-    : [...AGENT_AUTO_PRIORITY];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { model: any; label: string } | { error: string } {
+  const declared = resolveDeclaredModel(preferredGatewayId);
+  if (!declared.ok) return { error: declared.reason };
 
-  for (const gwId of candidates) {
-    const gw = GATEWAY_MODELS[gwId];
-    if (!gw) continue;
-
-    const stdProvider = PROVIDERS[gw.provider];
-    const extProvider = EXTENDED_PROVIDERS[gw.provider];
-    const envKeys = stdProvider
-      ? stdProvider.envKeys
-      : extProvider
-        ? extProvider.envKeys
-        : [];
-    const apiKey = envKeys.map((k) => process.env[k]).find(Boolean);
-
-    if (!apiKey) continue;
-
-    if (gw.provider === "google") {
-      const google = createGoogleGenerativeAI({ apiKey });
-      return { model: google(gw.modelId), label: gw.label };
-    }
-    if (gw.provider === "anthropic") {
-      const anthropic = createAnthropic({ apiKey });
-      return { model: anthropic(gw.modelId), label: gw.label };
-    }
-    if (gw.provider === "openai") {
-      const openai = createOpenAI({ apiKey });
-      return { model: openai(gw.modelId), label: gw.label };
-    }
-    if (extProvider) {
-      const compat = createOpenAI({ apiKey, baseURL: extProvider.baseUrl });
-      return { model: compat(gw.modelId), label: gw.label };
-    }
+  const { provider, modelId, apiKey, label, baseUrl } = declared;
+  if (provider === "google") {
+    return { model: createGoogleGenerativeAI({ apiKey })(modelId), label };
   }
-
-  // Final fallback: any configured legacy provider
-  for (const [providerId, cfg] of Object.entries(PROVIDERS)) {
-    const apiKey = resolveApiKey(cfg);
-    if (!apiKey) continue;
-
-    if (providerId === "google") {
-      const google = createGoogleGenerativeAI({ apiKey });
-      return {
-        model: google(cfg.defaultModel),
-        label: `${providerId}/${cfg.defaultModel}`,
-      };
-    }
-    if (providerId === "anthropic") {
-      const anthropic = createAnthropic({ apiKey });
-      return {
-        model: anthropic(cfg.defaultModel),
-        label: `${providerId}/${cfg.defaultModel}`,
-      };
-    }
-    if (providerId === "openai") {
-      const openai = createOpenAI({ apiKey });
-      return {
-        model: openai(cfg.defaultModel),
-        label: `${providerId}/${cfg.defaultModel}`,
-      };
-    }
-    if (providerId === "openrouter") {
-      const openrouter = createOpenAI({
-        apiKey,
-        baseURL: "https://openrouter.ai/api/v1",
-      });
-      return {
-        model: openrouter(cfg.defaultModel),
-        label: `openrouter/${cfg.defaultModel}`,
-      };
-    }
+  if (provider === "anthropic") {
+    return { model: createAnthropic({ apiKey })(modelId), label };
   }
-
-  return null;
+  if (provider === "openai") {
+    return { model: createOpenAI({ apiKey })(modelId), label };
+  }
+  if (baseUrl) {
+    return {
+      model: createOpenAI({ apiKey, baseURL: baseUrl })(modelId),
+      label,
+    };
+  }
+  return { error: `unsupported provider ${provider}` };
 }
 
 // ---------------------------------------------------------------------------
@@ -212,40 +129,6 @@ async function resolveSession(req: NextRequest) {
     return { supabase, userId: data.user.id, user: data.user };
   } catch {
     return null;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Credit check
-// ---------------------------------------------------------------------------
-
-async function checkCredits(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any,
-  userId: string,
-  required: number,
-): Promise<{ sufficient: boolean; balance: number }> {
-  try {
-    const { data } = await supabase
-      .from("credits")
-      .select("balance")
-      .eq("user_id", userId)
-      .single();
-
-    if (!data) {
-      // No record yet — initialize with 100 free credits
-      await supabase
-        .from("credits")
-        .insert({ user_id: userId, balance: 100 })
-        .select()
-        .single();
-      return { sufficient: required <= 100, balance: 100 };
-    }
-
-    return { sufficient: data.balance >= required, balance: data.balance };
-  } catch {
-    // Non-fatal: allow execution if credits table is unavailable
-    return { sufficient: true, balance: 0 };
   }
 }
 
@@ -319,29 +202,55 @@ export async function POST(
   try {
     const { id } = await params;
 
-    // ── 1. Validate request body ─────────────────────────────────────────────
+    const deny = (
+      status: number,
+      error: string,
+      reason: string,
+      extra: Record<string, unknown> = {},
+      headers: Record<string, string> = {},
+    ) => {
+      logExecute({ event: "denied", reason, status, agentId: id });
+      return new Response(JSON.stringify({ error, ...extra }), {
+        status,
+        headers: { "Content-Type": "application/json", ...headers },
+      });
+    };
+
+    // ── 1. Kill switch, rate limit, body validation and caps ─────────────────
+    if (!meteredCallsAllowed()) {
+      return deny(503, "Agent execution is temporarily unavailable.", "kill_switch");
+    }
+
+    const ipLimit = checkRateLimit(
+      getClientIdentifier(req),
+      EXECUTE_LIMITS.perIp,
+    );
+    if (!ipLimit.allowed) {
+      const retryAfter = Math.max(
+        1,
+        Math.ceil((ipLimit.resetTime - Date.now()) / 1000),
+      );
+      return deny(
+        429,
+        "Too many requests. Please slow down.",
+        "rate_limit_ip",
+        { retryAfter },
+        { "Retry-After": String(retryAfter) },
+      );
+    }
+
     let body: { input?: unknown; context?: unknown };
     try {
       body = await req.json();
     } catch {
-      return new Response("Invalid JSON in request body", { status: 400 });
+      return deny(400, "Invalid JSON in request body", "invalid_json");
     }
 
-    if (
-      !body.input ||
-      typeof body.input !== "string" ||
-      body.input.trim().length === 0
-    ) {
-      return new Response("input is required and must be a non-empty string", {
-        status: 400,
-      });
+    const checked = checkInputCaps(body.input, body.context);
+    if (!checked.ok) {
+      return deny(checked.status, checked.error, "input_caps");
     }
-
-    const input = body.input.trim();
-    const context =
-      typeof body.context === "object" && body.context !== null
-        ? (body.context as Record<string, unknown>)
-        : {};
+    const { input, context } = checked;
 
     // ── 2. Resolve agent spec ────────────────────────────────────────────────
     // Resolution order: 12 Chosen Luminors → marketplace catalog → marketplace_agents table
@@ -432,33 +341,59 @@ export async function POST(
       return new Response("Agent not found", { status: 404 });
     }
 
-    // ── 3. Resolve user session ──────────────────────────────────────────────
+    // ── 3. Resolve user session (required) ───────────────────────────────────
     const session = await resolveSession(req);
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-    // ── 4. Credit check (authenticated users only) ───────────────────────────
-    if (session) {
-      const { sufficient, balance } = await checkCredits(
-        session.supabase,
-        session.userId,
-        agent.priceCredits,
-      );
+    if (!session) {
+      return deny(401, "Sign in to run agents.", "anonymous");
+    }
 
-      if (!sufficient) {
-        return new Response(
-          JSON.stringify({
-            error: "Insufficient credits",
-            required: agent.priceCredits,
-            balance,
-            message: "Purchase more credits to run this agent.",
-          }),
-          {
-            status: 402,
-            headers: { "Content-Type": "application/json" },
-          },
-        );
-      }
+    const userLimit = checkRateLimit(
+      getClientIdentifier(req, session.userId),
+      EXECUTE_LIMITS.perUser,
+    );
+    if (!userLimit.allowed) {
+      const retryAfter = Math.max(
+        1,
+        Math.ceil((userLimit.resetTime - Date.now()) / 1000),
+      );
+      return deny(
+        429,
+        "Too many requests. Please slow down.",
+        "rate_limit_user",
+        { retryAfter },
+        { "Retry-After": String(retryAfter) },
+      );
+    }
+
+    // ── 4. Credit check — fail-closed ────────────────────────────────────────
+    const credits = await checkCreditsFailClosed(
+      session.supabase,
+      session.userId,
+      agent.priceCredits,
+    );
+
+    if (credits.status === "unavailable") {
+      return deny(
+        503,
+        "Credits are unavailable right now. Please try again shortly.",
+        "credits_unavailable",
+      );
+    }
+
+    if (credits.status === "insufficient") {
+      return deny(
+        402,
+        "Insufficient credits",
+        "insufficient_credits",
+        {
+          required: agent.priceCredits,
+          balance: credits.balance,
+          message: "Purchase more credits to run this agent.",
+        },
+      );
     }
 
     // ── 5. Build system prompt ───────────────────────────────────────────────
@@ -508,12 +443,13 @@ export async function POST(
 
     // ── 6. Resolve model ─────────────────────────────────────────────────────
     const preferredGatewayId = agent.spec?.preferredModel ?? undefined;
-    const resolved = resolveModel(preferredGatewayId);
+    const resolved = buildModel(preferredGatewayId);
 
-    if (!resolved) {
-      return new Response(
-        "No AI provider configured. Set at least one provider API key (GOOGLE_GENERATIVE_AI_API_KEY, ANTHROPIC_API_KEY, etc.) in your environment.",
-        { status: 503 },
+    if ("error" in resolved) {
+      return deny(
+        503,
+        "No AI provider is configured for this agent.",
+        `model_unavailable: ${resolved.error}`,
       );
     }
 
@@ -549,11 +485,23 @@ export async function POST(
       system: systemPrompt,
       messages: [{ role: "user", content: input }],
       ...(sendTemperature ? { temperature } : {}),
-      maxOutputTokens: 4096,
-      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+      maxOutputTokens: EXECUTE_LIMITS.maxOutputTokens,
+      // No provider-side fallback is requested: a refusal or error ends the
+      // call instead of silently re-running on another (billable) model.
       experimental_transform: refusalNoticeTransform(),
-      ...(luminorTools ? { tools: luminorTools, maxSteps: 5 } : {}),
-      onFinish: ({ text }) => {
+      ...(luminorTools ? { tools: luminorTools, maxSteps: EXECUTE_LIMITS.maxToolSteps } : {}),
+      onFinish: ({ text, usage, finishReason }) => {
+        logExecute({
+          event: "finished",
+          agentId: agent.id,
+          userId: session.userId,
+          model: label,
+          finishReason,
+          inputTokens: usage?.inputTokens,
+          outputTokens: usage?.outputTokens,
+          durationMs: Date.now() - requestStarted,
+        });
+
         // ── 8. Deduct credits after completion ──────────────────────────────
         if (session && supabaseUrl && supabaseAnonKey) {
           // Fire and forget — do not await
@@ -596,8 +544,9 @@ export async function POST(
         // ReasoningBank — JUDGE + DISTILL + CONSOLIDATE (fire-and-forget)
         // Runs the distillation loop in the background so the response
         // is never blocked. If a principle is extracted, it's stored as
-        // a memory item for future RETRIEVE calls.
-        if (supabaseUrl) {
+        // a memory item for future RETRIEVE calls. Off unless
+        // AGENT_EXECUTE_LEARNING=true: it costs a second provider call.
+        if (supabaseUrl && learningEnabled()) {
           void (async () => {
             try {
               const { learnFromExchange } =
@@ -683,6 +632,13 @@ export async function POST(
           })();
         }
       },
+    });
+
+    logExecute({
+      event: "started",
+      agentId: agent.id,
+      userId: session.userId,
+      model: label,
     });
 
     return result.toTextStreamResponse({
