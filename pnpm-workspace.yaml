@@ -12,7 +12,7 @@ allowBuilds:
 
 # pnpm 11 reads settings only from this file (package.json "pnpm" is ignored).
 overrides:
-  "next": "16.4.2"
+  "next": "16.4.1"
   "@types/react": "^19.0.0"
   "@types/react-dom": "^19.0.0"
   "eslint": "9.39.4"
