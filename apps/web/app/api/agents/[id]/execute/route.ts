@@ -51,7 +51,9 @@ import {
   EXECUTE_LIMITS,
   checkInputCaps,
   checkPromptCap,
+  classifyAuthError,
   extractAccessToken,
+  isHeaderSafeId,
   learningEnabled,
   logExecute,
   meteredCallsAllowed,
@@ -113,26 +115,40 @@ function buildModel(
 // Supabase session helper (edge-compatible — manual cookie parsing)
 // ---------------------------------------------------------------------------
 
-async function resolveSession(req: NextRequest) {
+async function resolveSession(req: NextRequest): Promise<
+  | {
+      ok: true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      supabase: any;
+      userId: string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      user: any;
+    }
+  | { ok: false; reason: "anonymous" | "unavailable" }
+> {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseAnonKey) return null;
+    // A missing configuration is an outage, not a signed-out visitor.
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return { ok: false, reason: "unavailable" };
+    }
 
     const jwt = extractAccessToken(req.headers.get("cookie") ?? "");
-    if (!jwt) return null;
+    if (!jwt) return { ok: false, reason: "anonymous" };
 
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       global: { headers: { Authorization: `Bearer ${jwt}` } },
     });
 
-    const { data } = await supabase.auth.getUser();
-    if (!data?.user) return null;
+    const { data, error } = await supabase.auth.getUser();
+    if (error) return { ok: false, reason: classifyAuthError(error) };
+    if (!data?.user) return { ok: false, reason: "anonymous" };
 
-    return { supabase, userId: data.user.id, user: data.user };
+    return { ok: true, supabase, userId: data.user.id, user: data.user };
   } catch {
-    return null;
+    return { ok: false, reason: "unavailable" };
   }
 }
 
@@ -342,12 +358,28 @@ export async function POST(
     }
 
     // ── 3. Resolve user session (required) ───────────────────────────────────
-    const session = await resolveSession(req);
+    const resolvedSession = await resolveSession(req);
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-    if (!session) {
-      return deny(401, "Sign in to run agents.", "anonymous");
+    if (!resolvedSession.ok) {
+      // Only a positively absent or rejected credential is a 401. A config or
+      // auth-service failure is a 503, so a signed-in user is not sent to the
+      // sign-in page during an outage.
+      return resolvedSession.reason === "anonymous"
+        ? deny(401, "Sign in to run agents.", "anonymous")
+        : deny(
+            503,
+            "Sign-in could not be checked right now. Please try again shortly.",
+            "auth_unavailable",
+          );
+    }
+    const session = resolvedSession;
+
+    // The agent id is echoed in a response header; refuse one that cannot be a
+    // header value before any credits are taken.
+    if (!isHeaderSafeId(agent.id)) {
+      return deny(404, "Agent not found", "agent_id_not_header_safe");
     }
 
     const userLimit = await checkExecuteRateLimit(
@@ -577,11 +609,16 @@ export async function POST(
       messages: [{ role: "user", content: input }],
       ...(sendTemperature ? { temperature } : {}),
       maxOutputTokens: EXECUTE_LIMITS.maxOutputTokens,
+      // One provider attempt per step. The SDK default retries twice, which
+      // would bill up to three attempts per step against one flat price.
+      maxRetries: 0,
       // No provider-side fallback is requested: a refusal or error ends the
       // call instead of silently re-running on another (billable) model.
       experimental_transform: refusalNoticeTransform(),
-      onError: () => {
-        void releaseReservation?.("stream_error");
+      // Return the refund so the SDK waits for it before closing the stream;
+      // an un-awaited write can be cut off when the invocation is frozen.
+      onError: async () => {
+        await releaseReservation?.("stream_error");
       },
       ...(luminorTools
         ? {
@@ -589,7 +626,7 @@ export async function POST(
             stopWhen: stepCountIs(EXECUTE_LIMITS.maxToolSteps),
           }
         : {}),
-      onFinish: ({ text, usage, totalUsage, finishReason }) => {
+      onFinish: async ({ text, usage, totalUsage, finishReason }) => {
         // `usage` is the last step only; `totalUsage` sums every step of a
         // multi-step tool run.
         const aggregateUsage = totalUsage ?? usage;
@@ -607,7 +644,7 @@ export async function POST(
         // A run that ended in an error did not deliver: give the credits back
         // and stop. No task record, learning call or creator revenue event.
         if (finishReason === "error") {
-          void releaseReservation?.("finish_error");
+          await releaseReservation?.("finish_error");
           return;
         }
 
@@ -728,6 +765,15 @@ export async function POST(
       },
     });
 
+    // Build the response first: if that throws, the outer catch still refunds.
+    const response = result.toTextStreamResponse({
+      headers: {
+        "x-arcanea-agent": agent.id,
+        "x-arcanea-model": label,
+        "x-arcanea-credits": String(agent.priceCredits),
+      },
+    });
+
     streamStarted = true;
     logExecute({
       event: "started",
@@ -736,13 +782,7 @@ export async function POST(
       model: label,
     });
 
-    return result.toTextStreamResponse({
-      headers: {
-        "x-arcanea-agent": agent.id,
-        "x-arcanea-model": label,
-        "x-arcanea-credits": String(agent.priceCredits),
-      },
-    });
+    return response;
   } catch {
     // Nothing was streamed: give any reserved credits back.
     if (!streamStarted) await releaseReservation?.("handler_error");
