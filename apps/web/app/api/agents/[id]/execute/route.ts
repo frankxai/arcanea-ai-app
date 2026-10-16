@@ -432,33 +432,52 @@ export async function POST(
       });
     }
 
+    // Idempotent per run: `refunded` flips only once the write has applied, a
+    // definite failure may be retried by a later callback, and an ambiguous one
+    // (the update may have applied) is logged for reconciliation, never retried.
     let refunded = false;
-    const refund = async (reason: string) => {
-      if (refunded || reservation.amount <= 0) return;
-      refunded = true;
-      const ok = await refundCredits(
-        writer,
-        session.userId,
-        reservation.amount,
-      );
-      logExecute({
-        event: ok ? "credits_refunded" : "credits_refund_failed",
-        reason,
-        agentId: agent.id,
-        userId: session.userId,
-        credits: reservation.amount,
-      });
-      if (ok) {
-        void recordCreditLedger(
+    let refundSettled = false;
+    let refundInFlight: Promise<void> | null = null;
+    const refund = (reason: string): Promise<void> => {
+      if (refunded || refundSettled || reservation.amount <= 0) {
+        return Promise.resolve();
+      }
+      if (refundInFlight) return refundInFlight;
+      refundInFlight = (async () => {
+        const out = await refundCredits(
           writer,
           session.userId,
-          agent.id,
           reservation.amount,
-          reservation.balance + reservation.amount,
-          "refund",
-          label,
         );
-      }
+        if (out.status === "refunded") refunded = true;
+        if (out.status === "unknown") refundSettled = true;
+        logExecute({
+          event:
+            out.status === "refunded"
+              ? "credits_refunded"
+              : out.status === "unknown"
+                ? "credits_refund_unknown"
+                : "credits_refund_failed",
+          reason,
+          agentId: agent.id,
+          userId: session.userId,
+          credits: reservation.amount,
+        });
+        if (out.status === "refunded") {
+          void recordCreditLedger(
+            writer,
+            session.userId,
+            agent.id,
+            reservation.amount,
+            out.balance,
+            "refund",
+            label,
+          );
+        }
+      })().finally(() => {
+        refundInFlight = null;
+      });
+      return refundInFlight;
     };
     releaseReservation = refund;
 
@@ -585,8 +604,12 @@ export async function POST(
           durationMs: Date.now() - requestStarted,
         });
 
-        // A run that ended in an error did not deliver; give the credits back.
-        if (finishReason === "error") void releaseReservation?.("finish_error");
+        // A run that ended in an error did not deliver: give the credits back
+        // and stop. No task record, learning call or creator revenue event.
+        if (finishReason === "error") {
+          void releaseReservation?.("finish_error");
+          return;
+        }
 
         // Log task to agent_tasks table (best-effort)
         if (session && supabaseUrl && supabaseAnonKey) {
