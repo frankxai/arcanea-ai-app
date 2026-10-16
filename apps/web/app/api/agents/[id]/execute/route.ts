@@ -211,7 +211,7 @@ export async function POST(
     }
 
     const ipLimit = checkRateLimit(
-      getClientIdentifier(req),
+      `agents.execute:${getClientIdentifier(req)}`,
       EXECUTE_LIMITS.perIp,
     );
     if (!ipLimit.allowed) {
@@ -340,7 +340,7 @@ export async function POST(
     }
 
     const userLimit = checkRateLimit(
-      getClientIdentifier(req, session.userId),
+      `agents.execute:${getClientIdentifier(req, session.userId)}`,
       EXECUTE_LIMITS.perUser,
     );
     if (!userLimit.allowed) {
