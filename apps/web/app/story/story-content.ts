@@ -106,4 +106,7 @@ export const STORY_DISCOVERY = {
   ],
 };
 
-export const STORY_JSON_LD = JSON.stringify(STORY_DISCOVERY).replace(/</g, "\\u003c");
+export const STORY_JSON_LD = JSON.stringify(STORY_DISCOVERY).replace(
+  /</g,
+  "\\u003c",
+);

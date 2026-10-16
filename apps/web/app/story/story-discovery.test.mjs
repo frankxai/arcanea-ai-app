@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { CANON, STILLS, STORY_DISCOVERY, STORY_JSON_LD } from "./story-content.ts";
+import {
+  CANON,
+  STILLS,
+  STORY_DISCOVERY,
+  STORY_JSON_LD,
+} from "./story-content.ts";
 
 test("original story and application retain distinct identities with resolved graph links", () => {
   const graph = JSON.parse(STORY_JSON_LD)["@graph"];
@@ -19,7 +24,9 @@ test("original story and application retain distinct identities with resolved gr
 });
 
 test("discovery derives from displayed story and image records without new commercial or canon claims", () => {
-  const work = STORY_DISCOVERY["@graph"].find((node) => node["@type"] === "CreativeWork");
+  const work = STORY_DISCOVERY["@graph"].find(
+    (node) => node["@type"] === "CreativeWork",
+  );
   assert.equal(work.name, CANON.title);
   assert.equal(work.description, CANON.lede);
   assert.equal(work.image.length, STILLS.length);
@@ -27,8 +34,18 @@ test("discovery derives from displayed story and image records without new comme
     assert.equal(new URL(work.image[index].url).pathname, still.src);
     assert.equal(work.image[index].caption, still.alt);
   });
-  for (const field of ["offers", "license", "datePublished", "author", "alternateName", "aggregateRating"]) {
-    assert.ok(!Object.hasOwn(work, field), `${field} needs separate source evidence`);
+  for (const field of [
+    "offers",
+    "license",
+    "datePublished",
+    "author",
+    "alternateName",
+    "aggregateRating",
+  ]) {
+    assert.ok(
+      !Object.hasOwn(work, field),
+      `${field} needs separate source evidence`,
+    );
   }
 });
 
