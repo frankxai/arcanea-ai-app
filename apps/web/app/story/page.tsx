@@ -7,6 +7,7 @@ import {
   LIVE_LINKS,
   PASSAGE,
   STILLS,
+  STORY_JSON_LD,
 } from "./story-content";
 import styles from "./story.module.css";
 
@@ -37,6 +38,10 @@ export default function StoryPage() {
 
   return (
     <div className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: STORY_JSON_LD }}
+      />
       <a className={styles.skip} href="#story-read">
         Skip to reading
       </a>
