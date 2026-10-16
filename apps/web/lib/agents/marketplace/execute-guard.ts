@@ -6,7 +6,8 @@
  * imports so it can be tested directly:
  *
  *   - one declared model, no silent fall-through to other paid providers
- *   - credits are checked fail-closed (an error denies, it never allows)
+ *   - credits are reserved atomically before the call and refunded if it
+ *     does not complete; an error denies, it never allows
  *   - hard caps on input, output and tool steps
  *   - the hidden second model call (ReasoningBank distillation) is opt-in
  *   - one structured log line per decision
@@ -38,12 +39,12 @@ const STANDARD_ENV_KEYS: Record<string, string[]> = {
 type Env = Record<string, string | undefined>;
 
 /**
- * Kill switch. Provider calls stay on unless an operator sets
- * AI_METERED_ALLOWED=false, which turns every call into a 503 without a
- * deploy. Flip the default here if the product should ship default-off.
+ * Kill switch, fail-closed. Provider calls are refused unless an operator sets
+ * AI_METERED_ALLOWED=true. A missing, misspelled or lost variable keeps spend
+ * off; setting it to anything else (including "false") also refuses.
  */
 export function meteredCallsAllowed(env: Env = process.env): boolean {
-  return env.AI_METERED_ALLOWED !== "false";
+  return env.AI_METERED_ALLOWED?.trim().toLowerCase() === "true";
 }
 
 /**
@@ -55,17 +56,28 @@ export function learningEnabled(env: Env = process.env): boolean {
 }
 
 /**
- * Tools that call a paid provider with a server key, outside the flat credit
- * price. `image_generate` is not listed: it only returns a reviewed /imagine
- * handoff and performs no generation or credit spend.
+ * Allowlist of tools this route may offer. Each one is local or free: a
+ * stateless handoff, the zero-cost /imagine handoff, a Supabase write, and
+ * static domain helpers. Anything not listed (web_search, deep_research,
+ * memory_store, and every tool added later) is withheld, because a tool that
+ * calls a paid provider with a server key spends outside the flat credit price.
  */
-export const PAID_TOOL_NAMES = ["web_search", "deep_research"];
+export const FREE_TOOL_NAMES = [
+  "handoff_to_luminor",
+  "image_generate",
+  "update_memory",
+  "suggest_code",
+  "describe_asset",
+  "create_outline",
+  "cite_source",
+] as const;
 
-export function withoutPaidTools<T>(
+export function onlyFreeTools<T>(
   tools: Record<string, T>,
 ): Record<string, T> | undefined {
+  const allowed: readonly string[] = FREE_TOOL_NAMES;
   const kept = Object.fromEntries(
-    Object.entries(tools).filter(([name]) => !PAID_TOOL_NAMES.includes(name)),
+    Object.entries(tools).filter(([name]) => allowed.includes(name)),
   );
   return Object.keys(kept).length > 0 ? kept : undefined;
 }
@@ -290,8 +302,112 @@ export async function checkCreditsFailClosed(
   }
 }
 
+export type CreditReservation =
+  | { status: "reserved"; amount: number; balance: number }
+  | { status: "insufficient"; balance: number }
+  | { status: "unavailable" };
+
+const RESERVE_ATTEMPTS = 4;
+
+/**
+ * Take the price out of the balance before the provider is called.
+ *
+ * The update only applies if the balance is still the value that was read
+ * (`.eq("balance", observed)`), so it is a single-row compare-and-set. Two
+ * parallel requests cannot both spend the same credits: the loser re-reads and
+ * either succeeds against the lower balance or is refused as insufficient. A
+ * run that never completes is returned with `refundCredits`.
+ *
+ * Reads go through `supabase` (the caller's session). Writes go through
+ * `writer`, which defaults to the same client.
+ */
+export async function reserveCredits(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  userId: string,
+  amount: number,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  writer: any = supabase,
+): Promise<CreditReservation> {
+  // Credits are an integer column; a fractional or negative price is refused.
+  if (!Number.isInteger(amount) || amount < 0) return { status: "unavailable" };
+
+  for (let attempt = 0; attempt < RESERVE_ATTEMPTS; attempt++) {
+    const seen = await checkCreditsFailClosed(supabase, userId, amount);
+    if (seen.status === "unavailable") return seen;
+    if (seen.status === "insufficient") return seen;
+    if (amount === 0)
+      return { status: "reserved", amount: 0, balance: seen.balance };
+
+    try {
+      const { data, error } = await writer
+        .from("credits")
+        .update({
+          balance: seen.balance - amount,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", userId)
+        .eq("balance", seen.balance)
+        .select("balance");
+      if (error) return { status: "unavailable" };
+      if (Array.isArray(data) && data.length === 1) {
+        return {
+          status: "reserved",
+          amount,
+          balance: Number(data[0]?.balance ?? seen.balance - amount),
+        };
+      }
+      // No row matched: another request changed the balance. Read again.
+    } catch {
+      return { status: "unavailable" };
+    }
+  }
+  // Still contended after several reads: refuse rather than guess.
+  return { status: "unavailable" };
+}
+
+/** Give a reservation back. Returns false if it could not be applied. */
+export async function refundCredits(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  writer: any,
+  userId: string,
+  amount: number,
+): Promise<boolean> {
+  if (!Number.isInteger(amount) || amount <= 0) return amount === 0;
+  for (let attempt = 0; attempt < RESERVE_ATTEMPTS; attempt++) {
+    try {
+      const { data: row, error: readError } = await writer
+        .from("credits")
+        .select("balance")
+        .eq("user_id", userId)
+        .single();
+      if (readError || typeof row?.balance !== "number") return false;
+      const { data, error } = await writer
+        .from("credits")
+        .update({
+          balance: row.balance + amount,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", userId)
+        .eq("balance", row.balance)
+        .select("balance");
+      if (error) return false;
+      if (Array.isArray(data) && data.length === 1) return true;
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+
 export interface ExecuteLogEvent {
-  event: "denied" | "started" | "finished";
+  event:
+    | "denied"
+    | "started"
+    | "finished"
+    | "credits_reserved"
+    | "credits_refunded"
+    | "credits_refund_failed";
   reason?: string;
   status?: number;
   agentId?: string;
@@ -301,6 +417,9 @@ export interface ExecuteLogEvent {
   inputTokens?: number;
   outputTokens?: number;
   durationMs?: number;
+  credits?: number;
+  /** Which rate-limit store served the decision. */
+  limiter?: string;
 }
 
 /** One JSON line per decision so spend can be audited from the host logs. */

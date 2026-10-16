@@ -4,12 +4,14 @@ import {
   EXECUTE_LIMITS,
   DEFAULT_EXECUTE_MODEL,
   checkCreditsFailClosed,
-  PAID_TOOL_NAMES,
+  FREE_TOOL_NAMES,
+  reserveCredits,
+  refundCredits,
   checkInputCaps,
   checkPromptCap,
   extractAccessToken,
   learningEnabled,
-  withoutPaidTools,
+  onlyFreeTools,
   meteredCallsAllowed,
   resolveDeclaredModel,
 } from "../execute-guard";
@@ -49,10 +51,14 @@ function creditsClient(opts: {
   };
 }
 
-test("the kill switch is on by default and only an explicit false turns it off", () => {
-  assert.equal(meteredCallsAllowed({}), true);
-  assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: "true" }), true);
+test("the kill switch fails closed: only an explicit true admits calls", () => {
+  assert.equal(meteredCallsAllowed({}), false);
+  assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: "" }), false);
   assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: "false" }), false);
+  assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: "ture" }), false);
+  assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: "1" }), false);
+  assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: "true" }), true);
+  assert.equal(meteredCallsAllowed({ AI_METERED_ALLOWED: " TRUE " }), true);
 });
 
 test("the second model call (learning) is off unless explicitly enabled", () => {
@@ -199,23 +205,24 @@ test("session cookie: garbage and unrelated cookies give no token", () => {
   assert.equal(extractAccessToken("sb-x-auth-token=base64-!!!"), null);
 });
 
-test("paid tools are stripped from the tool set", () => {
+test("only allowlisted free tools are offered; paid and unknown tools are withheld", () => {
   const tools = {
     handoff_to_luminor: 1,
     web_search: 2,
     deep_research: 3,
     image_generate: 4,
+    memory_store: 5,
+    some_future_paid_tool: 6,
   };
   // image_generate is a zero-cost /imagine handoff and stays available.
-  assert.deepEqual(withoutPaidTools(tools), {
+  assert.deepEqual(onlyFreeTools(tools), {
     handoff_to_luminor: 1,
     image_generate: 4,
   });
-  assert.equal(withoutPaidTools({ web_search: 1 }), undefined);
-  assert.deepEqual([...PAID_TOOL_NAMES].sort(), [
-    "deep_research",
-    "web_search",
-  ]);
+  assert.equal(onlyFreeTools({ web_search: 1, deep_research: 2 }), undefined);
+  for (const paid of ["web_search", "deep_research", "memory_store"]) {
+    assert.equal((FREE_TOOL_NAMES as readonly string[]).includes(paid), false);
+  }
 });
 
 test("the composed prompt is capped, not only the request fields", () => {
@@ -251,4 +258,133 @@ test("the arcanea-auto sentinel resolves to the single default model", () => {
     resolveDeclaredModel("arcanea-auto", { OPENAI_API_KEY: "sk-test" }).ok,
     false,
   );
+});
+
+// A tiny in-memory `credits` table that behaves like PostgREST for the calls
+// reserveCredits and refundCredits make, including the compare-and-set
+// `.eq("balance", seen)` on update.
+function creditsTable(initial: number, opts: { failUpdate?: boolean } = {}) {
+  const row = { user_id: "u1", balance: initial };
+  const client = {
+    row,
+    from(table: string) {
+      assert.equal(table, "credits");
+      return {
+        select() {
+          return {
+            eq() {
+              return {
+                async single() {
+                  // Yield so parallel callers interleave their reads.
+                  await Promise.resolve();
+                  return { data: { balance: row.balance }, error: null };
+                },
+              };
+            },
+          };
+        },
+        update(patch: { balance: number }) {
+          const filters: Record<string, unknown> = {};
+          const q = {
+            eq(col: string, val: unknown) {
+              filters[col] = val;
+              return q;
+            },
+            async select() {
+              await Promise.resolve();
+              if (opts.failUpdate)
+                return { data: null, error: { message: "denied" } };
+              if (filters.balance === row.balance) {
+                row.balance = patch.balance;
+                return { data: [{ balance: row.balance }], error: null };
+              }
+              return { data: [], error: null };
+            },
+          };
+          return q;
+        },
+      };
+    },
+  };
+  return client;
+}
+
+test("reserving credits takes the price before the call and reports the new balance", async () => {
+  const db = creditsTable(50);
+  const r = await reserveCredits(db, "u1", 10);
+  assert.deepEqual(r, { status: "reserved", amount: 10, balance: 40 });
+  assert.equal(db.row.balance, 40);
+});
+
+test("a free agent reserves nothing and never writes", async () => {
+  const db = creditsTable(0, { failUpdate: true });
+  const r = await reserveCredits(db, "u1", 0);
+  assert.deepEqual(r, { status: "reserved", amount: 0, balance: 0 });
+});
+
+test("parallel requests cannot spend the same credits twice", async () => {
+  // Exactly one run's worth of credits, five requests at once.
+  const db = creditsTable(10);
+  const results = await Promise.all(
+    Array.from({ length: 5 }, () => reserveCredits(db, "u1", 10)),
+  );
+  const reserved = results.filter((r) => r.status === "reserved");
+  assert.equal(reserved.length, 1);
+  assert.equal(db.row.balance, 0);
+  for (const r of results) {
+    if (r.status !== "reserved") {
+      assert.ok(r.status === "insufficient" || r.status === "unavailable");
+    }
+  }
+});
+
+test("parallel requests with credits for three runs reserve at most three", async () => {
+  const db = creditsTable(30);
+  const results = await Promise.all(
+    Array.from({ length: 6 }, () => reserveCredits(db, "u1", 10)),
+  );
+  const reserved = results.filter((r) => r.status === "reserved").length;
+  assert.ok(reserved <= 3);
+  assert.ok(db.row.balance >= 0);
+  assert.equal(db.row.balance, 30 - reserved * 10);
+});
+
+test("an insufficient balance is refused without writing", async () => {
+  const db = creditsTable(5);
+  assert.deepEqual(await reserveCredits(db, "u1", 10), {
+    status: "insufficient",
+    balance: 5,
+  });
+  assert.equal(db.row.balance, 5);
+});
+
+test("a failed write, and a negative or fractional price, fail closed", async () => {
+  assert.deepEqual(
+    await reserveCredits(creditsTable(50, { failUpdate: true }), "u1", 10),
+    {
+      status: "unavailable",
+    },
+  );
+  assert.deepEqual(await reserveCredits(creditsTable(50), "u1", -10), {
+    status: "unavailable",
+  });
+  assert.deepEqual(await reserveCredits(creditsTable(50), "u1", 2.5), {
+    status: "unavailable",
+  });
+  assert.deepEqual(await reserveCredits(creditsTable(50), "u1", Number.NaN), {
+    status: "unavailable",
+  });
+});
+
+test("a reservation is returned in full on refund", async () => {
+  const db = creditsTable(50);
+  const r = await reserveCredits(db, "u1", 10);
+  assert.equal(r.status, "reserved");
+  assert.equal(await refundCredits(db, "u1", 10), true);
+  assert.equal(db.row.balance, 50);
+  assert.equal(
+    await refundCredits(creditsTable(5, { failUpdate: true }), "u1", 10),
+    false,
+  );
+  assert.equal(await refundCredits(db, "u1", -3), false);
 });
