@@ -7,6 +7,8 @@ import {
   FREE_TOOL_NAMES,
   reserveCredits,
   refundCredits,
+  classifyAuthError,
+  isHeaderSafeId,
   checkInputCaps,
   checkPromptCap,
   extractAccessToken,
@@ -437,4 +439,25 @@ test("a refund that is rejected is a definite failure; a dropped connection is u
     };
   }) as typeof flaky.from;
   assert.deepEqual(await refundCredits(flaky, "u1", 10), { status: "unknown" });
+});
+
+test("an auth outage is not an anonymous visitor", () => {
+  // The auth server rejected the credential: signed out, 401.
+  assert.equal(classifyAuthError({ status: 401 }), "anonymous");
+  assert.equal(classifyAuthError({ status: 403 }), "anonymous");
+  // Could not check: dropped connection (no status), 5xx, rate limited: 503.
+  assert.equal(classifyAuthError({}), "unavailable");
+  assert.equal(classifyAuthError(null), "unavailable");
+  assert.equal(classifyAuthError({ status: 0 }), "unavailable");
+  assert.equal(classifyAuthError({ status: 502 }), "unavailable");
+  assert.equal(classifyAuthError({ status: 429 }), "unavailable");
+});
+
+test("only header-safe agent ids are echoed in a response header", () => {
+  assert.equal(isHeaderSafeId("code-crafter"), true);
+  assert.equal(isHeaderSafeId("agent_1.v2:beta"), true);
+  assert.equal(isHeaderSafeId("has space"), false);
+  assert.equal(isHeaderSafeId("naïve"), false);
+  assert.equal(isHeaderSafeId("line\nbreak"), false);
+  assert.equal(isHeaderSafeId(""), false);
 });

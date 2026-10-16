@@ -155,6 +155,27 @@ export function extractAccessToken(cookieHeader: string): string | null {
   return null;
 }
 
+/**
+ * A failed `auth.getUser()` is either "this credential is not valid" (the user
+ * is signed out: 401) or "auth could not be checked" (Supabase down, rate
+ * limited, dropped connection: 503). Only a positive rejection by the auth
+ * server counts as anonymous, so an outage never bounces a signed-in user to
+ * the sign-in page.
+ */
+export function classifyAuthError(
+  error: { status?: number } | null | undefined,
+): "anonymous" | "unavailable" {
+  const status = error?.status;
+  if (typeof status !== "number") return "unavailable";
+  if (status === 429) return "unavailable";
+  return status >= 400 && status < 500 ? "anonymous" : "unavailable";
+}
+
+/** Header values must be visible ASCII; the agent id is echoed in a header. */
+export function isHeaderSafeId(id: string): boolean {
+  return /^[\x21-\x7e]{1,200}$/.test(id);
+}
+
 export type InputCheck =
   | { ok: true; input: string; context: Record<string, unknown> }
   | { ok: false; status: number; error: string };
