@@ -42,11 +42,18 @@ export const RATE_KEY_PREFIX = "agents.execute:";
 export function sharedStoreConfig(
   env: Env = process.env,
 ): { url: string; token: string } | null {
-  const url = env.UPSTASH_REDIS_REST_URL ?? env.KV_REST_API_URL;
-  const token = env.UPSTASH_REDIS_REST_TOKEN ?? env.KV_REST_API_TOKEN;
-  if (!url || !token) return null;
-  if (!/^https:\/\//i.test(url)) return null;
-  return { url: url.replace(/\/+$/, ""), token };
+  // Take each binding as a matched pair, never a URL from one and a token from
+  // the other. Upstash names win; the Vercel KV names are the fallback.
+  const pairs = [
+    [env.UPSTASH_REDIS_REST_URL, env.UPSTASH_REDIS_REST_TOKEN],
+    [env.KV_REST_API_URL, env.KV_REST_API_TOKEN],
+  ];
+  for (const [url, token] of pairs) {
+    if (url && token && /^https:\/\//i.test(url)) {
+      return { url: url.replace(/\/+$/, ""), token };
+    }
+  }
+  return null;
 }
 
 export function localRateLimitAccepted(env: Env = process.env): boolean {

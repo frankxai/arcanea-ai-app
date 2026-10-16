@@ -120,3 +120,36 @@ test("fails closed when no shared store is configured, unless local is accepted"
     null,
   );
 });
+
+test("the URL and token are taken as a matched pair", () => {
+  // A partial Upstash binding must not borrow the KV token, or vice versa.
+  assert.deepEqual(
+    sharedStoreConfig({
+      UPSTASH_REDIS_REST_URL: "https://up.example.io",
+      KV_REST_API_URL: "https://kv.example.io/",
+      KV_REST_API_TOKEN: "kv-token",
+    }),
+    { url: "https://kv.example.io", token: "kv-token" },
+  );
+  assert.deepEqual(
+    sharedStoreConfig({
+      UPSTASH_REDIS_REST_TOKEN: "up-token",
+      KV_REST_API_URL: "https://kv.example.io",
+      KV_REST_API_TOKEN: "kv-token",
+    }),
+    { url: "https://kv.example.io", token: "kv-token" },
+  );
+  assert.deepEqual(
+    sharedStoreConfig({
+      UPSTASH_REDIS_REST_URL: "https://up.example.io",
+      UPSTASH_REDIS_REST_TOKEN: "up-token",
+      KV_REST_API_URL: "https://kv.example.io",
+      KV_REST_API_TOKEN: "kv-token",
+    }),
+    { url: "https://up.example.io", token: "up-token" },
+  );
+  assert.equal(
+    sharedStoreConfig({ UPSTASH_REDIS_REST_URL: "https://up.example.io" }),
+    null,
+  );
+});

@@ -366,38 +366,67 @@ export async function reserveCredits(
   return { status: "unavailable" };
 }
 
-/** Give a reservation back. Returns false if it could not be applied. */
+export type CreditRefund =
+  /** Applied. `balance` is the balance the update actually wrote. */
+  | { status: "refunded"; balance: number }
+  /** Definitely not applied (read failed, rejected, or lost every race). Safe to retry. */
+  | { status: "failed" }
+  /** The update may or may not have applied (network failure). Do not retry blindly. */
+  | { status: "unknown" };
+
+/**
+ * Give a reservation back. A balance update is not idempotent, so a retry after
+ * an ambiguous failure could credit twice; the outcome is therefore three-way
+ * and only "failed" may be retried.
+ */
 export async function refundCredits(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   writer: any,
   userId: string,
   amount: number,
-): Promise<boolean> {
-  if (!Number.isInteger(amount) || amount <= 0) return amount === 0;
+): Promise<CreditRefund> {
+  if (!Number.isInteger(amount) || amount <= 0) return { status: "failed" };
   for (let attempt = 0; attempt < RESERVE_ATTEMPTS; attempt++) {
+    let current: number;
     try {
-      const { data: row, error: readError } = await writer
+      const read = await writer
         .from("credits")
         .select("balance")
         .eq("user_id", userId)
         .single();
-      if (readError || typeof row?.balance !== "number") return false;
+      if (read.error || typeof read.data?.balance !== "number") {
+        return { status: "failed" };
+      }
+      current = read.data.balance;
+    } catch {
+      return { status: "failed" };
+    }
+    try {
       const { data, error } = await writer
         .from("credits")
         .update({
-          balance: row.balance + amount,
+          balance: current + amount,
           updated_at: new Date().toISOString(),
         })
         .eq("user_id", userId)
-        .eq("balance", row.balance)
+        .eq("balance", current)
         .select("balance");
-      if (error) return false;
-      if (Array.isArray(data) && data.length === 1) return true;
+      // An error that carries a database or API code was a rejection by the
+      // server. One without a code (a dropped connection) is ambiguous.
+      if (error)
+        return error.code ? { status: "failed" } : { status: "unknown" };
+      if (Array.isArray(data) && data.length === 1) {
+        return {
+          status: "refunded",
+          balance: Number(data[0]?.balance ?? current + amount),
+        };
+      }
+      // No row matched: the balance moved. Read again.
     } catch {
-      return false;
+      return { status: "unknown" };
     }
   }
-  return false;
+  return { status: "failed" };
 }
 
 export interface ExecuteLogEvent {
@@ -407,7 +436,8 @@ export interface ExecuteLogEvent {
     | "finished"
     | "credits_reserved"
     | "credits_refunded"
-    | "credits_refund_failed";
+    | "credits_refund_failed"
+    | "credits_refund_unknown";
   reason?: string;
   status?: number;
   agentId?: string;

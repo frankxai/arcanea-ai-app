@@ -159,7 +159,7 @@ test("a new user gets the starter balance only if it can be stored", async () =>
   const insertFails = await checkCreditsFailClosed(
     creditsClient({
       select: { data: null, error: { code: "PGRST116" } },
-      insert: { data: null, error: { message: "denied" } },
+      insert: { data: null, error: { code: "42501", message: "denied" } },
     }),
     "u1",
     10,
@@ -293,7 +293,10 @@ function creditsTable(initial: number, opts: { failUpdate?: boolean } = {}) {
             async select() {
               await Promise.resolve();
               if (opts.failUpdate)
-                return { data: null, error: { message: "denied" } };
+                return {
+                  data: null,
+                  error: { code: "42501", message: "denied" },
+                };
               if (filters.balance === row.balance) {
                 row.balance = patch.balance;
                 return { data: [{ balance: row.balance }], error: null };
@@ -376,15 +379,62 @@ test("a failed write, and a negative or fractional price, fail closed", async ()
   });
 });
 
-test("a reservation is returned in full on refund", async () => {
+test("a reservation is returned in full on refund and reports the balance written", async () => {
   const db = creditsTable(50);
   const r = await reserveCredits(db, "u1", 10);
   assert.equal(r.status, "reserved");
-  assert.equal(await refundCredits(db, "u1", 10), true);
+  assert.deepEqual(await refundCredits(db, "u1", 10), {
+    status: "refunded",
+    balance: 50,
+  });
   assert.equal(db.row.balance, 50);
-  assert.equal(
+  // The balance reported is the one the update wrote, not reserved + amount:
+  // another request changed it in between.
+  const a = await reserveCredits(db, "u1", 10);
+  const b = await reserveCredits(db, "u1", 10);
+  assert.equal(a.status === "reserved" && b.status === "reserved", true);
+  assert.deepEqual(await refundCredits(db, "u1", 10), {
+    status: "refunded",
+    balance: 40,
+  });
+});
+
+test("a refund that is rejected is a definite failure; a dropped connection is unknown", async () => {
+  // A server rejection carries a code: nothing applied, safe to retry.
+  assert.deepEqual(
     await refundCredits(creditsTable(5, { failUpdate: true }), "u1", 10),
-    false,
+    { status: "failed" },
   );
-  assert.equal(await refundCredits(db, "u1", -3), false);
+  assert.deepEqual(await refundCredits(creditsTable(5), "u1", -3), {
+    status: "failed",
+  });
+  // An error with no code (fetch failed) may or may not have applied.
+  const flaky = creditsTable(5);
+  const real = flaky.from.bind(flaky);
+  flaky.from = ((t: string) => {
+    const q = real(t) as ReturnType<typeof real>;
+    return {
+      ...q,
+      update: (patch: { balance: number }) => {
+        const u = q.update(patch);
+        return {
+          eq: (...args: [string, unknown]) => {
+            u.eq(...args);
+            return {
+              eq: (...a2: [string, unknown]) => {
+                u.eq(...a2);
+                return {
+                  select: async () => ({
+                    data: null,
+                    error: { message: "TypeError: fetch failed" },
+                  }),
+                };
+              },
+            };
+          },
+        };
+      },
+    };
+  }) as typeof flaky.from;
+  assert.deepEqual(await refundCredits(flaky, "u1", 10), { status: "unknown" });
 });
