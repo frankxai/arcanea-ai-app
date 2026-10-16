@@ -54,7 +54,7 @@ export function InlineImage({
       URL.revokeObjectURL(url);
     } catch {
       // Fallback: open in new tab
-      window.open(src, '_blank');
+      window.open(src, '_blank', 'noopener,noreferrer');
     }
   }, [src]);
 

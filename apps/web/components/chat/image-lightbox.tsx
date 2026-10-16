@@ -135,7 +135,7 @@ export function ImageLightbox({
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      window.open(current.src, '_blank');
+      window.open(current.src, '_blank', 'noopener,noreferrer');
     }
   }, [current.src]);
 
