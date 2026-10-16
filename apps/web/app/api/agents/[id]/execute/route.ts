@@ -10,23 +10,26 @@
  * Every call that reaches a provider is billable, so the route is guarded
  * (see lib/agents/marketplace/execute-guard.ts):
  *   - signed-in users only; anonymous requests are refused with 401
- *   - per-IP and per-user rate limits
+ *   - per-IP and per-user rate limits in a shared store (Upstash REST), failing
+ *     closed when the store is missing or down
  *   - hard caps on input, context, output tokens and tool steps
- *   - credits checked fail-closed: an error reading them denies the call
+ *   - credits reserved atomically before the call and refunded if it fails;
+ *     an error reading or writing them denies the call
  *   - one declared model, no fall-through to other paid providers
  *   - provider-side fallbacks are not requested
  *   - ReasoningBank distillation (a second model call) is opt-in
- *   - AI_METERED_ALLOWED=false turns the route off without a deploy
+ *   - AI_METERED_ALLOWED must be "true" for any provider call; unset or any
+ *     other value refuses with 503 (fail-closed)
  *   - one JSON log line per denial, start and finish
  *
  * Pipeline:
  *   1. Kill switch, rate limits, body validation and caps
  *   2. Look up agent spec in catalog (falls back to marketplace_agents table)
- *   3. Resolve user session (required) and check credits (fail-closed)
+ *   3. Resolve user session (required)
  *   4. Build system prompt from agent spec + user context
  *   5. Resolve the one declared model
  *   6. Stream response via Vercel AI SDK streamText
- *   7. Deduct credits on stream completion (best-effort, non-blocking)
+ *   7. Credits were reserved up front; refund them if the run errors
  *
  * Uses Edge runtime for low-latency streaming.
  */
@@ -46,18 +49,34 @@ import {
 } from "@/lib/rate-limit/rate-limiter";
 import {
   EXECUTE_LIMITS,
-  checkCreditsFailClosed,
   checkInputCaps,
   checkPromptCap,
   extractAccessToken,
   learningEnabled,
   logExecute,
   meteredCallsAllowed,
+  onlyFreeTools,
+  refundCredits,
+  reserveCredits,
   resolveDeclaredModel,
-  withoutPaidTools,
 } from "@/lib/agents/marketplace/execute-guard";
+import {
+  checkExecuteRateLimit,
+  type LocalLimiter,
+} from "@/lib/agents/marketplace/execute-rate-limit";
 
 export const runtime = "edge";
+
+// Per-isolate limiter, used only when an operator sets
+// AGENT_EXECUTE_RATE_LIMIT_LOCAL=true instead of configuring the shared store.
+const checkRateLimitLocal: LocalLimiter = (key, window) => {
+  const r = checkRateLimit(key, window);
+  return {
+    allowed: r.allowed,
+    resetTime: r.resetTime,
+    remaining: r.remaining,
+  };
+};
 
 // ---------------------------------------------------------------------------
 // Model resolution — one declared model, never a fall-through
@@ -118,60 +137,45 @@ async function resolveSession(req: NextRequest) {
 }
 
 // ---------------------------------------------------------------------------
-// Deduct credits (fire-and-forget after stream completes)
+// Credit writes. The price is reserved before the provider call (see
+// reserveCredits in execute-guard.ts); this only records the ledger row.
 // ---------------------------------------------------------------------------
 
-async function deductCredits(
+async function creditsWriter(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sessionClient: any,
   supabaseUrl: string,
-  supabaseAnonKey: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
+  // The caller is already authenticated and the user id comes from the verified
+  // session. The service key, when present, is used only for these two writes.
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceKey || !supabaseUrl) return sessionClient;
+  const { createClient } = await import("@supabase/supabase-js");
+  return createClient(supabaseUrl, serviceKey);
+}
+
+async function recordCreditLedger(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  writer: any,
   userId: string,
   agentId: string,
   amount: number,
+  balanceAfter: number,
+  type: "consume" | "refund",
   modelUsed: string,
 ): Promise<void> {
   try {
-    const { createClient } = await import("@supabase/supabase-js");
-    // Use service role key if available for elevated write access
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? supabaseAnonKey;
-    const admin = createClient(supabaseUrl, serviceKey);
-
-    // Try RPC first (atomic decrement); fall back to read-modify-write
-    const rpcResult = await admin.rpc("decrement_credits", {
-      p_user_id: userId,
-      p_amount: amount,
-    });
-
-    if (rpcResult.error) {
-      // RPC not available yet — read current balance then deduct manually
-      const { data: row } = await admin
-        .from("credits")
-        .select("balance")
-        .eq("user_id", userId)
-        .single();
-
-      const currentBalance: number = (row?.balance ?? 0) as number;
-      const newBalance = Math.max(0, currentBalance - amount);
-
-      await admin.from("credits").upsert(
-        {
-          user_id: userId,
-          balance: newBalance,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: "user_id" },
-      );
-    }
-
-    // Log the transaction
-    await admin.from("credit_transactions").insert({
+    await writer.from("credit_transactions").insert({
       user_id: userId,
-      amount: -amount,
-      type: "consume",
+      amount,
+      type,
       agent_id: agentId,
       description: `Agent task: ${agentId} (${modelUsed})`,
+      balance_after: balanceAfter,
     });
   } catch {
-    // Non-fatal: best-effort credit deduction
+    // Non-fatal: the balance itself was already updated atomically.
   }
 }
 
@@ -184,6 +188,9 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const requestStarted = Date.now();
+  // Set once credits are reserved; gives them back if the call never starts.
+  let releaseReservation: ((reason: string) => Promise<void>) | null = null;
+  let streamStarted = false;
   try {
     const { id } = await params;
 
@@ -210,21 +217,25 @@ export async function POST(
       );
     }
 
-    const ipLimit = checkRateLimit(
+    const ipLimit = await checkExecuteRateLimit(
       getClientIdentifier(req),
       EXECUTE_LIMITS.perIp,
+      { local: checkRateLimitLocal },
     );
-    if (!ipLimit.allowed) {
-      const retryAfter = Math.max(
-        1,
-        Math.ceil((ipLimit.resetTime - Date.now()) / 1000),
+    if (ipLimit.status === "unavailable") {
+      return deny(
+        503,
+        "Agent execution is temporarily unavailable.",
+        ipLimit.reason,
       );
+    }
+    if (ipLimit.status === "limited") {
       return deny(
         429,
         "Too many requests. Please slow down.",
         "rate_limit_ip",
-        { retryAfter },
-        { "Retry-After": String(retryAfter) },
+        { retryAfter: ipLimit.retryAfterSec },
+        { "Retry-After": String(ipLimit.retryAfterSec) },
       );
     }
 
@@ -339,49 +350,30 @@ export async function POST(
       return deny(401, "Sign in to run agents.", "anonymous");
     }
 
-    const userLimit = checkRateLimit(
+    const userLimit = await checkExecuteRateLimit(
       getClientIdentifier(req, session.userId),
       EXECUTE_LIMITS.perUser,
+      { local: checkRateLimitLocal },
     );
-    if (!userLimit.allowed) {
-      const retryAfter = Math.max(
-        1,
-        Math.ceil((userLimit.resetTime - Date.now()) / 1000),
+    if (userLimit.status === "unavailable") {
+      return deny(
+        503,
+        "Agent execution is temporarily unavailable.",
+        userLimit.reason,
       );
+    }
+    if (userLimit.status === "limited") {
       return deny(
         429,
         "Too many requests. Please slow down.",
         "rate_limit_user",
-        { retryAfter },
-        { "Retry-After": String(retryAfter) },
+        { retryAfter: userLimit.retryAfterSec },
+        { "Retry-After": String(userLimit.retryAfterSec) },
       );
     }
 
-    // ── 4. Credit check — fail-closed ────────────────────────────────────────
-    const credits = await checkCreditsFailClosed(
-      session.supabase,
-      session.userId,
-      agent.priceCredits,
-    );
-
-    if (credits.status === "unavailable") {
-      return deny(
-        503,
-        "Credits are unavailable right now. Please try again shortly.",
-        "credits_unavailable",
-      );
-    }
-
-    if (credits.status === "insufficient") {
-      return deny(402, "Insufficient credits", "insufficient_credits", {
-        required: agent.priceCredits,
-        balance: credits.balance,
-        message: "Purchase more credits to run this agent.",
-      });
-    }
-
-    // ── 5. Resolve the model first, so a missing key is refused before any
-    //      paid retrieval, embedding or tool call runs ───────────────────
+    // ── 4. Resolve the model first, so a missing key is refused before any
+    //      credits are taken or paid retrieval, embedding or tool call runs ──
     const preferredGatewayId = agent.spec?.preferredModel ?? undefined;
     const resolved = buildModel(preferredGatewayId);
 
@@ -399,7 +391,7 @@ export async function POST(
     const modelId = String(model.modelId ?? "");
     const sendTemperature = !claudeRejectsSamplingParams(modelId);
 
-    // ── 6. Build system prompt ───────────────────────────────────────────────
+    // ── 5. Build system prompt ───────────────────────────────────────────────
     const agentSystemPrompt =
       agent.spec?.systemPrompt ??
       `You are ${agent.name}, ${agent.title}. ${agent.description}`;
@@ -410,6 +402,82 @@ export async function POST(
     // again below once memory and creator context are added.
     if (!checkPromptCap(systemPrompt, input)) {
       return deny(413, "The agent prompt is too large to run.", "prompt_cap");
+    }
+
+    // ── 6. Reserve credits atomically — fail-closed ──────────────────────────
+    // The price leaves the balance now, before any paid retrieval or provider
+    // call, so parallel requests cannot spend the same credits. It is given
+    // back if the run does not complete.
+    const writer = await creditsWriter(session.supabase, supabaseUrl);
+    const reservation = await reserveCredits(
+      session.supabase,
+      session.userId,
+      agent.priceCredits,
+      writer,
+    );
+
+    if (reservation.status === "unavailable") {
+      return deny(
+        503,
+        "Credits are unavailable right now. Please try again shortly.",
+        "credits_unavailable",
+      );
+    }
+
+    if (reservation.status === "insufficient") {
+      return deny(402, "Insufficient credits", "insufficient_credits", {
+        required: agent.priceCredits,
+        balance: reservation.balance,
+        message: "Purchase more credits to run this agent.",
+      });
+    }
+
+    let refunded = false;
+    const refund = async (reason: string) => {
+      if (refunded || reservation.amount <= 0) return;
+      refunded = true;
+      const ok = await refundCredits(
+        writer,
+        session.userId,
+        reservation.amount,
+      );
+      logExecute({
+        event: ok ? "credits_refunded" : "credits_refund_failed",
+        reason,
+        agentId: agent.id,
+        userId: session.userId,
+        credits: reservation.amount,
+      });
+      if (ok) {
+        void recordCreditLedger(
+          writer,
+          session.userId,
+          agent.id,
+          reservation.amount,
+          reservation.balance + reservation.amount,
+          "refund",
+          label,
+        );
+      }
+    };
+    releaseReservation = refund;
+
+    logExecute({
+      event: "credits_reserved",
+      agentId: agent.id,
+      userId: session.userId,
+      credits: reservation.amount,
+    });
+    if (reservation.amount > 0) {
+      void recordCreditLedger(
+        writer,
+        session.userId,
+        agent.id,
+        -reservation.amount,
+        reservation.balance,
+        "consume",
+        label,
+      );
     }
 
     // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response.
@@ -453,6 +521,7 @@ export async function POST(
     }
 
     if (!checkPromptCap(systemPrompt, input)) {
+      await releaseReservation?.("prompt_cap");
       return deny(
         413,
         "The agent prompt is too large to run.",
@@ -476,8 +545,8 @@ export async function POST(
         userId: session?.userId ?? null,
         authenticated: !!session,
       });
-      // Tools that call a paid provider with a server key are not offered here.
-      luminorTools = withoutPaidTools(resolved);
+      // Only allowlisted free tools are offered; paid or unknown ones are withheld.
+      luminorTools = onlyFreeTools(resolved);
     } catch {
       // Fail-open: if tool resolution fails, proceed without tools
     }
@@ -492,6 +561,9 @@ export async function POST(
       // No provider-side fallback is requested: a refusal or error ends the
       // call instead of silently re-running on another (billable) model.
       experimental_transform: refusalNoticeTransform(),
+      onError: () => {
+        void releaseReservation?.("stream_error");
+      },
       ...(luminorTools
         ? {
             tools: luminorTools,
@@ -513,20 +585,8 @@ export async function POST(
           durationMs: Date.now() - requestStarted,
         });
 
-        // ── 8. Deduct credits after completion ──────────────────────────────
-        if (session && supabaseUrl && supabaseAnonKey) {
-          // Fire and forget — do not await
-          deductCredits(
-            supabaseUrl,
-            supabaseAnonKey,
-            session.userId,
-            agent.id,
-            agent.priceCredits,
-            label,
-          ).catch((err) => {
-            console.error("[execute] deductCredits failed:", err);
-          });
-        }
+        // A run that ended in an error did not deliver; give the credits back.
+        if (finishReason === "error") void releaseReservation?.("finish_error");
 
         // Log task to agent_tasks table (best-effort)
         if (session && supabaseUrl && supabaseAnonKey) {
@@ -645,6 +705,7 @@ export async function POST(
       },
     });
 
+    streamStarted = true;
     logExecute({
       event: "started",
       agentId: agent.id,
@@ -660,6 +721,8 @@ export async function POST(
       },
     });
   } catch {
+    // Nothing was streamed: give any reserved credits back.
+    if (!streamStarted) await releaseReservation?.("handler_error");
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
