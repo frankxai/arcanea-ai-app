@@ -39,6 +39,7 @@ const source = [
   "planning-with-files/CURRENT_STATE_2026-10-11_CHAT_COMPANION.md",
   "apps/web/hooks/use-provider.ts",
   "apps/web/hooks/use-conversation.ts",
+  "apps/web/lib/luminors/config.ts",
   "apps/web/lib/ai/provider-preferences.ts",
   "apps/web/lib/auth/context.tsx",
   "apps/web/lib/supabase/client.ts",
@@ -223,6 +224,31 @@ async function main() {
           exact: true,
         });
     await expect(surface).toBeVisible();
+    let imageReadiness = [];
+    if (name.startsWith("full-chat-")) {
+      const mascot = surface.getByRole("img", { name: "Arcanea", exact: true });
+      await expect(mascot).toBeVisible();
+      await expect
+        .poll(
+          () =>
+            mascot.evaluate(
+              (image) => image.complete && image.naturalWidth > 0,
+            ),
+          { timeout: 10_000 },
+        )
+        .toBe(true);
+      imageReadiness = await mascot.evaluate(async (image) => {
+        await image.decode();
+        return [
+          {
+            alt: image.alt,
+            complete: image.complete,
+            naturalWidth: image.naturalWidth,
+            naturalHeight: image.naturalHeight,
+          },
+        ];
+      });
+    }
     await expect
       .poll(() =>
         surface.evaluate(
@@ -273,6 +299,7 @@ async function main() {
       head,
       sourceHashes,
       surfaceGeometry,
+      imageReadiness,
       fixture: true,
       realProviderCalls: 0,
       productionWrites: 0,
@@ -428,6 +455,10 @@ async function main() {
       const input = panel.getByLabel("Your message", { exact: true });
       const log = panel.getByRole("log");
       await expect(input).toBeFocused();
+      await expect(
+        panel.getByText("Connect your provider key to chat", { exact: true }),
+      ).toBeVisible();
+      await expect(panel).not.toContainText("Your provider key");
       await panel
         .getByRole("button", {
           name: "Help me shape a character.",
@@ -458,6 +489,9 @@ async function main() {
         { key: fakeKey, names: guestStorageNames },
       );
       await expect(panel).toContainText("Gemini Flash");
+      await expect(
+        panel.getByText("Gemini Flash · Your provider key", { exact: true }),
+      ).toBeVisible();
       await input.dispatchEvent("keydown", {
         key: "Enter",
         code: "Enter",
@@ -685,6 +719,42 @@ async function main() {
       await page.keyboard.press("Escape");
       await expect(shortcutsDialog).toBeHidden();
       await expect(starterButtons.first()).toBeFocused();
+      const featuredSelections = [];
+      const requestsBeforeFeaturedSelection = requests;
+      for (const name of ["Storyteller", "Composer", "Systems Architect"]) {
+        await page.goto(`${base}/chat`);
+        const featured = page.getByRole("group", {
+          name: "Featured companions",
+        });
+        const choices = featured.getByRole("button");
+        await expect(choices).toHaveCount(3);
+        const choice = featured.getByRole("button", {
+          name: `Arcanean ${name} Luminor`,
+          exact: true,
+        });
+        await expect(choice.locator("svg")).toHaveCount(1);
+        const target = await choice.boundingBox();
+        assert.ok(target && target.width >= 44 && target.height >= 44);
+        await choice.focus();
+        await page.keyboard.press("Enter");
+        await expect(fullChatHeading).toHaveText(name);
+        await expect(featured).toBeHidden();
+        await starterButtons.first().click();
+        const fullChatInput = page.locator("[data-chat-composer] textarea");
+        await expect(fullChatInput).toHaveValue("Design a magic system");
+        await expect(fullChatInput).toBeFocused();
+        featuredSelections.push({
+          name,
+          target,
+          keyboardSelected: true,
+          starterDraftReady: true,
+        });
+      }
+      assert.equal(
+        requests,
+        requestsBeforeFeaturedSelection,
+        "Choosing a featured companion and preparing a starter never sends a provider request",
+      );
       await page.goto(base);
       await expect(opener).toBeHidden();
       assert.deepEqual(pageErrors, []);
@@ -692,6 +762,7 @@ async function main() {
         name: mode.name,
         requests,
         missingKeyDenied: true,
+        missingProviderClearlyDisclosed: true,
         starterExplicit: true,
         imeDidNotSend: true,
         sdkStream: true,
@@ -709,6 +780,8 @@ async function main() {
         shortcutsHeadingVisible: true,
         shortcutsFocusContainedAndRestored: true,
         startersImmediatelyReadable: true,
+        featuredSelections,
+        featuredSelectionDidNotSend: true,
         geometry,
         pageErrors,
       });

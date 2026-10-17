@@ -163,7 +163,11 @@ function ScopedCompanionChat({
   return (
     <div className={styles.chat}>
       <div className={styles.provider}>
-        <span>{provider.label} · Your provider key</span>
+        <span>
+          {provider.clientApiKey?.trim()
+            ? `${provider.label} · Your provider key`
+            : "Connect your provider key to chat"}
+        </span>
         <Link href="/settings/providers">Provider settings</Link>
       </div>
       <div

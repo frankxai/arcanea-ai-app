@@ -4,7 +4,7 @@
 import React, { useRef } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import styles from "@arcanea/design-system/companion.module.css";
-import { PhCaretDown } from "@/lib/phosphor-icons";
+import { PhCaretDown, PhSparkle, PhUser } from "@/lib/phosphor-icons";
 import {
   getModelById,
   CHAT_MODELS,
@@ -45,7 +45,6 @@ export function AgentHeader({
     type: "auto" as const,
     id: "arcanea-auto",
     name: "Arcanea",
-    avatar: "✦",
     specialty: "Smart Routing — all specialists available",
   };
 
@@ -60,11 +59,20 @@ export function AgentHeader({
         {/* Agent selector */}
         <button
           type="button"
+          aria-label={`Choose companion: ${agentDisplay.name}`}
           onClick={onOpenAgentPicker}
           className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-white/[0.04] transition-all group"
         >
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/20 to-[var(--arc-brand-cosmic-blue)]/10 flex items-center justify-center text-sm border border-white/[0.08] group-hover:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors">
-            {agentDisplay.avatar}
+            {activeAgent && activeAgent.type !== "auto" ? (
+              <PhUser className="w-4 h-4" weight="duotone" aria-hidden="true" />
+            ) : (
+              <PhSparkle
+                className="w-4 h-4"
+                weight="duotone"
+                aria-hidden="true"
+              />
+            )}
           </div>
           <div className="text-left">
             <div className="flex items-center gap-1.5">
