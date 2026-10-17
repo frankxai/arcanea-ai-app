@@ -16,6 +16,7 @@ import { ChatLayout } from "@/components/chat/chat-layout";
 import { ChatArea } from "@/components/chat/chat-area";
 import { HistorySidebar } from "@/components/chat/history-sidebar";
 import { ChatInputBar } from "@/components/chat/chat-input-bar";
+import { ChatStorageStatus } from "@/components/chat/chat-storage-status";
 import { ChatNotices } from "@/components/chat/chat-notices";
 import { ChatOverlays } from "@/components/chat/chat-overlays";
 import { AgentHeader } from "@/components/chat/agent-header";
@@ -46,8 +47,25 @@ import { useChatWorldMode } from "@/hooks/use-chat-world-mode";
 import { useAutoSave } from "@/lib/arc/auto-save";
 import { analytics } from "@/lib/analytics/events";
 import { ChatImagineTabs } from "@/components/chat/chat-imagine-tabs";
+import { useAuth } from "@/lib/auth/context";
+import ChatLoading from "./loading";
 
 export default function ChatPage() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => setHasMounted(true), []);
+  // Parent auth can resolve before this subtree hydrates. Keep its first render
+  // identical to the server, and preserve URL prompts until both are ready.
+  if (!hasMounted || !token.actor) return <ChatLoading />;
+  // Retire messages, artifacts, search and callbacks together when auth changes.
+  // The scope guards also reject work between the auth event and this render.
+  return (
+    <ChatPageContent key={`${token.actor ?? "pending"}:${token.revision}`} />
+  );
+}
+
+function ChatPageContent() {
   const chatSessions = useChatSessions();
   const conversation = useConversation({
     activeProject: chatSessions.activeProject,
@@ -197,6 +215,18 @@ export default function ChatPage() {
     textareaRef.current?.focus();
   }, [conversation, chatSessions]);
 
+  const handleDeleteSession = useCallback(
+    (id: string) => {
+      if (!chatSessions.deleteSession(id)) return false;
+      if (id === chatSessions.activeSessionId) {
+        void conversation.handleStop();
+        conversation.startNewChat();
+      }
+      return true;
+    },
+    [chatSessions, conversation],
+  );
+
   const lastSessionTitle =
     chatSessions.sessions.length > 0 &&
     chatSessions.sessions[0].title !== "New Chat"
@@ -251,7 +281,7 @@ export default function ChatPage() {
             activeSessionId={chatSessions.activeSessionId}
             onNewChat={handleNewChat}
             onSelectSession={handleLoadSession}
-            onDeleteSession={chatSessions.deleteSession}
+            onDeleteSession={handleDeleteSession}
             onRenameSession={chatSessions.renameSession}
             onTogglePin={chatSessions.togglePin}
             onSelectProject={chatSessions.setActiveProject}
@@ -318,6 +348,26 @@ export default function ChatPage() {
           </div>
         </div>
 
+        <ChatStorageStatus
+          status={
+            conversation.messages.length ? chatSessions.saveStatus : "idle"
+          }
+          onRetry={chatSessions.retryCloudSave}
+          onSaveCopy={chatSessions.saveSeparateCopy}
+          onExport={() => setShowExport(true)}
+          deletionFailed={chatSessions.deletionFailed}
+          pendingDeletionCount={chatSessions.pendingDeletionCount}
+          isRetryingDeletion={chatSessions.isRetryingDeletion}
+          onRetryDeletion={async () => {
+            if (chatSessions.failedDeletionId) {
+              if (handleDeleteSession(chatSessions.failedDeletionId))
+                textareaRef.current?.focus();
+              return;
+            }
+            if (await chatSessions.retryDeletion())
+              textareaRef.current?.focus();
+          }}
+        />
         <ChatNotices
           conversation={conversation}
           worldCharInit={worldCharInit}

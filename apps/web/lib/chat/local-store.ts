@@ -2,15 +2,24 @@
 /**
  * localStorage-based chat persistence
  *
- * Stores up to MAX_SESSIONS chat sessions in localStorage.
+ * Keeps a bounded cache of acknowledged cloud copies, while retaining pinned
+ * conversations and work that has no confirmed cloud copy.
  * Each session holds its messages, title, and timestamps.
  * When Supabase auth is configured, the persistence hook can
  * be upgraded to sync with the server — this module stays as
  * the offline / anonymous fallback.
  */
 
-const STORAGE_KEY = 'arcanea_chat_sessions';
-const ACTIVE_SESSION_KEY = 'arcanea_active_chat_session';
+import {
+  chatStorageKey,
+  guestChatStorageScope,
+  type ChatStorageScope,
+} from "./storage-scope";
+import { chatSnapshotContentKey } from "./cloud-snapshot";
+
+const STORAGE_KEY = "arcanea_chat_sessions";
+const ACTIVE_SESSION_KEY = "arcanea_active_chat_session";
+const DELETION_KEY = "arcanea_chat_deletion";
 const MAX_SESSIONS = 50;
 const TITLE_MAX_LENGTH = 60;
 
@@ -20,7 +29,7 @@ const TITLE_MAX_LENGTH = 60;
 
 export interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   /** Structured parts from AI SDK v6 — preserved for round-trip fidelity */
   parts?: Array<{ type: string; text?: string }>;
@@ -37,6 +46,8 @@ export interface ChatSession {
   pinned?: boolean;
   createdAt: string;
   updatedAt: string;
+  cloudRevision?: string;
+  cloudDirty?: boolean;
 }
 
 export interface ChatSessionSummary {
@@ -55,36 +66,138 @@ export interface ChatSessionSummary {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function readSessions(): ChatSession[] {
-  if (typeof window === 'undefined') return [];
+function deletionKey(id: string, scope: ChatStorageScope): string | null {
+  const prefix = chatStorageKey(DELETION_KEY, scope);
+  return prefix && id && id.length <= 200
+    ? `${prefix}:${encodeURIComponent(id)}`
+    : null;
+}
+
+function deletionState(
+  id: string,
+  scope: ChatStorageScope,
+): "pending" | "confirmed" | "unknown" | null {
+  const key = deletionKey(id, scope);
+  if (!key || typeof window === "undefined") return "unknown";
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const value = localStorage.getItem(key);
+    if (value === null || value === "pending" || value === "confirmed")
+      return value;
+    return "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+
+export function isChatSessionDeleted(
+  id: string,
+  scope: ChatStorageScope,
+): boolean {
+  return deletionState(id, scope) !== null;
+}
+
+export function listPendingChatDeletions(scope: ChatStorageScope): string[] {
+  const prefix = chatStorageKey(DELETION_KEY, scope);
+  if (!prefix || typeof window === "undefined") return [];
+  const pending: string[] = [];
+  try {
+    // Separate keys keep concurrent deletions from replacing each other's intent.
+    for (let index = 0; index < localStorage.length; index++) {
+      if (!scope.isCurrent()) return [];
+      const key = localStorage.key(index);
+      if (!key?.startsWith(`${prefix}:`)) continue;
+      if (localStorage.getItem(key) !== "pending") continue;
+      const id = decodeURIComponent(key.slice(prefix.length + 1));
+      if (deletionKey(id, scope) === key) pending.push(id);
+    }
+    return pending;
   } catch {
     return [];
   }
 }
 
-function writeSessions(sessions: ChatSession[]): void {
-  if (typeof window === 'undefined') return;
+export function acknowledgeChatDeletion(
+  id: string,
+  scope: ChatStorageScope,
+): boolean {
+  const key = deletionKey(id, scope);
+  const state = deletionState(id, scope);
+  if (state === "confirmed") return true;
+  if (!key || state !== "pending") return false;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+    // Keep the barrier after acknowledgement: a late read or stale save must
+    // never restore this ID. A separate copy always receives a fresh ID.
+    localStorage.setItem(key, "confirmed");
+    return localStorage.getItem(key) === "confirmed";
   } catch {
-    // localStorage full or blocked — silently fail
+    return false;
+  }
+}
+
+function readSessions(scope: ChatStorageScope): ChatSession[] {
+  if (typeof window === "undefined") return [];
+  const key = chatStorageKey(STORAGE_KEY, scope);
+  if (!key) return [];
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.filter((session) => !isChatSessionDeleted(session.id, scope))
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeSessions(
+  sessions: ChatSession[],
+  scope: ChatStorageScope,
+): boolean {
+  if (typeof window === "undefined") return false;
+  const key = chatStorageKey(STORAGE_KEY, scope);
+  if (!key) return false;
+  try {
+    const encoded = JSON.stringify(
+      sessions.filter((session) => !isChatSessionDeleted(session.id, scope)),
+    );
+    localStorage.setItem(key, encoded);
+    return localStorage.getItem(key) === encoded;
+  } catch {
+    return false;
   }
 }
 
 function normalizeSession(session: ChatSession): ChatSession {
   return {
     ...session,
-    title: session.title || 'New Chat',
+    title: session.title || "New Chat",
     messages: Array.isArray(session.messages) ? session.messages : [],
     luminorId: session.luminorId ?? null,
     modelId: session.modelId ?? null,
     projectId: session.projectId ?? null,
   };
+}
+
+function canEvictFromCache(session: ChatSession): boolean {
+  return (
+    !session.pinned &&
+    session.cloudDirty === false &&
+    /^[0-9a-f]{64}$/.test(session.cloudRevision ?? "")
+  );
+}
+
+function retainRecoverableSessions(sessions: ChatSession[]): ChatSession[] {
+  const protectedCount = sessions.filter(
+    (session) => !canEvictFromCache(session),
+  ).length;
+  let cacheSlots = Math.max(0, MAX_SESSIONS - protectedCount);
+  return sessions.filter((session) => {
+    if (!canEvictFromCache(session)) return true;
+    if (cacheSlots === 0) return false;
+    cacheSlots -= 1;
+    return true;
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -96,28 +209,35 @@ function normalizeSession(session: ChatSession): ChatSession {
  * Falls back to "New Chat" if no user message is found.
  */
 export function generateSessionTitle(messages: ChatMessage[]): string {
-  const firstUser = messages.find((m) => m.role === 'user');
-  if (!firstUser) return 'New Chat';
+  const firstUser = messages.find((m) => m.role === "user");
+  if (!firstUser) return "New Chat";
 
-  const text = firstUser.content || '';
-  if (!text.trim()) return 'New Chat';
+  const text = firstUser.content || "";
+  if (!text.trim()) return "New Chat";
 
   // Take the first line, truncate to TITLE_MAX_LENGTH
-  const firstLine = text.split('\n')[0].trim();
+  const firstLine = text.split("\n")[0].trim();
   if (firstLine.length <= TITLE_MAX_LENGTH) return firstLine;
-  return firstLine.slice(0, TITLE_MAX_LENGTH - 3) + '...';
+  return firstLine.slice(0, TITLE_MAX_LENGTH - 3) + "...";
 }
 
 /**
  * Save (create or update) a chat session.
- * Enforces MAX_SESSIONS limit with FIFO eviction.
+ * Only evicts unpinned acknowledged cloud copies beyond the cache budget.
  */
 export function saveChatSession(
   id: string,
   messages: ChatMessage[],
-  opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null; title?: string }
-): void {
-  const sessions = readSessions();
+  opts?: {
+    luminorId?: string | null;
+    modelId?: string | null;
+    projectId?: string | null;
+    title?: string;
+  },
+  scope: ChatStorageScope = guestChatStorageScope,
+): boolean {
+  if (isChatSessionDeleted(id, scope)) return false;
+  const sessions = readSessions(scope);
   const now = new Date().toISOString();
 
   const existingIdx = sessions.findIndex((s) => s.id === id);
@@ -132,7 +252,8 @@ export function saveChatSession(
   } else if (existingIdx >= 0) {
     const existing = sessions[existingIdx];
     const autoTitle = generateSessionTitle(messages);
-    const existingIsCustom = existing.title !== 'New Chat' && existing.title !== autoTitle;
+    const existingIsCustom =
+      existing.title !== "New Chat" && existing.title !== autoTitle;
     title = existingIsCustom ? existing.title : autoTitle;
   } else {
     title = generateSessionTitle(messages);
@@ -144,11 +265,23 @@ export function saveChatSession(
     messages,
     luminorId: opts?.luminorId ?? null,
     modelId: opts?.modelId ?? null,
-    projectId: opts?.projectId ?? (existingIdx >= 0 ? sessions[existingIdx].projectId ?? null : null),
+    projectId:
+      opts?.projectId ??
+      (existingIdx >= 0 ? (sessions[existingIdx].projectId ?? null) : null),
     pinned: existingIdx >= 0 ? sessions[existingIdx].pinned : false,
     createdAt: existingIdx >= 0 ? sessions[existingIdx].createdAt : now,
     updatedAt: now,
+    cloudRevision:
+      existingIdx >= 0 ? sessions[existingIdx].cloudRevision : undefined,
+    cloudDirty: true,
   };
+
+  if (
+    existingIdx >= 0 &&
+    chatSnapshotContentKey(session) ===
+      chatSnapshotContentKey(sessions[existingIdx])
+  )
+    session.cloudDirty = sessions[existingIdx].cloudDirty ?? true;
 
   if (existingIdx >= 0) {
     sessions[existingIdx] = session;
@@ -157,41 +290,56 @@ export function saveChatSession(
   }
 
   // Sort by updatedAt descending so most recent is first
-  sessions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  sessions.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
 
-  // FIFO eviction — drop oldest beyond MAX_SESSIONS, but protect pinned sessions
+  // Pins and unacknowledged manuscripts must survive the cache budget. A real
+  // browser quota failure returns false without claiming this save is durable.
   const pinned = sessions.filter((s) => s.pinned);
   const unpinned = sessions.filter((s) => !s.pinned);
-  const trimmed = [...pinned, ...unpinned].slice(0, MAX_SESSIONS);
+  const trimmed = retainRecoverableSessions([...pinned, ...unpinned]);
 
-  writeSessions(trimmed);
+  return writeSessions(trimmed, scope);
 }
 
 /**
  * Load a single chat session by ID.
  * Returns null if not found.
  */
-export function loadChatSession(id: string): ChatSession | null {
-  const sessions = readSessions();
+export function loadChatSession(
+  id: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): ChatSession | null {
+  const sessions = readSessions(scope);
   return sessions.find((s) => s.id === id) ?? null;
 }
 
-export function getActiveChatSessionId(): string | null {
-  if (typeof window === 'undefined') return null;
+export function getActiveChatSessionId(
+  scope: ChatStorageScope = guestChatStorageScope,
+): string | null {
+  if (typeof window === "undefined") return null;
+  const key = chatStorageKey(ACTIVE_SESSION_KEY, scope);
+  if (!key) return null;
   try {
-    return localStorage.getItem(ACTIVE_SESSION_KEY);
+    return localStorage.getItem(key);
   } catch {
     return null;
   }
 }
 
-export function setActiveChatSessionId(id: string | null): void {
-  if (typeof window === 'undefined') return;
+export function setActiveChatSessionId(
+  id: string | null,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  if (typeof window === "undefined") return;
+  const key = chatStorageKey(ACTIVE_SESSION_KEY, scope);
+  if (!key) return;
   try {
     if (id) {
-      localStorage.setItem(ACTIVE_SESSION_KEY, id);
+      localStorage.setItem(key, id);
     } else {
-      localStorage.removeItem(ACTIVE_SESSION_KEY);
+      localStorage.removeItem(key);
     }
   } catch {
     // ignore storage failures
@@ -202,17 +350,25 @@ export function setActiveChatSessionId(id: string | null): void {
  * List all saved sessions as summaries (no full message arrays).
  * Sorted by updatedAt descending.
  */
-export function listChatSessions(): ChatSessionSummary[] {
-  const sessions = readSessions();
+export function listChatSessions(
+  scope: ChatStorageScope = guestChatStorageScope,
+): ChatSessionSummary[] {
+  const sessions = readSessions(scope);
   return sessions.map((s) => {
-    const lastAssistant = [...s.messages].reverse().find((m) => m.role === 'assistant');
+    const lastAssistant = [...s.messages]
+      .reverse()
+      .find((m) => m.role === "assistant");
     const lastContent = lastAssistant?.content || null;
 
     return {
       id: s.id,
       title: s.title,
       messageCount: s.messages.length,
-      lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
+      lastMessage: lastContent
+        ? lastContent.length > 80
+          ? lastContent.slice(0, 80) + "..."
+          : lastContent
+        : null,
       luminorId: s.luminorId ?? null,
       projectId: s.projectId ?? null,
       pinned: s.pinned || false,
@@ -226,28 +382,37 @@ export function listChatSessions(): ChatSessionSummary[] {
  * Replace the entire session store with a normalized list.
  * Intended for canonical sync flows that merge local and cloud sessions first.
  */
-export function replaceChatSessions(sessions: ChatSession[]): void {
+export function replaceChatSessions(
+  sessions: ChatSession[],
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
   const deduped = new Map<string, ChatSession>();
 
   for (const session of sessions) {
     deduped.set(session.id, normalizeSession(session));
   }
 
-  const normalized = Array.from(deduped.values())
-    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-    .slice(0, MAX_SESSIONS);
+  const normalized = retainRecoverableSessions(
+    Array.from(deduped.values()).sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    ),
+  );
 
-  writeSessions(normalized);
+  writeSessions(normalized, scope);
 }
 
 /**
  * Merge incoming sessions into the local store, preferring the most recently
  * updated copy of each session.
  */
-export function mergeChatSessions(incoming: ChatSession[]): void {
+export function mergeChatSessions(
+  incoming: ChatSession[],
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
   const merged = new Map<string, ChatSession>();
 
-  for (const session of readSessions()) {
+  for (const session of readSessions(scope)) {
     merged.set(session.id, normalizeSession(session));
   }
 
@@ -260,26 +425,48 @@ export function mergeChatSessions(incoming: ChatSession[]): void {
       continue;
     }
 
-    if (new Date(normalized.updatedAt).getTime() >= new Date(existing.updatedAt).getTime()) {
-      merged.set(normalized.id, {
+    if (
+      existing.cloudDirty &&
+      chatSnapshotContentKey(existing) !== chatSnapshotContentKey(normalized)
+    )
+      continue;
+
+    if (
+      new Date(normalized.updatedAt).getTime() >=
+      new Date(existing.updatedAt).getTime()
+    ) {
+      const next = {
         ...normalized,
+        pinned: existing.pinned ?? false,
+        messages: normalized.messages.length
+          ? normalized.messages
+          : existing.messages,
         projectId: normalized.projectId ?? existing.projectId ?? null,
-      });
+      };
+      // A metadata-only response is not an acknowledgement of messages or
+      // project context retained from the device's complete copy.
+      next.cloudDirty =
+        normalized.cloudDirty !== false ||
+        chatSnapshotContentKey(next) !== chatSnapshotContentKey(normalized);
+      merged.set(normalized.id, next);
     }
   }
 
-  replaceChatSessions(Array.from(merged.values()));
+  replaceChatSessions(Array.from(merged.values()), scope);
 }
 
 /**
  * Search sessions by query — matches title or message content.
  * Returns summaries sorted by updatedAt descending.
  */
-export function searchSessions(query: string): ChatSessionSummary[] {
-  if (!query.trim()) return listChatSessions();
+export function searchSessions(
+  query: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): ChatSessionSummary[] {
+  if (!query.trim()) return listChatSessions(scope);
 
   const lowerQuery = query.toLowerCase();
-  const sessions = readSessions();
+  const sessions = readSessions(scope);
 
   const matched = sessions.filter((s) => {
     // Match title
@@ -289,17 +476,25 @@ export function searchSessions(query: string): ChatSessionSummary[] {
   });
 
   // Already sorted by updatedAt from readSessions/saveChatSession, but ensure it
-  matched.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  matched.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
 
   return matched.map((s) => {
-    const lastAssistant = [...s.messages].reverse().find((m) => m.role === 'assistant');
+    const lastAssistant = [...s.messages]
+      .reverse()
+      .find((m) => m.role === "assistant");
     const lastContent = lastAssistant?.content || null;
 
     return {
       id: s.id,
       title: s.title,
       messageCount: s.messages.length,
-      lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
+      lastMessage: lastContent
+        ? lastContent.length > 80
+          ? lastContent.slice(0, 80) + "..."
+          : lastContent
+        : null,
       luminorId: s.luminorId ?? null,
       projectId: s.projectId ?? null,
       pinned: s.pinned || false,
@@ -312,61 +507,109 @@ export function searchSessions(query: string): ChatSessionSummary[] {
 /**
  * Rename a chat session by ID.
  */
-export function renameChatSession(id: string, title: string): void {
-  const sessions = readSessions();
+export function renameChatSession(
+  id: string,
+  title: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.title = title;
+  session.cloudDirty = true;
   session.updatedAt = new Date().toISOString();
-  writeSessions(sessions);
+  writeSessions(sessions, scope);
 }
 
 /**
  * Delete a chat session by ID.
  */
-export function deleteChatSession(id: string): void {
-  const sessions = readSessions();
-  writeSessions(sessions.filter((s) => s.id !== id));
+export function deleteChatSession(
+  id: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): boolean {
+  const key = deletionKey(id, scope);
+  if (!key || typeof window === "undefined") return false;
+  const previous = deletionState(id, scope);
+  if (previous === "unknown") return false;
+  try {
+    const state =
+      previous === "confirmed" || scope.actor === "guest"
+        ? "confirmed"
+        : "pending";
+    localStorage.setItem(key, state);
+    if (localStorage.getItem(key) !== state) return false;
+  } catch {
+    return false;
+  }
+  // The intent is already durable even if rewriting a quota-full cache fails.
+  // Readers hide the old copy, and cloud recovery retries the pending deletion.
+  writeSessions(readSessions(scope), scope);
+  return true;
 }
 
 /**
  * Toggle the pinned state of a chat session by ID.
  */
-export function togglePinSession(id: string): void {
-  const sessions = readSessions();
+export function togglePinSession(
+  id: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.pinned = !session.pinned;
-  writeSessions(sessions);
+  writeSessions(sessions, scope);
 }
 
 /**
  * Assign a chat session to a project or clear the assignment.
  */
-export function assignSessionToProject(id: string, projectId: string | null): void {
-  const sessions = readSessions();
+export function assignSessionToProject(
+  id: string,
+  projectId: string | null,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope);
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.projectId = projectId;
+  session.cloudDirty = true;
   session.updatedAt = new Date().toISOString();
-  writeSessions(sessions);
+  writeSessions(sessions, scope);
 }
 
 /**
  * Remove a deleted project from all sessions.
  */
-export function clearProjectFromSessions(projectId: string): void {
-  const sessions = readSessions().map((session) => (
-    session.projectId === projectId
-      ? { ...session, projectId: null }
-      : session
-  ));
-  writeSessions(sessions);
+export function clearProjectFromSessions(
+  projectId: string,
+  scope: ChatStorageScope = guestChatStorageScope,
+): void {
+  const sessions = readSessions(scope).map((session) =>
+    session.projectId === projectId ? { ...session, projectId: null } : session,
+  );
+  writeSessions(sessions, scope);
 }
 
 /**
  * Generate a new unique session ID.
  */
 export function newSessionId(): string {
-  return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  return crypto.randomUUID();
+}
+
+export function acknowledgeChatSnapshot(
+  id: string,
+  revision: string,
+  savedContentKey: string,
+  scope: ChatStorageScope,
+): boolean {
+  const sessions = readSessions(scope);
+  const session = sessions.find((item) => item.id === id);
+  // Late acknowledgements must not resurrect a deleted browser conversation.
+  if (!session) return false;
+  session.cloudRevision = revision;
+  session.cloudDirty = chatSnapshotContentKey(session) !== savedContentKey;
+  return writeSessions(sessions, scope);
 }

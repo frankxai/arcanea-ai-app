@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { analytics } from '@/lib/analytics/events';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { analytics } from "@/lib/analytics/events";
+import { useAuth } from "@/lib/auth/context";
+import { chatUserId, createChatStorageScope } from "@/lib/chat/storage-scope";
 import {
   assignSessionToProject,
   deleteChatSession,
   getActiveChatSessionId,
+  generateSessionTitle,
   listChatSessions,
+  listPendingChatDeletions,
   loadChatSession,
   mergeChatSessions,
   newSessionId,
@@ -19,10 +23,9 @@ import {
   type ChatMessage,
   type ChatSession,
   type ChatSessionSummary,
-} from '@/lib/chat/local-store';
+} from "@/lib/chat/local-store";
 import {
   createChatProject,
-  assignCloudSessionToProject,
   deleteProjectFromCloud,
   deleteChatProject,
   getActiveChatProjectId,
@@ -33,24 +36,32 @@ import {
   setActiveChatProject,
   syncProjectsFromCloud,
   type ChatProject,
-} from '@/lib/chat/project-store';
+} from "@/lib/chat/project-store";
 import {
   cloudSessionToLocalSession,
   deleteCloudSession,
   loadCloudSessions,
-  renameCloudSession,
-  saveSessionToCloud,
-} from '@/lib/chat/supabase-store';
+  saveChatSnapshotToCloud,
+} from "@/lib/chat/supabase-store";
 
-const SIDEBAR_KEY = 'arcanea-sidebar-expanded';
+const SIDEBAR_KEY = "arcanea-sidebar-expanded";
 const MOBILE_BREAKPOINT = 768;
+export type ChatSaveStatus =
+  | "idle"
+  | "local"
+  | "saving"
+  | "synced"
+  | "conflict"
+  | "unavailable"
+  | "failed"
+  | "volatile";
 
 function getInitialExpanded(): boolean {
   return false;
 }
 
 function persistExpanded(value: boolean): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   try {
     localStorage.setItem(SIDEBAR_KEY, String(value));
@@ -69,6 +80,14 @@ export interface UseChatSessionsReturn {
   isSidebarExpanded: boolean;
   searchQuery: string;
   isHydrating: boolean;
+  saveStatus: ChatSaveStatus;
+  deletionFailed: boolean;
+  failedDeletionId: string | null;
+  pendingDeletionCount: number;
+  isRetryingDeletion: boolean;
+  retryDeletion: () => Promise<boolean>;
+  retryCloudSave: () => void;
+  saveSeparateCopy: () => void;
   setSearchQuery: (query: string) => void;
   toggleSidebar: () => void;
   setActiveProject: (projectId: string | null) => void;
@@ -76,10 +95,14 @@ export interface UseChatSessionsReturn {
   loadSession: (id: string) => ChatSession | null;
   saveMessages: (
     messages: ChatMessage[],
-    opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null },
+    opts?: {
+      luminorId?: string | null;
+      modelId?: string | null;
+      projectId?: string | null;
+    },
   ) => void;
   newSession: () => string;
-  deleteSession: (id: string) => void;
+  deleteSession: (id: string) => boolean;
   renameSession: (id: string, title: string) => void;
   togglePin: (id: string) => void;
   createProject: (title: string) => ChatProject | null;
@@ -90,30 +113,92 @@ export interface UseChatSessionsReturn {
 }
 
 export function useChatSessions(): UseChatSessionsReturn {
-  const [activeSessionId, setActiveSessionId] = useState<string>(() => getActiveChatSessionId() ?? newSessionId());
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(() => getActiveChatProjectId());
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(() => getInitialExpanded());
-  const [searchQuery, setSearchQuery] = useState('');
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  const storageScope = useMemo(
+    () => createChatStorageScope(credentialScope, token),
+    [credentialScope, token],
+  );
+  const [selection, setSelection] = useState(() => ({
+    scope: storageScope,
+    sessionId: getActiveChatSessionId(storageScope) ?? newSessionId(),
+    projectId: getActiveChatProjectId(storageScope),
+  }));
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(() =>
+    getInitialExpanded(),
+  );
+  const [searchQuery, setSearchQuery] = useState("");
   const [isHydrating, setIsHydrating] = useState(true);
+  // Keep the server and first client render independent of device-only caches.
+  const [hasMounted, setHasMounted] = useState(false);
   const [refreshTick, setRefreshTick] = useState(0);
+  const [deletionFailure, setDeletionFailure] = useState<{
+    scope: typeof storageScope;
+    id: string;
+  } | null>(null);
+  const [deletionRetryScope, setDeletionRetryScope] = useState<
+    typeof storageScope | null
+  >(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const saveEpochRef = useRef(0);
+  const pendingSnapshotRef = useRef<ChatSession | null>(null);
+  const [saveState, setSaveState] = useState<{
+    id: string;
+    status: ChatSaveStatus;
+  }>({ id: "", status: "idle" });
+
+  // Also reset consumers that use the hook outside the keyed chat page. React
+  // retries this render before committing callbacks for the previous selection.
+  if (selection.scope !== storageScope) {
+    setSelection({
+      scope: storageScope,
+      sessionId: getActiveChatSessionId(storageScope) ?? newSessionId(),
+      projectId: getActiveChatProjectId(storageScope),
+    });
+    setSearchQuery("");
+    setIsHydrating(true);
+    setSaveState({ id: "", status: "idle" });
+    setDeletionFailure(null);
+    setDeletionRetryScope(null);
+  }
+  const activeSessionId = selection.sessionId;
+  const activeProjectId = selection.projectId;
+  const setActiveSessionId = useCallback(
+    (id: string) => {
+      if (storageScope.isCurrent())
+        setSelection((previous) => ({ ...previous, sessionId: id }));
+    },
+    [storageScope],
+  );
+  const setActiveProjectId = useCallback(
+    (id: string | null) => {
+      if (storageScope.isCurrent())
+        setSelection((previous) => ({ ...previous, projectId: id }));
+    },
+    [storageScope],
+  );
 
   const syncCloudSessions = useCallback(async () => {
-    const cloudSessions = await loadCloudSessions();
-    if (cloudSessions.length === 0) return;
+    const cloudSessions = await loadCloudSessions(storageScope);
+    if (!storageScope.isCurrent() || cloudSessions.length === 0) return;
 
-    mergeChatSessions(cloudSessions.map(cloudSessionToLocalSession));
-  }, []);
+    mergeChatSessions(
+      cloudSessions.map(cloudSessionToLocalSession),
+      storageScope,
+    );
+  }, [storageScope]);
 
   const refreshSessions = useCallback(async () => {
+    if (!storageScope.isCurrent()) return;
     setRefreshTick((tick) => tick + 1);
-  }, []);
+  }, [storageScope]);
 
   useEffect(() => {
+    setHasMounted(true);
     try {
       const stored = localStorage.getItem(SIDEBAR_KEY);
       if (stored !== null) {
-        setIsSidebarExpanded(stored === 'true');
+        setIsSidebarExpanded(stored === "true");
       }
     } catch {
       // ignore localStorage failures
@@ -124,169 +209,378 @@ export function useChatSessions(): UseChatSessionsReturn {
     let cancelled = false;
 
     async function hydrate() {
-      await syncCloudSessions();
-      await syncProjectsFromCloud();
-      if (!cancelled) {
-        setRefreshTick((tick) => tick + 1);
-        setIsHydrating(false);
+      try {
+        await syncCloudSessions();
+        if (!cancelled && storageScope.isCurrent())
+          await syncProjectsFromCloud(storageScope);
+      } finally {
+        if (!cancelled && storageScope.isCurrent()) {
+          setRefreshTick((tick) => tick + 1);
+          setIsHydrating(false);
+        }
       }
     }
 
-    hydrate();
+    void hydrate().catch(() => {});
 
     return () => {
       cancelled = true;
     };
-  }, [refreshSessions, syncCloudSessions]);
+  }, [storageScope, syncCloudSessions]);
 
   useEffect(() => {
     function handleFocus() {
       void syncCloudSessions()
         .then(async () => {
-          await syncProjectsFromCloud();
-          setRefreshTick((tick) => tick + 1);
+          if (!storageScope.isCurrent()) return;
+          await syncProjectsFromCloud(storageScope);
+          if (storageScope.isCurrent()) setRefreshTick((tick) => tick + 1);
         })
         .catch(() => {});
     }
 
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
-  }, [refreshSessions, syncCloudSessions]);
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("online", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("online", handleFocus);
+    };
+  }, [storageScope, syncCloudSessions]);
 
   useEffect(() => {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
+      saveEpochRef.current += 1;
+      pendingSnapshotRef.current = null;
     };
-  }, []);
+  }, [storageScope]);
 
-  const setActiveSession = useCallback((sessionId: string) => {
-    setActiveSessionId(sessionId);
-    setActiveChatSessionId(sessionId);
-  }, []);
+  const setActiveSession = useCallback(
+    (sessionId: string) => {
+      if (!storageScope.isCurrent()) return;
+      setActiveSessionId(sessionId);
+      setActiveChatSessionId(sessionId, storageScope);
+    },
+    [storageScope],
+  );
 
-  const setProject = useCallback((projectId: string | null) => {
-    setActiveProjectId(projectId);
-    setActiveChatProject(projectId);
-    analytics.projectSelected(projectId);
-    refreshSessions();
-  }, [refreshSessions]);
+  const setProject = useCallback(
+    (projectId: string | null) => {
+      if (!storageScope.isCurrent()) return;
+      setActiveProjectId(projectId);
+      setActiveChatProject(projectId, storageScope);
+      analytics.projectSelected(projectId);
+      refreshSessions();
+    },
+    [refreshSessions, storageScope],
+  );
 
-  const loadSession = useCallback((id: string): ChatSession | null => {
-    const session = loadChatSession(id);
-    if (session) {
-      setActiveSessionId(id);
-      setActiveChatSessionId(id);
-      setActiveProjectId(session.projectId ?? null);
-      setActiveChatProject(session.projectId ?? null);
-    }
-    return session;
-  }, []);
+  const loadSession = useCallback(
+    (id: string): ChatSession | null => {
+      const session = loadChatSession(id, storageScope);
+      if (session) {
+        pendingSnapshotRef.current = null;
+        saveEpochRef.current += 1;
+        setActiveSessionId(id);
+        setActiveChatSessionId(id, storageScope);
+        setActiveProjectId(session.projectId ?? null);
+        setActiveChatProject(session.projectId ?? null, storageScope);
+      }
+      return session;
+    },
+    [storageScope],
+  );
 
-  const saveMessages = useCallback((
-    messages: ChatMessage[],
-    opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null },
-  ) => {
-    if (messages.length === 0) return;
+  const persistSnapshot = useCallback(
+    async (snapshot: ChatSession, epoch: number) => {
+      if (!storageScope.isCurrent() || !chatUserId(storageScope)) return;
+      setSaveState({ id: snapshot.id, status: "saving" });
+      const result = await saveChatSnapshotToCloud(
+        {
+          ...snapshot,
+          messages: snapshot.messages as unknown as Record<string, unknown>[],
+          luminorId: snapshot.luminorId ?? null,
+          modelId: snapshot.modelId ?? null,
+        },
+        storageScope,
+      );
+      if (
+        !storageScope.isCurrent() ||
+        epoch !== saveEpochRef.current ||
+        result.status === "retired"
+      )
+        return;
+      setSaveState({ id: snapshot.id, status: result.status });
+      refreshSessions();
+    },
+    [storageScope, refreshSessions],
+  );
 
+  const retryCloudSave = useCallback(() => {
+    if (!storageScope.isCurrent()) return;
+    const snapshot =
+      pendingSnapshotRef.current?.id === activeSessionId
+        ? pendingSnapshotRef.current
+        : loadChatSession(activeSessionId, storageScope);
+    if (!snapshot || snapshot.id !== activeSessionId) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
+    void persistSnapshot(snapshot, ++saveEpochRef.current);
+  }, [activeSessionId, storageScope, persistSnapshot]);
 
-    debounceRef.current = setTimeout(() => {
-      const resolvedProjectId = opts?.projectId ?? loadChatSession(activeSessionId)?.projectId ?? activeProjectId;
+  const saveSeparateCopy = useCallback(() => {
+    if (!storageScope.isCurrent()) return;
+    const original =
+      pendingSnapshotRef.current?.id === activeSessionId
+        ? pendingSnapshotRef.current
+        : loadChatSession(activeSessionId, storageScope);
+    if (!original || original.id !== activeSessionId) return;
+    const id = newSessionId();
+    const title = `${original.title.slice(0, 48)} (copy)`;
+    const stored = saveChatSession(
+      id,
+      original.messages,
+      { ...original, title },
+      storageScope,
+    );
+    const snapshot = loadChatSession(id, storageScope) ?? {
+      ...original,
+      id,
+      title,
+      cloudRevision: undefined,
+    };
+    pendingSnapshotRef.current = snapshot;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    setActiveSessionId(id);
+    setActiveChatSessionId(id, storageScope);
+    setSaveState({ id, status: stored ? "local" : "volatile" });
+    refreshSessions();
+    void persistSnapshot(snapshot, ++saveEpochRef.current);
+  }, [activeSessionId, storageScope, persistSnapshot, refreshSessions]);
 
-      saveChatSession(activeSessionId, messages, {
-        ...opts,
-        projectId: resolvedProjectId,
+  const saveMessages = useCallback(
+    (
+      messages: ChatMessage[],
+      opts?: {
+        luminorId?: string | null;
+        modelId?: string | null;
+        projectId?: string | null;
+      },
+    ) => {
+      if (!storageScope.isCurrent() || messages.length === 0) return;
+
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+
+      const resolvedProjectId =
+        opts?.projectId ??
+        loadChatSession(activeSessionId, storageScope)?.projectId ??
+        activeProjectId;
+      // Preserve completed messages immediately; only network sync is debounced.
+      // Changing account or leaving within 600 ms must not discard the local save.
+      const stored = saveChatSession(
+        activeSessionId,
+        messages,
+        { ...opts, projectId: resolvedProjectId },
+        storageScope,
+      );
+      const cached = loadChatSession(activeSessionId, storageScope);
+      const snapshot =
+        stored && cached
+          ? cached
+          : {
+              id: activeSessionId,
+              title: cached?.title ?? generateSessionTitle(messages),
+              messages: messages.map((message) => ({
+                ...message,
+                parts: message.parts?.map((part) => ({ ...part })),
+              })),
+              ...opts,
+              projectId: resolvedProjectId,
+              cloudRevision: cached?.cloudRevision,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+      pendingSnapshotRef.current = snapshot;
+      setSaveState({
+        id: activeSessionId,
+        status: stored ? "local" : "volatile",
       });
+      const epoch = ++saveEpochRef.current;
       refreshSessions();
 
-      void saveSessionToCloud({
-        id: activeSessionId,
-        title: loadChatSession(activeSessionId)?.title || 'New Chat',
-        messages: messages as unknown as Record<string, unknown>[],
-        luminorId: opts?.luminorId ?? null,
-        modelId: opts?.modelId ?? null,
-        projectId: resolvedProjectId,
-      });
-    }, 600);
-  }, [activeProjectId, activeSessionId, refreshSessions]);
+      debounceRef.current = setTimeout(() => {
+        if (!storageScope.isCurrent()) return;
+
+        const latest = stored
+          ? loadChatSession(activeSessionId, storageScope)
+          : null;
+        if (!latest && stored) return;
+        void persistSnapshot(latest ?? snapshot, epoch);
+      }, 600);
+    },
+    [
+      activeProjectId,
+      activeSessionId,
+      refreshSessions,
+      storageScope,
+      persistSnapshot,
+    ],
+  );
 
   const newSession = useCallback(() => {
     const id = newSessionId();
+    if (!storageScope.isCurrent()) return id;
+    pendingSnapshotRef.current = null;
+    saveEpochRef.current += 1;
     setActiveSessionId(id);
-    setActiveChatSessionId(id);
+    setActiveChatSessionId(id, storageScope);
     return id;
-  }, []);
+  }, [storageScope]);
 
-  const deleteSession = useCallback((id: string) => {
-    deleteChatSession(id);
-    void deleteCloudSession(id);
+  const deleteSession = useCallback(
+    (id: string) => {
+      if (!storageScope.isCurrent()) return false;
+      if (!deleteChatSession(id, storageScope)) {
+        setDeletionFailure({ scope: storageScope, id });
+        refreshSessions();
+        return false;
+      }
+      setDeletionFailure((previous) =>
+        previous?.scope === storageScope && previous.id === id
+          ? null
+          : previous,
+      );
+      if (id === activeSessionId && debounceRef.current)
+        clearTimeout(debounceRef.current);
+      void deleteCloudSession(id, storageScope)
+        .then(refreshSessions)
+        .catch(() => {});
 
-    if (id === activeSessionId) {
-      const nextSessionId = newSessionId();
-      setActiveSessionId(nextSessionId);
-      setActiveChatSessionId(nextSessionId);
-    }
+      if (id === activeSessionId) {
+        pendingSnapshotRef.current = null;
+        saveEpochRef.current += 1;
+        const nextSessionId = newSessionId();
+        setActiveSessionId(nextSessionId);
+        setActiveChatSessionId(nextSessionId, storageScope);
+      }
 
-    refreshSessions();
-  }, [activeSessionId, refreshSessions]);
-
-  const renameSession = useCallback((id: string, title: string) => {
-    const trimmed = title.trim();
-    if (!trimmed) return;
-
-    renameChatSession(id, trimmed);
-    void renameCloudSession(id, trimmed);
-    refreshSessions();
-  }, [refreshSessions]);
-
-  const togglePin = useCallback((id: string) => {
-    togglePinSession(id);
-    refreshSessions();
-  }, [refreshSessions]);
-
-  const createProjectHandler = useCallback((title: string) => {
-    const project = createChatProject({ title });
-    if (project) {
-      setActiveProjectId(project.id);
-      analytics.projectCreated(project.id);
-      void saveProjectToCloud(project);
       refreshSessions();
+      return true;
+    },
+    [activeSessionId, refreshSessions, storageScope],
+  );
+
+  const retryDeletion = useCallback(async () => {
+    if (!storageScope.isCurrent() || deletionRetryScope === storageScope)
+      return false;
+    if (deletionFailure?.scope === storageScope) {
+      return deleteSession(deletionFailure.id);
     }
-    return project;
-  }, [refreshSessions]);
-
-  const renameProjectHandler = useCallback((id: string, title: string) => {
-    const trimmed = title.trim();
-    if (!trimmed) return;
-    renameChatProject(id, trimmed);
-    const project = loadChatProject(id);
-    if (project) {
-      void saveProjectToCloud(project);
+    setDeletionRetryScope(storageScope);
+    // Use the same bounded reconciliation as mount/focus/online recovery.
+    try {
+      await syncCloudSessions();
+      return (
+        storageScope.isCurrent() &&
+        listPendingChatDeletions(storageScope).length === 0
+      );
+    } catch {
+      return false;
+    } finally {
+      if (storageScope.isCurrent()) {
+        setDeletionRetryScope((previous) =>
+          previous === storageScope ? null : previous,
+        );
+        refreshSessions();
+      }
     }
-    refreshSessions();
-  }, [refreshSessions]);
+  }, [
+    storageScope,
+    deletionRetryScope,
+    deletionFailure,
+    deleteSession,
+    syncCloudSessions,
+    refreshSessions,
+  ]);
 
-  const deleteProjectHandler = useCallback((id: string) => {
-    deleteChatProject(id);
-    void deleteProjectFromCloud(id);
-    if (activeProjectId === id) {
-      setActiveProjectId(null);
-    }
-    refreshSessions();
-  }, [activeProjectId, refreshSessions]);
+  const renameSession = useCallback(
+    (id: string, title: string) => {
+      const trimmed = title.trim();
+      if (!storageScope.isCurrent() || !trimmed) return;
 
-  const assignSessionProject = useCallback((sessionId: string, projectId: string | null) => {
-    assignSessionToProject(sessionId, projectId);
-    analytics.projectSessionLinked(projectId, sessionId);
-    void assignCloudSessionToProject(sessionId, projectId);
+      renameChatSession(id, trimmed, storageScope);
+      const snapshot = loadChatSession(id, storageScope);
+      if (snapshot) void persistSnapshot(snapshot, ++saveEpochRef.current);
+      refreshSessions();
+    },
+    [refreshSessions, storageScope, persistSnapshot],
+  );
 
-    if (sessionId === activeSessionId) {
-      setActiveProjectId(projectId);
-      setActiveChatProject(projectId);
-    }
+  const togglePin = useCallback(
+    (id: string) => {
+      togglePinSession(id, storageScope);
+      refreshSessions();
+    },
+    [refreshSessions, storageScope],
+  );
 
-    refreshSessions();
-  }, [activeSessionId, refreshSessions]);
+  const createProjectHandler = useCallback(
+    (title: string) => {
+      const project = createChatProject({ title }, storageScope);
+      if (project) {
+        setActiveProjectId(project.id);
+        analytics.projectCreated(project.id);
+        void saveProjectToCloud(project, storageScope);
+        refreshSessions();
+      }
+      return project;
+    },
+    [refreshSessions, storageScope],
+  );
+
+  const renameProjectHandler = useCallback(
+    (id: string, title: string) => {
+      const trimmed = title.trim();
+      if (!storageScope.isCurrent() || !trimmed) return;
+      renameChatProject(id, trimmed, storageScope);
+      const project = loadChatProject(id, storageScope);
+      if (project) {
+        void saveProjectToCloud(project, storageScope);
+      }
+      refreshSessions();
+    },
+    [refreshSessions, storageScope],
+  );
+
+  const deleteProjectHandler = useCallback(
+    (id: string) => {
+      if (!storageScope.isCurrent()) return;
+      deleteChatProject(id, storageScope);
+      void deleteProjectFromCloud(id, storageScope);
+      if (activeProjectId === id) {
+        setActiveProjectId(null);
+      }
+      refreshSessions();
+    },
+    [activeProjectId, refreshSessions, storageScope],
+  );
+
+  const assignSessionProject = useCallback(
+    (sessionId: string, projectId: string | null) => {
+      if (!storageScope.isCurrent()) return;
+      assignSessionToProject(sessionId, projectId, storageScope);
+      analytics.projectSessionLinked(projectId, sessionId);
+      const snapshot = loadChatSession(sessionId, storageScope);
+      if (snapshot) void persistSnapshot(snapshot, ++saveEpochRef.current);
+
+      if (sessionId === activeSessionId) {
+        setActiveProjectId(projectId);
+        setActiveChatProject(projectId, storageScope);
+      }
+
+      refreshSessions();
+    },
+    [activeSessionId, refreshSessions, storageScope, persistSnapshot],
+  );
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarExpanded((prev) => {
@@ -298,10 +592,11 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const allSessions = useMemo<ChatSessionSummary[]>(() => {
     void refreshTick;
+    if (!hasMounted) return [];
     return searchQuery.trim()
-      ? searchSessions(searchQuery)
-      : listChatSessions();
-  }, [refreshTick, searchQuery]);
+      ? searchSessions(searchQuery, storageScope)
+      : listChatSessions(storageScope);
+  }, [hasMounted, refreshTick, searchQuery, storageScope]);
 
   const stableSessions = useMemo<ChatSessionSummary[]>(() => {
     return activeProjectId
@@ -311,20 +606,49 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const stableProjects = useMemo<ChatProject[]>(() => {
     void refreshTick;
-    return listChatProjects();
-  }, [refreshTick]);
+    if (!hasMounted) return [];
+    return listChatProjects(storageScope);
+  }, [hasMounted, refreshTick, storageScope]);
 
   const activeProject = useMemo(
-    () => (activeProjectId ? loadChatProject(activeProjectId) : null),
-    [activeProjectId, refreshTick],
+    () =>
+      hasMounted && activeProjectId
+        ? loadChatProject(activeProjectId, storageScope)
+        : null,
+    [hasMounted, activeProjectId, refreshTick, storageScope],
   );
 
+  const pendingDeletionCount = useMemo(() => {
+    void refreshTick;
+    return hasMounted ? listPendingChatDeletions(storageScope).length : 0;
+  }, [hasMounted, refreshTick, storageScope]);
+
   return {
+    deletionFailed:
+      storageScope.isCurrent() && deletionFailure?.scope === storageScope,
+    failedDeletionId:
+      storageScope.isCurrent() && deletionFailure?.scope === storageScope
+        ? deletionFailure.id
+        : null,
+    pendingDeletionCount,
+    isRetryingDeletion: deletionRetryScope === storageScope,
+    retryDeletion,
+    saveStatus: !hasMounted
+      ? "idle"
+      : saveState.id === activeSessionId
+        ? saveState.status
+        : loadChatSession(activeSessionId, storageScope)?.cloudDirty
+          ? "local"
+          : loadChatSession(activeSessionId, storageScope)?.cloudRevision
+            ? "synced"
+            : "idle",
+    retryCloudSave,
+    saveSeparateCopy,
     allSessions,
     sessions: stableSessions,
     projects: stableProjects,
     activeProject,
-    activeProjectId,
+    activeProjectId: hasMounted ? activeProjectId : null,
     activeSessionId,
     isSidebarExpanded,
     searchQuery,

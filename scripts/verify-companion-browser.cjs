@@ -25,6 +25,16 @@ const source = [
   "apps/web/components/chat/chat-input-bar.tsx",
   "apps/web/components/chat/agent-header.tsx",
   "apps/web/app/chat/page.tsx",
+  "apps/web/app/globals.css",
+  "apps/web/components/chat/chat-storage-status.tsx",
+  "apps/web/components/chat/history-sidebar.tsx",
+  "apps/web/components/chat/chat-layout.tsx",
+  "apps/web/hooks/use-chat-sessions.ts",
+  "apps/web/lib/chat/storage-scope.ts",
+  "apps/web/lib/chat/local-store.ts",
+  "apps/web/lib/chat/project-store.ts",
+  "apps/web/lib/chat/cloud-snapshot.ts",
+  "apps/web/lib/chat/supabase-store.ts",
   "apps/web/lib/chat/error-message.ts",
   "packages/design-system/src/companion.module.css",
   "packages/design-system/src/tokens.css",
@@ -33,6 +43,8 @@ const source = [
   "scripts/tests/chat-error-message.test.cjs",
   "scripts/tests/companion-chat-instance.test.cjs",
   "scripts/tests/chat-stop-control.test.cjs",
+  "scripts/tests/chat-account-storage.test.cjs",
+  "scripts/tests/chat-cloud-persistence.test.cjs",
   "scripts/capture-sovereign-built-app.cjs",
   "scripts/verify-author-draft-browser.cjs",
   ".github/workflows/companion.yml",
@@ -143,6 +155,15 @@ async function composerReadability(page) {
           ),
         );
     }
+    const recovery = document.querySelector("[data-chat-storage-status]");
+    if (recovery) {
+      for (const label of recovery.querySelectorAll(
+        '[role="alert"], [role="status"]',
+      ))
+        result.push(measure(label, "Conversation recovery message", 4.5));
+      for (const button of recovery.querySelectorAll("button:enabled"))
+        result.push(measure(button, button.textContent.trim(), 4.5));
+    }
     return result;
   });
   for (const item of measurements) {
@@ -150,7 +171,11 @@ async function composerReadability(page) {
       item.contrast >= item.minimum,
       `${item.label}: ${item.contrast.toFixed(2)} contrast below ${item.minimum}`,
     );
-    if (item.label !== "Message placeholder")
+    if (
+      !["Message placeholder", "Conversation recovery message"].includes(
+        item.label,
+      )
+    )
       assert.ok(
         item.width >= 44 && item.height >= 44,
         `${item.label}: composer touch target below 44px`,
@@ -214,6 +239,74 @@ async function main() {
     failures: [],
   };
   const capturePage = async (page, name) => {
+    // A closing drawer can obscure a fully painted chat log. Verify its own
+    // transitions; unrelated Worlds activity is outside this recovery gate.
+    if (new URL(page.url()).pathname === "/chat") {
+      const sidebar = page.getByLabel(/^(Chat sidebar|Sidebar)$/);
+      await expect(sidebar).toHaveCount(1);
+      await expect
+        .poll(() =>
+          sidebar.evaluate(
+            (element) =>
+              element
+                .getAnimations({ subtree: true })
+                .filter(
+                  (animation) =>
+                    Number.isFinite(
+                      animation.effect?.getComputedTiming().iterations,
+                    ) && animation.playState === "running",
+                ).length,
+          ),
+        )
+        .toBe(0);
+      if (
+        await page.evaluate(
+          () => matchMedia("(prefers-reduced-motion: reduce)").matches,
+        )
+      )
+        // The global reduced-motion reset retains a tiny duration. No property
+        // may transition, regardless of that independent computed duration.
+        await expect(sidebar).toHaveCSS("transition-property", "none");
+    }
+    let recoveryGeometry;
+    if (name.startsWith("full-chat-removal-") && !name.includes("recovered")) {
+      const recovery = page.locator("[data-chat-storage-status]");
+      await expect(recovery).toBeInViewport();
+      const retry = recovery.getByRole("button");
+      await expect(retry).toBeInViewport();
+      await retry.click({ trial: true });
+      recoveryGeometry = await recovery.evaluate((element) => {
+        const targets = [
+          ...element.querySelectorAll(
+            '[role="alert"], [role="status"], button',
+          ),
+        ];
+        return targets.map((target) => {
+          const box = target.getBoundingClientRect();
+          const points = [
+            box.left + 2,
+            box.left + box.width / 2,
+            box.right - 2,
+          ];
+          return {
+            text: target.textContent.trim(),
+            width: box.width,
+            height: box.height,
+            unobscured: points.every((x) => {
+              const hit = document.elementFromPoint(
+                x,
+                box.top + box.height / 2,
+              );
+              return hit === target || target.contains(hit);
+            }),
+          };
+        });
+      });
+      assert.ok(
+        recoveryGeometry.every((target) => target.unobscured),
+        "Recovery text and retry must remain unobscured after history closes",
+      );
+    }
     const surface = name.startsWith("full-chat-")
       ? page.getByRole("log", { name: "Chat messages", exact: true })
       : page.getByRole("dialog", {
@@ -273,6 +366,7 @@ async function main() {
       head,
       sourceHashes,
       surfaceGeometry,
+      recoveryGeometry,
       fixture: true,
       realProviderCalls: 0,
       productionWrites: 0,
@@ -371,7 +465,18 @@ async function main() {
       page.setDefaultTimeout(15000);
       const pageErrors = [];
       receipt.currentPageErrors = pageErrors;
-      page.on("pageerror", (error) => pageErrors.push(error.message));
+      const errorLocations = [];
+      receipt.currentErrorLocations = errorLocations;
+      let phase = "worlds";
+      page.on("pageerror", (error) => {
+        pageErrors.push(error.message);
+        errorLocations.push({
+          phase,
+          path: new URL(page.url()).pathname,
+          message: error.message,
+          stack: error.stack?.slice(0, 6000),
+        });
+      });
       receipt.failedRequests = [];
       page.on("requestfailed", (request) => {
         const url = new URL(request.url());
@@ -626,6 +731,12 @@ async function main() {
       await expect(input).toHaveValue("");
       await expect(log).not.toContainText("A door opens");
       await expect(log).not.toContainText("Previous account");
+      assert.deepEqual(
+        pageErrors,
+        [],
+        "Worlds must render without page errors",
+      );
+      phase = "chat";
       await page.goto(`${base}/chat`);
       await expect(opener).toBeHidden();
       const fullChatHeading = page.getByRole("heading", { level: 1 });
@@ -685,6 +796,195 @@ async function main() {
       await page.keyboard.press("Escape");
       await expect(shortcutsDialog).toBeHidden();
       await expect(starterButtons.first()).toBeFocused();
+      // Seed only disposable guest data. Refuse the intent write, then recover
+      // through the actual rendered sidebar and hook; no customer or cloud write.
+      await page.evaluate(() => {
+        localStorage.setItem(
+          "arcanea_chat_sessions:v2:guest",
+          JSON.stringify([
+            {
+              id: "00000000-0000-4000-8000-000000000093",
+              title: "Removal recovery fixture",
+              messages: [
+                {
+                  id: "remove-original",
+                  role: "user",
+                  content: "Keep this original until removal intent is stored.",
+                },
+              ],
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              cloudDirty: true,
+            },
+          ]),
+        );
+        localStorage.setItem("arcanea-sidebar-expanded", "false");
+      });
+      await page.reload();
+      await expect(fullChatHeading).toBeVisible();
+      await page.evaluate(() => {
+        const original = Storage.prototype.setItem;
+        Storage.prototype.setItem = function (key, value) {
+          if (key.startsWith("arcanea_chat_deletion:"))
+            throw new DOMException(
+              "Fixture storage refusal",
+              "QuotaExceededError",
+            );
+          return original.call(this, key, value);
+        };
+        window.restoreRemovalFixtureStorage = () => {
+          Storage.prototype.setItem = original;
+        };
+      });
+      await page
+        .getByRole("button", {
+          name: mode.viewport.width < 768 ? "Toggle sidebar" : "Show history",
+          exact: true,
+        })
+        .click();
+      const removeFixture = page.getByRole("button", {
+        name: "Delete: Removal recovery fixture",
+        exact: true,
+      });
+      await removeFixture.click();
+      await page
+        .getByRole("button", { name: "Confirm delete", exact: true })
+        .click();
+      await expect(removeFixture).toBeVisible();
+      assert.equal(
+        await page.evaluate(
+          () =>
+            JSON.parse(
+              localStorage.getItem("arcanea_chat_sessions:v2:guest"),
+            )[0].messages[0].content,
+        ),
+        "Keep this original until removal intent is stored.",
+      );
+      await page
+        .getByRole("button", { name: "Collapse sidebar", exact: true })
+        .click();
+      const removalAlert = page
+        .getByRole("alert")
+        .filter({ hasText: "Couldn’t remove a conversation. Try again." });
+      await expect(removalAlert).toBeVisible();
+      const retryRemoval = page.getByRole("button", {
+        name: "Retry removal",
+        exact: true,
+      });
+      await retryRemoval.focus();
+      await page.keyboard.press("Tab");
+      await page.keyboard.press("Shift+Tab");
+      await expect(retryRemoval).toBeFocused();
+      await expect(retryRemoval).toHaveCSS("outline-style", "solid");
+      const removalContrast = await composerReadability(page);
+      assert.equal(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth,
+        ),
+        false,
+      );
+      await capturePage(page, `full-chat-removal-failed-${mode.name}`);
+      // Reopen the preserved original before retrying. Successful removal must
+      // clear this active editor rather than leave messages under a fresh ID.
+      await page
+        .getByRole("button", {
+          name: mode.viewport.width < 768 ? "Toggle sidebar" : "Show history",
+          exact: true,
+        })
+        .click();
+      await page
+        .getByRole("button", { name: /^Removal recovery fixture/ })
+        .click();
+      const fullChatLog = page.getByRole("log", {
+        name: "Chat messages",
+        exact: true,
+      });
+      await expect(fullChatLog).toContainText(
+        "Keep this original until removal intent is stored.",
+      );
+      const collapseHistory = page.getByRole("button", {
+        name: "Collapse sidebar",
+        exact: true,
+      });
+      if (await collapseHistory.isVisible()) await collapseHistory.click();
+      await retryRemoval.focus();
+      await page.evaluate(() => window.restoreRemovalFixtureStorage());
+      await page.keyboard.press("Enter");
+      await expect(removalAlert).toBeHidden();
+      await expect(page.locator("[data-chat-composer] textarea")).toBeFocused();
+      await expect(fullChatLog).not.toContainText(
+        "Keep this original until removal intent is stored.",
+      );
+      assert.equal(
+        await page.evaluate(() =>
+          localStorage.getItem(
+            "arcanea_chat_deletion:v2:guest:00000000-0000-4000-8000-000000000093",
+          ),
+        ),
+        "confirmed",
+      );
+      assert.deepEqual(
+        await page.evaluate(() =>
+          JSON.parse(localStorage.getItem("arcanea_chat_sessions:v2:guest")),
+        ),
+        [],
+      );
+      await capturePage(page, `full-chat-removal-recovered-${mode.name}`);
+      // A disposable synthetic account owns this pending intent. The intercepted
+      // unavailable auth/cloud response must leave it pending and retryable.
+      await page.evaluate(() => {
+        const actor = "user:00000000-0000-4000-8000-000000000091";
+        localStorage.setItem(
+          `arcanea_chat_deletion:v2:${encodeURIComponent(actor)}:00000000-0000-4000-8000-000000000094`,
+          "pending",
+        );
+        const channel = new BroadcastChannel("sb-placeholder-auth-token");
+        channel.postMessage({
+          event: "SIGNED_IN",
+          session: {
+            user: {
+              id: "00000000-0000-4000-8000-000000000091",
+              email: "companion-fixture@example.invalid",
+              user_metadata: {},
+            },
+            access_token: "fixture-not-a-credential",
+            token_type: "bearer",
+            refresh_token: "fixture-not-a-credential",
+            expires_at: Math.floor(Date.now() / 1000) + 3600,
+          },
+        });
+        channel.close();
+      });
+      const pendingRemoval = page
+        .getByRole("status")
+        .filter({ hasText: "1 conversation removal is waiting to sync." });
+      await expect(pendingRemoval).toBeVisible();
+      const retryRemovalSync = page.getByRole("button", {
+        name: "Retry removal sync",
+        exact: true,
+      });
+      await retryRemovalSync.focus();
+      await page.keyboard.press("Enter");
+      await expect(retryRemovalSync).toBeEnabled();
+      await expect(pendingRemoval).toBeVisible();
+      assert.equal(
+        await page.evaluate(() =>
+          localStorage.getItem(
+            "arcanea_chat_deletion:v2:user%3A00000000-0000-4000-8000-000000000091:00000000-0000-4000-8000-000000000094",
+          ),
+        ),
+        "pending",
+      );
+      const pendingRemovalContrast = await composerReadability(page);
+      await capturePage(page, `full-chat-removal-pending-${mode.name}`);
+      await page.evaluate(() => {
+        const channel = new BroadcastChannel("sb-placeholder-auth-token");
+        channel.postMessage({ event: "SIGNED_OUT", session: null });
+        channel.close();
+      });
+      await expect(pendingRemoval).toBeHidden();
+      assert.deepEqual(pageErrors, [], "Chat must render without page errors");
+      phase = "home";
       await page.goto(base);
       await expect(opener).toBeHidden();
       assert.deepEqual(pageErrors, []);
@@ -709,8 +1009,19 @@ async function main() {
         shortcutsHeadingVisible: true,
         shortcutsFocusContainedAndRestored: true,
         startersImmediatelyReadable: true,
+        removalRefusalVisibleAndOriginalRetained: true,
+        removalKeyboardRetryAndComposerFocus: true,
+        removalIntentConfirmedAndCacheRemoved: true,
+        removedActiveConversationCleared: true,
+        recoveryControlsUnobscured: true,
+        reducedMotionSidebar: mode.reducedMotion === "reduce",
+        removalContrast,
+        pendingRemovalVisibleAndUnavailableRetryRetained: true,
+        pendingRemovalRetiredOnSignOut: true,
+        pendingRemovalContrast,
         geometry,
         pageErrors,
+        errorLocations,
       });
       await context.close();
     }

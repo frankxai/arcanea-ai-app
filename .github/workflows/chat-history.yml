@@ -1,0 +1,80 @@
+name: Chat account history
+
+on:
+  pull_request:
+    paths:
+      - apps/web/lib/chat/**
+      - apps/web/hooks/use-chat-sessions.ts
+      - apps/web/hooks/use-chat-persistence.ts
+      - apps/web/app/chat/page.tsx
+      - apps/web/app/projects/**
+      - scripts/tests/chat-account-storage.test.cjs
+      - scripts/tests/chat-cloud-persistence.test.cjs
+      - supabase/migrations/*atomic_chat_snapshots.sql
+      - supabase/tests/chat-snapshots.sql
+      - apps/web/components/chat/chat-storage-status.tsx
+      - .github/workflows/chat-history.yml
+  push:
+    branches: [main]
+    paths:
+      - apps/web/lib/chat/**
+      - apps/web/hooks/use-chat-sessions.ts
+      - apps/web/hooks/use-chat-persistence.ts
+      - apps/web/app/chat/page.tsx
+      - apps/web/app/projects/**
+      - scripts/tests/chat-account-storage.test.cjs
+      - scripts/tests/chat-cloud-persistence.test.cjs
+      - supabase/migrations/*atomic_chat_snapshots.sql
+      - supabase/tests/chat-snapshots.sql
+      - apps/web/components/chat/chat-storage-status.tsx
+      - .github/workflows/chat-history.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  account-boundaries:
+    name: Private chat account boundaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Actual stores and hook callbacks without network, credentials or inference
+        run: node --test scripts/tests/chat-account-storage.test.cjs scripts/tests/chat-cloud-persistence.test.cjs
+  normalized-cloud-snapshots:
+    name: Atomic chat snapshots on disposable PostgreSQL 17.6
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: chat_fixture
+          POSTGRES_DB: chat_disposable
+        ports: ["127.0.0.1:5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Rehearse actual migration, owner RLS, rollback, replay and concurrent writes
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: chat_fixture
+          PGDATABASE: chat_disposable
+        run: psql -X -v chat_disposable=1 -f supabase/tests/chat-snapshots.sql 2>&1 | tee chat-postgres.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: chat-postgres-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_attempt }}
+          path: chat-postgres.log
+          if-no-files-found: error
