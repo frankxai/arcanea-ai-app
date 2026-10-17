@@ -73,7 +73,7 @@ The Guardian side panel sits alongside ChatGPT, Claude, Gemini, and any other we
 Arcanea is a bring-your-own-key extension. You enter your Anthropic, Google, or OpenAI API key once in Settings. Your key is stored locally in Chrome's isolated extension storage and sent only to your chosen AI provider. Arcanea has no backend server and receives nothing.
 
 Supports:
-- Anthropic Claude (claude-opus-4-6)
+- Anthropic Claude (claude-opus-5-5)
 - Google Gemini (gemini-2.0-flash-exp)
 - OpenAI GPT-4o
 
