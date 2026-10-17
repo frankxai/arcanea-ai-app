@@ -13,6 +13,15 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // The MCP endpoint authenticates every request itself with an
+  // Authorization: Bearer token (lib/mcp/world-context-auth.ts) and answers
+  // 401 with WWW-Authenticate + resource_metadata. MCP clients carry no
+  // browser cookie, so skip the cookie gate for this exact path only; nested
+  // paths and look-alikes (/api/mcp/x, /api/mcpx) still hit updateSession.
+  if (request.nextUrl.pathname === "/api/mcp") {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
   // Recover Supabase's Site URL fallback before rendering or loading analytics.
   const recovery =
     request.method === "GET" ? getOAuthRecoveryPath(request.nextUrl) : null;
