@@ -15,6 +15,15 @@ on:
       - apps/web/lib/chat/error-message.ts
       - apps/web/hooks/use-provider.ts
       - apps/web/hooks/use-conversation.ts
+      - apps/web/hooks/use-chat-world-mode.ts
+      - apps/web/lib/chat/world-handoff.ts
+      - apps/web/lib/chat/world-character-mode.ts
+      - apps/web/lib/worlds/**
+      - apps/web/app/api/worlds/generate/route.ts
+      - apps/web/app/worlds/create/page.tsx
+      - apps/web/app/worlds/**
+      - apps/web/components/worlds/world-draft-editor.tsx
+      - apps/web/lib/luminors/config.ts
       - apps/web/lib/ai/provider-preferences.ts
       - apps/web/lib/auth/context.tsx
       - packages/design-system/**
@@ -22,6 +31,9 @@ on:
       - scripts/tests/chat-error-message.test.cjs
       - scripts/tests/companion-chat-instance.test.cjs
       - scripts/tests/chat-stop-control.test.cjs
+      - scripts/tests/chat-world-handoff.test.cjs
+      - scripts/tests/world-landmarks.test.cjs
+      - scripts/test-world-generation.cjs
       - scripts/capture-sovereign-built-app.cjs
       - scripts/verify-author-draft-browser.cjs
       - scripts/verify-reading-scene-browser.cjs
@@ -29,6 +41,7 @@ on:
       - scripts/tests/test_review_companion.py
       - .github/workflows/companion.yml
       - planning-with-files/CURRENT_STATE_2026-10-11_CHAT_COMPANION.md
+      - planning-with-files/CURRENT_STATE_2026-10-11_CHAT_WORLD_HANDOFF.md
   workflow_dispatch:
 
 permissions:
@@ -64,6 +77,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Verify useful safe errors
         run: node --test scripts/tests/chat-error-message.test.cjs
+      - name: Verify loading and loaded world landmark ownership
+        run: node --test --test-timeout=10000 scripts/tests/world-landmarks.test.cjs
       - name: Verify account lifetime and real SDK cancellation
         run: |
           node scripts/tests/companion-chat-instance.test.cjs
@@ -95,15 +110,17 @@ jobs:
 
   independent-source-review:
     name: Independent public-source review
-    # This bounded lane already exposes its source publicly. No repository or
-    # provider secrets are made available; forks and other lanes do not dispatch.
-    if: github.event_name == 'pull_request' && github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'agent/codex/provider-account-20261011'
+    needs: companion
+    # These two owned PRs already expose their source publicly. No repository or
+    # provider secrets are available; forks, different PRs and other lanes are denied.
+    if: github.event_name == 'pull_request' && github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && github.event.pull_request.head.repo.full_name == github.repository && ((github.head_ref == 'agent/codex/provider-account-20261011' && github.event.pull_request.number == 597) || (github.head_ref == 'agent/codex/chat-world-handoff-20261011' && github.event.pull_request.number == 602))
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       REVIEW_HEAD: ${{ github.event.pull_request.head.sha }}
       REVIEW_BASE: ${{ github.event.pull_request.base.sha }}
       REVIEW_PR: ${{ github.event.pull_request.number }}
+      REVIEW_MODEL: ${{ github.event.pull_request.number == 602 && 'nvidia/nemotron-3-ultra-550b-a55b:free' || 'dots-studio/dots-3-note-preview:free' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -121,7 +138,7 @@ jobs:
       - name: Verify source, privacy and zero-price denial boundaries
         run: python -m unittest discover -s scripts/tests -p test_review_companion.py -v
       - name: Review all complete pinned public source
-        run: python scripts/review-companion.py --head "$REVIEW_HEAD" --base "$REVIEW_BASE" --pull-request "$REVIEW_PR"
+        run: python scripts/review-companion.py --head "$REVIEW_HEAD" --base "$REVIEW_BASE" --pull-request "$REVIEW_PR" --model "$REVIEW_MODEL"
       - name: Retain exact-source review and all attempts
         if: always()
         uses: actions/upload-artifact@v7.0.2

@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const Module = require("node:module");
+require("./tests/chat-world-handoff.test.cjs");
 const webRequire = Module.createRequire(path.resolve("apps/web/package.json"));
 const ts = webRequire("typescript");
 const { NextRequest } = webRequire("next/server");

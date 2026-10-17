@@ -134,22 +134,30 @@ export function ChatNotices({
         </div>
       )}
 
-      {/* World Builder: "Create this world" CTA */}
+      {/* Conversation handoff into the editable world creator. */}
       {worldMode.isWorldMode &&
         worldMode.canCreateWorld &&
-        !worldMode.createdSlug && (
+        !worldMode.draft && (
           <div className="mx-4 mt-2 shrink-0">
-            <div className="bg-[var(--arc-void)]/5 border border-[var(--arc-void)]/15 rounded-xl px-4 py-3 flex items-center gap-3">
+            <div className="bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border)] rounded-xl px-4 py-3 flex flex-wrap items-center gap-3">
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-[var(--arc-text-primary)] font-medium">
                   Your world is taking shape.
                 </p>
-                <p className="text-[11px] text-white/30">
-                  Generate a world from this conversation.
+                <p className="text-sm text-[var(--arc-text-secondary)]">
+                  Prepare an editable draft from this conversation using your
+                  Gemini key and Google quota. Saving stays a separate action.
                 </p>
+                {worldMode.source && conversation.messages.length === 0 && (
+                  <p className="mt-1 text-sm text-[var(--arc-text-secondary)]">
+                    Your previous source conversation was recovered in this tab.
+                    Download it before preparing another draft from that
+                    context.
+                  </p>
+                )}
               </div>
               <button
-                disabled={worldMode.isCreating}
+                disabled={worldMode.isCreating || worldMode.uncertain}
                 onClick={() => {
                   worldMode.createWorld(
                     conversation.messages.map((m) => ({
@@ -158,39 +166,111 @@ export function ChatNotices({
                     })),
                   );
                 }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium bg-[var(--arc-void)]/15 border border-[var(--arc-void)]/30 text-[var(--arc-text-primary)] hover:bg-[var(--arc-void)]/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="inline-flex min-h-11 items-center justify-center px-4 py-2 rounded-lg text-sm font-medium border border-[var(--arc-brand-atlantean-teal)] text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {worldMode.isCreating ? (
-                  <>
-                    <span className="w-3 h-3 border-2 border-[var(--arc-text-primary)]/30 border-t-[var(--arc-text-primary)] rounded-full animate-spin" />
-                    Creating...
-                  </>
+                  <>Preparing draft…</>
                 ) : (
-                  "Create this world"
+                  "Prepare world draft"
                 )}
               </button>
+              {worldMode.isCreating && (
+                <button
+                  onClick={worldMode.cancelGeneration}
+                  className="min-h-11 rounded-lg px-4 py-2 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2"
+                >
+                  Stop generation
+                </button>
+              )}
             </div>
           </div>
         )}
       {worldMode.createError && (
         <div className="mx-4 mt-2 shrink-0">
-          <div className="bg-red-500/5 border border-red-500/10 rounded-xl px-4 py-3">
-            <p className="text-sm text-red-300">{worldMode.createError}</p>
+          <div
+            role="alert"
+            className="border border-[var(--arc-cosmic-border)] rounded-xl px-4 py-3 text-[var(--arc-text-primary)]"
+          >
+            <p className="text-sm">{worldMode.createError}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <Link
+                href="/settings/providers"
+                className="inline-flex min-h-11 items-center px-3 text-sm underline focus-visible:outline focus-visible:outline-2"
+              >
+                Provider settings
+              </Link>
+              <Link
+                href="/worlds/create?resume=1"
+                className="inline-flex min-h-11 items-center px-3 text-sm underline focus-visible:outline focus-visible:outline-2"
+              >
+                Open existing world draft
+              </Link>
+              {worldMode.uncertain && (
+                <button
+                  onClick={worldMode.allowAnotherAttempt}
+                  className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 text-sm focus-visible:outline focus-visible:outline-2"
+                >
+                  Allow another attempt
+                </button>
+              )}
+              {worldMode.source && !worldMode.draft && (
+                <button
+                  onClick={worldMode.exportDraft}
+                  className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-3 text-sm focus-visible:outline focus-visible:outline-2"
+                >
+                  Download source conversation
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
-      {worldMode.createdSlug && (
-        <div className="mx-4 mt-2 shrink-0">
-          <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3 flex items-center gap-3">
-            <p className="text-sm text-emerald-300 flex-1">World created!</p>
-            <Link
-              href={`/worlds/${worldMode.createdSlug}`}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/20 transition-all"
+      {worldMode.draft && (
+        <section
+          aria-label="Prepared world draft"
+          className="mx-4 mt-2 shrink-0 rounded-xl border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] px-4 py-3"
+        >
+          <p
+            role="status"
+            className="text-sm font-medium text-[var(--arc-text-primary)]"
+          >
+            {worldMode.draft.world.name} · Unsaved draft
+          </p>
+          <p className="mt-1 text-sm text-[var(--arc-text-secondary)]">
+            Inspect and edit the world, then save privately. Download includes
+            the complete draft and source conversation.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={worldMode.openDraft}
+              className="min-h-11 rounded-lg border border-[var(--arc-brand-atlantean-teal)] px-4 py-2 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2"
             >
-              View it &rarr;
-            </Link>
+              Edit world draft
+            </button>
+            <button
+              onClick={worldMode.exportDraft}
+              className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-4 py-2 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2"
+            >
+              Download world draft
+            </button>
+            {!worldMode.transferred && (
+              <button
+                onClick={worldMode.retryTransfer}
+                className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-4 py-2 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2"
+              >
+                Retry transfer
+              </button>
+            )}
+            <button
+              onClick={() => {
+                if (worldMode.startAnotherDraft()) handleNewChat();
+              }}
+              className="min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] px-4 py-2 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2"
+            >
+              Start another world draft
+            </button>
           </div>
-        </div>
+        </section>
       )}
     </>
   );
