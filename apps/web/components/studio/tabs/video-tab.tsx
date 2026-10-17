@@ -41,7 +41,27 @@ async function generateVideo(params: {
       return { error: text || `Generation failed (${res.status})` };
     }
     const data = await res.json();
-    return { videoUrl: data.videoUrl || data.url };
+    if (data.videoUrl || data.url) {
+      return { videoUrl: data.videoUrl || data.url };
+    }
+    if (!data.jobId) {
+      return { error: 'No job ID returned' };
+    }
+
+    const jobId = data.jobId;
+    for (let i = 0; i < 60; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const statusRes = await fetch(`/api/ai/generate-video?jobId=${jobId}`);
+      if (!statusRes.ok) continue;
+      const statusData = await statusRes.json();
+      if (statusData.status === 'completed' && statusData.videoUrl) {
+        return { videoUrl: statusData.videoUrl };
+      }
+      if (statusData.status === 'failed' || statusData.status === 'refunded') {
+        return { error: statusData.error || 'Video generation failed' };
+      }
+    }
+    return { error: 'Generation timed out' };
   } catch (e: any) {
     return { error: e.message || 'Network error' };
   }
