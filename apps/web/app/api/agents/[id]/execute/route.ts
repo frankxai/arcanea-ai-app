@@ -4,18 +4,32 @@
  *
  * POST /api/agents/:id/execute
  *   Body: { input: string, context?: Record<string, unknown> }
- *   Headers: Cookie (Supabase session — optional, anonymous allowed)
+ *   Headers: Cookie (Supabase session — required)
  *   Returns: Streaming text response (Vercel AI SDK format)
  *
+ * Every call that reaches a provider is billable, so the route is guarded
+ * (see lib/agents/marketplace/execute-guard.ts):
+ *   - signed-in users only; anonymous requests are refused with 401
+ *   - per-IP and per-user rate limits in a shared store (Upstash REST), failing
+ *     closed when the store is missing or down
+ *   - hard caps on input, context, output tokens and tool steps
+ *   - credits reserved atomically before the call and refunded if it fails;
+ *     an error reading or writing them denies the call
+ *   - one declared model, no fall-through to other paid providers
+ *   - provider-side fallbacks are not requested
+ *   - ReasoningBank distillation (a second model call) is opt-in
+ *   - AI_METERED_ALLOWED must be "true" for any provider call; unset or any
+ *     other value refuses with 503 (fail-closed)
+ *   - one JSON log line per denial, start and finish
+ *
  * Pipeline:
- *   1. Parse and validate request body
- *   2. Resolve user session (optional — anonymous gets limited credits)
- *   3. Look up agent spec in catalog (falls back to marketplace_agents table)
- *   4. Check credit balance if authenticated
- *   5. Build system prompt from agent spec + optional user context
- *   6. Resolve model using the same gateway pattern as /api/ai/chat
- *   7. Stream response via Vercel AI SDK streamText
- *   8. Deduct credits on stream completion (best-effort, non-blocking)
+ *   1. Kill switch, rate limits, body validation and caps
+ *   2. Look up agent spec in catalog (falls back to marketplace_agents table)
+ *   3. Resolve user session (required)
+ *   4. Build system prompt from agent spec + user context
+ *   5. Resolve the one declared model
+ *   6. Stream response via Vercel AI SDK streamText
+ *   7. Credits were reserved up front; refund them if the run errors
  *
  * Uses Edge runtime for low-latency streaming.
  */
@@ -24,286 +38,160 @@ import { NextRequest } from "next/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { stepCountIs, streamText } from "ai";
 import { CATALOG_BY_ID } from "@/lib/agents/marketplace/catalog";
-import {
-  GATEWAY_MODELS,
-  EXTENDED_PROVIDERS,
-  claudeRejectsSamplingParams,
-} from "@/lib/gateway/catalog";
+import { claudeRejectsSamplingParams } from "@/lib/gateway/catalog";
 import { LUMINORS } from "@/lib/luminors/config";
+import { refusalNoticeTransform } from "@/lib/ai/claude-safeguards";
 import {
-  claudeFallbackOptions,
-  refusalNoticeTransform,
-} from "@/lib/ai/claude-safeguards";
+  getClientIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit/rate-limiter";
+import {
+  EXECUTE_LIMITS,
+  checkInputCaps,
+  checkPromptCap,
+  classifyAuthError,
+  extractAccessToken,
+  isHeaderSafeId,
+  learningEnabled,
+  logExecute,
+  meteredCallsAllowed,
+  onlyFreeTools,
+  refundCredits,
+  reserveCredits,
+  resolveDeclaredModel,
+} from "@/lib/agents/marketplace/execute-guard";
+import {
+  checkExecuteRateLimit,
+  type LocalLimiter,
+} from "@/lib/agents/marketplace/execute-rate-limit";
 
 export const runtime = "edge";
 
-// ---------------------------------------------------------------------------
-// Provider config — mirrors /api/ai/chat/route.ts
-// ---------------------------------------------------------------------------
-
-interface ProviderConfig {
-  envKeys: string[];
-  defaultModel: string;
-}
-
-const PROVIDERS: Record<string, ProviderConfig> = {
-  google: {
-    envKeys: ["GOOGLE_GENERATIVE_AI_API_KEY", "GEMINI_API_KEY"],
-    defaultModel: "gemini-2.0-flash",
-  },
-  anthropic: {
-    envKeys: ["ANTHROPIC_API_KEY"],
-    defaultModel: "claude-haiku-5-5",
-  },
-  openai: {
-    envKeys: ["OPENAI_API_KEY"],
-    defaultModel: "gpt-4o-mini",
-  },
-  openrouter: {
-    envKeys: ["OPENROUTER_API_KEY"],
-    defaultModel: "google/gemini-2.5-flash",
-  },
+// Per-isolate limiter, used only when an operator sets
+// AGENT_EXECUTE_RATE_LIMIT_LOCAL=true instead of configuring the shared store.
+const checkRateLimitLocal: LocalLimiter = (key, window) => {
+  const r = checkRateLimit(key, window);
+  return {
+    allowed: r.allowed,
+    resetTime: r.resetTime,
+    remaining: r.remaining,
+  };
 };
 
-function resolveApiKey(config: ProviderConfig): string | undefined {
-  for (const key of config.envKeys) {
-    if (process.env[key]) return process.env[key];
-  }
-  return undefined;
-}
-
 // ---------------------------------------------------------------------------
-// Model resolution — prefer cheap + capable for agent tasks
-// Auto-routing priority: Gemini Flash > Haiku > Bolt > Lightning
+// Model resolution — one declared model, never a fall-through
 // ---------------------------------------------------------------------------
-
-const AGENT_AUTO_PRIORITY = [
-  "arcanea-gemini-flash",
-  "arcanea-haiku",
-  "arcanea-bolt",
-  "arcanea-lightning",
-  "arcanea-deepseek",
-] as const;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function resolveModel(
+function buildModel(
   preferredGatewayId?: string,
-): { model: any; label: string } | null {
-  // Try preferred model first if specified
-  const candidates = preferredGatewayId
-    ? [preferredGatewayId, ...AGENT_AUTO_PRIORITY]
-    : [...AGENT_AUTO_PRIORITY];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { model: any; label: string } | { error: string } {
+  const declared = resolveDeclaredModel(preferredGatewayId);
+  if (!declared.ok) return { error: declared.reason };
 
-  for (const gwId of candidates) {
-    const gw = GATEWAY_MODELS[gwId];
-    if (!gw) continue;
-
-    const stdProvider = PROVIDERS[gw.provider];
-    const extProvider = EXTENDED_PROVIDERS[gw.provider];
-    const envKeys = stdProvider
-      ? stdProvider.envKeys
-      : extProvider
-        ? extProvider.envKeys
-        : [];
-    const apiKey = envKeys.map((k) => process.env[k]).find(Boolean);
-
-    if (!apiKey) continue;
-
-    if (gw.provider === "google") {
-      const google = createGoogleGenerativeAI({ apiKey });
-      return { model: google(gw.modelId), label: gw.label };
-    }
-    if (gw.provider === "anthropic") {
-      const anthropic = createAnthropic({ apiKey });
-      return { model: anthropic(gw.modelId), label: gw.label };
-    }
-    if (gw.provider === "openai") {
-      const openai = createOpenAI({ apiKey });
-      return { model: openai(gw.modelId), label: gw.label };
-    }
-    if (extProvider) {
-      const compat = createOpenAI({ apiKey, baseURL: extProvider.baseUrl });
-      return { model: compat(gw.modelId), label: gw.label };
-    }
+  const { provider, modelId, apiKey, label, baseUrl } = declared;
+  if (provider === "google") {
+    return { model: createGoogleGenerativeAI({ apiKey })(modelId), label };
   }
-
-  // Final fallback: any configured legacy provider
-  for (const [providerId, cfg] of Object.entries(PROVIDERS)) {
-    const apiKey = resolveApiKey(cfg);
-    if (!apiKey) continue;
-
-    if (providerId === "google") {
-      const google = createGoogleGenerativeAI({ apiKey });
-      return {
-        model: google(cfg.defaultModel),
-        label: `${providerId}/${cfg.defaultModel}`,
-      };
-    }
-    if (providerId === "anthropic") {
-      const anthropic = createAnthropic({ apiKey });
-      return {
-        model: anthropic(cfg.defaultModel),
-        label: `${providerId}/${cfg.defaultModel}`,
-      };
-    }
-    if (providerId === "openai") {
-      const openai = createOpenAI({ apiKey });
-      return {
-        model: openai(cfg.defaultModel),
-        label: `${providerId}/${cfg.defaultModel}`,
-      };
-    }
-    if (providerId === "openrouter") {
-      const openrouter = createOpenAI({
-        apiKey,
-        baseURL: "https://openrouter.ai/api/v1",
-      });
-      return {
-        model: openrouter(cfg.defaultModel),
-        label: `openrouter/${cfg.defaultModel}`,
-      };
-    }
+  if (provider === "anthropic") {
+    return { model: createAnthropic({ apiKey })(modelId), label };
   }
-
-  return null;
+  if (provider === "openai") {
+    return { model: createOpenAI({ apiKey })(modelId), label };
+  }
+  if (baseUrl) {
+    return {
+      model: createOpenAI({ apiKey, baseURL: baseUrl })(modelId),
+      label,
+    };
+  }
+  return { error: `unsupported provider ${provider}` };
 }
 
 // ---------------------------------------------------------------------------
 // Supabase session helper (edge-compatible — manual cookie parsing)
 // ---------------------------------------------------------------------------
 
-async function resolveSession(req: NextRequest) {
+async function resolveSession(req: NextRequest): Promise<
+  | {
+      ok: true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      supabase: any;
+      userId: string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      user: any;
+    }
+  | { ok: false; reason: "anonymous" | "unavailable" }
+> {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseAnonKey) return null;
-
-    const cookieHeader = req.headers.get("cookie") ?? "";
-    const accessToken = cookieHeader
-      .split(";")
-      .map((c) => c.trim())
-      .find((c) => c.startsWith("sb-") && c.includes("-auth-token"))
-      ?.split("=")
-      .slice(1)
-      .join("=");
-
-    if (!accessToken) return null;
-
-    let jwt = accessToken;
-    try {
-      const decoded = JSON.parse(decodeURIComponent(accessToken));
-      if (decoded?.access_token) jwt = decoded.access_token;
-      else if (Array.isArray(decoded) && decoded[0]?.access_token)
-        jwt = decoded[0].access_token;
-    } catch {
-      // Already a raw JWT
+    // A missing configuration is an outage, not a signed-out visitor.
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return { ok: false, reason: "unavailable" };
     }
+
+    const jwt = extractAccessToken(req.headers.get("cookie") ?? "");
+    if (!jwt) return { ok: false, reason: "anonymous" };
 
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       global: { headers: { Authorization: `Bearer ${jwt}` } },
     });
 
-    const { data } = await supabase.auth.getUser();
-    if (!data?.user) return null;
+    const { data, error } = await supabase.auth.getUser();
+    if (error) return { ok: false, reason: classifyAuthError(error) };
+    if (!data?.user) return { ok: false, reason: "anonymous" };
 
-    return { supabase, userId: data.user.id, user: data.user };
+    return { ok: true, supabase, userId: data.user.id, user: data.user };
   } catch {
-    return null;
+    return { ok: false, reason: "unavailable" };
   }
 }
 
 // ---------------------------------------------------------------------------
-// Credit check
+// Credit writes. The price is reserved before the provider call (see
+// reserveCredits in execute-guard.ts); this only records the ledger row.
 // ---------------------------------------------------------------------------
 
-async function checkCredits(
+async function creditsWriter(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any,
-  userId: string,
-  required: number,
-): Promise<{ sufficient: boolean; balance: number }> {
-  try {
-    const { data } = await supabase
-      .from("credits")
-      .select("balance")
-      .eq("user_id", userId)
-      .single();
-
-    if (!data) {
-      // No record yet — initialize with 100 free credits
-      await supabase
-        .from("credits")
-        .insert({ user_id: userId, balance: 100 })
-        .select()
-        .single();
-      return { sufficient: required <= 100, balance: 100 };
-    }
-
-    return { sufficient: data.balance >= required, balance: data.balance };
-  } catch {
-    // Non-fatal: allow execution if credits table is unavailable
-    return { sufficient: true, balance: 0 };
-  }
+  sessionClient: any,
+  supabaseUrl: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
+  // The caller is already authenticated and the user id comes from the verified
+  // session. The service key, when present, is used only for these two writes.
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceKey || !supabaseUrl) return sessionClient;
+  const { createClient } = await import("@supabase/supabase-js");
+  return createClient(supabaseUrl, serviceKey);
 }
 
-// ---------------------------------------------------------------------------
-// Deduct credits (fire-and-forget after stream completes)
-// ---------------------------------------------------------------------------
-
-async function deductCredits(
-  supabaseUrl: string,
-  supabaseAnonKey: string,
+async function recordCreditLedger(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  writer: any,
   userId: string,
   agentId: string,
   amount: number,
+  balanceAfter: number,
+  type: "consume" | "refund",
   modelUsed: string,
 ): Promise<void> {
   try {
-    const { createClient } = await import("@supabase/supabase-js");
-    // Use service role key if available for elevated write access
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? supabaseAnonKey;
-    const admin = createClient(supabaseUrl, serviceKey);
-
-    // Try RPC first (atomic decrement); fall back to read-modify-write
-    const rpcResult = await admin.rpc("decrement_credits", {
-      p_user_id: userId,
-      p_amount: amount,
-    });
-
-    if (rpcResult.error) {
-      // RPC not available yet — read current balance then deduct manually
-      const { data: row } = await admin
-        .from("credits")
-        .select("balance")
-        .eq("user_id", userId)
-        .single();
-
-      const currentBalance: number = (row?.balance ?? 0) as number;
-      const newBalance = Math.max(0, currentBalance - amount);
-
-      await admin.from("credits").upsert(
-        {
-          user_id: userId,
-          balance: newBalance,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: "user_id" },
-      );
-    }
-
-    // Log the transaction
-    await admin.from("credit_transactions").insert({
+    await writer.from("credit_transactions").insert({
       user_id: userId,
-      amount: -amount,
-      type: "consume",
+      amount,
+      type,
       agent_id: agentId,
       description: `Agent task: ${agentId} (${modelUsed})`,
+      balance_after: balanceAfter,
     });
   } catch {
-    // Non-fatal: best-effort credit deduction
+    // Non-fatal: the balance itself was already updated atomically.
   }
 }
 
@@ -316,32 +204,69 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const requestStarted = Date.now();
+  // Set once credits are reserved; gives them back if the call never starts.
+  let releaseReservation: ((reason: string) => Promise<void>) | null = null;
+  let streamStarted = false;
   try {
     const { id } = await params;
 
-    // ── 1. Validate request body ─────────────────────────────────────────────
+    const deny = (
+      status: number,
+      error: string,
+      reason: string,
+      extra: Record<string, unknown> = {},
+      headers: Record<string, string> = {},
+    ) => {
+      logExecute({ event: "denied", reason, status, agentId: id });
+      return new Response(JSON.stringify({ error, ...extra }), {
+        status,
+        headers: { "Content-Type": "application/json", ...headers },
+      });
+    };
+
+    // ── 1. Kill switch, rate limit, body validation and caps ─────────────────
+    if (!meteredCallsAllowed()) {
+      return deny(
+        503,
+        "Agent execution is temporarily unavailable.",
+        "kill_switch",
+      );
+    }
+
+    const ipLimit = await checkExecuteRateLimit(
+      getClientIdentifier(req),
+      EXECUTE_LIMITS.perIp,
+      { local: checkRateLimitLocal },
+    );
+    if (ipLimit.status === "unavailable") {
+      return deny(
+        503,
+        "Agent execution is temporarily unavailable.",
+        ipLimit.reason,
+      );
+    }
+    if (ipLimit.status === "limited") {
+      return deny(
+        429,
+        "Too many requests. Please slow down.",
+        "rate_limit_ip",
+        { retryAfter: ipLimit.retryAfterSec },
+        { "Retry-After": String(ipLimit.retryAfterSec) },
+      );
+    }
+
     let body: { input?: unknown; context?: unknown };
     try {
       body = await req.json();
     } catch {
-      return new Response("Invalid JSON in request body", { status: 400 });
+      return deny(400, "Invalid JSON in request body", "invalid_json");
     }
 
-    if (
-      !body.input ||
-      typeof body.input !== "string" ||
-      body.input.trim().length === 0
-    ) {
-      return new Response("input is required and must be a non-empty string", {
-        status: 400,
-      });
+    const checked = checkInputCaps(body.input, body.context);
+    if (!checked.ok) {
+      return deny(checked.status, checked.error, "input_caps");
     }
-
-    const input = body.input.trim();
-    const context =
-      typeof body.context === "object" && body.context !== null
-        ? (body.context as Record<string, unknown>)
-        : {};
+    const { input, context } = checked;
 
     // ── 2. Resolve agent spec ────────────────────────────────────────────────
     // Resolution order: 12 Chosen Luminors → marketplace catalog → marketplace_agents table
@@ -432,34 +357,71 @@ export async function POST(
       return new Response("Agent not found", { status: 404 });
     }
 
-    // ── 3. Resolve user session ──────────────────────────────────────────────
-    const session = await resolveSession(req);
+    // ── 3. Resolve user session (required) ───────────────────────────────────
+    const resolvedSession = await resolveSession(req);
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-    // ── 4. Credit check (authenticated users only) ───────────────────────────
-    if (session) {
-      const { sufficient, balance } = await checkCredits(
-        session.supabase,
-        session.userId,
-        agent.priceCredits,
-      );
-
-      if (!sufficient) {
-        return new Response(
-          JSON.stringify({
-            error: "Insufficient credits",
-            required: agent.priceCredits,
-            balance,
-            message: "Purchase more credits to run this agent.",
-          }),
-          {
-            status: 402,
-            headers: { "Content-Type": "application/json" },
-          },
-        );
-      }
+    if (!resolvedSession.ok) {
+      // Only a positively absent or rejected credential is a 401. A config or
+      // auth-service failure is a 503, so a signed-in user is not sent to the
+      // sign-in page during an outage.
+      return resolvedSession.reason === "anonymous"
+        ? deny(401, "Sign in to run agents.", "anonymous")
+        : deny(
+            503,
+            "Sign-in could not be checked right now. Please try again shortly.",
+            "auth_unavailable",
+          );
     }
+    const session = resolvedSession;
+
+    // The agent id is echoed in a response header; refuse one that cannot be a
+    // header value before any credits are taken.
+    if (!isHeaderSafeId(agent.id)) {
+      return deny(404, "Agent not found", "agent_id_not_header_safe");
+    }
+
+    const userLimit = await checkExecuteRateLimit(
+      getClientIdentifier(req, session.userId),
+      EXECUTE_LIMITS.perUser,
+      { local: checkRateLimitLocal },
+    );
+    if (userLimit.status === "unavailable") {
+      return deny(
+        503,
+        "Agent execution is temporarily unavailable.",
+        userLimit.reason,
+      );
+    }
+    if (userLimit.status === "limited") {
+      return deny(
+        429,
+        "Too many requests. Please slow down.",
+        "rate_limit_user",
+        { retryAfter: userLimit.retryAfterSec },
+        { "Retry-After": String(userLimit.retryAfterSec) },
+      );
+    }
+
+    // ── 4. Resolve the model first, so a missing key is refused before any
+    //      credits are taken or paid retrieval, embedding or tool call runs ──
+    const preferredGatewayId = agent.spec?.preferredModel ?? undefined;
+    const resolved = buildModel(preferredGatewayId);
+
+    if ("error" in resolved) {
+      return deny(
+        503,
+        "No AI provider is configured for this agent.",
+        `model_unavailable: ${resolved.error}`,
+      );
+    }
+
+    const { model, label } = resolved;
+    const temperature = agent.spec?.temperature ?? 0.7;
+    // AI SDK models expose modelId; Claude 5.x rejects sampling parameters with a 400.
+    const modelId = String(model.modelId ?? "");
+    const sendTemperature = !claudeRejectsSamplingParams(modelId);
 
     // ── 5. Build system prompt ───────────────────────────────────────────────
     const agentSystemPrompt =
@@ -468,9 +430,112 @@ export async function POST(
 
     let systemPrompt = agentSystemPrompt;
 
-    // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response
-    // Non-blocking fallback: if retrieval fails, we proceed without memory.
+    // Refuse an oversized prompt before any paid retrieval runs; it is checked
+    // again below once memory and creator context are added.
+    if (!checkPromptCap(systemPrompt, input)) {
+      return deny(413, "The agent prompt is too large to run.", "prompt_cap");
+    }
+
+    // ── 6. Reserve credits atomically — fail-closed ──────────────────────────
+    // The price leaves the balance now, before any paid retrieval or provider
+    // call, so parallel requests cannot spend the same credits. It is given
+    // back if the run does not complete.
+    const writer = await creditsWriter(session.supabase, supabaseUrl);
+    const reservation = await reserveCredits(
+      session.supabase,
+      session.userId,
+      agent.priceCredits,
+      writer,
+    );
+
+    if (reservation.status === "unavailable") {
+      return deny(
+        503,
+        "Credits are unavailable right now. Please try again shortly.",
+        "credits_unavailable",
+      );
+    }
+
+    if (reservation.status === "insufficient") {
+      return deny(402, "Insufficient credits", "insufficient_credits", {
+        required: agent.priceCredits,
+        balance: reservation.balance,
+        message: "Purchase more credits to run this agent.",
+      });
+    }
+
+    // Idempotent per run: `refunded` flips only once the write has applied, a
+    // definite failure may be retried by a later callback, and an ambiguous one
+    // (the update may have applied) is logged for reconciliation, never retried.
+    let refunded = false;
+    let refundSettled = false;
+    let refundInFlight: Promise<void> | null = null;
+    const refund = (reason: string): Promise<void> => {
+      if (refunded || refundSettled || reservation.amount <= 0) {
+        return Promise.resolve();
+      }
+      if (refundInFlight) return refundInFlight;
+      refundInFlight = (async () => {
+        const out = await refundCredits(
+          writer,
+          session.userId,
+          reservation.amount,
+        );
+        if (out.status === "refunded") refunded = true;
+        if (out.status === "unknown") refundSettled = true;
+        logExecute({
+          event:
+            out.status === "refunded"
+              ? "credits_refunded"
+              : out.status === "unknown"
+                ? "credits_refund_unknown"
+                : "credits_refund_failed",
+          reason,
+          agentId: agent.id,
+          userId: session.userId,
+          credits: reservation.amount,
+        });
+        if (out.status === "refunded") {
+          void recordCreditLedger(
+            writer,
+            session.userId,
+            agent.id,
+            reservation.amount,
+            out.balance,
+            "refund",
+            label,
+          );
+        }
+      })().finally(() => {
+        refundInFlight = null;
+      });
+      return refundInFlight;
+    };
+    releaseReservation = refund;
+
+    logExecute({
+      event: "credits_reserved",
+      agentId: agent.id,
+      userId: session.userId,
+      credits: reservation.amount,
+    });
+    if (reservation.amount > 0) {
+      void recordCreditLedger(
+        writer,
+        session.userId,
+        agent.id,
+        -reservation.amount,
+        reservation.balance,
+        "consume",
+        label,
+      );
+    }
+
+    // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response.
+    // Off unless AGENT_EXECUTE_LEARNING=true: retrieval embeds the input through
+    // a paid provider. If retrieval fails, we proceed without memory.
     try {
+      if (!learningEnabled()) throw new Error("memory disabled");
       const { retrieveMemoryItems, formatMemoryItemsForPrompt } =
         await import("@/lib/memory/reasoning-bank");
       const memoryItems = await retrieveMemoryItems({
@@ -506,22 +571,15 @@ export async function POST(
       systemPrompt = `${contextBlock}${systemPrompt}`;
     }
 
-    // ── 6. Resolve model ─────────────────────────────────────────────────────
-    const preferredGatewayId = agent.spec?.preferredModel ?? undefined;
-    const resolved = resolveModel(preferredGatewayId);
-
-    if (!resolved) {
-      return new Response(
-        "No AI provider configured. Set at least one provider API key (GOOGLE_GENERATIVE_AI_API_KEY, ANTHROPIC_API_KEY, etc.) in your environment.",
-        { status: 503 },
+    if (!checkPromptCap(systemPrompt, input)) {
+      await releaseReservation?.("prompt_cap");
+      return deny(
+        413,
+        "The agent prompt is too large to run.",
+        "prompt_cap",
+        {},
       );
     }
-
-    const { model, label } = resolved;
-    const temperature = agent.spec?.temperature ?? 0.7;
-    // AI SDK models expose modelId; Claude 5.x rejects sampling parameters with a 400.
-    const modelId = String(model.modelId ?? "");
-    const sendTemperature = !claudeRejectsSamplingParams(modelId);
 
     // ── 7. Resolve tools for this Luminor ─────────────────────────────────────
     // Dynamic import for edge compatibility — tool-resolver pulls in zod + ai/tool
@@ -538,7 +596,8 @@ export async function POST(
         userId: session?.userId ?? null,
         authenticated: !!session,
       });
-      luminorTools = Object.keys(resolved).length > 0 ? resolved : undefined;
+      // Only allowlisted free tools are offered; paid or unknown ones are withheld.
+      luminorTools = onlyFreeTools(resolved);
     } catch {
       // Fail-open: if tool resolution fails, proceed without tools
     }
@@ -549,24 +608,44 @@ export async function POST(
       system: systemPrompt,
       messages: [{ role: "user", content: input }],
       ...(sendTemperature ? { temperature } : {}),
-      maxOutputTokens: 4096,
-      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+      maxOutputTokens: EXECUTE_LIMITS.maxOutputTokens,
+      // One provider attempt per step. The SDK default retries twice, which
+      // would bill up to three attempts per step against one flat price.
+      maxRetries: 0,
+      // No provider-side fallback is requested: a refusal or error ends the
+      // call instead of silently re-running on another (billable) model.
       experimental_transform: refusalNoticeTransform(),
-      ...(luminorTools ? { tools: luminorTools, maxSteps: 5 } : {}),
-      onFinish: ({ text }) => {
-        // ── 8. Deduct credits after completion ──────────────────────────────
-        if (session && supabaseUrl && supabaseAnonKey) {
-          // Fire and forget — do not await
-          deductCredits(
-            supabaseUrl,
-            supabaseAnonKey,
-            session.userId,
-            agent.id,
-            agent.priceCredits,
-            label,
-          ).catch((err) => {
-            console.error("[execute] deductCredits failed:", err);
-          });
+      // Return the refund so the SDK waits for it before closing the stream;
+      // an un-awaited write can be cut off when the invocation is frozen.
+      onError: async () => {
+        await releaseReservation?.("stream_error");
+      },
+      ...(luminorTools
+        ? {
+            tools: luminorTools,
+            stopWhen: stepCountIs(EXECUTE_LIMITS.maxToolSteps),
+          }
+        : {}),
+      onFinish: async ({ text, usage, totalUsage, finishReason }) => {
+        // `usage` is the last step only; `totalUsage` sums every step of a
+        // multi-step tool run.
+        const aggregateUsage = totalUsage ?? usage;
+        logExecute({
+          event: "finished",
+          agentId: agent.id,
+          userId: session.userId,
+          model: label,
+          finishReason,
+          inputTokens: aggregateUsage?.inputTokens,
+          outputTokens: aggregateUsage?.outputTokens,
+          durationMs: Date.now() - requestStarted,
+        });
+
+        // A run that ended in an error did not deliver: give the credits back
+        // and stop. No task record, learning call or creator revenue event.
+        if (finishReason === "error") {
+          await releaseReservation?.("finish_error");
+          return;
         }
 
         // Log task to agent_tasks table (best-effort)
@@ -596,8 +675,9 @@ export async function POST(
         // ReasoningBank — JUDGE + DISTILL + CONSOLIDATE (fire-and-forget)
         // Runs the distillation loop in the background so the response
         // is never blocked. If a principle is extracted, it's stored as
-        // a memory item for future RETRIEVE calls.
-        if (supabaseUrl) {
+        // a memory item for future RETRIEVE calls. Off unless
+        // AGENT_EXECUTE_LEARNING=true: it costs a second provider call.
+        if (supabaseUrl && learningEnabled()) {
           void (async () => {
             try {
               const { learnFromExchange } =
@@ -627,11 +707,11 @@ export async function POST(
                 process.env.SUPABASE_SERVICE_ROLE_KEY ?? supabaseAnonKey;
               const admin = createClient(supabaseUrl, serviceKey);
 
-              // Approximate token count from text length (Vercel AI SDK edge
-              // doesn't always surface usage; ~4 chars per token is a safe estimate)
-              const estimatedTokens = Math.ceil(
-                (input.length + text.length) / 4,
-              );
+              // Prefer the SDK's aggregate usage across all steps; fall back to
+              // a ~4 chars per token estimate when the provider reports none.
+              const estimatedTokens =
+                aggregateUsage?.totalTokens ??
+                Math.ceil((input.length + text.length) / 4);
               const durationMs = Date.now() - requestStarted;
 
               // 1. usage_events — every invocation
@@ -685,14 +765,27 @@ export async function POST(
       },
     });
 
-    return result.toTextStreamResponse({
+    // Build the response first: if that throws, the outer catch still refunds.
+    const response = result.toTextStreamResponse({
       headers: {
         "x-arcanea-agent": agent.id,
         "x-arcanea-model": label,
         "x-arcanea-credits": String(agent.priceCredits),
       },
     });
+
+    streamStarted = true;
+    logExecute({
+      event: "started",
+      agentId: agent.id,
+      userId: session.userId,
+      model: label,
+    });
+
+    return response;
   } catch {
+    // Nothing was streamed: give any reserved credits back.
+    if (!streamStarted) await releaseReservation?.("handler_error");
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
