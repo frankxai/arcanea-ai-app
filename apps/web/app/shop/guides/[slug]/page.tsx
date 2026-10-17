@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 import { SHOP_GUIDES, findGuide } from "@/lib/shop/guides";
 import { SHOP_ORIGIN, SHOP_UPDATED } from "@/lib/shop/catalog";
 
@@ -63,22 +64,45 @@ export default async function GuidePage({
       {guide.sections.map((section) => (
         <section key={section.title}>
           <h2>{section.title}</h2>
-          {section.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          {section.paragraphs.map((paragraph, index) => (
+            <ReactMarkdown
+              key={index}
+              components={{
+                a: ({ children, href }) => (
+                  <a
+                    href={href}
+                    target={href?.startsWith("http") ? "_blank" : undefined}
+                    rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="shop-text-link"
+                  >
+                    {children}
+                  </a>
+                ),
+                code: ({ children }) => (
+                  <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-teal-300">
+                    {children}
+                  </code>
+                ),
+              }}
+            >
+              {paragraph}
+            </ReactMarkdown>
           ))}
         </section>
       ))}
       <h2>Try the worked example.</h2>
       <p>
         Read the free demonstration scene and download the editable World
-        Starter. The example is an AI-assisted proposal outside official Arcanea
-        canon; adapt its method to your own original project.
+        Starter. Adapt its canon-state workflow to your own original project.
       </p>
-      <Link href="/shop/sample" className="shop-button">
+      <Link
+        href={`/shop/sample?utm_source=arcanea_guides&utm_medium=field_note&utm_campaign=${guide.slug}`}
+        className="shop-button"
+      >
         Open the free World Starter
       </Link>
       <Link
-        href="/shop/worldbuilder-production-edition"
+        href={`/shop/worldbuilder-production-edition?utm_source=arcanea_guides&utm_medium=field_note&utm_campaign=${guide.slug}`}
         className="shop-text-link"
       >
         Inspect the Production Edition
