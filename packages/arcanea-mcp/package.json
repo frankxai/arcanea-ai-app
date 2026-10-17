@@ -19,8 +19,7 @@
   },
   "files": [
     "dist/",
-    "README.md",
-    "server.json"
+    "README.md"
   ],
   "scripts": {
     "build": "tsc",
