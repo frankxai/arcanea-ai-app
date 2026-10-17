@@ -15,6 +15,48 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'ai-disclosure-canon-provenance-guide',
+    title: 'AI Disclosure & Canon Provenance Guide for Novelists and Game Developers',
+    excerpt:
+      'The definitive guide for authors and game developers on declaring AI usage across Steam, KDP, and the Copyright Office, complete with a worked canon-state workflow.',
+    category: 'Guide',
+    author: 'FrankX',
+    date: '2026-04-18',
+    readTime: '12 min read',
+    featured: true,
+    accent: 'var(--arc-brand-atlantean-teal)',
+    tags: ['ai-disclosure', 'canon-provenance', 'steam-compliance', 'kdp-compliance', 'copyright-office', 'game-development', 'novelists', 'author-tools'],
+    content: `
+## 1. The Regulatory Landscape for AI Creators
+
+As novelists, game developers, and worldbuilders integrate AI agents into their creative pipelines, distribution platforms and copyright offices have instituted strict mandates around AI disclosure, copyright limitation disclaimers, and non-infringement guarantees.
+
+### Valve / Steam Policy (January 9, 2024)
+- **Source:** [Steam News Announcement](https://store.steampowered.com/news/group/4145017/view/3862463747997849618)
+- Requires developer disclosure via an AI disclosure survey in build configurations.
+- Categorizes AI usage into **Pre-generated** vs. **Live-generated**.
+- Disclosures are published directly on game store pages for transparency.
+
+### Amazon KDP Guidelines (September 2023 / 2024)
+- **Source:** [KDP Content Guidelines](https://kdp.amazon.com/en_US/help/topic/G200672390)
+- Requires authors and publishers to declare if content is **AI-Generated** or **AI-Assisted**.
+- Requires disclosure for cover art, interior illustrations, and text generation during book setup.
+
+### US Copyright Office Guidance (March 16, 2023 / 2024)
+- **Source:** [US Copyright Office AI Policy](https://www.copyright.gov/ai/)
+- Requires explicit disclaimers for un-human AI-generated material in the Limitation of Claim section (37 CFR Part 202).
+- Protects human creative selection, arrangement, and editing contributions.
+
+## 2. Worked Example: Canon-State Workflow
+
+1. Declare locked baseline canon in \`CANON_LOCKED.md\` with a cryptographic hash.
+2. Generate author drafts with embedded \`provenance\` headers linking model IDs, prompt DAG hashes, and human contribution percentages in \`book.yaml\`.
+3. Export verified compliance packages directly to Amazon KDP, Steam survey fields, and Copyright Office filings.
+
+[Launch Provenance Workflow in Studio Author](/studio/author?utm_source=blog&utm_medium=guide&utm_campaign=ai-disclosure-canon-provenance)
+`,
+  },
+  {
     slug: 'ai-model-arena-free-models-guide',
     title: 'The AI Model Arena: How We Route Free Models Across 10 Agents',
     excerpt:
