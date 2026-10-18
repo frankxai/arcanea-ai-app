@@ -145,13 +145,10 @@ if (baseline) {
       assert.ok(result.calls.every((call) => call.maxOutputTokens === 8192));
     });
   }
-  test(
-    "baseline premium falls through when declared provider is absent",
-    () => {
-      const result = run({ body: standard("archmage") }, {}, baseline);
-      assert.equal(result.calls.length, 13);
-      assert.ok(result.calls.every((call) => call.model.provider === "google"));
-      assert.equal(result.networkAttempts, 0);
-    },
-  );
+  test("baseline premium falls through when declared provider is absent", () => {
+    const result = run({ body: standard("archmage") }, {}, baseline);
+    assert.equal(result.calls.length, 13);
+    assert.ok(result.calls.every((call) => call.model.provider === "google"));
+    assert.equal(result.networkAttempts, 0);
+  });
 }

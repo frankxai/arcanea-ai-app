@@ -40,7 +40,10 @@ registerHooks({
       return { url: stub(fixtures[specifier]), shortCircuit: true };
     }
     if (specifier.startsWith("@/")) {
-      return nextResolve(new URL(specifier.slice(2) + ".ts", web).href, context);
+      return nextResolve(
+        new URL(specifier.slice(2) + ".ts", web).href,
+        context,
+      );
     }
     return nextResolve(specifier, context);
   },
