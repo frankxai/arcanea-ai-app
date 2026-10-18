@@ -64,7 +64,7 @@ cd ../..
 echo ""
 echo "4/4: @arcanea/mcp-server v1.0.0"
 cd packages/arcanea-mcp
-npm publish --access public || echo "  (may already be published)"
+npm publish --access public --provenance 2>/dev/null || npm publish --access public || echo "  (may already be published)"
 cd ../..
 
 echo ""

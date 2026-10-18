@@ -37,7 +37,6 @@ export const metadata: Metadata = {
     "Compare AI models for worldbuilding, high fantasy fiction, long canon memory, hard magic logic, and anti-slop prose. Live OpenRouter pricing, favorites, and Arcanea WorldCraft editorial ratings.",
   keywords: [
     "AI models for world building",
-    "best AI for fantasy writing",
     "high fantasy LLM comparison",
     "1M context canon memory",
     "hard magic system AI",
@@ -150,7 +149,7 @@ export default async function ModelsArenaPage() {
               <strong className="text-[var(--arc-brand-cosmic-blue)]">
                 {oneMillionCount}
               </strong>{" "}
-              1M+ context titans
+              1M+ context
             </span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             {isLive ? (
@@ -171,7 +170,7 @@ export default async function ModelsArenaPage() {
               href="#curated-best"
               className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-white/60 hover:text-white hover:border-[var(--arc-brand-arcanean-gold)]/40 transition-all"
             >
-              🏆 Curated Best
+              Curated Picks
             </a>
             <a
               href="#explorer"

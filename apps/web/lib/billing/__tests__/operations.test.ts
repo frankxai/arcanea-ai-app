@@ -1,0 +1,245 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import {
+  runReservedOperation,
+  InsufficientCreditsError,
+  OperationPendingError,
+  OperationFailedError,
+  OperationConflictError,
+  type BillingRpc,
+  type OperationReceipt,
+} from "../operations";
+const input = {
+  userId: "user-a",
+  action: "image.standard" as const,
+  amount: 10,
+  requestKey: "key",
+  fingerprint: "hash",
+};
+
+test("definite oversized or over-quoted output releases credits and becomes a terminal failure", async () => {
+  for (const outcome of [
+    { result: "x".repeat(33554432), actualCredits: 10 },
+    { result: "image", actualCredits: 11 },
+  ]) {
+    const f = fixture();
+    await assert.rejects(
+      runReservedOperation(f.rpc, input, async () => outcome),
+      OperationFailedError,
+    );
+    assert.equal(f.receipt?.state, "failed");
+    assert.equal(f.receipt?.balance, 100);
+    assert.equal(f.calls.includes("billing_stage_result"), false);
+  }
+});
+function fixture() {
+  let receipt: OperationReceipt<string> | undefined;
+  let workCalls = 0;
+  const failures = new Map<string, number>();
+  const committedFailures = new Set<string>();
+  const calls: string[] = [];
+  const account = {
+    userId: input.userId,
+    plan: "spark" as const,
+    planStatus: "none" as const,
+    balance: 90,
+    reserved: 10,
+    currentPeriodEnd: null,
+    cancelAtPeriodEnd: false,
+    polarCustomerId: null,
+    polarSubscriptionId: null,
+  };
+  const rpc: BillingRpc = async <T>(
+    fn: string,
+    args: Record<string, unknown>,
+  ): Promise<T> => {
+    calls.push(fn);
+    const remaining = failures.get(fn) ?? 0;
+    if (remaining > 0) {
+      failures.set(fn, remaining - 1);
+      throw Error("database unavailable");
+    }
+    if (fn === "billing_reserve_credits") {
+      if (receipt) receipt.idempotent = true;
+      else
+        receipt = { ...account, ok: true, idempotent: false, state: "running" };
+    } else if (fn === "billing_stage_result") {
+      receipt = {
+        ...receipt!,
+        state: "result_ready",
+        result: args.p_result as string,
+        charged: args.p_actual as number,
+      };
+    } else if (fn === "billing_complete_operation") {
+      receipt = { ...receipt!, state: "completed", reserved: 0 };
+    } else if (fn === "billing_request_release")
+      receipt!.state = "refund_pending";
+    else if (fn === "billing_release_reservation")
+      receipt = {
+        ...receipt!,
+        state: "failed",
+        reserved: 0,
+        balance: 100,
+        charged: 0,
+      };
+    if (committedFailures.delete(fn))
+      throw Error("acknowledgement lost after commit");
+    return { ...receipt } as T;
+  };
+  const work = async () => {
+    workCalls++;
+    return { result: "stored-image", actualCredits: 10 };
+  };
+  return {
+    rpc,
+    work,
+    failures,
+    committedFailures,
+    calls,
+    get receipt() {
+      return receipt;
+    },
+    get workCalls() {
+      return workCalls;
+    },
+  };
+}
+test("completed retry replays the actual artifact without a second provider call", async () => {
+  const f = fixture();
+  const a = await runReservedOperation(f.rpc, input, f.work);
+  const b = await runReservedOperation(f.rpc, input, f.work);
+  assert.equal(a.result, "stored-image");
+  assert.equal(b.result, a.result);
+  assert.equal(f.workCalls, 1);
+});
+test("unknown provider outcome preserves admission and cannot start a second paid job", async () => {
+  const f = fixture();
+  let calls = 0;
+  const work = async () => {
+    calls++;
+    throw new OperationPendingError("user-a:key");
+  };
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, work),
+    OperationPendingError,
+  );
+  assert.equal(f.receipt?.state, "running");
+  assert.equal(f.calls.includes("billing_request_release"), false);
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, work),
+    OperationPendingError,
+  );
+  assert.equal(calls, 1);
+});
+test("uncertain admission never invokes work, and retry does not reserve again", async () => {
+  const f = fixture();
+  f.committedFailures.add("billing_reserve_credits");
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, f.work),
+    OperationPendingError,
+  );
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, f.work),
+    OperationPendingError,
+  );
+  assert.equal(f.workCalls, 0);
+});
+test("a checkpointed provider job recovers its result without resubmission and then replays", async () => {
+  const f = fixture();
+  let starts = 0,
+    recoveries = 0;
+  const work = async () => {
+    starts++;
+    throw new OperationPendingError("user-a:key");
+  };
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, work),
+    OperationPendingError,
+  );
+  const recover = async () => {
+    recoveries++;
+    return { result: "recovered-video", actualCredits: input.amount };
+  };
+  const a = await runReservedOperation(f.rpc, input, work, recover);
+  const b = await runReservedOperation(f.rpc, input, work, recover);
+  assert.equal(a.result, "recovered-video");
+  assert.equal(b.result, a.result);
+  assert.equal(starts, 1);
+  assert.equal(recoveries, 1);
+  assert.equal(f.receipt?.state, "completed");
+});
+test("competing retry observes running state and invokes no additional work", async () => {
+  const f = fixture();
+  let release!: () => void;
+  const barrier = new Promise<void>((r) => {
+    release = r;
+  });
+  const first = runReservedOperation(f.rpc, input, async () => {
+    await barrier;
+    return f.work();
+  });
+  await new Promise((r) => setImmediate(r));
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, f.work),
+    OperationPendingError,
+  );
+  release();
+  await first;
+  assert.equal(f.workCalls, 1);
+});
+test("settlement outage retains output for same-key recovery", async () => {
+  const f = fixture();
+  f.failures.set("billing_complete_operation", 2);
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, f.work),
+    OperationPendingError,
+  );
+  assert.equal(f.receipt?.state, "result_ready");
+  const recovered = await runReservedOperation(f.rpc, input, f.work);
+  assert.equal(recovered.result, "stored-image");
+  assert.equal(f.workCalls, 1);
+});
+test("lost result and settlement acknowledgements retry database transitions only", async () => {
+  const f = fixture();
+  f.committedFailures.add("billing_stage_result");
+  f.committedFailures.add("billing_complete_operation");
+  assert.equal(
+    (await runReservedOperation(f.rpc, input, f.work)).result,
+    "stored-image",
+  );
+  assert.equal(f.workCalls, 1);
+});
+test("failed refund remains durable and resumes on retry without work", async () => {
+  const f = fixture();
+  f.failures.set("billing_release_reservation", 2);
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, async () => {
+      throw Error("provider failure");
+    }),
+    OperationPendingError,
+  );
+  assert.equal(f.receipt?.state, "refund_pending");
+  await assert.rejects(
+    runReservedOperation(f.rpc, input, f.work),
+    OperationFailedError,
+  );
+  assert.equal(f.receipt?.balance, 100);
+  assert.equal(f.workCalls, 0);
+});
+test("insufficient credit and request conflicts invoke no provider or enhancement work", async () => {
+  for (const reason of ["insufficient_credits", "request_conflict"]) {
+    let calls = 0;
+    const rpc: BillingRpc = async <T>() =>
+      ({ ok: false, reason, balance: 0, required: 10 }) as T;
+    await assert.rejects(
+      runReservedOperation(rpc, input, async () => {
+        calls++;
+        return { result: "bad", actualCredits: 10 };
+      }),
+      reason === "request_conflict"
+        ? OperationConflictError
+        : InsufficientCreditsError,
+    );
+    assert.equal(calls, 0);
+  }
+});

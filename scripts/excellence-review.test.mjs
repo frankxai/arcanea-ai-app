@@ -375,10 +375,10 @@ test("unknown surface produces explicit missing coverage without using the provi
 
 test("mixed scope reviews covered pixels and retains unassessed files prominently", async () => {
   const h = harness({
-    files: [...files, { filename: "apps/web/middleware.ts" }],
+    files: [...files, { filename: "apps/web/proxy.ts" }],
   });
   const result = await reviewRun(h.dependencies);
-  assert.deepEqual(result.receipt.uncovered, ["apps/web/middleware.ts"]);
+  assert.deepEqual(result.receipt.uncovered, ["apps/web/proxy.ts"]);
   assert.match(h.posts()[0].options.body.body, /Unassessed changed files/);
 });
 

@@ -160,9 +160,12 @@ async function translateWithClaude(
       "x-api-key": config.apiKey,
       "anthropic-version": "2023-06-01",
     },
+    // No sampling parameters: Claude 5.x rejects them with a 400. Sonnet 5.5
+    // always thinks and thinking counts toward max_tokens, so the cap leaves
+    // headroom above a 3,000-word chunk's translation.
     body: JSON.stringify({
-      model: config.model ?? "claude-sonnet-4-20250514",
-      max_tokens: 8192,
+      model: config.model ?? "claude-sonnet-5-5",
+      max_tokens: 16000,
       system: systemPrompt,
       messages: [{ role: "user", content: text }],
     }),
@@ -174,8 +177,17 @@ async function translateWithClaude(
   }
 
   const data = (await response.json()) as {
+    stop_reason?: string | null;
     content: Array<{ type: string; text?: string }>;
   };
+
+  // Safety classifiers decline with HTTP 200 and stop_reason "refusal"; any
+  // content alongside it is partial and must not be used as a translation.
+  if (data.stop_reason === "refusal") {
+    throw new Error(
+      "Claude API declined the translation (stop_reason: refusal)",
+    );
+  }
 
   const textBlock = data.content.find((b) => b.type === "text");
   if (!textBlock?.text) {

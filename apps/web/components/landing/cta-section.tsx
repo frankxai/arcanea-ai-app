@@ -4,7 +4,9 @@
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { track } from "@vercel/analytics";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
+import { PhArrowRight, PhCheck } from "@/lib/phosphor-icons";
 
 const BENEFITS = [
   "Creative partners across writing, code, design, music, and research",
@@ -17,7 +19,11 @@ const ORBITING_GUARDIANS = [
   { name: "Alera", image: "/guardians/v3/alera-hero-v3.webp", angle: 72 },
   { name: "Leyla", image: "/guardians/v3/leyla-hero-v3.webp", angle: 144 },
   { name: "Maylinn", image: "/guardians/v3/maylinn-hero-v3.webp", angle: 216 },
-  { name: "Draconia", image: "/guardians/v3/draconia-hero-v3.webp", angle: 288 },
+  {
+    name: "Draconia",
+    image: "/guardians/v3/draconia-hero-v3.webp",
+    angle: 288,
+  },
 ];
 
 export function CTASection() {
@@ -52,24 +58,21 @@ export function CTASection() {
                 </h2>
 
                 <p className="text-lg text-white/50 mb-8 leading-relaxed">
-                  A complete creation ecosystem — not a thin AI wrapper.
-                  Type one sentence and watch a universe unfold.
+                  A complete creation ecosystem — not a thin AI wrapper. Type
+                  one sentence and watch a universe unfold.
                 </p>
 
                 <ul className="space-y-3 mb-10">
                   {BENEFITS.map((benefit) => (
-                    <li
-                      key={benefit}
-                      className="flex items-center gap-3"
-                    >
+                    <li key={benefit} className="flex items-center gap-3">
                       <div className="w-5 h-5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/35 flex items-center justify-center flex-shrink-0">
-                        <span className="text-[11px] text-[var(--arc-brand-atlantean-teal)]">
-                          ✓
-                        </span>
+                        <PhCheck
+                          aria-hidden="true"
+                          weight="bold"
+                          className="h-3 w-3 text-[var(--arc-brand-atlantean-teal)]"
+                        />
                       </div>
-                      <span className="text-white/50 text-sm">
-                        {benefit}
-                      </span>
+                      <span className="text-white/50 text-sm">{benefit}</span>
                     </li>
                   ))}
                 </ul>
@@ -77,21 +80,27 @@ export function CTASection() {
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="/chat"
+                    onClick={() => track("home_final_cta", { target: "/chat" })}
                     className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-brand-cosmic-blue)] via-[var(--arc-brand-cosmic-blue)] to-[var(--arc-brand-atlantean-teal)] transition-opacity duration-300" />
                     <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-cosmic-blue)] to-[var(--arc-brand-cosmic-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative z-10 text-white flex items-center gap-2">
                       Start Creating
-                      <span className="group-hover:translate-x-1 transition-transform duration-200">
-                        →
-                      </span>
+                      <PhArrowRight
+                        aria-hidden="true"
+                        weight="bold"
+                        className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200"
+                      />
                     </span>
                   </Link>
 
                   <Link
                     href="/library"
-                    className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                    onClick={() =>
+                      track("home_final_cta", { target: "/library" })
+                    }
+                    className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02] active:scale-[0.98] transition-[background-color,border-color,transform] duration-300"
                   >
                     Explore the Library
                   </Link>
@@ -122,7 +131,7 @@ export function CTASection() {
                             height={48}
                             sizes="48px"
                             className="w-full h-full object-cover object-top"
-                           />
+                          />
                         </div>
                       </div>
                     );

@@ -1,0 +1,199 @@
+# Narrative routing implementation and programme evidence
+
+Scope: execute the 11 October release/community lead brief through the existing
+Arcanea programme. This first engineering lane repairs actual CLI routing; it
+does not redefine the full objective as a routing patch.
+
+Owner: Codex thread `01a127b9-5a4e-7b83-ae44-ddc8e8a6a8cb`, sole writer in
+`arcanea-narrative-routing-20261011`, branch
+`agent/codex/narrative-routing-20261011`.
+Origin: `https://github.com/frankxai/arcanea-ai-app.git`.
+Base: `5745705c6f881d250d6a46336a6662de0d746d24`.
+Programme: [276](https://github.com/frankxai/arcanea-ai-app/issues/276);
+creative evaluation: [282](https://github.com/frankxai/arcanea-ai-app/issues/282).
+
+Frank explicitly requested end-to-end execution, normal PR merges and production
+verification. Preserve distinct rights/canon/publication decisions, actual
+customer consent and funded spending boundaries. Existing human receipts must
+bind the applicable artifact; no agent can invent human acceptance.
+
+## First lane contract
+
+User job: an operator selects a model/surface and gets that eligible model through
+the supported native CLI, or a clear refusal. A disallowed, deprecated,
+unsupported or recorded-uninstalled route must not be resurrected as fallback.
+
+Files: router-spec index/tests; orchestrator run/CLI/runtime adapters,
+explain/learn presentation, runtime/CLI tests and README; this pickup.
+Other owners' reader 560, companion 562, entry 567 and all existing branches and
+manuscripts remain intact. No overlap with their source files or indexes.
+
+Acceptance: overrides and pins obey catalog tier/context rules; exhausted routes
+stop; explicit surface beats saved default; Codex/Gemini receive the selected
+model; OpenCode receives a positional prompt and namespaced model; unsupported
+providers cannot execute through Claude; dispatch does not add approval bypasses.
+Catalog eligibility is not provider access, billing authorization or a spend cap.
+
+Verification: reproduce failures first, compile the two packages, run native
+router/runtime/CLI regressions, run the existing broader orchestrator suite and
+format/whitespace checks. Existing hosted Orchestrator CI uses a frozen install
+and verifies these packages when the PR is ready. Required main-target build,
+types, lint, security and independent exact-revision review remain release gates.
+
+Rollback: a reviewed revert of this package slice, preserving source manuscripts,
+locked canon, user data and other lanes. Do not restore unsafe dispatch as a
+production workaround; disable that route while a replacement is reviewed.
+
+## Reproduction and source evidence
+
+Installed `codex exec --help`, `opencode run --help` and `gemini --help` were read
+without inference. OpenCode's `-p` is password, not prompt. Codex and Gemini
+advertise explicit model flags; the old adapters discarded the model. Gemini's
+installed help does not advertise the old compression/sync flags.
+
+The first package/CLI reproducer ran 36 cases: 19 passed and 17 failed on the
+unchanged implementation. Failures reproduced tier/context bypasses, invalid
+fallback resurrection, ignored model/surface controls and unsafe adapter shapes.
+No native model process or provider was invoked by those dry-run fixtures.
+
+The routing correction then passed all 37 focused cases. A separate two-case
+execution fixture reproduced `--no-history` still creating the history file
+(one failure, one passing ordinary-history control). Commander exposes this flag
+as `history: false`; the old code checked `noHistory`. The correction checks the
+actual flag. The runtime is an isolated temporary no-op executable with a fixed
+marker, not a provider or real agent, and both home/history paths are isolated.
+
+Read-only pinned dependency reuse avoids another install. New ignored junctions
+in this owned checkout point to existing third-party dependencies; the router
+package link points to this checkout, so orchestrator tests exercise this source.
+No peer checkout, lockfile or global configuration was modified. Root Node is
+24.16.0. The existing default build admission initially held; a bounded two-package
+workload uses a 1 GiB reserve, one workload and no new parallel agents. Preserve
+CPU/RAM floor constraints and use cloud gates for heavier verification.
+
+Root AGENTS SHA256:
+`36b534b6a33f240aa752e4360ab08468702cbaa366c85c3ca9db0e0b21fd2ca5`.
+Orchestrator AGENTS SHA256:
+`27b8492649a13e865acf4651f1e38959c2b7feed24edeee1d9c41c11755c1f04`.
+Loaded newest relevant planning records, SYSTEM/SCHEMA/SKILLS, shared intelligence,
+master plan, engineering kernel, workspace/quality/machine policies and SO.
+Current source reading is an explicit handoff, not native session rediscovery.
+Location guard and explicit routing checks passed; no deeper guide or active-agent
+file governs this lane. Reviewed Registry main was re-queried and remains
+`b4b82e3d1430846d62707973a66584de4f2e4776`. Re-query before later
+architectural/managed activation work.
+
+## Current candidate verification
+
+Both package compilers pass. The complete existing package/native test selection
+passes 82 cases, ten suites, zero failures/skips. It includes the real compiled
+CLI, both history controls and existing ecosystem/config/pantheon cases. Pantheon
+fixtures are deterministic source behavior, not evidence of model-generated prose
+or creative quality. Router catalog validation, final exact-source review and
+hosted application/package gates remain to be recorded separately.
+
+Changed files pass the existing direct Prettier check and git diff --check. The
+first formatting check flagged the files; they were formatted and rechecked.
+Enabled commit secret hooks must pass; no lockfile/dependency/runtime/default-model
+change or native provider call is included. No owned test process remains running.
+
+The first commit was refused by the newly installed `starlight-ops` ownership
+hook because this checkout had no registered active lane. The exact eleven-file
+scope was then claimed through its installed CLI under this thread, with both
+instruction hashes verified. Lease `ops-36af7fc0dbcaa75d05ca` is private machine
+state. Re-run the ownership gate before commit; do not disable it or secret hooks.
+This hook governs commits, not every file edit or product runtime action.
+
+## Review correction at the routing candidate
+
+Initial candidate `3376708c9f16aea1687ec430495aaa2428904590` is preserved in
+[PR569](https://github.com/frankxai/arcanea-ai-app/pull/569). Its hosted
+CI38111634801 passes build, types, lint and CI Status; CodeQL38111634807 passes
+actual analysis. Earlier draft CI38111617380 was cancelled by the ready transition
+and retained with its failed aggregate. The two package/review workflows were
+found manually disabled on GitHub; no workflow setting was altered.
+
+A tool-free anonymous NVIDIA Ultra review covered all eleven changed files and
+eight complete source contexts at that exact head, returned PASS with no findings
+and reported US$0. Its public-source manifest is
+`f2058c4a92bd7115ee7688243ed2645dd647f19818e4ac586c598eee75202d35`.
+GitHub's separate code review then found three supported defects that this PASS
+missed: unsupported explain selections, lost display-surface resolution and the
+retired Gemini Pro identifier. The initial PASS cannot approve the correction.
+
+Five new regression cases failed before correction. Execution and explain now
+share preference/runtime/adaptive selection. Catalog display retains eligible
+candidates, while execution refuses display-only surfaces even with a model pin.
+Retired Gemini pins are rejected with the replacement named; Gemini Pro routes
+use the native `gemini-3.1-pro-preview` identifier. Google's model and deprecation
+references were read on11 October; actual account access and prose remain
+untested. This changes that route's catalog default, without claiming a model
+quality promotion or refreshing every other historical model entry.
+
+Renewed two-package build admission is BOUNDED:7757MB free,5120MB required,
+CPU61%, one workload and no new parallel agents. Both compilers and all86 selected
+tests pass; the tests keep config/history and no-op runtime execution isolated.
+All source must be frozen and reviewed again at the new head before normal merge.
+The claim extension initially refused without `--adopt`; the existing same-owner
+lease was then refreshed through the supported CLI with the full original scope
+plus models.yaml. No lease was removed, rewritten directly or taken from a peer.
+
+## Full objective: evidence still needed
+
+Final GitHub review at a4d2f3d3 found two remaining diagnostics gaps missed by
+the independent PASS: learn still selected display/unsupported routes and
+explain ignored the saved default surface. Four new compiled-CLI regressions
+reproduced all four failures before source correction. Learn now shares runnable
+eligibility for its baseline and labels its adaptive simulation as a preview;
+explain and learn resolve explicit/saved/default surfaces just like run. No
+review at the previous head approves this correction. Required current checks
+and exact-source independent review remain mandatory before normal merge.
+
+Integration receipt: GitHub now records initial PR569 as merged at04:42:24UTC,
+receiving main233013ca5c73745b456c0f924392d2001fee846e. Its complete package
+trees equal the reviewed initial3376708 source. The correction atbbcb6375
+received a second zero-price NVIDIA PASS (61,292 input/695 output tokens; no
+findings). That review is retained against its actual head, not transferred to
+a later integration head.
+
+A proposed branch transition was refused by the existing checkout lease, so
+the writer returned to the admitted branch. No lease was bypassed or deleted.
+Merging current main produced seven conflicts because the initial PR had been
+squashed. After verifying main's scoped tree equals3376708 exactly, those seven
+paths were resolved to the reviewed correction atbbcb6375. All code source is
+preserved; the follow-up is reviewed and checked separately before normal merge.
+
+| Required outcome                                      | Owning record and evidence                                                                                                | Current disposition                                                                                     |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Accepted Arcanea release and coherent universe        | 276/277/280; selected full manuscript, approved canon delta, rights and human release receipt                             | Selection/acceptance not verified by this lane; cannot infer from excerpts                              |
+| Single-source web/EPUB/print                          | 279/280; manifest hashes, EPUBCheck, print specification and human preview                                                | Existing validator PR509; end-to-end edition proof still open                                           |
+| Creator drafting/review/recovery/export               | Existing reader/companion/entry PRs and AuthorOS/SIS owners; actual editable output and interruption evidence             | Candidates exist; current provider/customer acceptance and independent release review need verification |
+| Models/harnesses and 1/3/5-role creative comparisons  | 282; versioned 20-task fixtures, independent disposition, repair/quality/cost results                                     | CLI reproducibility under repair; creative results not produced here                                    |
+| Canon/world and durable mission boundaries            | 278/283/284/285; source-bound snapshots, authorized writes, lease/budget/crash-replay and quest proof                     | Existing implementation/proposals require exact current-state audit; one durable owner required         |
+| Installable creator offering and community usefulness | Existing 517/Academy/product owners; cold consumer install, real completed artifact and consented pilot                   | MCP source 1.0.0 differs from npm latest; licensing/distribution and participant proof remain separate  |
+| Managed API subscriptions and tenant recovery         | Existing 511/529/platform owners; funded supply, isolation, entitlement/accounting, cancellation/export and live recovery | Not established by catalog tiers or mocked routes; reconcile current source and commercial gates        |
+| Controlled continuous improvement                     | 282/platform owner; isolated funded experiments, frozen judges, immutable versions, new-run canary/freeze/rollback        | Required longer-term work, not claimed as implemented                                                   |
+| GTM, demand and sustainable economics                 | Owning product/community records; permissioned release/demo/trial/showcase, repeat use and real buyer evidence            | Proposals remain proposals; no invented consent, price approval or demand                               |
+| All relevant PR integration and green production      | Exact candidate checks/reviews, normal merge, source-bound stable deployment and actual journeys                          | Production metadata READY at 5745705; not complete journey or customer proof                            |
+
+The active founder goal remains intact. Advance independent authorized work when
+one gate waits; do not substitute unit tests for creator acceptance or close the
+programme based on this lane.
+
+## Diagnostic repair verification and integration
+
+PR570 was normally merged on GitHub at 05:15:21 UTC into
+`a131c1e9dfa2a2e6b8d93e1be4bd32c43794afc1`. Its two complete package trees equal
+the prior reviewed `a4d2f3d3cdbf34a4e8eea9b0805bb97999715edb` source. That merge
+does not contain the later learn/default-surface repair described above.
+
+Both package compilers passed with the repair. The full local selection ran
+90 cases: 89 passed and one failed because the new learn assertion omitted the
+existing numbered output (`→ 1. model`). The actual saved Gemini route was
+correct. After correcting the assertion, the isolated compiled-CLI case passed.
+The full 90-case selection has not been rerun locally after that assertion edit.
+Renewed PP admission returned HOLD with 3352 MB free against 5120 MB required;
+heavy local work stays stopped. The reader integration adds both package builds,
+spec validation and the entire routing selection to the required hosted CI job.
+Exact-source independent review and hosted verification remain pending for this
+new diagnostic repair; earlier PASS verdicts do not approve it.

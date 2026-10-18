@@ -1,22 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
-import { useState, useCallback, useEffect } from 'react';
-import { m } from 'framer-motion';
-import { isFavorited, addFavorite, removeFavorite } from '@/lib/imagine-favorites';
+import { useState, useCallback, useEffect } from "react";
+import { m, useReducedMotion } from "framer-motion";
+import {
+  getFavorites,
+  readCloudFavorite,
+  addFavorite,
+  removeFavorite,
+  type FavoriteImage,
+} from "@/lib/imagine-favorites";
+import {
+  generatedImageBlob,
+  type GenerationAuthority,
+} from "@/lib/imagine/request";
 
 const ASPECT_CLASSES: Record<string, string> = {
-  '1:1': 'aspect-square',
-  '16:9': 'aspect-video',
-  '9:16': 'aspect-[9/16]',
-  '4:3': 'aspect-[4/3]',
-  '3:4': 'aspect-[3/4]',
-  '3:2': 'aspect-[3/2]',
-  '2:3': 'aspect-[2/3]',
+  "1:1": "aspect-square",
+  "16:9": "aspect-video",
+  "9:16": "aspect-[9/16]",
+  "4:3": "aspect-[4/3]",
+  "3:4": "aspect-[3/4]",
+  "3:2": "aspect-[3/2]",
+  "2:3": "aspect-[2/3]",
 };
 
 interface ImageCardProps {
+  authority: GenerationAuthority;
+  favorite?: FavoriteImage | null;
   id: string;
   src: string;
   prompt: string;
@@ -26,74 +38,166 @@ interface ImageCardProps {
   aspectRatio?: string;
   onAnimate?: (id: string, imageUrl: string) => void;
   onVary?: (prompt: string) => void;
-  onFavoriteChange?: () => void;
+  onFavoriteChange?: (warning?: string | null) => void;
   isAnimating?: boolean;
   videoUrl?: string;
 }
 
 export function ImageCard({
+  authority,
+  favorite,
   id,
   src,
   prompt,
   index,
   data,
   mimeType,
-  aspectRatio = '1:1',
+  aspectRatio = "1:1",
   onAnimate,
   onVary,
   onFavoriteChange,
   isAnimating,
   videoUrl,
 }: ImageCardProps) {
+  const reduceMotion = useReducedMotion();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [favoriteChecking, setFavoriteChecking] = useState(false);
+  const [favoriteRecord, setFavoriteRecord] = useState<FavoriteImage | null>(
+    null,
+  );
+  const [favoriteError, setFavoriteError] = useState<string | null>(null);
 
   useEffect(() => {
-    setFavorited(isFavorited(id));
-  }, [id]);
-
-  const handleToggleFavorite = useCallback(async (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (isSaving) return;
-
-    if (favorited) {
-      removeFavorite(id);
-      setFavorited(false);
-      onFavoriteChange?.();
-      return;
-    }
-
-    setIsSaving(true);
+    let active = true;
+    const controller = new AbortController();
+    const current = () => active && authority.scope.isCurrent(authority.token);
+    setFavoriteChecking(false);
     try {
-      await addFavorite({ id, url: src, prompt, data, mimeType });
-      setFavorited(true);
-      onFavoriteChange?.();
+      const cached =
+        favorite === undefined
+          ? (getFavorites(authority).find((row) => row.id === id) ?? null)
+          : favorite;
+      setFavoriteRecord(cached);
+      setFavorited(Boolean(cached));
+      setFavoriteError(null);
+      if (favorite === undefined && cached?.assetId) {
+        setFavoriteChecking(true);
+        void readCloudFavorite(cached, authority, controller.signal)
+          .then((result) => {
+            if (!current()) return;
+            setFavoriteRecord(result.favorite);
+            setFavorited(result.favorited);
+          })
+          .catch((error) => {
+            if (current())
+              setFavoriteError(
+                error instanceof Error
+                  ? error.message
+                  : "Refresh your account favorites to check this image.",
+              );
+          })
+          .finally(() => {
+            if (current()) setFavoriteChecking(false);
+          });
+      }
     } catch {
-      // Favorite failed silently
-    } finally {
-      setIsSaving(false);
+      setFavoriteError(
+        "Favorites could not be read. Your browser data has been preserved.",
+      );
     }
-  }, [id, src, prompt, data, mimeType, favorited, isSaving, onFavoriteChange]);
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [id, authority, favorite]);
+
+  const handleToggleFavorite = useCallback(
+    async (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      if (isSaving || favoriteChecking) return;
+      if (!authority.scope.isCurrent(authority.token)) return;
+      setFavoriteError(null);
+      setIsSaving(true);
+      try {
+        let warning: string | null = null;
+        if (favorited)
+          warning = (await removeFavorite(favoriteRecord ?? id, authority))
+            .cacheWarning;
+        else {
+          const saved = await addFavorite(
+            { id, url: src, prompt, data, mimeType },
+            authority,
+          );
+          if (!authority.scope.isCurrent(authority.token)) return;
+          setFavoriteRecord(saved);
+          warning = saved.cacheWarning ?? null;
+        }
+        if (!authority.scope.isCurrent(authority.token)) return;
+        setFavorited(!favorited);
+        onFavoriteChange?.(warning);
+      } catch (error) {
+        if (!authority.scope.isCurrent(authority.token)) return;
+        setFavoriteError(
+          error instanceof Error
+            ? error.message
+            : "The image was not saved. Download it and retry.",
+        );
+      } finally {
+        if (authority.scope.isCurrent(authority.token)) setIsSaving(false);
+      }
+    },
+    [
+      id,
+      src,
+      prompt,
+      data,
+      mimeType,
+      favorited,
+      isSaving,
+      favoriteChecking,
+      favoriteRecord,
+      onFavoriteChange,
+      authority,
+    ],
+  );
 
   const handleDownload = useCallback(async () => {
     try {
-      const response = await fetch(src);
-      const blob = await response.blob();
+      const blob = await generatedImageBlob(src, authority);
+      if (!authority.scope.isCurrent(authority.token)) return;
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = `arcanea-imagine-${id}.png`;
+      const extension =
+        blob.type === "image/webp"
+          ? "webp"
+          : blob.type === "image/jpeg"
+            ? "jpg"
+            : "png";
+      a.download = `arcanea-imagine-${id}.${extension}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch {
-      window.open(src, '_blank');
+      if (!authority.scope.isCurrent(authority.token)) return;
+      try {
+        const original = new URL(src);
+        if (
+          original.protocol === "https:" &&
+          !original.username &&
+          !original.password
+        )
+          window.open(src, "_blank", "noopener,noreferrer");
+      } catch {
+        /* Invalid sources do not open another page. */
+      }
     }
-  }, [src, id]);
+  }, [src, id, authority]);
 
   const handleCopyPrompt = useCallback(() => {
     navigator.clipboard.writeText(prompt);
@@ -102,31 +206,44 @@ export function ImageCard({
   }, [prompt]);
 
   const [shared, setShared] = useState(false);
-  const handleShare = useCallback(async (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    const shareUrl = src.startsWith('data:') ? window.location.href : src;
-    const shareData = { title: 'Arcanea Imagine', text: prompt, url: shareUrl };
-    try {
-      if (navigator.share && !src.startsWith('data:')) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(shareUrl);
-        setShared(true);
-        setTimeout(() => setShared(false), 2000);
+  const handleShare = useCallback(
+    async (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      const shareUrl = src.startsWith("data:") ? window.location.href : src;
+      const shareData = {
+        title: "Arcanea Imagine",
+        text: prompt,
+        url: shareUrl,
+      };
+      try {
+        if (navigator.share && !src.startsWith("data:")) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(shareUrl);
+          setShared(true);
+          setTimeout(() => setShared(false), 2000);
+        }
+      } catch {
+        // Share cancelled or failed
       }
-    } catch {
-      // Share cancelled or failed
-    }
-  }, [src, prompt]);
+    },
+    [src, prompt],
+  );
 
   // Heart SVG — filled when favorited, outline when not
-  const HeartIcon = ({ size = 14, className = '' }: { size?: number; className?: string }) => (
+  const HeartIcon = ({
+    size = 14,
+    className = "",
+  }: {
+    size?: number;
+    className?: string;
+  }) => (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={favorited ? 'var(--arc-void)' : 'none'}
-      stroke={favorited ? 'var(--arc-void)' : 'white'}
+      fill={favorited ? "var(--arc-void)" : "none"}
+      stroke={favorited ? "var(--arc-void)" : "white"}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -139,9 +256,12 @@ export function ImageCard({
   return (
     <>
       <m.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, delay: index * 0.08 }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.4,
+          delay: reduceMotion ? 0 : index * 0.08,
+        }}
         className="group relative rounded-sm sm:rounded-2xl overflow-hidden cursor-pointer"
         onClick={() => setIsExpanded(true)}
       >
@@ -153,7 +273,7 @@ export function ImageCard({
             loop
             muted
             playsInline
-            className={`w-full ${ASPECT_CLASSES[aspectRatio] || 'aspect-square'} object-cover`}
+            className={`w-full ${ASPECT_CLASSES[aspectRatio] || "aspect-square"} object-cover`}
             onClick={(e) => {
               e.stopPropagation();
               setShowVideo(false);
@@ -163,9 +283,12 @@ export function ImageCard({
           <Image
             src={src}
             alt={prompt}
-            className={`w-full ${ASPECT_CLASSES[aspectRatio] || 'aspect-square'} object-cover transition-transform duration-500 group-hover:scale-105`}
+            unoptimized
+            width={1024}
+            height={1024}
+            className={`w-full ${ASPECT_CLASSES[aspectRatio] || "aspect-square"} object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none`}
             loading="lazy"
-           />
+          />
         )}
 
         {/* Video badge */}
@@ -185,34 +308,57 @@ export function ImageCard({
         {/* Favorite button — always visible (top-left) */}
         <button
           onClick={handleToggleFavorite}
-          className={`absolute top-3 left-3 p-2 rounded-xl backdrop-blur-sm transition-all z-10 ${
+          disabled={isSaving || favoriteChecking}
+          aria-label={
+            favorited ? "Remove from favorites" : "Save image to favorites"
+          }
+          aria-pressed={favorited}
+          className={`absolute top-3 left-3 min-h-11 min-w-11 p-2 rounded-xl backdrop-blur-sm transition-all z-10 ${
             favorited
-              ? 'bg-pink-500/20 border border-pink-500/30'
-              : 'bg-black/30 opacity-0 group-hover:opacity-100 hover:bg-white/20'
-          } ${isSaving ? 'animate-pulse' : ''}`}
-          title={favorited ? 'Remove from favorites' : 'Add to favorites'}
+              ? "bg-pink-500/20 border border-pink-500/30"
+              : "bg-black/30 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus-visible:opacity-100 hover:bg-white/20"
+          } ${isSaving ? "animate-pulse" : ""}`}
+          title={favorited ? "Remove from favorites" : "Add to favorites"}
         >
           <HeartIcon size={16} />
         </button>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <div className="relative bg-[var(--arc-cosmic-surface)] opacity-100 pointer-events-none sm:absolute sm:inset-0 sm:bg-transparent sm:bg-gradient-to-t sm:from-black/80 sm:via-black/20 sm:to-transparent sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 sm:transition-opacity sm:duration-200 motion-reduce:transition-none">
           {/* Top-right actions */}
-          <div className="absolute top-3 right-3 flex gap-1.5 pointer-events-auto">
+          <div className="relative flex flex-wrap gap-1 p-2 pointer-events-auto sm:absolute sm:top-3 sm:right-3 sm:gap-1.5 sm:p-0">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleCopyPrompt();
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
-              title={copied ? 'Copied!' : 'Copy prompt'}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+              title={copied ? "Copied!" : "Copy prompt"}
             >
               {copied ? (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--arc-wind)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--arc-wind)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               ) : (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                   <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
                 </svg>
@@ -223,10 +369,19 @@ export function ImageCard({
                 e.stopPropagation();
                 handleDownload();
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               title="Download"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
@@ -234,15 +389,33 @@ export function ImageCard({
             </button>
             <button
               onClick={handleShare}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
-              title={shared ? 'Link copied!' : 'Share'}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+              title={shared ? "Link copied!" : "Share"}
             >
               {shared ? (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--arc-wind)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--arc-wind)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               ) : (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <circle cx="18" cy="5" r="3" />
                   <circle cx="6" cy="12" r="3" />
                   <circle cx="18" cy="19" r="3" />
@@ -254,21 +427,33 @@ export function ImageCard({
           </div>
 
           {/* Bottom info */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 pointer-events-auto">
+          <div className="relative p-2 pt-0 pointer-events-auto sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:p-4">
             <p className="text-xs text-white/70 line-clamp-2 font-body leading-relaxed">
               {prompt}
             </p>
-            <div className="flex items-center gap-1.5 mt-2">
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
               {onVary && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onVary(prompt);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({
+                      top: 0,
+                      behavior: reduceMotion ? "auto" : "smooth",
+                    });
                   }}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--arc-brand-atlantean-teal)]/80 text-white hover:bg-[var(--arc-brand-atlantean-teal)] transition-all backdrop-blur-sm flex items-center gap-1.5"
+                  className="inline-flex min-h-11 min-w-11 items-center gap-1.5 rounded-lg border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] px-3 text-xs font-medium text-[var(--arc-text-primary)] transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                 >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M16 3h5v5" />
                     <path d="M8 3H3v5" />
                     <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3" />
@@ -285,15 +470,17 @@ export function ImageCard({
                     onAnimate(id, src);
                   }}
                   disabled={isAnimating}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/80 text-white hover:bg-violet-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+                  className="min-h-11 min-w-11 rounded-lg border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] px-3 text-xs font-medium text-[var(--arc-text-primary)] transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                 >
                   {isAnimating ? (
                     <span className="flex items-center gap-1.5">
                       <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       Animating
                     </span>
+                  ) : src.startsWith("data:") ? (
+                    "Save and animate"
                   ) : (
-                    'Animate'
+                    "Animate"
                   )}
                 </button>
               )}
@@ -306,11 +493,21 @@ export function ImageCard({
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm">
             <div className="flex flex-col items-center gap-2">
               <div className="w-8 h-8 border-2 border-violet-400/30 border-t-violet-400 rounded-full animate-spin" />
-              <span className="text-xs text-violet-300">Bringing to life...</span>
+              <span className="text-xs text-violet-300">
+                Bringing to life...
+              </span>
             </div>
           </div>
         )}
       </m.div>
+      {favoriteError && (
+        <p
+          role="alert"
+          className="mt-2 text-sm text-[var(--arc-text-secondary)]"
+        >
+          {favoriteError}
+        </p>
+      )}
 
       {/* Lightbox */}
       {isExpanded && (
@@ -319,9 +516,9 @@ export function ImageCard({
           onClick={() => setIsExpanded(false)}
         >
           <m.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: reduceMotion ? 0 : 0.3 }}
             className="relative max-w-5xl max-h-[90vh] w-full"
             onClick={(e) => e.stopPropagation()}
           >
@@ -337,8 +534,11 @@ export function ImageCard({
               <Image
                 src={src}
                 alt={prompt}
+                unoptimized
+                width={1024}
+                height={1024}
                 className="max-w-full max-h-[80vh] mx-auto object-contain rounded-2xl"
-               />
+              />
             )}
 
             {/* Lightbox controls */}
@@ -352,19 +552,19 @@ export function ImageCard({
                   onClick={() => handleToggleFavorite()}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${
                     favorited
-                      ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30'
-                      : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
-                  } ${isSaving ? 'animate-pulse' : ''}`}
+                      ? "bg-pink-500/20 text-pink-300 border border-pink-500/30"
+                      : "bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm"
+                  } ${isSaving ? "animate-pulse" : ""}`}
                 >
                   <HeartIcon size={16} />
-                  {favorited ? 'Favorited' : 'Favorite'}
+                  {favorited ? "Favorited" : "Favorite"}
                 </button>
                 {videoUrl && (
                   <button
                     onClick={() => setShowVideo(!showVideo)}
                     className="px-4 py-2 rounded-xl text-sm font-medium bg-violet-600/80 text-white hover:bg-violet-500 transition-all"
                   >
-                    {showVideo ? 'Show Image' : 'Play Video'}
+                    {showVideo ? "Show Image" : "Play Video"}
                   </button>
                 )}
                 <button
@@ -377,20 +577,29 @@ export function ImageCard({
                   onClick={handleCopyPrompt}
                   className="px-4 py-2 rounded-xl text-sm font-medium bg-white/10 text-white hover:bg-white/20 transition-all backdrop-blur-sm"
                 >
-                  {copied ? 'Copied!' : 'Copy Prompt'}
+                  {copied ? "Copied!" : "Copy Prompt"}
                 </button>
                 <button
                   onClick={handleShare}
                   className="px-4 py-2 rounded-xl text-sm font-medium bg-white/10 text-white hover:bg-white/20 transition-all backdrop-blur-sm flex items-center gap-2"
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="18" cy="5" r="3" />
                     <circle cx="6" cy="12" r="3" />
                     <circle cx="18" cy="19" r="3" />
                     <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
                     <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
                   </svg>
-                  {shared ? 'Shared!' : 'Share'}
+                  {shared ? "Shared!" : "Share"}
                 </button>
                 <button
                   onClick={() => setIsExpanded(false)}
@@ -406,7 +615,16 @@ export function ImageCard({
               onClick={() => setIsExpanded(false)}
               className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>

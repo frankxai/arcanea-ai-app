@@ -266,7 +266,8 @@ export function registerCanonTools(server: McpServer) {
   server.registerTool(
     "validate_canon",
     {
-      description: "Check content for Arcanea canon compliance",
+      description:
+        "Screen configured terms and explicit Guardian/Gate declarations. Returns heuristic findings and evidence spans; human canon approval remains required.",
       inputSchema: {
         content: z.string(),
         contentType: z.enum(["story", "character", "general"]).optional(),
