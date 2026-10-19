@@ -1,105 +1,64 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client'
+"use client";
 
 // Arcanea Prompt Books — Zustand Store
 // Client-side state management with localStorage persistence
 
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import type {
-  Collection, Prompt, Tag, PromptType, SyncStatus,
-  CreateCollectionInput, UpdateCollectionInput,
-  CreatePromptInput, UpdatePromptInput,
-  CreateTagInput, UpdateTagInput,
-  PromptFilters,
-} from './types'
-import * as service from './service'
-import type { SupabaseClient } from '@supabase/supabase-js'
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type { PromptBooksState } from "./store-state";
+import * as service from "./service";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
-// =====================================================================
-// Store Interface
-// =====================================================================
+// Store Implementation
 
-interface PromptBooksState {
-  // Data
-  collections: Collection[]
-  prompts: Prompt[]
-  tags: Tag[]
+let searchGeneration = 0;
+let promptLoadGeneration = 0;
+let collectionLoadGeneration = 0;
+let tagLoadGeneration = 0;
 
-  // Active state
-  activeCollectionId: string | null
-  activePromptId: string | null
-  activePromptType: PromptType | null
-
-  // UI state
-  sidebarCollapsed: boolean
-  editorSplitView: boolean
-  viewMode: 'grid' | 'list'
-
-  // Search
-  searchQuery: string
-  searchResults: Prompt[]
-  isSearching: boolean
-
-  // Sync
-  syncStatus: SyncStatus
-  lastSyncAt: string | null
-
-  // Supabase client reference (set on init)
-  _client: SupabaseClient | null
-  _userId: string | null
-
-  // Actions — Initialization
-  initialize: (client: SupabaseClient, userId: string) => Promise<void>
-
-  // Actions — Collections
-  loadCollections: () => Promise<void>
-  addCollection: (collection: Collection) => void
-  updateCollectionInStore: (collection: Collection) => void
-  removeCollection: (id: string) => void
-  createCollection: (input: CreateCollectionInput) => Promise<Collection>
-  updateCollection: (id: string, input: UpdateCollectionInput) => Promise<Collection>
-  deleteCollection: (id: string) => Promise<void>
-  setActiveCollection: (id: string | null) => void
-
-  // Actions — Prompts
-  loadPrompts: (filters?: PromptFilters) => Promise<void>
-  addPrompt: (prompt: Prompt) => void
-  updatePromptInStore: (prompt: Prompt) => void
-  removePrompt: (id: string) => void
-  createPrompt: (input: CreatePromptInput) => Promise<Prompt>
-  updatePrompt: (id: string, input: UpdatePromptInput) => Promise<Prompt>
-  deletePrompt: (id: string) => Promise<void>
-  duplicatePrompt: (id: string) => Promise<Prompt>
-  setActivePrompt: (id: string | null) => void
-  setActivePromptType: (type: PromptType | null) => void
-
-  // Actions — Tags
-  loadTags: (collectionId?: string) => Promise<void>
-  addTag: (tag: Tag) => void
-  updateTagInStore: (tag: Tag) => void
-  removeTag: (id: string) => void
-  createTag: (input: CreateTagInput) => Promise<Tag>
-  updateTag: (id: string, input: UpdateTagInput) => Promise<Tag>
-  deleteTag: (id: string) => Promise<void>
-
-  // Actions — Search
-  search: (query: string) => Promise<void>
-  clearSearch: () => void
-
-  // Actions — UI
-  toggleSidebar: () => void
-  toggleSplitView: () => void
-  setViewMode: (mode: 'grid' | 'list') => void
-
-  // Actions — Sync
-  setSyncStatus: (status: SyncStatus) => void
-  setLastSyncAt: (time: string) => void
+function currentActor(client: SupabaseClient, userId: string, version: number) {
+  const state = usePromptBooksStore.getState();
+  return (
+    state._client === client &&
+    state._userId === userId &&
+    state._sessionVersion === version
+  );
 }
 
-// =====================================================================
-// Store Implementation
-// =====================================================================
+async function actor() {
+  const {
+    _client: client,
+    _userId: userId,
+    _sessionVersion: version,
+  } = usePromptBooksStore.getState();
+  if (!client || !userId) throw new Error("Not initialized");
+  const verified = await client.auth.getUser();
+  if (
+    verified.error ||
+    verified.data.user?.id !== userId ||
+    !currentActor(client, userId, version)
+  )
+    throw new Error("Prompt Books identity changed");
+  return { client, userId, version };
+}
+
+function assertActor(client: SupabaseClient, userId: string, version: number) {
+  if (!currentActor(client, userId, version))
+    throw new Error("Prompt Books identity changed");
+}
+
+const privateState = {
+  collections: [],
+  prompts: [],
+  tags: [],
+  activeCollectionId: null,
+  activePromptId: null,
+  activePromptType: null,
+  searchQuery: "",
+  searchResults: [],
+  isSearching: false,
+  lastSyncAt: null,
+};
 
 export const usePromptBooksStore = create<PromptBooksState>()(
   persist(
@@ -117,276 +76,401 @@ export const usePromptBooksStore = create<PromptBooksState>()(
       // UI state
       sidebarCollapsed: false,
       editorSplitView: false,
-      viewMode: 'grid',
+      viewMode: "grid",
 
       // Search
-      searchQuery: '',
+      searchQuery: "",
       searchResults: [],
       isSearching: false,
 
       // Sync
-      syncStatus: 'offline',
+      syncStatus: "offline",
       lastSyncAt: null,
 
       // Internal
       _client: null,
       _userId: null,
+      _sessionVersion: 0,
 
-      // =====================================================
       // Initialization
-      // =====================================================
 
+      reset: () => {
+        searchGeneration += 1;
+        promptLoadGeneration += 1;
+        collectionLoadGeneration += 1;
+        tagLoadGeneration += 1;
+        set({
+          ...privateState,
+          _client: null,
+          _userId: null,
+          _sessionVersion: get()._sessionVersion + 1,
+          syncStatus: "offline",
+        });
+      },
       initialize: async (client, userId) => {
-        set({ _client: client, _userId: userId, syncStatus: 'syncing' })
-
+        get().reset();
+        const version = get()._sessionVersion;
+        set({ _client: client, _userId: userId, syncStatus: "syncing" });
         try {
-          await get().loadCollections()
-          await get().loadTags()
-          set({ syncStatus: 'synced', lastSyncAt: new Date().toISOString() })
+          await Promise.all([
+            get().loadCollections(),
+            get().loadTags(),
+            get().loadPrompts(),
+          ]);
+          if (currentActor(client, userId, version))
+            set({ syncStatus: "synced", lastSyncAt: new Date().toISOString() });
         } catch {
-          set({ syncStatus: 'error' })
+          if (currentActor(client, userId, version))
+            set({ syncStatus: "error" });
         }
       },
 
-      // =====================================================
       // Collections
-      // =====================================================
 
       loadCollections: async () => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) return
+        const {
+          _client: client,
+          _userId: userId,
+          _sessionVersion: version,
+        } = get();
+        if (!client || !userId) return;
+        const generation = ++collectionLoadGeneration;
 
-        const collections = await service.listCollections(client, userId)
-        set({ collections })
+        const collections = await service.listCollections(client, userId);
+        if (
+          generation === collectionLoadGeneration &&
+          currentActor(client, userId, version)
+        )
+          set({
+            collections: collections.filter((row) => row.userId === userId),
+          });
       },
 
       addCollection: (collection) => {
+        if (collection.userId !== get()._userId) return;
         set((s) => ({
-          collections: [...s.collections.filter((c) => c.id !== collection.id), collection],
-        }))
+          collections: [
+            ...s.collections.filter((c) => c.id !== collection.id),
+            collection,
+          ],
+        }));
       },
 
       updateCollectionInStore: (collection) => {
+        if (collection.userId !== get()._userId) return;
         set((s) => ({
-          collections: s.collections.map((c) => c.id === collection.id ? collection : c),
-        }))
+          collections: s.collections.map((c) =>
+            c.id === collection.id ? collection : c,
+          ),
+        }));
       },
 
       removeCollection: (id) => {
         set((s) => ({
           collections: s.collections.filter((c) => c.id !== id),
-          activeCollectionId: s.activeCollectionId === id ? null : s.activeCollectionId,
-        }))
+          activeCollectionId:
+            s.activeCollectionId === id ? null : s.activeCollectionId,
+        }));
       },
 
       createCollection: async (input) => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        const collection = await service.createCollection(client, userId, input)
-        get().addCollection(collection)
-        return collection
+        const collection = await service.createCollection(
+          client,
+          userId,
+          input,
+        );
+        assertActor(client, userId, version);
+        if (collection.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().addCollection(collection);
+        return collection;
       },
 
       updateCollection: async (id, input) => {
-        const { _client: client } = get()
-        if (!client) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        const collection = await service.updateCollection(client, id, input)
-        get().updateCollectionInStore(collection)
-        return collection
+        const collection = await service.updateCollection(client, id, input);
+        assertActor(client, userId, version);
+        if (collection.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().updateCollectionInStore(collection);
+        return collection;
       },
 
       deleteCollection: async (id) => {
-        const { _client: client } = get()
-        if (!client) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        await service.deleteCollection(client, id)
-        get().removeCollection(id)
+        await service.deleteCollection(client, id);
+        assertActor(client, userId, version);
+        get().removeCollection(id);
       },
 
       setActiveCollection: (id) => {
-        set({ activeCollectionId: id, activePromptId: null })
-        if (id) {
-          get().loadPrompts({ collectionId: id })
-          get().loadTags(id)
-        }
+        const selection = id === "_all" ? null : id;
+        set({ activeCollectionId: selection, activePromptId: null });
+        void get()
+          .loadPrompts(id && id !== "_all" ? { collectionId: id } : undefined)
+          .catch(() => get().setSyncStatus("error"));
+        void get()
+          .loadTags(id && id !== "_all" ? id : undefined)
+          .catch(() => get().setSyncStatus("error"));
       },
 
-      // =====================================================
       // Prompts
-      // =====================================================
 
       loadPrompts: async (filters) => {
-        const { _client: client, _userId: userId, activeCollectionId } = get()
-        if (!client || !userId) return
+        const {
+          _client: client,
+          _userId: userId,
+          activeCollectionId,
+          _sessionVersion: version,
+        } = get();
+        if (!client || !userId) return;
+        const generation = ++promptLoadGeneration;
 
         const prompts = await service.listPrompts(client, {
-          userId,
-          collectionId: filters?.collectionId || activeCollectionId || undefined,
+          collectionId:
+            filters?.collectionId || activeCollectionId || undefined,
           promptType: filters?.promptType || undefined,
           ...filters,
-        })
-        set({ prompts })
+          userId,
+        });
+        if (
+          generation !== promptLoadGeneration ||
+          !currentActor(client, userId, version) ||
+          get().activeCollectionId !== activeCollectionId
+        )
+          return;
+        set((state) => ({
+          prompts: prompts
+            .filter((row) => row.userId === userId)
+            .map((incoming) => {
+              const current = state.prompts.find(
+                (row) => row.id === incoming.id && row.userId === userId,
+              );
+              return current &&
+                Date.parse(current.updatedAt) >= Date.parse(incoming.updatedAt)
+                ? current
+                : incoming;
+            }),
+        }));
       },
 
       addPrompt: (prompt) => {
+        if (prompt.userId !== get()._userId) return;
         set((s) => ({
           prompts: [...s.prompts.filter((p) => p.id !== prompt.id), prompt],
-        }))
+        }));
       },
 
       updatePromptInStore: (prompt) => {
+        if (prompt.userId !== get()._userId) return;
         set((s) => ({
-          prompts: s.prompts.map((p) => p.id === prompt.id ? prompt : p),
-        }))
+          prompts: s.prompts.map((p) =>
+            p.id === prompt.id &&
+            Date.parse(prompt.updatedAt) >= Date.parse(p.updatedAt)
+              ? prompt
+              : p,
+          ),
+        }));
       },
 
       removePrompt: (id) => {
         set((s) => ({
           prompts: s.prompts.filter((p) => p.id !== id),
           activePromptId: s.activePromptId === id ? null : s.activePromptId,
-        }))
+        }));
       },
 
       createPrompt: async (input) => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        const prompt = await service.createPrompt(client, userId, input)
-        get().addPrompt(prompt)
-        return prompt
+        const prompt = await service.createPrompt(client, userId, input);
+        assertActor(client, userId, version);
+        if (prompt.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().addPrompt(prompt);
+        return prompt;
       },
 
       updatePrompt: async (id, input) => {
-        const { _client: client } = get()
-        if (!client) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        const prompt = await service.updatePrompt(client, id, input)
-        get().updatePromptInStore(prompt)
-        return prompt
+        const prompt = await service.updatePrompt(client, id, input);
+        assertActor(client, userId, version);
+        if (prompt.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().updatePromptInStore(prompt);
+        return prompt;
       },
 
       deletePrompt: async (id) => {
-        const { _client: client } = get()
-        if (!client) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        await service.deletePrompt(client, id)
-        get().removePrompt(id)
+        await service.deletePrompt(client, id);
+        assertActor(client, userId, version);
+        get().removePrompt(id);
       },
 
       duplicatePrompt: async (id) => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) throw new Error('Not initialized')
-
-        const prompt = await service.duplicatePrompt(client, id, userId)
-        get().addPrompt(prompt)
-        return prompt
+        const { client, userId, version } = await actor();
+        const prompt = await service.duplicatePrompt(client, id, userId);
+        assertActor(client, userId, version);
+        if (prompt.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().addPrompt(prompt);
+        return prompt;
       },
 
       setActivePrompt: (id) => set({ activePromptId: id }),
       setActivePromptType: (type) => set({ activePromptType: type }),
 
-      // =====================================================
       // Tags
-      // =====================================================
 
       loadTags: async (collectionId) => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) return
+        const {
+          _client: client,
+          _userId: userId,
+          _sessionVersion: version,
+        } = get();
+        if (!client || !userId) return;
+        const generation = ++tagLoadGeneration;
 
-        const tags = await service.listTags(client, userId, collectionId)
-        set({ tags })
+        const tags = await service.listTags(client, userId, collectionId);
+        if (
+          generation === tagLoadGeneration &&
+          currentActor(client, userId, version)
+        )
+          set({ tags: tags.filter((row) => row.userId === userId) });
       },
 
       addTag: (tag) => {
+        if (tag.userId !== get()._userId) return;
         set((s) => ({
           tags: [...s.tags.filter((t) => t.id !== tag.id), tag],
-        }))
+        }));
       },
 
       updateTagInStore: (tag) => {
+        if (tag.userId !== get()._userId) return;
         set((s) => ({
-          tags: s.tags.map((t) => t.id === tag.id ? tag : t),
-        }))
+          tags: s.tags.map((t) => (t.id === tag.id ? tag : t)),
+        }));
       },
 
       removeTag: (id) => {
-        set((s) => ({ tags: s.tags.filter((t) => t.id !== id) }))
+        set((s) => ({ tags: s.tags.filter((t) => t.id !== id) }));
       },
 
       createTag: async (input) => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        const tag = await service.createTag(client, userId, input)
-        get().addTag(tag)
-        return tag
+        const tag = await service.createTag(client, userId, input);
+        assertActor(client, userId, version);
+        if (tag.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().addTag(tag);
+        return tag;
       },
 
       updateTag: async (id, input) => {
-        const { _client: client } = get()
-        if (!client) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        const tag = await service.updateTag(client, id, input)
-        get().updateTagInStore(tag)
-        return tag
+        const tag = await service.updateTag(client, id, input);
+        assertActor(client, userId, version);
+        if (tag.userId !== userId)
+          throw new Error("Unexpected Prompt Books owner");
+        get().updateTagInStore(tag);
+        return tag;
       },
 
       deleteTag: async (id) => {
-        const { _client: client } = get()
-        if (!client) throw new Error('Not initialized')
+        const { client, userId, version } = await actor();
 
-        await service.deleteTag(client, id)
-        get().removeTag(id)
+        await service.deleteTag(client, id);
+        assertActor(client, userId, version);
+        get().removeTag(id);
       },
 
-      // =====================================================
       // Search
-      // =====================================================
 
       search: async (query) => {
-        const { _client: client, _userId: userId } = get()
-        if (!client || !userId) return
+        const {
+          _client: client,
+          _userId: userId,
+          _sessionVersion: version,
+        } = get();
+        if (!client || !userId) return;
 
-        set({ searchQuery: query, isSearching: true })
+        const generation = ++searchGeneration;
+        const isCurrent = () =>
+          generation === searchGeneration &&
+          currentActor(client, userId, version);
+        set({ searchQuery: query, searchResults: [], isSearching: true });
 
         try {
-          const results = await service.searchPrompts(client, userId, query)
-          set({ searchResults: results, isSearching: false })
+          const results = await service.searchPrompts(client, userId, query);
+          if (isCurrent())
+            set({
+              searchResults: results.filter((row) => row.userId === userId),
+              isSearching: false,
+            });
         } catch {
-          set({ searchResults: [], isSearching: false })
+          if (isCurrent()) set({ searchResults: [], isSearching: false });
         }
       },
 
       clearSearch: () => {
-        set({ searchQuery: '', searchResults: [], isSearching: false })
+        searchGeneration += 1;
+        set({ searchQuery: "", searchResults: [], isSearching: false });
       },
 
-      // =====================================================
       // UI
-      // =====================================================
 
-      toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
-      toggleSplitView: () => set((s) => ({ editorSplitView: !s.editorSplitView })),
+      toggleSidebar: () =>
+        set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
+      toggleSplitView: () =>
+        set((s) => ({ editorSplitView: !s.editorSplitView })),
       setViewMode: (mode) => set({ viewMode: mode }),
 
-      // =====================================================
       // Sync
-      // =====================================================
 
       setSyncStatus: (status) => set({ syncStatus: status }),
       setLastSyncAt: (time) => set({ lastSyncAt: time }),
     }),
     {
-      name: 'arcanea-prompt-books',
+      name: "arcanea-prompt-books",
+      // Older installations may contain arbitrary private fields. Hydrate only
+      // validated preferences, regardless of their stored version.
+      merge: (persisted, current) => {
+        const preferences =
+          persisted && typeof persisted === "object"
+            ? (persisted as Record<string, unknown>)
+            : {};
+        return {
+          ...current,
+          sidebarCollapsed:
+            typeof preferences.sidebarCollapsed === "boolean"
+              ? preferences.sidebarCollapsed
+              : current.sidebarCollapsed,
+          editorSplitView:
+            typeof preferences.editorSplitView === "boolean"
+              ? preferences.editorSplitView
+              : current.editorSplitView,
+          viewMode:
+            preferences.viewMode === "grid" || preferences.viewMode === "list"
+              ? preferences.viewMode
+              : current.viewMode,
+        };
+      },
       partialize: (state) => ({
         // Only persist UI preferences, not data
         sidebarCollapsed: state.sidebarCollapsed,
         editorSplitView: state.editorSplitView,
         viewMode: state.viewMode,
-        activeCollectionId: state.activeCollectionId,
       }),
     },
   ),
-)
+);

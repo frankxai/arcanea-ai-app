@@ -1,34 +1,39 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client'
+"use client";
 
-import { useEffect, useState, useCallback, useRef } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { usePromptBooksStore } from '@/lib/prompt-books/store'
-import { usePromptEditor } from '@/hooks/use-prompt-editor'
-import { EditorToolbar } from '@/components/prompt-books/editor/EditorToolbar'
-import { PromptTypeTabs } from '@/components/prompt-books/editor/PromptTypeTabs'
-import { ContentEditor } from '@/components/prompt-books/editor/ContentEditor'
-import { SystemPromptEditor } from '@/components/prompt-books/editor/SystemPromptEditor'
-import { NegativePromptEditor } from '@/components/prompt-books/editor/NegativePromptEditor'
-import { MarkdownPreview } from '@/components/prompt-books/editor/MarkdownPreview'
-import { WeightModifier } from '@/components/prompt-books/editor/WeightModifier'
-import { VersionHistoryDrawer } from '@/components/prompt-books/editor/VersionHistoryDrawer'
-import { TagChipBar } from '@/components/prompt-books/tags/TagChipBar'
-import { TagSelector } from '@/components/prompt-books/tags/TagSelector'
-import { ContextPanel } from '@/components/prompt-books/context/ContextPanel'
-import { SaveAsTemplateDialog } from '@/components/prompt-books/templates/SaveAsTemplateDialog'
-import { promptToMd } from '@/lib/prompt-books/markdown'
-import { applyWeight } from '@/lib/prompt-books/weight-syntax'
-import * as service from '@/lib/prompt-books/service'
-import type { WeightSyntaxType } from '@/lib/prompt-books/constants'
-import type { TagCategory, ContextConfig, FewShotExample, ChainStep } from '@/lib/prompt-books/types'
-import { cn } from '@/lib/utils'
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { usePromptBooksStore } from "@/lib/prompt-books/store";
+import { usePromptEditor } from "@/hooks/use-prompt-editor";
+import { EditorToolbar } from "@/components/prompt-books/editor/EditorToolbar";
+import { PromptTypeTabs } from "@/components/prompt-books/editor/PromptTypeTabs";
+import { ContentEditor } from "@/components/prompt-books/editor/ContentEditor";
+import { SystemPromptEditor } from "@/components/prompt-books/editor/SystemPromptEditor";
+import { NegativePromptEditor } from "@/components/prompt-books/editor/NegativePromptEditor";
+import { MarkdownPreview } from "@/components/prompt-books/editor/MarkdownPreview";
+import { WeightModifier } from "@/components/prompt-books/editor/WeightModifier";
+import { VersionHistoryDrawer } from "@/components/prompt-books/editor/VersionHistoryDrawer";
+import { TagChipBar } from "@/components/prompt-books/tags/TagChipBar";
+import { TagSelector } from "@/components/prompt-books/tags/TagSelector";
+import { ContextPanel } from "@/components/prompt-books/context/ContextPanel";
+import { SaveAsTemplateDialog } from "@/components/prompt-books/templates/SaveAsTemplateDialog";
+import { promptToMd } from "@/lib/prompt-books/markdown";
+import { applyWeight } from "@/lib/prompt-books/weight-syntax";
+import * as service from "@/lib/prompt-books/service";
+import type { WeightSyntaxType } from "@/lib/prompt-books/constants";
+import type {
+  TagCategory,
+  ContextConfig,
+  FewShotExample,
+  ChainStep,
+} from "@/lib/prompt-books/types";
+import { cn } from "@/lib/utils";
 
 export default function PromptEditorPage() {
-  const params = useParams()
-  const router = useRouter()
-  const collectionId = params.collectionId as string
-  const promptId = params.promptId as string
+  const params = useParams();
+  const router = useRouter();
+  const collectionId = params.collectionId as string;
+  const promptId = params.promptId as string;
 
   const {
     setActiveCollection,
@@ -41,7 +46,7 @@ export default function PromptEditorPage() {
     prompts,
     _client: client,
     _userId: userId,
-  } = usePromptBooksStore()
+  } = usePromptBooksStore();
 
   const {
     prompt,
@@ -49,6 +54,7 @@ export default function PromptEditorPage() {
     isDirty,
     isSaving,
     lastSavedAt,
+    saveError,
     wordCount,
     charCount,
     typeConfig,
@@ -57,165 +63,199 @@ export default function PromptEditorPage() {
     handleDelete,
     handleDuplicate,
     handleCopy,
-  } = usePromptEditor(promptId)
+  } = usePromptEditor(promptId);
 
-  const [historyOpen, setHistoryOpen] = useState(false)
-  const [tagSelectorOpen, setTagSelectorOpen] = useState(false)
-  const [saveTemplateOpen, setSaveTemplateOpen] = useState(false)
-  const contentRef = useRef<HTMLTextAreaElement>(null)
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [tagSelectorOpen, setTagSelectorOpen] = useState(false);
+  const [saveTemplateOpen, setSaveTemplateOpen] = useState(false);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
 
   // Context engineering state
   const [contextConfig, setContextConfig] = useState<ContextConfig>(
-    prompt?.contextConfig ?? {}
-  )
+    prompt?.contextConfig ?? {},
+  );
   const [fewShotExamples, setFewShotExamples] = useState<FewShotExample[]>(
-    prompt?.fewShotExamples ?? []
-  )
+    prompt?.fewShotExamples ?? [],
+  );
   const [chainSteps, setChainSteps] = useState<ChainStep[]>(
-    prompt?.chainSteps ?? []
-  )
+    prompt?.chainSteps ?? [],
+  );
 
   // Tag IDs assigned to this prompt
-  const assignedTagIds = (prompt?.tags ?? []).map((t) => t.id)
+  const assignedTagIds = (prompt?.tags ?? []).map((t) => t.id);
 
   // Sync context state when prompt loads
   useEffect(() => {
     if (prompt) {
-      setContextConfig(prompt.contextConfig ?? {})
-      setFewShotExamples(prompt.fewShotExamples ?? [])
-      setChainSteps(prompt.chainSteps ?? [])
+      setContextConfig(prompt.contextConfig ?? {});
+      setFewShotExamples(prompt.fewShotExamples ?? []);
+      setChainSteps(prompt.chainSteps ?? []);
     }
-  }, [prompt?.id])
+  }, [prompt?.id]);
 
   // Set active collection and prompt on mount
   useEffect(() => {
-    if (collectionId) setActiveCollection(collectionId)
-    if (promptId) setActivePrompt(promptId)
-    return () => setActivePrompt(null)
-  }, [collectionId, promptId, setActiveCollection, setActivePrompt])
+    if (collectionId) setActiveCollection(collectionId);
+    if (promptId) setActivePrompt(promptId);
+    return () => setActivePrompt(null);
+  }, [collectionId, promptId, setActiveCollection, setActivePrompt]);
 
-  const handleBack = useCallback(() => {
-    router.push(`/prompt-books/${collectionId}`)
-  }, [router, collectionId])
+  const handleBack = useCallback(async () => {
+    if (await save()) router.push(`/prompt-books/${collectionId}`);
+  }, [router, collectionId, save]);
 
   const handleDeleteAndBack = useCallback(async () => {
-    await handleDelete()
-    handleBack()
-  }, [handleDelete, handleBack])
+    if (await handleDelete()) router.push(`/prompt-books/${collectionId}`);
+  }, [handleDelete, router, collectionId]);
 
   const handleExport = useCallback(() => {
-    if (!prompt) return
-    const md = promptToMd(prompt)
-    const blob = new Blob([md], { type: 'text/markdown' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${prompt.title.replace(/\s+/g, '-').toLowerCase()}.md`
-    a.click()
-    URL.revokeObjectURL(url)
-  }, [prompt])
+    if (!prompt) return;
+    const md = promptToMd(prompt);
+    const blob = new Blob([md], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${prompt.title.replace(/\s+/g, "-").toLowerCase()}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [prompt]);
 
   const handleToggleFavorite = useCallback(async () => {
-    if (!prompt) return
-    await updatePrompt(prompt.id, { isFavorite: !prompt.isFavorite })
-  }, [prompt, updatePrompt])
+    if (!prompt) return;
+    await updatePrompt(prompt.id, { isFavorite: !prompt.isFavorite });
+  }, [prompt, updatePrompt]);
 
   const handleWeightApply = useCallback(
     (weight: number, syntax: WeightSyntaxType) => {
       // Get selection from textarea — find the focused textarea
-      const activeEl = document.activeElement as HTMLTextAreaElement
-      if (!activeEl || activeEl.tagName !== 'TEXTAREA') return
+      const activeEl = document.activeElement as HTMLTextAreaElement;
+      if (!activeEl || activeEl.tagName !== "TEXTAREA") return;
 
-      const start = activeEl.selectionStart
-      const end = activeEl.selectionEnd
-      if (start === end) return
+      const start = activeEl.selectionStart;
+      const end = activeEl.selectionEnd;
+      if (start === end) return;
 
-      const newContent = applyWeight(state.content, start, end, weight, syntax)
-      updateField('content', newContent)
+      const newContent = applyWeight(state.content, start, end, weight, syntax);
+      updateField("content", newContent);
     },
     [state.content, updateField],
-  )
+  );
 
-  const handleTagAssign = useCallback(async (tagId: string) => {
-    if (!client || !promptId) return
-    await service.assignTagsToPrompt(client, promptId, [tagId])
-    // Reload prompt to get updated tags
-    const updated = await service.getPrompt(client, promptId)
-    if (updated) usePromptBooksStore.getState().updatePromptInStore(updated)
-  }, [client, promptId])
+  const handleTagAssign = useCallback(
+    async (tagId: string) => {
+      if (!client || !promptId) return;
+      await service.assignTagsToPrompt(client, promptId, [tagId]);
+      // Reload prompt to get updated tags
+      const updated = await service.getPrompt(client, promptId);
+      if (updated) usePromptBooksStore.getState().updatePromptInStore(updated);
+    },
+    [client, promptId],
+  );
 
-  const handleTagUnassign = useCallback(async (tagId: string) => {
-    if (!client || !promptId) return
-    await service.removeTagFromPrompt(client, promptId, tagId)
-    const updated = await service.getPrompt(client, promptId)
-    if (updated) usePromptBooksStore.getState().updatePromptInStore(updated)
-  }, [client, promptId])
+  const handleTagUnassign = useCallback(
+    async (tagId: string) => {
+      if (!client || !promptId) return;
+      await service.removeTagFromPrompt(client, promptId, tagId);
+      const updated = await service.getPrompt(client, promptId);
+      if (updated) usePromptBooksStore.getState().updatePromptInStore(updated);
+    },
+    [client, promptId],
+  );
 
-  const handleCreateTag = useCallback(async (name: string, category: TagCategory) => {
-    return await createTag({ name, category, isGlobal: false, collectionId })
-  }, [createTag, collectionId])
+  const handleCreateTag = useCallback(
+    async (name: string, category: TagCategory) => {
+      return await createTag({ name, category, isGlobal: false, collectionId });
+    },
+    [createTag, collectionId],
+  );
 
   const handleRestore = useCallback(
-    async (version: { content: string; negativeContent: string | null; systemPrompt: string | null }) => {
-      updateField('content', version.content)
-      if (version.negativeContent !== null) updateField('negativeContent', version.negativeContent)
-      if (version.systemPrompt !== null) updateField('systemPrompt', version.systemPrompt)
-      setHistoryOpen(false)
+    async (version: {
+      content: string;
+      negativeContent: string | null;
+      systemPrompt: string | null;
+    }) => {
+      updateField("content", version.content);
+      if (version.negativeContent !== null)
+        updateField("negativeContent", version.negativeContent);
+      if (version.systemPrompt !== null)
+        updateField("systemPrompt", version.systemPrompt);
+      setHistoryOpen(false);
     },
     [updateField],
-  )
+  );
 
   // Save context config changes to prompt
-  const handleContextConfigChange = useCallback(async (config: ContextConfig) => {
-    setContextConfig(config)
-    if (promptId) {
-      await updatePrompt(promptId, { contextConfig: config })
-    }
-  }, [promptId, updatePrompt])
+  const handleContextConfigChange = useCallback(
+    async (config: ContextConfig) => {
+      setContextConfig(config);
+      if (promptId) {
+        await updatePrompt(promptId, { contextConfig: config });
+      }
+    },
+    [promptId, updatePrompt],
+  );
 
-  const handleFewShotChange = useCallback(async (examples: FewShotExample[]) => {
-    setFewShotExamples(examples)
-    if (promptId) {
-      await updatePrompt(promptId, { fewShotExamples: examples })
-    }
-  }, [promptId, updatePrompt])
+  const handleFewShotChange = useCallback(
+    async (examples: FewShotExample[]) => {
+      setFewShotExamples(examples);
+      if (promptId) {
+        await updatePrompt(promptId, { fewShotExamples: examples });
+      }
+    },
+    [promptId, updatePrompt],
+  );
 
-  const handleChainStepsChange = useCallback(async (steps: ChainStep[]) => {
-    setChainSteps(steps)
-    if (promptId) {
-      await updatePrompt(promptId, { chainSteps: steps })
-    }
-  }, [promptId, updatePrompt])
+  const handleChainStepsChange = useCallback(
+    async (steps: ChainStep[]) => {
+      setChainSteps(steps);
+      if (promptId) {
+        await updatePrompt(promptId, { chainSteps: steps });
+      }
+    },
+    [promptId, updatePrompt],
+  );
 
-  const handleSaveAsTemplate = useCallback(async (data: {
-    name: string
-    description: string
-    category: string
-    variables: { name: string; label: string; type: string; default?: string; required?: boolean }[]
-    isPublic: boolean
-  }) => {
-    if (!client || !userId || !prompt) return
-    await service.saveAsTemplate(client, userId, prompt, data)
-  }, [client, userId, prompt])
+  const handleSaveAsTemplate = useCallback(
+    async (data: {
+      name: string;
+      description: string;
+      category: string;
+      variables: {
+        name: string;
+        label: string;
+        type: string;
+        default?: string;
+        required?: boolean;
+      }[];
+      isPublic: boolean;
+    }) => {
+      if (!client || !userId || !prompt) return;
+      await service.saveAsTemplate(client, userId, prompt, data);
+    },
+    [client, userId, prompt],
+  );
 
   // Cmd+S to save
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
-        e.preventDefault()
-        save()
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        save();
       }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [save])
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [save]);
 
   if (!prompt) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <span className="text-text-muted text-sm font-sans">Loading prompt...</span>
+        <span className="text-text-muted text-sm font-sans">
+          {saveError || "Loading prompt..."}
+        </span>
       </div>
-    )
+    );
   }
 
   return (
@@ -223,7 +263,7 @@ export default function PromptEditorPage() {
       {/* Editor Toolbar */}
       <EditorToolbar
         title={state.title}
-        onTitleChange={(t) => updateField('title', t)}
+        onTitleChange={(t) => updateField("title", t)}
         isDirty={isDirty}
         isSaving={isSaving}
         lastSavedAt={lastSavedAt}
@@ -242,11 +282,28 @@ export default function PromptEditorPage() {
         onSaveAsTemplate={() => setSaveTemplateOpen(true)}
       />
 
+      {saveError && (
+        <div
+          role="alert"
+          className="border-b border-white/[0.08] px-4 py-3 text-sm text-text-primary"
+        >
+          <p>{saveError}</p>
+          <button
+            type="button"
+            onClick={() => void save()}
+            disabled={isSaving}
+            className="mt-2 rounded-lg border border-white/[0.12] px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-atlantean-teal"
+          >
+            Retry save
+          </button>
+        </div>
+      )}
+
       {/* Prompt Type Tabs */}
       <div className="border-b border-white/[0.04] px-4">
         <PromptTypeTabs
           value={state.promptType}
-          onChange={(type) => updateField('promptType', type)}
+          onChange={(type) => updateField("promptType", type)}
         />
       </div>
 
@@ -256,7 +313,9 @@ export default function PromptEditorPage() {
           tags={prompt.tags ?? []}
           selectedIds={assignedTagIds}
           onToggle={(id) =>
-            assignedTagIds.includes(id) ? handleTagUnassign(id) : handleTagAssign(id)
+            assignedTagIds.includes(id)
+              ? handleTagUnassign(id)
+              : handleTagAssign(id)
           }
           onRemove={handleTagUnassign}
           onAddClick={() => setTagSelectorOpen(!tagSelectorOpen)}
@@ -286,15 +345,29 @@ export default function PromptEditorPage() {
       {/* Editor + Preview + Context */}
       <div className="flex-1 flex overflow-hidden">
         {/* Editor + Preview */}
-        <div className={cn('flex-1 flex overflow-hidden', editorSplitView && 'divide-x divide-white/[0.04]')}>
+        <div
+          className={cn(
+            "flex-1 flex overflow-hidden",
+            editorSplitView && "divide-x divide-white/[0.04]",
+          )}
+        >
           {/* Editor pane */}
-          <div className={cn('flex-1 overflow-y-auto', editorSplitView ? 'w-1/2' : 'w-full')}>
+          <div
+            className={cn(
+              "flex-1 overflow-y-auto",
+              editorSplitView ? "w-1/2" : "w-full",
+            )}
+          >
             <div className="px-6 py-4 space-y-0">
               {/* Main content editor */}
               <ContentEditor
                 value={state.content}
-                onChange={(v) => updateField('content', v)}
-                placeholder={typeConfig.hasNegativePrompt ? 'masterpiece, best quality, 1girl...' : 'Write your prompt here...'}
+                onChange={(v) => updateField("content", v)}
+                placeholder={
+                  typeConfig.hasNegativePrompt
+                    ? "masterpiece, best quality, 1girl..."
+                    : "Write your prompt here..."
+                }
                 label="Content"
                 showToolbar={!typeConfig.hasNegativePrompt}
               />
@@ -303,7 +376,7 @@ export default function PromptEditorPage() {
               {typeConfig.hasNegativePrompt && (
                 <NegativePromptEditor
                   value={state.negativeContent}
-                  onChange={(v) => updateField('negativeContent', v)}
+                  onChange={(v) => updateField("negativeContent", v)}
                 />
               )}
 
@@ -311,7 +384,7 @@ export default function PromptEditorPage() {
               {typeConfig.hasSystemPrompt && (
                 <SystemPromptEditor
                   value={state.systemPrompt}
-                  onChange={(v) => updateField('systemPrompt', v)}
+                  onChange={(v) => updateField("systemPrompt", v)}
                 />
               )}
             </div>
@@ -359,5 +432,5 @@ export default function PromptEditorPage() {
         onSave={handleSaveAsTemplate}
       />
     </div>
-  )
+  );
 }

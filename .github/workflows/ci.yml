@@ -247,6 +247,9 @@ jobs:
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
+      - name: Verify Prompt Books save recovery and actor isolation
+        run: pnpm --dir apps/web exec tsx --test lib/prompt-books/__tests__/recovery.test.ts
+
       - name: Verify exact world drafts and account return paths
         run: |
           pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
@@ -488,7 +491,9 @@ jobs:
           node scripts/verify-shop-browser.cjs || shop_status=$?
           timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
           timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
+          prompt_books_status=0
+          PLAYWRIGHT_NO_WEB_SERVER=1 pnpm --dir apps/web exec playwright test e2e/prompt-books-recovery.spec.ts || prompt_books_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ] || [ "$prompt_books_status" -ne 0 ]; then
             exit 1
           fi
 

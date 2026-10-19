@@ -287,30 +287,10 @@ export default function PromptBooksPage() {
     updateTag,
     deleteTag,
     addPrompt,
-    initialize,
     _userId: userId,
   } = usePromptBooksStore();
 
   const router = useRouter();
-
-  // Initialize store with authenticated user's Supabase client
-  useEffect(() => {
-    const initAuth = async () => {
-      try {
-        const supabase = createClient();
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (user) {
-          await initialize(supabase, user.id);
-        }
-      } catch {
-        // Supabase not configured or offline — show landing
-      }
-    };
-    initAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const {
     open: captureOpen,
