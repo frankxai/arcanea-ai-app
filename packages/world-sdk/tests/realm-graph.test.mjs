@@ -29,6 +29,173 @@ const clone = (value) => structuredClone(value);
 const open = (overlay = clone(fixture)) =>
   sdk.openRealmGraph(repo, commit, overlay);
 
+test("current locked canon supplies missing creative rules without changing Gate IDs", async () => {
+  const graph = await open();
+  const facts = new Map(graph.locked.assertions.map((a) => [a.id, a.value]));
+  assert.equal(
+    facts.get("fact:world-rule:element:fire:domain"),
+    "Energy, transformation",
+  );
+  assert.equal(
+    facts.get("fact:world-rule:element:void-spirit:color"),
+    "Black/Gold, purple/white",
+  );
+  assert.deepEqual(facts.get("fact:world-rule:rank:luminor:openedGates"), {
+    min: 9,
+    max: 10,
+  });
+  assert.equal(facts.get("fact:world-rule:wisdom:kardia:archive"), "Flow");
+  assert.equal(facts.get("fact:world-rule:wisdom:eudaira:element"), "Air");
+  assert.equal(
+    facts.get("fact:character:malachar:formerName"),
+    "Malachar Lumenbright",
+  );
+  assert.equal(
+    facts.get("fact:character:malachar:currentState"),
+    "Sealed in the Shadowfen",
+  );
+  assert.equal(
+    facts.get("fact:faction:house-synthesis:domain"),
+    "Integration of all",
+  );
+  assert.equal(
+    facts.get("fact:world-rule:term:luminor:definition"),
+    "Rank for those who opened all 10 Gates",
+  );
+  assert.equal(facts.get("fact:world-rule:fire:frequencyHz"), 396);
+  assert.equal(
+    facts.get("fact:character:maylinn:bondedGodbeast"),
+    "creature:laeylinn",
+  );
+  assert.equal(graph.locked.entities.length, 62);
+  assert.equal(graph.locked.assertions.length, 97);
+  assert.equal(new Set(graph.locked.entities.map((a) => a.id)).size, 62);
+  assert.equal(
+    graph.locked.entities.find((a) => a.id === "world-rule:wisdom:kardia").type,
+    "world-rule",
+  );
+  assert.equal(
+    graph.locked.entities.find((a) => a.id === "faction:house-nero").type,
+    "faction",
+  );
+});
+
+test("locked source context preserves prose and only explicit locked terminology rows", async () => {
+  const graph = await open();
+  const lines = execFileSync(
+    "git",
+    ["show", `${commit}:.arcanea/lore/CANON_LOCKED.md`],
+    { cwd: repo, encoding: "utf8" },
+  ).split(/\r?\n/);
+  assert.equal(
+    graph.locked.coverage,
+    "current-locked-sections-and-locked-terminology",
+  );
+  assert.equal(
+    graph.locked.generatorVersion,
+    "arcanea.locked-canon-projection.v1",
+  );
+  assert.equal(graph.locked.sourceSegments.length, 11);
+  for (const segment of graph.locked.sourceSegments) {
+    assert.equal(
+      segment.text,
+      lines
+        .slice(segment.source.lineStart - 1, segment.source.lineEnd)
+        .join("\n"),
+    );
+    assert.deepEqual(segment.source, {
+      ...graph.canonSource,
+      lineStart: segment.source.lineStart,
+      lineEnd: segment.source.lineEnd,
+    });
+  }
+  const context = graph.locked.sourceSegments.map((a) => a.text).join("\n");
+  assert.match(context, /Nero is NOT evil/);
+  assert.match(context, /Malachar is tragic, not purely evil/);
+  assert.match(context, /Wisdoms are aspects\/virtues, not entities/);
+  assert.match(context, /Houses are institutional, not geographic/);
+  assert.match(context, /explicit Creator \(Frank\) approval/);
+  assert.doesNotMatch(
+    context,
+    /APPROVAL LOG|Las Tierras de Luz|The Awakened|Pyrathis|First-Witness|Veldoria|Velora/,
+  );
+});
+
+test("Luminor discrepancy keeps both actual source lines for human resolution", async () => {
+  const graph = await open();
+  assert.equal(graph.locked.ambiguities.length, 1);
+  const ambiguity = graph.locked.ambiguities[0];
+  assert.equal(ambiguity.id, "ambiguity:luminor-gates");
+  assert.equal(ambiguity.status, "human-resolution-required");
+  const lines = execFileSync(
+    "git",
+    ["show", `${commit}:.arcanea/lore/CANON_LOCKED.md`],
+    { cwd: repo, encoding: "utf8" },
+  ).split(/\r?\n/);
+  assert.equal(ambiguity.sources.length, 2);
+  assert.match(lines[ambiguity.sources[0].lineStart - 1], /9-10 \| Luminor/);
+  assert.match(
+    lines[ambiguity.sources[1].lineStart - 1],
+    /opened all 10 Gates/,
+  );
+  assert.throws(() => {
+    ambiguity.status = "resolved";
+  }, TypeError);
+  const exported = sdk.exportRealmGraph(graph);
+  exported.locked.sourceSegments[0].text = "tampered";
+  assert.notEqual(graph.locked.sourceSegments[0].text, "tampered");
+  const reopened = await sdk.openRealmGraph(repo, commit, exported.staging);
+  assert.deepEqual(reopened.locked, graph.locked);
+});
+
+test("Malachar scene continuity carries factual and qualified canon context without promotion", async () => {
+  const staging = {
+    schemaVersion: "realm.arcanea.graph.v0",
+    releaseId: "creative-context-fixture",
+    entities: [
+      { id: "work:fixture", type: "work", label: "Synthetic context work" },
+      { id: "timeline:fixture", type: "timeline", label: "Synthetic ordering" },
+      {
+        id: "scene:fixture",
+        type: "scene",
+        label: "Synthetic Malachar context",
+        workId: "work:fixture",
+        timelineId: "timeline:fixture",
+        moment: 0,
+        participants: ["character:malachar"],
+      },
+    ],
+    assertions: [],
+    dependencies: [],
+  };
+  const graph = await open(staging);
+  const result = sdk.realmContinuity(
+    graph,
+    "character:malachar",
+    "scene:fixture",
+  );
+  assert.equal(result.lockedFacts.length, 5);
+  assert.ok(result.lockedFacts.some((a) => a.predicate === "nature"));
+  assert.deepEqual(
+    result.canonContext.sourceSegments,
+    graph.locked.sourceSegments,
+  );
+  assert.deepEqual(result.canonContext.ambiguities, graph.locked.ambiguities);
+  assert.match(
+    result.canonContext.sourceSegments.find((a) => a.canonTier === "tier-4")
+      .text,
+    /once the greatest of Lumina's champions/,
+  );
+  assert.equal(result.canonPromotionAllowed, false);
+  assert.throws(() => {
+    result.canonContext.sourceSegments[0].text = "altered";
+  }, TypeError);
+  await assert.rejects(
+    open({ ...staging, canonContext: result.canonContext }),
+    /unknown field/,
+  );
+});
+
 test("locked projection is deterministic and binds actual immutable Git bytes", async () => {
   const first = await open();
   const second = await open();

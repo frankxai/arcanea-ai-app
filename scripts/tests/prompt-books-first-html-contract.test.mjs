@@ -49,5 +49,5 @@ test("prompt-books model picker uses neutral labels, not rankings", async () => 
   ]) {
     assert.doesNotMatch(selector, ranking);
   }
-  assert.match(selector, /name: ['"]Claude Opus 4\.6['"]/);
+  assert.match(selector, /name: ['"]Claude Opus 5\.5['"]/);
 });

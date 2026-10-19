@@ -1,0 +1,49 @@
+name: Author Council review boundary
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "packages/author-council/**"
+      - "packages/orchestrator/**"
+      - "packages/router-spec/**"
+      - ".github/workflows/author-council.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packages/author-council/**"
+      - "packages/orchestrator/**"
+      - "packages/router-spec/**"
+      - ".github/workflows/author-council.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  review-boundary:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Install existing council and orchestrator dependencies
+        run: pnpm --filter @arcanea/author-council --filter @arcanea/orchestrator... install --frozen-lockfile
+      - name: Build the existing protocol and orchestration packages
+        run: pnpm --filter @arcanea/router-spec --filter @arcanea/author-council --filter @arcanea/orchestrator run build
+      - name: Verify emitted MCP behavior and existing protocol cases
+        run: node --test --test-concurrency=1 packages/author-council/tests/*.test.mjs
+      - name: Verify native stdio and recoverable book review attempts
+        run: pnpm --filter @arcanea/orchestrator exec tsx --test tests/author-council.test.ts

@@ -14,7 +14,15 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { createArcanea } from "@/lib/ai/arcanea-intelligence";
-import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from "@/lib/gateway/catalog";
+import {
+  claudeFallbackOptions,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
+import {
+  GATEWAY_MODELS,
+  EXTENDED_PROVIDERS,
+  claudeRejectsSamplingParams,
+} from "@/lib/gateway/catalog";
 import {
   resolveProviderRoute,
   ProviderRoutingError,
@@ -89,8 +97,8 @@ const PROVIDERS: Record<string, ProviderConfig> = {
   },
   anthropic: {
     envKeys: ["ANTHROPIC_API_KEY"],
-    defaultModel: "claude-sonnet-4-20250514",
-    label: "Claude Sonnet 4",
+    defaultModel: "claude-sonnet-5-5",
+    label: "Claude Sonnet 5.5",
   },
   openai: {
     envKeys: ["OPENAI_API_KEY"],
@@ -175,19 +183,19 @@ function createModel(
         apiKey,
         baseURL: "https://openrouter.ai/api/v1",
       });
-      return { model: openrouter(modelId), label: modelId };
+      return { model: openrouter(modelId), label: modelId, modelId };
     }
     case "google": {
       const google = createGoogleGenerativeAI({ apiKey });
-      return { model: google(modelId), label: config.label };
+      return { model: google(modelId), label: config.label, modelId };
     }
     case "anthropic": {
       const anthropic = createAnthropic({ apiKey });
-      return { model: anthropic(modelId), label: config.label };
+      return { model: anthropic(modelId), label: config.label, modelId };
     }
     case "openai": {
       const openai = createOpenAI({ apiKey });
-      return { model: openai(modelId), label: config.label };
+      return { model: openai(modelId), label: config.label, modelId };
     }
     default:
       throw new Error(`Unsupported provider: ${providerId}`);
@@ -260,6 +268,7 @@ export async function POST(req: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let model: any;
     let label: string;
+    let resolvedModelId: string;
 
     let route;
     try {
@@ -366,6 +375,7 @@ export async function POST(req: NextRequest) {
         );
       }
       label = resolvedGateway.label;
+      resolvedModelId = resolvedGateway.modelId;
     } else {
       const created = createModel(
         resolvedProviderId,
@@ -374,6 +384,7 @@ export async function POST(req: NextRequest) {
       );
       model = created.model;
       label = created.label;
+      resolvedModelId = created.modelId;
     }
 
     const normalizedMessages = messages.map((msg) => ({
@@ -890,8 +901,13 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       model,
       system: resolvedSystemPrompt,
       messages: modelMessages,
-      temperature: temperature ?? 0.7,
+      // Claude 5.x rejects sampling parameters with a 400; other providers keep them.
+      ...(claudeRejectsSamplingParams(resolvedModelId)
+        ? {}
+        : { temperature: temperature ?? 0.7 }),
       maxOutputTokens: maxTokens ?? 8192,
+      providerOptions: { anthropic: claudeFallbackOptions(resolvedModelId) },
+      experimental_transform: refusalNoticeTransform(),
       onError: () => {
         console.error("Chat provider stream failed.");
       },

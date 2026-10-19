@@ -31,7 +31,7 @@ export function ReadingTracker({
 
   useEffect(() => {
     if (!userId || isLoading || loadError || saveError || done) return;
-    const article = document.getElementById("main-content");
+    const article = document.getElementById("library-reading-text");
     if (!article) return;
     let active = true;
     let pending = false;

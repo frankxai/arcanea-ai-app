@@ -107,11 +107,36 @@ node --test tests/*.test.mjs
 ## Realm continuity and change impact
 
 The local Realm Graph reads the immutable `.arcanea/lore/CANON_LOCKED.md` Git
-blob at a full commit. Its v0 source pin projects only the explicit
-primordial-duality and Ten Gates tables: 32 entities and 44 facts. Other locked
-sections, staging sections and the historical approval log are outside this
-projection. Source drift refuses until a reviewed compiler update changes the
-pin. Neither a supplied hash nor a serialized graph establishes canon authority.
+blob at a full commit. Generator `arcanea.locked-canon-projection.v1` retains the
+original Gate/God/Godbeast identifiers and projects 62 entities and 97 facts from
+the current approved foundation, Gates, elements, ranks, Wisdoms, Malachar,
+Academy Houses and explicitly LOCKED terminology rows. Elements, ranks, Wisdoms
+and terms use separate world-rule namespaces; Houses are factions. Wisdoms are
+aspects, and Luminor is a rank. Element `Wind` and Wisdom `Air` retain their
+actual source wording without inferred equivalence.
+
+The graph also carries 11 source segments: the six current fully LOCKED sections
+(including extensibility principles) and five explicitly LOCKED terminology
+rows. `realmContinuity(...).canonContext` returns these segments and compiler
+ambiguities alongside the scene's facts. Segment text preserves the selected
+lines with newline normalization, including prose qualifications about Nero,
+Malachar and the institutional Houses. Each citation binds the full Git blob
+hash, immutable commit and inclusive line range.
+
+The source's Magic Ranks table assigns Luminor to 9-10 open Gates, while its
+LOCKED terminology row requires all 10. `ambiguity:luminor-gates` retains both
+citations with `human-resolution-required`; the compiler does not resolve this
+discrepancy. This is explicit compiler metadata, not a general semantic
+contradiction detector. The source pin remains unchanged. Source drift refuses
+until a reviewed compiler update changes the pin. Neither a supplied hash nor a
+serialized graph establishes canon authority.
+
+STAGING sections, STAGING terminology rows, auxiliary lore files, the historical
+approval log and its unique details are outside this current projection. A
+"Locked novel" sentence inside a STAGING Realm section does not promote that
+section. Historical entries can require separate reconciliation; their presence
+does not replace the current tables. Generated context is read-only, and the host
+chooses how much to include in a model request under its privacy and budget rules.
 
 A staging JSON overlay links characters, places, factions, creatures, artifacts,
 world rules, events, timelines, series, works, scenes, quests, assets and releases.

@@ -353,7 +353,9 @@ async function runMode(mode, base) {
     await page.evaluate(() => window.progressFixture.setUser("synthetic-f"));
     await load("synthetic-f");
     await visible(button("Mark as read"));
-    const sentinel = page.locator('#main-content > div[aria-hidden="true"]');
+    const sentinel = page.locator(
+      '#library-reading-text > div[aria-hidden="true"]',
+    );
     assert.equal(await sentinel.count(), 1);
     assert.equal((await sentinel.boundingBox()).height, 1);
     await sentinel.scrollIntoViewIfNeeded();
@@ -547,7 +549,7 @@ async function runMode(mode, base) {
   const html = `<!doctype html><html lang="en" class="dark font-sans ${[...fontClasses].join(" ")}"><head>
     <meta name="viewport" content="width=device-width,initial-scale=1">${links}<title>Reading progress verification</title></head>
     <body class="bg-cosmic-void text-text-primary"><main class="mx-auto max-w-xl px-6 py-8">
-    <h1 class="mb-6 text-2xl">Reading progress</h1><div id="tracker"></div><article id="main-content" class="mt-8 space-y-6">
+    <h1 class="mb-6 text-2xl">Reading progress</h1><div id="tracker"></div><article id="library-reading-text" class="mt-8 space-y-6">
     ${"<p>Synthetic public reading fixture. No manuscript or customer content.</p>".repeat(80)}
     </article></main><script src="/fixture.js"></script></body></html>`;
   server = http.createServer(async (req, res) => {

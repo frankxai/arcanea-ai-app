@@ -91,6 +91,7 @@ test(
       assert.equal(new Set(tools.map((tool) => tool.name)).size, tools.length);
       for (const name of [
         "generate_character",
+        "validate_canon",
         "save_world",
         "load_world",
         "get_world_graph",
@@ -102,6 +103,20 @@ test(
           name,
         );
       }
+      const correctCanon = await call(client, "validate_canon", {
+        content:
+          "Lyssandria is Guardian of Gate 1. Shinkami is Guardian of Gate 10. Nero is balanced. Malachar is evil.",
+      });
+      assert.equal(correctCanon.valid, true);
+      assert.equal(correctCanon.checkedAssociations, 2);
+      assert.equal(correctCanon.canonApproval, false);
+      assert.equal(correctCanon.humanReviewRequired, true);
+      const incorrectCanon = await call(client, "validate_canon", {
+        content: "Shinkami is Guardian of Gate 1.",
+      });
+      assert.equal(incorrectCanon.valid, false);
+      assert.equal(incorrectCanon.issues.length, 1);
+      assert.equal(incorrectCanon.issues[0].evidence.start, 0);
       await call(client, "generate_character", {
         sessionId: "consumer-world",
         primaryElement: "Water",

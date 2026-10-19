@@ -86,7 +86,7 @@ jobs:
           timeout 240 node scripts/verify-companion-browser.cjs
       - name: Keep revision-bound captures and safe fixture receipts
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: companion-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_attempt }}
           path: screenshots/companion/
@@ -124,7 +124,7 @@ jobs:
         run: python scripts/review-companion.py --head "$REVIEW_HEAD" --base "$REVIEW_BASE" --pull-request "$REVIEW_PR"
       - name: Retain exact-source review and all attempts
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: companion-review-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
           path: screenshots/companion-review/

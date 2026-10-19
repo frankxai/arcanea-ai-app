@@ -275,7 +275,7 @@
           "maxItems": 8000
         },
         "canonTier": {
-          "enum": ["tier-1", "tier-2"]
+          "$ref": "#/$defs/canonTier"
         },
         "sourceVerification": {
           "const": "git-byte-verified"
@@ -296,6 +296,51 @@
         "canonTier",
         "sourceVerification"
       ]
+    },
+    "canonTier": {
+      "enum": [
+        "tier-1",
+        "tier-2",
+        "tier-3",
+        "tier-4",
+        "tier-6",
+        "terminology",
+        "extensibility"
+      ]
+    },
+    "canonCitation": {
+      "allOf": [
+        { "$ref": "#/$defs/source" },
+        { "required": ["commit", "lineStart", "lineEnd"] }
+      ]
+    },
+    "canonSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 128000 },
+        "canonTier": { "$ref": "#/$defs/canonTier" },
+        "source": { "$ref": "#/$defs/canonCitation" }
+      },
+      "required": ["id", "title", "text", "canonTier", "source"]
+    },
+    "canonAmbiguity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "const": "ambiguity:luminor-gates" },
+        "status": { "const": "human-resolution-required" },
+        "description": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "sources": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/canonCitation" }
+        }
+      },
+      "required": ["id", "status", "description", "sources"]
     },
     "overlay": {
       "type": "object",
@@ -391,7 +436,10 @@
           "additionalProperties": false,
           "properties": {
             "coverage": {
-              "const": "primordial-duality-and-ten-gates-tables-only"
+              "const": "current-locked-sections-and-locked-terminology"
+            },
+            "generatorVersion": {
+              "const": "arcanea.locked-canon-projection.v1"
             },
             "entities": {
               "type": "array",
@@ -404,9 +452,24 @@
               "items": {
                 "$ref": "#/$defs/lockedAssertion"
               }
+            },
+            "sourceSegments": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/canonSegment" }
+            },
+            "ambiguities": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/canonAmbiguity" }
             }
           },
-          "required": ["coverage", "entities", "assertions"]
+          "required": [
+            "coverage",
+            "generatorVersion",
+            "entities",
+            "assertions",
+            "sourceSegments",
+            "ambiguities"
+          ]
         },
         "staging": {
           "$ref": "#/$defs/overlay"
