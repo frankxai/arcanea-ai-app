@@ -2,6 +2,7 @@
   "name": "arcanea-atlas",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.28.4",
   "type": "module",
   "scripts": {
     "dev": "astro dev",

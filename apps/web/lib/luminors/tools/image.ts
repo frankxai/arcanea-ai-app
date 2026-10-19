@@ -1,40 +1,39 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-/**
- * image_generate — Luminors can call the imagine pipeline mid-response.
- *
- * The Luminor describes an image; `@/lib/imagine/generate` picks a provider
- * (NB2 by default, see feedback_nb2_default memory) and returns hosted URLs.
- */
-
-import { tool } from 'ai';
-import { z } from 'zod';
-import { generateImages } from '@/lib/imagine/generate';
+/** Prepare an image request for explicit creator review in Imagine. */
+import { tool } from "ai";
+import { z } from "zod";
 
 export const imageGenerateInputSchema = z.object({
-  prompt: z.string().describe('Detailed description of the image to generate'),
+  prompt: z
+    .string()
+    .trim()
+    .min(1)
+    .max(2000)
+    .describe("Detailed description of the image to generate"),
   aspectRatio: z
-    .enum(['1:1', '16:9', '9:16', '4:3'])
+    .enum(["1:1", "16:9", "9:16", "4:3"])
     .optional()
-    .describe('Image aspect ratio. Defaults to 1:1 if not specified.'),
+    .describe(
+      "Suggested image aspect ratio. The creator selects this in Imagine.",
+    ),
 });
-
 export type ImageGenerateInput = z.infer<typeof imageGenerateInputSchema>;
 
 export function buildImageGenerateTool() {
   return tool({
     description:
-      'Generate an image based on a text description. Use when the user asks to create, draw, generate, or imagine a visual image.',
+      "Prepare an image request and return a link to Imagine for the creator to review the prompt, choose the model and aspect ratio, and submit it. This tool does not generate an image or spend credits. Never describe its result as a completed image.",
     inputSchema: imageGenerateInputSchema,
-    execute: async ({ prompt, aspectRatio }: ImageGenerateInput) => {
-      const result = await generateImages({
-        prompt,
-        aspectRatio: aspectRatio ?? '1:1',
-        count: 1,
-      });
+    execute: async (input: ImageGenerateInput) => {
+      const { prompt, aspectRatio = "1:1" } =
+        imageGenerateInputSchema.parse(input);
       return {
-        type: 'image' as const,
-        images: result.images,
-        provider: result.provider,
+        type: "image_generation_handoff" as const,
+        status: "awaiting_creator" as const,
+        prompt,
+        aspectRatio,
+        href: `/imagine?${new URLSearchParams({ prompt })}`,
+        message:
+          "Review the prompt in Imagine, select the requested aspect ratio and model, then generate. No image has been generated and no image credits have been spent.",
       };
     },
   });

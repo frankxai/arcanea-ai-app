@@ -9,19 +9,19 @@
  * Cheap Haiku-class call. Falls back to heuristics if no Anthropic key.
  */
 
-import { anthropic } from '@ai-sdk/anthropic';
-import { generateObject } from 'ai';
-import { z } from 'zod';
+import { anthropic, type AnthropicProviderOptions } from "@ai-sdk/anthropic";
+import { generateObject } from "ai";
+import { z } from "zod";
 
 export const CLASSIFICATIONS = [
-  'character',
-  'location',
-  'magic',
-  'scene',
-  'lore',
-  'reference',
-  'chapter',
-  'note',
+  "character",
+  "location",
+  "magic",
+  "scene",
+  "lore",
+  "reference",
+  "chapter",
+  "note",
 ] as const;
 
 export type Classification = (typeof CLASSIFICATIONS)[number];
@@ -56,22 +56,36 @@ Also suggest:
 Return JSON strictly matching the schema.`;
 
 const HEURISTIC_HINTS: { keyword: RegExp; classification: Classification }[] = [
-  { keyword: /^\s*#\s/m, classification: 'chapter' },
-  { keyword: /\bchapter\s+\d+\b/i, classification: 'chapter' },
-  { keyword: /\bmagic system\b|\bspell\b|\bincantation\b/i, classification: 'magic' },
-  { keyword: /\bcharacter\b.*\b(backstory|motivation|role)\b/i, classification: 'character' },
-  { keyword: /\b(city|kingdom|realm|forest|mountains|capital)\b.*\bof\s/i, classification: 'location' },
-  { keyword: /\bonce\s+upon\s+a\s+time\b|\blegend\s+tells\b|\bin\s+the\s+age\s+of\b/i, classification: 'lore' },
+  { keyword: /^\s*#\s/m, classification: "chapter" },
+  { keyword: /\bchapter\s+\d+\b/i, classification: "chapter" },
+  {
+    keyword: /\bmagic system\b|\bspell\b|\bincantation\b/i,
+    classification: "magic",
+  },
+  {
+    keyword: /\bcharacter\b.*\b(backstory|motivation|role)\b/i,
+    classification: "character",
+  },
+  {
+    keyword: /\b(city|kingdom|realm|forest|mountains|capital)\b.*\bof\s/i,
+    classification: "location",
+  },
+  {
+    keyword:
+      /\bonce\s+upon\s+a\s+time\b|\blegend\s+tells\b|\bin\s+the\s+age\s+of\b/i,
+    classification: "lore",
+  },
 ];
 
 function heuristicClassify(text: string): ClassifyResult {
   const snippet = text.slice(0, 2000);
   const match = HEURISTIC_HINTS.find((h) => h.keyword.test(snippet));
-  const classification: Classification = match?.classification ?? 'reference';
+  const classification: Classification = match?.classification ?? "reference";
 
   // Pull first heading or first line as suggested title
   const firstHeading = snippet.match(/^\s*#{1,3}\s+(.{3,100})/m)?.[1];
-  const firstLine = snippet.split('\n').find((l) => l.trim().length > 5) ?? 'Untitled note';
+  const firstLine =
+    snippet.split("\n").find((l) => l.trim().length > 5) ?? "Untitled note";
   const suggestedTitle = (firstHeading ?? firstLine).slice(0, 120).trim();
 
   return {
@@ -79,7 +93,7 @@ function heuristicClassify(text: string): ClassifyResult {
     confidence: 0.35, // low — heuristic, not LLM
     suggested_title: suggestedTitle,
     suggested_tags: [],
-    summary: snippet.slice(0, 400).replace(/\s+/g, ' ').trim(),
+    summary: snippet.slice(0, 400).replace(/\s+/g, " ").trim(),
   };
 }
 
@@ -96,14 +110,20 @@ export async function classifyContent(
 
   try {
     const { object } = await generateObject({
-      model: anthropic('claude-haiku-4-5-20251001'),
+      model: anthropic("claude-haiku-5-5"),
       system: CLASSIFIER_PROMPT,
       prompt: input,
       schema: classificationSchema,
+      // Haiku 5.5 rejects sampling parameters and thinks by default; thinking
+      // counts toward maxOutputTokens, so effort is low and the cap has headroom.
+      providerOptions: {
+        anthropic: { effort: "low" } satisfies AnthropicProviderOptions,
+      },
+      maxOutputTokens: 1024,
     });
     return object;
   } catch (err) {
-    console.warn('[studio/classify] LLM failed, using heuristic:', err);
+    console.warn("[studio/classify] LLM failed, using heuristic:", err);
     return heuristicClassify(rawText);
   }
 }

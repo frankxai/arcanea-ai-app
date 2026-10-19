@@ -23,25 +23,25 @@ const PILLARS: Pillar[] = [
   {
     icon: Keyboard,
     title: "BYOK Compute",
-    body: "Bring Your Own Keys. Standard platforms tax your intelligence with subscription markups. Arcanea hooks directly into Anthropic, OpenAI, and Google at raw cost. Complete compute sovereignty.",
+    body: "Chat runs on your own provider key, and world drafts run on your Gemini key. You pay the provider directly; Arcanea adds no markup. Image generation in Imagine uses account credits.",
     accent: brand.aquamarine,
   },
   {
     icon: Shield,
     title: "Sovereign Lore",
-    body: "Your dreams are your property. Every world graph, scene, and character schema is compiled locally to SQLite. We claim 0% royalties. No vendor lock-in, no data harvesting, no model training on your IP.",
+    body: "Worlds, characters, and scenes are stored in your Arcanea account. You keep ownership of what you make, and Arcanea takes no royalties. Arcanea does not train models on your work without your consent.",
     accent: brand.atlanteanTeal,
   },
   {
     icon: Code,
-    title: "MIT-Licensed Stack",
-    body: "Clone the runtime, spin up local MCP servers, and refactor the agent logic. Arcanea's core clients are completely open-source under the MIT license. Build without boundaries.",
+    title: "MIT-Licensed Tools",
+    body: "Clone the Arcanea MCP server and creator skills, run them locally, and change the agent logic. Both are MIT-licensed.",
     accent: brand.arcaneanGold,
   },
   {
     icon: ArrowSquareOut,
-    title: "Stateless to Stateful",
-    body: "World schemas map directly to Cursor, Claude Code, or local CLI terminals. Seamlessly bridge your stateful universe with any developer workspace. Portable, compiler-ready, and stateless-free.",
+    title: "Canon in Your Editor",
+    body: "Point Claude, Codex, or Cursor at the Arcanea MCP reader to check drafts against canon. Signed-in world context over MCP is in preview.",
     accent: ambient.lavender,
   },
 ];
