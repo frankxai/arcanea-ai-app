@@ -22,7 +22,8 @@ const MCP_URL = `${ORIGIN}/api/mcp`;
 const METADATA_URL = `${ORIGIN}/.well-known/oauth-protected-resource/api/mcp`;
 const USER_ID = "20000000-0000-4000-8000-000000000001";
 const ISSUER = `${SUPABASE_URL}/auth/v1`;
-const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
 const WWW_AUTHENTICATE = new RegExp(
   `^Bearer resource_metadata="${escapeRegExp(METADATA_URL)}"$`,
 );
