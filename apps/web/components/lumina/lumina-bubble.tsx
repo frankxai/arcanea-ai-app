@@ -15,7 +15,7 @@ const CompanionChat = dynamic(
   { ssr: false, loading: () => <p role="status">Opening your companion…</p> },
 );
 
-function AccountCompanion() {
+function AccountCompanion({ inline = false }: { inline?: boolean }) {
   const [open, setOpen] = useState(false);
   const [opened, setOpened] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -29,19 +29,24 @@ function AccountCompanion() {
     <>
       <button
         ref={trigger}
-        className={styles.bubble}
+        className={`${styles.bubble}${inline ? ` ${styles.inlineTrigger}` : ""}`}
         type="button"
-        hidden={open}
-        aria-label="Open Arcanea companion"
+        hidden={!inline && open}
+        aria-label={open ? "Close Arcanea companion" : "Open Arcanea companion"}
         aria-expanded={open}
         aria-controls={opened ? panelId : undefined}
         aria-haspopup="dialog"
         onClick={() => {
+          if (open) {
+            close();
+            return;
+          }
           setOpened(true);
           setOpen(true);
         }}
       >
         <Image src={markSrc} alt="" width={56} height={56} />
+        {inline && <span>{open ? "Close companion" : "Open companion"}</span>}
       </button>
       {opened && (
         <section
@@ -85,6 +90,12 @@ function AccountCompanion() {
   );
 }
 
+export function ReadingCompanion() {
+  const { user, isLoading } = useAuth();
+  if (isLoading) return null;
+  return <AccountCompanion key={user?.id ?? "anonymous"} inline />;
+}
+
 export function LuminaBubble() {
   const pathname = usePathname();
   const { user, isLoading } = useAuth();
@@ -92,6 +103,7 @@ export function LuminaBubble() {
     isLoading ||
     pathname === "/" ||
     /^\/[a-z]{2}\/?$/.test(pathname) ||
+    /^\/library\/[^/]+\/[^/]+\/?$/.test(pathname) ||
     /^\/(chat|room)(\/|$)/.test(pathname)
   )
     return null;

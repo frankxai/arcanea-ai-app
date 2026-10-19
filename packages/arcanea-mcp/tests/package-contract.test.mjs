@@ -1,10 +1,37 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+  rmSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { verifyPackage } from "../scripts/verify-package.mjs";
+
+test("server.json exists and conforms to official MCP registry schema", () => {
+  const pkgDir = fileURLToPath(new URL("..", import.meta.url));
+  const serverJsonPath = join(pkgDir, "server.json");
+  const content = readFileSync(serverJsonPath, "utf8");
+  const server = JSON.parse(content);
+
+  assert.ok(server.$schema, "server.json must include $schema");
+  assert.equal(server.name, "io.github.frankxai/arcanea-mcp");
+  assert.equal(server.title, "Arcanea MCP Server");
+  assert.ok(server.description);
+  assert.equal(
+    server.repository?.url,
+    "https://github.com/frankxai/arcanea-ai-app",
+  );
+  assert.equal(server.license, "MIT");
+  assert.ok(Array.isArray(server.packages) && server.packages.length > 0);
+  assert.equal(server.packages[0].name, "@arcanea/mcp-server");
+  assert.equal(server.packages[0].registry, "npm");
+  assert.equal(server.packages[0].transport?.type, "stdio");
+});
 
 test("built package has consumer-resolvable dependencies and entrypoints", () => {
   const report = verifyPackage(fileURLToPath(new URL("..", import.meta.url)));

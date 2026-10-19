@@ -2,27 +2,18 @@
 // Inspired by oh-my-opencode's orchestration patterns
 
 export type AgentModel =
-  | "claude-opus-4-5"
-  | "claude-sonnet-4-5"
+  | "claude-opus-5-5"
+  | "claude-sonnet-5-5"
   | "gemini-3-pro"
   | "gemini-3-flash"
   | "gpt-5"
   | "grok-code";
 
 export type AgentRole =
-  | "orchestrator"
-  | "coach"
-  | "generator"
-  | "narrator"
-  | "researcher";
+  "orchestrator" | "coach" | "generator" | "narrator" | "researcher";
 
 export type AgentStatus =
-  | "idle"
-  | "thinking"
-  | "working"
-  | "waiting"
-  | "completed"
-  | "failed";
+  "idle" | "thinking" | "working" | "waiting" | "completed" | "failed";
 
 export interface AgentCapability {
   name: string;
@@ -81,11 +72,11 @@ export interface WorldState {
 }
 
 export enum WorldMaturity {
-  VIRGIN = "virgin",      // No creations yet
-  EMERGING = "emerging",  // 1-10 creations
+  VIRGIN = "virgin", // No creations yet
+  EMERGING = "emerging", // 1-10 creations
   DEVELOPING = "developing", // 10-50 creations
-  RICH = "rich",          // 50-100 creations
-  EPIC = "epic",          // 100+ creations
+  RICH = "rich", // 50-100 creations
+  EPIC = "epic", // 100+ creations
 }
 
 export interface OrchestratorDecision {
@@ -138,13 +129,25 @@ export interface CreativeSkill {
 export const CREATIVE_SKILLS: CreativeSkill[] = [
   {
     name: "character_creation",
-    triggers: ["create character", "generate character", "new character", "design character"],
+    triggers: [
+      "create character",
+      "generate character",
+      "new character",
+      "design character",
+    ],
     agent: "worldsmith",
     priority: 1,
   },
   {
     name: "creative_coaching",
-    triggers: ["stuck", "blocked", "help me", "can't write", "overwhelmed", "perfectionism"],
+    triggers: [
+      "stuck",
+      "blocked",
+      "help me",
+      "can't write",
+      "overwhelmed",
+      "perfectionism",
+    ],
     agent: "luminor-council",
     priority: 2,
   },
@@ -172,9 +175,9 @@ export const CREATIVE_SKILLS: CreativeSkill[] = [
 export function matchCreativeSkill(request: string): CreativeSkill | null {
   const lower = request.toLowerCase();
 
-  const matches = CREATIVE_SKILLS
-    .filter(skill => skill.triggers.some(trigger => lower.includes(trigger)))
-    .sort((a, b) => b.priority - a.priority);
+  const matches = CREATIVE_SKILLS.filter((skill) =>
+    skill.triggers.some((trigger) => lower.includes(trigger)),
+  ).sort((a, b) => b.priority - a.priority);
 
   return matches[0] || null;
 }

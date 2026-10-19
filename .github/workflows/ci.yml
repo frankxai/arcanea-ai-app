@@ -206,6 +206,12 @@ jobs:
           pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
           node --test scripts/tests/auth-response-privacy.test.cjs
 
+      - name: Verify ingestion DNS, redirects and native proxy isolation
+        run: |
+          pnpm --dir apps/web test:safe-fetch
+          node --test scripts/tests/safe-fetch-network.test.cjs
+          node --test scripts/tests/studio-ingest-cache.test.cjs
+
       - name: Verify author draft ownership, persistence and migration recovery
         env:
           PGPASSWORD: disposable-author-fixture
@@ -227,12 +233,16 @@ jobs:
           PROJECT_DOCUMENT_CONFIG_FIXTURE: "true"
         run: node --test scripts/tests/provider-fixture-private-config.test.cjs
 
+      - name: Verify private document original recovery and portable export
+        run: node --test scripts/tests/document-media.test.cjs scripts/tests/document-media-client.test.cjs scripts/tests/document-media-blob-fixture.test.cjs
+
       - name: Verify private image owner access and atomic storage admission
         env:
           PGPASSWORD: disposable-author-fixture
         run: |
           createdb -h localhost -U postgres arcanea_private_imagine_fixture
           psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/project-doc-media.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
@@ -379,7 +389,7 @@ jobs:
           pnpm --dir packages/arcanea-mcp test:consumer
       - name: Retain MCP consumer delivery evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: mcp-consumer-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/mcp-consumer/
@@ -448,7 +458,7 @@ jobs:
 
       - name: Upload reader journey evidence
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: reader-entry-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/reader-entry/
@@ -484,7 +494,7 @@ jobs:
 
       - name: Upload gallery rendered evidence
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: galleries-built-app-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/
@@ -536,7 +546,7 @@ jobs:
           timeout 300s node scripts/verify-author-draft-browser.cjs
       - name: Retain authenticated preview evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: author-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/author-hosted/
@@ -576,7 +586,7 @@ jobs:
         run: node scripts/run-world-service-fixture.mjs
       - name: Retain safe world acceptance evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: world-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/world-service/
@@ -623,7 +633,7 @@ jobs:
         run: node scripts/review-author-recovery.mjs
       - name: Retain handover final findings and source receipt
         if: always() && (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: hub-review-${{ github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_head || '5326dc36c78f' }}-attempt-${{ github.run_attempt }}
           path: screenshots/hub-review/
@@ -636,7 +646,7 @@ jobs:
         run: node scripts/review-author-recovery.mjs
       - name: Retain final findings and exact source receipt
         if: always() && (github.ref_name != 'agent/codex/review-handover-20261010' || !inputs.review_hub_release)
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: author-review-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/author-review/
@@ -674,7 +684,7 @@ jobs:
         run: node scripts/run-generation-service-fixture.mjs
       - name: Retain safe generation acceptance evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: generation-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/generation-service/
@@ -710,7 +720,7 @@ jobs:
         run: node scripts/run-project-document-service-fixture.mjs
       - name: Retain safe document acceptance evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: project-document-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/project-document-service/
@@ -744,7 +754,7 @@ jobs:
         run: node scripts/run-provider-account-fixture.mjs
       - name: Retain safe provider settings acceptance evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: provider-settings-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/provider-settings/
@@ -778,7 +788,7 @@ jobs:
         run: node scripts/run-provider-account-fixture.mjs
       - name: Retain safe private Imagine acceptance evidence
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: private-imagine-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/private-imagine/

@@ -57,6 +57,12 @@ On Windows, use forward slashes in JSON paths, such as `C:/projects/arcanea-ai-a
 
 Core world generation, graph storage and planning need no provider key. Other connectors, renderers or model hosts you add have their own credentials and costs. Keep sensitive manuscripts and private world material in a data directory you control.
 
+## Canon screening
+
+`validate_canon` screens configured terminology and explicit Guardian/Gate declarations. It distinguishes Gate 10 from Gate 1, checks repeated declarations and recognizes cardinal, ordinal, active and reverse forms such as `Shinkami is Guardian of Gate 10`, `Shinkami is Guardian of the 10th Gate`, `Shinkami guards Gate 10` and `Gate 10 is guarded by Shinkami`. Merely visiting a Gate or mentioning another character's villainy does not assign guardianship or make Nero evil.
+
+`valid: true` means the configured heuristics found no errors. Every result includes `validationScope`, `checkedAssociations`, `canonApproval: false` and `humanReviewRequired: true`. Findings include JavaScript UTF-16 offsets for the matched declaration, usable with `string.slice(start, end)`. Arbitrary prose, quoted assertions, negation across clauses, implicit relationships and complete manuscript continuity still require source-aware editorial review. The screen does not promote canon or issue release approval.
+
 ## Toolsets
 
 Every tool a server lists costs the agent context on every turn, so the CLI serves the 12-tool `core` set by default. Add groups with `--toolsets core,world` or `ARCANEA_TOOLSETS=all`; the flag wins over the variable.

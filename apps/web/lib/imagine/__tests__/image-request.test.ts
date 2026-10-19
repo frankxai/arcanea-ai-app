@@ -533,3 +533,43 @@ test("confirmed legacy adoption starts a fresh next request while the unassigned
     else Reflect.deleteProperty(globalThis, "sessionStorage");
   }
 });
+
+test("image request with 401 returns unauthorized response with nested error payload", async () => {
+  const originalFetch = globalThis.fetch;
+  const slots = new Map<string, string>();
+  const descriptor = Object.getOwnPropertyDescriptor(
+    globalThis,
+    "sessionStorage",
+  );
+  Object.defineProperty(globalThis, "sessionStorage", {
+    configurable: true,
+    value: {
+      getItem: (key: string) => slots.get(key) ?? null,
+      setItem: (key: string, value: string) => slots.set(key, value),
+      removeItem: (key: string) => slots.delete(key),
+    },
+  });
+  globalThis.fetch = async () => {
+    return new Response(
+      JSON.stringify({
+        error: { message: "Unauthorized", code: "AUTH_REQUIRED" },
+      }),
+      {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  };
+  try {
+    const res = await requestImages({ prompt: "cosmic dragon" });
+    assert.equal(res.status, 401);
+    assert.equal(res.ok, false);
+    const data = await res.json();
+    assert.equal(data.error.message, "Unauthorized");
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (descriptor)
+      Object.defineProperty(globalThis, "sessionStorage", descriptor);
+    else Reflect.deleteProperty(globalThis, "sessionStorage");
+  }
+});

@@ -43,6 +43,7 @@ function page(actor: string | null, hydrated = false) {
     "@/components/imagine/PromptInput": { PromptInput: empty },
     "@/components/imagine/ImageCard": { ImageCard: empty },
     "@/components/imagine/FavoritesPanel": { FavoritesPanel: empty },
+    "@/components/auth/auth-modal": { AuthModal: empty },
     "@/lib/imagine-favorites": {},
     "@/lib/phosphor-icons": { Heart: empty, X: empty },
   };

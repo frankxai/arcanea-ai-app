@@ -18,7 +18,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { LuminaBubble } from "@/components/lumina/lumina-bubble";
 import { CommandPalette } from "@/components/command-palette";
 
-
 function CosmicBackgroundFallback() {
   return (
     <div
@@ -124,18 +123,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      style={{ colorScheme: "dark", "--font-serif": "'Newsreader Variable', serif" } as React.CSSProperties}
-            className={cn(
-              GeistSans.variable,
-              GeistMono.variable,
-              jetbrainsMono.variable,
-              instrumentSerif.variable,
-              "font-sans",
-            )}
+      style={
+        {
+          colorScheme: "dark",
+          "--font-serif": "'Newsreader Variable', serif",
+        } as React.CSSProperties
+      }
+      className={cn(
+        GeistSans.variable,
+        GeistMono.variable,
+        jetbrainsMono.variable,
+        instrumentSerif.variable,
+        "font-sans",
+      )}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
           type="application/ld+json"
@@ -143,27 +151,28 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              "name": "Arcanea",
-              "url": "https://www.arcanea.ai",
-              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
-              "applicationCategory": "CreativeWork",
-              "operatingSystem": "Web",
-              "offers": {
+              name: "Arcanea",
+              url: "https://www.arcanea.ai",
+              description:
+                "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
+              applicationCategory: "CreativeWork",
+              operatingSystem: "Web",
+              offers: {
                 "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "description": "Free to start"
+                price: "0",
+                priceCurrency: "USD",
+                description: "Free to start",
               },
-              "creator": {
+              creator: {
                 "@type": "Organization",
-                "name": "Arcanea",
-                "url": "https://www.arcanea.ai"
+                name: "Arcanea",
+                url: "https://www.arcanea.ai",
               },
-              "featureList": [
+              featureList: [
                 "Living world builder with auto-linking",
-                "Quest and faction generation"
-              ]
-            })
+                "Quest and faction generation",
+              ],
+            }),
           }}
         />
       </head>
@@ -191,7 +200,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </Suspense>
             <GlobalGlowTrackerLazy />
             <Navbar />
-            <main id="main-content" className="relative pt-[var(--nav-h)]">
+            <main
+              id="main-content"
+              tabIndex={-1}
+              className="relative pt-[var(--nav-h)]"
+            >
               {children}
             </main>
             <Footer />

@@ -119,7 +119,9 @@ test("customer binding and current draft survive a deferred provider denial safe
   assert.ok(!stream.includes("test-customer-key"));
   const call = outbound.at(-1)!;
   assert.equal(call.headers.get("x-api-key"), "test-customer-key");
-  assert.equal(call.body.model, "claude-sonnet-4-6");
+  assert.equal(call.body.model, "claude-sonnet-5-5");
+  // Claude 5.5 models reject sampling parameters with a 400.
+  assert.equal(call.body.temperature, undefined);
   assert.ok(
     JSON.stringify(call.body.system).includes(
       "Latest lighthouse keeper revision",

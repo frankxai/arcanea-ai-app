@@ -89,7 +89,7 @@ test("cli explain shows routing decision", async () => {
   const res = await isolatedRun(["world.canon"], {}, false, "explain");
   assert.equal(res.exitCode, 0);
   assert.match(res.stdout, /Task: world\.canon/);
-  assert.match(res.stdout, /claude-opus-4-7/);
+  assert.match(res.stdout, /claude-opus-5-5/);
 });
 
 test("cli explain with unknown task exits non-zero", async () => {
@@ -107,7 +107,7 @@ test("cli run --dry-run shows exec plan without invoking runtime", async () => {
   const res = await isolatedRun(["--task", "nav.fast"]);
   assert.equal(res.exitCode, 0);
   assert.match(res.stderr, /dry-run/);
-  assert.match(res.stderr, /claude-haiku-4-5/);
+  assert.match(res.stderr, /claude-haiku-5-5/);
 });
 
 test("explain labels an unsupported provider without routing it to Claude", async () => {

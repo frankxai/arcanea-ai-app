@@ -15,11 +15,22 @@ import { setTimeout as pause } from "node:timers/promises";
 // Disposable hosted acceptance only. The existing Postgres service owns the
 // database lifetime; this runner owns two containers, one gateway and app jobs.
 const branch = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME;
-const admittedBranches = new Set([
-  "agent/codex/reading-scene-20261010",
-  "agent/codex/provider-account-20261011",
-  "main",
-]);
+const progressMode = process.env.READING_PROGRESS_AUTH === "true";
+if (process.env.READING_PROGRESS_AUTH && !progressMode)
+  throw Error("Use the explicit reading-progress acceptance mode.");
+const admittedBranches = new Set(
+  progressMode
+    ? [
+        "agent/codex/reading-progress-auth-20261012",
+        "agent/codex/reading-companion-20261012",
+        "main",
+      ]
+    : [
+        "agent/codex/reading-scene-20261010",
+        "agent/codex/provider-account-20261011",
+        "main",
+      ],
+);
 if (
   process.env.GITHUB_ACTIONS !== "true" ||
   process.env.GITHUB_REPOSITORY !== "frankxai/arcanea-ai-app" ||
@@ -38,7 +49,9 @@ if (head !== process.env.READING_SCENE_HEAD)
 const password = process.env.READING_SCENE_FIXTURE_PASSWORD;
 if (!/^\d+-\d+-fixture$/.test(password || ""))
   throw Error("Only the ephemeral GitHub fixture password is allowed.");
-const output = "screenshots/reading-scene-auth";
+const output = progressMode
+  ? "screenshots/reading-progress-auth"
+  : "screenshots/reading-scene-auth";
 mkdirSync(output, { recursive: true });
 const secret = randomBytes(32).toString("hex");
 const jwt = (role) => {
@@ -58,7 +71,7 @@ const redact = (value) =>
       /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,
       "[redacted-jwt]",
     );
-const namePrefix = `reading-auth-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
+const namePrefix = `${progressMode ? "reading-progress-auth" : "reading-auth"}-${process.env.GITHUB_RUN_ID}-${process.env.GITHUB_RUN_ATTEMPT}`;
 const containers = [];
 const children = new Set();
 const configPath = join(
@@ -87,7 +100,12 @@ const receipt = {
   backend: "disposable GoTrue/PostgREST/Postgres",
   productionWrites: 0,
   providerCalls: 0,
-  generation: "intercepted synthetic raster; no provider credential supplied",
+  generation: progressMode
+    ? "No generation or provider credential supplied"
+    : "intercepted synthetic raster; no provider credential supplied",
+  acceptance: progressMode
+    ? "compiled Library reading progress with real password Auth and PostgREST/RLS"
+    : "compiled reading-scene recovery",
   passed: false,
 };
 let cleanupPromise;
@@ -134,6 +152,16 @@ async function finish() {
         "apps/web/app/api/reading-scenes/route.ts",
         "apps/web/lib/supabase/server.ts",
         ".github/workflows/reading-scene.yml",
+        ...(progressMode
+          ? [
+              "scripts/fixtures/reading-progress-auth.sql",
+              "scripts/verify-reading-progress-auth-browser.cjs",
+              "scripts/tests/reading-progress-auth-admission.test.cjs",
+              "apps/web/hooks/use-reading-progress.ts",
+              "apps/web/app/library/reading-tracker.tsx",
+              ".github/workflows/reading-progress.yml",
+            ]
+          : []),
       ].map((file) => [
         file,
         createHash("sha256").update(readFileSync(file)).digest("hex"),
@@ -280,6 +308,8 @@ try {
   sql(
     "create or replace function auth.uid() returns uuid language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claim.sub',true),''),(nullif(current_setting('request.jwt.claims',true),'')::jsonb ->> 'sub'))::uuid $$;",
   );
+  if (progressMode)
+    sql(readFileSync("scripts/fixtures/reading-progress-auth.sql", "utf8"));
   container("rest", "postgrest/postgrest:v13.0.7", {
     PGRST_DB_URI: `postgres://authenticator:${password}@127.0.0.1:5432/reading_scene_fixture`,
     PGRST_DB_SCHEMAS: "public",
@@ -369,7 +399,11 @@ try {
     READING_SCENE_AUTH_CONFIG: configPath,
     // A dummy local value exercises configuration UI only. The browser intercepts
     // the generation endpoint; this is never a usable provider credential.
-    OPENROUTER_API_KEY: "disposable-reading-fixture-not-a-provider-key",
+    ...(progressMode
+      ? {}
+      : {
+          OPENROUTER_API_KEY: "disposable-reading-fixture-not-a-provider-key",
+        }),
   };
   privateConfiguration.write({
     head,
@@ -403,12 +437,18 @@ try {
   );
   children.add(server);
   await ready(
-    "http://127.0.0.1:3001/books/forge-of-ruin/the-forty-seven-names",
+    progressMode
+      ? "http://127.0.0.1:3001/library/laws-of-arcanea/i-the-scientific-foundations"
+      : "http://127.0.0.1:3001/books/forge-of-ruin/the-forty-seven-names",
   );
   phase = "real-auth-browser";
   await run(
     "node",
-    ["scripts/verify-reading-scene-auth-browser.cjs"],
+    [
+      progressMode
+        ? "scripts/verify-reading-progress-auth-browser.cjs"
+        : "scripts/verify-reading-scene-auth-browser.cjs",
+    ],
     env,
     180000,
   );
