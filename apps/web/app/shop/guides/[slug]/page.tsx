@@ -93,7 +93,8 @@ export default async function GuidePage({
       <h2>Try the worked example.</h2>
       <p>
         Read the free demonstration scene and download the editable World
-        Starter. Adapt its canon-state workflow to your own original project.
+        Starter. The example is an AI-assisted proposal outside official Arcanea
+        canon; adapt its method to your own original project.
       </p>
       <Link
         href={`/shop/sample?utm_source=arcanea_guides&utm_medium=field_note&utm_campaign=${guide.slug}`}
