@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Sparkle,
   Lightning,
@@ -13,9 +13,58 @@ import {
   WarningCircle,
 } from '@/lib/phosphor-icons'
 import { cn } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
+
+const ACTIVE_VIDEO_JOB_STORAGE_KEY = "arcanea_active_video_job_id"
 
 interface VideoTabProps {
   generationState?: "idle" | "generating" | "complete" | "error"
+}
+
+async function buildAuthHeaders(): Promise<Record<string, string>> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" }
+  try {
+    const supabase = createClient()
+    const { data } = await supabase.auth.getSession()
+    const token = data?.session?.access_token
+    if (token) {
+      headers.Authorization = `Bearer ${token}`
+    }
+  } catch {}
+  return headers
+}
+
+async function pollVideoJob(jobId: string): Promise<{ videoUrl?: string; error?: string }> {
+  for (let i = 0; i < 60; i++) {
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    const headers = await buildAuthHeaders()
+    const statusRes = await fetch(`/api/ai/generate-video?jobId=${encodeURIComponent(jobId)}`, {
+      method: "GET",
+      headers,
+      credentials: "same-origin",
+    })
+    if (statusRes.status === 401 || statusRes.status === 404) {
+      try {
+        sessionStorage.removeItem(ACTIVE_VIDEO_JOB_STORAGE_KEY)
+      } catch {}
+      return { error: statusRes.status === 401 ? "Sign in to view video generation status" : "Video job not found" }
+    }
+    if (!statusRes.ok) continue
+    const statusData = await statusRes.json()
+    if (statusData.status === "completed" && statusData.videoUrl) {
+      try {
+        sessionStorage.removeItem(ACTIVE_VIDEO_JOB_STORAGE_KEY)
+      } catch {}
+      return { videoUrl: statusData.videoUrl }
+    }
+    if (statusData.status === "failed" || statusData.status === "refunded") {
+      try {
+        sessionStorage.removeItem(ACTIVE_VIDEO_JOB_STORAGE_KEY)
+      } catch {}
+      return { error: statusData.error || "Video generation failed" }
+    }
+  }
+  return { error: "Generation timed out" }
 }
 
 async function generateVideo(params: {
@@ -23,22 +72,33 @@ async function generateVideo(params: {
   duration: number;
   cameraMovement: string;
   style: string;
+  requestKey: string;
 }): Promise<{ videoUrl?: string; error?: string }> {
   try {
+    const headers = await buildAuthHeaders()
     const res = await fetch('/api/ai/generate-video', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
+      credentials: 'same-origin',
       body: JSON.stringify({
         prompt: `${params.prompt}. Style: ${params.style}. Camera: ${params.cameraMovement}`,
         duration: params.duration,
         cameraMovement: params.cameraMovement,
         resolution: '720p',
         quality: 'high',
+        requestKey: params.requestKey,
       }),
     });
     if (!res.ok) {
-      const text = await res.text();
-      return { error: text || `Generation failed (${res.status})` };
+      let message = `Generation failed (${res.status})`;
+      try {
+        const errBody = await res.json();
+        if (errBody?.error) message = errBody.error;
+      } catch {
+        const text = await res.text().catch(() => "");
+        if (text) message = text;
+      }
+      return { error: message };
     }
     const data = await res.json();
     if (data.videoUrl || data.url) {
@@ -48,20 +108,11 @@ async function generateVideo(params: {
       return { error: 'No job ID returned' };
     }
 
-    const jobId = data.jobId;
-    for (let i = 0; i < 60; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const statusRes = await fetch(`/api/ai/generate-video?jobId=${jobId}`);
-      if (!statusRes.ok) continue;
-      const statusData = await statusRes.json();
-      if (statusData.status === 'completed' && statusData.videoUrl) {
-        return { videoUrl: statusData.videoUrl };
-      }
-      if (statusData.status === 'failed' || statusData.status === 'refunded') {
-        return { error: statusData.error || 'Video generation failed' };
-      }
-    }
-    return { error: 'Generation timed out' };
+    try {
+      sessionStorage.setItem(ACTIVE_VIDEO_JOB_STORAGE_KEY, data.jobId);
+    } catch {}
+
+    return pollVideoJob(data.jobId);
   } catch (e: any) {
     return { error: e.message || 'Network error' };
   }
@@ -94,10 +145,45 @@ export function VideoTab({ generationState: externalState }: VideoTabProps) {
 
   const generationState = externalState || internalState
 
+  useEffect(() => {
+    let cancelled = false
+    try {
+      const savedJobId = sessionStorage.getItem(ACTIVE_VIDEO_JOB_STORAGE_KEY)
+      if (!savedJobId) return
+      setInternalState("generating")
+      setGenError(null)
+      pollVideoJob(savedJobId).then((result) => {
+        if (cancelled) return
+        if (result.error) {
+          setGenError(result.error)
+          setInternalState("error")
+        } else if (result.videoUrl) {
+          setVideoUrl(result.videoUrl)
+          setInternalState("complete")
+        } else {
+          setInternalState("idle")
+        }
+      })
+    } catch {}
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   const handleGenerate = async () => {
     setInternalState("generating")
     setGenError(null)
-    const result = await generateVideo({ prompt, duration, cameraMovement: selectedCamera, style: selectedStyle })
+    const requestKey =
+      typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : `req_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
+    const result = await generateVideo({
+      prompt,
+      duration,
+      cameraMovement: selectedCamera,
+      style: selectedStyle,
+      requestKey,
+    })
     if (result.error) {
       setGenError(result.error)
       setInternalState("error")

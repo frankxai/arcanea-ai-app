@@ -4,6 +4,7 @@ begin;
 create table if not exists public.generation_jobs (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
+  request_key text not null,
   kind text not null default 'video',
   model text not null,
   inputs jsonb not null default '{}'::jsonb,
@@ -18,6 +19,7 @@ create table if not exists public.generation_jobs (
   updated_at timestamptz not null default now()
 );
 
+create unique index if not exists generation_jobs_user_request_key_idx on public.generation_jobs (user_id, request_key);
 create index if not exists generation_jobs_user_status_idx on public.generation_jobs (user_id, status, created_at desc);
 
 alter table public.generation_jobs enable row level security;
