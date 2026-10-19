@@ -8,7 +8,21 @@ import {
   type WorldContextRepository,
 } from "@arcanea/mcp-server/gateway";
 
+import { mcpWwwAuthenticate } from "./protected-resource-metadata";
+
 const MAX_REQUEST_BYTES = 65_536;
+
+/**
+ * Thrown by `authenticate` when a Bearer token was presented but is invalid,
+ * expired, from another issuer, or not issued for this resource (audience).
+ * Answered with 401 + `WWW-Authenticate: Bearer error="invalid_token"`.
+ */
+export class WorldContextInvalidTokenError extends Error {
+  constructor(readonly reason: string) {
+    super("The access token is invalid or was not issued for this resource.");
+    this.name = "WorldContextInvalidTokenError";
+  }
+}
 
 export interface AuthenticatedWorldContextSession {
   actor: WorldContextActor;
@@ -122,13 +136,6 @@ export function createWorldContextMcpHttpHandler(
     dependencies.handleMcpRequest ?? handleStatelessWorldContextMcpRequest;
 
   return async (request: Request): Promise<Response> => {
-    if (dependencies.getMode() !== "compatibility-preview") {
-      return jsonResponse(
-        503,
-        "adapter-required",
-        "World Context Gateway is not connected.",
-      );
-    }
     if (request.method !== "POST") {
       return jsonResponse(
         405,
@@ -141,10 +148,24 @@ export function createWorldContextMcpHttpHandler(
       return jsonResponse(403, "origin-denied", "Origin is not allowed.");
     }
 
+    // Authenticate before anything that reveals gateway state: a client
+    // without a valid, resource-bound token only ever sees 401.
     let session: AuthenticatedWorldContextSession | null;
     try {
       session = await dependencies.authenticate(request);
     } catch (error) {
+      if (error instanceof WorldContextInvalidTokenError) {
+        return jsonResponse(
+          401,
+          "invalid-token",
+          "The access token is invalid or was not issued for this resource.",
+          {
+            "www-authenticate": mcpWwwAuthenticate(request.url, {
+              invalidToken: true,
+            }),
+          },
+        );
+      }
       if (error instanceof GatewayError && error.code === "adapter-required") {
         return jsonResponse(503, error.code, error.message);
       }
@@ -160,8 +181,16 @@ export function createWorldContextMcpHttpHandler(
         "authentication-required",
         "Authentication is required.",
         {
-          "www-authenticate": "Bearer",
+          "www-authenticate": mcpWwwAuthenticate(request.url),
         },
+      );
+    }
+
+    if (dependencies.getMode() !== "compatibility-preview") {
+      return jsonResponse(
+        503,
+        "adapter-required",
+        "World Context Gateway is not connected.",
       );
     }
 

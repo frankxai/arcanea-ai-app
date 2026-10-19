@@ -26,30 +26,47 @@ export function ComingSoonPage({
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubscribe = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || submitting) return;
-    setSubmitting(true);
-    try {
-      await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: `coming-soon:${title}` }),
-      });
-    } catch {
-      // Still show success
-    } finally {
-      setSubscribed(true);
-      setEmail("");
-      setSubmitting(false);
-    }
-  }, [email, submitting, title]);
+  const handleSubscribe = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!email.trim() || submitting) return;
+      setSubmitting(true);
+      setError("");
+      try {
+        const res = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.trim(),
+            source: `coming-soon:${title}`,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          setSubscribed(true);
+          setEmail("");
+        } else {
+          setError(
+            data.error || "We couldn't save your email. Please try again.",
+          );
+        }
+      } catch {
+        setError("We couldn't reach the server. Please try again.");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [email, submitting, title],
+  );
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 py-20 text-center">
       {icon && (
-        <div className="mb-6 text-[var(--arc-brand-atlantean-teal)]/60">{icon}</div>
+        <div className="mb-6 text-[var(--arc-brand-atlantean-teal)]/60">
+          {icon}
+        </div>
       )}
 
       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[11px] uppercase tracking-[0.2em] font-semibold text-[var(--arc-brand-atlantean-teal)] mb-6">
@@ -102,6 +119,11 @@ export function ComingSoonPage({
                 {submitting ? "..." : "Notify Me"}
               </button>
             </form>
+          )}
+          {error && !subscribed && (
+            <p role="alert" className="mt-2 text-sm text-white/60">
+              {error}
+            </p>
           )}
         </div>
       )}

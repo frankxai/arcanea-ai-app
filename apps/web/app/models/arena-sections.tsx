@@ -58,7 +58,9 @@ function CategoryDot({ category }: { category: AIModel["category"] }) {
   return (
     <span
       className="inline-block w-2 h-2 rounded-full mr-2 flex-shrink-0"
-      style={{ backgroundColor: colors[category] ?? "var(--arc-brand-atlantean-teal)" }}
+      style={{
+        backgroundColor: colors[category] ?? "var(--arc-brand-atlantean-teal)",
+      }}
     />
   );
 }
@@ -85,23 +87,41 @@ export function BenchmarkTable() {
   return (
     <section className="mb-24">
       <SectionHeading
-        tag="Benchmarks"
-        title="Full Model Rankings"
-        subtitle="Every model we track, sorted by SWE-Bench Verified score. Pricing is per million tokens."
+        tag="Models"
+        title="All Tracked Models"
+        subtitle="Every model we track. Pricing is per million tokens."
       />
       <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
         <table className="w-full text-sm text-left">
           <thead>
             <tr className="border-b border-white/[0.06] bg-white/[0.02]">
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">#</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Model</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Provider</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">Context</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">SWE-Bench</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">Input</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">Output</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">Speed</th>
-              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Category</th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                #
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                Model
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                Provider
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Context
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                SWE-Bench
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Input
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Output
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Speed
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                Category
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -110,7 +130,9 @@ export function BenchmarkTable() {
                 key={model.id}
                 className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
               >
-                <td className="px-4 py-3 text-white/30 font-mono text-xs">{i + 1}</td>
+                <td className="px-4 py-3 text-white/30 font-mono text-xs">
+                  {i + 1}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <span>{model.providerLogo}</span>
@@ -128,7 +150,11 @@ export function BenchmarkTable() {
                       className="font-medium"
                       style={{
                         color:
-                          model.sweBench >= 70 ? "var(--arc-brand-atlantean-teal)" : model.sweBench >= 50 ? "var(--arc-brand-arcanean-gold)" : "var(--arc-fire)",
+                          model.sweBench >= 70
+                            ? "var(--arc-brand-atlantean-teal)"
+                            : model.sweBench >= 50
+                              ? "var(--arc-brand-arcanean-gold)"
+                              : "var(--arc-fire)",
                       }}
                     >
                       {model.sweBench}%
@@ -233,7 +259,9 @@ export function WorkflowMap() {
                   <span className="text-white/40 flex-shrink-0">Fallbacks</span>
                   <span className="text-white/50 text-right ml-2">
                     {wf.fallbackModels
-                      .map((id) => AI_MODELS.find((m) => m.id === id)?.name ?? id)
+                      .map(
+                        (id) => AI_MODELS.find((m) => m.id === id)?.name ?? id,
+                      )
                       .join(", ")}
                   </span>
                 </div>
@@ -263,7 +291,7 @@ export function ModelDeepDives() {
       <SectionHeading
         tag="Deep Dives"
         title="Model Analysis"
-        subtitle="Strengths, weaknesses, and recommended use cases for the top models."
+        subtitle="Strengths, weaknesses, and recommended use cases."
       />
       <div className="space-y-3">
         {top.map((model) => (
@@ -276,51 +304,85 @@ export function ModelDeepDives() {
                 <span className="text-lg">{model.providerLogo}</span>
                 <div>
                   <span className="font-medium text-white">{model.name}</span>
-                  <span className="text-xs text-white/40 ml-2">{model.provider}</span>
+                  <span className="text-xs text-white/40 ml-2">
+                    {model.provider}
+                  </span>
                 </div>
                 {model.pricing.input === "free" && (
-                  <span className="ml-2"><FreeBadge /></span>
+                  <span className="ml-2">
+                    <FreeBadge />
+                  </span>
                 )}
               </div>
               <div className="flex items-center gap-4">
                 {model.sweBench !== null && (
-                  <span className="text-sm font-mono text-[var(--arc-brand-atlantean-teal)]">{model.sweBench}%</span>
+                  <span className="text-sm font-mono text-[var(--arc-brand-atlantean-teal)]">
+                    {model.sweBench}%
+                  </span>
                 )}
                 <svg
                   className="w-4 h-4 text-white/30 group-open:rotate-180 transition-transform"
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </div>
             </summary>
             <div className="px-5 pb-5 border-t border-white/[0.04]">
               <div className="grid sm:grid-cols-3 gap-6 pt-4">
                 <div>
-                  <h4 className="text-xs font-medium text-[var(--arc-wind)] uppercase tracking-wider mb-2">Strengths</h4>
+                  <h4 className="text-xs font-medium text-[var(--arc-wind)] uppercase tracking-wider mb-2">
+                    Strengths
+                  </h4>
                   <ul className="space-y-1">
                     {model.strengths.map((s, i) => (
-                      <li key={i} className="text-xs text-white/50 flex items-start gap-1.5">
-                        <span className="text-[var(--arc-wind)] mt-0.5 flex-shrink-0">+</span>{s}
+                      <li
+                        key={i}
+                        className="text-xs text-white/50 flex items-start gap-1.5"
+                      >
+                        <span className="text-[var(--arc-wind)] mt-0.5 flex-shrink-0">
+                          +
+                        </span>
+                        {s}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h4 className="text-xs font-medium text-[var(--arc-fire)] uppercase tracking-wider mb-2">Weaknesses</h4>
+                  <h4 className="text-xs font-medium text-[var(--arc-fire)] uppercase tracking-wider mb-2">
+                    Weaknesses
+                  </h4>
                   <ul className="space-y-1">
                     {model.weaknesses.map((w, i) => (
-                      <li key={i} className="text-xs text-white/50 flex items-start gap-1.5">
-                        <span className="text-[var(--arc-fire)] mt-0.5 flex-shrink-0">-</span>{w}
+                      <li
+                        key={i}
+                        className="text-xs text-white/50 flex items-start gap-1.5"
+                      >
+                        <span className="text-[var(--arc-fire)] mt-0.5 flex-shrink-0">
+                          -
+                        </span>
+                        {w}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h4 className="text-xs font-medium text-[var(--arc-brand-cosmic-blue)] uppercase tracking-wider mb-2">Tags</h4>
+                  <h4 className="text-xs font-medium text-[var(--arc-brand-cosmic-blue)] uppercase tracking-wider mb-2">
+                    Tags
+                  </h4>
                   <div className="flex flex-wrap gap-1">
                     {model.tags.map((tag) => (
-                      <span key={tag} className="inline-block px-2 py-0.5 rounded text-[10px] text-white/40 bg-white/[0.04]">
+                      <span
+                        key={tag}
+                        className="inline-block px-2 py-0.5 rounded text-[10px] text-white/40 bg-white/[0.04]"
+                      >
                         {tag}
                       </span>
                     ))}
@@ -328,7 +390,9 @@ export function ModelDeepDives() {
                   <div className="mt-3 space-y-1 text-xs text-white/40">
                     <div className="flex justify-between">
                       <span>Context</span>
-                      <span className="text-white/60">{formatContext(model.contextWindow)}</span>
+                      <span className="text-white/60">
+                        {formatContext(model.contextWindow)}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Speed</span>

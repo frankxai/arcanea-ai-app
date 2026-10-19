@@ -18,16 +18,24 @@ import type {
   ChatMessage,
   GatewayConfig,
   ProviderId,
+  ToolCall,
   UsageInfo,
-} from './types';
-import { PROVIDERS } from './models';
+} from "./types";
+import { PROVIDERS } from "./models";
+import {
+  ANTHROPIC_API_VERSION,
+  CLAUDE_SERVER_FALLBACK_BETA,
+  claudeRejectsSamplingParams,
+  claudeSupportsServerFallback,
+} from "./catalog";
 import {
   proxySSEStream,
   adaptAnthropicStream,
+  mapAnthropicStopReason,
   createSSEResponse,
   sseHeaders,
   generateCompletionId,
-} from './streaming';
+} from "./streaming";
 
 // ─── Provider Key Resolution ─────────────────────────────────────────
 
@@ -43,7 +51,7 @@ export function resolveApiKey(
   config: GatewayConfig,
 ): string | null {
   // 1. Request-level override (most explicit)
-  const headerKey = request.headers.get('x-provider-key');
+  const headerKey = request.headers.get("x-provider-key");
   if (headerKey) return headerKey;
 
   // 2. User's stored BYOK keys
@@ -77,7 +85,7 @@ export async function proxyToOpenAICompatible(
   const url = `${providerBaseUrl}/chat/completions`;
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers,
     body: JSON.stringify({
       ...body,
@@ -86,19 +94,18 @@ export async function proxyToOpenAICompatible(
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
+    await response.body?.cancel();
     return new Response(
       JSON.stringify({
         error: {
-          message: `Provider error: ${response.status} ${response.statusText}`,
-          type: 'provider_error',
+          message: `Provider request failed (${response.status}). Check your provider account and retry.`,
+          type: "provider_error",
           code: response.status,
-          details: errorText,
         },
       }),
       {
         status: response.status,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       },
     );
   }
@@ -110,15 +117,37 @@ export async function proxyToOpenAICompatible(
   }
 
   // Non-streaming: parse, transform, return
-  const data = await response.json() as ChatCompletionResponse;
+  const data = (await response.json()) as ChatCompletionResponse;
   data.model = arcaneaModelId;
 
   return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
 
 // ─── Anthropic Adapter ───────────────────────────────────────────────
+
+function openAIContentToText(
+  content: ChatMessage["content"] | null | undefined,
+): string {
+  if (typeof content === "string") return content;
+  if (!Array.isArray(content)) return "";
+  return content
+    .filter((part) => part.type === "text")
+    .map((part) => part.text ?? "")
+    .join("\n");
+}
+
+function parseToolArguments(raw: string): unknown {
+  try {
+    const parsed = JSON.parse(raw || "{}");
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? parsed
+      : {};
+  } catch {
+    return {};
+  }
+}
 
 /**
  * Translate OpenAI-format request to Anthropic's Messages API format,
@@ -129,36 +158,82 @@ export async function proxyToAnthropic(
   body: ChatCompletionRequest,
   arcaneaModelId: string,
   streaming: boolean,
+  options: { fallbackConsent?: boolean } = {},
 ): Promise<Response> {
   // Extract system message
   let systemPrompt: string | undefined;
-  const messages: Array<{ role: 'user' | 'assistant'; content: string | unknown[] }> = [];
+  const messages: Array<{
+    role: "user" | "assistant";
+    content: string | unknown[];
+  }> = [];
 
   for (const msg of body.messages) {
-    if (msg.role === 'system') {
-      systemPrompt = typeof msg.content === 'string' ? msg.content : '';
+    if (msg.role === "system") {
+      systemPrompt = typeof msg.content === "string" ? msg.content : "";
       continue;
     }
 
-    if (msg.role === 'user' || msg.role === 'assistant') {
-      if (typeof msg.content === 'string') {
+    // OpenAI tool round trip: an assistant message carrying `tool_calls`, then
+    // `role: "tool"` results. Anthropic needs these as `tool_use` blocks on the
+    // assistant turn and `tool_result` blocks in the next user turn.
+    if (msg.role === "assistant" && msg.tool_calls?.length) {
+      const blocks: unknown[] = [];
+      const text = openAIContentToText(msg.content);
+      if (text) blocks.push({ type: "text", text });
+      for (const call of msg.tool_calls) {
+        blocks.push({
+          type: "tool_use",
+          id: call.id,
+          name: call.function.name,
+          input: parseToolArguments(call.function.arguments),
+        });
+      }
+      messages.push({ role: "assistant", content: blocks });
+      continue;
+    }
+
+    if (msg.role === "tool") {
+      const block = {
+        type: "tool_result",
+        tool_use_id: msg.tool_call_id,
+        content: openAIContentToText(msg.content),
+      };
+      const previous = messages[messages.length - 1];
+      if (
+        previous?.role === "user" &&
+        Array.isArray(previous.content) &&
+        previous.content.length > 0 &&
+        previous.content.every(
+          (part) => (part as { type?: string }).type === "tool_result",
+        )
+      ) {
+        // Results for one assistant turn share a single user message.
+        previous.content.push(block);
+      } else {
+        messages.push({ role: "user", content: [block] });
+      }
+      continue;
+    }
+
+    if (msg.role === "user" || msg.role === "assistant") {
+      if (typeof msg.content === "string") {
         messages.push({ role: msg.role, content: msg.content });
       } else if (Array.isArray(msg.content)) {
         // Convert OpenAI content parts to Anthropic format
         const parts = msg.content.map((part) => {
-          if (part.type === 'text') {
-            return { type: 'text', text: part.text || '' };
+          if (part.type === "text") {
+            return { type: "text", text: part.text || "" };
           }
-          if (part.type === 'image_url' && part.image_url) {
+          if (part.type === "image_url" && part.image_url) {
             return {
-              type: 'image',
+              type: "image",
               source: {
-                type: 'url',
+                type: "url",
                 url: part.image_url.url,
               },
             };
           }
-          return { type: 'text', text: '' };
+          return { type: "text", text: "" };
         });
         messages.push({ role: msg.role, content: parts });
       }
@@ -174,9 +249,16 @@ export async function proxyToAnthropic(
   };
 
   if (systemPrompt) anthropicBody.system = systemPrompt;
-  if (body.temperature != null) anthropicBody.temperature = body.temperature;
-  if (body.top_p != null) anthropicBody.top_p = body.top_p;
-  if (body.stop) anthropicBody.stop_sequences = Array.isArray(body.stop) ? body.stop : [body.stop];
+  // Claude 5.x (and Opus 4.7/4.8) return a 400 for non-default sampling
+  // parameters, so OpenAI-style temperature/top_p are dropped for them.
+  if (!claudeRejectsSamplingParams(String(body.model))) {
+    if (body.temperature != null) anthropicBody.temperature = body.temperature;
+    if (body.top_p != null) anthropicBody.top_p = body.top_p;
+  }
+  if (body.stop)
+    anthropicBody.stop_sequences = Array.isArray(body.stop)
+      ? body.stop
+      : [body.stop];
 
   // Tools translation
   if (body.tools) {
@@ -187,30 +269,42 @@ export async function proxyToAnthropic(
     }));
   }
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2024-10-22',
-    },
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "x-api-key": apiKey,
+    "anthropic-version": ANTHROPIC_API_VERSION,
+  };
+  // A declined request can re-run server-side on Anthropic's recommended
+  // model for that refusal category. That second attempt is billed to the
+  // caller's key, possibly at another model's rate, so it only runs when the
+  // caller explicitly opted in. Off by default.
+  if (
+    options.fallbackConsent === true &&
+    claudeSupportsServerFallback(String(body.model))
+  ) {
+    anthropicBody.fallbacks = "default";
+    headers["anthropic-beta"] = CLAUDE_SERVER_FALLBACK_BETA;
+  }
+
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers,
     body: JSON.stringify(anthropicBody),
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
+    await response.body?.cancel();
     return new Response(
       JSON.stringify({
         error: {
-          message: `Anthropic error: ${response.status}`,
-          type: 'provider_error',
+          message: `Provider request failed (${response.status}). Check your provider account and retry.`,
+          type: "provider_error",
           code: response.status,
-          details: errorText,
         },
       }),
       {
         status: response.status,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       },
     );
   }
@@ -221,39 +315,66 @@ export async function proxyToAnthropic(
   }
 
   // Non-streaming: translate Anthropic response to OpenAI format
-  const data = await response.json() as Record<string, unknown>;
+  const data = (await response.json()) as Record<string, unknown>;
 
-  const content = Array.isArray(data.content)
-    ? (data.content as Array<{ type: string; text?: string }>)
-        .filter((c) => c.type === 'text')
-        .map((c) => c.text || '')
-        .join('')
-    : '';
+  const blocks = Array.isArray(data.content)
+    ? (data.content as Array<{
+        type: string;
+        text?: string;
+        id?: string;
+        name?: string;
+        input?: unknown;
+      }>)
+    : [];
+  const content = blocks
+    .filter((c) => c.type === "text")
+    .map((c) => c.text || "")
+    .join("");
+  const toolCalls: ToolCall[] = blocks
+    .filter((c) => c.type === "tool_use")
+    .map((c) => ({
+      id: String(c.id ?? ""),
+      type: "function" as const,
+      function: {
+        name: String(c.name ?? ""),
+        arguments: JSON.stringify(c.input ?? {}),
+      },
+    }));
+  const servedModel = typeof data.model === "string" ? data.model : undefined;
 
   const usage = data.usage as Record<string, number> | undefined;
 
   const openaiResponse: ChatCompletionResponse = {
     id: generateCompletionId(),
-    object: 'chat.completion',
+    object: "chat.completion",
     created: Math.floor(Date.now() / 1000),
     model: arcaneaModelId,
-    choices: [{
-      index: 0,
-      message: {
-        role: 'assistant',
-        content,
+    choices: [
+      {
+        index: 0,
+        message: {
+          role: "assistant",
+          content,
+          ...(toolCalls.length > 0 ? { tool_calls: toolCalls } : {}),
+        },
+        finish_reason: mapAnthropicStopReason(data.stop_reason),
       },
-      finish_reason: data.stop_reason === 'end_turn' ? 'stop' : 'stop',
-    }],
+    ],
     usage: {
       prompt_tokens: usage?.input_tokens || 0,
       completion_tokens: usage?.output_tokens || 0,
       total_tokens: (usage?.input_tokens || 0) + (usage?.output_tokens || 0),
     },
+    ...(servedModel ? { served_model: servedModel } : {}),
   };
 
+  const responseHeaders: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (servedModel) responseHeaders["X-Arcanea-Served-Model"] = servedModel;
+
   return new Response(JSON.stringify(openaiResponse), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: responseHeaders,
   });
 }
 
@@ -269,12 +390,18 @@ export async function dispatchToProvider(
   body: ChatCompletionRequest,
   arcaneaModelId: string,
   streaming: boolean,
+  options: { fallbackConsent?: boolean } = {},
 ): Promise<Response> {
   const providerConfig = PROVIDERS[provider];
   if (!providerConfig) {
     return new Response(
-      JSON.stringify({ error: { message: `Unknown provider: ${provider}`, type: 'invalid_request_error' } }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } },
+      JSON.stringify({
+        error: {
+          message: `Unknown provider: ${provider}`,
+          type: "invalid_request_error",
+        },
+      }),
+      { status: 400, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -282,17 +409,23 @@ export async function dispatchToProvider(
   const requestBody = { ...body, model: providerModelId };
 
   // Anthropic has its own format
-  if (providerConfig.format === 'anthropic') {
-    return proxyToAnthropic(apiKey, requestBody, arcaneaModelId, streaming);
+  if (providerConfig.format === "anthropic") {
+    return proxyToAnthropic(
+      apiKey,
+      requestBody,
+      arcaneaModelId,
+      streaming,
+      options,
+    );
   }
 
   // All other providers are OpenAI-compatible
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
 
-  if (providerConfig.authHeader === 'Authorization') {
-    headers['Authorization'] = `Bearer ${apiKey}`;
+  if (providerConfig.authHeader === "Authorization") {
+    headers["Authorization"] = `Bearer ${apiKey}`;
   } else {
     headers[providerConfig.authHeader] = apiKey;
   }

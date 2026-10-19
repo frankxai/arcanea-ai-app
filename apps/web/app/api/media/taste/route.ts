@@ -13,7 +13,7 @@
  *   Canon Alignment (25%), Design Compliance (25%), Emotional Impact (20%),
  *   Technical Fit (15%), Uniqueness (15%)
  *
- * Cost: ~$0.0003/image via Haiku 4.5 vision
+ * Cost: ~$0.0003/image via Haiku 5.5 vision
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -27,6 +27,33 @@ interface CatalogEntry {
   element: string | null;
   scene: string;
   public_url: string;
+}
+
+function isValidScoreDimension(value: unknown): value is number {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value) &&
+    value >= 0 &&
+    value <= 100
+  );
+}
+
+function resolveTrustedStorageImageUrl(
+  publicUrl: string,
+  supabaseUrl: string,
+): string | null {
+  try {
+    const allowedOrigin = new URL(supabaseUrl);
+    const candidate = new URL(publicUrl);
+    if (candidate.protocol !== "https:") return null;
+    if (candidate.hostname !== allowedOrigin.hostname) return null;
+    if (!candidate.pathname.startsWith("/storage/v1/object/public/")) {
+      return null;
+    }
+    return candidate.toString();
+  } catch {
+    return null;
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -50,27 +77,50 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  let body: Record<string, unknown>;
   try {
-    const body = await request.json();
-    const { ids, guardian, tier, limit = 20 } = body ?? {};
-    if (
-      !Number.isInteger(limit) ||
-      limit < 1 ||
-      limit > 50 ||
-      (ids !== undefined &&
-        (!Array.isArray(ids) ||
-          ids.length > 50 ||
-          !ids.every(
-            (id) => typeof id === "string" && /^[a-f0-9-]{36}$/i.test(id),
-          )))
-    ) {
+    const parsed = await request.json();
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
       return NextResponse.json(
-        { error: "Invalid media selection or limit." },
+        { error: "Invalid JSON body." },
         { status: 400 },
       );
     }
-    const maxLimit = limit;
+    body = parsed as Record<string, unknown>;
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+  }
 
+  const { ids, guardian, tier, limit = 20 } = body;
+  if (
+    typeof limit !== "number" ||
+    !Number.isInteger(limit) ||
+    limit < 1 ||
+    limit > 50 ||
+    (ids !== undefined &&
+      (!Array.isArray(ids) ||
+        ids.length === 0 ||
+        ids.length > 50 ||
+        !ids.every(
+          (id) => typeof id === "string" && /^[a-f0-9-]{36}$/i.test(id),
+        ))) ||
+    (guardian !== undefined &&
+      (typeof guardian !== "string" ||
+        !/^[a-z0-9_-]{1,64}$/i.test(guardian))) ||
+    (tier !== undefined &&
+      (typeof tier !== "number" ||
+        !Number.isInteger(tier) ||
+        tier < 1 ||
+        tier > 4))
+  ) {
+    return NextResponse.json(
+      { error: "Invalid media selection or limit." },
+      { status: 400 },
+    );
+  }
+  const maxLimit = limit;
+
+  try {
     // Fetch entries to analyze
     const params = new URLSearchParams();
     params.set(
@@ -78,13 +128,13 @@ export async function POST(request: NextRequest) {
       "id,storage_path,guardian,gate,element,scene,public_url",
     );
     params.set("limit", String(maxLimit));
-    params.set("order", "created_at.asc");
+    params.set("order", "created_at.asc,id.asc");
 
-    if (ids?.length) {
+    if (Array.isArray(ids) && ids.length > 0) {
       params.set("id", `in.(${ids.join(",")})`);
-    } else if (guardian) {
+    } else if (typeof guardian === "string") {
       params.set("guardian", `eq.${guardian}`);
-    } else if (tier) {
+    } else if (typeof tier === "number") {
       params.set("quality_tier", `eq.${tier}`);
     }
 
@@ -94,8 +144,8 @@ export async function POST(request: NextRequest) {
     );
     if (!fetchRes.ok) {
       return NextResponse.json(
-        { error: "Failed to fetch entries" },
-        { status: 500 },
+        { error: "Existing catalog could not be read." },
+        { status: 502 },
       );
     }
 
@@ -119,7 +169,7 @@ export async function POST(request: NextRequest) {
     for (let i = 0; i < entries.length; i += 5) {
       const batch = entries.slice(i, i + 5);
       const batchResults = await Promise.all(
-        batch.map((e) => analyzeImage(e, anthropicKey)),
+        batch.map((e) => analyzeImage(e, anthropicKey, supabaseUrl)),
       );
       for (const r of batchResults) {
         if (r) results.push(r);
@@ -186,8 +236,18 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function analyzeImage(entry: CatalogEntry, anthropicKey: string) {
+async function analyzeImage(
+  entry: CatalogEntry,
+  anthropicKey: string,
+  supabaseUrl: string,
+) {
   try {
+    const trustedImageUrl = resolveTrustedStorageImageUrl(
+      entry.public_url,
+      supabaseUrl,
+    );
+    if (!trustedImageUrl) return null;
+
     const guardianCtx = entry.guardian
       ? `This image represents ${entry.guardian} (${entry.gate} Gate, ${entry.element} element).`
       : "No Guardian assigned yet.";
@@ -200,13 +260,19 @@ async function analyzeImage(entry: CatalogEntry, anthropicKey: string) {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 200,
+        model: "claude-haiku-5-5",
+        // Haiku 5.5 thinks by default and thinking counts toward max_tokens:
+        // low effort plus headroom keeps the short JSON reply from being cut off.
+        max_tokens: 1024,
+        output_config: { effort: "low" },
         messages: [
           {
             role: "user",
             content: [
-              { type: "image", source: { type: "url", url: entry.public_url } },
+              {
+                type: "image",
+                source: { type: "url", url: trustedImageUrl },
+              },
               {
                 type: "text",
                 text: `TASTE evaluator for Arcanea fantasy universe. Score this image 0-100 on:
@@ -227,17 +293,34 @@ Reply ONLY with JSON: {"canon":N,"design":N,"emotion":N,"technical":N,"uniquenes
     if (!response.ok) return null;
 
     const data = await response.json();
-    const text = data.content?.[0]?.text ?? "";
+    // A safety refusal is HTTP 200 with no usable text; Haiku 5.5 has no
+    // server-side fallback, so the image simply goes unscored.
+    if (data.stop_reason === "refusal") return null;
+    // The reply can start with a thinking block, so find the text block by type.
+    const text =
+      (
+        data.content as Array<{ type: string; text?: string }> | undefined
+      )?.find((block) => block.type === "text")?.text ?? "";
     const match = text.match(/\{[^}]+\}/);
     if (!match) return null;
 
     const s = JSON.parse(match[0]);
+    if (
+      !isValidScoreDimension(s.canon) ||
+      !isValidScoreDimension(s.design) ||
+      !isValidScoreDimension(s.emotion) ||
+      !isValidScoreDimension(s.technical) ||
+      !isValidScoreDimension(s.uniqueness)
+    ) {
+      return null;
+    }
+
     const total = Math.round(
-      (s.canon ?? 50) * 0.25 +
-        (s.design ?? 50) * 0.25 +
-        (s.emotion ?? 50) * 0.2 +
-        (s.technical ?? 50) * 0.15 +
-        (s.uniqueness ?? 50) * 0.15,
+      s.canon * 0.25 +
+        s.design * 0.25 +
+        s.emotion * 0.2 +
+        s.technical * 0.15 +
+        s.uniqueness * 0.15,
     );
     const tier = total >= 80 ? 1 : total >= 60 ? 2 : total >= 40 ? 3 : 4;
 
@@ -253,7 +336,7 @@ Reply ONLY with JSON: {"canon":N,"design":N,"emotion":N,"technical":N,"uniquenes
         total,
       },
       tier,
-      notes: s.notes ?? "",
+      notes: typeof s.notes === "string" ? s.notes : "",
     };
   } catch {
     return null;

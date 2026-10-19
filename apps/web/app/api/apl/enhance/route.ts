@@ -74,7 +74,10 @@ export async function POST(req: NextRequest) {
   try {
     // --- Rate limiting by IP ---
     const forwarded = req.headers.get("x-forwarded-for");
-    const ip = forwarded?.split(",")[0].trim() || "anonymous";
+    const ip =
+      forwarded?.split(",").at(-1)?.trim() ||
+      req.headers.get("x-real-ip")?.trim() ||
+      "anonymous";
     const rateLimitKey = `apl:${ip}`;
     const now = Date.now();
     const userLimit = rateLimits.get(rateLimitKey);
@@ -234,7 +237,14 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const enhanced = parsed.enhanced || prompt;
+    const enhanced =
+      typeof parsed.enhanced === "string" ? parsed.enhanced.trim() : "";
+    if (!enhanced) {
+      return NextResponse.json(
+        { error: "Enhancement provider returned an empty rewrite." },
+        { status: 502 },
+      );
+    }
 
     // --- After quality score ---
     const after = enhance(enhanced);

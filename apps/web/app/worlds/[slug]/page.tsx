@@ -5,11 +5,17 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { createPublicClient } from "@/lib/supabase/public";
 import { withAbortDeadline } from "@/lib/async-deadline";
+import {
+  WorldReadUnavailableError,
+  worldReadFailure,
+  worldRootFromResult,
+} from "@/lib/worlds/read-result";
 
 import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
+import { readWorldElements, worldDisplayPalette } from "@/lib/worlds/elements";
 import { WorldActions } from "@/components/worlds/WorldActions";
-import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
+import { WorldDetailTabs } from "./world-detail-tabs";
 
 // Ceiling well below the 300s platform limit so a pathological world fails
 // fast and visibly instead of holding a function open for five minutes.
@@ -33,14 +39,14 @@ const QUERY_TIMEOUT_MS = 3_500;
 async function safeRows<T>(
   label: string,
   query: (
-    signal: AbortSignal
-  ) => PromiseLike<{ data: T[] | null; error: unknown }>
+    signal: AbortSignal,
+  ) => PromiseLike<{ data: T[] | null; error: unknown }>,
 ): Promise<T[]> {
   try {
     const { data, error } = await withAbortDeadline(
       `${label} query`,
       QUERY_TIMEOUT_MS,
-      query
+      query,
     );
     if (error) {
       console.error(`[worlds/[slug]] ${label} query failed:`, error);
@@ -55,10 +61,8 @@ async function safeRows<T>(
 
 async function getCurrentUserWithinDeadline() {
   try {
-    return await withAbortDeadline(
-      "world auth lookup",
-      QUERY_TIMEOUT_MS,
-      () => getCachedUser()
+    return await withAbortDeadline("world auth lookup", QUERY_TIMEOUT_MS, () =>
+      getCachedUser(),
     );
   } catch (error) {
     console.error("[worlds/[slug]] auth lookup failed or timed out", {
@@ -79,23 +83,23 @@ async function fetchWorldRoot(sb: any, slug: string) {
           .select("*")
           .eq("slug", slug)
           .abortSignal(signal)
-          .single()
+          .maybeSingle(),
     );
-
     if (result.error) {
-      console.error("[worlds/[slug]] world query failed", {
-        errorName:
-          result.error instanceof Error ? result.error.name : "SupabaseError",
-      });
-      return null;
+      console.error(
+        "[worlds/[slug]] world query failed",
+        worldReadFailure(result.error),
+      );
     }
-
-    return result.data;
+    return worldRootFromResult(result);
   } catch (error) {
-    console.error("[worlds/[slug]] world query aborted or threw", {
-      errorName: error instanceof Error ? error.name : "UnknownError",
-    });
-    return null;
+    if (!(error instanceof WorldReadUnavailableError)) {
+      console.error(
+        "[worlds/[slug]] world query aborted or threw",
+        worldReadFailure(error),
+      );
+    }
+    throw new WorldReadUnavailableError();
   }
 }
 
@@ -107,7 +111,7 @@ async function getWorld(slug: string) {
   let sb: any = createPublicClient();
   if (!sb) {
     console.error("[worlds/[slug]] public Supabase binding unavailable");
-    return null;
+    throw new WorldReadUnavailableError();
   }
 
   let world: any = await fetchWorldRoot(sb, slug);
@@ -117,13 +121,14 @@ async function getWorld(slug: string) {
       sb = (await withAbortDeadline(
         "world client init",
         CLIENT_INIT_TIMEOUT_MS,
-        () => createClient()
+        () => createClient(),
       )) as any;
     } catch (error) {
-      console.error("[worlds/[slug]] private client init failed or timed out", {
-        errorName: error instanceof Error ? error.name : "UnknownError",
-      });
-      return null;
+      console.error(
+        "[worlds/[slug]] private client init failed or timed out",
+        worldReadFailure(error),
+      );
+      throw new WorldReadUnavailableError();
     }
 
     world = await fetchWorldRoot(sb, slug);
@@ -137,39 +142,49 @@ async function getWorld(slug: string) {
   }
 
   const [characters, factions, locations, events] = await Promise.all([
-    safeRows("characters", (signal) => sb
-      .from("world_characters")
-      .select("id, name, element, gate, origin_class, title, backstory, portrait_url, motivation, is_agent")
-      .eq("world_id", world.id)
-      .limit(CHILD_ROW_LIMIT)
-      .abortSignal(signal)),
-    safeRows("factions", (signal) => sb
-      .from("world_factions")
-      .select("id, name, history, philosophy, territory")
-      .eq("world_id", world.id)
-      .limit(CHILD_ROW_LIMIT)
-      .abortSignal(signal)),
-    safeRows("locations", (signal) => sb
-      .from("world_locations")
-      .select("id, name, description, region, significance, image_url")
-      .eq("world_id", world.id)
-      .limit(CHILD_ROW_LIMIT)
-      .abortSignal(signal)),
-    safeRows("events", (signal) => sb
-      .from("world_events")
-      .select("id, title, description, era, characters_involved, sort_order, consequences, date_in_world")
-      .eq("world_id", world.id)
-      .order("sort_order")
-      .limit(CHILD_ROW_LIMIT)
-      .abortSignal(signal)),
+    safeRows("characters", (signal) =>
+      sb
+        .from("world_characters")
+        .select(
+          "id, name, element, gate, origin_class, title, backstory, portrait_url, motivation, is_agent",
+        )
+        .eq("world_id", world.id)
+        .limit(CHILD_ROW_LIMIT)
+        .abortSignal(signal),
+    ),
+    safeRows("factions", (signal) =>
+      sb
+        .from("world_factions")
+        .select("id, name, history, philosophy, territory")
+        .eq("world_id", world.id)
+        .limit(CHILD_ROW_LIMIT)
+        .abortSignal(signal),
+    ),
+    safeRows("locations", (signal) =>
+      sb
+        .from("world_locations")
+        .select("id, name, description, region, significance, image_url")
+        .eq("world_id", world.id)
+        .limit(CHILD_ROW_LIMIT)
+        .abortSignal(signal),
+    ),
+    safeRows("events", (signal) =>
+      sb
+        .from("world_events")
+        .select(
+          "id, title, description, era, characters_involved, sort_order, consequences, date_in_world",
+        )
+        .eq("world_id", world.id)
+        .order("sort_order")
+        .limit(CHILD_ROW_LIMIT)
+        .abortSignal(signal),
+    ),
   ]);
 
   return {
     ...world,
-    // Normalize elements from Json to string[]
-    elements: Array.isArray(world.elements)
-      ? (world.elements as string[])
-      : [],
+    elements: readWorldElements(world.elements).map((element) => element.name),
+    displayElements: readWorldElements(world.elements),
     characters,
     factions,
     locations,
@@ -200,7 +215,7 @@ export default async function WorldDetailPage({ params }: Props) {
     : null;
 
   const elements = world.elements;
-  const palette = extractPalette(elements);
+  const palette = worldDisplayPalette(world.displayElements, world.palette);
 
   return (
     <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
@@ -257,24 +272,17 @@ export default async function WorldDetailPage({ params }: Props) {
             {/* Meta row */}
             <div className="flex flex-wrap items-center gap-4 mt-1 text-sm text-white/40">
               <span>
-                by{" "}
-                <span className="text-white/60 font-medium">Creator</span>
+                by <span className="text-white/60 font-medium">Creator</span>
               </span>
               {createdDate && (
                 <>
-                  <span
-                    className="w-px h-4 bg-white/10"
-                    aria-hidden="true"
-                  />
+                  <span className="w-px h-4 bg-white/10" aria-hidden="true" />
                   <span>{createdDate}</span>
                 </>
               )}
               {world.mood && (
                 <>
-                  <span
-                    className="w-px h-4 bg-white/10"
-                    aria-hidden="true"
-                  />
+                  <span className="w-px h-4 bg-white/10" aria-hidden="true" />
                   <span className="capitalize">{world.mood}</span>
                 </>
               )}
@@ -471,38 +479,4 @@ function ForkButton({ slug }: { slug: string }) {
       Fork
     </Link>
   );
-}
-
-// ── Palette extraction ───────────────────────────────────────────────
-
-const ELEMENT_HEX: Record<string, string> = {
-  Fire: "var(--arc-fire)",
-  Water: "var(--arc-brand-cosmic-blue)",
-  Earth: "var(--arc-wind)",
-  Wind: "var(--arc-text-primary)",
-  Void: "var(--arc-void)",
-  Spirit: "var(--arc-brand-arcanean-gold)",
-};
-
-function extractPalette(elements: string[]): WorldPalette {
-  if (elements.length === 0) {
-    return {
-      gradient: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-void))",
-      primary: "var(--arc-brand-atlantean-teal)",
-      secondary: "var(--arc-void)",
-    };
-  }
-
-  const colors = elements
-    .map((e) => ELEMENT_HEX[e] || "var(--arc-brand-atlantean-teal)")
-    .slice(0, 3);
-
-  if (colors.length === 1) colors.push("var(--arc-brand-cosmic-blue)");
-  if (colors.length === 2) colors.push("var(--arc-cosmic-void)");
-
-  return {
-    gradient: `linear-gradient(135deg, ${colors.join(", ")})`,
-    primary: colors[0],
-    secondary: colors[1],
-  };
 }

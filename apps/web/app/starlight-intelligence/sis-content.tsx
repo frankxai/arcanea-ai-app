@@ -1,22 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { LazyMotion, domAnimation, m } from 'framer-motion';
-import { VAULT_CONFIG, VAULT_CATEGORIES, type VaultCategory } from '@/lib/vault-data';
-import { EASE, VIEWPORT } from '@/lib/motion';
-import { SplitText } from '@/components/motion/split-text';
-import { TiltCard } from '@/components/motion/tilt-card';
-import { Magnetic } from '@/components/motion/magnetic';
-import { SisArchitecture } from './sis-architecture';
+import Link from "next/link";
+import { LazyMotion, domAnimation, m } from "framer-motion";
+import {
+  VAULT_CONFIG,
+  VAULT_CATEGORIES,
+  type VaultCategory,
+} from "@/lib/vault-data";
+import { EASE, VIEWPORT } from "@/lib/motion";
+import { SplitText } from "@/components/motion/split-text";
+import { TiltCard } from "@/components/motion/tilt-card";
+import { Magnetic } from "@/components/motion/magnetic";
+import { SisArchitecture } from "./sis-architecture";
 
 const ADAPTERS = [
-  { name: 'Claude Code', desc: 'MCP server integration' },
-  { name: 'Cursor', desc: 'Rules file + vault access' },
-  { name: 'OpenCode', desc: 'TUI with vault commands' },
-  { name: 'Gemini', desc: 'Context injection' },
-  { name: 'Codex', desc: 'Thin vault pointer' },
-  { name: 'Any MCP Client', desc: 'Universal protocol' },
+  { name: "Claude Code", desc: "MCP server integration" },
+  { name: "Cursor", desc: "Rules file + vault access" },
+  { name: "OpenCode", desc: "TUI with vault commands" },
+  { name: "Gemini", desc: "Context injection" },
+  { name: "Codex", desc: "Thin vault pointer" },
+  { name: "Any MCP Client", desc: "Universal protocol" },
 ];
 
 const API_EXAMPLE = `GET /api/vaults/frank
@@ -35,19 +39,19 @@ const API_EXAMPLE = `GET /api/vaults/frank
 
 const HOW_STEPS = [
   {
-    step: '01',
-    title: 'Store locally',
-    desc: 'Insights save to ~/.starlight/ as plain JSONL files. Human-readable. Git-friendly. No database.',
+    step: "01",
+    title: "Store locally",
+    desc: "Insights save to ~/.starlight/ as plain JSONL files. Human-readable. Git-friendly. No database.",
   },
   {
-    step: '02',
-    title: 'Connect via MCP',
-    desc: 'The SIS MCP server exposes vault_remember, vault_recall, and horizon_append to any AI tool.',
+    step: "02",
+    title: "Connect via MCP",
+    desc: "The SIS MCP server exposes vault_remember, vault_recall, and horizon_append to any AI tool.",
   },
   {
-    step: '03',
-    title: 'Memory compounds',
-    desc: 'Every session builds on the last. Confidence scores, vault routing, and cross-vault synthesis grow over time.',
+    step: "03",
+    title: "Memory compounds",
+    desc: "Every session builds on the last. Confidence scores, vault routing, and cross-vault synthesis grow over time.",
   },
 ];
 
@@ -87,8 +91,9 @@ export function SisContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE.smooth, delay: 1.3 }}
           >
-            6 semantic vaults. 5 cognitive layers. Local JSONL files. Works with every AI tool
-            through MCP. Your intelligence compounds instead of resetting.
+            6 semantic vaults. 5 cognitive layers. Local JSONL files. Works with
+            every AI tool through MCP. Your intelligence compounds instead of
+            resetting.
           </m.p>
         </section>
 
@@ -115,7 +120,9 @@ export function SisContent() {
             viewport={VIEWPORT}
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+              visible: {
+                transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+              },
             }}
           >
             {VAULT_CATEGORIES.map((cat) => {
@@ -124,31 +131,38 @@ export function SisContent() {
                 <m.div
                   key={cat}
                   variants={{
-                    hidden: { opacity: 0, y: 16, filter: 'blur(8px)' },
+                    hidden: { opacity: 0, y: 16, filter: "blur(8px)" },
                     visible: {
                       opacity: 1,
                       y: 0,
-                      filter: 'blur(0px)',
+                      filter: "blur(0px)",
                       transition: { duration: 0.6, ease: EASE.smooth },
                     },
                   }}
                 >
                   <TiltCard intensity={6}>
                     <Link
-                      href={`/vault/${cat}`}
+                      href={`/starlight-intelligence/vault/${cat}`}
                       className="group block p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm hover:bg-white/[0.05] hover:border-white/[0.1] transition-all"
                     >
                       <div className="flex items-center gap-2 mb-2">
                         <div
                           className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: config.color, boxShadow: `0 0 12px ${config.color}60` }}
+                          style={{
+                            backgroundColor: config.color,
+                            boxShadow: `0 0 12px ${config.color}60`,
+                          }}
                         />
-                        <span className="text-sm font-semibold text-[var(--arc-text-primary)]">{config.label}</span>
+                        <span className="text-sm font-semibold text-[var(--arc-text-primary)]">
+                          {config.label}
+                        </span>
                         <span className="text-[9px] text-[var(--arc-text-muted)] font-mono tracking-[0.1em] uppercase ml-auto">
                           {config.guardian}
                         </span>
                       </div>
-                      <p className="text-xs text-[var(--arc-text-muted)]">{config.tagline}</p>
+                      <p className="text-xs text-[var(--arc-text-muted)]">
+                        {config.tagline}
+                      </p>
                     </Link>
                   </TiltCard>
                 </m.div>
@@ -172,16 +186,26 @@ export function SisContent() {
             {HOW_STEPS.map((item, i) => (
               <m.div
                 key={item.step}
-                initial={{ opacity: 0, y: 24, filter: 'blur(10px)' }}
-                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={VIEWPORT}
-                transition={{ duration: 0.6, ease: EASE.smooth, delay: i * 0.15 }}
+                transition={{
+                  duration: 0.6,
+                  ease: EASE.smooth,
+                  delay: i * 0.15,
+                }}
               >
                 <TiltCard intensity={5}>
                   <div className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm h-full">
-                    <p className="text-[11px] font-mono tracking-[0.2em] text-[var(--arc-brand-atlantean-teal)] mb-4">{item.step}</p>
-                    <p className="text-sm font-semibold text-[var(--arc-text-primary)] mb-1 tracking-tight">{item.title}</p>
-                    <p className="text-xs text-[var(--arc-text-muted)] leading-relaxed">{item.desc}</p>
+                    <p className="text-[11px] font-mono tracking-[0.2em] text-[var(--arc-brand-atlantean-teal)] mb-4">
+                      {item.step}
+                    </p>
+                    <p className="text-sm font-semibold text-[var(--arc-text-primary)] mb-1 tracking-tight">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-[var(--arc-text-muted)] leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                 </TiltCard>
               </m.div>
@@ -203,12 +227,12 @@ export function SisContent() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                title: '~/.starlight/',
-                body: 'Private. Never leaves your machine. All vault files, profile, and config stay local. You own the files.',
+                title: "~/.starlight/",
+                body: "Private. Never leaves your machine. All vault files, profile, and config stay local. You own the files.",
               },
               {
-                title: 'public-vault/',
-                body: 'Opt-in. Push selected insights to a GitHub repo. Powers the constellation and the Agent API.',
+                title: "public-vault/",
+                body: "Opt-in. Push selected insights to a GitHub repo. Powers the constellation and the Agent API.",
               },
             ].map((item, i) => (
               <m.div
@@ -216,11 +240,19 @@ export function SisContent() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={VIEWPORT}
-                transition={{ duration: 0.6, ease: EASE.smooth, delay: i * 0.1 }}
+                transition={{
+                  duration: 0.6,
+                  ease: EASE.smooth,
+                  delay: i * 0.1,
+                }}
                 className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm"
               >
-                <p className="text-sm font-mono text-[var(--arc-text-primary)] mb-2">{item.title}</p>
-                <p className="text-xs text-[var(--arc-text-muted)] leading-relaxed">{item.body}</p>
+                <p className="text-sm font-mono text-[var(--arc-text-primary)] mb-2">
+                  {item.title}
+                </p>
+                <p className="text-xs text-[var(--arc-text-muted)] leading-relaxed">
+                  {item.body}
+                </p>
               </m.div>
             ))}
           </div>
@@ -242,19 +274,30 @@ export function SisContent() {
             initial="hidden"
             whileInView="visible"
             viewport={VIEWPORT}
-            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.04 } },
+            }}
           >
             {ADAPTERS.map((a) => (
               <m.div
                 key={a.name}
                 variants={{
                   hidden: { opacity: 0, y: 8 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE.smooth } },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.5, ease: EASE.smooth },
+                  },
                 }}
                 className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]"
               >
-                <p className="text-xs font-semibold text-[var(--arc-text-primary)]">{a.name}</p>
-                <p className="text-[10px] text-[var(--arc-text-muted)]">{a.desc}</p>
+                <p className="text-xs font-semibold text-[var(--arc-text-primary)]">
+                  {a.name}
+                </p>
+                <p className="text-[10px] text-[var(--arc-text-muted)]">
+                  {a.desc}
+                </p>
               </m.div>
             ))}
           </m.div>
@@ -272,8 +315,8 @@ export function SisContent() {
             Agent API
           </m.h2>
           <m.div
-            initial={{ opacity: 0, y: 24, filter: 'blur(10px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={VIEWPORT}
             transition={{ duration: 0.7, ease: EASE.smooth }}
             className="rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm overflow-hidden"
@@ -284,8 +327,12 @@ export function SisContent() {
                 <div className="w-2 h-2 rounded-full bg-white/15" />
                 <div className="w-2 h-2 rounded-full bg-white/15" />
               </div>
-              <span className="text-[10px] font-mono text-[var(--arc-wind)] font-bold ml-2">GET</span>
-              <span className="text-xs font-mono text-[var(--arc-text-muted)]">/api/vaults/frank</span>
+              <span className="text-[10px] font-mono text-[var(--arc-wind)] font-bold ml-2">
+                GET
+              </span>
+              <span className="text-xs font-mono text-[var(--arc-text-muted)]">
+                /api/vaults/frank
+              </span>
             </div>
             <pre className="p-5 text-xs font-mono text-[var(--arc-text-secondary)] overflow-x-auto leading-relaxed">
               {API_EXAMPLE}
@@ -311,14 +358,6 @@ export function SisContent() {
               >
                 Deploy your vault
               </a>
-            </Magnetic>
-            <Magnetic>
-              <Link
-                href="/arcanea-vault"
-                className="inline-block px-8 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[var(--arc-text-primary)] hover:bg-white/[0.08] transition-colors"
-              >
-                Explore the constellation
-              </Link>
             </Magnetic>
             <Magnetic>
               <a

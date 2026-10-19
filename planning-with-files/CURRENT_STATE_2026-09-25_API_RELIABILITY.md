@@ -6,8 +6,9 @@ Owner: Arcanea product/reliability; quality issue #427. Base revision:
 `4e104ae5e40d280d04f863137a505483f11e2409` (current production when
 inspected). Related draft: Guardian report PR #446; shared monitoring PR #53
 in private `frankxai/agentic-ops`.
-Files: chat history/sessions/service, APL enhancement, media scoring/catalog
-analysis, authorization policy, focused tests, this record.
+Files: APL enhancement, media scoring/catalog analysis, authorization policy,
+focused tests, this record (chat history/sessions/service landed separately in
+PR #447).
 Non-goals: modifying secrets, data, DNS, database policies, billing, preview
 protection, paid services or production; replacing the current main chat UI.
 
@@ -28,14 +29,8 @@ write that did not occur.
 
 ## Candidate contract
 
-- `/chat` uses the AI SDK and local project/session storage today. The older
-  `/api/chat/history` and `/api/chat/sessions` endpoints now require an
-  authenticated Supabase account. Client-supplied `userId` cannot select
-  another account. Database errors return 503; temporary function files or
-  memory no longer masquerade as durable saved history.
-- History pages newest messages and returns them in chronological order.
-  Once a message insert succeeds, nonessential title, bond-count or timestamp
-  work cannot turn it into a misleading failed save response.
+- Saved chat history and sessions (`/api/chat/history` and `/api/chat/sessions`)
+  are covered by companion PR #447 (`cd3370a3655`).
 - `/api/apl/enhance` provides labelled, deterministic APL guidance when the
   optional OpenRouter key is absent; quality scores do not imply a model
   rewrite. Provider failures and 429 remain visible as distinct errors.

@@ -53,25 +53,33 @@ export async function POST(request: NextRequest) {
     );
 
     // Phase 2: Get existing entries to skip already-analyzed files
-    let existingPaths = new Set<string>();
+    const existingPaths = new Set<string>();
     if (!force) {
-      const existRes = await fetch(
-        `${supabaseUrl}/rest/v1/media_catalog?select=storage_path&limit=2000`,
-        {
-          headers: {
-            apikey: writeKey,
-            Authorization: `Bearer ${writeKey}`,
+      const PAGE_SIZE = 1000;
+      let offset = 0;
+      while (true) {
+        const existRes = await fetch(
+          `${supabaseUrl}/rest/v1/media_catalog?select=storage_path&order=storage_path.asc&limit=${PAGE_SIZE}&offset=${offset}`,
+          {
+            headers: {
+              apikey: writeKey,
+              Authorization: `Bearer ${writeKey}`,
+            },
           },
-        },
-      );
-      if (!existRes.ok) {
-        return NextResponse.json(
-          { error: "Existing catalog could not be read." },
-          { status: 502 },
         );
+        if (!existRes.ok) {
+          return NextResponse.json(
+            { error: "Existing catalog could not be read." },
+            { status: 502 },
+          );
+        }
+        const existing: Array<{ storage_path: string }> = await existRes.json();
+        for (const row of existing) {
+          existingPaths.add(row.storage_path);
+        }
+        if (existing.length < PAGE_SIZE) break;
+        offset += PAGE_SIZE;
       }
-      const existing: Array<{ storage_path: string }> = await existRes.json();
-      existingPaths = new Set(existing.map((e) => e.storage_path));
     }
 
     // Phase 3: Upsert into media_catalog
@@ -113,7 +121,11 @@ export async function POST(request: NextRequest) {
       if (force)
         upsertHeaders["Prefer"] = "resolution=merge-duplicates,return=minimal";
 
-      const res = await fetch(`${supabaseUrl}/rest/v1/media_catalog`, {
+      const upsertUrl = force
+        ? `${supabaseUrl}/rest/v1/media_catalog?on_conflict=storage_path`
+        : `${supabaseUrl}/rest/v1/media_catalog`;
+
+      const res = await fetch(upsertUrl, {
         method: "POST",
         headers: upsertHeaders,
         body: JSON.stringify(batch),

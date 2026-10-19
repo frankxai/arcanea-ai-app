@@ -31,6 +31,7 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
+  { href: "/shop", label: "Shop", also: [] },
   {
     href: "/worlds",
     label: "Worlds",
@@ -42,6 +43,18 @@ const navLinks: NavLink[] = [
           { href: "/worlds", label: "Worlds", desc: "Build universes" },
           { href: "/canvas", label: "Canvas", desc: "Node workflows" },
           { href: "/forge/companion", label: "Forge", desc: "Create agents" },
+        ],
+      },
+      {
+        title: "Agents",
+        items: [
+          {
+            href: "/agent",
+            label: "Arcanea Agent",
+            desc: "Desktop app + profile",
+          },
+          { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
+          { href: "/forge/companion", label: "Forge", desc: "Create your own" },
         ],
       },
       {
@@ -65,6 +78,7 @@ const navLinks: NavLink[] = [
     href: "/gallery",
     label: "Explore",
     also: [
+      "/atlas",
       "/discover",
       "/library",
       "/lore",
@@ -98,6 +112,11 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
+          {
+            href: "/atlas",
+            label: "Multiverse Atlas",
+            desc: "Realms, corridors & dialects",
+          },
           {
             href: "/story",
             label: "The First Light",
@@ -287,6 +306,11 @@ export function Navbar() {
   return (
     <LazyMotion features={domAnimation}>
       <nav
+        style={
+          pathname === "/stories/the-light-she-could-not-see"
+            ? { backgroundColor: "var(--arc-story-night)" }
+            : undefined
+        }
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "liquid-glass bg-[var(--arc-cosmic-void)]/85 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_36px_rgba(0,0,0,0.32)]"
@@ -561,14 +585,20 @@ export function Navbar() {
                 <div className="h-px bg-white/[0.08] my-3" />
 
                 <m.div
-                  className="flex items-center gap-3 px-1"
+                  className="flex flex-col gap-3 px-1"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2, delay: 0.25 }}
                 >
-                  <SearchBar compact />
-                  <NotificationBell />
-                  <UserNav />
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="min-w-0 flex-1">
+                      <SearchBar compact />
+                    </div>
+                    <NotificationBell />
+                  </div>
+                  <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2">
+                    <UserNav onAuthOpen={() => setMobileMenuOpen(false)} />
+                  </div>
                 </m.div>
               </div>
             </nav>

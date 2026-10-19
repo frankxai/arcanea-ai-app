@@ -3,6 +3,10 @@
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "paths": {
+      "@arcanea/schemas": ["../schemas/dist/index.d.ts"]
+    },
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,

@@ -1,3 +1,5 @@
-# Publication gate for /books. Records the already-live public state of this work;
-# it was reachable unauthenticated before this file existed. Set to private to withdraw it.
-visibility: public
+# Publication gate for /books. This folder holds Companions of Arcanea stories
+# (story-*.md) but is not yet a draft-manifest book (no title/authors/chapters/).
+# After #480, /books/drafts/companions rendered "Draft Not Found" while the hub
+# still listed it. Keep private until a real draft manifest + chapters land.
+visibility: private

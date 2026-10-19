@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { GearSix } from '@/lib/phosphor-icons';
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "@/lib/auth/context";
+import { AnimatePresence, motion } from "framer-motion";
+import { GearSix } from "@/lib/phosphor-icons";
 import {
   clearStoredKeys,
   getStoredKeys,
   setStoredKeys,
   verifyElevenKey,
   verifyGroqKey,
-} from './browser-voice';
+} from "./browser-voice";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -22,80 +23,113 @@ export interface SettingsPanelProps {
   onKeysChanged?: () => void;
 }
 
-type VerifyState = 'idle' | 'loading' | 'ok' | 'err';
+type VerifyState = "idle" | "loading" | "ok" | "err";
 
 // ---------------------------------------------------------------------------
 // Drawer slide animation
 // ---------------------------------------------------------------------------
 
 const DRAWER = {
-  initial: { x: '100%' },
+  initial: { x: "100%" },
   animate: { x: 0 },
-  exit: { x: '100%' },
-  transition: { duration: 0.35, ease: [0.22, 0.65, 0.25, 1] as [number, number, number, number] },
+  exit: { x: "100%" },
+  transition: {
+    duration: 0.35,
+    ease: [0.22, 0.65, 0.25, 1] as [number, number, number, number],
+  },
 };
 
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
-export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPanelProps) {
+export function SettingsPanel({
+  open,
+  onOpenChange,
+  onKeysChanged,
+}: SettingsPanelProps) {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
   const setOpen = onOpenChange;
-  const [groqVal, setGroqVal] = useState('');
-  const [elevenVal, setElevenVal] = useState('');
-  const [groqState, setGroqState] = useState<VerifyState>('idle');
-  const [elevenState, setElevenState] = useState<VerifyState>('idle');
+  const [groqVal, setGroqVal] = useState("");
+  const [elevenVal, setElevenVal] = useState("");
+  const [groqState, setGroqState] = useState<VerifyState>("idle");
+  const [elevenState, setElevenState] = useState<VerifyState>("idle");
   const [hasKeys, setHasKeys] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
   // Seed inputs from storage when drawer opens
   useEffect(() => {
     if (!open) return;
-    const k = getStoredKeys();
-    setGroqVal(k.groq ?? '');
-    setElevenVal(k.eleven ?? '');
-    setGroqState('idle');
-    setElevenState('idle');
-  }, [open]);
+    const k = getStoredKeys(token.actor);
+    setGroqVal(k.groq ?? "");
+    setElevenVal(k.eleven ?? "");
+    setGroqState("idle");
+    setElevenState("idle");
+  }, [open, token]);
 
   // Track whether any key is stored (for dot indicator)
   useEffect(() => {
-    const k = getStoredKeys();
+    const k = getStoredKeys(token.actor);
     setHasKeys(Boolean(k.groq || k.eleven));
-  }, []);
+  }, [token]);
 
   const refreshHasKeys = () => {
-    const k = getStoredKeys();
+    const k = getStoredKeys(token.actor);
     setHasKeys(Boolean(k.groq || k.eleven));
   };
 
   const handleVerifyGroq = async () => {
+    if (!credentialScope.isCurrent(token)) return;
     if (!groqVal.trim()) return;
-    setGroqState('loading');
+    setGroqState("loading");
     const result = await verifyGroqKey(groqVal.trim());
-    setGroqState(result.ok ? 'ok' : 'err');
+    if (!credentialScope.isCurrent(token)) return;
+    setGroqState(result.ok ? "ok" : "err");
   };
 
   const handleVerifyEleven = async () => {
+    if (!credentialScope.isCurrent(token)) return;
     if (!elevenVal.trim()) return;
-    setElevenState('loading');
+    setElevenState("loading");
     const result = await verifyElevenKey(elevenVal.trim());
-    setElevenState(result.ok ? 'ok' : 'err');
+    if (!credentialScope.isCurrent(token)) return;
+    setElevenState(result.ok ? "ok" : "err");
   };
 
   const handleSave = () => {
-    setStoredKeys({ groq: groqVal.trim() || undefined, eleven: elevenVal.trim() || undefined });
+    if (!credentialScope.isCurrent(token)) return;
+    try {
+      setStoredKeys(
+        {
+          groq: groqVal.trim() || undefined,
+          eleven: elevenVal.trim() || undefined,
+        },
+        token.actor,
+      );
+    } catch {
+      setGroqState("err");
+      setElevenState("err");
+      return;
+    }
     refreshHasKeys();
     onKeysChanged?.();
     setOpen(false);
   };
 
   const handleClear = () => {
-    clearStoredKeys();
-    setGroqVal('');
-    setElevenVal('');
-    setGroqState('idle');
-    setElevenState('idle');
+    if (!credentialScope.isCurrent(token)) return;
+    try {
+      clearStoredKeys(token.actor);
+    } catch {
+      setGroqState("err");
+      setElevenState("err");
+      return;
+    }
+    setGroqVal("");
+    setElevenVal("");
+    setGroqState("idle");
+    setElevenState("idle");
     refreshHasKeys();
     onKeysChanged?.();
   };
@@ -107,12 +141,15 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
         data-ignore-click
         type="button"
         aria-label="Open API key settings"
-        onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
         className="absolute flex items-center justify-center w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-md text-white/45 hover:text-white/95 hover:bg-white/[0.10] transition-colors"
         style={{
-          cursor: 'pointer',
-          top: 'max(1.5rem, env(safe-area-inset-top, 0px))',
-          right: 'max(1.5rem, env(safe-area-inset-right, 0px))',
+          cursor: "pointer",
+          top: "max(1.5rem, env(safe-area-inset-top, 0px))",
+          right: "max(1.5rem, env(safe-area-inset-right, 0px))",
         }}
       >
         <GearSix size={16} weight="regular" />
@@ -120,7 +157,11 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
         <span
           aria-hidden
           className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full border border-[var(--arc-cosmic-void)]"
-          style={{ backgroundColor: hasKeys ? 'var(--arc-brand-atlantean-teal)' : 'rgba(255,255,255,0.15)' }}
+          style={{
+            backgroundColor: hasKeys
+              ? "var(--arc-brand-atlantean-teal)"
+              : "rgba(255,255,255,0.15)",
+          }}
         />
       </button>
 
@@ -137,7 +178,10 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
-              onClick={(e) => { e.stopPropagation(); setOpen(false); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpen(false);
+              }}
             />
 
             {/* Drawer */}
@@ -147,14 +191,14 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
               data-ignore-click
               {...DRAWER}
               className="fixed inset-y-0 right-0 z-50 flex flex-col bg-[var(--arc-cosmic-void)]/90 border-l border-white/[0.06] backdrop-blur-xl"
-              style={{ width: 'min(420px, 100vw)' }}
+              style={{ width: "min(420px, 100vw)" }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/[0.06]">
                 <h2
                   className="text-[11px] tracking-[0.28em] uppercase text-white/80"
-                  style={{ fontFamily: 'var(--font-display)' }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   Your Keys
                 </h2>
@@ -175,7 +219,10 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
                   label="Groq API Key"
                   placeholder="gsk_..."
                   value={groqVal}
-                  onChange={(v) => { setGroqVal(v); setGroqState('idle'); }}
+                  onChange={(v) => {
+                    setGroqVal(v);
+                    setGroqState("idle");
+                  }}
                   verifyState={groqState}
                   onVerify={handleVerifyGroq}
                   linkHref="https://console.groq.com/keys"
@@ -187,7 +234,10 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
                   label="ElevenLabs API Key"
                   placeholder="sk_..."
                   value={elevenVal}
-                  onChange={(v) => { setElevenVal(v); setElevenState('idle'); }}
+                  onChange={(v) => {
+                    setElevenVal(v);
+                    setElevenState("idle");
+                  }}
                   verifyState={elevenState}
                   onVerify={handleVerifyEleven}
                   linkHref="https://elevenlabs.io/app/speech-synthesis"
@@ -207,9 +257,9 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
                   onClick={handleSave}
                   className="flex-1 py-2 rounded-lg text-[11px] tracking-[0.14em] uppercase font-medium transition-colors"
                   style={{
-                    background: 'rgba(0,188,212,0.15)',
-                    color: 'var(--arc-text-primary)',
-                    border: '1px solid rgba(0,188,212,0.3)',
+                    background: "rgba(0,188,212,0.15)",
+                    color: "var(--arc-text-primary)",
+                    border: "1px solid rgba(0,188,212,0.3)",
                   }}
                 >
                   Save
@@ -269,9 +319,13 @@ function KeyField({
           autoComplete="off"
           spellCheck={false}
           className="flex-1 px-3 py-2 rounded-lg text-[12px] text-white/80 bg-white/[0.03] border border-white/[0.06] placeholder-white/20 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors"
-          style={{ fontFamily: 'var(--font-mono, JetBrains Mono, monospace)' }}
+          style={{ fontFamily: "var(--font-mono, JetBrains Mono, monospace)" }}
         />
-        <VerifyButton state={verifyState} onClick={onVerify} disabled={!value.trim()} />
+        <VerifyButton
+          state={verifyState}
+          onClick={onVerify}
+          disabled={!value.trim()}
+        />
       </div>
       <a
         href={linkHref}
@@ -297,11 +351,11 @@ interface VerifyButtonProps {
 
 function VerifyButton({ state, onClick, disabled }: VerifyButtonProps) {
   const icon =
-    state === 'loading' ? (
+    state === "loading" ? (
       <span className="inline-block w-3 h-3 border border-white/40 border-t-white rounded-full animate-spin" />
-    ) : state === 'ok' ? (
+    ) : state === "ok" ? (
       <span className="text-emerald-400">✓</span>
-    ) : state === 'err' ? (
+    ) : state === "err" ? (
       <span className="text-rose-400">✗</span>
     ) : (
       <span>Check</span>
@@ -311,7 +365,7 @@ function VerifyButton({ state, onClick, disabled }: VerifyButtonProps) {
     <button
       type="button"
       onClick={onClick}
-      disabled={disabled || state === 'loading'}
+      disabled={disabled || state === "loading"}
       className="px-3 py-2 rounded-lg text-[11px] border border-white/[0.08] bg-white/[0.03] text-white/50 hover:text-white/80 hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       aria-label="Verify key"
     >

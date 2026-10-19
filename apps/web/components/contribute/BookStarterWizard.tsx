@@ -40,10 +40,15 @@ const TIERS = [
 ] as const;
 
 const MODELS = [
-  { id: "claude-opus-4-6", label: "Claude Opus 4.6", provider: "anthropic" },
+  { id: "claude-opus-5-5", label: "Claude Opus 5.5", provider: "anthropic" },
   {
-    id: "claude-sonnet-4-5",
-    label: "Claude Sonnet 4.5",
+    id: "claude-sonnet-5-5",
+    label: "Claude Sonnet 5.5",
+    provider: "anthropic",
+  },
+  {
+    id: "claude-haiku-5-5",
+    label: "Claude Haiku 5.5",
     provider: "anthropic",
   },
   { id: "gpt-5", label: "GPT-5", provider: "openai" },
@@ -151,7 +156,7 @@ function buildBundle(values: WizardValues): GeneratedBundle {
               `    - id: ${m.id}\n      provider: ${m.provider}\n      role: prose-drafting`,
           )
           .join("\n")
-      : "    - id: claude-opus-4-6\n      provider: anthropic\n      role: prose-drafting";
+      : "    - id: claude-opus-5-5\n      provider: anthropic\n      role: prose-drafting";
 
   const coAuthorBlock = values.coAuthor?.trim()
     ? `\n  - name: ${escapeYamlString(values.coAuthor.trim())}\n    role: co_author`
@@ -340,7 +345,7 @@ export function BookStarterWizard() {
       authorGithub: "",
       coAuthor: "",
       humanPercent: 40,
-      models: ["claude-opus-4-6"],
+      models: ["claude-opus-5-5"],
       license: "CC-BY-NC-SA-4.0",
       logline: "",
     },

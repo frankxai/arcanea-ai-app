@@ -1,54 +1,64 @@
-# Arcanea Atlas Microsite
+# Arcanea Atlas
 
-The Atlas is an Astro-generated microsite that fuses canon, realm architecture, and execution telemetry into a single scroll experience.
+Atlas retains an Astro/MDX configuration and a standalone dependency graph.
+At revision `d2285fb74f296ce783d3f0fed9bdef6959e3f9d9`, this directory has no
+tracked `src/` pages, components or styles. A successful configuration build
+does not establish a usable microsite or an accepted deployment.
 
-## Project Layout
+## Tracked files and setup
 
-```
-docs/atlas/
-  ├─ package.json          # Astro workspace + data build scripts
-  ├─ astro.config.mjs      # MDX + build configuration
-  ├─ data/
-  │   ├─ canon-manifest.json   # Curated configuration (realms, deities, luminors, open-source matrix)
-  │   ├─ canon-sources.json    # Generated markdown payloads (run `npm run generate:data`)
-  │   └─ README.md
-  ├─ scripts/
-  │   └─ build-data.ts         # Reads docs/canon/*.md → data/canon-sources.json
-  └─ src/
-      ├─ components/           # Constellation navigation, roadmap cards, truth list, etc.
-      ├─ data/manifest.ts      # Type helpers + manifest exports
-      ├─ pages/index.astro     # Atlas landing scroll
-      └─ styles/global.css
-```
+The directory contains `astro.config.mjs`, `package.json`, the PNPM workspace
+and lock files, `tsconfig.json`, `data/`, `scripts/build-data.ts` and archive
+planning documents. It is outside the root application's workspace and uses
+its own graph with the repository's pinned Node and PNPM versions.
 
-Canon markdown lives in `docs/canon/`. Update those files first, then regenerate the derived data payload:
+From the repository root, using Node from `.nvmrc`:
 
 ```bash
-cd docs/atlas
-npm install
-npm run generate:data
-npm run dev
+pnpm --dir docs/atlas install --frozen-lockfile --ignore-scripts
+node scripts/verify-atlas-dependency-lock.cjs
+node --test scripts/tests/atlas-source-map-regressions.test.cjs scripts/tests/atlas-sharp-runtime.test.cjs
+pnpm --dir docs/atlas build
 ```
 
-## Dynamic Widgets
+The graph verifier checks all preserved resolved nodes against the immutable
+pre-migration revision. The focused workflow installs on Linux and Windows,
+tests the actual Astro → Vite → PostCSS source-map dependency and the actual
+Astro → Sharp native image dependency, then builds the tracked configuration.
+It does not generate canon payloads or publish a site.
 
-- **Status strategy widgets**: The roadmap and action plan cards are fed from `src/pages/index.astro`. Replace the placeholder arrays with data pulled from Notion/CSV by extending `scripts/build-data.ts` (e.g., hit Notion API, dump CSV to `data/status.csv`, and import it).
-- **Real-time panels**: Astro supports server-side endpoints; add `/src/pages/api/status.json.ts` to proxy Supabase telemetry and hydrate client components via `on:visible` island architecture.
-- **Constellation navigation**: Controlled by `data/canon-manifest.json → realms[]`. Add or reorder nodes to reflect Library, Sanctuary, Nexus, etc. Animations rely on CSS only.
+## Dependency repair
 
-## Archiving Legacy HTML
+The legacy v6 lock is incompatible with PNPM 11's frozen install. The v9 migration
+preserves the 292 resolved snapshots and the top-level versions/specifiers.
+It changes Sharp 0.35.4 to 0.35.5, its packaged native binaries/libvips family,
+and source-map-js 1.2.1 to 1.2.2. Legacy `dev`/`requiresBuild` annotations are
+removed; optional peers use modern snapshot placement. All unrelated package
+metadata and dependency edges remain preserved.
 
-Once sections from the Expo-era HTML decks (`archive/old-structure/Arcanea App/*.html`) are migrated, move the originals into `docs/legacy-timelines/` and reference them from an Atlas "History" section. Tracking table:
+Sharp 0.35.5 bundles patched librsvg 2.63.2; source-map-js 1.2.2 bounds indexed
+map offsets. See the [Sharp advisory](https://github.com/advisories/GHSA-wq5f-xc86-pv6w)
+and [source-map advisory](https://github.com/advisories/GHSA-68fv-2mgg-jv7q).
+The native test checks the loaded library and decodes a small benign SVG.
+It does not attempt exploitation or prove application reachability.
 
-| Legacy asset | Atlas destination | Status |
-|--------------|-------------------|--------|
-| `interactive-roadmap.html` | Roadmap cards (Phase I–III) | Pending refinement |
-| `ecosystem-visualization.html` | Constellation navigation | Migrated (visual motifs reused) |
-| `team-dashboard.html` | Guardian roster timeline | TODO |
+The preserved Astro dependency still includes http-cache-semantics 4.2.0.
+Its [shared-cache advisory](https://github.com/advisories/GHSA-ch52-4w7c-c8xp)
+has no published patch as inspected on 11 October 2026. That alert remains open;
+this repair does not establish the deployed cache behavior or dismiss the alert.
 
-## Next Extensions
+## Canon and unfinished product work
 
-1. Replace placeholder luminor names with canon once the Glossary is harmonized.
-2. Add deity relationship diagram using D3/Canvas for Lumina ↔ Nero duality.
-3. Integrate Mixpanel dashboards via embedded iframes or live charts after safety approvals.
-4. Promote the build to `atlas.arcanea.ai` via Vercel output from `docs/atlas/dist/`.
+`.arcanea/lore/CANON_LOCKED.md` is authoritative. The older `docs/canon/`
+inputs and `data/canon-manifest.json` are retained historical/derived material;
+they are not authority for new canon promotion.
+
+`scripts/build-data.ts` reads legacy markdown and writes a derived payload.
+The dependency workflow does not run it. Any canon reconciliation or promotion
+requires the separate canon process before generating or publishing that payload.
+
+The earlier documentation's landing page, constellation navigation, status
+widgets, live endpoints and `atlas.arcanea.ai` deployment are proposed work.
+Their implementation and customer acceptance are not established by this
+directory's current tracked files. Preserve the archive plan and original
+assets until their owner reviews any migration.
