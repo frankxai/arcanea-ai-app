@@ -6,16 +6,31 @@
  * When user says "arcanea-auto", this picks the best model for their task.
  */
 
-import type { ChatMessage, CuratedModel, GatewayConfig, ProviderId } from './types';
-import { CURATED_MODELS, getModelById, PROVIDERS } from './models';
+import type {
+  ChatMessage,
+  CuratedModel,
+  GatewayConfig,
+  ProviderId,
+} from "./types";
+import { CURATED_MODELS, getModelById, PROVIDERS } from "./models";
+import { ANTHROPIC_API_VERSION } from "./catalog";
 
 // ─── Task Classification ─────────────────────────────────────────────
 
-type TaskType = 'reasoning' | 'creative' | 'code' | 'chat' | 'vision' | 'image-gen' | 'video-gen' | 'audio' | 'translation';
+type TaskType =
+  | "reasoning"
+  | "creative"
+  | "code"
+  | "chat"
+  | "vision"
+  | "image-gen"
+  | "video-gen"
+  | "audio"
+  | "translation";
 
 interface ClassificationResult {
   taskType: TaskType;
-  complexity: 'simple' | 'moderate' | 'complex' | 'expert';
+  complexity: "simple" | "moderate" | "complex" | "expert";
   needsVision: boolean;
   estimatedTokens: number;
 }
@@ -23,47 +38,130 @@ interface ClassificationResult {
 /** Classify the task from the messages to determine optimal routing */
 export function classifyTask(messages: ChatMessage[]): ClassificationResult {
   const lastMessage = messages[messages.length - 1];
-  const content = typeof lastMessage?.content === 'string'
-    ? lastMessage.content
-    : Array.isArray(lastMessage?.content)
-      ? lastMessage.content.map((p) => p.text || '').join(' ')
-      : '';
+  const content =
+    typeof lastMessage?.content === "string"
+      ? lastMessage.content
+      : Array.isArray(lastMessage?.content)
+        ? lastMessage.content.map((p) => p.text || "").join(" ")
+        : "";
 
   const lower = content.toLowerCase();
   const wordCount = content.split(/\s+/).length;
 
   // Vision detection
-  const hasImages = Array.isArray(lastMessage?.content) &&
-    lastMessage.content.some((p) => p.type === 'image_url');
+  const hasImages =
+    Array.isArray(lastMessage?.content) &&
+    lastMessage.content.some((p) => p.type === "image_url");
 
   // Task type classification
-  let taskType: TaskType = 'chat';
+  let taskType: TaskType = "chat";
 
-  const codeSignals = ['code', 'function', 'bug', 'debug', 'implement', 'refactor', 'class', 'api', 'typescript', 'python', 'javascript', 'sql', 'css', 'html', 'regex', 'algorithm', 'data structure', 'compile', 'runtime'];
-  const reasoningSignals = ['analyze', 'compare', 'evaluate', 'explain why', 'pros and cons', 'trade-off', 'strategy', 'architecture', 'design', 'plan', 'reasoning', 'logic', 'proof', 'derive', 'calculate', 'math'];
-  const creativeSignals = ['write', 'story', 'poem', 'creative', 'imagine', 'narrative', 'character', 'dialogue', 'scene', 'fiction', 'essay', 'blog', 'article', 'copy', 'script', 'lyrics'];
-  const imageSignals = ['generate image', 'create image', 'draw', 'illustration', 'picture of', 'photo of', 'design a logo', 'make an image'];
-  const videoSignals = ['generate video', 'create video', 'animate', 'motion', 'clip of'];
-  const translationSignals = ['translate', 'translation', 'in german', 'in french', 'in spanish', 'in japanese', 'in chinese'];
+  const codeSignals = [
+    "code",
+    "function",
+    "bug",
+    "debug",
+    "implement",
+    "refactor",
+    "class",
+    "api",
+    "typescript",
+    "python",
+    "javascript",
+    "sql",
+    "css",
+    "html",
+    "regex",
+    "algorithm",
+    "data structure",
+    "compile",
+    "runtime",
+  ];
+  const reasoningSignals = [
+    "analyze",
+    "compare",
+    "evaluate",
+    "explain why",
+    "pros and cons",
+    "trade-off",
+    "strategy",
+    "architecture",
+    "design",
+    "plan",
+    "reasoning",
+    "logic",
+    "proof",
+    "derive",
+    "calculate",
+    "math",
+  ];
+  const creativeSignals = [
+    "write",
+    "story",
+    "poem",
+    "creative",
+    "imagine",
+    "narrative",
+    "character",
+    "dialogue",
+    "scene",
+    "fiction",
+    "essay",
+    "blog",
+    "article",
+    "copy",
+    "script",
+    "lyrics",
+  ];
+  const imageSignals = [
+    "generate image",
+    "create image",
+    "draw",
+    "illustration",
+    "picture of",
+    "photo of",
+    "design a logo",
+    "make an image",
+  ];
+  const videoSignals = [
+    "generate video",
+    "create video",
+    "animate",
+    "motion",
+    "clip of",
+  ];
+  const translationSignals = [
+    "translate",
+    "translation",
+    "in german",
+    "in french",
+    "in spanish",
+    "in japanese",
+    "in chinese",
+  ];
 
-  if (hasImages) taskType = 'vision';
-  else if (imageSignals.some((s) => lower.includes(s))) taskType = 'image-gen';
-  else if (videoSignals.some((s) => lower.includes(s))) taskType = 'video-gen';
-  else if (codeSignals.filter((s) => lower.includes(s)).length >= 2) taskType = 'code';
-  else if (reasoningSignals.filter((s) => lower.includes(s)).length >= 2) taskType = 'reasoning';
-  else if (creativeSignals.filter((s) => lower.includes(s)).length >= 2) taskType = 'creative';
-  else if (translationSignals.some((s) => lower.includes(s))) taskType = 'translation';
+  if (hasImages) taskType = "vision";
+  else if (imageSignals.some((s) => lower.includes(s))) taskType = "image-gen";
+  else if (videoSignals.some((s) => lower.includes(s))) taskType = "video-gen";
+  else if (codeSignals.filter((s) => lower.includes(s)).length >= 2)
+    taskType = "code";
+  else if (reasoningSignals.filter((s) => lower.includes(s)).length >= 2)
+    taskType = "reasoning";
+  else if (creativeSignals.filter((s) => lower.includes(s)).length >= 2)
+    taskType = "creative";
+  else if (translationSignals.some((s) => lower.includes(s)))
+    taskType = "translation";
 
   // Complexity estimation
-  const totalContent = messages.map((m) =>
-    typeof m.content === 'string' ? m.content : ''
-  ).join(' ');
+  const totalContent = messages
+    .map((m) => (typeof m.content === "string" ? m.content : ""))
+    .join(" ");
   const totalWords = totalContent.split(/\s+/).length;
 
-  let complexity: ClassificationResult['complexity'] = 'simple';
-  if (totalWords > 2000 || messages.length > 10) complexity = 'expert';
-  else if (totalWords > 500 || messages.length > 5) complexity = 'complex';
-  else if (totalWords > 100 || messages.length > 2) complexity = 'moderate';
+  let complexity: ClassificationResult["complexity"] = "simple";
+  if (totalWords > 2000 || messages.length > 10) complexity = "expert";
+  else if (totalWords > 500 || messages.length > 5) complexity = "complex";
+  else if (totalWords > 100 || messages.length > 2) complexity = "moderate";
 
   return {
     taskType,
@@ -100,11 +198,11 @@ export function selectModel(
     candidates = candidates.filter((m) => m.supportsVision);
   }
 
-  if (classification.taskType === 'image-gen') {
+  if (classification.taskType === "image-gen") {
     candidates = candidates.filter((m) => m.supportsImageOutput);
   }
 
-  if (classification.taskType === 'video-gen') {
+  if (classification.taskType === "video-gen") {
     candidates = candidates.filter((m) => m.supportsVideoOutput);
   }
 
@@ -119,18 +217,26 @@ export function selectModel(
     if (model.category.includes(classification.taskType as any)) score += 30;
 
     // Tier bonus
-    if (classification.complexity === 'expert' && model.tier === 'frontier') score += 25;
-    if (classification.complexity === 'complex' && model.tier !== 'speed') score += 15;
-    if (classification.complexity === 'simple' && model.tier === 'speed') score += 20;
-    if (classification.complexity === 'simple' && model.tier === 'performance') score += 10;
+    if (classification.complexity === "expert" && model.tier === "frontier")
+      score += 25;
+    if (classification.complexity === "complex" && model.tier !== "speed")
+      score += 15;
+    if (classification.complexity === "simple" && model.tier === "speed")
+      score += 20;
+    if (classification.complexity === "simple" && model.tier === "performance")
+      score += 10;
 
     // Speed bonus for simple tasks
-    if (classification.complexity === 'simple' && model.tokensPerSecond && model.tokensPerSecond > 500) {
+    if (
+      classification.complexity === "simple" &&
+      model.tokensPerSecond &&
+      model.tokensPerSecond > 500
+    ) {
       score += 15;
     }
 
     // Cost efficiency for non-expert tasks
-    if (classification.complexity !== 'expert') {
+    if (classification.complexity !== "expert") {
       const costScore = Math.max(0, 20 - model.outputPrice);
       score += costScore;
     }
@@ -151,8 +257,9 @@ export function selectModel(
   const alternatives = scored.slice(1, 4).map((s) => s.model);
 
   let reason = `Selected for ${classification.taskType} task (${classification.complexity} complexity)`;
-  if (classification.needsVision) reason += ' with vision capability';
-  if (winner.model.tokensPerSecond) reason += ` at ${winner.model.tokensPerSecond} tok/s`;
+  if (classification.needsVision) reason += " with vision capability";
+  if (winner.model.tokensPerSecond)
+    reason += ` at ${winner.model.tokensPerSecond} tok/s`;
 
   return {
     model: winner.model,
@@ -178,9 +285,9 @@ export function routeRequest(
   config: GatewayConfig,
 ): RouteResult | null {
   let selectedModel: CuratedModel | undefined;
-  let reason = '';
+  let reason = "";
 
-  if (modelId === 'arcanea-auto' || modelId === 'auto') {
+  if (modelId === "arcanea-auto" || modelId === "auto") {
     // Smart routing — auto-select best model
     const classification = classifyTask(messages);
     const decision = selectModel(classification, config);
@@ -194,7 +301,7 @@ export function routeRequest(
       // Try matching by provider model ID (passthrough)
       selectedModel = CURATED_MODELS.find((m) => m.providerModelId === modelId);
     }
-    reason = 'Direct model selection';
+    reason = "Direct model selection";
   }
 
   if (!selectedModel) return null;
@@ -210,18 +317,18 @@ export function routeRequest(
 
   // Build auth headers
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
 
-  if (provider.authHeader === 'Authorization') {
-    headers['Authorization'] = `Bearer ${apiKey}`;
+  if (provider.authHeader === "Authorization") {
+    headers["Authorization"] = `Bearer ${apiKey}`;
   } else {
     headers[provider.authHeader] = apiKey;
   }
 
   // Anthropic-specific headers
-  if (provider.id === 'anthropic') {
-    headers['anthropic-version'] = '2024-10-22';
+  if (provider.id === "anthropic") {
+    headers["anthropic-version"] = ANTHROPIC_API_VERSION;
   }
 
   return {

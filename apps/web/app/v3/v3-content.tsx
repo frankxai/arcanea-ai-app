@@ -188,7 +188,7 @@ function HeroPortal() {
 
           {/* Headline */}
           <h1 className="text-[clamp(2.25rem,5.1vw,4.45rem)] font-display font-bold tracking-[-0.025em] leading-[1.04] mb-4 md:mb-5 text-white">
-            <span className="block">Build living worlds</span>
+            <span className="block">Build living worlds</span>{" "}
             <span className="block">with AI agents.</span>
           </h1>
 

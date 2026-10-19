@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import {
+  voiceCredentialHeaders,
+  voiceResponseRecovery,
+  type VoiceRecovery,
+} from "@/lib/voice/customer-credentials";
+import Image from "next/image";
+import styles from "@arcanea/design-system/companion.module.css";
+import Link from "next/link";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   PhPaperPlane,
   PhMicrophone,
@@ -13,11 +20,18 @@ import {
   PhPaperclip,
   PhCaretDown,
   PhImageSquare,
-} from '@/lib/phosphor-icons';
-import { CHAT_MODELS, getModelById, ProviderLogo } from '@/components/chat/model-selector';
-import { MentionPopup, type MentionItem } from './mention-popup';
-import { VoiceWaveform } from './voice-waveform';
-import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
+} from "@/lib/phosphor-icons";
+import {
+  CHAT_MODELS,
+  getModelById,
+  ProviderLogo,
+} from "@/components/chat/model-selector";
+import { MentionPopup, type MentionItem } from "./mention-popup";
+import { VoiceWaveform } from "./voice-waveform";
+import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
+import { useAuth } from "@/lib/auth/context";
+import type { createCredentialScope } from "@/lib/ai/provider-preferences";
+type CredentialScope = ReturnType<typeof createCredentialScope>;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -57,11 +71,11 @@ function formatFileSize(bytes: number): string {
 // Compact model picker (inline in toggles row)
 // ---------------------------------------------------------------------------
 
-const TIER_ORDER = ['frontier', 'performance', 'speed'] as const;
+const TIER_ORDER = ["frontier", "performance", "speed"] as const;
 const TIER_META: Record<string, { label: string; color: string }> = {
-  frontier: { label: 'Frontier', color: 'var(--arc-brand-atlantean-teal)' },
-  performance: { label: 'Performance', color: 'var(--arc-earth)' },
-  speed: { label: 'Speed', color: 'var(--arc-brand-arcanean-gold)' },
+  frontier: { label: "Frontier", color: "var(--arc-brand-atlantean-teal)" },
+  performance: { label: "Performance", color: "var(--arc-earth)" },
+  speed: { label: "Speed", color: "var(--arc-brand-arcanean-gold)" },
 };
 
 function CompactModelPicker({
@@ -72,7 +86,7 @@ function CompactModelPicker({
   onChange: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const ref = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -82,11 +96,11 @@ function CompactModelPicker({
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
-        setSearch('');
+        setSearch("");
       }
     }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
   // Focus search on open
@@ -98,14 +112,16 @@ function CompactModelPicker({
 
   const selected = getModelById(value) || CHAT_MODELS[0];
 
-  const tierColor = (tier: string) => TIER_META[tier]?.color || 'var(--arc-brand-arcanean-gold)';
+  const tierColor = (tier: string) =>
+    TIER_META[tier]?.color || "var(--arc-brand-arcanean-gold)";
 
   // Filter models by search
   const filteredModels = search
-    ? CHAT_MODELS.filter((m) =>
-        m.shortName.toLowerCase().includes(search.toLowerCase()) ||
-        m.provider.toLowerCase().includes(search.toLowerCase()) ||
-        m.description.toLowerCase().includes(search.toLowerCase())
+    ? CHAT_MODELS.filter(
+        (m) =>
+          m.shortName.toLowerCase().includes(search.toLowerCase()) ||
+          m.provider.toLowerCase().includes(search.toLowerCase()) ||
+          m.description.toLowerCase().includes(search.toLowerCase()),
       )
     : CHAT_MODELS;
 
@@ -124,13 +140,13 @@ function CompactModelPicker({
         aria-expanded={open}
         aria-haspopup="listbox"
         className="flex items-center gap-1.5 px-2.5 py-1 min-h-[44px] rounded-lg text-[11px] font-medium transition-all duration-200
-          border border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/[0.04] text-white/50 hover:text-white/70
+          border border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/[0.04] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)]
           focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
       >
         <ProviderLogo provider={selected.provider} size={16} />
         <span>{selected.shortName}</span>
         <PhCaretDown
-          className={`w-3 h-3 text-white/30 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`w-3 h-3 text-[var(--arc-text-secondary)] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -147,11 +163,11 @@ function CompactModelPicker({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search models..."
-              className="w-full px-3 py-2 text-xs bg-white/[0.04] border border-white/[0.06] rounded-lg text-white/80 placeholder-white/25 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
+              className="w-full px-3 py-2 text-xs bg-white/[0.04] border border-white/[0.06] rounded-lg text-[var(--arc-text-primary)] placeholder:text-[var(--arc-text-secondary)] focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
               onKeyDown={(e) => {
-                if (e.key === 'Escape') {
+                if (e.key === "Escape") {
                   setOpen(false);
-                  setSearch('');
+                  setSearch("");
                 }
               }}
             />
@@ -161,7 +177,7 @@ function CompactModelPicker({
           <div
             role="listbox"
             className="max-h-[50vh] sm:max-h-[350px] overflow-y-auto p-1"
-            style={{ scrollbarWidth: 'thin' }}
+            style={{ scrollbarWidth: "thin" }}
           >
             {grouped.map(({ tier, models }) => (
               <div key={tier}>
@@ -172,8 +188,8 @@ function CompactModelPicker({
                     style={{ backgroundColor: tierColor(tier) }}
                   />
                   <span
-                    className="text-[10px] font-semibold uppercase tracking-wider"
-                    style={{ color: `${tierColor(tier)}90` }}
+                    className="text-[10px] font-semibold"
+                    style={{ color: tierColor(tier) }}
                   >
                     {TIER_META[tier]?.label}
                   </span>
@@ -189,18 +205,22 @@ function CompactModelPicker({
                     onClick={() => {
                       onChange(model.id);
                       setOpen(false);
-                      setSearch('');
+                      setSearch("");
                     }}
                     className={`w-full text-left px-3 py-2 flex items-center gap-2.5 rounded-lg transition-all duration-150 ${
                       model.id === value
-                        ? 'bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/10 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.15)]'
-                        : 'text-white/60 hover:bg-white/[0.04] hover:text-white/80'
+                        ? "bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/10 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.15)]"
+                        : "text-[var(--arc-text-secondary)] hover:bg-white/[0.04] hover:text-[var(--arc-text-primary)]"
                     }`}
                   >
                     <ProviderLogo provider={model.provider} size={20} />
-                    <span className="text-xs font-medium flex-1">{model.shortName}</span>
+                    <span className="text-xs font-medium flex-1">
+                      {model.shortName}
+                    </span>
                     {model.tokensPerSecond && (
-                      <span className="text-[9px] text-white/20 font-mono">{model.tokensPerSecond}t/s</span>
+                      <span className="text-[9px] text-[var(--arc-text-secondary)] font-mono">
+                        {model.tokensPerSecond}t/s
+                      </span>
                     )}
                   </button>
                 ))}
@@ -208,7 +228,7 @@ function CompactModelPicker({
             ))}
 
             {grouped.length === 0 && (
-              <div className="px-4 py-6 text-center text-xs text-white/25">
+              <div className="px-4 py-6 text-center text-xs text-[var(--arc-text-secondary)]">
                 No models match &ldquo;{search}&rdquo;
               </div>
             )}
@@ -242,7 +262,7 @@ function ToolToggle({
   activeColor?: string;
   onClick: () => void;
 }) {
-  const color = activeColor ?? 'var(--arc-brand-atlantean-teal)';
+  const color = activeColor ?? "var(--arc-brand-atlantean-teal)";
   return (
     <div className="relative group/toggle">
       <button
@@ -253,20 +273,23 @@ function ToolToggle({
         aria-label={label}
         aria-pressed={active}
         className={`relative flex items-center justify-center gap-1.5 h-8 min-h-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
-          active ? 'px-3 min-w-[44px]' : 'w-8 min-w-[44px]'
+          active ? "px-3 min-w-[44px]" : "w-8 min-w-[44px]"
         } ${
           disabled
-            ? 'opacity-30 cursor-not-allowed'
+            ? "opacity-30 cursor-not-allowed"
             : active
-              ? `border text-white/90 shadow-[0_0_16px_${color}30,inset_0_1px_0_${color}20]`
-              : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06] hover:border-white/[0.1]'
+              ? "border text-[var(--arc-text-primary)]"
+              : "bg-white/[0.03] border border-white/[0.06] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.06] hover:border-white/[0.1]"
         }`}
-        style={active ? {
-          background: `linear-gradient(135deg, ${color}20, ${color}08)`,
-          borderColor: `${color}50`,
-          color: color,
-          boxShadow: `0 0 16px ${color}25, inset 0 1px 0 ${color}15`,
-        } : undefined}
+        style={
+          active
+            ? {
+                background: `color-mix(in srgb, ${color} 12%, var(--arc-cosmic-surface))`,
+                borderColor: color,
+                color: "var(--arc-text-primary)",
+              }
+            : undefined
+        }
       >
         <Icon className="w-4 h-4" />
         {active && shortLabel && (
@@ -274,7 +297,7 @@ function ToolToggle({
         )}
       </button>
       {tooltip && !active && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[var(--arc-cosmic-void)] text-white/70 text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[var(--arc-cosmic-void)] text-[var(--arc-text-secondary)] text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
           {tooltip}
         </div>
       )}
@@ -294,26 +317,55 @@ function ToolsPopover({
   onToggleTool: (tool: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const activeCount = enabledTools.size;
 
   const tools = [
-    { id: 'image', icon: PhImage, label: 'Image Generation', desc: 'Generate images from descriptions', color: 'var(--arc-fire)' },
-    { id: 'think', icon: PhBrain, label: 'Extended Thinking', desc: 'Deep reasoning for complex problems', color: 'var(--arc-void)' },
-    { id: 'search', icon: PhMagnifyingGlass, label: 'Web Search', desc: 'Search the web for current info', color: 'var(--arc-wind)' },
+    {
+      id: "image",
+      icon: PhImage,
+      label: "Image generation",
+      desc: "Use Imagine with your account credits",
+      color: "var(--arc-fire)",
+    },
+    {
+      id: "think",
+      icon: PhBrain,
+      label: "Extended thinking",
+      desc: "Unavailable as a chat tool",
+      color: "var(--arc-void)",
+    },
+    {
+      id: "search",
+      icon: PhMagnifyingGlass,
+      label: "Web search",
+      desc: "Unavailable in chat",
+      color: "var(--arc-wind)",
+    },
   ];
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) {
+          setOpen(false);
+          triggerRef.current?.focus();
+        }
+      }}
+    >
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen(!open)}
         className={`flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
           activeCount > 0
-            ? 'bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)]'
-            : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06]'
+            ? "bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)]"
+            : "bg-white/[0.03] border border-white/[0.06] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.06]"
         }`}
-        aria-label={`Tools (${activeCount} active)`}
-        title="Tools: Image gen, Thinking, Web search"
+        aria-label={`Tools (${activeCount} selected)`}
+        aria-expanded={open}
+        title="Tool availability"
       >
         <PhBrain className="w-4 h-4" />
         {activeCount > 0 && (
@@ -327,42 +379,67 @@ function ToolsPopover({
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute bottom-full left-0 mb-2 w-64 rounded-xl bg-[var(--arc-cosmic-void)] border border-white/[0.08] shadow-2xl z-50 py-2">
-            <p className="px-3 py-1 text-[10px] font-semibold text-white/30 uppercase tracking-wider">Tools</p>
+            <p className="px-3 py-1 text-xs font-semibold text-[var(--arc-text-secondary)]">
+              Tool availability
+            </p>
             {tools.map((t) => {
               const active = enabledTools.has(t.id);
               const Icon = t.icon;
               return (
                 <button
                   key={t.id}
-                  onClick={() => onToggleTool(t.id)}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-white/[0.04] transition-colors text-left"
+                  type="button"
+                  disabled={!active}
+                  aria-pressed={active}
+                  onClick={() => {
+                    if (active) onToggleTool(t.id);
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 enabled:hover:bg-white/[0.04] transition-colors text-left disabled:cursor-not-allowed"
                 >
                   <div
                     className="w-7 h-7 rounded-lg flex items-center justify-center border transition-all"
-                    style={active ? {
-                      backgroundColor: `${t.color}15`,
-                      borderColor: `${t.color}40`,
-                      color: t.color,
-                    } : {
-                      backgroundColor: 'rgba(255,255,255,0.03)',
-                      borderColor: 'rgba(255,255,255,0.06)',
-                      color: 'rgba(255,255,255,0.3)',
-                    }}
+                    style={
+                      active
+                        ? {
+                            backgroundColor: `color-mix(in srgb, ${t.color} 12%, var(--arc-cosmic-surface))`,
+                            borderColor: t.color,
+                            color: t.color,
+                          }
+                        : {
+                            backgroundColor: "var(--arc-cosmic-surface)",
+                            borderColor: "var(--arc-cosmic-border-bright)",
+                            color: "var(--arc-text-secondary)",
+                          }
+                    }
                   >
                     <Icon className="w-3.5 h-3.5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={`text-xs font-medium ${active ? 'text-white/80' : 'text-white/50'}`}>{t.label}</p>
-                    <p className="text-[9px] text-white/20">{t.desc}</p>
+                    <p className="text-xs font-medium text-[var(--arc-text-primary)]">
+                      {t.label}
+                    </p>
+                    <p className="text-xs text-[var(--arc-text-secondary)]">
+                      {active ? "Turn off to continue with text chat" : t.desc}
+                    </p>
                   </div>
                   <div
                     className={`w-4 h-4 rounded border-2 transition-all ${
-                      active ? 'border-current bg-current' : 'border-white/15'
+                      active ? "border-current bg-current" : "border-white/15"
                     }`}
-                    style={active ? { borderColor: t.color, backgroundColor: t.color } : undefined}
+                    style={
+                      active
+                        ? { borderColor: t.color, backgroundColor: t.color }
+                        : undefined
+                    }
                   >
                     {active && (
-                      <svg viewBox="0 0 16 16" fill="none" stroke="black" strokeWidth="2.5" className="w-full h-full">
+                      <svg
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="black"
+                        strokeWidth="2.5"
+                        className="w-full h-full"
+                      >
                         <polyline points="3,8 6,11 12,5" />
                       </svg>
                     )}
@@ -370,6 +447,12 @@ function ToolsPopover({
                 </button>
               );
             })}
+            <a
+              href="/imagine"
+              className="min-h-[44px] flex items-center px-3 text-xs text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2"
+            >
+              Open Imagine
+            </a>
           </div>
         </>
       )}
@@ -381,7 +464,20 @@ function ToolsPopover({
 // Main component
 // ---------------------------------------------------------------------------
 
-export function ChatInputBar({
+export function ChatInputBar(props: ChatInputBarProps) {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  return (
+    <ChatInputBarSession
+      key={token.revision}
+      {...props}
+      credentialScope={credentialScope}
+      credentialToken={token}
+    />
+  );
+}
+
+function ChatInputBarSession({
   onSend,
   onModelChange,
   currentModel,
@@ -392,17 +488,26 @@ export function ChatInputBar({
   externalMessage,
   onExternalMessageConsumed,
   textareaRef: externalTextareaRef,
-}: ChatInputBarProps) {
-  const [message, setMessage] = useState('');
+  credentialScope,
+  credentialToken,
+}: ChatInputBarProps & {
+  credentialScope: CredentialScope;
+  credentialToken: ReturnType<CredentialScope["get"]>;
+}) {
+  const [message, setMessage] = useState("");
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [voiceAutoSend, setVoiceAutoSend] = useState(true);
+  const [voiceRecovery, setVoiceRecovery] = useState<VoiceRecovery | null>(
+    null,
+  );
   const [validationToast, setValidationToast] = useState<string | null>(null);
 
   // @mention state
   const [mentionVisible, setMentionVisible] = useState(false);
-  const [mentionQuery, setMentionQuery] = useState('');
+  const [mentionQuery, setMentionQuery] = useState("");
   const [mentionStart, setMentionStart] = useState(-1);
 
   const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -410,7 +515,7 @@ export function ChatInputBar({
 
   // Consume external message when it changes (e.g. from starter chip click)
   useEffect(() => {
-    if (externalMessage !== undefined && externalMessage !== '') {
+    if (externalMessage !== undefined && externalMessage !== "") {
       setMessage(externalMessage);
       onExternalMessageConsumed?.();
       // Focus the textarea so the user can edit or press Enter
@@ -424,6 +529,13 @@ export function ChatInputBar({
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const transcriptionRef = useRef<AbortController | null>(null);
+  const voiceOperationRef = useRef(false);
+  const voiceMountedRef = useRef(true);
+  const draftRef = useRef({ message, attachments });
+  useEffect(() => {
+    draftRef.current = { message, attachments };
+  }, [message, attachments]);
 
   // Live (on-device) speech preview — Whisper remains the authoritative final text.
   // Destructure the stable functions so recording callbacks don't churn as the
@@ -436,8 +548,8 @@ export function ChatInputBar({
     stop: stopSpeech,
     reset: resetSpeech,
   } = useSpeechRecognition();
-  const voiceBaseRef = useRef('');   // message text typed before recording started
-  const spokenRef = useRef('');      // latest Web Speech final, readable in async callbacks
+  const voiceBaseRef = useRef(""); // message text typed before recording started
+  const spokenRef = useRef(""); // latest Web Speech final, readable in async callbacks
   useEffect(() => {
     spokenRef.current = speechFinalText;
   }, [speechFinalText]);
@@ -452,12 +564,19 @@ export function ChatInputBar({
 
   // Cleanup voice recording on unmount to prevent timeout firing on unmounted component
   useEffect(() => {
+    voiceMountedRef.current = true;
     return () => {
+      voiceMountedRef.current = false;
+      transcriptionRef.current?.abort();
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
       if (voiceTimeoutRef.current) {
         clearTimeout(voiceTimeoutRef.current);
         voiceTimeoutRef.current = null;
       }
-      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      if (
+        mediaRecorderRef.current &&
+        mediaRecorderRef.current.state !== "inactive"
+      ) {
         mediaRecorderRef.current.stop();
       }
     };
@@ -469,7 +588,7 @@ export function ChatInputBar({
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
   }, [message]);
@@ -478,16 +597,18 @@ export function ChatInputBar({
   // Send logic
   // -------------------------------------------------------------------------
 
-  const canSend = (message.trim().length > 0 || attachments.length > 0) && !isStreaming;
+  const canSend =
+    (message.trim().length > 0 || attachments.length > 0) && !isStreaming;
 
   const handleSend = useCallback(() => {
     if (!canSend) return;
+    transcriptionRef.current?.abort();
     onSend(message.trim(), attachments.length > 0 ? attachments : undefined);
-    setMessage('');
+    setMessage("");
     setAttachments([]);
     // Reset textarea height
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = "auto";
     }
   }, [canSend, message, attachments, onSend]);
 
@@ -498,11 +619,14 @@ export function ChatInputBar({
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
       // If mention popup is visible, let it handle navigation keys
-      if (mentionVisible && ['ArrowDown', 'ArrowUp', 'Enter', 'Tab', 'Escape'].includes(e.key)) {
+      if (
+        mentionVisible &&
+        ["ArrowDown", "ArrowUp", "Enter", "Tab", "Escape"].includes(e.key)
+      ) {
         return; // MentionPopup handles via document listener
       }
 
-      if (e.key === 'Enter' && !e.shiftKey) {
+      if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         handleSend();
       }
@@ -514,33 +638,37 @@ export function ChatInputBar({
   // @mention detection
   // -------------------------------------------------------------------------
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const val = e.target.value.slice(0, MAX_CHARS);
-    setMessage(val);
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const val = e.target.value.slice(0, MAX_CHARS);
+      draftRef.current.message = val;
+      setMessage(val);
 
-    const cursorPos = e.target.selectionStart ?? val.length;
-    // Look backward from cursor for an unmatched @
-    const textBeforeCursor = val.slice(0, cursorPos);
-    const atIndex = textBeforeCursor.lastIndexOf('@');
+      const cursorPos = e.target.selectionStart ?? val.length;
+      // Look backward from cursor for an unmatched @
+      const textBeforeCursor = val.slice(0, cursorPos);
+      const atIndex = textBeforeCursor.lastIndexOf("@");
 
-    if (atIndex >= 0) {
-      const textBetween = textBeforeCursor.slice(atIndex + 1);
-      // Only trigger if @ is at start or preceded by whitespace, and no spaces in query
-      const charBefore = atIndex > 0 ? textBeforeCursor[atIndex - 1] : ' ';
-      if (/\s/.test(charBefore) || atIndex === 0) {
-        if (!/\s/.test(textBetween)) {
-          setMentionVisible(true);
-          setMentionQuery(textBetween);
-          setMentionStart(atIndex);
-          return;
+      if (atIndex >= 0) {
+        const textBetween = textBeforeCursor.slice(atIndex + 1);
+        // Only trigger if @ is at start or preceded by whitespace, and no spaces in query
+        const charBefore = atIndex > 0 ? textBeforeCursor[atIndex - 1] : " ";
+        if (/\s/.test(charBefore) || atIndex === 0) {
+          if (!/\s/.test(textBetween)) {
+            setMentionVisible(true);
+            setMentionQuery(textBetween);
+            setMentionStart(atIndex);
+            return;
+          }
         }
       }
-    }
 
-    setMentionVisible(false);
-    setMentionQuery('');
-    setMentionStart(-1);
-  }, []);
+      setMentionVisible(false);
+      setMentionQuery("");
+      setMentionStart(-1);
+    },
+    [],
+  );
 
   const handleMentionSelect = useCallback(
     (item: MentionItem) => {
@@ -552,7 +680,7 @@ export function ChatInputBar({
       const newMessage = before + insertText + after;
       setMessage(newMessage);
       setMentionVisible(false);
-      setMentionQuery('');
+      setMentionQuery("");
       setMentionStart(-1);
 
       // Restore focus and cursor position
@@ -569,7 +697,7 @@ export function ChatInputBar({
 
   const handleMentionDismiss = useCallback(() => {
     setMentionVisible(false);
-    setMentionQuery('');
+    setMentionQuery("");
     setMentionStart(-1);
   }, []);
 
@@ -582,38 +710,48 @@ export function ChatInputBar({
     setTimeout(() => setValidationToast(null), 4000);
   }, []);
 
-  const filterFilesBySize = useCallback((files: File[]): File[] => {
-    const valid: File[] = [];
-    const oversized: string[] = [];
-    for (const file of files) {
-      if (file.size > MAX_FILE_SIZE) {
-        oversized.push(file.name);
-      } else {
-        valid.push(file);
+  const filterFilesBySize = useCallback(
+    (files: File[]): File[] => {
+      const valid: File[] = [];
+      const oversized: string[] = [];
+      for (const file of files) {
+        if (file.size > MAX_FILE_SIZE) {
+          oversized.push(file.name);
+        } else {
+          valid.push(file);
+        }
       }
-    }
-    if (oversized.length === 1) {
-      showValidationToast(`"${oversized[0]}" exceeds 10MB limit`);
-    } else if (oversized.length > 1) {
-      showValidationToast(`${oversized.length} files exceed 10MB limit`);
-    }
-    return valid;
-  }, [showValidationToast]);
+      if (oversized.length === 1) {
+        showValidationToast(`"${oversized[0]}" exceeds 10MB limit`);
+      } else if (oversized.length > 1) {
+        showValidationToast(`${oversized.length} files exceed 10MB limit`);
+      }
+      return valid;
+    },
+    [showValidationToast],
+  );
 
-  const handlePaste = useCallback((e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    const items = e.clipboardData?.items;
-    if (!items) return;
-    const imageItems = Array.from(items).filter((item) => item.type.startsWith('image/'));
-    if (imageItems.length > 0) {
-      e.preventDefault();
-      const files = filterFilesBySize(
-        imageItems.map((item) => item.getAsFile()).filter((f): f is File => f !== null),
+  const handlePaste = useCallback(
+    (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const imageItems = Array.from(items).filter((item) =>
+        item.type.startsWith("image/"),
       );
-      if (files.length > 0) {
-        setAttachments((prev) => [...prev, ...files]);
+      if (imageItems.length > 0) {
+        e.preventDefault();
+        const files = filterFilesBySize(
+          imageItems
+            .map((item) => item.getAsFile())
+            .filter((f): f is File => f !== null),
+        );
+        if (files.length > 0) {
+          setAttachments((prev) => [...prev, ...files]);
+        }
       }
-    }
-  }, [filterFilesBySize]);
+    },
+    [filterFilesBySize],
+  );
 
   // -------------------------------------------------------------------------
   // Drag and drop
@@ -628,28 +766,36 @@ export function ChatInputBar({
     setIsDragOver(false);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    const files = filterFilesBySize(
-      Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/')),
-    );
-    if (files.length > 0) {
-      setAttachments((prev) => [...prev, ...files]);
-    }
-  }, [filterFilesBySize]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragOver(false);
+      const files = filterFilesBySize(
+        Array.from(e.dataTransfer.files).filter((f) =>
+          f.type.startsWith("image/"),
+        ),
+      );
+      if (files.length > 0) {
+        setAttachments((prev) => [...prev, ...files]);
+      }
+    },
+    [filterFilesBySize],
+  );
 
   // -------------------------------------------------------------------------
   // File input
   // -------------------------------------------------------------------------
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = filterFilesBySize(Array.from(e.target.files || []));
-    if (files.length > 0) {
-      setAttachments((prev) => [...prev, ...files]);
-    }
-    if (e.target) e.target.value = '';
-  }, [filterFilesBySize]);
+  const handleFileSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = filterFilesBySize(Array.from(e.target.files || []));
+      if (files.length > 0) {
+        setAttachments((prev) => [...prev, ...files]);
+      }
+      if (e.target) e.target.value = "";
+    },
+    [filterFilesBySize],
+  );
 
   const removeAttachment = useCallback((index: number) => {
     setAttachments((prev) => prev.filter((_, i) => i !== index));
@@ -664,7 +810,10 @@ export function ChatInputBar({
       clearTimeout(voiceTimeoutRef.current);
       voiceTimeoutRef.current = null;
     }
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive"
+    ) {
       mediaRecorderRef.current.stop();
     }
     stopSpeech();
@@ -673,21 +822,41 @@ export function ChatInputBar({
   }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
-    if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
-      showValidationToast('Voice input is not supported in this browser.');
+    if (!credentialScope.isCurrent(credentialToken)) {
+      showValidationToast("Wait for your current account before recording.");
       return;
     }
+    if (voiceOperationRef.current) return;
+    setVoiceRecovery(null);
+    if (
+      typeof navigator === "undefined" ||
+      !navigator.mediaDevices?.getUserMedia
+    ) {
+      showValidationToast("Voice input is not supported in this browser.");
+      return;
+    }
+    voiceOperationRef.current = true;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (
+        !voiceMountedRef.current ||
+        !credentialScope.isCurrent(credentialToken)
+      ) {
+        stream.getTracks().forEach((track) => track.stop());
+        voiceOperationRef.current = false;
+        return;
+      }
       mediaStreamRef.current = stream;
       // Snapshot any already-typed text so live/Whisper transcript appends to it.
       voiceBaseRef.current = message;
-      spokenRef.current = '';
+      spokenRef.current = "";
       if (speechSupported) {
         resetSpeech();
         startSpeech();
       }
-      const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
+      const mimeType = MediaRecorder.isTypeSupported("audio/webm")
+        ? "audio/webm"
+        : "audio/mp4";
       const mediaRecorder = new MediaRecorder(stream, { mimeType });
       audioChunksRef.current = [];
 
@@ -697,42 +866,110 @@ export function ChatInputBar({
 
       mediaRecorder.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(audioChunksRef.current, { type: mediaRecorder.mimeType });
+        if (
+          !voiceMountedRef.current ||
+          !credentialScope.isCurrent(credentialToken)
+        ) {
+          voiceOperationRef.current = false;
+          return;
+        }
+        const draftAtStop = { ...draftRef.current };
+        const controller = new AbortController();
+        transcriptionRef.current = controller;
+        setIsTranscribing(true);
+        const blob = new Blob(audioChunksRef.current, {
+          type: mediaRecorder.mimeType,
+        });
 
         // Resolve the spoken text: prefer accurate Whisper, fall back to the
         // on-device Web Speech transcript (already shown live) if Whisper fails.
-        let spoken = '';
+        let spoken = "";
+        let recovery: VoiceRecovery | null = null;
         try {
           const formData = new FormData();
-          const ext = mediaRecorder.mimeType.includes('webm') ? 'webm' : 'mp4';
-          formData.append('audio', blob, `recording.${ext}`);
-          const res = await fetch('/api/ai/transcribe', { method: 'POST', body: formData });
+          const ext = mediaRecorder.mimeType.includes("webm") ? "webm" : "mp4";
+          formData.append("audio", blob, `recording.${ext}`);
+          const res = await fetch("/api/ai/transcribe", {
+            method: "POST",
+            headers: voiceCredentialHeaders(credentialToken.actor),
+            signal: controller.signal,
+            body: formData,
+          });
           if (res.ok) {
             const { text } = await res.json();
-            if (text) spoken = String(text).trim();
+            if (typeof text === "string") spoken = text.trim();
+          } else {
+            recovery = await voiceResponseRecovery(res);
           }
-        } catch (e) {
-          console.warn('Transcription failed:', e);
+        } catch {
+          recovery = {
+            message:
+              "Voice transcription failed. Try again or check your provider settings.",
+            cta: "retry",
+          };
+        } finally {
+          transcriptionRef.current = null;
+          voiceOperationRef.current = false;
+          if (voiceMountedRef.current) setIsTranscribing(false);
         }
+        if (
+          controller.signal.aborted ||
+          !voiceMountedRef.current ||
+          !credentialScope.isCurrent(credentialToken)
+        )
+          return;
         if (!spoken) spoken = spokenRef.current.trim();
 
-        const base = voiceBaseRef.current.trim();
-        const combined = base ? (spoken ? `${base} ${spoken}` : base) : spoken;
+        const originalDraft = voiceBaseRef.current;
+        const preview = [originalDraft.trim(), spokenRef.current.trim()]
+          .filter(Boolean)
+          .join(" ");
+        const baseDraft =
+          draftAtStop.message === preview ? originalDraft : draftAtStop.message;
+        const base = baseDraft.trim();
+        const combined = base ? `${base} ${spoken}` : spoken;
 
         // Clear voice scratch state now that we have an authoritative result.
-        voiceBaseRef.current = '';
-        spokenRef.current = '';
+        voiceBaseRef.current = "";
+        spokenRef.current = "";
         resetSpeech();
 
-        if (!combined) {
-          // Nothing transcribed — restore the user's pre-recording text.
-          setMessage(base);
+        if (!spoken) {
+          setMessage((current) =>
+            current === draftAtStop.message &&
+            (current === originalDraft || current === preview)
+              ? originalDraft
+              : current,
+          );
+          setVoiceRecovery(
+            recovery ?? {
+              message:
+                "No speech was recognized. Your draft is still here. Try recording again.",
+              cta: "retry",
+            },
+          );
+          return;
+        }
+        if (
+          draftRef.current.message !== draftAtStop.message ||
+          draftRef.current.attachments !== draftAtStop.attachments
+        ) {
+          setMessage((current) => {
+            const keptDraft =
+              current === draftAtStop.message ? baseDraft : current;
+            return `${keptDraft}${keptDraft.trim() ? " " : ""}${spoken}`;
+          });
           return;
         }
         if (voiceAutoSend) {
           // One-step voice: transcribe → send immediately
-          onSend(combined, attachments.length > 0 ? attachments : undefined);
-          setMessage('');
+          onSend(
+            combined,
+            draftAtStop.attachments.length > 0
+              ? draftAtStop.attachments
+              : undefined,
+          );
+          setMessage("");
           setAttachments([]);
         } else {
           setMessage(combined);
@@ -748,11 +985,25 @@ export function ChatInputBar({
         stopRecording();
       }, 60_000);
     } catch (e) {
-      console.warn('Microphone access denied:', e);
+      voiceOperationRef.current = false;
+      console.warn("Microphone access denied:", e);
       stopSpeech();
-      showValidationToast('Microphone access denied. Check browser permissions.');
+      showValidationToast(
+        "Microphone access denied. Check browser permissions.",
+      );
     }
-  }, [stopRecording, showValidationToast, voiceAutoSend, message, onSend, attachments, stopSpeech, resetSpeech, startSpeech, speechSupported]);
+  }, [
+    stopRecording,
+    showValidationToast,
+    voiceAutoSend,
+    message,
+    onSend,
+    attachments,
+    stopSpeech,
+    resetSpeech,
+    startSpeech,
+    speechSupported,
+  ]);
 
   // -------------------------------------------------------------------------
   // Derived state
@@ -773,11 +1024,64 @@ export function ChatInputBar({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {voiceRecovery && (
+        <div
+          role="alert"
+          aria-label="Voice input"
+          className="mb-2 flex flex-wrap items-center gap-2 rounded-xl border border-[var(--arc-glass-border)] bg-[var(--arc-cosmic-surface)] px-4 py-2 text-sm text-[var(--arc-text-secondary)]"
+        >
+          <span>{voiceRecovery.message}</span>
+          <Link
+            href="/settings/providers"
+            className="inline-flex min-h-11 items-center text-[var(--arc-brand-atlantean-teal)] underline"
+          >
+            Provider settings
+          </Link>
+          <button
+            type="button"
+            onClick={() => setVoiceRecovery(null)}
+            className="ml-auto min-h-11 min-w-11 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            aria-label="Dismiss voice input error"
+          >
+            <PhX className="mx-auto h-4 w-4" />
+          </button>
+        </div>
+      )}
+      {isTranscribing && (
+        <div
+          role="status"
+          aria-label="Voice transcription"
+          className="mb-2 flex flex-wrap items-center gap-2 px-4 text-sm text-[var(--arc-text-secondary)]"
+        >
+          <span>Transcribing your recording…</span>
+          <button
+            type="button"
+            onClick={() => transcriptionRef.current?.abort()}
+            className="inline-flex min-h-11 items-center rounded-lg px-3 text-[var(--arc-brand-atlantean-teal)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+          >
+            Cancel transcription
+          </button>
+        </div>
+      )}
       {/* Validation toast */}
       {validationToast && (
         <div className="absolute -top-12 left-4 right-4 flex items-center justify-center z-20">
-          <div className="px-3 py-1.5 rounded-lg bg-red-500/90 text-white text-xs font-medium shadow-lg backdrop-blur-sm flex items-center gap-2">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          <div className="px-3 py-1.5 rounded-lg bg-red-500/90 text-[var(--arc-text-primary)] text-xs font-medium shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <circle
+                cx="8"
+                cy="8"
+                r="7"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M8 5v3.5M8 10.5v.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
             {validationToast}
           </div>
         </div>
@@ -788,35 +1092,14 @@ export function ChatInputBar({
         <div className="absolute inset-0 z-20 bg-[var(--arc-brand-atlantean-teal)]/10 border-2 border-dashed border-[var(--arc-brand-atlantean-teal)]/40 rounded-2xl flex items-center justify-center backdrop-blur-sm pointer-events-none">
           <div className="text-center">
             <PhImageSquare className="w-8 h-8 text-[var(--arc-brand-atlantean-teal)] mx-auto mb-2" />
-            <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">Drop images here</p>
+            <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">
+              Drop images here
+            </p>
           </div>
         </div>
       )}
 
-      <div
-        className="relative rounded-2xl backdrop-blur-xl transition-all duration-300 group/input"
-        style={{
-          background: message.trim()
-            ? 'linear-gradient(135deg, rgba(13,13,20,0.92), rgba(0,30,40,0.88))'
-            : 'linear-gradient(135deg, rgba(13,13,20,0.85), rgba(16,16,26,0.85))',
-          boxShadow: message.trim()
-            ? '0 0 40px rgba(0,188,212,0.1), 0 0 80px rgba(0,188,212,0.04), inset 0 1px 0 rgba(255,255,255,0.04)'
-            : '0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.03)',
-        }}
-      >
-        {/* Gradient border overlay */}
-        <div
-          className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
-          style={{
-            padding: '1px',
-            background: message.trim()
-              ? 'linear-gradient(135deg, rgba(0,188,212,0.4), rgba(13,71,161,0.3), rgba(0,137,123,0.4))'
-              : 'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04), rgba(255,255,255,0.06))',
-            mask: 'linear-gradient(var(--arc-text-primary) 0 0) content-box, linear-gradient(var(--arc-text-primary) 0 0)',
-            maskComposite: 'exclude',
-            WebkitMaskComposite: 'xor',
-          }}
-        />
+      <div className={styles.inputSurface} data-chat-composer>
         {/* Attachment preview */}
         {attachments.length > 0 && (
           <div className="flex gap-2 px-4 pt-3 pb-1 flex-wrap">
@@ -825,30 +1108,34 @@ export function ChatInputBar({
                 key={`${file.name}-${i}`}
                 className="relative group/attach w-16 h-16 rounded-lg overflow-hidden border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm"
               >
-                {file.type.startsWith('image/') ? (
+                {file.type.startsWith("image/") ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <Image
                     src={URL.createObjectURL(file)}
                     alt=""
                     className="w-full h-full object-cover"
-                   />
+                  />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-1">
-                    <PhPaperclip className="w-4 h-4 text-white/30" />
-                    <span className="text-[8px] text-white/30 truncate max-w-[56px] px-1">
+                    <PhPaperclip className="w-4 h-4 text-[var(--arc-text-secondary)]" />
+                    <span className="text-[8px] text-[var(--arc-text-secondary)] truncate max-w-[56px] px-1">
                       {file.name}
                     </span>
                   </div>
                 )}
                 {/* Filename + size overlay on hover */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/attach:opacity-100 transition-opacity rounded-lg flex flex-col items-center justify-center p-1">
-                  <span className="text-[9px] text-white/80 truncate max-w-full">{file.name}</span>
-                  <span className="text-[8px] text-white/40">{formatFileSize(file.size)}</span>
+                  <span className="text-[9px] text-[var(--arc-text-primary)] truncate max-w-full">
+                    {file.name}
+                  </span>
+                  <span className="text-[8px] text-[var(--arc-text-secondary)]">
+                    {formatFileSize(file.size)}
+                  </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => removeAttachment(i)}
-                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white opacity-0 group-hover/attach:opacity-100 transition-opacity z-10"
+                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)] opacity-0 group-hover/attach:opacity-100 transition-opacity z-10"
                   aria-label={`Remove ${file.name}`}
                 >
                   <PhX className="w-3 h-3" />
@@ -860,25 +1147,28 @@ export function ChatInputBar({
 
         {/* Voice waveform visualization */}
         {isRecording && mediaStreamRef.current && (
-          <VoiceWaveform stream={mediaStreamRef.current} onStop={stopRecording} />
+          <VoiceWaveform
+            stream={mediaStreamRef.current}
+            onStop={stopRecording}
+          />
         )}
 
         {/* Active tools indicator */}
         {enabledTools.size > 0 && (
           <div className="flex items-center gap-2 px-4 py-1.5">
-            {enabledTools.has('image') && (
+            {enabledTools.has("image") && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--arc-fire)]/10 text-[var(--arc-fire)] border border-[var(--arc-fire)]/20 animate-[fadeIn_0.2s_ease-out]">
                 <PhImage className="w-3 h-3" />
                 Image generation on
               </span>
             )}
-            {enabledTools.has('think') && (
+            {enabledTools.has("think") && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--arc-void)]/10 text-[var(--arc-void)] border border-[var(--arc-void)]/20 animate-[fadeIn_0.2s_ease-out]">
                 <PhBrain className="w-3 h-3" />
                 Extended thinking on
               </span>
             )}
-            {enabledTools.has('search') && (
+            {enabledTools.has("search") && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--arc-wind)]/10 text-[var(--arc-wind)] border border-[var(--arc-wind)]/20 animate-[fadeIn_0.2s_ease-out]">
                 <PhMagnifyingGlass className="w-3 h-3" />
                 Web search on
@@ -904,35 +1194,39 @@ export function ChatInputBar({
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
             placeholder={
-              enabledTools.has('image')
-                ? 'Describe the image you want to create...'
-                : enabledTools.has('search')
-                  ? 'Ask anything — I\'ll search the web for answers...'
-                  : enabledTools.has('think')
-                    ? 'Ask a complex question — I\'ll think deeply...'
-                    : 'Type a message... (@mention for agents)'
+              enabledTools.has("image")
+                ? "Describe the image you want to create..."
+                : enabledTools.has("search")
+                  ? "Ask anything — I'll search the web for answers..."
+                  : enabledTools.has("think")
+                    ? "Ask a complex question — I'll think deeply..."
+                    : "Type a message... (@mention for agents)"
             }
             aria-label="Message input"
             disabled={isStreaming}
             rows={1}
-            className="w-full px-4 py-3 pr-20 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none focus:shadow-[0_0_12px_rgba(0,188,212,0.1)] disabled:opacity-40 text-[15px] rounded-2xl transition-shadow"
-            style={{ minHeight: '52px', maxHeight: '200px' }}
+            className="w-full px-4 py-3 pr-20 bg-transparent text-[var(--arc-text-primary)] placeholder:text-[var(--arc-text-secondary)] resize-none focus:outline-none disabled:opacity-40 text-base rounded-2xl"
+            style={{ minHeight: "52px", maxHeight: "200px" }}
           />
 
           {/* Right-side buttons (mic + send/stop) */}
           <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
             {/* Voice input — always visible, coexists with typing */}
-            {!isStreaming && !isRecording && (
+            {!isStreaming && !isRecording && !isTranscribing && (
               <div className="relative group/voice">
                 <button
                   type="button"
                   onClick={startRecording}
                   className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
                     message.trim()
-                      ? 'text-white/20 hover:text-[var(--arc-brand-atlantean-teal)]/70 hover:bg-[var(--arc-brand-atlantean-teal)]/5'
-                      : 'text-white/30 hover:text-white/60 hover:bg-white/[0.04]'
+                      ? "text-[var(--arc-text-secondary)] hover:text-[var(--arc-brand-atlantean-teal)]/70 hover:bg-[var(--arc-brand-atlantean-teal)]/5"
+                      : "text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.04]"
                   }`}
-                  aria-label={voiceAutoSend ? 'Voice input (auto-send)' : 'Voice input (transcribe only)'}
+                  aria-label={
+                    voiceAutoSend
+                      ? "Voice input (auto-send)"
+                      : "Voice input (transcribe only)"
+                  }
                 >
                   <PhMicrophone className="w-4 h-4" />
                   {voiceAutoSend && (
@@ -943,14 +1237,23 @@ export function ChatInputBar({
                 <div className="absolute bottom-full right-0 mb-2 hidden group-hover/voice:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[var(--arc-cosmic-void)]/95 border border-white/[0.06] backdrop-blur-xl shadow-lg whitespace-nowrap z-50">
                   <button
                     type="button"
-                    onClick={(e) => { e.stopPropagation(); setVoiceAutoSend(!voiceAutoSend); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setVoiceAutoSend(!voiceAutoSend);
+                    }}
                     className="flex items-center gap-1.5 text-[10px]"
                     aria-label="Toggle auto-send"
                   >
-                    <span className={`w-6 h-3.5 rounded-full relative transition-colors ${voiceAutoSend ? 'bg-[var(--arc-brand-atlantean-teal)]' : 'bg-white/10'}`}>
-                      <span className={`absolute top-0.5 w-2.5 h-2.5 rounded-full bg-white transition-transform ${voiceAutoSend ? 'translate-x-3' : 'translate-x-0.5'}`} />
+                    <span
+                      className={`w-6 h-3.5 rounded-full relative transition-colors ${voiceAutoSend ? "bg-[var(--arc-brand-atlantean-teal)]" : "bg-white/10"}`}
+                    >
+                      <span
+                        className={`absolute top-0.5 w-2.5 h-2.5 rounded-full bg-white transition-transform ${voiceAutoSend ? "translate-x-3" : "translate-x-0.5"}`}
+                      />
                     </span>
-                    <span className="text-white/50">Auto-send</span>
+                    <span className="text-[var(--arc-text-secondary)]">
+                      Auto-send
+                    </span>
                   </button>
                 </div>
               </div>
@@ -961,10 +1264,15 @@ export function ChatInputBar({
               <button
                 type="button"
                 onClick={onStop}
-                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center bg-white/10 text-white/70 hover:bg-white/15 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center bg-white/10 text-[var(--arc-text-secondary)] hover:bg-white/15 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
                 aria-label="Stop generating"
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="currentColor"
+                >
                   <rect x="2" y="2" width="10" height="10" rx="2" />
                 </svg>
               </button>
@@ -975,12 +1283,12 @@ export function ChatInputBar({
                 disabled={!canSend}
                 className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
                   canSend
-                    ? 'bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_0_16px_rgba(0,188,212,0.35),0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_0_24px_rgba(0,188,212,0.5),0_4px_12px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95'
-                    : 'bg-white/[0.04] text-white/20'
+                    ? styles.sendAction
+                    : "bg-white/[0.04] text-[var(--arc-text-secondary)]"
                 }`}
                 aria-label="Send message"
               >
-                <PhPaperPlane className="w-4 h-4 text-white" />
+                <PhPaperPlane className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -991,7 +1299,9 @@ export function ChatInputBar({
           <div className="px-4 pb-1" role="status" aria-live="polite">
             <span
               className={`text-[10px] ${
-                isNearLimit ? 'text-orange-400' : 'text-white/20'
+                isNearLimit
+                  ? "text-[var(--arc-fire)]"
+                  : "text-[var(--arc-text-secondary)]"
               }`}
             >
               {charCount} / {MAX_CHARS}
@@ -1000,7 +1310,10 @@ export function ChatInputBar({
         )}
 
         {/* Toggles row */}
-        <div className="flex items-center justify-between px-3 py-2 sm:py-2 border-t border-white/[0.05] gap-2" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
+        <div
+          className="flex items-center justify-between px-3 py-2 sm:py-2 border-t border-white/[0.05] gap-2"
+          style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+        >
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
             {/* Attach file */}
             <input
@@ -1014,7 +1327,7 @@ export function ChatInputBar({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-white/40 hover:text-white/60 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+              className="flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-secondary)] hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
               aria-label="Attach file"
               title="Attach file"
             >
@@ -1029,12 +1342,12 @@ export function ChatInputBar({
           </div>
 
           {/* Keyboard hints */}
-          <span className="text-[10px] text-white/15 hidden sm:inline">
+          <span className="text-[10px] text-[var(--arc-text-secondary)] hidden sm:inline">
             ⏎ Send · ⇧⏎ New line
           </span>
           <div className="sr-only" role="note">
-            Keyboard shortcuts: Enter to send, Shift+Enter for new line,
-            @ to mention agents, Escape to close popups
+            Keyboard shortcuts: Enter to send, Shift+Enter for new line, @ to
+            mention agents, Escape to close popups
           </div>
         </div>
       </div>

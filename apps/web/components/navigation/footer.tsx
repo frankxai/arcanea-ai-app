@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useCallback } from "react";
 import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
@@ -18,6 +19,7 @@ const footerLinks = {
       { href: "/cinema-studio", label: "Cinema Studio" },
       { href: "/canvas", label: "Canvas" },
       { href: "/forge", label: "Forge" },
+      { href: "/agent", label: "Arcanea Agent" },
       { href: "/agents", label: "Agents" },
     ],
   },
@@ -75,6 +77,7 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -109,6 +112,34 @@ export function Footer() {
     },
     [email, submitting],
   );
+
+  if (pathname === "/projects" || pathname?.startsWith("/projects/")) {
+    return (
+      <footer
+        aria-label="Project workspace footer"
+        className="mt-8 border-t border-border"
+      >
+        <nav
+          aria-label="Workspace links"
+          className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 px-4 py-2 text-sm text-text-secondary"
+        >
+          {[
+            { href: "/contact", label: "Support" },
+            { href: "/privacy", label: "Privacy" },
+            { href: "/terms", label: "Terms" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center hover:text-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-atlantean-aqua"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      </footer>
+    );
+  }
 
   return (
     <footer
@@ -154,12 +185,12 @@ export function Footer() {
                   placeholder="your@email.com"
                   required
                   aria-label="Email address for newsletter"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
+                  className="min-w-0 min-h-11 flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
+                  className="min-h-11 shrink-0 px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
                 >
                   {submitting ? "..." : "Subscribe"}
                 </button>

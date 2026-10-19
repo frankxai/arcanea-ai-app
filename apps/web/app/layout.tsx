@@ -204,7 +204,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </DeferredBackground>
             <DeferredGlowTracker />
             <Navbar />
-            <main id="main-content" className="relative pt-[var(--nav-h)]">
+            <main
+              id="main-content"
+              tabIndex={-1}
+              className="relative pt-[var(--nav-h)]"
+            >
               {children}
             </main>
             <Footer />

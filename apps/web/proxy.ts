@@ -13,6 +13,15 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // The MCP endpoint authenticates every request itself with an
+  // Authorization: Bearer token (lib/mcp/world-context-auth.ts) and answers
+  // 401 with WWW-Authenticate + resource_metadata. MCP clients carry no
+  // browser cookie, so skip the cookie gate for this exact path only; nested
+  // paths and look-alikes (/api/mcp/x, /api/mcpx) still hit updateSession.
+  if (request.nextUrl.pathname === "/api/mcp") {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
   // Recover Supabase's Site URL fallback before rendering or loading analytics.
   const recovery =
     request.method === "GET" ? getOAuthRecoveryPath(request.nextUrl) : null;
@@ -20,6 +29,15 @@ export async function proxy(request: NextRequest) {
     const response = NextResponse.redirect(new URL(recovery, request.url), 303);
     response.headers.set("Cache-Control", "private, no-store");
     return response;
+  }
+
+  // This exact compatibility route admits its own customer provider credential;
+  // cookie auth here would block external SDK clients before that check runs.
+  if (
+    request.nextUrl.pathname === "/api/v1/chat/completions" &&
+    (request.method === "GET" || request.method === "POST")
+  ) {
+    return NextResponse.next({ request: { headers: request.headers } });
   }
 
   // Public submissions and the stateless shop checkout lookup are exact POSTs.
