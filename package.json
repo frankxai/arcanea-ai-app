@@ -24,6 +24,7 @@
     "test:luminor-read-timeout": "node --test scripts/tests/luminor-read-timeout-contract.test.mjs",
     "test:health-media-readiness": "node --test scripts/tests/health-media-readiness-contract.test.mjs",
     "test:worlds-accessibility": "node --test scripts/tests/worlds-accessibility-contract.test.mjs",
+    "test:release-manifest": "node --test scripts/tests/release-manifest-schema.test.mjs",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
     "clean": "turbo run clean",

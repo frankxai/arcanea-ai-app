@@ -10,6 +10,19 @@ import {
 import { authenticateWorldContextBearer } from "@/lib/mcp/world-context-auth";
 import { createWorldContextMcpHttpHandler } from "@/lib/mcp/world-context-http";
 
+/**
+ * MCP World Context endpoint (Streamable HTTP, POST only).
+ *
+ * Clients must use https://www.arcanea.ai/api/mcp. The apex arcanea.ai
+ * answers with a 308 redirect, and clients drop the Authorization header on
+ * that cross-host redirect, so a request to the apex arrives unauthenticated.
+ *
+ * Auth: Authorization: Bearer <access token> on every request. The token must
+ * be accepted by Supabase Auth and its `aud` must name this resource
+ * (lib/mcp/world-context-auth.ts). Discovery: a 401 carries
+ * WWW-Authenticate: Bearer resource_metadata="<origin>/.well-known/
+ * oauth-protected-resource/api/mcp" (RFC 9728).
+ */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
