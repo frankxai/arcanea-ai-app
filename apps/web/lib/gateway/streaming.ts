@@ -6,7 +6,7 @@
  * Supports both forwarding provider streams and constructing new ones.
  */
 
-import type { ChatCompletionChunk, StreamChoice } from "./types";
+import type { ChatCompletionChunk, StreamChoice, ToolCallDelta } from "./types";
 
 // ─── SSE Stream Construction ─────────────────────────────────────────
 
@@ -73,6 +73,7 @@ export function createFinishChunk(
   id: string,
   model: string,
   reason: FinishReason = "stop",
+  servedModel?: string,
 ): ChatCompletionChunk {
   return {
     id,
@@ -84,6 +85,28 @@ export function createFinishChunk(
         index: 0,
         delta: {},
         finish_reason: reason,
+      },
+    ],
+    ...(servedModel ? { served_model: servedModel } : {}),
+  };
+}
+
+/** Create a tool-call delta chunk (OpenAI streaming shape). */
+export function createToolCallChunk(
+  id: string,
+  model: string,
+  toolCall: ToolCallDelta,
+): ChatCompletionChunk {
+  return {
+    id,
+    object: "chat.completion.chunk",
+    created: Math.floor(Date.now() / 1000),
+    model,
+    choices: [
+      {
+        index: 0,
+        delta: { tool_calls: [toolCall] },
+        finish_reason: null,
       },
     ],
   };
@@ -243,6 +266,9 @@ export function adaptAnthropicStream(
   let sentRole = false;
   let stopReason: unknown;
   let finished = false;
+  let servedModel: string | undefined;
+  // Anthropic content-block index -> OpenAI tool_calls index.
+  const toolIndexByBlock = new Map<number, number>();
 
   // Emit the finish chunk and [DONE] exactly once, whether the provider
   // sends message_stop or the body simply ends.
@@ -256,6 +282,7 @@ export function adaptAnthropicStream(
             completionId,
             arcaneaModelId,
             mapAnthropicStopReason(stopReason),
+            servedModel,
           ),
         ),
       ),
@@ -300,6 +327,54 @@ export function adaptAnthropicStream(
                 ),
               );
               sentRole = true;
+            }
+
+            if (
+              eventType === "message_start" &&
+              typeof data.message?.model === "string"
+            ) {
+              servedModel = data.message.model;
+            }
+
+            if (
+              eventType === "content_block_start" &&
+              data.content_block?.type === "tool_use"
+            ) {
+              const toolIndex = toolIndexByBlock.size;
+              toolIndexByBlock.set(data.index, toolIndex);
+              controller.enqueue(
+                encoder.encode(
+                  formatSSEChunk(
+                    createToolCallChunk(completionId, arcaneaModelId, {
+                      index: toolIndex,
+                      id: data.content_block.id,
+                      type: "function",
+                      function: {
+                        name: data.content_block.name,
+                        arguments: "",
+                      },
+                    }),
+                  ),
+                ),
+              );
+            }
+
+            if (
+              eventType === "content_block_delta" &&
+              data.delta?.type === "input_json_delta" &&
+              toolIndexByBlock.has(data.index) &&
+              data.delta.partial_json
+            ) {
+              controller.enqueue(
+                encoder.encode(
+                  formatSSEChunk(
+                    createToolCallChunk(completionId, arcaneaModelId, {
+                      index: toolIndexByBlock.get(data.index)!,
+                      function: { arguments: data.delta.partial_json },
+                    }),
+                  ),
+                ),
+              );
             }
 
             if (

@@ -1,0 +1,542 @@
+{
+  "title": "Before the Road",
+  "type": "negotiate",
+  "hook": "Kael has chosen Atlantean. Before leaving the lighthouse, choose whose counsel to ask for and what Sela may record about new personal observations.",
+  "objective": "Choose a first intended practice and a local, revisitable boundary for new personal observation notes; preserve the fixed departure with Sela to Atlantean.",
+  "stakes": "Kael needs help and remains afraid of what that help may cost in privacy or agency. Refusal of notes must leave the journey viable.",
+  "complications": [
+    "The three emissaries offer distinct kinds of help; no choice teaches mastery.",
+    "Sela has read a historical voluntary-registration record; present permission for new observations cannot change that file or bind the Academy.",
+    "Questions about suppression remain theories, not accepted explanations.",
+    "The lighthouse is not a place for an uncontrolled five-element demonstration; that restriction is a proposed scene boundary, not a universal physical inability."
+  ],
+  "rewards": {
+    "tangible": "Sirvaine's existing white card remains in Kael's coat in every path; no new artifact is awarded.",
+    "intangible": "An explicit intended first practice and a local, revisitable agreement about new personal observation notes."
+  },
+  "involvedCreations": [
+    "manuscript-local:book1:kael",
+    "manuscript-local:book1:sirvaine-delloch",
+    "manuscript-local:book1:bren-caulder",
+    "manuscript-local:book1:sela",
+    "manuscript-local:book1:torven",
+    "manuscript-local:book1:ashenmere-lighthouse"
+  ],
+  "estimatedDifficulty": "apprentice",
+  "start": "threshold",
+  "goal": "Depart toward Atlantean with a selected first practice and an explicit local notes boundary.",
+  "variables": [
+    {
+      "id": "focus",
+      "initial": "unset"
+    },
+    {
+      "id": "supportPlan",
+      "initial": "none"
+    },
+    {
+      "id": "notesPermission",
+      "initial": "undecided"
+    },
+    {
+      "id": "destination",
+      "initial": "Atlantean"
+    },
+    {
+      "id": "historicalFileChanged",
+      "initial": false
+    },
+    {
+      "id": "notesScope",
+      "initial": "new-kael-observations-only"
+    },
+    {
+      "id": "notesSharingAllowed",
+      "initial": false
+    },
+    {
+      "id": "notesRevocable",
+      "initial": true
+    },
+    {
+      "id": "stopAgreement",
+      "initial": false
+    },
+    {
+      "id": "firstRoadQuestion",
+      "initial": "none"
+    },
+    {
+      "id": "nextDiscussion",
+      "initial": "none"
+    }
+  ],
+  "states": [
+    {
+      "id": "threshold",
+      "title": "Before the road",
+      "text": "Sirvaine's white card is in Kael's coat. Bren is leaving. Sela is packed and waits apart. Kael has chosen Atlantean. There is time for one last request for counsel before Kael and Sela leave Ashenmere.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "Everyone knows what I might become. I still need to know what to do when I am afraid."
+        },
+        {
+          "speaker": "Torven",
+          "text": "Then ask that. You have a little time before they go."
+        },
+        {
+          "speaker": "Kael",
+          "text": "There is time for one first lesson."
+        }
+      ]
+    },
+    {
+      "id": "care",
+      "title": "Ask Sirvaine how to name the fear",
+      "text": "Kael catches Sirvaine before she mounts. The card's edge presses against the inside of the coat. Asking for this help means admitting that choosing another Academy has not made her advice unnecessary.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "If I go with Sela, will you still answer me?"
+        },
+        {
+          "speaker": "Sirvaine",
+          "text": "That is what the card is for."
+        },
+        {
+          "speaker": "Kael",
+          "text": "I wanted to save the people on the ship. Now, every time someone looks at my eyes, I wonder whether they are counting the ways I could hurt them."
+        },
+        {
+          "speaker": "Sirvaine",
+          "text": "Before you try to make that fear useful, say what it is. To a person, if you can. A teacher cannot help with the thing a student has decided to conceal."
+        },
+        {
+          "speaker": "Kael",
+          "text": "What if they hear it as weakness?"
+        },
+        {
+          "speaker": "Sirvaine",
+          "text": "Then you will have learned something about that teacher. Ask another."
+        },
+        {
+          "speaker": "Kael",
+          "text": "I am afraid I will hurt someone while trying to help."
+        },
+        {
+          "speaker": "Sirvaine",
+          "text": "Yes. That is a question we can work on. You need not answer it on the lighthouse steps."
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "title": "Ask Bren how to stop",
+      "text": "Kael calls Bren back. There will be no elemental demonstration beside the lighthouse. This is a request for a first training boundary, not proof that Kael has acquired control.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "You asked me to hit you. I still cannot promise what would happen to the lighthouse."
+        },
+        {
+          "speaker": "Bren",
+          "text": "Good. You remembered the part that mattered."
+        },
+        {
+          "speaker": "Kael",
+          "text": "I thought the part that mattered was hitting you."
+        },
+        {
+          "speaker": "Bren",
+          "text": "For me, perhaps. For you, it was saying why you would not. We can start with that."
+        },
+        {
+          "speaker": "Kael",
+          "text": "Show me something that does not involve fire."
+        },
+        {
+          "speaker": "Bren",
+          "text": "Say stop before you need it. Put your hand up. Make me acknowledge it. If I go on after that, walk away from me. I can take an honest refusal."
+        },
+        {
+          "speaker": "Kael",
+          "text": "Stop."
+        },
+        {
+          "speaker": "Bren",
+          "text": "Stopped."
+        },
+        {
+          "speaker": "Kael",
+          "text": "That was all?"
+        },
+        {
+          "speaker": "Bren",
+          "text": "That was the agreement. Learning to keep it is longer work. When you are ready for that work, you know where I am."
+        }
+      ]
+    },
+    {
+      "id": "evidence",
+      "title": "Ask Sela what she knows",
+      "text": "Kael stays beside Sela's pack. She has told the hardest thing directly. That does not make every line in her notebook equally certain.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "Before we leave, show me where what you know stops and what you think begins."
+        },
+        {
+          "speaker": "Sela",
+          "text": "Your mother registered for an assessment. She declined further study. Those are records. Your sensitivity escaped detection. That is a problem. Suppression is my theory about the problem."
+        },
+        {
+          "speaker": "Kael",
+          "text": "You called it a theory. How will you know if it is the wrong one?"
+        },
+        {
+          "speaker": "Sela",
+          "text": "By finding something it cannot explain. That is part of why I want to hear what you perceive. I may have to abandon it."
+        },
+        {
+          "speaker": "Kael",
+          "text": "You read her file before you met me."
+        },
+        {
+          "speaker": "Sela",
+          "text": "Yes. Her registration is in the records. Your answer to me now is about what I may ask of you next. It cannot change that file or become an agreement for the Academy."
+        },
+        {
+          "speaker": "Kael",
+          "text": "Then I want to know why you ask a question before I answer it."
+        },
+        {
+          "speaker": "Sela",
+          "text": "Ask me which part I observed and which I inferred."
+        }
+      ]
+    },
+    {
+      "id": "private_care",
+      "title": "A question out of earshot",
+      "text": "Kael and Sela step away from the other emissaries before discussing any new personal observation notes. The counsel just received is not being offered as research data.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "I spoke privately to Sirvaine. That conversation is not something I am offering for your study."
+        },
+        {
+          "speaker": "Sela",
+          "text": "It will not become my notes. I am asking about something different: if you later choose to describe a new observation, may I record it after checking with you?"
+        },
+        {
+          "speaker": "Kael",
+          "text": "And if I change my mind?"
+        },
+        {
+          "speaker": "Sela",
+          "text": "Say stop and I stop writing. Those new notes stay in my own notebook; I will not share them. If you want the page back later, tell me. That is my promise about my new notes, not the old file or the Academy."
+        }
+      ]
+    },
+    {
+      "id": "care_allow",
+      "title": "Carry the question",
+      "text": "Kael gives Sela permission to note new personal observations only when she checks before recording. Sirvaine's card remains a way to ask for help, not evidence of a different allegiance. On the road, Kael's first declared practice is to name a fear before attempting to turn it into a working. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "You may note a new observation after checking with me before you record it."
+        },
+        {
+          "speaker": "Sela",
+          "text": "I will ask what you notice before fear, if you want that question. The conversation with Sirvaine stays out of my record."
+        }
+      ]
+    },
+    {
+      "id": "care_defer",
+      "title": "Keep the question private for now",
+      "text": "Kael keeps Sirvaine's card and defers new personal observation notes until a later discussion. The first declared practice is to name a fear to a chosen listener; that listener need not be the person carrying a notebook. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "Not yet. Ask again after we discuss what the question is for."
+        },
+        {
+          "speaker": "Sela",
+          "text": "Then no new observation notes. We can talk without the notebook, or not talk for a while."
+        }
+      ]
+    },
+    {
+      "id": "private_control",
+      "title": "A question out of earshot",
+      "text": "Kael and Sela step away from the other emissaries before discussing any new personal observation notes. The counsel just received is not being offered as research data.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "Bren agreed to stop when I said it. On the road, I need you to agree too."
+        },
+        {
+          "speaker": "Sela",
+          "text": "During a question or an observation, yes. Say stop and I stop the question and stop writing. I cannot promise that a word will halt your magic. I can promise what I do."
+        },
+        {
+          "speaker": "Kael",
+          "text": "You want a record of what I notice."
+        },
+        {
+          "speaker": "Sela",
+          "text": "Only new observations you choose to give, checked before recording. My notebook, no sharing. Withdraw permission or ask for my new page back. My agreement, not an Academy rule or a change to the old file."
+        }
+      ]
+    },
+    {
+      "id": "control_allow",
+      "title": "Carry a stopping agreement",
+      "text": "Kael permits Sela to note new personal observations with a check before each record. The first training boundary is a spoken stop acknowledged by the person teaching. This records an intended practice; it grants no new ability and says nothing about whether Kael can yet halt an elemental eruption. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "You may note a new observation after checking with me before you record it."
+        },
+        {
+          "speaker": "Sela",
+          "text": "I will ask what you notice and whether you want to continue. Your stop ends my question as well as my writing."
+        }
+      ]
+    },
+    {
+      "id": "control_defer",
+      "title": "Keep training and study separate",
+      "text": "Kael defers new personal observation notes until another discussion and carries Bren's stopping agreement as the first intended training boundary.  Refusing a notebook entry is not refusing the journey or forfeiting Bren's offer of later training. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "Not yet. Ask again after we discuss what the question is for."
+        },
+        {
+          "speaker": "Sela",
+          "text": "No new observation notes. The stopping agreement still applies to any question. You do not have to earn it by agreeing to the study."
+        }
+      ]
+    },
+    {
+      "id": "private_evidence",
+      "title": "A question out of earshot",
+      "text": "Kael and Sela step away from the other emissaries before discussing any new personal observation notes. The counsel just received is not being offered as research data.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "I want the purpose of the first question before the question itself."
+        },
+        {
+          "speaker": "Sela",
+          "text": "To compare what you perceive with what my theory predicts. A note must distinguish the observation from my interpretation."
+        },
+        {
+          "speaker": "Kael",
+          "text": "And agreeing to that does not give you every answer after it."
+        },
+        {
+          "speaker": "Sela",
+          "text": "I check before each new record. Say stop and I stop asking and writing. My new notes stay unshared in my notebook; you can withdraw and request the page. I speak for myself, not the archive."
+        }
+      ]
+    },
+    {
+      "id": "evidence_allow",
+      "title": "A notebook with room for uncertainty",
+      "text": "Kael permits new personal observation notes with a check before each record, and asks Sela to distinguish an observation from its interpretation. The existing theory remains unproved. The theory is a question to test, not an accepted explanation of Kael's childhood. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "You may note a new observation after checking with me before you record it."
+        },
+        {
+          "speaker": "Sela",
+          "text": "The first question will distinguish your observation from my interpretation. You can challenge the purpose before I record an answer."
+        }
+      ]
+    },
+    {
+      "id": "evidence_defer",
+      "title": "A question before an answer",
+      "text": "Kael defers new personal observation notes until the purpose of the questions is discussed. Sela does not close the road or rewrite the mother's file. The first intended practice is to separate what a person has seen from what that person has inferred. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back.",
+      "dialogue": [
+        {
+          "speaker": "Kael",
+          "text": "Not yet. Ask again after we discuss what the question is for."
+        },
+        {
+          "speaker": "Sela",
+          "text": "No new observation notes. I can explain a question's purpose before you decide whether to answer; explanation does not obligate an answer."
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "ask-care",
+      "from": "threshold",
+      "action": "Ask Sirvaine for help naming the fear; accept being heard before being taught.",
+      "when": true,
+      "set": {
+        "focus": "care",
+        "supportPlan": "name-fear-to-chosen-listener"
+      },
+      "to": "care"
+    },
+    {
+      "id": "ask-control",
+      "from": "threshold",
+      "action": "Ask Bren for a stopping agreement; accept that a boundary is not proof of control.",
+      "when": true,
+      "set": {
+        "focus": "control",
+        "supportPlan": "agree-on-stop-before-training"
+      },
+      "to": "control"
+    },
+    {
+      "id": "ask-evidence",
+      "from": "threshold",
+      "action": "Ask Sela to separate records from theory; accept that the answer may remain unknown.",
+      "when": true,
+      "set": {
+        "focus": "evidence",
+        "supportPlan": "separate-observation-from-theory"
+      },
+      "to": "evidence"
+    },
+    {
+      "id": "private-care",
+      "from": "care",
+      "action": "Speak to Sela alone about the next questions; keep the counsel conversation out of her notes.",
+      "when": true,
+      "set": {
+        "stopAgreement": true
+      },
+      "to": "private_care"
+    },
+    {
+      "id": "care-allow",
+      "from": "private_care",
+      "action": "Allow new observations with a check each time; keep the fear conversation private while giving Sela data.",
+      "when": true,
+      "set": {
+        "notesPermission": "allow-with-check-in",
+        "firstRoadQuestion": "What do you notice before the feeling becomes frightening?",
+        "nextDiscussion": "check-before-each-new-record"
+      },
+      "to": "care_allow"
+    },
+    {
+      "id": "care-defer",
+      "from": "private_care",
+      "action": "Defer new observation notes; choose a listener before choosing what belongs in a notebook.",
+      "when": true,
+      "set": {
+        "notesPermission": "defer-until-discussed",
+        "firstRoadQuestion": "none-until-agreement-reviewed",
+        "nextDiscussion": "Would you prefer to speak without a notebook today?"
+      },
+      "to": "care_defer"
+    },
+    {
+      "id": "private-control",
+      "from": "control",
+      "action": "Speak to Sela alone about the next questions; keep the counsel conversation out of her notes.",
+      "when": true,
+      "set": {
+        "stopAgreement": true
+      },
+      "to": "private_control"
+    },
+    {
+      "id": "control-allow",
+      "from": "private_control",
+      "action": "Allow new observations with a check each time; test the agreed stop boundary in ordinary questions.",
+      "when": true,
+      "set": {
+        "notesPermission": "allow-with-check-in",
+        "firstRoadQuestion": "What do you notice now, and do you want to continue?",
+        "nextDiscussion": "check-before-each-new-record"
+      },
+      "to": "control_allow"
+    },
+    {
+      "id": "control-defer",
+      "from": "private_control",
+      "action": "Defer new observation notes; establish the stop agreement before deciding whether to be studied.",
+      "when": true,
+      "set": {
+        "notesPermission": "defer-until-discussed",
+        "firstRoadQuestion": "none-until-agreement-reviewed",
+        "nextDiscussion": "What should I do when you ask to stop a question?"
+      },
+      "to": "control_defer"
+    },
+    {
+      "id": "private-evidence",
+      "from": "evidence",
+      "action": "Speak to Sela alone about the next questions; keep the counsel conversation out of her notes.",
+      "when": true,
+      "set": {
+        "stopAgreement": true
+      },
+      "to": "private_evidence"
+    },
+    {
+      "id": "evidence-allow",
+      "from": "private_evidence",
+      "action": "Allow new observations with a check each time; give Sela evidence while keeping her interpretation open to challenge.",
+      "when": true,
+      "set": {
+        "notesPermission": "allow-with-check-in",
+        "firstRoadQuestion": "Which part did you perceive, and which part are we inferring?",
+        "nextDiscussion": "check-before-each-new-record"
+      },
+      "to": "evidence_allow"
+    },
+    {
+      "id": "evidence-defer",
+      "from": "private_evidence",
+      "action": "Defer new observation notes; understand the purpose of the questions before supplying data.",
+      "when": true,
+      "set": {
+        "notesPermission": "defer-until-discussed",
+        "firstRoadQuestion": "none-until-agreement-reviewed",
+        "nextDiscussion": "Would you like the purpose of a question explained before deciding?"
+      },
+      "to": "evidence_defer"
+    }
+  ],
+  "endings": [
+    {
+      "state": "care_allow",
+      "result": "Kael gives Sela permission to note new personal observations only when she checks before recording. Sirvaine's card remains a way to ask for help, not evidence of a different allegiance. On the road, Kael's first declared practice is to name a fear before attempting to turn it into a working. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back."
+    },
+    {
+      "state": "care_defer",
+      "result": "Kael keeps Sirvaine's card and defers new personal observation notes until a later discussion. The first declared practice is to name a fear to a chosen listener; that listener need not be the person carrying a notebook. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back."
+    },
+    {
+      "state": "control_allow",
+      "result": "Kael permits Sela to note new personal observations with a check before each record. The first training boundary is a spoken stop acknowledged by the person teaching. This records an intended practice; it grants no new ability and says nothing about whether Kael can yet halt an elemental eruption. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back."
+    },
+    {
+      "state": "control_defer",
+      "result": "Kael defers new personal observation notes until another discussion and carries Bren's stopping agreement as the first intended training boundary.  Refusing a notebook entry is not refusing the journey or forfeiting Bren's offer of later training. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back."
+    },
+    {
+      "state": "evidence_allow",
+      "result": "Kael permits new personal observation notes with a check before each record, and asks Sela to distinguish an observation from its interpretation. The existing theory remains unproved. The theory is a question to test, not an accepted explanation of Kael's childhood. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back."
+    },
+    {
+      "state": "evidence_defer",
+      "result": "Kael defers new personal observation notes until the purpose of the questions is discussed. Sela does not close the road or rewrite the mother's file. The first intended practice is to separate what a person has seen from what that person has inferred. Kael and Sela leave Ashenmere for Atlantean. The agreement covers only Sela's new notes of Kael's personal observations, never the mother's file or the Academy. Kael may stop a question or writing at any time; new notes are personally held, unshared, and a new page may be requested back."
+    }
+  ]
+}

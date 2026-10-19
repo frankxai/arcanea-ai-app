@@ -19,8 +19,6 @@ on:
         description: Full first-parent hash of that handover commit
         type: string
         default: ""
-  push:
-    branches: [main]
   pull_request:
     # Validate stacked PRs too; each proposed merge needs its own checks.
     # 'edited' is required: it is the only pull_request activity type that fires
@@ -247,6 +245,9 @@ jobs:
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
+      - name: Verify Prompt Books save recovery and actor isolation
+        run: pnpm --dir apps/web exec tsx --test lib/prompt-books/__tests__/recovery.test.ts lib/prompt-books/__tests__/lifecycle.test.ts lib/prompt-books/__tests__/templates.test.ts lib/prompt-books/__tests__/conflicts.test.ts lib/prompt-books/__tests__/tag-ordering.test.ts lib/prompt-books/__tests__/search-recovery.test.ts
+
       - name: Verify exact world drafts and account return paths
         run: |
           pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
@@ -259,7 +260,7 @@ jobs:
         run: pnpm --dir apps/web test:billing
 
       - name: Verify waitlist signups are saved or honestly refused
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
 
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
@@ -269,6 +270,9 @@ jobs:
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
+
+      - name: Gate dependencies on high and critical advisories
+        run: pnpm audit --audit-level=high
 
       # The repository has historical formatting debt. Enforce Prettier as a
       # ratchet on every file changed by this push/PR without masking failures
@@ -402,6 +406,9 @@ jobs:
       - name: Verify health and media readiness
         run: pnpm test:health-media-readiness
 
+      - name: Verify saved media URL contracts
+        run: pnpm --dir apps/web exec tsx --test lib/media/__tests__/creation-url.test.ts lib/media/__tests__/creation-media-route.test.ts lib/media/__tests__/creation-upload-route.test.ts
+
       - name: Verify Worlds accessibility boundary
         run: pnpm test:worlds-accessibility
 
@@ -431,6 +438,10 @@ jobs:
           pnpm --dir packages/router-spec validate
           pnpm --dir packages/orchestrator build
           pnpm exec tsx --test --test-concurrency=1 packages/router-spec/tests/validate.test.ts packages/orchestrator/tests/*.test.ts packages/orchestrator/tests/ecosystem/*.test.ts
+
+      - name: Verify proposed quest fixture replay and refusal
+        run: node docs/research/benchmarks/quest-authoring-proof-2026-10-02/replay-check.mjs
+
 
       - name: Verify public collection assets and proposal relationships
         run: |
@@ -465,6 +476,27 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+      - name: Verify community signup and recovery in the built browser
+        timeout-minutes: 5
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/community-next.log" 2>&1 &
+          community_server_pid=$!
+          trap 'kill "$community_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-community-capture-browser.cjs
+
+      - name: Upload community signup browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: community-capture-built-app-${{ github.sha }}
+          path: screenshots/community-capture/
+          retention-days: 7
+          if-no-files-found: warn
+
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
         env:
@@ -488,7 +520,9 @@ jobs:
           node scripts/verify-shop-browser.cjs || shop_status=$?
           timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
           timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
+          prompt_books_status=0
+          PLAYWRIGHT_NO_WEB_SERVER=1 pnpm --dir apps/web exec playwright test e2e/prompt-books-recovery.spec.ts || prompt_books_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ] || [ "$prompt_books_status" -ne 0 ]; then
             exit 1
           fi
 

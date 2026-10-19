@@ -4,6 +4,8 @@ import { NextRequest } from "next/server";
 import { GET, POST } from "../../../app/api/v1/chat/completions/route";
 import { CURATED_MODELS } from "../models";
 
+type ToolDelta = { index?: number; function?: { arguments?: string } };
+
 const originalFetch = globalThis.fetch;
 const originalServerKey = process.env.OPENAI_API_KEY;
 const model = CURATED_MODELS.find(
@@ -108,12 +110,273 @@ test("Anthropic compatibility chat drops sampling parameters for Claude 5.5", as
   assert.equal(calls[0].body.temperature, undefined);
   assert.equal(calls[0].body.top_p, undefined);
   assert.equal(calls[0].headers.get("anthropic-version"), "2023-06-01");
-  // Sonnet 5.5 opts into server-side refusal fallback.
+  // A billed fallback is opt-in only: no consent header, no fallback.
+  assert.equal(calls[0].body.fallbacks, undefined);
+  assert.equal(calls[0].headers.get("anthropic-beta"), null);
+});
+
+test("BYOK fallback runs only with explicit consent", async () => {
+  for (const consent of ["", "yes", "true", "deny"]) {
+    calls.length = 0;
+    const headers: Record<string, string> = {
+      "x-anthropic-key": "test-customer-key",
+    };
+    if (consent) headers["x-arcanea-fallback-consent"] = consent;
+    const response = await POST(
+      request(headers, {
+        model: "arcanea-sonnet",
+        messages: [{ role: "user", content: "Draft a scene." }],
+      }),
+    );
+    assert.equal(response.status, 200);
+    assert.equal(calls[0].body.fallbacks, undefined, `consent=${consent}`);
+    assert.equal(calls[0].headers.get("anthropic-beta"), null);
+  }
+
+  calls.length = 0;
+  const allowed = await POST(
+    request(
+      {
+        "x-anthropic-key": "test-customer-key",
+        "x-arcanea-fallback-consent": "allow",
+      },
+      {
+        model: "arcanea-sonnet",
+        messages: [{ role: "user", content: "Draft a scene." }],
+      },
+    ),
+  );
+  assert.equal(allowed.status, 200);
   assert.equal(calls[0].body.fallbacks, "default");
   assert.equal(
     calls[0].headers.get("anthropic-beta"),
     "server-side-fallback-2026-07-01",
   );
+});
+
+test("non-streaming Anthropic reply returns tool calls and the serving model", async () => {
+  globalThis.fetch = async () =>
+    Response.json({
+      id: "msg_tool",
+      type: "message",
+      role: "assistant",
+      model: "claude-opus-5-5",
+      content: [
+        { type: "text", text: "Checking the map." },
+        {
+          type: "tool_use",
+          id: "toolu_1",
+          name: "lookup_realm",
+          input: { realm: "Aether" },
+        },
+      ],
+      stop_reason: "tool_use",
+      usage: { input_tokens: 4, output_tokens: 6 },
+    });
+  const response = await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        messages: [{ role: "user", content: "Where is Aether?" }],
+        tools: [
+          {
+            type: "function",
+            function: { name: "lookup_realm", parameters: { type: "object" } },
+          },
+        ],
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  assert.equal(
+    response.headers.get("x-arcanea-served-model"),
+    "claude-opus-5-5",
+  );
+  const json = await response.json();
+  assert.equal(json.model, "arcanea-sonnet");
+  assert.equal(json.served_model, "claude-opus-5-5");
+  assert.equal(json.choices[0].finish_reason, "tool_calls");
+  assert.equal(json.choices[0].message.content, "Checking the map.");
+  assert.deepEqual(json.choices[0].message.tool_calls, [
+    {
+      id: "toolu_1",
+      type: "function",
+      function: { name: "lookup_realm", arguments: '{"realm":"Aether"}' },
+    },
+  ]);
+});
+
+test("a follow-up request carries the tool call and its result to Anthropic as tool_use and tool_result", async () => {
+  await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        messages: [
+          { role: "user", content: "Where is Aether?" },
+          {
+            role: "assistant",
+            content: null,
+            tool_calls: [
+              {
+                id: "toolu_1",
+                type: "function",
+                function: {
+                  name: "lookup_realm",
+                  arguments: '{"realm":"Aether"}',
+                },
+              },
+              {
+                id: "toolu_2",
+                type: "function",
+                function: { name: "lookup_realm", arguments: "not json" },
+              },
+            ],
+          },
+          {
+            role: "tool",
+            tool_call_id: "toolu_1",
+            content: "Aether is the sky realm.",
+          },
+          { role: "tool", tool_call_id: "toolu_2", content: "No such realm." },
+        ],
+      },
+    ),
+  );
+  assert.equal(calls.length, 1);
+  assert.deepEqual(calls[0].body.messages, [
+    { role: "user", content: "Where is Aether?" },
+    {
+      role: "assistant",
+      content: [
+        {
+          type: "tool_use",
+          id: "toolu_1",
+          name: "lookup_realm",
+          input: { realm: "Aether" },
+        },
+        { type: "tool_use", id: "toolu_2", name: "lookup_realm", input: {} },
+      ],
+    },
+    {
+      role: "user",
+      content: [
+        {
+          type: "tool_result",
+          tool_use_id: "toolu_1",
+          content: "Aether is the sky realm.",
+        },
+        {
+          type: "tool_result",
+          tool_use_id: "toolu_2",
+          content: "No such realm.",
+        },
+      ],
+    },
+  ]);
+});
+
+test("streaming Anthropic reply emits tool call deltas and the serving model", async () => {
+  const events: Array<[string, unknown]> = [
+    [
+      "message_start",
+      { type: "message_start", message: { model: "claude-opus-5-5" } },
+    ],
+    [
+      "content_block_start",
+      {
+        type: "content_block_start",
+        index: 0,
+        content_block: { type: "text", text: "" },
+      },
+    ],
+    [
+      "content_block_delta",
+      {
+        type: "content_block_delta",
+        index: 0,
+        delta: { type: "text_delta", text: "Looking." },
+      },
+    ],
+    [
+      "content_block_start",
+      {
+        type: "content_block_start",
+        index: 1,
+        content_block: {
+          type: "tool_use",
+          id: "toolu_2",
+          name: "lookup_realm",
+          input: {},
+        },
+      },
+    ],
+    [
+      "content_block_delta",
+      {
+        type: "content_block_delta",
+        index: 1,
+        delta: { type: "input_json_delta", partial_json: '{"realm":' },
+      },
+    ],
+    [
+      "content_block_delta",
+      {
+        type: "content_block_delta",
+        index: 1,
+        delta: { type: "input_json_delta", partial_json: '"Aether"}' },
+      },
+    ],
+    [
+      "message_delta",
+      { type: "message_delta", delta: { stop_reason: "tool_use" } },
+    ],
+    ["message_stop", { type: "message_stop" }],
+  ];
+  const sse = events
+    .map(
+      ([event, data]) => `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`,
+    )
+    .join("");
+  globalThis.fetch = async () =>
+    new Response(sse, { headers: { "content-type": "text/event-stream" } });
+  const response = await POST(
+    request(
+      { "x-anthropic-key": "test-customer-key" },
+      {
+        model: "arcanea-sonnet",
+        stream: true,
+        messages: [{ role: "user", content: "Where is Aether?" }],
+      },
+    ),
+  );
+  assert.equal(response.status, 200);
+  const chunks = (await response.text())
+    .split("\n\n")
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("data: ") && line !== "data: [DONE]")
+    .map((line) => JSON.parse(line.slice(6)));
+  const toolDeltas = chunks.flatMap(
+    (chunk) => chunk.choices[0].delta.tool_calls ?? [],
+  );
+  assert.deepEqual(toolDeltas[0], {
+    index: 0,
+    id: "toolu_2",
+    type: "function",
+    function: { name: "lookup_realm", arguments: "" },
+  });
+  assert.equal(
+    toolDeltas
+      .map((delta: ToolDelta) => delta.function?.arguments ?? "")
+      .join(""),
+    '{"realm":"Aether"}',
+  );
+  assert.ok(toolDeltas.every((delta: ToolDelta) => delta.index === 0));
+  const finish = chunks[chunks.length - 1];
+  assert.equal(finish.choices[0].finish_reason, "tool_calls");
+  assert.equal(finish.served_model, "claude-opus-5-5");
+  assert.equal(finish.model, "arcanea-sonnet");
 });
 
 test("Anthropic compatibility chat sends no fallback for Haiku 5.5", async () => {
@@ -568,8 +831,9 @@ test("UI customer chat streams through the real AI SDK with the customer key", a
     assert.equal(sent.model, "claude-sonnet-5-5");
     // Claude 5.5 models reject sampling parameters with a 400.
     assert.equal(sent.temperature, undefined);
-    assert.equal(sent.fallbacks, "default");
-    assert.match(
+    // No billed fallback without an explicit opt-in.
+    assert.equal(sent.fallbacks, undefined);
+    assert.doesNotMatch(
       new Headers(init?.headers).get("anthropic-beta") ?? "",
       /server-side-fallback-2026-07-01/,
     );

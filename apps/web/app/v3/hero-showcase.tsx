@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { m } from "framer-motion";
 import { brand, guardianAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
@@ -21,9 +20,12 @@ const CARDS = [
     title: "Realm Gate",
     subtitle: "world graph · canon seed",
     elements: [brand.atlanteanTeal, brand.arcaneanGold, guardianAccents.lyria],
-    gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
-    gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/50",
-    borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 25%, transparent)",
+    gradient:
+      "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
+    gradientAlt:
+      "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/50",
+    borderGlow:
+      "color-mix(in srgb, var(--arc-brand-atlantean-teal) 25%, transparent)",
     status: "Ready now",
     badge: "World OS",
     badgeColor: brand.atlanteanTeal,
@@ -35,8 +37,10 @@ const CARDS = [
     title: "Draconis Bond",
     subtitle: "fire gate · scale system",
     elements: [guardianAccents.draconia, brand.arcaneanGold],
-    gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-cosmic-void)]/45",
-    gradientAlt: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
+    gradient:
+      "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-cosmic-void)]/45",
+    gradientAlt:
+      "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
     borderGlow: "color-mix(in srgb, var(--arc-fire) 24%, transparent)",
     status: "Canon guide",
     badge: "Canon",
@@ -49,9 +53,12 @@ const CARDS = [
     title: "Dragon Rider",
     subtitle: "episodes · game loop",
     elements: [guardianAccents.draconia, brand.aquamarine, brand.arcaneanGold],
-    gradient: "from-[var(--arc-fire)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
-    gradientAlt: "from-[var(--arc-fire)]/35 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
-    borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
+    gradient:
+      "from-[var(--arc-fire)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
+    gradientAlt:
+      "from-[var(--arc-fire)]/35 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
+    borderGlow:
+      "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
     status: "Preview",
     badge: "Rider",
     badgeColor: brand.aquamarine,
@@ -63,8 +70,10 @@ const CARDS = [
     title: "Living Lore",
     subtitle: "rules · factions · memory",
     elements: [guardianAccents.lyria, WIND_NEUTRAL, brand.arcaneanGold],
-    gradient: "from-[var(--arc-void)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/20",
-    gradientAlt: "from-[var(--arc-void)]/35 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
+    gradient:
+      "from-[var(--arc-void)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/20",
+    gradientAlt:
+      "from-[var(--arc-void)]/35 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
     borderGlow: "color-mix(in srgb, var(--arc-void) 20%, transparent)",
     status: "Canon guide",
     badge: "Memory",
@@ -77,9 +86,12 @@ const CARDS = [
     title: "Portal Trailer",
     subtitle: "Shot list · render prompts",
     elements: [brand.arcaneanGold, brand.atlanteanTeal],
-    gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
-    gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/35 to-[var(--arc-fire)]/40",
-    borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
+    gradient:
+      "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
+    gradientAlt:
+      "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/35 to-[var(--arc-fire)]/40",
+    borderGlow:
+      "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
     status: "Preview",
     badge: "Cinematic",
     badgeColor: brand.arcaneanGold,
@@ -91,9 +103,12 @@ const CARDS = [
     title: "Lab Handoff",
     subtitle: "tools · agents · context",
     elements: [brand.arcaneanGold, brand.aquamarine],
-    gradient: "from-[var(--arc-brand-arcanean-gold)]/38 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/28",
-    gradientAlt: "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-arcanean-gold)]/35",
-    borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 24%, transparent)",
+    gradient:
+      "from-[var(--arc-brand-arcanean-gold)]/38 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/28",
+    gradientAlt:
+      "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-arcanean-gold)]/35",
+    borderGlow:
+      "color-mix(in srgb, var(--arc-brand-atlantean-teal) 24%, transparent)",
     status: "Dev preview",
     badge: "Agent OS",
     badgeColor: brand.atlanteanTeal,
@@ -102,67 +117,33 @@ const CARDS = [
   },
 ] as const;
 
-function ShowcaseCard({
-  card,
-  delay,
-}: {
-  card: (typeof CARDS)[number];
-  delay: number;
-}) {
+function ShowcaseCard({ card }: { card: (typeof CARDS)[number] }) {
   return (
     <Link href={card.href} className="block">
-      <m.div
-        className="group relative w-full sm:w-[280px] rounded-2xl overflow-hidden cursor-pointer"
-        whileHover={{
-          scale: 1.04,
-          y: -4,
-          transition: { type: "spring", stiffness: 300, damping: 22 },
-        }}
-        whileTap={{ scale: 0.97 }}
-      >
-        {/* Animated gradient border */}
-        <m.div
-          className="absolute inset-0 rounded-2xl -z-10"
-          animate={{
-            boxShadow: [
-              `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent), 0 0 20px 0 transparent`,
-              `0 0 0 1px ${card.borderGlow}, 0 0 28px 4px ${card.borderGlow}`,
-              `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent), 0 0 20px 0 transparent`,
-            ],
-          }}
-          transition={{ duration: 4, repeat: Infinity, delay, ease: "easeInOut" }}
-        />
+      {/* Hover lift is CSS only and is skipped under reduced motion. */}
+      <div className="group relative w-full sm:w-[280px] rounded-2xl overflow-hidden cursor-pointer transition-transform duration-200 ease-out motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.04] motion-safe:active:scale-[0.97]">
         <div
           className="absolute inset-0 rounded-2xl z-0"
-          style={{ boxShadow: `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent)` }}
+          style={{
+            boxShadow: `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent)`,
+          }}
         />
 
         {/* Glass background */}
         <div className="absolute inset-0 bg-white/[0.025] backdrop-blur-xl rounded-2xl" />
 
         {/* Gradient art area */}
-        <div className={`relative h-[150px] bg-gradient-to-br ${card.gradient} overflow-hidden`}>
+        <div
+          className={`relative h-[150px] bg-gradient-to-br ${card.gradient} overflow-hidden`}
+        >
           <Image
             src={card.image}
             alt={`${card.title} preview`}
             fill
             sizes="280px"
-            className="object-cover opacity-78 transition-transform duration-700 group-hover:scale-110"
+            className="object-cover opacity-78 transition-transform duration-700 motion-safe:group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/55 via-transparent to-transparent" />
-          {/* Animated gradient shift */}
-          <m.div
-            className={`absolute inset-0 bg-gradient-to-br ${card.gradientAlt}`}
-            animate={{ opacity: [0, 0.6, 0] }}
-            transition={{ duration: 5, repeat: Infinity, delay: delay + 1, ease: "easeInOut" }}
-          />
-          {/* Shimmer sweep */}
-          <m.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"
-            animate={{ x: ["-100%", "200%"] }}
-            transition={{ duration: 3.5, repeat: Infinity, delay: delay + 0.5, ease: "easeInOut" }}
-            style={{ skewX: "-20deg" }}
-          />
           {/* Vignette overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)]/50 via-transparent to-transparent" />
           {/* Type label */}
@@ -199,7 +180,9 @@ function ShowcaseCard({
                   ))}
                 </div>
               )}
-              <span className="text-[10px] text-white/30 font-body">{card.subtitle}</span>
+              <span className="text-[10px] text-white/30 font-body">
+                {card.subtitle}
+              </span>
             </div>
             <span
               className="inline-block rounded-full border px-2 py-0.5 text-[11px] font-body"
@@ -213,7 +196,7 @@ function ShowcaseCard({
             </span>
           </div>
         </div>
-      </m.div>
+      </div>
     </Link>
   );
 }
@@ -222,29 +205,22 @@ export function HeroShowcase() {
   return (
     <section className="relative py-16 md:py-20 px-6">
       {/* Section heading */}
-      <m.p
-        className="mb-10 text-center font-editorial text-xl italic leading-none text-white/30"
-      >
+      <p className="mb-10 text-center font-editorial text-xl italic leading-none text-white/30">
         Every prompt becomes a connected artifact
-      </m.p>
+      </p>
 
       {/* Card strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-5 max-w-5xl mx-auto">
-        {CARDS.map((card, i) => (
-          <ShowcaseCard
-            key={card.title}
-            card={card}
-            delay={0.3 + i * 0.15}
-          />
+        {CARDS.map((card) => (
+          <ShowcaseCard key={card.title} card={card} />
         ))}
       </div>
 
       {/* Caption */}
-      <m.p
-        className="text-center mt-10 text-sm text-white/20 font-body"
-      >
-        Portals, godbeasts, dragon-rider sagas, cinema, and agent workflows share one creation layer.
-      </m.p>
+      <p className="text-center mt-10 text-sm text-white/20 font-body">
+        Portals, godbeasts, dragon-rider sagas, cinema, and agent workflows
+        share one creation layer.
+      </p>
     </section>
   );
 }
