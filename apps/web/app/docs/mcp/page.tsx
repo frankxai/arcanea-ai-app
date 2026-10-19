@@ -1,49 +1,24 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-const READER = "https://arcanea-reader.frankxai.workers.dev/mcp";
+import {
+  CANON_SOURCE_URL,
+  READER_CLIENTS,
+  READER_LIMITS,
+  READER_TOOLS,
+} from "@/lib/mcp/reader-catalog";
 
 export const metadata: Metadata = {
   title: "Arcanea MCP reader",
   description:
-    "Connect Claude Code, Codex, or Cursor to the free Arcanea reader. Six tools: rubrics, canon lint, and a score that cannot grant ship. No install and no API key.",
+    "Connect Claude Code, Codex, or Cursor to the free Arcanea reader. Six tools with limited deterministic checks and explicit refusals. No local server package or provider key.",
   openGraph: {
     title: "Arcanea MCP reader",
     description:
-      "A live HTTPS reader for Claude, Codex, and Cursor. Rubrics, canon lint, and a score that will not call a draft ship.",
+      "A remote HTTPS reader for Claude, Codex and Cursor. Public rubric prompts, limited canon checks and a separate canonical source.",
   },
   alternates: { canonical: "/docs/mcp" },
 };
-
-const TOOLS = [
-  {
-    name: "arcanea_rubric",
-    detail:
-      "Returns the canon-fit or visual-taste rubric. Any other name is refused.",
-  },
-  {
-    name: "arcanea_canon_lint",
-    detail:
-      "Flags an eleventh gate, or a Guardian or godbeast on the wrong element. No model call.",
-  },
-  {
-    name: "arcanea_score",
-    detail:
-      "A contradiction blocks ship. A clean draft is clear, and clear is not a score of 85.",
-  },
-  {
-    name: "arcanea_doctor",
-    detail: "Says this is the free door, with no key and no generation.",
-  },
-  {
-    name: "arcanea_lore",
-    detail: "Refuses. The world text stays in the licensed studio.",
-  },
-  {
-    name: "arcanea_template",
-    detail: "Refuses. Prompts and templates stay in the licensed studio.",
-  },
-];
 
 export default function McpOverviewPage() {
   return (
@@ -66,28 +41,33 @@ export default function McpOverviewPage() {
 
         <section className="pb-12 pt-10 sm:pb-16">
           <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-4 py-1.5 font-mono text-xs tracking-widest text-[var(--arc-brand-atlantean-teal)]">
-            Live reader
+            Remote reader
           </p>
           <h1 className="font-display text-4xl font-bold text-white sm:text-5xl">
             Arcanea MCP reader
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            One HTTPS address. No package and no API key. Claude Code, Codex,
-            and Cursor can call the rubrics, the lint, and a score that will not
-            grant ship.
+            One HTTPS address for Claude Desktop, Claude Code, Codex and Cursor.
+            Read public rubric prompts or check a draft against supported canon
+            patterns. The reader does not use a provider key or generate
+            content.
           </p>
 
           <div className="mt-8 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
-            <p className="mb-3 font-mono text-xs uppercase tracking-wider text-zinc-500">
+            <p className="mb-3 font-mono text-xs tracking-wider text-zinc-500">
               Claude Code
             </p>
             <code className="block break-all font-mono text-sm text-zinc-200">
-              claude mcp add --transport http arcanea {READER}
+              {
+                READER_CLIENTS.find((client) => client.name === "Claude Code")
+                  ?.body
+              }
             </code>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">
               Run that in a terminal, then{" "}
               <code className="text-zinc-300">claude mcp list</code>. Codex and
-              Cursor use the URL directly. The full blocks are on the{" "}
+              Cursor have project config options; Claude Desktop uses a custom
+              connector. Client instructions are on the{" "}
               <Link
                 href="/docs/mcp/install"
                 className="text-[var(--arc-brand-atlantean-teal)] hover:text-white"
@@ -104,7 +84,7 @@ export default function McpOverviewPage() {
             Six tools
           </h2>
           <ul className="grid gap-3">
-            {TOOLS.map((tool) => (
+            {READER_TOOLS.map((tool) => (
               <li
                 key={tool.name}
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-5 py-4"
@@ -128,16 +108,22 @@ export default function McpOverviewPage() {
 
         <section className="pb-20">
           <h2 className="mb-3 font-display text-xl font-semibold text-white">
-            What this door is not
+            Coverage and canonical source
           </h2>
           <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
-            It does not return canon passages, prompts, or templates. It does
-            not generate images. It does not hold a provider key. A clear score
-            is not permission to publish. The licensed studio is a later
-            install, and this page does not show an npm command for it. Older
-            docs that listed dozens of generators described a package that is
-            not this server.
+            {READER_LIMITS}
           </p>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400">
+            Canon and lore remain in the public app repository. A refusal on
+            this endpoint does not make that source private or grant content
+            reuse rights.
+          </p>
+          <a
+            href={CANON_SOURCE_URL}
+            className="mt-3 inline-block text-sm text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4"
+          >
+            Read the canonical source
+          </a>
         </section>
       </main>
     </div>

@@ -1,32 +1,18 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-const READER = "https://arcanea-reader.frankxai.workers.dev/mcp";
+import {
+  READER_CLIENTS,
+  READER_HEALTH_URL,
+  READER_URL,
+} from "@/lib/mcp/reader-catalog";
 
 export const metadata: Metadata = {
   title: "Connect the Arcanea reader",
   description:
-    "Add the live Arcanea reader to Claude Code, Codex, or Cursor. One HTTPS address. No package and no API key.",
+    "Connect Claude Desktop, Claude Code, Codex or Cursor to the remote Arcanea reader. Client-specific setup with no local server package or provider key.",
   alternates: { canonical: "/docs/mcp/install" },
 };
-
-const CLIENTS = [
-  {
-    name: "Claude Code",
-    note: "Run this in a terminal, not inside a Claude session. Then run claude mcp list.",
-    code: `claude mcp add --transport http arcanea ${READER}`,
-  },
-  {
-    name: "Codex",
-    note: "Add this block to ~/.codex/config.toml.",
-    code: `[mcp_servers.arcanea]\nurl = "${READER}"`,
-  },
-  {
-    name: "Cursor",
-    note: "Add this block to ~/.cursor/mcp.json, then reload the window.",
-    code: `{\n  "mcpServers": {\n    "arcanea": {\n      "url": "${READER}"\n    }\n  }\n}`,
-  },
-];
 
 export default function McpInstallPage() {
   return (
@@ -55,18 +41,18 @@ export default function McpInstallPage() {
             Connect the reader
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            The reader is already running. You do not install a package, and you
-            do not send an API key. After it connects, call{" "}
+            Connect to the remote reader through your client. It needs no local
+            server package or provider key. After it connects, call{" "}
             <code className="text-zinc-200">arcanea_canon_lint</code> on a
             draft.
           </p>
           <p className="mt-4 break-all font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">
-            {READER}
+            {READER_URL}
           </p>
         </section>
 
         <section className="grid gap-4 pb-20">
-          {CLIENTS.map((client) => (
+          {READER_CLIENTS.map((client) => (
             <article
               key={client.name}
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5"
@@ -74,21 +60,30 @@ export default function McpInstallPage() {
               <h2 className="font-display text-xl font-semibold text-white">
                 {client.name}
               </h2>
-              <p className="mt-2 text-sm text-zinc-400">{client.note}</p>
+              <p className="mt-2 text-sm text-zinc-400">{client.location}</p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                {client.note}
+              </p>
               <pre className="mt-4 overflow-x-auto whitespace-pre-wrap font-mono text-sm leading-relaxed text-zinc-200">
-                {client.code}
+                {client.body}
               </pre>
+              <a
+                href={client.guide}
+                className="mt-4 inline-block text-sm text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4"
+              >
+                {client.name} setup guide
+              </a>
             </article>
           ))}
           <p className="text-sm leading-relaxed text-zinc-500">
             Health is at{" "}
             <a
               className="text-[var(--arc-brand-atlantean-teal)] hover:text-white"
-              href="https://arcanea-reader.frankxai.workers.dev/health"
+              href={READER_HEALTH_URL}
             >
               /health
             </a>
-            . It should report the free reader and keys false. Tool arguments
+            . Check current availability and reader scope there. Tool arguments
             are on the{" "}
             <Link
               href="/docs/mcp/tools"
