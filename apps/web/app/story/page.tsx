@@ -7,6 +7,7 @@ import {
   LIVE_LINKS,
   PASSAGE,
   STILLS,
+  STORY_JSON_LD,
 } from "./story-content";
 import styles from "./story.module.css";
 
@@ -37,6 +38,10 @@ export default function StoryPage() {
 
   return (
     <div className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: STORY_JSON_LD }}
+      />
       <a className={styles.skip} href="#story-read">
         Skip to reading
       </a>
@@ -46,13 +51,7 @@ export default function StoryPage() {
 
       <section className={styles.hero} aria-labelledby="story-title">
         <div className={styles.frame}>
-          <Image
-            src={hero.src}
-            alt={hero.alt}
-            fill
-            priority
-            sizes="100vw"
-          />
+          <Image src={hero.src} alt={hero.alt} fill priority sizes="100vw" />
         </div>
         <div className={styles.scrim} aria-hidden="true" />
         <div className={styles.grain} aria-hidden="true" />
@@ -76,13 +75,17 @@ export default function StoryPage() {
       <section id="story-read" className={`${styles.chapter} ${styles.dual}`}>
         <article className={styles.panel}>
           <p className={styles.mark}>I · Form</p>
-          <h2 className={`${styles.entity} ${styles.gold}`}>{CANON.luminaName}</h2>
+          <h2 className={`${styles.entity} ${styles.gold}`}>
+            {CANON.luminaName}
+          </h2>
           <p className={styles.aspect}>{CANON.luminaTitle}</p>
           <p className={styles.body}>{CANON.lumina}</p>
         </article>
         <article className={styles.panel}>
           <p className={styles.mark}>II · Potential</p>
-          <h2 className={`${styles.entity} ${styles.teal}`}>{CANON.neroName}</h2>
+          <h2 className={`${styles.entity} ${styles.teal}`}>
+            {CANON.neroName}
+          </h2>
           <p className={styles.aspect}>{CANON.neroTitle}</p>
           <p className={styles.body}>{CANON.nero}</p>
         </article>
@@ -90,12 +93,7 @@ export default function StoryPage() {
 
       <section className={styles.stillChapter} aria-labelledby="story-passage">
         <div className={styles.frame}>
-          <Image
-            src={valley.src}
-            alt={valley.alt}
-            fill
-            sizes="100vw"
-          />
+          <Image src={valley.src} alt={valley.alt} fill sizes="100vw" />
         </div>
         <div className={styles.scrim} aria-hidden="true" />
         <div className={styles.grain} aria-hidden="true" />
