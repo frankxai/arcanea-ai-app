@@ -51,7 +51,7 @@ On Windows, use forward slashes in JSON paths, such as `C:/projects/arcanea-ai-a
 | `load_world`                                  | Restores a graph into memory, replacing that session's current graph. With no id, lists saved worlds.                                                             |
 | Creative journey memory                       | Lives in the process. Graph snapshots do not include journey history, preferences or milestones.                                                                  |
 | Agent orchestration                           | Returns planning and routing scaffolding. The executor currently returns placeholders; it does not launch the named models or a real agent swarm.                 |
-| Library, vault and media lookup               | Some tools rely on repository-local books, vaults or a local media manifest. Those assets are not bundled in the npm tarball.                                     |
+| Vault and media lookup                        | Some tools rely on repository-local vaults or a local media manifest. Those assets are not bundled in the npm tarball.                                            |
 | Sovereign Depths and Weight of Wonders search | Separately registered by the CLI; retain explicit proposal and experimental opt-ins. These tools can read remote proposal archives and never promote canon.       |
 | World Context Gateway                         | Separate `@arcanea/mcp-server/gateway` API with its own authority and verification contracts. Its authentication does not apply to the local HTTP listener below. |
 
@@ -100,3 +100,26 @@ pnpm pack --pack-destination /absolute/path/to/release-artifacts
 Before release, install the resulting tarball into a fresh directory outside this workspace with install scripts disabled. Run the CLI's help and version commands there, then run `tests/runtime-delivery.test.mjs` with `ARCANEA_MCP_ENTRY` set to the installed `dist/cli.js`. This proves real MCP initialization, tool discovery, a saved world and restoration after restart without relying on workspace dependencies.
 
 The package's existing license declaration is MIT. See the repository license and review any separately supplied assets under their own terms.
+
+## Search a local Markdown library
+
+The `search_library` MCP tool reads the dedicated folder selected by the server
+operator in `ARCANEA_LIBRARY_DIR`. Set an absolute folder path in the MCP server's
+`env` configuration, alongside `ARCANEA_DATA_DIR` if used. Without this setting,
+the tool returns a configuration error. It never guesses a parent `book` folder,
+searches your home directory, downloads texts, or bundles the repository library.
+Every client allowed to call this server can receive excerpts from this folder.
+
+Search terms match literally and case-insensitively; any matching term contributes
+to ranking. Responses include the relative file, collection, heading, excerpt and
+score. For example, call `search_library` with `{"query":"river memory","limit":5}`.
+Repeated terms do not inflate scores. Returned excerpts are source material, not
+instructions or an assertion that the text is approved Arcanea canon.
+
+Each call accepts up to 512 query characters and 32 distinct words, returns 1–20
+results, and reads at most 1,000 Markdown files, 5,000 directory entries, eight
+nested directory levels and 8 MiB of text. Individual files are limited to 512 KiB.
+Hidden entries, README files and child symbolic links/junctions are excluded.
+The `scan` field reports skipped entries and incomplete scans; partial counts only
+describe files actually read. Folder access failures return explicit errors.
+This is bounded local lookup, not an OS sandbox against concurrent filesystem changes.

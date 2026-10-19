@@ -31,6 +31,7 @@ import { registerWorldIntelligenceTools } from "./registrations/world-intelligen
 import { registerWorldPersistenceTools } from "./registrations/world-persistence.js";
 import { registerVisualPromptTools } from "./registrations/visual-prompts.js";
 import { RUNTIME_INFO } from "./runtime-info.js";
+import { registerLibraryTools } from "./registrations/library.js";
 
 export function createServer(): McpServer {
   const server = new McpServer(RUNTIME_INFO);
@@ -46,6 +47,7 @@ export function createServer(): McpServer {
   registerProductionTools(server);
   registerReferences(server);
   registerWebVaultTools(server);
+  registerLibraryTools(server);
   return server;
 }
 

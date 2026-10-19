@@ -28,10 +28,10 @@
     "clean": "rm -rf dist",
     "test:gateway": "pnpm run build && node --test tests/world-context-gateway.test.mjs",
     "test": "node --test tests/*.test.mjs",
-    "test:delivery": "node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs",
+    "test:delivery": "node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs tests/canon.test.mjs tests/library-search.test.mjs",
     "verify:package": "node scripts/verify-package.mjs",
     "prepack": "tsc && node scripts/verify-package.mjs",
-    "prepublishOnly": "tsc && node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs && node scripts/verify-package.mjs"
+    "prepublishOnly": "tsc && node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs tests/creation-identity.test.mjs tests/registration-composition.test.mjs tests/canon.test.mjs tests/library-search.test.mjs && node scripts/verify-package.mjs"
   },
   "keywords": [
     "mcp",
