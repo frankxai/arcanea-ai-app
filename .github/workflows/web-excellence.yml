@@ -34,6 +34,10 @@ on:
       - ".github/workflows/web-excellence.yml"
       - ".claude/ci/web-guidelines-lint.mjs"
 
+concurrency:
+  group: web-excellence-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -43,6 +47,7 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Web Interface Guidelines (mechanical)
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
         with:
