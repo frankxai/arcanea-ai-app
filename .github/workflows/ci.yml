@@ -19,8 +19,6 @@ on:
         description: Full first-parent hash of that handover commit
         type: string
         default: ""
-  push:
-    branches: [main]
   pull_request:
     # Validate stacked PRs too; each proposed merge needs its own checks.
     # 'edited' is required: it is the only pull_request activity type that fires
@@ -247,6 +245,9 @@ jobs:
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
+      - name: Verify Prompt Books save recovery and actor isolation
+        run: pnpm --dir apps/web exec tsx --test lib/prompt-books/__tests__/recovery.test.ts lib/prompt-books/__tests__/lifecycle.test.ts lib/prompt-books/__tests__/templates.test.ts lib/prompt-books/__tests__/conflicts.test.ts lib/prompt-books/__tests__/tag-ordering.test.ts lib/prompt-books/__tests__/search-recovery.test.ts
+
       - name: Verify exact world drafts and account return paths
         run: |
           pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
@@ -259,7 +260,10 @@ jobs:
         run: pnpm --dir apps/web test:billing
 
       - name: Verify waitlist signups are saved or honestly refused
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
+
+      - name: Verify reader arguments against observed remote schema
+        run: pnpm --dir apps/web exec tsx --test lib/mcp/__tests__/reader-catalog.test.ts
 
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
@@ -269,6 +273,9 @@ jobs:
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
+
+      - name: Gate dependencies on high and critical advisories
+        run: pnpm audit --audit-level=high
 
       # The repository has historical formatting debt. Enforce Prettier as a
       # ratchet on every file changed by this push/PR without masking failures
@@ -339,6 +346,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           persist-credentials: false
+          fetch-depth: 2
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -402,6 +410,12 @@ jobs:
       - name: Verify health and media readiness
         run: pnpm test:health-media-readiness
 
+      - name: Verify Arcanea API operator and local guidance contracts
+        run: pnpm --dir apps/web exec tsx --test lib/media/__tests__/operator-role.test.ts lib/apl/__tests__/local-guidance.test.ts
+
+      - name: Verify saved media URL contracts
+        run: pnpm --dir apps/web exec tsx --test lib/media/__tests__/creation-url.test.ts lib/media/__tests__/creation-media-route.test.ts lib/media/__tests__/creation-upload-route.test.ts
+
       - name: Verify Worlds accessibility boundary
         run: pnpm test:worlds-accessibility
 
@@ -431,6 +445,10 @@ jobs:
           pnpm --dir packages/router-spec validate
           pnpm --dir packages/orchestrator build
           pnpm exec tsx --test --test-concurrency=1 packages/router-spec/tests/validate.test.ts packages/orchestrator/tests/*.test.ts packages/orchestrator/tests/ecosystem/*.test.ts
+
+      - name: Verify proposed quest fixture replay and refusal
+        run: node docs/research/benchmarks/quest-authoring-proof-2026-10-02/replay-check.mjs
+
 
       - name: Verify public collection assets and proposal relationships
         run: |
@@ -465,11 +483,61 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
-      - name: Verify galleries rendered desktop, 375px mobile and reduced motion
-        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+      - name: Verify community signup and recovery in the built browser
+        timeout-minutes: 5
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/community-next.log" 2>&1 &
+          community_server_pid=$!
+          trap 'kill "$community_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-community-capture-browser.cjs
+
+      - name: Upload community signup browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: community-capture-built-app-${{ github.sha }}
+          path: screenshots/community-capture/
+          retention-days: 7
+          if-no-files-found: warn
+
+      - name: Select MCP reader browser scope
+        id: mcp-scope
+        run: |
+          git rev-parse --verify HEAD^ > /dev/null
+          mcp_changed=0
+          git diff --quiet HEAD^ HEAD -- apps/web/app/mcp apps/web/app/docs/mcp apps/web/lib/mcp/reader-catalog.ts apps/web/lib/waitlist apps/web/app/api/waitlist/route.ts apps/web/app/layout.tsx apps/web/app/globals.css packages/design-system/src/tokens.css scripts/verify-mcp-reader-browser.cjs .github/workflows/ci.yml || mcp_changed=$?
+          if [ "$mcp_changed" -gt 1 ]; then exit "$mcp_changed"; fi
+          if [ "$mcp_changed" -eq 1 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Select footer browser scope
+        id: footer-scope
+        run: |
+          git rev-parse --verify HEAD^ > /dev/null
+          footer_changed=0
+          git diff --quiet HEAD^ HEAD -- apps/web/components/navigation/footer.tsx apps/web/lib/waitlist apps/web/app/api/subscribe/route.ts apps/web/app/layout.tsx apps/web/app/globals.css packages/design-system/src/tokens.css scripts/verify-footer-built-app.cjs .github/workflows/ci.yml || footer_changed=$?
+          if [ "$footer_changed" -gt 1 ]; then exit "$footer_changed"; fi
+          if [ "$footer_changed" -eq 1 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify built-app browser journeys
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false || steps.mcp-scope.outputs.run == 'true' || steps.footer-scope.outputs.run == 'true'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+          MCP_READER_BROWSER: ${{ steps.mcp-scope.outputs.run }}
+          FOOTER_BROWSER: ${{ steps.footer-scope.outputs.run }}
+          RUN_GALLERY_BROWSER: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         run: |
           pnpm --dir apps/web exec playwright install --with-deps chromium
           pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
@@ -482,18 +550,30 @@ jobs:
           shop_status=0
           chat_tools_status=0
           voice_credentials_status=0
-          node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
-          node scripts/verify-creator-starters-browser.cjs || starter_status=$?
-          node scripts/verify-world-draft-browser.cjs || draft_status=$?
-          node scripts/verify-shop-browser.cjs || shop_status=$?
-          timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
-          timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
+          prompt_books_status=0
+          mcp_status=0
+          footer_status=0
+          if [ "$RUN_GALLERY_BROWSER" = "true" ]; then
+            node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
+            node scripts/verify-creator-starters-browser.cjs || starter_status=$?
+            node scripts/verify-world-draft-browser.cjs || draft_status=$?
+            node scripts/verify-shop-browser.cjs || shop_status=$?
+            timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
+            timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
+            PLAYWRIGHT_NO_WEB_SERVER=1 pnpm --dir apps/web exec playwright test e2e/prompt-books-recovery.spec.ts || prompt_books_status=$?
+          fi
+          if [ "$MCP_READER_BROWSER" = "true" ]; then
+            node scripts/verify-mcp-reader-browser.cjs || mcp_status=$?
+          fi
+          if [ "$FOOTER_BROWSER" = "true" ]; then
+            node scripts/verify-footer-built-app.cjs || footer_status=$?
+          fi
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ] || [ "$prompt_books_status" -ne 0 ] || [ "$mcp_status" -ne 0 ] || [ "$footer_status" -ne 0 ]; then
             exit 1
           fi
 
       - name: Upload gallery rendered evidence
-        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false || steps.mcp-scope.outputs.run == 'true' || steps.footer-scope.outputs.run == 'true')
         uses: actions/upload-artifact@v7.0.2
         with:
           name: galleries-built-app-${{ github.sha }}-attempt-${{ github.run_attempt }}

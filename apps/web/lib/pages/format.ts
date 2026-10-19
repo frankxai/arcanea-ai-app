@@ -112,6 +112,19 @@ function toDomain(url: string): string {
   }
 }
 
+const TRAILING_PUNCTUATION = ".,;";
+
+/**
+ * Drop trailing `.`, `,` and `;` from a matched URL in linear time.
+ * Replaces `/[.,;]+$/`, which backtracks quadratically on long runs of
+ * punctuation that are not at the end (CodeQL js/polynomial-redos, alert #304).
+ */
+export function trimTrailingPunctuation(raw: string): string {
+  let end = raw.length;
+  while (end > 0 && TRAILING_PUNCTUATION.includes(raw[end - 1])) end--;
+  return raw.slice(0, end);
+}
+
 /** Harvest unique URLs cited anywhere in the transcript as fallback sources. */
 export function extractSources(messages: ThreadMessage[]): PageSource[] {
   const seen = new Set<string>();
@@ -120,7 +133,7 @@ export function extractSources(messages: ThreadMessage[]): PageSource[] {
     const matches = m.content?.match(URL_RE);
     if (!matches) continue;
     for (const raw of matches) {
-      const url = raw.replace(/[.,;]+$/, "");
+      const url = trimTrailingPunctuation(raw);
       if (seen.has(url)) continue;
       seen.add(url);
       const domain = toDomain(url);
