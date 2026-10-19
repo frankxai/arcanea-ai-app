@@ -432,6 +432,10 @@ jobs:
           pnpm --dir packages/orchestrator build
           pnpm exec tsx --test --test-concurrency=1 packages/router-spec/tests/validate.test.ts packages/orchestrator/tests/*.test.ts packages/orchestrator/tests/ecosystem/*.test.ts
 
+      - name: Verify proposed quest fixture replay and refusal
+        run: node docs/research/benchmarks/quest-authoring-proof-2026-10-02/replay-check.mjs
+
+
       - name: Verify public collection assets and proposal relationships
         run: |
           node scripts/verify-sovereign-depths.mjs
