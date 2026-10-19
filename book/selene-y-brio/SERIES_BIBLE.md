@@ -1,5 +1,7 @@
 # Selene & Brío — Las Tierras de Luz
 
+> Continuing-series note (2026-09-09): this file preserves the Book I edition and its earlier development outlines. The completed Book II and current future-development decisions are recorded in [SERIES_BIBLE_V2.md](../selene-y-brio-orchard/SERIES_BIBLE_V2.md). That STAGING update supersedes the Book II outline and later-form restriction for Brío; it does not change Book I prose or promote any claim to LOCKED canon.
+
 > Status: STAGING ⏳ · 2026-09-09 · Adult illustrated companion reimagining.
 > Purpose: series architecture, character continuity, magic boundaries, and source provenance.
 > Touches LOCKED canon: no. The vault and earlier editions remain unchanged.
