@@ -4,6 +4,7 @@
 import { buildManifest, slugify } from "./manifest.mjs";
 import { writeManifest, writeFiles } from "./fs-world.mjs";
 import { genesis } from "./genesis.mjs";
+import { validateManifest } from "./validate.mjs";
 
 async function maybeWorldEngine() {
   try {
@@ -78,6 +79,14 @@ function licenseDoc(manifest) {
  * @param {object} spec  a WorldSpec (from genesis() or hand-authored)
  */
 export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
+  const manifest = buildManifest({ ...spec, agents: spec.agents });
+  if (!validateManifest(manifest).valid) {
+    const error = new Error(
+      "Invalid world manifest. Check validateManifest field errors and repair the input before retrying.",
+    );
+    error.code = "ERR_ARCANEA_WORLD_MANIFEST";
+    throw error;
+  }
   const we = useWorldEngine ? await maybeWorldEngine() : null;
 
   // Reuse world-engine for richer characters/locations when the workspace link is present.
@@ -93,20 +102,24 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
     });
   }
 
-  const manifest = buildManifest({ ...spec, agents: spec.agents });
-
   const files = [
     { path: "README.md", bytes: readme(manifest) },
     { path: "canon/world-bible.md", bytes: worldBible(manifest) },
     { path: "licenses/LICENSE.md", bytes: licenseDoc(manifest) },
-    { path: "licenses/royalty.json", bytes: JSON.stringify(manifest.royalty, null, 2) + "\n" },
+    {
+      path: "licenses/royalty.json",
+      bytes: JSON.stringify(manifest.royalty, null, 2) + "\n",
+    },
     { path: "media/.gitkeep", bytes: "" },
     { path: "quests/.gitkeep", bytes: "" },
     { path: "books/.gitkeep", bytes: "" },
   ];
 
   for (const c of characters) {
-    files.push({ path: `characters/${slugify(c.name)}.md`, bytes: characterDoc(c) });
+    files.push({
+      path: `characters/${slugify(c.name)}.md`,
+      bytes: characterDoc(c),
+    });
   }
   for (const l of spec.locations || []) {
     files.push({
@@ -115,7 +128,10 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
     });
   }
   for (const a of manifest.agents || []) {
-    files.push({ path: `agents/${a.id}.md`, bytes: `# ${a.id}\n\n- harness: ${a.harness}\n- role: ${a.role}\n${a.skill ? `- skill: ${a.skill}\n` : ""}` });
+    files.push({
+      path: `agents/${a.id}.md`,
+      bytes: `# ${a.id}\n\n- harness: ${a.harness}\n- role: ${a.role}\n${a.skill ? `- skill: ${a.skill}\n` : ""}`,
+    });
   }
 
   await writeManifest(dir, manifest);
@@ -127,6 +143,8 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
 export async function createWorld(dir, sentence, opts = {}) {
   const spec = await genesis(sentence, opts);
   if (opts.creator) spec.creator = opts.creator;
-  const manifest = await scaffoldWorld(dir, spec, { useWorldEngine: opts.useWorldEngine !== false });
+  const manifest = await scaffoldWorld(dir, spec, {
+    useWorldEngine: opts.useWorldEngine !== false,
+  });
   return { dir, manifest };
 }

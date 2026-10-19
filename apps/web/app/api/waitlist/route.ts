@@ -13,9 +13,9 @@ const NO_STORE = { "Cache-Control": "no-store" };
  * Anonymous by design: middleware exempts exactly POST /api/waitlist from auth.
  * Every other method on this path still goes through the session check.
  *
- * Two signup shapes share this path: the pricing page's `{ email }` Founding
- * Circle form (Supabase `waitlists`, #458) and the per-product /waitlist form
- * (`productId`, shared demand capture in KV).
+ * Two signup shapes share this path: the pricing/MCP `{ email, source? }`
+ * Founding Circle / studio form (Supabase `waitlists`, #458/#478) and the
+ * per-product /waitlist form (`productId`, shared demand capture in KV).
  */
 export async function POST(req: Request) {
   const raw = await readWaitlistJson(req);
@@ -26,6 +26,12 @@ export async function POST(req: Request) {
     );
 
   if (isFoundingCircleSignup(raw.json)) {
+    const candidateSource = (raw.json as { source?: unknown }).source;
+    const source =
+      typeof candidateSource === "string" &&
+      /^[a-z0-9_]{1,64}$/.test(candidateSource)
+        ? candidateSource
+        : "pricing_founding_circle";
     const result = await captureEmail(
       raw.json.email,
       async (row) => {
@@ -37,7 +43,7 @@ export async function POST(req: Request) {
           return { error: { message: String(error) } };
         }
       },
-      "pricing_founding_circle",
+      source,
       "Welcome to the Founding Circle!",
     );
     return Response.json(result.body, {

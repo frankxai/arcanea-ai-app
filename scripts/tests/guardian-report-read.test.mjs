@@ -79,6 +79,12 @@ function loader(bookResult, reviewResult) {
     "../content/book-path": { getBookRoot: () => "/unused-book-fixture" },
     ai: { generateText: forbidden },
     "gray-matter": forbidden,
+    // Scoring-only helpers: the read path must never reach them.
+    "@/lib/ai/claude-safeguards": {
+      claudeFallbackOptions: forbidden,
+      isRefusal: forbidden,
+    },
+    "@/lib/gateway/catalog": { claudeRejectsSamplingParams: forbidden },
     "@/lib/supabase/server": {
       createAdminClient: forbidden,
       createClient: async () => {

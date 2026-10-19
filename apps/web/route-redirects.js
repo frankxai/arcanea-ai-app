@@ -20,6 +20,7 @@ const routeRedirects = [
   moved("/intelligence", "/constellation"),
   moved("/luminor-standard", "/luminors"),
   moved("/mascot", "/about"),
+  moved("/guardian", "/lore/guardians"),
   moved("/ops/:path*", "/developers"),
   moved("/orchestrator", "/developers"),
   moved("/products", "/ecosystem"),

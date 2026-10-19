@@ -3,13 +3,13 @@
  * Chat Service
  *
  * Handles Supabase persistence for chat sessions and messages.
- * Authenticated users get full persistence; anonymous users
- * get the file-based fallback via /api/chat/history.
+ * Authenticated users get full persistence; anonymous conversations live in
+ * the browser until the creator signs in.
  *
  * All queries use RLS — users can only access their own data.
  */
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from "@/lib/supabase/server";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -27,7 +27,7 @@ export interface ChatSession {
 export interface ChatMessage {
   id: string;
   sessionId: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   createdAt: string;
 }
@@ -52,12 +52,12 @@ function deriveBondState(userTurnCount: number): BondState {
     level >= 10 ? 0 : Math.max(0, (nextLevelTurns - userTurnCount) * 10);
   const relationshipStatus =
     level >= 8
-      ? 'trusted_ally'
+      ? "trusted_ally"
       : level >= 5
-      ? 'companion'
-      : level >= 3
-      ? 'friend'
-      : 'stranger';
+        ? "companion"
+        : level >= 3
+          ? "friend"
+          : "stranger";
 
   return { level, xp, xpToNextLevel, relationshipStatus };
 }
@@ -72,17 +72,17 @@ function deriveBondState(userTurnCount: number): BondState {
  */
 export async function getOrCreateSession(
   userId: string,
-  luminorId: string
+  luminorId: string,
 ): Promise<string> {
   const supabase = await createClient();
 
   // Look for the most recent session for this user + luminor
   const { data: existing, error: fetchError } = await supabase
-    .from('chat_sessions')
-    .select('id')
-    .eq('user_id', userId)
-    .eq('luminor_id', luminorId)
-    .order('updated_at', { ascending: false })
+    .from("chat_sessions")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("luminor_id", luminorId)
+    .order("updated_at", { ascending: false })
     .limit(1)
     .maybeSingle();
 
@@ -94,14 +94,14 @@ export async function getOrCreateSession(
 
   // Create a new session
   const { data: created, error: createError } = await supabase
-    .from('chat_sessions')
+    .from("chat_sessions")
     .insert({ user_id: userId, luminor_id: luminorId })
-    .select('id')
+    .select("id")
     .single();
 
   if (createError || !created) {
     throw new Error(
-      `Failed to create chat session: ${createError?.message ?? 'unknown'}`
+      `Failed to create chat session: ${createError?.message ?? "unknown"}`,
     );
   }
 
@@ -113,18 +113,18 @@ export async function getOrCreateSession(
  */
 export async function getUserSessions(
   userId: string,
-  luminorId?: string
+  luminorId?: string,
 ): Promise<ChatSession[]> {
   const supabase = await createClient();
 
   let query = supabase
-    .from('chat_sessions')
-    .select('*')
-    .eq('user_id', userId)
-    .order('updated_at', { ascending: false });
+    .from("chat_sessions")
+    .select("*")
+    .eq("user_id", userId)
+    .order("updated_at", { ascending: false });
 
   if (luminorId) {
-    query = query.eq('luminor_id', luminorId);
+    query = query.eq("luminor_id", luminorId);
   }
 
   const { data, error } = await query;
@@ -146,20 +146,18 @@ export async function getUserSessions(
  */
 export async function createSession(
   userId: string,
-  luminorId: string
+  luminorId: string,
 ): Promise<string> {
   const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from('chat_sessions')
+    .from("chat_sessions")
     .insert({ user_id: userId, luminor_id: luminorId })
-    .select('id')
+    .select("id")
     .single();
 
   if (error || !data) {
-    throw new Error(
-      `Failed to create session: ${error?.message ?? 'unknown'}`
-    );
+    throw new Error(`Failed to create session: ${error?.message ?? "unknown"}`);
   }
 
   return data.id;
@@ -170,16 +168,17 @@ export async function createSession(
  */
 export async function updateSessionTitle(
   sessionId: string,
-  title: string
+  title: string,
 ): Promise<void> {
   const supabase = await createClient();
 
   const { error } = await supabase
-    .from('chat_sessions')
+    .from("chat_sessions")
     .update({ title: title.slice(0, 120) })
-    .eq('id', sessionId);
+    .eq("id", sessionId);
 
-  if (error) throw new Error(`Failed to update session title: ${error.message}`);
+  if (error)
+    throw new Error(`Failed to update session title: ${error.message}`);
 }
 
 /**
@@ -189,9 +188,9 @@ export async function deleteSession(sessionId: string): Promise<void> {
   const supabase = await createClient();
 
   const { error } = await supabase
-    .from('chat_sessions')
+    .from("chat_sessions")
     .delete()
-    .eq('id', sessionId);
+    .eq("id", sessionId);
 
   if (error) throw new Error(`Failed to delete session: ${error.message}`);
 }
@@ -208,28 +207,30 @@ export async function getMessages(
   opts: {
     limit?: number;
     beforeId?: string;
-  } = {}
+  } = {},
 ): Promise<{ messages: ChatMessage[]; hasMore: boolean }> {
   const supabase = await createClient();
   const limit = Math.max(1, Math.min(200, opts.limit ?? 50));
 
   let query = supabase
-    .from('chat_messages')
-    .select('*')
-    .eq('session_id', sessionId)
-    .order('created_at', { ascending: true });
+    .from("chat_messages")
+    .select("*")
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: false });
 
   if (opts.beforeId) {
     // Fetch the timestamp of the cursor message so we can page correctly
-    const { data: cursor } = await supabase
-      .from('chat_messages')
-      .select('created_at')
-      .eq('id', opts.beforeId)
+    const { data: cursor, error: cursorError } = await supabase
+      .from("chat_messages")
+      .select("created_at")
+      .eq("id", opts.beforeId)
+      .eq("session_id", sessionId)
       .maybeSingle();
 
-    if (cursor) {
-      query = query.lt('created_at', cursor.created_at);
-    }
+    if (cursorError)
+      throw new Error(`Failed to fetch cursor: ${cursorError.message}`);
+    if (!cursor) throw new Error("Cursor message not found in this session");
+    query = query.lt("created_at", cursor.created_at);
   }
 
   // Fetch one extra row to determine hasMore
@@ -241,13 +242,16 @@ export async function getMessages(
 
   const rows = data ?? [];
   const hasMore = rows.length > limit;
-  const messages = (hasMore ? rows.slice(0, limit) : rows).map((row: any) => ({
-    id: row.id,
-    sessionId: row.session_id,
-    role: row.role as 'user' | 'assistant' | 'system',
-    content: row.content,
-    createdAt: row.created_at,
-  }));
+  const messages = rows
+    .slice(0, limit)
+    .reverse()
+    .map((row: any) => ({
+      id: row.id,
+      sessionId: row.session_id,
+      role: row.role as "user" | "assistant" | "system",
+      content: row.content,
+      createdAt: row.created_at,
+    }));
 
   return { messages, hasMore };
 }
@@ -258,7 +262,11 @@ export async function getMessages(
  */
 export async function addMessages(
   sessionId: string,
-  messages: Array<{ id?: string; role: 'user' | 'assistant' | 'system'; content: string }>
+  messages: Array<{
+    id?: string;
+    role: "user" | "assistant" | "system";
+    content: string;
+  }>,
 ): Promise<ChatMessage[]> {
   if (messages.length === 0) return [];
 
@@ -272,22 +280,28 @@ export async function addMessages(
   }));
 
   const { data, error } = await supabase
-    .from('chat_messages')
-    .upsert(rows, { onConflict: 'id', ignoreDuplicates: true })
+    .from("chat_messages")
+    .upsert(rows, { onConflict: "id", ignoreDuplicates: true })
     .select();
 
   if (error) throw new Error(`Failed to insert messages: ${error.message}`);
 
   // Touch updated_at on the session
-  await supabase
-    .from('chat_sessions')
-    .update({ updated_at: new Date().toISOString() })
-    .eq('id', sessionId);
+  try {
+    const { error: touchError } = await supabase
+      .from("chat_sessions")
+      .update({ updated_at: new Date().toISOString() })
+      .eq("id", sessionId);
+    if (touchError)
+      console.error("[chat-service] Session timestamp update unavailable");
+  } catch {
+    console.error("[chat-service] Session timestamp update unavailable");
+  }
 
   return (data ?? []).map((row: any) => ({
     id: row.id,
     sessionId: row.session_id,
-    role: row.role as 'user' | 'assistant' | 'system',
+    role: row.role as "user" | "assistant" | "system",
     content: row.content,
     createdAt: row.created_at,
   }));
@@ -305,7 +319,7 @@ export async function addMessages(
 export async function getChatHistory(
   userId: string,
   luminorId: string,
-  opts: { limit?: number; beforeId?: string } = {}
+  opts: { limit?: number; beforeId?: string } = {},
 ): Promise<{
   sessionId: string;
   messages: ChatMessage[];
@@ -317,11 +331,13 @@ export async function getChatHistory(
 
   // Count all user turns (not just this page) for accurate bond state
   const supabase = await createClient();
-  const { count } = await supabase
-    .from('chat_messages')
-    .select('*', { count: 'exact', head: true })
-    .eq('session_id', sessionId)
-    .eq('role', 'user');
+  const { count, error: countError } = await supabase
+    .from("chat_messages")
+    .select("*", { count: "exact", head: true })
+    .eq("session_id", sessionId)
+    .eq("role", "user");
+  if (countError)
+    throw new Error(`Failed to count chat messages: ${countError.message}`);
 
   const bondState = deriveBondState(count ?? 0);
 
@@ -335,34 +351,35 @@ export async function getChatHistory(
 export async function persistChatMessages(
   userId: string,
   luminorId: string,
-  messages: Array<{ id: string; role: 'user' | 'assistant'; content: string }>
-): Promise<{ sessionId: string; saved: number; bondState: BondState }> {
+  messages: Array<{ id: string; role: "user" | "assistant"; content: string }>,
+): Promise<{ sessionId: string; saved: number; bondState: BondState | null }> {
   const sessionId = await getOrCreateSession(userId, luminorId);
 
   const saved = await addMessages(sessionId, messages);
 
-  const supabase = await createClient();
-  const { count } = await supabase
-    .from('chat_messages')
-    .select('*', { count: 'exact', head: true })
-    .eq('session_id', sessionId)
-    .eq('role', 'user');
+  // A count or title failure must not turn a committed write into a failed
+  // response: callers would otherwise retry a message already saved.
+  let bondState: BondState | null = null;
+  try {
+    const supabase = await createClient();
+    const { count, error: countError } = await supabase
+      .from("chat_messages")
+      .select("*", { count: "exact", head: true })
+      .eq("session_id", sessionId)
+      .eq("role", "user");
+    if (!countError) bondState = deriveBondState(count ?? 0);
 
-  const bondState = deriveBondState(count ?? 0);
-
-  // Set a title from the first user message if the session has no title
-  const { data: session } = await supabase
-    .from('chat_sessions')
-    .select('title')
-    .eq('id', sessionId)
-    .single();
-
-  if (!session?.title) {
-    const firstUserMsg = messages.find((m) => m.role === 'user');
-    if (firstUserMsg) {
-      const title = firstUserMsg.content.slice(0, 80);
-      await updateSessionTitle(sessionId, title);
+    const { data: session } = await supabase
+      .from("chat_sessions")
+      .select("title")
+      .eq("id", sessionId)
+      .single();
+    const firstUserMsg = messages.find((m) => m.role === "user");
+    if (!session?.title && firstUserMsg) {
+      await updateSessionTitle(sessionId, firstUserMsg.content.slice(0, 80));
     }
+  } catch {
+    console.error("[chat-service] Post-save metadata unavailable");
   }
 
   return { sessionId, saved: saved.length, bondState };

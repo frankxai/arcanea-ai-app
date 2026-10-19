@@ -236,9 +236,9 @@
             "arcanea-or-free"
           ],
           "enumDescriptions": [
-            "Opus 4.6 — Deep reasoning, 1M context (Anthropic)",
-            "Sonnet 4.6 — Best code + creative balance (Anthropic)",
-            "Haiku 4.5 — Fast + cheap (Anthropic)",
+            "Opus 5.5 — Deep reasoning, 1M context (Anthropic)",
+            "Sonnet 5.5 — Best code + creative balance (Anthropic)",
+            "Haiku 5.5 — Fast + cheap (Anthropic)",
             "GPT-5.2 Pro — Ultra reasoning (OpenAI)",
             "GPT-4o — Balanced multimodal (OpenAI)",
             "GPT-4o Mini — Fast + cheap (OpenAI)",
@@ -393,7 +393,7 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.138.0",
-    "@vscode/vsce": "^3.9.2",
+    "@vscode/vsce": "^4.0.0",
     "esbuild": "^0.28.2",
     "typescript": "^5.9.3"
   },

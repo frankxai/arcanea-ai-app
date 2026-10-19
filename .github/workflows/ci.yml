@@ -1,10 +1,28 @@
 name: CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      world_live_generation:
+        description: Two bounded creator comparisons after exact-head review
+        type: boolean
+        default: false
+      review_hub_release:
+        description: Review the pinned public release handover
+        type: boolean
+        default: false
+      review_hub_head:
+        description: Full handover commit hash in the owned review lane
+        type: string
+        default: ""
+      review_hub_base:
+        description: Full first-parent hash of that handover commit
+        type: string
+        default: ""
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    # Validate stacked PRs too; each proposed merge needs its own checks.
     # 'edited' is required: it is the only pull_request activity type that fires
     # when the base branch is retargeted, and required-check verdicts are recorded
     # against the head SHA. Without it a green earned against one base survives a
@@ -19,8 +37,8 @@ permissions:
   contents: read
 
 env:
-  NODE_VERSION: "22"
-  PNPM_VERSION: "8.15.0"
+  NODE_VERSION: "24"
+  PNPM_VERSION: "11.28.4"
 
 jobs:
   # ============================================
@@ -79,6 +97,18 @@ jobs:
   # ============================================
   lint:
     name: Lint
+    services:
+      author-db:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-author-fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     runs-on: ubuntu-latest
     needs: install
     # Runs even when install failed, so this required context fails instead of
@@ -140,19 +170,93 @@ jobs:
         run: node --test scripts/tests/changed-format.test.mjs
 
       - name: Verify visual-review trust and evidence boundaries
-        run: node --test scripts/excellence-review.test.mjs
+        run: node --test scripts/excellence-review.test.mjs scripts/tests/visual-preview.test.mjs
 
       - name: Verify preview deployment history handling
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
 
+      - name: Verify independent review admission before provider access
+        run: node --test scripts/test-independent-review-admission.mjs
+
+      - name: Verify disposable generation provider isolation
+        run: node --test scripts/tests/generation-fixture.test.mjs
+
+      - name: Verify Luminor image handoff without inference or spending
+        run: pnpm exec tsx --tsconfig apps/web/tsconfig.json --test apps/web/lib/luminors/tools/__tests__/image.test.ts
+
       - name: Verify auth recovery and creator economics
-        run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs
+        run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs scripts/tests/provider-routing.test.mjs scripts/tests/provider-preferences.test.mjs scripts/tests/notification-channel.test.mjs
+
+      - name: Verify public chat credentials and denial before provider execution
+        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/gateway/__tests__/chat-route.test.ts
+
+      - name: Verify generation admission, provider recovery and billing invariants
+        run: pnpm --dir apps/web exec tsx --test lib/billing/__tests__/*.test.ts lib/imagine/__tests__/image-request.test.ts
+
+      - name: Verify account favorites and private image recovery
+        run: pnpm --dir apps/web exec tsx --test lib/imagine/__tests__/favorites.test.ts lib/imagine/__tests__/private-assets.test.ts lib/imagine/__tests__/hydration.test.ts
+
+      - name: Verify customer voice credentials, privacy and recovery
+        run: |
+          pnpm --dir apps/web exec tsx --test --test-force-exit lib/voice/__tests__/voice-routes.test.ts lib/ai/__tests__/provider-preferences.test.ts
+          node --test scripts/tests/provider-chat-instance.test.cjs scripts/tests/provider-fixture-private-config.test.cjs scripts/tests/private-imagine-blob-fixture.test.cjs
+
+      - name: Verify author credentials and exact draft acknowledgements
+        run: |
+          pnpm --dir apps/web exec tsx --test --test-force-exit lib/author/__tests__/author-chat.test.ts lib/author/__tests__/draft-session.test.ts lib/author/__tests__/book-files.test.ts
+          node --test scripts/tests/auth-response-privacy.test.cjs
+
+      - name: Verify ingestion DNS, redirects and native proxy isolation
+        run: |
+          pnpm --dir apps/web test:safe-fetch
+          node --test scripts/tests/safe-fetch-network.test.cjs
+          node --test scripts/tests/studio-ingest-cache.test.cjs
+
+      - name: Verify author draft ownership, persistence and migration recovery
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=0 -f supabase/tests/author-draft-recovery.sql
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v original_first=1 -f supabase/tests/author-draft-recovery.sql
+
+      - name: Verify atomic project document save and recovery
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          pnpm --dir apps/web exec tsx --test lib/docs/__tests__/save.test.ts
+          pnpm --dir apps/web exec tsx lib/docs/__tests__/api-contracts.test.ts
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v doc_disposable=1 -v original_first=1 -f supabase/tests/project-doc-revisions.sql
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -v doc_disposable=1 -v original_first=0 -f supabase/tests/project-doc-revisions.sql
+
+      - name: Verify document fixture private configuration ownership
+        env:
+          PROJECT_DOCUMENT_CONFIG_FIXTURE: "true"
+        run: node --test scripts/tests/provider-fixture-private-config.test.cjs
+
+      - name: Verify private document original recovery and portable export
+        run: node --test scripts/tests/document-media.test.cjs scripts/tests/document-media-client.test.cjs scripts/tests/document-media-blob-fixture.test.cjs
+
+      - name: Verify private image owner access and atomic storage admission
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          createdb -h localhost -U postgres arcanea_private_imagine_fixture
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/private-imagine-assets.sql
+          psql -h localhost -U postgres -d arcanea_private_imagine_fixture -v ON_ERROR_STOP=1 -f supabase/tests/project-doc-media.sql
 
       - name: Verify prompt-books first HTML is the landing
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
       - name: Verify exact world drafts and account return paths
-        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+        run: |
+          pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+          node --test scripts/test-world-generation.cjs scripts/test-world-save.cjs scripts/test-world-elements.cjs scripts/test-world-live-admission.mjs
+
+      - name: Verify feedback persistence receipts
+        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
+
+      - name: Verify billing admission and operation recovery
+        run: pnpm --dir apps/web test:billing
 
       - name: Verify waitlist signups are saved or honestly refused
         run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/capture-email.test.ts
@@ -162,6 +266,9 @@ jobs:
 
       - name: Verify waitlist capture fails closed and unknown locales 404
         run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/route.test.ts lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/faults.test.ts lib/__tests__/locale-catch-all.test.ts
+
+      - name: Verify reader title presentation and unchanged scene source
+        run: node --test scripts/tests/reader-presentation.test.cjs
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
@@ -174,6 +281,9 @@ jobs:
         env:
           FORMAT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
+          if [ -z "$FORMAT_BASE_SHA" ]; then
+            FORMAT_BASE_SHA=$(git merge-base origin/main "$GITHUB_SHA")
+          fi
           bash scripts/check-changed-format.sh "$FORMAT_BASE_SHA" "$GITHUB_SHA"
 
   # ============================================
@@ -276,6 +386,19 @@ jobs:
           pnpm --dir packages/arcanea-mcp test:gateway
           pnpm --dir apps/web test:mcp-world-context
 
+      - name: Verify MCP runtime and installed consumer package
+        run: |
+          pnpm --dir packages/arcanea-mcp test:delivery
+          pnpm --dir packages/arcanea-mcp test:consumer
+      - name: Retain MCP consumer delivery evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: mcp-consumer-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/mcp-consumer/
+          retention-days: 7
+          if-no-files-found: warn
+
       - name: Verify Luminor public-read timeout
         run: pnpm test:luminor-read-timeout
 
@@ -296,8 +419,21 @@ jobs:
       - name: Verify saga public release boundary (default-deny)
         run: pnpm --dir apps/web test:saga-gate
 
+      - name: Verify catalog entries match reader chapters
+        run: |
+          pnpm --dir apps/web exec tsx lib/saga/__tests__/chapter-files.test.ts
+          pnpm --dir apps/web exec tsx --test lib/saga/__tests__/series-entry.test.ts
+
       - name: Run package tests
         run: pnpm test:quick
+
+      - name: Verify model routing and native CLI adapters
+        timeout-minutes: 2
+        run: |
+          pnpm --dir packages/router-spec build
+          pnpm --dir packages/router-spec validate
+          pnpm --dir packages/orchestrator build
+          pnpm exec tsx --test --test-concurrency=1 packages/router-spec/tests/validate.test.ts packages/orchestrator/tests/*.test.ts packages/orchestrator/tests/ecosystem/*.test.ts
 
       - name: Verify public collection assets and proposal relationships
         run: |
@@ -305,6 +441,32 @@ jobs:
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/sovereign-depths.test.ts
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
+
+      - name: Verify shop checkout trust boundaries
+        run: pnpm --dir apps/web exec tsx --test lib/shop/__tests__/checkout.test.ts
+
+      - name: Verify reader catalog and featured chapter journeys
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+        timeout-minutes: 5
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+          PLAYWRIGHT_SKIP_BROWSER_GC: "1"
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/reader-next.log" 2>&1 &
+          reader_server_pid=$!
+          trap 'kill "$reader_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-reader-entry-browser.cjs
+
+      - name: Upload reader journey evidence
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: reader-entry-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/reader-entry/
+          retention-days: 7
+          if-no-files-found: warn
 
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
@@ -320,18 +482,24 @@ jobs:
           gallery_status=0
           starter_status=0
           draft_status=0
+          shop_status=0
+          chat_tools_status=0
+          voice_credentials_status=0
           node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
           node scripts/verify-creator-starters-browser.cjs || starter_status=$?
           node scripts/verify-world-draft-browser.cjs || draft_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ]; then
+          node scripts/verify-shop-browser.cjs || shop_status=$?
+          timeout 120s node scripts/verify-chat-tools-browser.cjs || chat_tools_status=$?
+          timeout 120s node scripts/verify-voice-credentials-browser.cjs || voice_credentials_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ] || [ "$shop_status" -ne 0 ] || [ "$chat_tools_status" -ne 0 ] || [ "$voice_credentials_status" -ne 0 ]; then
             exit 1
           fi
 
       - name: Upload gallery rendered evidence
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
-          name: galleries-built-app-${{ github.sha }}
+          name: galleries-built-app-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: screenshots/
           retention-days: 7
           if-no-files-found: warn
@@ -344,6 +512,292 @@ jobs:
           echo "- **Node**: ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "- **pnpm**: ${{ env.PNPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
 
+  # Authenticated author acceptance runs on the exact owned preview with real
+  # fixture accounts, separately from unauthenticated compiled-gallery fixtures.
+  author-preview:
+    name: Authenticated author preview
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/author-draft-recovery-20261010'
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Verify real authenticated owner recovery and account isolation
+        env:
+          AUTHOR_PREVIEW_FIXTURE: ${{ secrets.ARCANEA_AUTHOR_PREVIEW_FIXTURE_20261010 }}
+          AUTHOR_EXPECTED_HEAD: ${{ github.sha }}
+          AUTHOR_TEST_CONFIG: ${{ runner.temp }}/author-fixture.json
+        run: |
+          node -e 'const fs=require("node:fs");const c=JSON.parse(process.env.AUTHOR_PREVIEW_FIXTURE);if(c.head!==process.env.AUTHOR_EXPECTED_HEAD)throw Error("Preview fixture is bound to a different source revision");for(const a of c.accounts)console.log("::add-mask::"+a.password);console.log("::add-mask::"+c.shareUrl);c.output="screenshots/author-hosted";fs.writeFileSync(process.env.AUTHOR_TEST_CONFIG,JSON.stringify(c),{mode:0o600});'
+          trap 'rm -f "$AUTHOR_TEST_CONFIG"' EXIT
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          timeout 300s node scripts/verify-author-draft-browser.cjs
+      - name: Retain authenticated preview evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: author-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/author-hosted/
+          retention-days: 7
+          if-no-files-found: warn
+
+  world-preview:
+    name: Authenticated world acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/world-creator-recovery-20261010'
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Exact-source review hashes require the immutable base revision.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real password login, private partial-write recovery and account isolation
+        env:
+          WORLD_TEST_API_KEY: ${{ inputs.world_live_generation && secrets.GEMINI_API_KEY || '' }}
+          WORLD_LIVE_GENERATION: ${{ inputs.world_live_generation }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/run-world-service-fixture.mjs
+      - name: Retain safe world acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: world-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/world-service/
+          retention-days: 7
+          if-no-files-found: warn
+
+  author-independent-review:
+    name: Independent author source review
+    needs: [author-preview, world-preview]
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && (github.ref_name == 'agent/codex/author-draft-recovery-20261010' || github.ref_name == 'agent/codex/auth-response-privacy-20261010' || github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010' || github.ref_name == 'agent/codex/world-creator-recovery-20261010' || github.ref_name == 'agent/codex/generation-admission-20261011' || github.ref_name == 'agent/codex/private-imagine-assets-20261011' || github.ref_name == 'agent/codex/project-document-recovery-20261011')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Validate pinned handover inputs before checkout
+        if: github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_release
+        env:
+          REVIEW_HUB_HEAD: ${{ inputs.review_hub_head }}
+          REVIEW_HUB_BASE: ${{ inputs.review_hub_base }}
+        run: |
+          node --input-type=module -e 'for (const key of ["REVIEW_HUB_HEAD", "REVIEW_HUB_BASE"]) { if (!/^[a-f0-9]{40}$/.test(process.env[key] || "")) throw Error("Full pinned handover hashes required"); }'
+      - name: Read the exact public release handover for independent review
+        if: (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
+        uses: actions/checkout@v7
+        with:
+          repository: frankxai/agentic-ops-hub
+          ref: ${{ github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_head || '5326dc36c78f324ad7c47573d875c7b9689e8ecb' }}
+          path: .review-hub
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Review the exact handover using the existing independent provider
+        if: (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          REVIEW_TARGET: hub-release
+          REVIEW_HUB_HEAD: ${{ inputs.review_hub_head }}
+          REVIEW_HUB_BASE: ${{ inputs.review_hub_base }}
+        run: node scripts/review-author-recovery.mjs
+      - name: Retain handover final findings and source receipt
+        if: always() && (github.ref_name == 'agent/codex/mcp-runtime-integration-20261010' || github.ref_name == 'agent/codex/review-handover-20261010') && inputs.review_hub_release
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hub-review-${{ github.ref_name == 'agent/codex/review-handover-20261010' && inputs.review_hub_head || '5326dc36c78f' }}-attempt-${{ github.run_attempt }}
+          path: screenshots/hub-review/
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Review complete exact source using the existing independent provider
+        if: (github.ref_name != 'agent/codex/review-handover-20261010' || !inputs.review_hub_release) && !(github.ref_name == 'agent/codex/world-creator-recovery-20261010' && inputs.world_live_generation)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/review-author-recovery.mjs
+      - name: Retain final findings and exact source receipt
+        if: always() && (github.ref_name != 'agent/codex/review-handover-20261010' || !inputs.review_hub_release)
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: author-review-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/author-review/
+          retention-days: 7
+          if-no-files-found: warn
+
+  generation-preview:
+    name: Authenticated generation acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/generation-admission-20261011'
+    # This fixture compiles its own app with disposable Auth. Collect its evidence
+    # even if a separate gallery suite fails; CI Status still requires both.
+    needs: [install, lint, typecheck]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Exact-source review hashes require the immutable base revision.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real password login, durable image recovery and account isolation
+        run: node scripts/run-generation-service-fixture.mjs
+      - name: Retain safe generation acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: generation-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/generation-service/
+          retention-days: 7
+          if-no-files-found: warn
+
+  project-document-preview:
+    name: Authenticated project document acceptance
+    # Independent review intentionally runs after skipped author/world jobs.
+    # Avoid their inherited success() skip, while still requiring every direct gate.
+    if: always() && !cancelled() && github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/project-document-recovery-20261011' && needs.install.result == 'success' && needs.lint.result == 'success' && needs.typecheck.result == 'success' && needs.author-independent-review.result == 'success'
+    needs: [install, lint, typecheck, author-independent-review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Actual isolated login, document recovery and account isolation
+        run: node scripts/run-project-document-service-fixture.mjs
+      - name: Retain safe document acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: project-document-preview-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/project-document-service/
+          retention-days: 7
+          if-no-files-found: warn
+
+  provider-account-preview:
+    name: Authenticated provider settings acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/provider-account-20261011'
+    needs: [install, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real isolated login, provider saves and stale-account denial
+        run: node scripts/run-provider-account-fixture.mjs
+      - name: Retain safe provider settings acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: provider-settings-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/provider-settings/
+          retention-days: 7
+          if-no-files-found: warn
+
+  private-imagine-preview:
+    name: Authenticated private Imagine acceptance
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'frankxai' && github.ref_name == 'agent/codex/private-imagine-assets-20261011'
+    needs: [install, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache/restore@v6
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Real isolated login, private save, reopen, recovery and export
+        run: node scripts/run-provider-account-fixture.mjs
+      - name: Retain safe private Imagine acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: private-imagine-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: screenshots/private-imagine/
+          retention-days: 7
+          if-no-files-found: warn
+
   # ============================================
   # STATUS — the merge gate. It is the only job here that cannot skip under any
   # event, so it is the only context whose green is unconditionally earned.
@@ -353,7 +807,18 @@ jobs:
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
-    needs: [install, lint, typecheck, build]
+    needs:
+      [
+        install,
+        lint,
+        typecheck,
+        build,
+        generation-preview,
+        provider-account-preview,
+        private-imagine-preview,
+        project-document-preview,
+        author-independent-review,
+      ]
     # always() and nothing else: this job must run even when an upstream job fails
     # or is cancelled, so it reports a real verdict. Any condition that can make it
     # skip reads as a passing required check.
@@ -386,6 +851,33 @@ jobs:
           if [ "${{ needs.build.result }}" != "success" ]; then
             echo "::error::Build failed — blocks merge"
             PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/generation-admission-20261011" ] && [ "${{ needs.generation-preview.result }}" != "success" ]; then
+            echo "::error::Authenticated generation acceptance is unearned for this dispatched revision"
+            PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/private-imagine-assets-20261011" ] && [ "${{ needs.author-independent-review.result }}" != "success" ]; then
+            echo "::error::Exact private Imagine source review is unearned for this dispatched revision"
+            exit 1
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/private-imagine-assets-20261011" ] && [ "${{ needs.private-imagine-preview.result }}" != "success" ]; then
+            echo "::error::Authenticated private Imagine acceptance is unearned for this dispatched revision"
+            PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/provider-account-20261011" ] && [ "${{ needs.provider-account-preview.result }}" != "success" ]; then
+            echo "::error::Authenticated provider settings acceptance is unearned for this dispatched revision"
+            PASS=false
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.ref_name }}" = "agent/codex/project-document-recovery-20261011" ]; then
+            if [ "${{ needs.project-document-preview.result }}" != "success" ] || [ "${{ needs.author-independent-review.result }}" != "success" ]; then
+              echo "::error::Document authenticated acceptance or exact-source review is unearned"
+              PASS=false
+            fi
           fi
 
           if [ "$PASS" = true ]; then

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { mkdir, writeFile, access } from 'fs/promises';
-import { join } from 'path';
-import { NextResponse } from 'next/server';
-import { getBookRoot } from '@/lib/content/book-path';
+import { mkdir, writeFile, access } from "fs/promises";
+import { join } from "path";
+import { NextResponse } from "next/server";
+import { getBookRoot } from "@/lib/content/book-path";
 
 const BOOK_ROOT = getBookRoot();
 
@@ -16,11 +16,12 @@ async function exists(p: string) {
 }
 
 export async function POST(req: Request) {
-  if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
+  if (process.env.VERCEL === "1" || process.env.NODE_ENV === "production") {
     return NextResponse.json(
       {
-        error: 'Read-only in production',
-        reason: 'Book creation requires a persistent filesystem. Use local dev or Claude Code.',
+        error: "Read-only in production",
+        reason:
+          "Book creation requires a persistent filesystem. Use local dev or Claude Code.",
       },
       { status: 423 },
     );
@@ -35,39 +36,39 @@ export async function POST(req: Request) {
   };
 
   if (!title?.trim()) {
-    return NextResponse.json({ error: 'title is required' }, { status: 400 });
+    return NextResponse.json({ error: "title is required" }, { status: 400 });
   }
 
   if (!slug?.trim()) {
-    return NextResponse.json({ error: 'slug is required' }, { status: 400 });
+    return NextResponse.json({ error: "slug is required" }, { status: 400 });
   }
 
   // Sanitize slug: lowercase, alphanumeric and hyphens only, collapse multiples
   const safeSlug = slug
     .toLowerCase()
-    .replace(/[^a-z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 
   if (!safeSlug) {
-    return NextResponse.json({ error: 'Invalid slug' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
   }
 
   const bookDir = join(BOOK_ROOT, safeSlug);
 
   if (await exists(bookDir)) {
-    return NextResponse.json({ error: 'Book already exists' }, { status: 409 });
+    return NextResponse.json({ error: "Book already exists" }, { status: 409 });
   }
 
   // Create directory structure
-  await mkdir(join(bookDir, 'chapters'), { recursive: true });
+  await mkdir(join(bookDir, "chapters"), { recursive: true });
 
   // Build book.yaml manifest
   const descLine = description?.trim()
     ? `\ndescription: "${description.trim().replace(/"/g, '\\"')}"\n`
-    : '\n';
+    : "\n";
   const safeTitle = title.trim().replace(/"/g, '\\"');
-  const safeGenre = genre?.trim() || 'fantasy';
+  const safeGenre = genre?.trim() || "fantasy";
 
   const yaml = `title: "${safeTitle}"
 slug: ${safeSlug}
@@ -80,7 +81,7 @@ ${descLine}authors:
 
 ai_transparency:
   models_used:
-    - id: claude-opus-4-6
+    - id: claude-opus-5-5
       provider: anthropic
       role: co-author
   human_contribution: 50%
@@ -94,11 +95,15 @@ tags: [${safeGenre}]
 acknowledgments: |
   Created with Arcanea Author Studio. Written in the open.
 `;
-  await writeFile(join(bookDir, 'book.yaml'), yaml, 'utf-8');
+  await writeFile(join(bookDir, "book.yaml"), yaml, "utf-8");
 
   // Create first chapter
   const firstChapter = `# Chapter One\n\nBegin writing...\n`;
-  await writeFile(join(bookDir, 'chapters', '01-chapter-one.md'), firstChapter, 'utf-8');
+  await writeFile(
+    join(bookDir, "chapters", "01-chapter-one.md"),
+    firstChapter,
+    "utf-8",
+  );
 
   return NextResponse.json({
     success: true,
