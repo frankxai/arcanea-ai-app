@@ -1,0 +1,51 @@
+name: URI normalization
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/uri-normalization.yml"
+      - "scripts/tests/fast-uri-normalization.test.cjs"
+      - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
+      - "package.json"
+      - ".nvmrc"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/uri-normalization.yml"
+      - "scripts/tests/fast-uri-normalization.test.cjs"
+      - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
+      - "package.json"
+      - ".nvmrc"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: uri-normalization-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  installed-uri:
+    name: Frozen URI behavior
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+      - name: Frozen install without lifecycle scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Verify actual installed URI behavior
+        run: node scripts/tests/fast-uri-normalization.test.cjs
+      - name: Preserve dependency inputs
+        run: git diff --exit-code -- pnpm-lock.yaml pnpm-workspace.yaml

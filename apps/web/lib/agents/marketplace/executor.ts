@@ -10,12 +10,22 @@
  * exactly — no new dependencies, no new infrastructure.
  */
 
-import { streamText } from 'ai';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { createAnthropic } from '@ai-sdk/anthropic';
-import { createOpenAI } from '@ai-sdk/openai';
-import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
-import type { MarketplaceAgent } from './types';
+import { streamText } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { createOpenAI } from "@ai-sdk/openai";
+import {
+  GATEWAY_MODELS,
+  EXTENDED_PROVIDERS,
+  claudeRejectsSamplingParams,
+} from "@/lib/gateway/catalog";
+import {
+  REFUSAL_NOTICE,
+  claudeFallbackOptions,
+  isRefusal,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
+import type { MarketplaceAgent } from "./types";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -39,16 +49,16 @@ export interface ExecuteAgentParams {
 
 const PROVIDERS: Record<string, { envKeys: string[]; defaultModel: string }> = {
   google: {
-    envKeys: ['GOOGLE_GENERATIVE_AI_API_KEY', 'GEMINI_API_KEY'],
-    defaultModel: 'gemini-2.0-flash',
+    envKeys: ["GOOGLE_GENERATIVE_AI_API_KEY", "GEMINI_API_KEY"],
+    defaultModel: "gemini-2.0-flash",
   },
   anthropic: {
-    envKeys: ['ANTHROPIC_API_KEY'],
-    defaultModel: 'claude-sonnet-4-20250514',
+    envKeys: ["ANTHROPIC_API_KEY"],
+    defaultModel: "claude-sonnet-5-5",
   },
   openai: {
-    envKeys: ['OPENAI_API_KEY'],
-    defaultModel: 'gpt-4o',
+    envKeys: ["OPENAI_API_KEY"],
+    defaultModel: "gpt-4o",
   },
 };
 
@@ -66,17 +76,20 @@ function resolveEnvKey(envKeys: string[]): string | undefined {
  */
 function resolveModel(preferredGatewayId?: string) {
   const AUTO_PRIORITY = [
-    'arcanea-gemini-flash',
-    'arcanea-sonnet',
-    'arcanea-gpt5',
-    'arcanea-haiku',
-    'arcanea-deepseek',
-    'arcanea-bolt',
-    'arcanea-lightning',
+    "arcanea-gemini-flash",
+    "arcanea-sonnet",
+    "arcanea-gpt5",
+    "arcanea-haiku",
+    "arcanea-deepseek",
+    "arcanea-bolt",
+    "arcanea-lightning",
   ];
 
   const candidates = preferredGatewayId
-    ? [preferredGatewayId, ...AUTO_PRIORITY.filter((id) => id !== preferredGatewayId)]
+    ? [
+        preferredGatewayId,
+        ...AUTO_PRIORITY.filter((id) => id !== preferredGatewayId),
+      ]
     : AUTO_PRIORITY;
 
   for (const gwId of candidates) {
@@ -96,58 +109,86 @@ function resolveModel(preferredGatewayId?: string) {
     if (!apiKey) continue;
 
     // Create model instance based on provider type
-    if (provider === 'google') {
+    const modelId = gw.modelId;
+
+    if (provider === "google") {
       const google = createGoogleGenerativeAI({ apiKey });
-      return { model: google(gw.modelId), label: gw.label };
+      return { model: google(modelId), modelId, label: gw.label };
     }
 
-    if (provider === 'anthropic') {
+    if (provider === "anthropic") {
       const anthropic = createAnthropic({ apiKey });
-      return { model: anthropic(gw.modelId), label: gw.label };
+      return { model: anthropic(modelId), modelId, label: gw.label };
     }
 
-    if (provider === 'openai') {
+    if (provider === "openai") {
       const openai = createOpenAI({ apiKey });
-      return { model: openai(gw.modelId), label: gw.label };
+      return { model: openai(modelId), modelId, label: gw.label };
     }
 
     if (extProvider) {
-      const openaiCompat = createOpenAI({ apiKey, baseURL: extProvider.baseUrl });
-      return { model: openaiCompat(gw.modelId), label: gw.label };
+      const openaiCompat = createOpenAI({
+        apiKey,
+        baseURL: extProvider.baseUrl,
+      });
+      return { model: openaiCompat(modelId), modelId, label: gw.label };
     }
   }
 
   throw new Error(
-    'No API key available for any configured provider. ' +
-      'Set at least one of: ANTHROPIC_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, OPENAI_API_KEY.'
+    "No API key available for any configured provider. " +
+      "Set at least one of: ANTHROPIC_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, OPENAI_API_KEY.",
   );
+}
+
+/**
+ * Request options that depend on the resolved model. Claude 5.x rejects
+ * sampling parameters with a 400, so the agent's temperature only reaches
+ * other providers (OpenRouter Claude slugs included in the check). Opus and
+ * Sonnet 5.5 also opt into server-side refusal fallback.
+ */
+function modelCallOptions(modelId: string, temperature: number) {
+  return {
+    ...(claudeRejectsSamplingParams(modelId) ? {} : { temperature }),
+    providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+  };
 }
 
 // ---------------------------------------------------------------------------
 // System prompt builder
 // ---------------------------------------------------------------------------
 
-function buildSystemPrompt(agent: MarketplaceAgent, userContext?: ExecuteAgentParams['userContext']): string {
+function buildSystemPrompt(
+  agent: MarketplaceAgent,
+  userContext?: ExecuteAgentParams["userContext"],
+): string {
   let prompt = agent.spec.systemPrompt;
 
   // Inject user context block when available
-  if (userContext && (userContext.name || userContext.rank || userContext.element)) {
-    const contextLines: string[] = ['[CREATOR CONTEXT]'];
+  if (
+    userContext &&
+    (userContext.name || userContext.rank || userContext.element)
+  ) {
+    const contextLines: string[] = ["[CREATOR CONTEXT]"];
 
     if (userContext.name) contextLines.push(`Creator: ${userContext.name}`);
     if (userContext.rank) {
-      const gatesNote = userContext.gatesOpen !== undefined ? ` (${userContext.gatesOpen}/10 Gates open)` : '';
+      const gatesNote =
+        userContext.gatesOpen !== undefined
+          ? ` (${userContext.gatesOpen}/10 Gates open)`
+          : "";
       contextLines.push(`Rank: ${userContext.rank}${gatesNote}`);
     }
-    if (userContext.element) contextLines.push(`Element affinity: ${userContext.element}`);
+    if (userContext.element)
+      contextLines.push(`Element affinity: ${userContext.element}`);
 
     contextLines.push(
-      'Adapt depth and vocabulary to this creator\'s level.',
-      '[/CREATOR CONTEXT]',
-      ''
+      "Adapt depth and vocabulary to this creator's level.",
+      "[/CREATOR CONTEXT]",
+      "",
     );
 
-    prompt = contextLines.join('\n') + prompt;
+    prompt = contextLines.join("\n") + prompt;
   }
 
   return prompt;
@@ -167,25 +208,29 @@ function buildSystemPrompt(agent: MarketplaceAgent, userContext?: ExecuteAgentPa
  *
  * This function only handles model selection and streaming.
  */
-export async function executeAgent(params: ExecuteAgentParams): Promise<Response> {
+export async function executeAgent(
+  params: ExecuteAgentParams,
+): Promise<Response> {
   const { agent, input, userContext } = params;
 
-  const { model, label } = resolveModel(agent.spec.preferredModel);
+  const { model, modelId, label } = resolveModel(agent.spec.preferredModel);
   const systemPrompt = buildSystemPrompt(agent, userContext);
   const temperature = agent.spec.temperature ?? 0.7;
 
   const result = streamText({
     model,
     system: systemPrompt,
-    messages: [{ role: 'user', content: input }],
-    temperature,
+    messages: [{ role: "user", content: input }],
+    ...modelCallOptions(modelId, temperature),
     maxOutputTokens: 8192,
+    // A refusal would otherwise end the stream with no text.
+    experimental_transform: refusalNoticeTransform(),
   });
 
   return result.toTextStreamResponse({
     headers: {
-      'x-arcanea-agent': agent.id,
-      'x-arcanea-model': label,
+      "x-arcanea-agent": agent.id,
+      "x-arcanea-model": label,
     },
   });
 }
@@ -194,20 +239,31 @@ export async function executeAgent(params: ExecuteAgentParams): Promise<Response
  * Non-streaming variant — awaits the full response and returns the text.
  * Useful for background tasks and server-side processing.
  */
-export async function executeAgentSync(params: ExecuteAgentParams): Promise<string> {
+export async function executeAgentSync(
+  params: ExecuteAgentParams,
+): Promise<string> {
   const { agent, input, userContext } = params;
 
-  const { model } = resolveModel(agent.spec.preferredModel);
+  const { model, modelId } = resolveModel(agent.spec.preferredModel);
   const systemPrompt = buildSystemPrompt(agent, userContext);
   const temperature = agent.spec.temperature ?? 0.7;
 
   const result = streamText({
     model,
     system: systemPrompt,
-    messages: [{ role: 'user', content: input }],
-    temperature,
+    messages: [{ role: "user", content: input }],
+    ...modelCallOptions(modelId, temperature),
     maxOutputTokens: 8192,
   });
 
-  return result.text;
+  const [text, finishReason] = await Promise.all([
+    result.text,
+    result.finishReason,
+  ]);
+  // A refusal has no usable text; surface it as an error so callers (the
+  // Grimoire orchestrator) record the section as failed instead of saving it.
+  if (isRefusal(finishReason)) {
+    throw new Error(REFUSAL_NOTICE);
+  }
+  return text;
 }

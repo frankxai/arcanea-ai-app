@@ -1,0 +1,134 @@
+.surface {
+  /* The global reduced-motion duration must not enable theme transitions. */
+  transition-property: none;
+}
+
+.dock {
+  bottom: calc(var(--arc-space-6) + env(safe-area-inset-bottom));
+  width: max-content;
+  max-width: calc(100% - var(--arc-space-6) * 2);
+  transition: opacity var(--arc-duration-fast) var(--arc-ease-expo-out);
+}
+
+.dock[data-visible="false"]:not(:focus-within) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dock:focus-within {
+  transition: none;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: var(--arc-space-2);
+  padding: var(--arc-space-2);
+  border: var(--arc-border-width) solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-xl);
+  background: var(--arc-cosmic-deep);
+  color: var(--arc-text-primary);
+  box-shadow: var(--arc-shadow-elevation-3);
+}
+
+.controls[data-light="true"] {
+  background: var(--arc-text-primary);
+  color: var(--arc-cosmic-void);
+  border-color: var(--arc-text-muted);
+}
+
+.control {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--arc-touch-target);
+  height: var(--arc-touch-target);
+  border-radius: var(--arc-radius-md);
+  color: inherit;
+  transition: transform var(--arc-duration-instant) var(--arc-ease-expo-out);
+}
+
+.control:active {
+  transform: scale(0.97);
+}
+
+.control:focus-visible {
+  outline: var(--arc-border-accent-width) solid currentColor;
+  outline-offset: var(--arc-border-accent-width);
+  transition: none;
+}
+
+.control[aria-pressed="true"],
+.control[aria-expanded="true"] {
+  background: var(--arc-cosmic-raised);
+  color: var(--arc-text-primary);
+}
+
+.control:disabled,
+.control[aria-disabled="true"] {
+  color: var(--arc-text-muted);
+  cursor: not-allowed;
+}
+
+.control[aria-disabled="true"] {
+  pointer-events: none;
+}
+
+.divider {
+  flex: none;
+  width: var(--arc-border-width);
+  height: var(--arc-space-5);
+  margin-inline: var(--arc-space-2);
+  background: var(--arc-text-muted);
+}
+
+.fontSize {
+  flex: none;
+  width: var(--arc-space-6);
+  color: inherit;
+  text-align: center;
+  font-size: var(--arc-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The chat renderer's own line-height and white text must not override
+   the preferences of this reading surface. Chat messages stay unchanged. */
+.reading :is(p, li, blockquote, strong, em, h1, h2, h3) {
+  color: inherit;
+  line-height: inherit;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .control:not(:disabled):not([aria-disabled="true"]):hover {
+    background: var(--arc-cosmic-raised);
+    color: var(--arc-text-primary);
+  }
+}
+
+@media (max-width: 640px) {
+  .dock {
+    /* Leave the existing floating assistant and the phone's safe area clear. */
+    bottom: calc(
+      var(--arc-space-14) + var(--arc-space-4) + var(--arc-space-2) +
+        env(safe-area-inset-bottom)
+    );
+  }
+
+  .divider {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock,
+  .control {
+    transition: none;
+  }
+
+  .control:active {
+    transform: none;
+  }
+}

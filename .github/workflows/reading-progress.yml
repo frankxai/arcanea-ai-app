@@ -1,0 +1,165 @@
+name: Reading progress
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - apps/web/hooks/use-reading-progress.ts
+      - apps/web/app/library/reading-tracker.tsx
+      - apps/web/app/library/**
+      - apps/web/components/lumina/**
+      - packages/design-system/src/companion.module.css
+      - scripts/tests/reading-progress-account.test.cjs
+      - scripts/verify-reading-progress-browser.cjs
+      - scripts/verify-reading-progress-auth-browser.cjs
+      - scripts/run-reading-scene-auth-fixture.mjs
+      - scripts/fixtures/reading-progress-auth.sql
+      - scripts/fixtures/reading-scene-auth.sql
+      - scripts/fixtures/reading-scene-postgrest.sql
+      - scripts/tests/reading-progress-auth-admission.test.cjs
+      - .github/workflows/reading-progress.yml
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS.md
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS_AUTH.md
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_COMPANION.md
+  push:
+    branches: [main]
+    paths:
+      - apps/web/hooks/use-reading-progress.ts
+      - apps/web/app/library/reading-tracker.tsx
+      - apps/web/app/library/**
+      - apps/web/components/lumina/**
+      - packages/design-system/src/companion.module.css
+      - scripts/tests/reading-progress-account.test.cjs
+      - scripts/verify-reading-progress-browser.cjs
+      - scripts/verify-reading-progress-auth-browser.cjs
+      - scripts/run-reading-scene-auth-fixture.mjs
+      - scripts/fixtures/reading-progress-auth.sql
+      - scripts/fixtures/reading-scene-auth.sql
+      - scripts/fixtures/reading-scene-postgrest.sql
+      - scripts/tests/reading-progress-auth-admission.test.cjs
+      - .github/workflows/reading-progress.yml
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS.md
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_PROGRESS_AUTH.md
+      - planning-with-files/CURRENT_STATE_2026-10-12_READING_COMPANION.md
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reading-progress-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+
+jobs:
+  account-recovery:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: pnpm install --frozen-lockfile
+      - run: node --test scripts/tests/reading-progress-account.test.cjs
+      - run: node --test scripts/tests/reading-progress-auth-admission.test.cjs
+      - run: PRIVATE_CONFIGURATION_RUNNER=scripts/run-reading-scene-auth-fixture.mjs node --test scripts/tests/provider-fixture-private-config.test.cjs
+        if: runner.os == 'Linux'
+
+  rendered-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: pnpm install --frozen-lockfile
+      - name: Build same-source web CSS and fonts
+        run: pnpm turbo run build --filter=@arcanea/web
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+      - name: Install hosted Chromium
+        run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Verify real React tracker with controlled transport
+        run: node scripts/verify-reading-progress-browser.cjs
+        env:
+          READING_PROGRESS_SOURCE_COMMIT: ${{ env.SOURCE_COMMIT }}
+      - name: Retain exact-source captures and provenance
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: reading-progress-${{ env.SOURCE_COMMIT }}-attempt-${{ github.run_attempt }}
+          path: screenshots/reading-progress/
+          retention-days: 7
+          if-no-files-found: error
+
+  authenticated-recovery:
+    # Runner admission and workflow admission must agree. No credentials,
+    # production database, provider, paid reviewer or untrusted fork is admitted.
+    if: github.repository == 'frankxai/arcanea-ai-app' && github.actor == 'frankxai' && contains(fromJSON('["agent/codex/reading-progress-auth-20261012","agent/codex/reading-companion-20261012","main"]'), github.head_ref || github.ref_name)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      reading-db:
+        image: postgres:17
+        env:
+          POSTGRES_DB: reading_scene_fixture
+          POSTGRES_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: pnpm install --frozen-lockfile
+      - name: Install hosted Chromium
+        run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Bootstrap disposable reader database
+        run: psql -h 127.0.0.1 -U postgres -d reading_scene_fixture -v ON_ERROR_STOP=1 -f scripts/fixtures/reading-scene-postgrest.sql
+        env:
+          PGPASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+          READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+      - name: Verify compiled Library real Auth, RLS and recovery
+        run: timeout 1200s node scripts/run-reading-scene-auth-fixture.mjs
+        env:
+          READING_PROGRESS_AUTH: "true"
+          READING_SCENE_HEAD: ${{ env.SOURCE_COMMIT }}
+          READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
+      - name: Retain authenticated acceptance and provenance
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: reading-progress-auth-${{ env.SOURCE_COMMIT }}-attempt-${{ github.run_attempt }}
+          path: screenshots/reading-progress-auth/
+          retention-days: 7
+          if-no-files-found: error

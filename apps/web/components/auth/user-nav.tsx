@@ -18,17 +18,23 @@ import {
 import { useAuth } from "@/lib/auth/context";
 import { AuthModal } from "./auth-modal";
 
-export function UserNav() {
+interface UserNavProps {
+  onAuthOpen?: () => void;
+}
+
+export function UserNav({ onAuthOpen }: UserNavProps = {}) {
   const { user, isLoading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
 
   const openLogin = () => {
+    onAuthOpen?.();
     setAuthModalTab("login");
     setShowAuthModal(true);
   };
 
   const openSignup = () => {
+    onAuthOpen?.();
     setAuthModalTab("signup");
     setShowAuthModal(true);
   };
@@ -45,13 +51,13 @@ export function UserNav() {
         <div className="flex items-center gap-2">
           <button
             onClick={openLogin}
-            className="text-sm text-text-secondary hover:text-white transition-colors px-3 py-2"
+            className="inline-flex min-h-[44px] items-center text-sm text-text-secondary hover:text-white transition-colors px-3 py-2"
           >
             Sign In
           </button>
           <button
             onClick={openSignup}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.3)] transition-all duration-300"
+            className="px-4 py-2 rounded-xl shrink-0 whitespace-nowrap bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.3)] transition-all duration-300"
           >
             <span className="whitespace-nowrap">Get Started</span>
           </button>

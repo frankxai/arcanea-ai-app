@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useCallback, useRef, useEffect, type ReactNode } from 'react';
+import {
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   EditorRoot,
   EditorContent,
@@ -21,11 +28,11 @@ import {
   Color,
   HighlightExtension,
   Placeholder,
-  CodeBlockLowlight,
   HorizontalRule,
   CharacterCount,
   GlobalDragHandle,
   ImageResizer,
+  UploadImagesPlugin,
   handleImageDrop,
   handleImagePaste,
   createImageUpload,
@@ -33,7 +40,19 @@ import {
   handleCommandNavigation,
   type JSONContent,
   type EditorInstance,
-} from 'novel';
+} from "novel";
+import {
+  acknowledgeDocumentOriginal,
+  documentContainsOriginal,
+  readDocumentOriginal,
+  retainDocumentOriginal,
+  type DocumentOriginal,
+} from "@/lib/docs/media-outbox";
+import {
+  DocumentMediaError,
+  documentMediaUrl,
+  type DocumentMediaScope,
+} from "@/lib/docs/media";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -49,30 +68,25 @@ interface DocEditorProps {
   initialContent?: JSONContent;
   placeholder?: string;
   onSave?: (payload: DocEditorSavePayload) => Promise<void> | void;
+  /** Immediate current revision; save remains debounced. */
+  onChange?: (payload: DocEditorSavePayload) => void;
+  onReady?: (payload: DocEditorSavePayload) => void;
   /** Debounce delay in ms (default 2000) */
   saveDelay?: number;
   readOnly?: boolean;
+  onImageUpload?: (file: File) => Promise<string>;
+  imageRecovery?: {
+    scope: DocumentMediaScope;
+    current: () => boolean;
+    /** Content from a verified server revision, never an unsaved draft. */
+    confirmedContent: unknown;
+    confirmation: number;
+  };
 }
 
 // ---------------------------------------------------------------------------
-// Image upload stub (replace with real Supabase Storage upload)
+// Image upload is supplied by the current owner/document workspace.
 // ---------------------------------------------------------------------------
-
-const uploadFn = createImageUpload({
-  onUpload: async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    const res = await fetch('/api/upload/image', { method: 'POST', body: formData });
-    if (!res.ok) throw new Error('Upload failed');
-    const data = await res.json();
-    return data.url as string;
-  },
-  validateFn: (file: File) => {
-    if (!file.type.startsWith('image/')) return false;
-    if (file.size > 10 * 1024 * 1024) return false;
-    return true;
-  },
-});
 
 function commandIcon(label: string): ReactNode {
   return (
@@ -86,132 +100,230 @@ function commandIcon(label: string): ReactNode {
 // Slash command items
 // ---------------------------------------------------------------------------
 
-const suggestionItems = createSuggestionItems([
-  {
-    title: 'Text',
-    description: 'Plain paragraph',
-    icon: commandIcon('T'),
-    searchTerms: ['text', 'paragraph', 'p'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleNode('paragraph', 'paragraph').run();
+function documentSuggestionItems(
+  uploadFn: ReturnType<typeof createImageUpload>,
+) {
+  return createSuggestionItems([
+    {
+      title: "Text",
+      description: "Plain paragraph",
+      icon: commandIcon("T"),
+      searchTerms: ["text", "paragraph", "p"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .toggleNode("paragraph", "paragraph")
+          .run();
+      },
     },
-  },
-  {
-    title: 'Heading 1',
-    description: 'Large section heading',
-    icon: commandIcon('H1'),
-    searchTerms: ['h1', 'heading', 'title'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run();
+    {
+      title: "Heading 1",
+      description: "Large section heading",
+      icon: commandIcon("H1"),
+      searchTerms: ["h1", "heading", "title"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode("heading", { level: 1 })
+          .run();
+      },
     },
-  },
-  {
-    title: 'Heading 2',
-    description: 'Medium section heading',
-    icon: commandIcon('H2'),
-    searchTerms: ['h2', 'heading', 'subtitle'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run();
+    {
+      title: "Heading 2",
+      description: "Medium section heading",
+      icon: commandIcon("H2"),
+      searchTerms: ["h2", "heading", "subtitle"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode("heading", { level: 2 })
+          .run();
+      },
     },
-  },
-  {
-    title: 'Heading 3',
-    description: 'Small section heading',
-    icon: commandIcon('H3'),
-    searchTerms: ['h3', 'heading'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 3 }).run();
+    {
+      title: "Heading 3",
+      description: "Small section heading",
+      icon: commandIcon("H3"),
+      searchTerms: ["h3", "heading"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode("heading", { level: 3 })
+          .run();
+      },
     },
-  },
-  {
-    title: 'Bullet List',
-    description: 'Unordered list',
-    icon: commandIcon('•'),
-    searchTerms: ['ul', 'list', 'bullet', 'unordered'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleBulletList().run();
+    {
+      title: "Bullet List",
+      description: "Unordered list",
+      icon: commandIcon("•"),
+      searchTerms: ["ul", "list", "bullet", "unordered"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleBulletList().run();
+      },
     },
-  },
-  {
-    title: 'Numbered List',
-    description: 'Ordered list',
-    icon: commandIcon('1.'),
-    searchTerms: ['ol', 'list', 'numbered', 'ordered'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+    {
+      title: "Numbered List",
+      description: "Ordered list",
+      icon: commandIcon("1."),
+      searchTerms: ["ol", "list", "numbered", "ordered"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+      },
     },
-  },
-  {
-    title: 'To-Do',
-    description: 'Task checklist item',
-    icon: commandIcon('[]'),
-    searchTerms: ['todo', 'task', 'check', 'checkbox'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleTaskList().run();
+    {
+      title: "To-Do",
+      description: "Task checklist item",
+      icon: commandIcon("[]"),
+      searchTerms: ["todo", "task", "check", "checkbox"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run();
+      },
     },
-  },
-  {
-    title: 'Quote',
-    description: 'Block quotation',
-    icon: commandIcon('"'),
-    searchTerms: ['blockquote', 'quote'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleBlockquote().run();
+    {
+      title: "Quote",
+      description: "Block quotation",
+      icon: commandIcon('"'),
+      searchTerms: ["blockquote", "quote"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleBlockquote().run();
+      },
     },
-  },
-  {
-    title: 'Code',
-    description: 'Code block with syntax highlighting',
-    icon: commandIcon('</>'),
-    searchTerms: ['code', 'codeblock', 'pre'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+    {
+      title: "Code",
+      description: "Code block",
+      icon: commandIcon("</>"),
+      searchTerms: ["code", "codeblock", "pre"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+      },
     },
-  },
-  {
-    title: 'Divider',
-    description: 'Horizontal rule',
-    icon: commandIcon('---'),
-    searchTerms: ['hr', 'divider', 'separator', 'rule'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+    {
+      title: "Divider",
+      description: "Horizontal rule",
+      icon: commandIcon("---"),
+      searchTerms: ["hr", "divider", "separator", "rule"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+      },
     },
-  },
-  {
-    title: 'Image',
-    description: 'Upload or embed an image',
-    icon: commandIcon('Img'),
-    searchTerms: ['image', 'img', 'photo', 'picture'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).run();
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.onchange = async () => {
-        if (!input.files?.[0]) return;
-        uploadFn(input.files[0], editor.view, editor.state.selection.from);
-      };
-      input.click();
+    {
+      title: "Image",
+      description: "Upload a private document image",
+      icon: commandIcon("Img"),
+      searchTerms: ["image", "img", "photo", "picture"],
+      command: ({
+        editor,
+        range,
+      }: {
+        editor: EditorInstance;
+        range: { from: number; to: number };
+      }) => {
+        editor.chain().focus().deleteRange(range).run();
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = async () => {
+          if (!input.files?.[0]) return;
+          uploadFn(input.files[0], editor.view, editor.state.selection.from);
+        };
+        input.click();
+      },
     },
-  },
-]);
+  ]);
+}
 
 // ---------------------------------------------------------------------------
 // Extensions
 // ---------------------------------------------------------------------------
 
 const extensions = [
-  StarterKit.configure({ codeBlock: false }),
+  StarterKit,
   TiptapLink.configure({ openOnClick: false }),
-  TiptapImage.configure({ allowBase64: false }),
+  TiptapImage.extend({
+    addProseMirrorPlugins() {
+      return [
+        ...(this.parent?.() ?? []),
+        UploadImagesPlugin({
+          imageClass: "rounded-lg border border-[var(--arc-cosmic-border)]",
+        }),
+      ];
+    },
+  }).configure({ allowBase64: false }),
   TiptapUnderline,
   TaskList,
   TaskItem.configure({ nested: true }),
   TextStyle,
   Color,
   HighlightExtension.configure({ multicolor: true }),
-  Placeholder.configure({ placeholder: 'Type / for commands…' }),
-  CodeBlockLowlight,
+  Placeholder.configure({ placeholder: "Type / for commands…" }),
   HorizontalRule,
   CharacterCount,
   GlobalDragHandle,
@@ -224,11 +336,275 @@ const extensions = [
 export function DocEditor({
   initialContent,
   onSave,
+  onChange,
+  onReady,
   saveDelay = 2000,
   readOnly = false,
+  onImageUpload,
+  imageRecovery,
 }: DocEditorProps) {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const editorRef = useRef<EditorInstance | null>(null);
+  const pendingImageRef = useRef<File | null>(null);
+  const originalRef = useRef<DocumentOriginal | null>(null);
+  const pendingUrlRef = useRef<string | null>(null);
+  const uploadBusyRef = useRef(false);
+  const recoveryLoadingRef = useRef(Boolean(imageRecovery));
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const alive = useRef(true);
+  const [pendingImage, setPendingImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [recoveringImage, setRecoveringImage] = useState(
+    Boolean(imageRecovery),
+  );
+  const [imageRecoveryNotice, setImageRecoveryNotice] = useState<string | null>(
+    null,
+  );
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const recoveryScope = imageRecovery?.scope;
+  const recoveryCurrent = imageRecovery?.current;
+  useEffect(() => {
+    if (!recoveryScope || !recoveryCurrent) return;
+    let mounted = true;
+    recoveryLoadingRef.current = true;
+    setRecoveringImage(true);
+    void readDocumentOriginal(recoveryScope, () => mounted && recoveryCurrent())
+      .then((entry) => {
+        if (!mounted || !recoveryCurrent()) return;
+        recoveryLoadingRef.current = false;
+        if (!entry) return;
+        originalRef.current = entry;
+        pendingImageRef.current = entry.file;
+        pendingUrlRef.current = documentMediaUrl(
+          entry.claim,
+          entry.claim.assetId,
+        );
+        setPendingImage(entry.file);
+        setImageError(
+          "An original image was recovered from this browser. Retry to add it or finish saving the document.",
+        );
+        setImageRecoveryNotice(
+          "Original kept in this browser. Download a copy before clearing browser data.",
+        );
+      })
+      .catch((error: unknown) => {
+        if (!mounted || !recoveryCurrent()) return;
+        setImageError(
+          error instanceof Error
+            ? error.message
+            : "Browser image recovery is unavailable. Keep your original file.",
+        );
+        // An unreadable copy must never be replaced by a new upload.
+        if (error instanceof DocumentMediaError && error.status === 409)
+          recoveryLoadingRef.current = true;
+      })
+      .finally(() => {
+        if (!mounted || !recoveryCurrent()) return;
+        if (!originalRef.current && recoveryLoadingRef.current) {
+          // A scoped read failure keeps adding disabled until the document reopens.
+          setRecoveringImage(true);
+        } else {
+          recoveryLoadingRef.current = false;
+          setRecoveringImage(false);
+        }
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [recoveryScope, recoveryCurrent]);
+  useEffect(() => {
+    const entry = originalRef.current;
+    if (!imageRecovery || uploadingImage) return;
+    if (!entry) {
+      if (
+        pendingImageRef.current &&
+        pendingUrlRef.current &&
+        imageRecovery.current() &&
+        documentContainsOriginal(
+          imageRecovery.confirmedContent,
+          pendingUrlRef.current,
+        )
+      ) {
+        pendingImageRef.current = null;
+        pendingUrlRef.current = null;
+        setPendingImage(null);
+        setUploadedImageUrl(null);
+        setImageError(null);
+        setImageRecoveryNotice(null);
+      }
+      return;
+    }
+    let mounted = true;
+    void acknowledgeDocumentOriginal(
+      entry,
+      imageRecovery.confirmedContent,
+      () => mounted && imageRecovery.current(),
+    )
+      .then((removed) => {
+        if (
+          !removed ||
+          !mounted ||
+          !imageRecovery.current() ||
+          originalRef.current !== entry
+        )
+          return;
+        originalRef.current = null;
+        pendingImageRef.current = null;
+        pendingUrlRef.current = null;
+        setPendingImage(null);
+        setUploadedImageUrl(null);
+        setImageError(null);
+        setImageRecoveryNotice(null);
+      })
+      .catch((error: unknown) => {
+        if (mounted && imageRecovery.current())
+          setImageError(
+            error instanceof Error
+              ? error.message
+              : "Image saving is confirmed, but the browser recovery copy could not be retired.",
+          );
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [imageRecovery, pendingImage, uploadedImageUrl, uploadingImage]);
+  useEffect(() => {
+    alive.current = true;
+    const unload = (event: BeforeUnloadEvent) => {
+      if (!pendingImageRef.current) return;
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    const navigation = (event: MouseEvent) => {
+      const link =
+        event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+      if (
+        pendingImageRef.current &&
+        link &&
+        !link.hasAttribute("download") &&
+        !window.confirm(
+          "Leave before this image is saved? Download its original first if you do not have a copy.",
+        )
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    window.addEventListener("beforeunload", unload);
+    document.addEventListener("click", navigation, true);
+    return () => {
+      alive.current = false;
+      window.removeEventListener("beforeunload", unload);
+      document.removeEventListener("click", navigation, true);
+    };
+  }, []);
+  const uploadFn = useMemo(
+    () =>
+      createImageUpload({
+        onUpload: async (file: File) => {
+          if (readOnly || !onImageUpload)
+            throw Error(
+              "Private image saving is unavailable in this editor. Keep the original file.",
+            );
+          if (
+            recoveryLoadingRef.current ||
+            uploadBusyRef.current ||
+            (pendingImageRef.current && pendingImageRef.current !== file)
+          )
+            throw Error(
+              "Finish or download the pending image before adding another.",
+            );
+          pendingImageRef.current = file;
+          uploadBusyRef.current = true;
+          if (alive.current) {
+            setPendingImage(file);
+            setImageError(null);
+            setUploadingImage(true);
+          }
+          try {
+            if (imageRecovery) {
+              try {
+                originalRef.current = await retainDocumentOriginal(
+                  file,
+                  imageRecovery.scope,
+                  () => alive.current && imageRecovery.current(),
+                );
+                if (alive.current && imageRecovery.current())
+                  setImageRecoveryNotice(
+                    "Original kept in this browser. Download a copy before clearing browser data.",
+                  );
+              } catch (error) {
+                if (
+                  !alive.current ||
+                  !imageRecovery.current() ||
+                  (error instanceof DocumentMediaError && error.status !== 503)
+                )
+                  throw error;
+                setImageRecoveryNotice(
+                  "Browser backup is unavailable. Download the original before closing this page.",
+                );
+              }
+            }
+            const url = await onImageUpload(file);
+            if (!alive.current || (imageRecovery && !imageRecovery.current()))
+              throw Error(
+                "The document closed before image saving was confirmed.",
+              );
+            pendingUrlRef.current = url;
+            setUploadedImageUrl(url);
+            return url;
+          } catch (error) {
+            if (alive.current)
+              setImageError(
+                error instanceof Error
+                  ? error.message
+                  : "Image saving was not confirmed. Keep the original file.",
+              );
+            throw error;
+          } finally {
+            uploadBusyRef.current = false;
+            if (alive.current) setUploadingImage(false);
+          }
+        },
+        validateFn: (file: File) => {
+          const valid =
+            ["image/png", "image/jpeg", "image/webp"].includes(file.type) &&
+            file.size > 0 &&
+            file.size <= 10 * 1024 * 1024;
+          if (!valid && alive.current)
+            setImageError(
+              "Use a PNG, JPEG or WEBP image of at most 10 MiB. Your original file is unchanged.",
+            );
+          return valid;
+        },
+      }),
+    [onImageUpload, readOnly, imageRecovery],
+  );
+  const suggestionItems = useMemo(
+    () => documentSuggestionItems(uploadFn),
+    [uploadFn],
+  );
+  const imageControl =
+    "min-h-11 rounded-lg border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] px-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50";
+  function insertFile(file: File) {
+    const editor = editorRef.current;
+    if (!editor) return;
+    uploadFn(file, editor.view, editor.state.selection.from);
+  }
+  function retryImage(file: File) {
+    const editor = editorRef.current;
+    if (!editor || recoveryLoadingRef.current || uploadBusyRef.current) return;
+    if (
+      pendingUrlRef.current &&
+      documentContainsOriginal(editor.getJSON(), pendingUrlRef.current)
+    ) {
+      setImageError(null);
+      triggerSave(editor);
+    } else insertFile(file);
+  }
 
   const triggerSave = useCallback(
     (editor: EditorInstance) => {
@@ -238,12 +614,18 @@ export function DocEditor({
         const json = editor.getJSON();
         const text = editor.getText();
         const wordCount =
-          (editor.storage as { characterCount?: { words?: () => number } })
-            .characterCount?.words?.() ?? text.split(/\s+/).filter(Boolean).length;
-        await onSave({ content_json: json, content_text: text, word_count: wordCount });
+          (
+            editor.storage as { characterCount?: { words?: () => number } }
+          ).characterCount?.words?.() ??
+          text.split(/\s+/).filter(Boolean).length;
+        await onSave({
+          content_json: json,
+          content_text: text,
+          word_count: wordCount,
+        });
       }, saveDelay);
     },
-    [onSave, saveDelay]
+    [onSave, saveDelay],
   );
 
   // Flush pending save on unmount
@@ -256,7 +638,11 @@ export function DocEditor({
           const json = editor.getJSON();
           const text = editor.getText();
           const wordCount = text.split(/\s+/).filter(Boolean).length;
-          void onSave({ content_json: json, content_text: text, word_count: wordCount });
+          void onSave({
+            content_json: json,
+            content_text: text,
+            word_count: wordCount,
+          });
         }
       }
     };
@@ -264,6 +650,81 @@ export function DocEditor({
 
   return (
     <div className="doc-editor relative min-h-[60vh]">
+      {!readOnly && (
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            className={imageControl}
+            disabled={
+              recoveringImage ||
+              uploadingImage ||
+              pendingImage !== null ||
+              !onImageUpload
+            }
+            onClick={() => imageInputRef.current?.click()}
+          >
+            Add image
+          </button>
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            hidden
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              if (file) insertFile(file);
+              event.target.value = "";
+            }}
+          />
+          <span className="text-sm text-[var(--arc-text-secondary)]">
+            PNG, JPEG or WEBP, up to 10 MiB
+          </span>
+        </div>
+      )}
+      {(imageError || pendingImage) && (
+        <section
+          aria-label="Image recovery"
+          className="mb-4 rounded-lg border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-4"
+        >
+          <p role={imageError ? "alert" : "status"} className="mb-3 text-sm">
+            {imageError ??
+              (uploadedImageUrl
+                ? "Image uploaded. Waiting for the document save to be confirmed."
+                : "Saving your image… Keep this page open.")}
+          </p>
+          {imageRecoveryNotice && (
+            <p className="mb-3 text-sm text-[var(--arc-text-secondary)]">
+              {imageRecoveryNotice}
+            </p>
+          )}
+          {pendingImage && (
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className={imageControl}
+                disabled={uploadingImage}
+                onClick={() => retryImage(pendingImage)}
+              >
+                Retry image
+              </button>
+              <button
+                type="button"
+                className={imageControl}
+                onClick={() => {
+                  const url = URL.createObjectURL(pendingImage);
+                  const anchor = document.createElement("a");
+                  anchor.href = url;
+                  anchor.download = pendingImage.name;
+                  anchor.click();
+                  setTimeout(() => URL.revokeObjectURL(url), 1000);
+                }}
+              >
+                Download original image
+              </button>
+            </div>
+          )}
+        </section>
+      )}
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}
@@ -272,10 +733,20 @@ export function DocEditor({
           className="prose prose-invert prose-sm sm:prose-base max-w-none focus:outline-none [&_.ProseMirror]:min-h-[60vh] [&_.ProseMirror]:px-0 [&_.ProseMirror]:py-2 [&_.ProseMirror_h1]:font-display [&_.ProseMirror_h1]:text-3xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h2]:font-display [&_.ProseMirror_h2]:text-2xl [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h3]:font-display [&_.ProseMirror_h3]:text-xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_blockquote]:border-l-2 [&_.ProseMirror_blockquote]:border-white/20 [&_.ProseMirror_blockquote]:pl-4 [&_.ProseMirror_blockquote]:text-white/50 [&_.ProseMirror_code]:bg-white/[0.06] [&_.ProseMirror_code]:rounded [&_.ProseMirror_code]:px-1.5 [&_.ProseMirror_code]:py-0.5 [&_.ProseMirror_code]:text-[var(--arc-brand-atlantean-teal)] [&_.ProseMirror_pre]:bg-white/[0.04] [&_.ProseMirror_pre]:rounded-xl [&_.ProseMirror_pre]:p-4 [&_.ProseMirror_pre]:border [&_.ProseMirror_pre]:border-white/[0.06]"
           onUpdate={({ editor }) => {
             editorRef.current = editor;
+            onChange?.({
+              content_json: editor.getJSON(),
+              content_text: editor.getText(),
+              word_count: editor.getText().split(/\s+/).filter(Boolean).length,
+            });
             triggerSave(editor);
           }}
           onCreate={({ editor }) => {
             editorRef.current = editor;
+            onReady?.({
+              content_json: editor.getJSON(),
+              content_text: editor.getText(),
+              word_count: editor.getText().split(/\s+/).filter(Boolean).length,
+            });
           }}
           editorProps={{
             handleDrop: (view, event, _slice, moved) =>
@@ -286,7 +757,7 @@ export function DocEditor({
               return handleCommandNavigation(event) ?? false;
             },
             attributes: {
-              class: 'outline-none',
+              class: "outline-none",
             },
           }}
         >
@@ -305,9 +776,13 @@ export function DocEditor({
                 >
                   <span className="flex-shrink-0">{item.icon}</span>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-medium text-white/80">{item.title}</span>
+                    <span className="text-sm font-medium text-white/80">
+                      {item.title}
+                    </span>
                     {item.description && (
-                      <span className="text-[11px] text-white/35">{item.description}</span>
+                      <span className="text-[11px] text-white/35">
+                        {item.description}
+                      </span>
                     )}
                   </div>
                 </EditorCommandItem>
@@ -317,54 +792,58 @@ export function DocEditor({
 
           {/* Bubble toolbar */}
           <EditorBubble
-            tippyOptions={{ duration: 100, placement: 'top' }}
+            tippyOptions={{ duration: 100, placement: "top" }}
             className="flex items-center gap-0.5 rounded-xl border border-white/[0.10] bg-[var(--arc-cosmic-void)]/95 backdrop-blur-xl px-1.5 py-1 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
             <BubbleButton
               label="Bold"
               shortcut="B"
               onSelect={(editor) => editor.chain().focus().toggleBold().run()}
-              isActive={(editor) => editor.isActive('bold')}
+              isActive={(editor) => editor.isActive("bold")}
             />
             <BubbleButton
               label="Italic"
               shortcut="I"
               onSelect={(editor) => editor.chain().focus().toggleItalic().run()}
-              isActive={(editor) => editor.isActive('italic')}
+              isActive={(editor) => editor.isActive("italic")}
             />
             <BubbleButton
               label="U"
               shortcut="U"
-              onSelect={(editor) => editor.chain().focus().toggleUnderline().run()}
-              isActive={(editor) => editor.isActive('underline')}
+              onSelect={(editor) =>
+                editor.chain().focus().toggleUnderline().run()
+              }
+              isActive={(editor) => editor.isActive("underline")}
             />
             <BubbleButton
               label="S"
               shortcut="S"
               className="line-through"
               onSelect={(editor) => editor.chain().focus().toggleStrike().run()}
-              isActive={(editor) => editor.isActive('strike')}
+              isActive={(editor) => editor.isActive("strike")}
             />
             <div className="w-px h-4 bg-white/[0.10] mx-0.5" />
             <BubbleButton
               label="Mark"
-              onSelect={(editor) => editor.chain().focus().toggleHighlight().run()}
-              isActive={(editor) => editor.isActive('highlight')}
+              onSelect={(editor) =>
+                editor.chain().focus().toggleHighlight().run()
+              }
+              isActive={(editor) => editor.isActive("highlight")}
               highlight
             />
             <BubbleButton
               label="Code"
               onSelect={(editor) => editor.chain().focus().toggleCode().run()}
-              isActive={(editor) => editor.isActive('code')}
+              isActive={(editor) => editor.isActive("code")}
               mono
             />
             <BubbleButton
               label="Link"
               onSelect={(editor) => {
-                const url = window.prompt('URL:');
+                const url = window.prompt("URL:");
                 if (url) editor.chain().focus().setLink({ href: url }).run();
               }}
-              isActive={(editor) => editor.isActive('link')}
+              isActive={(editor) => editor.isActive("link")}
             />
           </EditorBubble>
 
@@ -386,7 +865,7 @@ function BubbleButton({
   isActive,
   highlight,
   mono,
-  className = '',
+  className = "",
 }: {
   label: string;
   shortcut?: string;
@@ -400,14 +879,18 @@ function BubbleButton({
     <EditorBubbleItem
       onSelect={(editor) => onSelect(editor)}
       className={[
-        'cursor-pointer select-none rounded-lg px-2.5 py-1.5 text-xs transition-colors font-sans',
-        highlight ? 'bg-yellow-400/20 text-yellow-300 hover:bg-yellow-400/30' : '',
-        mono ? 'font-mono text-[var(--arc-brand-atlantean-teal)]' : '',
-        !highlight && !mono ? 'text-white/50 hover:bg-white/[0.08] hover:text-white' : '',
+        "cursor-pointer select-none rounded-lg px-2.5 py-1.5 text-xs transition-colors font-sans",
+        highlight
+          ? "bg-yellow-400/20 text-yellow-300 hover:bg-yellow-400/30"
+          : "",
+        mono ? "font-mono text-[var(--arc-brand-atlantean-teal)]" : "",
+        !highlight && !mono
+          ? "text-white/50 hover:bg-white/[0.08] hover:text-white"
+          : "",
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {label}
     </EditorBubbleItem>

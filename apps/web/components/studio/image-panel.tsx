@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { useAuth } from "@/lib/auth/context";
+import { requestImages } from "@/lib/imagine/request";
 import { useState, useCallback } from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import {
   Sparkle,
   Download,
@@ -30,6 +32,13 @@ export function ImageCreationPanel({
   generatedImages,
   setGeneratedImages,
 }: ImageCreationPanelProps) {
+  const { credentialScope } = useAuth();
+  const currentToken = credentialScope.get();
+  const [editorOwner, setEditorOwner] = useState<typeof currentToken | null>(
+    currentToken.actor?.startsWith("user:") ? currentToken : null,
+  );
+  if (!editorOwner && currentToken.actor?.startsWith("user:"))
+    setEditorOwner(currentToken);
   const [style, setStyle] = useState("Fantasy Art");
   const [aspectRatio, setAspectRatio] = useState("1:1");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -39,17 +48,21 @@ export function ImageCreationPanel({
   const handleGenerate = useCallback(async () => {
     if (!imagePrompt.trim() || isGenerating) return;
 
+    const token = credentialScope.get();
     setIsGenerating(true);
     setImageError(null);
 
     const fullPrompt = `${imagePrompt.trim()}, ${style.toLowerCase()} style`;
 
     try {
-      const res = await fetch("/api/imagine/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: fullPrompt, count: 4, aspectRatio }),
-      });
+      const res = await requestImages(
+        {
+          prompt: fullPrompt,
+          count: 4,
+          aspectRatio,
+        },
+        { scope: credentialScope, token },
+      );
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -57,6 +70,7 @@ export function ImageCreationPanel({
       }
 
       const data = await res.json();
+      if (!credentialScope.isCurrent(token)) return;
       const images: GeneratedImageData[] = (data.images || []).map(
         (
           img: {
@@ -65,7 +79,7 @@ export function ImageCreationPanel({
             mimeType?: string;
             prompt?: string;
           },
-          i: number
+          i: number,
         ) => ({
           id: `studio_img_${Date.now()}_${i}`,
           url:
@@ -74,19 +88,35 @@ export function ImageCreationPanel({
               ? `data:${img.mimeType || "image/png"};base64,${img.data}`
               : ""),
           prompt: img.prompt || fullPrompt,
-        })
+        }),
       );
 
       setGeneratedImages(images);
       if (images.length > 0) setSelectedImage(images[0].id);
     } catch (err) {
+      if (!credentialScope.isCurrent(token)) return;
       setImageError(
-        err instanceof Error ? err.message : "Image generation failed"
+        err instanceof Error ? err.message : "Image generation failed",
       );
     } finally {
-      setIsGenerating(false);
+      if (credentialScope.isCurrent(token)) setIsGenerating(false);
     }
-  }, [imagePrompt, style, aspectRatio, isGenerating, setGeneratedImages]);
+  }, [
+    credentialScope,
+    imagePrompt,
+    style,
+    aspectRatio,
+    isGenerating,
+    setGeneratedImages,
+  ]);
+
+  if (editorOwner && !credentialScope.isCurrent(editorOwner))
+    return (
+      <p role="status" className="text-sm text-white/70">
+        Your account changed. Reload this page to continue with the current
+        account.
+      </p>
+    );
 
   const activeImage = generatedImages.find((img) => img.id === selectedImage);
 
@@ -161,7 +191,9 @@ in the style of epic fantasy concept art."
               background: isGenerating
                 ? "rgba(127,255,212,0.12)"
                 : "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-atlantean-teal))",
-              color: isGenerating ? "var(--arc-brand-atlantean-teal)" : "var(--arc-cosmic-void)",
+              color: isGenerating
+                ? "var(--arc-brand-atlantean-teal)"
+                : "var(--arc-cosmic-void)",
             }}
           >
             {isGenerating ? (
@@ -240,7 +272,10 @@ in the style of epic fantasy concept art."
           {!isGenerating && generatedImages.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-4 py-12">
               <div className="w-16 h-16 rounded-2xl bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 flex items-center justify-center">
-                <PhImage size={28} className="text-[var(--arc-brand-atlantean-teal)]/60" />
+                <PhImage
+                  size={28}
+                  className="text-[var(--arc-brand-atlantean-teal)]/60"
+                />
               </div>
               <div className="text-center">
                 <p className="text-sm text-text-muted">
@@ -264,7 +299,7 @@ in the style of epic fantasy concept art."
                   src={activeImage.url}
                   alt={activeImage.prompt}
                   className="w-full object-contain bg-black/20"
-                 />
+                />
                 <div className="absolute bottom-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                   <a
                     href={activeImage.url}
@@ -293,7 +328,7 @@ in the style of epic fantasy concept art."
                         src={img.url}
                         alt=""
                         className="w-full h-full object-cover"
-                       />
+                      />
                     </button>
                   ))}
                 </div>
