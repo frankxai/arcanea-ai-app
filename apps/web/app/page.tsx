@@ -52,7 +52,7 @@ async function HomeWithData() {
 
 export default function Page() {
   return (
-    <main>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -60,6 +60,6 @@ export default function Page() {
       <Suspense fallback={<HomeLoading />}>
         <HomeWithData />
       </Suspense>
-    </main>
+    </>
   );
 }

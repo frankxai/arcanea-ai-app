@@ -78,6 +78,7 @@ export function CollectionGrid({ entries }: { entries: SovereignEntry[] }) {
             Search names, regions, factions and books
           </span>
           <input
+            id="sovereign-depths-search"
             type="search"
             className={styles.search}
             value={query}

@@ -7,15 +7,16 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal, StaggerReveal } from "@/components/motion/reveal";
 import { GradientMesh } from "@/components/motion/gradient-mesh";
 import { NumberTicker } from "@/components/motion/number-ticker";
+import { FACTS } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Blueprints — Open Source Production Code",
   description:
-    "Nine production blueprints for AI startups, authors, game studios, and design engineers. Fork the code running arcanea.ai.",
+    "Production blueprints for AI startups, authors, game studios, and design engineers. Fork the code running arcanea.ai.",
   openGraph: {
     title: "Arcanea Blueprints — Fork the code behind arcanea.ai",
     description:
-      "Nine production blueprints. Multi-model chat, world engine, publishing house, MCP server. Fork the code running arcanea.ai.",
+      "Production blueprints: multi-model chat, world engine, publishing house, MCP server. Fork the code running arcanea.ai.",
     type: "website",
   },
   alternates: { canonical: "/templates" },
@@ -99,7 +100,6 @@ const BLUEPRINTS: Blueprint[] = [
     ],
     stack: ["React 19", "Framer Motion 11", "Tailwind", "Radix UI"],
     github: "https://github.com/frankxai/cosmic-landing-template",
-    demo: "/arcanea-vault",
     deploy:
       "https://vercel.com/new/clone?repository-url=https://github.com/frankxai/cosmic-landing-template",
     color: "var(--arc-brand-atlantean-teal)",
@@ -123,14 +123,10 @@ const BLUEPRINTS: Blueprint[] = [
     desc: "6 semantic vaults with confidence scoring, Guardian routing, Mem0 adapter, and WebGL constellation visualization.",
     audience: "Agent builders",
     loc: "4,600",
-    files: [
-      "packages/memory-system/src/",
-      "packages/memory-mcp/",
-      "app/arcanea-vault/",
-    ],
+    files: ["packages/memory-system/src/", "packages/memory-mcp/"],
     stack: ["TypeScript", "MCP SDK", "JSONL", "React Three Fiber"],
     github: "https://github.com/frankxai/Starlight-Intelligence-System",
-    demo: "/arcanea-vault",
+    demo: "/starlight-intelligence",
     color: "var(--arc-void)",
   },
   {
@@ -151,7 +147,7 @@ const BLUEPRINTS: Blueprint[] = [
   {
     id: "mcp",
     name: "MCP Server",
-    desc: "54 tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.",
+    desc: `${FACTS.mcpTools} tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.`,
     audience: "Claude developers · Agent builders",
     loc: "8,500",
     files: [
@@ -199,7 +195,7 @@ const USE_CASES = [
     title: "Need a premium dark UI?",
     desc: "The Motion + UI Kit gives you 12 physics-based primitives (SplitText, LiquidGlass, TiltCard, Magnetic) and 40 production components. Works with any Next.js project — just copy the files.",
     blueprints: ["motion"],
-    cta: { label: "See it in action", href: "/arcanea-vault" },
+    cta: { label: "See it on the homepage", href: "/" },
     color: "var(--arc-brand-atlantean-teal)",
   },
 ];
@@ -207,10 +203,8 @@ const USE_CASES = [
 // ── Stats ───────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: 7, suffix: "", label: "Blueprints" },
-  { value: 33, suffix: "K+", label: "Lines of code" },
-  { value: 42, suffix: "", label: "MCP tools" },
-  { value: 12, suffix: "", label: "Motion primitives" },
+  { value: BLUEPRINTS.length, suffix: "", label: "Blueprints" },
+  { value: FACTS.mcpTools, suffix: "", label: "MCP tools" },
 ];
 
 // ── Page ────────────────────────────────────────────────────────────────────

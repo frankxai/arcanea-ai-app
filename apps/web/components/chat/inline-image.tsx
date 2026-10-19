@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import React, { useState, useCallback } from 'react';
-import Image from 'next/image';
-import {
-  Download,
-  ArrowsClockwise,
-  ArrowsOut,
-} from '@/lib/phosphor-icons';
-import { ImageLightbox } from './image-lightbox';
+import React, { useState, useCallback } from "react";
+import Image from "next/image";
+import { Download, ArrowsClockwise, ArrowsOut } from "@/lib/phosphor-icons";
+import { ImageLightbox } from "./image-lightbox";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -45,7 +41,7 @@ export function InlineImage({
       const response = await fetch(src);
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `arcanea-image-${Date.now()}.png`;
       document.body.appendChild(a);
@@ -54,7 +50,7 @@ export function InlineImage({
       URL.revokeObjectURL(url);
     } catch {
       // Fallback: open in new tab
-      window.open(src, '_blank');
+      window.open(src, "_blank", "noopener,noreferrer");
     }
   }, [src]);
 
@@ -83,7 +79,7 @@ export function InlineImage({
         {/* Image container */}
         <div
           className="relative rounded-xl overflow-hidden border border-white/[0.06] cursor-pointer group/img hover:shadow-[0_0_16px_rgba(0,188,212,0.1)] transition-shadow"
-          style={{ aspectRatio: aspectRatio || 'auto' }}
+          style={{ aspectRatio: aspectRatio || "auto" }}
           onClick={() => setLightboxOpen(true)}
         >
           {/* Shimmer placeholder */}
@@ -91,10 +87,11 @@ export function InlineImage({
             <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] via-white/[0.06] to-white/[0.02] animate-shimmer bg-[length:200%_100%]" />
           )}
 
-          <Image src={src}
-            alt={displayPrompt || 'AI-generated image'}
+          <Image
+            src={src}
+            alt={displayPrompt || "AI-generated image"}
             className={`w-full h-auto transition-opacity duration-300 ${
-              loaded ? 'opacity-100' : 'opacity-0'
+              loaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setLoaded(true)}
             onError={() => setError(true)}
@@ -143,7 +140,7 @@ export function InlineImage({
       {/* Full-featured lightbox with zoom, download, and spring animation */}
       {lightboxOpen && (
         <ImageLightbox
-          images={[{ src, alt: displayPrompt || 'AI-generated image' }]}
+          images={[{ src, alt: displayPrompt || "AI-generated image" }]}
           initialIndex={0}
           onClose={() => setLightboxOpen(false)}
         />

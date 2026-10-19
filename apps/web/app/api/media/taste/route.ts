@@ -16,12 +16,12 @@
  * Cost: ~$0.0003/image via Haiku 4.5 vision
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
-const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
-const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? '';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
+const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? "";
 
 interface CatalogEntry {
   id: string;
@@ -36,12 +36,15 @@ interface CatalogEntry {
 export async function POST(request: NextRequest) {
   const writeKey = SERVICE_KEY || SUPABASE_ANON;
   if (!SUPABASE_URL || !writeKey) {
-    return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Supabase not configured" },
+      { status: 500 },
+    );
   }
   if (!ANTHROPIC_KEY) {
     return NextResponse.json(
-      { error: 'ANTHROPIC_API_KEY required for TASTE AI scoring' },
-      { status: 500 }
+      { error: "ANTHROPIC_API_KEY required for TASTE AI scoring" },
+      { status: 500 },
     );
   }
 
@@ -52,37 +55,52 @@ export async function POST(request: NextRequest) {
 
     // Fetch entries to analyze
     const params = new URLSearchParams();
-    params.set('select', 'id,storage_path,guardian,gate,element,scene,public_url');
-    params.set('limit', String(maxLimit));
-    params.set('order', 'created_at.asc');
+    params.set(
+      "select",
+      "id,storage_path,guardian,gate,element,scene,public_url",
+    );
+    params.set("limit", String(maxLimit));
+    params.set("order", "created_at.asc");
 
     if (ids?.length) {
-      params.set('id', `in.(${ids.join(',')})`);
+      params.set("id", `in.(${ids.join(",")})`);
     } else if (guardian) {
-      params.set('guardian', `eq.${guardian}`);
+      params.set("guardian", `eq.${guardian}`);
     } else if (tier) {
-      params.set('quality_tier', `eq.${tier}`);
+      params.set("quality_tier", `eq.${tier}`);
     }
 
     const fetchRes = await fetch(
       `${SUPABASE_URL}/rest/v1/media_catalog?${params}`,
-      { headers: { apikey: writeKey, Authorization: `Bearer ${writeKey}` } }
+      { headers: { apikey: writeKey, Authorization: `Bearer ${writeKey}` } },
     );
     if (!fetchRes.ok) {
-      return NextResponse.json({ error: 'Failed to fetch entries' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to fetch entries" },
+        { status: 500 },
+      );
     }
 
     const entries: CatalogEntry[] = await fetchRes.json();
     if (entries.length === 0) {
-      return NextResponse.json({ analyzed: 0, message: 'No entries match criteria' });
+      return NextResponse.json({
+        analyzed: 0,
+        message: "No entries match criteria",
+      });
     }
 
     // Analyze in batches of 5
-    const results: Array<{ id: string; guardian: string | null; scores: Record<string, number>; tier: number; notes: string }> = [];
+    const results: Array<{
+      id: string;
+      guardian: string | null;
+      scores: Record<string, number>;
+      tier: number;
+      notes: string;
+    }> = [];
 
     for (let i = 0; i < entries.length; i += 5) {
       const batch = entries.slice(i, i + 5);
-      const batchResults = await Promise.all(batch.map(e => analyzeImage(e)));
+      const batchResults = await Promise.all(batch.map((e) => analyzeImage(e)));
       for (const r of batchResults) {
         if (r) results.push(r);
       }
@@ -94,19 +112,19 @@ export async function POST(request: NextRequest) {
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/media_catalog?id=eq.${r.id}`,
         {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
             apikey: writeKey,
             Authorization: `Bearer ${writeKey}`,
-            'Content-Type': 'application/json',
-            Prefer: 'return=minimal',
+            "Content-Type": "application/json",
+            Prefer: "return=minimal",
           },
           body: JSON.stringify({
             taste_score: r.scores,
             quality_tier: r.tier,
-            analyzed_by: 'haiku-vision',
+            analyzed_by: "haiku-vision",
           }),
-        }
+        },
       );
       if (res.ok) updated++;
     }
@@ -115,13 +133,16 @@ export async function POST(request: NextRequest) {
       analyzed: results.length,
       updated,
       cost_estimate: `~$${(results.length * 0.0003).toFixed(4)}`,
-      results: results.map(r => ({
-        id: r.id, guardian: r.guardian, tier: r.tier,
-        total: r.scores.total, notes: r.notes,
+      results: results.map((r) => ({
+        id: r.id,
+        guardian: r.guardian,
+        tier: r.tier,
+        total: r.scores.total,
+        notes: r.notes,
       })),
     });
   } catch (err) {
-    console.error('[media/taste] error:', err);
+    console.error("[media/taste] error:", err);
     return NextResponse.json({ error: String(err) }, { status: 500 });
   }
 }
@@ -130,25 +151,29 @@ async function analyzeImage(entry: CatalogEntry) {
   try {
     const guardianCtx = entry.guardian
       ? `This image represents ${entry.guardian} (${entry.gate} Gate, ${entry.element} element).`
-      : 'No Guardian assigned yet.';
+      : "No Guardian assigned yet.";
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
       headers: {
-        'x-api-key': ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
+        "x-api-key": ANTHROPIC_KEY,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 200,
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'image', source: { type: 'url', url: entry.public_url } },
-            {
-              type: 'text',
-              text: `TASTE evaluator for Arcanea fantasy universe. Score this image 0-100 on:
+        model: "claude-haiku-5-5",
+        // Haiku 5.5 thinks by default and thinking counts toward max_tokens:
+        // low effort plus headroom keeps the short JSON reply from being cut off.
+        max_tokens: 1024,
+        output_config: { effort: "low" },
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "image", source: { type: "url", url: entry.public_url } },
+              {
+                type: "text",
+                text: `TASTE evaluator for Arcanea fantasy universe. Score this image 0-100 on:
 1. CANON (25%): Arcanea mythology fit? ${guardianCtx}
 2. DESIGN (25%): Cosmic glass aesthetic, ethereal, detailed?
 3. EMOTION (20%): Evokes wonder/power/transcendence?
@@ -156,33 +181,50 @@ async function analyzeImage(entry: CatalogEntry) {
 5. UNIQUENESS (15%): Distinctive contribution?
 Context: "${entry.scene}"
 Reply ONLY with JSON: {"canon":N,"design":N,"emotion":N,"technical":N,"uniqueness":N,"notes":"one line"}`,
-            },
-          ],
-        }],
+              },
+            ],
+          },
+        ],
       }),
     });
 
     if (!response.ok) return null;
 
     const data = await response.json();
-    const text = data.content?.[0]?.text ?? '';
+    // A safety refusal is HTTP 200 with no usable text; Haiku 5.5 has no
+    // server-side fallback, so the image simply goes unscored.
+    if (data.stop_reason === "refusal") return null;
+    // The reply can start with a thinking block, so find the text block by type.
+    const text =
+      (
+        data.content as Array<{ type: string; text?: string }> | undefined
+      )?.find((block) => block.type === "text")?.text ?? "";
     const match = text.match(/\{[^}]+\}/);
     if (!match) return null;
 
     const s = JSON.parse(match[0]);
     const total = Math.round(
-      (s.canon ?? 50) * 0.25 + (s.design ?? 50) * 0.25 +
-      (s.emotion ?? 50) * 0.20 + (s.technical ?? 50) * 0.15 +
-      (s.uniqueness ?? 50) * 0.15
+      (s.canon ?? 50) * 0.25 +
+        (s.design ?? 50) * 0.25 +
+        (s.emotion ?? 50) * 0.2 +
+        (s.technical ?? 50) * 0.15 +
+        (s.uniqueness ?? 50) * 0.15,
     );
     const tier = total >= 80 ? 1 : total >= 60 ? 2 : total >= 40 ? 3 : 4;
 
     return {
       id: entry.id,
       guardian: entry.guardian,
-      scores: { canon: s.canon, design: s.design, emotion: s.emotion, technical: s.technical, uniqueness: s.uniqueness, total },
+      scores: {
+        canon: s.canon,
+        design: s.design,
+        emotion: s.emotion,
+        technical: s.technical,
+        uniqueness: s.uniqueness,
+        total,
+      },
       tier,
-      notes: s.notes ?? '',
+      notes: s.notes ?? "",
     };
   } catch {
     return null;

@@ -62,3 +62,51 @@ export const ARTBOOK = [
     href: "/books/song-of-van-linh/subject-7",
   },
 ] as const;
+
+// This page is an original work in Arcanea, distinct from the application.
+// Reuse its visible title, prose and images; do not imply a new canon edition.
+const storyUrl = "https://www.arcanea.ai/story";
+const publisherId = "https://www.arcanea.ai/#organization";
+
+export const STORY_DISCOVERY = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": publisherId,
+      name: "Arcanea",
+      url: "https://www.arcanea.ai",
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": `${storyUrl}#work`,
+      url: storyUrl,
+      name: CANON.title,
+      description: CANON.lede,
+      disambiguatingDescription:
+        "Arcanea's origin story of Lumina and Nero, leading into The Three Academies.",
+      inLanguage: "en",
+      publisher: { "@id": publisherId },
+      mainEntityOfPage: { "@id": `${storyUrl}#page` },
+      image: STILLS.map((still) => ({
+        "@type": "ImageObject",
+        url: new URL(still.src, storyUrl).href,
+        caption: still.alt,
+        width: still.width,
+        height: still.height,
+      })),
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${storyUrl}#page`,
+      url: storyUrl,
+      name: CANON.title,
+      mainEntity: { "@id": `${storyUrl}#work` },
+    },
+  ],
+};
+
+export const STORY_JSON_LD = JSON.stringify(STORY_DISCOVERY).replace(
+  /</g,
+  "\\u003c",
+);

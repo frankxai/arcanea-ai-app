@@ -2,6 +2,8 @@
 import { MetadataRoute } from "next";
 import { COLLECTIONS, getAllTexts } from "@/lib/content";
 import { BLOG_POSTS } from "@/lib/blog-data";
+import { SHOP_EDITIONS, SHOP_UPDATED } from "@/lib/shop/catalog";
+import { SHOP_GUIDES } from "@/lib/shop/guides";
 import constellationData from "@/data/arcanea-constellation.v1.json";
 import characterData from "@/data/arcanea-character-identities.v1.json";
 import campaignData from "@/data/arcanea-visual-campaign.v1.json";
@@ -357,18 +359,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
-      url: `${baseUrl}/arcanea-vault`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/arcanea-os`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/install`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -610,7 +600,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Supabase not available at build
   }
 
+  const shopPaths = [
+    "/shop",
+    "/shop/sample",
+    "/shop/delivery",
+    "/shop/collections/creators",
+    "/shop/collections/collectors",
+    ...SHOP_EDITIONS.map((edition) => `/shop/${edition.slug}`),
+    ...SHOP_GUIDES.map((guide) => `/shop/guides/${guide.slug}`),
+  ];
+  const shopPages: MetadataRoute.Sitemap = shopPaths.map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: new Date(SHOP_UPDATED),
+    changeFrequency: "monthly",
+    priority: path === "/shop" ? 0.85 : 0.7,
+  }));
+
   return [
+    ...shopPages,
     ...staticPages,
     ...constellationPages,
     ...guardianIdentityPages,

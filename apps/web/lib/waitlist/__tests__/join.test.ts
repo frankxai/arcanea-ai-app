@@ -28,6 +28,23 @@ test("a failed save is reported, never shown as success", async () => {
   assert.equal(result.body.success, false);
 });
 
+test("a studio signup keeps its own source", async () => {
+  let saved: { email: string; source: string } | undefined;
+  const result = await joinWaitlist(
+    "studio@example.com",
+    async (row) => {
+      saved = row;
+      return { error: null };
+    },
+    "mcp_reader",
+  );
+  assert.equal(result.status, 200);
+  assert.deepEqual(saved, {
+    email: "studio@example.com",
+    source: "mcp_reader",
+  });
+});
+
 test("a repeat signup is already on the list", async () => {
   const result = await joinWaitlist("reader@example.com", async () => ({
     error: { code: "23505", message: "duplicate key value" },
