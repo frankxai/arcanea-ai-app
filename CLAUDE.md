@@ -4,7 +4,7 @@ Read `@AGENTS.md` first for repo identity and the rules that apply to every harn
 
 ## LLM + API key policy (machine-global)
 
-**Authoritative source: `~/.claude/CLAUDE.md` on this machine.** Default LLM route = OpenRouter (`OPENROUTER_API_KEY` + `OPENROUTER_BASE_URL`). Image gen for Arcanea book covers, character art, marketplace cards = Higgsfield MCP (preferred) or direct (NB2 = `gemini-3.1-flash-image`, GPT Image 2 = `gpt-image-1`/`gpt-image-2`). **Reason first** — don't auto-call external LLMs when you can think. Daily monitoring + secret scan via `StarlightAPIKeyMonitor` + `StarlightSecretScan` scheduled tasks. Arcanea-specific overrides: book covers → `/arcanea-book-cover` skill (NB2 with cover-design thinking).
+**Product runtimes route models through Vercel AI Gateway** (registry `tech_vercel_ai_gateway`, confirmed 2026-10-19). OpenRouter is on hold: operator-local tooling may keep it per `~/.claude/CLAUDE.md`, but new product routes must not add it, and existing OpenRouter routes are migration debt. Image gen for Arcanea book covers, character art, marketplace cards = Higgsfield MCP (preferred) or direct (NB2 = `gemini-3.1-flash-image`, GPT Image 2 = `gpt-image-1`/`gpt-image-2`). **Reason first** — don't auto-call external LLMs when you can think. Daily monitoring + secret scan via `StarlightAPIKeyMonitor` + `StarlightSecretScan` scheduled tasks. Arcanea-specific overrides: book covers → `/arcanea-book-cover` skill (NB2 with cover-design thinking).
 
 ## Source Of Truth
 

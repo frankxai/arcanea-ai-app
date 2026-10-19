@@ -16,21 +16,48 @@ export interface GatewayModel {
   label: string;
 }
 
+/**
+ * True for Claude models whose API rejects non-default `temperature`,
+ * `top_p` and `top_k` with a 400: Opus 4.7 / 4.8 and every Claude 5.x model
+ * (including the 5.5 family the gateway routes to). Matches bare Anthropic IDs
+ * and OpenRouter-style slugs such as "anthropic/claude-sonnet-5.5".
+ */
+export function claudeRejectsSamplingParams(modelId: string): boolean {
+  return /claude-(?:opus-4[-.][78]|(?:opus|sonnet|haiku|fable|mythos)-5)(?![0-9])/.test(
+    modelId,
+  );
+}
+
+/** The only Messages API version Anthropic documents. */
+export const ANTHROPIC_API_VERSION = "2023-06-01";
+
+/** Beta header that gates `fallbacks: "default"` on the Messages API. */
+export const CLAUDE_SERVER_FALLBACK_BETA = "server-side-fallback-2026-07-01";
+
+/**
+ * True for bare Claude API model IDs that accept server-side refusal
+ * fallback (`fallbacks: "default"`). Haiku 5.5 has none; OpenRouter slugs
+ * never reach the Claude API, so they never match.
+ */
+export function claudeSupportsServerFallback(modelId: string): boolean {
+  return /^claude-(?:opus-5(?:-5)?|sonnet-5-5|fable-5-1)$/.test(modelId);
+}
+
 export const GATEWAY_MODELS: Record<string, GatewayModel> = {
   "arcanea-opus": {
     provider: "anthropic",
-    modelId: "claude-opus-4-6",
-    label: "Opus 4.6",
+    modelId: "claude-opus-5-5",
+    label: "Opus 5.5",
   },
   "arcanea-sonnet": {
     provider: "anthropic",
-    modelId: "claude-sonnet-4-6",
-    label: "Sonnet 4.6",
+    modelId: "claude-sonnet-5-5",
+    label: "Sonnet 5.5",
   },
   "arcanea-haiku": {
     provider: "anthropic",
-    modelId: "claude-haiku-4-5-20251001",
-    label: "Haiku 4.5",
+    modelId: "claude-haiku-5-5",
+    label: "Haiku 5.5",
   },
   "arcanea-gpt5": {
     provider: "openai",

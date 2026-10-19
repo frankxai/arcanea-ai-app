@@ -15,7 +15,7 @@
  *
  * Uses the AI SDK's `generateText` + `createAnthropic` pattern, which is
  * the established convention across apps/web. Model defaults to
- * claude-opus-4-6, overridable via GUARDIAN_REVIEW_MODEL env var.
+ * claude-opus-5-5, overridable via GUARDIAN_REVIEW_MODEL env var.
  */
 
 import { readFile, readdir } from "fs/promises";
@@ -25,6 +25,8 @@ import { getBookRoot } from "../content/book-path";
 import { generateText } from "ai";
 import matter from "gray-matter";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { claudeFallbackOptions, isRefusal } from "@/lib/ai/claude-safeguards";
+import { claudeRejectsSamplingParams } from "@/lib/gateway/catalog";
 import {
   GUARDIANS,
   GUARDIAN_IDS,
@@ -83,9 +85,11 @@ export class GuardianScorerError extends Error {
 // Config
 // ---------------------------------------------------------------------------
 
-const DEFAULT_MODEL = "claude-opus-4-6";
+const DEFAULT_MODEL = "claude-opus-5-5";
 const BOOK_ROOT = getBookRoot();
-const MAX_OUTPUT_TOKENS = 1024;
+// The verdict itself is ~300 tokens. Opus 5.5 always thinks, and thinking
+// counts toward maxOutputTokens, so the cap leaves room for a whole-book read.
+const MAX_OUTPUT_TOKENS = 8192;
 
 function getModelId(): string {
   return process.env.GUARDIAN_REVIEW_MODEL || DEFAULT_MODEL;
@@ -312,14 +316,26 @@ async function runGuardian(
 
   const start = Date.now();
   try {
-    const { text } = await generateText({
+    const { text, finishReason } = await generateText({
       model,
       system: prompt.systemPrompt,
       prompt: prompt.userPromptTemplate(input),
       maxOutputTokens: MAX_OUTPUT_TOKENS,
-      temperature: 0.3,
+      // Claude 5.x rejects sampling parameters with a 400; an older model set
+      // through GUARDIAN_REVIEW_MODEL keeps the low temperature.
+      ...(claudeRejectsSamplingParams(modelId) ? {} : { temperature: 0.3 }),
+      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
     });
     const durationMs = Date.now() - start;
+
+    // A refusal that survived the server-side fallback is not a verdict:
+    // fail this Guardian rather than persist a made-up score.
+    if (isRefusal(finishReason)) {
+      throw new GuardianScorerError(
+        `${prompt.displayName} was declined by the model's safety checks`,
+        "llm_failed",
+      );
+    }
 
     let parsed: unknown;
     try {

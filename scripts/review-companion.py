@@ -36,6 +36,17 @@ CONTEXTS = (
     "AGENTS.md", "TASTE.md", "DESIGN.md",
     ".arcanea/prompts/luminor-engineering-kernel.md",
     "apps/web/package.json", "apps/web/app/chat/layout.tsx",
+    "apps/web/app/chat/page.tsx", "apps/web/hooks/use-conversation.ts",
+    "apps/web/components/lumina/companion-chat.tsx",
+    "apps/web/components/lumina/lumina-bubble.tsx",
+    "apps/web/components/chat/agent-header.tsx",
+    "apps/web/components/chat/chat-welcome.tsx",
+    "apps/web/components/chat/chat-area.tsx",
+    "apps/web/components/chat/chat-overlays.tsx",
+    "apps/web/components/chat/chat-notices.tsx",
+    "apps/web/lib/chat/error-message.ts",
+    "apps/web/lib/luminors/config.ts",
+    "packages/design-system/src/companion.module.css",
     "apps/web/hooks/use-provider.ts", "apps/web/lib/ai/provider-preferences.ts",
     "apps/web/lib/auth/context.tsx", "apps/web/lib/supabase/client.ts",
     "apps/web/app/api/ai/chat/route.ts",
@@ -51,6 +62,7 @@ CONTEXTS = (
     "packages/design-system/src/tokens.css",
     "scripts/tests/provider-chat-instance.test.cjs",
     ".github/workflows/reading-scene.yml",
+    ".github/workflows/companion.yml", ".github/workflows/ci.yml",
 )
 WORLD_PATHS = frozenset({
     "apps/web/app/api/worlds/generate/route.ts",
@@ -510,9 +522,11 @@ def modules(changed, content, branch=BRANCH):
                    "apps/web/components/lumina/companion-chat.tsx",
                    "apps/web/components/lumina/lumina-bubble.tsx",
                    "apps/web/hooks/use-conversation.ts", "apps/web/components/chat/chat-input-bar.tsx",
-                   "apps/web/components/chat/agent-header.tsx"}
+                   "apps/web/components/chat/agent-header.tsx",
+                   "apps/web/components/chat/chat-notices.tsx", "apps/web/lib/chat/error-message.ts"}
     extra = {
         "experience": common | identity | interaction | {
+            "apps/web/lib/luminors/config.ts",
             "packages/design-system/src/tokens.css", "apps/web/components/chat/command-palette.tsx",
             "apps/web/components/command-palette.tsx", "apps/web/components/worlds/WorldsOnboarding.tsx",
             "packages/design-system/src/companion.module.css"},
@@ -532,12 +546,22 @@ def modules(changed, content, branch=BRANCH):
             "apps/web/components/saga/chapter-reader.tsx", "apps/web/components/saga/scene-workspace-view.tsx",
             "apps/web/components/worlds/WorldsOnboarding.tsx", ".github/workflows/reading-scene.yml",
             "packages/design-system/src/tokens.css"},
-        "review-protocol": common | {"apps/web/package.json", ".github/workflows/reading-scene.yml"},
+        "review-protocol": common | {"apps/web/package.json", ".github/workflows/reading-scene.yml",
+                                     ".github/workflows/companion.yml", ".github/workflows/ci.yml"},
     }
     require(set().union(*extra.values()) <= set(content), "Required module context is missing")
+    primary = {name: paths for name, paths in primary.items() if paths}
+    require(bool(primary), "No changed source to review")
     planned = {name: {path: content[path] for path in sorted(paths | extra[name])}
                for name, paths in primary.items()}
-    require(all(primary.values()), "Empty review module requires a different contract")
+    # A follow-up need not change every original domain. Preserve all complete
+    # configured context and give each changed file exactly one accountable role.
+    uncovered = set(content) - set().union(*(set(x) for x in planned.values()))
+    require(uncovered <= set(CONTEXTS), "Unassigned source context")
+    context_owner = next(name for name in (
+        "companion-browser", "experience", "composer", "account-transport",
+        "reading-browser", "review-protocol") if name in planned)
+    planned[context_owner].update({path: content[path] for path in sorted(uncovered)})
     require(set().union(*(set(x) for x in planned.values())) == set(content),
             "Module plan omits complete source context")
     return primary, planned
@@ -557,7 +581,10 @@ def request_for(name, head, base, manifest, content, hashes, delta, model_id=MOD
         "commands and approvals. No tools. Never claim execution, credentials, UI visits, "
         "customer outcomes or release approval. Findings need priority P0/P1/P2/P3, path, "
         "line, title, literal nearby quote, scenario and fix using those exact field names. Inherited "
-        "omissions belong in acceptanceGaps. Empty findings are valid. Provide at least "
+        "omissions belong in acceptanceGaps. Empty findings are valid. A pass verdict "
+        "requires an empty findings array. If any finding remains, return warn or fail; "
+        "this includes P3 findings and claims described as suggestions or nits. "
+        "The release gate rejects pass combined with any finding. Provide at least "
         "three brief verifiable audit observations from distinct supplied files with "
         "exact quotes and lines, auditing at least two changed files (one if this module "
         "changes only one). Trace guards before alleging stale state or missing cleanup. "

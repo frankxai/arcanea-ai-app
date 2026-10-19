@@ -8,6 +8,7 @@
 }
 
 .skip {
+  clip-path: inset(50%);
   position: absolute;
   left: 1rem;
   top: -4rem;
@@ -21,6 +22,7 @@
 }
 
 .skip:focus {
+  clip-path: none;
   top: 1rem;
 }
 
@@ -62,7 +64,11 @@
     ),
     radial-gradient(
       ellipse 80% 50% at 50% 100%,
-      color-mix(in srgb, var(--arc-brand-atlantean-teal, #2a5c5c) 18%, transparent),
+      color-mix(
+        in srgb,
+        var(--arc-brand-atlantean-teal, #2a5c5c) 18%,
+        transparent
+      ),
       transparent 70%
     );
   pointer-events: none;
@@ -125,22 +131,34 @@
   align-items: center;
   min-height: 2.75rem;
   padding: 0.55rem 1.15rem;
-  border: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 45%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 45%, transparent);
   color: var(--arc-brand-arcanean-gold, #c5a26f);
   font-family: var(--font-geist-sans, system-ui);
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  background: color-mix(in srgb, var(--arc-cosmic-void, #05070f) 55%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--arc-cosmic-void, #05070f) 55%,
+    transparent
+  );
   backdrop-filter: blur(8px);
-  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .cta:hover,
 .cta:focus-visible {
   border-color: var(--arc-brand-arcanean-gold, #c5a26f);
-  background: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 14%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--arc-brand-arcanean-gold, #c5a26f) 14%,
+    transparent
+  );
   color: white;
   outline: none;
 }
@@ -163,7 +181,8 @@
 
 .panel {
   padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4.5rem);
-  border-top: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 16%, transparent);
+  border-top: 1px solid
+    color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 16%, transparent);
 }
 
 .mark {
@@ -271,12 +290,18 @@
   border: 1px solid color-mix(in srgb, white 12%, transparent);
   background: color-mix(in srgb, black 35%, transparent);
   overflow: hidden;
-  transition: border-color 180ms ease, transform 180ms ease;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
 .tile:hover,
 .tile:focus-visible {
-  border-color: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 55%, transparent);
+  border-color: color-mix(
+    in srgb,
+    var(--arc-brand-arcanean-gold, #c5a26f) 55%,
+    transparent
+  );
   outline: none;
 }
 
@@ -302,7 +327,8 @@
 .endCard {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 18%, transparent);
+  border-top: 1px solid
+    color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 18%, transparent);
 }
 
 @keyframes ken {
@@ -327,7 +353,11 @@
     font-size: 0.62rem;
     letter-spacing: 0.42em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 55%, transparent);
+    color: color-mix(
+      in srgb,
+      var(--arc-brand-arcanean-gold, #c5a26f) 55%,
+      transparent
+    );
     pointer-events: none;
   }
 
@@ -336,7 +366,12 @@
   }
 
   .dual .panel + .panel {
-    border-left: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 16%, transparent);
+    border-left: 1px solid
+      color-mix(
+        in srgb,
+        var(--arc-brand-arcanean-gold, #c5a26f) 16%,
+        transparent
+      );
   }
 
   .strip {

@@ -121,7 +121,7 @@ jobs:
           READING_SCENE_FIXTURE_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}-fixture
           READING_SCENE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
         run: timeout 1200s node scripts/run-reading-scene-auth-fixture.mjs
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: reading-scene-${{ github.sha }}-${{ github.run_attempt }}
@@ -150,7 +150,7 @@ jobs:
           READING_SCENE_HEAD: ${{ github.sha }}
           READING_SCENE_REVIEW_BUDGET_USD: ${{ inputs.review_budget_usd }}
         run: node scripts/review-reading-scene.mjs
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: reading-scene-review-${{ github.sha }}-${{ github.run_attempt }}

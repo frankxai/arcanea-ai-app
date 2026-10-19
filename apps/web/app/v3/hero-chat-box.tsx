@@ -5,11 +5,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
-import { m } from "framer-motion";
+import { track } from "@vercel/analytics";
 import {
   PhPaperPlane,
   PhPencil,
-  PhMusicNote,
+  PhFeather,
   PhCode,
   PhPaintBrush,
 } from "@/lib/phosphor-icons";
@@ -27,7 +27,7 @@ const STARTER_CARDS = [
     href: "/worlds/create",
   },
   {
-    icon: PhMusicNote,
+    icon: PhFeather,
     label: "Write a scene",
     prompt:
       "Write an opening scene for a creator-owned fantasy series with a strong hook, sensory detail, and a clear character choice.",
@@ -70,10 +70,18 @@ export function HeroChatBox() {
     router.push(`/chat?prompt=${encodeURIComponent(trimmed)}`);
   };
 
+  // Typed prompts only. The event carries no properties: the prompt text is
+  // the creator's and never leaves the page as analytics.
+  const submit = () => {
+    if (!message.trim()) return;
+    track("home_hero_submit");
+    goToChat(message);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      goToChat(message);
+      submit();
     }
   };
 
@@ -83,7 +91,7 @@ export function HeroChatBox() {
     <div className="w-full max-w-2xl mx-auto">
       {/* Input container */}
       <div
-        className={`relative rounded-2xl transition-all duration-300 ${
+        className={`relative rounded-2xl transition-shadow duration-300 ${
           isFocused
             ? "shadow-[0_0_0_1px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_30%,transparent),0_8px_40px_color-mix(in_srgb,var(--arc-cosmic-void)_72%,transparent),0_0_80px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_8%,transparent)]"
             : "shadow-[0_0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_6%,transparent),0_4px_24px_color-mix(in_srgb,var(--arc-cosmic-void)_72%,transparent)]"
@@ -125,21 +133,24 @@ export function HeroChatBox() {
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="Describe the world, story, or creator system you want to build..."
+            placeholder="Describe the world, story, or creator system you want to build…"
             aria-label="Describe what you want to create"
+            name="prompt"
+            autoComplete="off"
             rows={1}
-            className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
+            className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/50 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
             style={{ minHeight: "56px", maxHeight: "120px" }}
           />
 
           {/* Send */}
           <div className="p-2.5 pr-3">
             <button
-              onClick={() => goToChat(message)}
+              type="button"
+              onClick={submit}
               disabled={!hasText}
-              className={`p-2.5 rounded-xl transition-all duration-200 ${
+              className={`inline-flex h-11 w-11 items-center justify-center rounded-xl transition-[box-shadow,transform,background-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--arc-cosmic-void)] ${
                 hasText
-                  ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_2px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_35%,transparent)] hover:shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_50%,transparent)] hover:scale-105 active:scale-95"
+                  ? "bg-[var(--arc-brand-atlantean-teal)] shadow-[0_2px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_35%,transparent)] hover:shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_50%,transparent)] active:scale-95"
                   : "bg-white/[0.04] cursor-default"
               }`}
               aria-label={
@@ -149,7 +160,9 @@ export function HeroChatBox() {
               }
             >
               <PhPaperPlane
-                className={`w-4 h-4 transition-colors ${hasText ? "text-[var(--arc-cosmic-void)]" : "text-white/30"}`}
+                aria-hidden="true"
+                weight={hasText ? "bold" : "regular"}
+                className={`w-[18px] h-[18px] transition-colors ${hasText ? "text-[var(--arc-cosmic-void)]" : "text-white/45"}`}
               />
             </button>
           </div>
@@ -157,15 +170,11 @@ export function HeroChatBox() {
       </div>
 
       {/* Starter cards — 4 creation modes */}
-      <m.div
-        className="mt-5 grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.4 }}
-      >
+      <div className="mt-5 grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2">
         {STARTER_CARDS.map((card) => {
           const Icon = card.icon;
           const handleClick = () => {
+            track("home_hero_chip", { chip: card.label });
             if ("href" in card && card.href) {
               const sep = card.href.includes("?") ? "&" : "?";
               router.push(
@@ -178,16 +187,20 @@ export function HeroChatBox() {
           return (
             <button
               key={card.label}
+              type="button"
               onClick={handleClick}
-              className="group flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-[12px] sm:text-[13px] text-white/35 hover:text-white/70 bg-white/[0.025] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.05] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-300"
+              className="group flex min-h-[44px] items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-[12px] sm:text-[13px] text-white/70 hover:text-white/90 bg-white/[0.04] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)] active:scale-[0.98] transition-[color,background-color,border-color,box-shadow,transform] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]"
               aria-label={`${card.label}: ${card.prompt}`}
             >
-              <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[var(--arc-brand-atlantean-teal)]/70 transition-colors" />
+              <Icon
+                aria-hidden="true"
+                className="w-3.5 h-3.5 text-white/55 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
+              />
               {card.label}
             </button>
           );
         })}
-      </m.div>
+      </div>
     </div>
   );
 }

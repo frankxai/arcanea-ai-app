@@ -25,6 +25,7 @@ import {
   type FavoriteImage,
 } from "@/lib/imagine-favorites";
 import { Heart, X } from "@/lib/phosphor-icons";
+import { AuthModal } from "@/components/auth/auth-modal";
 
 // ---------------------------------------------------------------------------
 // Featured Templates — Arcanean style presets as clickable cards (like Grok)
@@ -165,6 +166,7 @@ function ImaginePageContent() {
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState("");
   const [currentAspectRatio, setCurrentAspectRatio] = useState("1:1");
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false);
@@ -333,8 +335,28 @@ function ImaginePageContent() {
         { scope: credentialScope, token },
       );
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Generation failed");
+        let errMessage = "Generation failed";
+        try {
+          const data = await res.json();
+          if (res.status === 401) {
+            errMessage = "Sign in to generate.";
+          } else if (typeof data === "string") {
+            errMessage = data;
+          } else if (data?.error) {
+            errMessage =
+              typeof data.error === "string"
+                ? data.error
+                : data.error.message || "Generation failed";
+          } else if (data?.message) {
+            errMessage = data.message;
+          }
+        } catch {
+          errMessage =
+            res.status === 401
+              ? "Sign in to generate."
+              : `Request failed with status ${res.status}`;
+        }
+        throw new Error(errMessage);
       }
       const data = await res.json();
       if (!credentialScope.isCurrent(token)) return null;
@@ -580,8 +602,26 @@ function ImaginePageContent() {
           { scope: credentialScope, token },
         );
         if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error || "Animation failed");
+          let errMessage = "Animation failed";
+          try {
+            const data = await res.json();
+            if (res.status === 401) {
+              errMessage = "Sign in to generate.";
+            } else if (typeof data === "string") {
+              errMessage = data;
+            } else if (data?.error) {
+              errMessage =
+                typeof data.error === "string"
+                  ? data.error
+                  : data.error.message || "Animation failed";
+            }
+          } catch {
+            errMessage =
+              res.status === 401
+                ? "Sign in to generate."
+                : `Request failed with status ${res.status}`;
+          }
+          throw new Error(errMessage);
         }
         const data = await res.json();
         if (!credentialScope.isCurrent(token)) return;
@@ -782,7 +822,14 @@ function ImaginePageContent() {
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
                 <span className="truncate">{error}</span>
                 <div className="flex items-center gap-2 ml-3 flex-shrink-0">
-                  {currentPrompt && (
+                  {error === "Sign in to generate." ? (
+                    <button
+                      onClick={() => setShowAuthModal(true)}
+                      className="px-3 py-1 text-xs rounded-lg bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep font-semibold hover:shadow-[0_0_12px_rgba(0,188,212,0.3)] transition-all"
+                    >
+                      Sign in
+                    </button>
+                  ) : currentPrompt ? (
                     <button
                       onClick={() => {
                         setError(null);
@@ -800,7 +847,7 @@ function ImaginePageContent() {
                     >
                       Retry
                     </button>
-                  )}
+                  ) : null}
                   <button
                     onClick={() => setError(null)}
                     className="text-red-400 hover:text-red-300 p-1"
@@ -972,6 +1019,11 @@ function ImaginePageContent() {
             void refreshFavorites(null, false, warning);
           }}
           returnFocusRef={favoriteOpenerRef}
+        />
+
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
         />
       </div>
     </LazyMotion>

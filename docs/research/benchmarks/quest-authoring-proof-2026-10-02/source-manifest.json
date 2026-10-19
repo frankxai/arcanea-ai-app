@@ -1,0 +1,50 @@
+{
+  "purpose": "Local quest authoring fixture; no shared world/Realm Graph schema",
+  "authority": "PROPOSAL: all added dialogue, practices, agreements and consequences require human disposition",
+  "sourceCommit": "fd43ed6aaedee8646502a8ffb2cd20ee17849190",
+  "mainBase": "b86549cd04562471a677301e5c095cd6f093919e",
+  "mainEquivalentSources": [
+    "book/chapters/book1/02-the-ones-who-came.md",
+    "book/chapters/book1/03-the-road-between.md",
+    ".arcanea/lore/CANON_LOCKED.md",
+    "packages/world-engine/src/types.ts",
+    ".arcanea/prompts/luminor-engineering-kernel.md"
+  ],
+  "sourceHashes": {
+    "book/chapters/book1/02-the-ones-who-came.md": "8ebdaccb59c3b864cf8d8150aff9ff77ab34e9e6cb13e3195fa19da0ad17840f",
+    "book/chapters/book1/03-the-road-between.md": "355e26ba940032ee4c18e71dd306a87dd3e06387247faf44c548946a4183cd0f",
+    ".arcanea/lore/CANON_LOCKED.md": "58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f",
+    "packages/arcanea-skills/skills/quest-adapt/SKILL.md": "81d3bb3c382c66917ed0f14b6890989efc6db70a0ad4e8f4f07575978c4dcd55",
+    "packages/arcanea-skills/skills/quest-adapt/references/example.md": "a2ade0d65acab5bb2c83f2354fcc320cb02c919dba2fa0aa19ad86603e3f7832",
+    "packages/world-engine/src/types.ts": "eaaccf87e52b5acaddfa69d2958515a6b7811cfcff695a77bcd4b9fc2430e470",
+    ".arcanea/prompts/luminor-engineering-kernel.md": "e59663a25df9dee74a7ae8f1132ab5fc39fd710ef5f91891733dd05a74a0a127"
+  },
+  "packetSha256": "410116df6e81d6f213434d45648ed78e4708ca71c72374cc7eaaa959f2e66ba9",
+  "byteHashConvention": "SHA256 of exact UTF-8/LF file bytes; formatter changes require a new packet hash",
+  "creatorRequestSha256": "5e24302f832fcf7560fb28afd27564de3e412800239cbccac6e81c908da96979",
+  "maker": "Codex lead, hand-authored against pinned sources and existing internal quest-adapt candidate",
+  "actors": ["Kael", "Torven", "Sirvaine", "Bren", "Sela"],
+  "localIds": "manuscript-local labels only, not approved Realm Graph IDs",
+  "sourceConstraints": [
+    "Locked lore remains authoritative; manuscripts are material, not newly locked canon.",
+    "Chapter3: Kael chose Atlantean, departs with Sela; white card from Sirvaine, Bren leaves.",
+    "Chapter2: three different offers; no teacher assures control near the lighthouse.",
+    "Mother registered voluntarily and declined study. Present permission concerns only new Kael observations.",
+    "Suppression and later self-concealment are NPC theories, not settled causes."
+  ],
+  "readonlyVariables": [
+    "destination",
+    "historicalFileChanged",
+    "notesScope",
+    "notesSharingAllowed",
+    "notesRevocable"
+  ],
+  "sourceQuestions": [
+    "Chapter2 arrival-hour and day references remain unrepaired; the encounter adds no calendar date.",
+    "No Heart-frequency ruling; no new Gate, power, origin class or locked fact."
+  ],
+  "promotion": "None; no WorldProof adapter, canonical write, graph migration, skill readiness or engine import",
+  "runtime": "Pending Frank selection under #285 and its prerequisites",
+  "rights": "Pending; no licence added, asset generated or distribution/commerce approval",
+  "humanDisposition": "Pending"
+}

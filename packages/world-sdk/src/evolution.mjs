@@ -1,18 +1,50 @@
 // Private world memories and deterministic salience-weighted summaries.
 // Legacy evolution entry points reject: a memory is not approval to publish canon.
 
-import { promises as fs } from "node:fs";
 import { randomUUID } from "node:crypto";
-import path from "node:path";
+import { writeFiles } from "./fs-world.mjs";
+import { readRoot, readDirectory, readFile } from "./world-reads.mjs";
 
 const MEM_DIR = ".arcanea/memories";
 
-async function ensureDir(d) {
-  await fs.mkdir(d, { recursive: true });
+function memoryError() {
+  return Object.assign(
+    new Error(
+      "Private memory is invalid; repair or retain the affected record before retrying.",
+    ),
+    { code: "ERR_ARCANEA_MEMORY_INVALID" },
+  );
+}
+function validMemory(record) {
+  if (
+    !record ||
+    typeof record !== "object" ||
+    Array.isArray(record) ||
+    typeof record.ts !== "string" ||
+    !Number.isFinite(Date.parse(record.ts)) ||
+    typeof record.content !== "string" ||
+    (record.characterId !== null && typeof record.characterId !== "string") ||
+    typeof record.salience !== "number" ||
+    !Number.isFinite(record.salience) ||
+    record.salience < 0 ||
+    record.salience > 1
+  )
+    throw memoryError();
+  return record;
 }
 
 export async function recordMemory(dir, mem) {
-  await ensureDir(path.join(dir, MEM_DIR));
+  if (
+    !mem ||
+    typeof mem !== "object" ||
+    Array.isArray(mem) ||
+    (typeof mem.salience === "number" && !Number.isFinite(mem.salience)) ||
+    (mem.ts != null &&
+      (typeof mem.ts !== "string" || !Number.isFinite(Date.parse(mem.ts)))) ||
+    (mem.content != null && typeof mem.content !== "string") ||
+    (mem.characterId != null && typeof mem.characterId !== "string")
+  )
+    throw memoryError();
   const ts = mem.ts || new Date().toISOString();
   const rec = {
     ts,
@@ -24,30 +56,38 @@ export async function recordMemory(dir, mem) {
         : 0.5,
     meaningImpact: mem.meaningImpact || null,
   };
+  validMemory(rec);
   // Multiple events can share a timestamp. Keep the timestamp in the record,
   // not in an overwrite-prone filename; exclusive creation preserves each event.
   const fname = `${randomUUID()}.json`;
-  await fs.writeFile(
-    path.join(dir, MEM_DIR, fname),
-    JSON.stringify(rec, null, 2) + "\n",
-    { flag: "wx" },
+  await writeFiles(
+    dir,
+    [
+      {
+        path: `${MEM_DIR}/${fname}`,
+        bytes: JSON.stringify(rec, null, 2) + "\n",
+      },
+    ],
+    { exclusive: true },
   );
   return { path: `${MEM_DIR}/${fname}`, record: rec };
 }
 
 export async function listMemories(dir) {
-  const p = path.join(dir, MEM_DIR);
-  try {
-    const files = await fs.readdir(p);
-    const out = [];
-    for (const f of files.filter((f) => f.endsWith(".json"))) {
-      const raw = await fs.readFile(path.join(p, f), "utf8");
-      out.push(JSON.parse(raw));
+  const root = await readRoot(dir);
+  const files = await readDirectory(root, MEM_DIR);
+  const out = [];
+  for (const file of files.filter((name) => name.endsWith(".json"))) {
+    const raw = await readFile(root, `${MEM_DIR}/${file}`);
+    let record;
+    try {
+      record = JSON.parse(raw.toString("utf8").replace(/^\uFEFF/, ""));
+    } catch {
+      throw memoryError();
     }
-    return out.sort((a, b) => a.ts.localeCompare(b.ts));
-  } catch {
-    return [];
+    out.push(validMemory(record));
   }
+  return out.sort((a, b) => a.ts.localeCompare(b.ts));
 }
 
 export function distillOffline(memories, { max = 3 } = {}) {
@@ -80,6 +120,8 @@ export async function evolveCharacter() {
 }
 
 export async function remember(dir, content, opts = {}) {
+  // Refuse a damaged/redirected store before an append could make a failed retry duplicate an event.
+  await listMemories(dir);
   const rec = await recordMemory(dir, { content, ...opts });
   const mems = await listMemories(dir);
   const summary = distillOffline(mems);

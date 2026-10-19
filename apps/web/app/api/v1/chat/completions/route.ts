@@ -21,6 +21,7 @@ import type { ChatCompletionRequest, GatewayConfig } from "@/lib/gateway/types";
 import { CURATED_MODELS, getModelById } from "@/lib/gateway/models";
 import { routeRequest } from "@/lib/gateway/router";
 import { dispatchToProvider } from "@/lib/gateway/providers";
+import { fallbackConsentFromRequest } from "@/lib/ai/claude-safeguards";
 import {
   checkRateLimit,
   rateLimitHeaders,
@@ -216,6 +217,7 @@ export async function POST(req: NextRequest) {
       body,
       route.model.id,
       streaming,
+      { fallbackConsent: fallbackConsentFromRequest(req) },
     );
 
     // Add gateway metadata headers + rate limit headers

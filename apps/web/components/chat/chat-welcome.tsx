@@ -15,13 +15,16 @@ import {
   PhUser,
   PhFeather,
   PhGlobe,
+  PhBookOpen,
+  PhMusicNotes,
+  PhCpu,
 } from "@/lib/phosphor-icons";
 
 /** 3 featured Luminors for quick-select in empty state — one per creative domain */
-const FEATURED_LUMINOR_IDS = [
-  "storyteller",
-  "composer",
-  "systems-architect",
+const FEATURED_LUMINORS = [
+  { id: "storyteller", icon: PhBookOpen },
+  { id: "composer", icon: PhMusicNotes },
+  { id: "systems-architect", icon: PhCpu },
 ] as const;
 
 const CREATIVE_STARTERS = [
@@ -175,23 +178,30 @@ export function ChatWelcome({
 
         {/* Luminor quick-select — 3 featured personalities */}
         {!activeLuminor && (
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+          <div
+            className="flex flex-wrap items-center justify-center gap-2 mb-4"
+            role="group"
+            aria-label="Featured companions"
+          >
             <span className="text-[10px] text-[var(--arc-text-secondary)] mr-1">
               Talk to
             </span>
-            {FEATURED_LUMINOR_IDS.map((lid) => {
+            {FEATURED_LUMINORS.map(({ id: lid, icon: Icon }) => {
               const l = LUMINORS[lid];
               if (!l) return null;
               return (
                 <button
                   key={lid}
-                  onClick={() => onSelectLuminor(l as unknown as ActiveLuminor)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-200 group"
+                  type="button"
+                  onClick={() => onSelectLuminor(l)}
+                  className="flex min-h-11 items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-200 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                   title={`${l.loreName} — ${l.specialty}`}
                 >
-                  <span className="text-sm" aria-hidden="true">
-                    {l.avatar}
-                  </span>
+                  <Icon
+                    className="w-4 h-4 shrink-0"
+                    weight="duotone"
+                    aria-hidden="true"
+                  />
                   <span className="text-[11px] text-[var(--arc-text-secondary)] group-hover:text-[var(--arc-text-primary)] transition-colors">
                     {l.loreName}
                   </span>
