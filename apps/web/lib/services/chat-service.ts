@@ -200,6 +200,16 @@ export async function deleteSession(sessionId: string): Promise<void> {
 // ---------------------------------------------------------------------------
 
 /**
+ * Build compound PostgREST filter for deterministic (created_at DESC, id DESC) cursor pagination.
+ */
+export function buildCursorDecayFilter(cursor: {
+  created_at: string;
+  id: string;
+}): string {
+  return `created_at.lt.${cursor.created_at},and(created_at.eq.${cursor.created_at},id.lt.${cursor.id})`;
+}
+
+/**
  * Retrieve messages for a session with optional cursor-based pagination.
  */
 export async function getMessages(
@@ -216,13 +226,14 @@ export async function getMessages(
     .from("chat_messages")
     .select("*")
     .eq("session_id", sessionId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false });
 
   if (opts.beforeId) {
-    // Fetch the timestamp of the cursor message so we can page correctly
+    // Fetch the timestamp and id of the cursor message so timestamp ties page deterministically
     const { data: cursor, error: cursorError } = await supabase
       .from("chat_messages")
-      .select("created_at")
+      .select("created_at, id")
       .eq("id", opts.beforeId)
       .eq("session_id", sessionId)
       .maybeSingle();
@@ -230,7 +241,7 @@ export async function getMessages(
     if (cursorError)
       throw new Error(`Failed to fetch cursor: ${cursorError.message}`);
     if (!cursor) throw new Error("Cursor message not found in this session");
-    query = query.lt("created_at", cursor.created_at);
+    query = query.or(buildCursorDecayFilter(cursor));
   }
 
   // Fetch one extra row to determine hasMore
