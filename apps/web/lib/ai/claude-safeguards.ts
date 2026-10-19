@@ -33,14 +33,34 @@ export function isRefusal(finishReason: FinishReason | undefined): boolean {
 }
 
 /**
+ * Request header a caller sends to allow a billed server-side fallback.
+ * Only the exact value `allow` counts; anything else, or no header, is no.
+ */
+export const FALLBACK_CONSENT_HEADER = "x-arcanea-fallback-consent";
+
+/** True only when the request explicitly allows a billed fallback attempt. */
+export function fallbackConsentFromRequest(request: Request): boolean {
+  return (
+    request.headers.get(FALLBACK_CONSENT_HEADER)?.trim().toLowerCase() ===
+    "allow"
+  );
+}
+
+/**
  * `providerOptions.anthropic` fields that opt a request into server-side
- * refusal fallback. Empty for models without one (Haiku 5.5, older Claude,
- * OpenRouter slugs), so it is safe to spread unconditionally.
+ * refusal fallback. A fallback runs a second, billed model attempt, possibly
+ * at a different rate, so it is off unless the caller passes
+ * `{ consent: true }` from an explicit opt-in. Empty for models without a
+ * fallback (Haiku 5.5, older Claude, OpenRouter slugs), so it is safe to
+ * spread unconditionally.
  */
 export function claudeFallbackOptions(
   modelId: string,
+  options: { consent?: boolean } = {},
 ): { fallbacks: "default" } | Record<string, never> {
-  return claudeSupportsServerFallback(modelId) ? { fallbacks: "default" } : {};
+  return options.consent === true && claudeSupportsServerFallback(modelId)
+    ? { fallbacks: "default" }
+    : {};
 }
 
 /**
