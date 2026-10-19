@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { PhCircleNotch } from '@/lib/phosphor-icons';
+import { PhCircleNotch } from "@/lib/phosphor-icons";
 
 export default function Loading() {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16">
+    <div className="flex min-h-[100svh] flex-col items-center justify-center px-4 py-16">
       {/* Animated loader with cosmic glow */}
       <div className="relative mb-8">
         <div className="absolute inset-0 animate-pulse blur-2xl bg-atlantean-teal-aqua/30 rounded-full" />

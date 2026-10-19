@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Arcanea Agents — AI That Creates For You",
     description:
-      "Autonomous AI agents for creators. Write, build, compose, design — powered by the Ten Gates.",
+      "Autonomous AI agents for creators. Write, build, compose, and design.",
   },
   alternates: { canonical: "/agents" },
 };

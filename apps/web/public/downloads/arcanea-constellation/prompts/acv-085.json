@@ -1,0 +1,94 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an evidence-bound visual study of The Hall of White for the contracted deliverable.",
+  "subject": {
+    "stableId": "hall-of-white",
+    "displayName": "The Hall of White",
+    "kind": "world",
+    "identityLock": "The Hall of White is one exact institutional room inside Cinderwall: an octagonal chamber with polished Yumiko-Prism walls, floor, and ceiling; eight clerestory windows keyed to four canonical hours; one central practice circle; twelve Aspirant seats, three senior-Prism seats, and one slightly raised White seat. Prism stone dampens voices, and wear, measurement, risk, and reserved authority must prevent whiteness from reading as empty luxury.",
+    "evidenceState": "source-complete",
+    "openIdentityVariables": [],
+    "allowedVariation": "Weather, time of day, and viewpoint may vary; geography, ecology, architecture, labor, inhabitable scale, and material economy may not drift."
+  },
+  "storyBeat": "At the Hour-of-the-Quiet, the sixteen-seat order is visible around an empty central circle; a seven-band Yumiko-Prism lens rests on its worn inscription, the eastern wall carries one faint unresolved glow, and measured absence makes institutional consequence legible without depicting an unapproved character identity.",
+  "composition": "16:9 inhabitable environmental plate with foreground work, midground social system, and distant ecological consequence; no empty establishing shot.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "16:9",
+    "intendedSurface": "world-dossier-and-environment-atlas",
+    "deliveryRole": "world system identity candidate plate",
+    "cropSafety": "Protect the foreground action and midground causal evidence inside the central field; distant context may not become the sole story carrier, and no alternate crop is authorized.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "adaptive-primary-pending",
+    "direction": "ADAPTIVE_STYLE_PRIMARY_PENDING_AFTER_ROUND_01",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      "book/the-hall-of-white/BIBLE.md#geography--the-hall-of-white-and-immediate-surrounds [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]",
+      "book/the-hall-of-white/BIBLE.md#the-five-spiritual-beats--the-hall-of-white [sha256:3587f1fe9b9f5f966bdf476f91a03a8cc0201bb939cf89c777184cc284b3e33a]"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "perspective, inhabitable scale, ecology, architecture, labor, and material economy remain coherent",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "foreground labor or maintained evidence, midground social system, and distant ecological consequence all derive from cited sources",
+    "geography remains navigable and material economy remains physically plausible",
+    "architecture, ecology, climate, labor, and active phenomenon belong to one causal world system"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal",
+    "empty skyline postcard",
+    "decorative fantasy megacity without food labor water waste transport or maintenance",
+    "portal as the only evidence of a world",
+    "monoculture represented by one costume one temple or one color"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "candidate-after-human-gates",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": []
+  },
+  "contractHash": "5eaff0c19b0be1fa4cb3b673e4afd03975e7555dcce96051be9e8161a96d7cc4"
+}

@@ -1,0 +1,45 @@
+name: Book review evidence
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/book-review-evidence.yml"
+      - "scripts/narrative-evals/verify-book-review.py"
+      - "scripts/narrative-evals/verify-source-evidence.py"
+      - "scripts/tests/book-review-evidence.test.py"
+      - "docs/research/benchmarks/narrative-evidence-2026-10-11/06-evals/book-review.md"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/book-review-evidence.yml"
+      - "scripts/narrative-evals/verify-book-review.py"
+      - "scripts/narrative-evals/verify-source-evidence.py"
+      - "scripts/tests/book-review-evidence.test.py"
+      - "docs/research/benchmarks/narrative-evidence-2026-10-11/06-evals/book-review.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: book-review-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preserved-review:
+    name: Preserved book review (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+      - name: Preservation, refusal and recovery cases
+        run: python -O scripts/tests/book-review-evidence.test.py
+      - name: Existing citation-contract regression cases
+        run: python -O scripts/tests/narrative-evidence.test.py

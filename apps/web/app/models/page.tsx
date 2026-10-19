@@ -28,12 +28,15 @@ export const revalidate = 3600;
 /* ------------------------------------------------------------------ */
 
 export const metadata: Metadata = {
-  title: "AI Model Arena | Arcanea — Worldbuilding & High Fantasy Writing Intelligence",
+  alternates: {
+    canonical: "https://www.arcanea.ai/models",
+  },
+  title:
+    "AI Model Arena | Arcanea — Worldbuilding & High Fantasy Writing Intelligence",
   description:
-    "Evaluate, benchmark, and compare AI models dedicated for worldbuilding, high fantasy fiction, 1M canon memory, hard magic logic, and anti-slop prose. Live OpenRouter pricing, favorites, and Arcanea WorldCraft lab scores.",
+    "Compare AI models for worldbuilding, high fantasy fiction, long canon memory, hard magic logic, and anti-slop prose. Live OpenRouter pricing, favorites, and Arcanea WorldCraft editorial ratings.",
   keywords: [
     "AI models for world building",
-    "best AI for fantasy writing",
     "high fantasy LLM comparison",
     "1M context canon memory",
     "hard magic system AI",
@@ -44,9 +47,11 @@ export const metadata: Metadata = {
     "Arcanea Gate resonance",
   ],
   openGraph: {
-    title: "AI Model Arena | Arcanea — Worldbuilding & High Fantasy Intelligence",
+    url: "https://www.arcanea.ai/models",
+    title:
+      "AI Model Arena | Arcanea — Worldbuilding & High Fantasy Intelligence",
     description:
-      "Empirical benchmarks, 1M lore vault tracking, anti-slop prose evaluations, and side-by-side fantasy model comparison. Updated hourly.",
+      "Editorial worldbuilding ratings, live OpenRouter pricing refreshed hourly, and side-by-side fantasy model comparison.",
     type: "website",
   },
 };
@@ -59,9 +64,11 @@ function ArenaJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": "https://www.arcanea.ai/models#webpage",
+    url: "https://www.arcanea.ai/models",
     name: "Arcanea Worldcraft AI Model Arena",
     description:
-      "Empirical benchmarks, rankings, and analysis of AI models dedicated to worldbuilding, high fantasy writing, and universe continuity.",
+      "Editorial rankings and analysis of AI models for worldbuilding, high fantasy writing, and universe continuity.",
     publisher: {
       "@type": "Organization",
       name: "Arcanea",
@@ -114,25 +121,35 @@ export default async function ModelsArenaPage() {
           />
 
           <h2 className="text-lg sm:text-xl text-[var(--arc-brand-arcanean-gold)] font-medium max-w-3xl mx-auto mb-4 font-[family-name:var(--font-display)]">
-            Dedicated Intelligence for Worldbuilders, Fantasy Novelists & Saga Architects
+            Dedicated Intelligence for Worldbuilders, Fantasy Novelists & Saga
+            Architects
           </h2>
 
           <p className="text-base text-white/50 max-w-2xl mx-auto leading-relaxed mb-8">
-            Evaluate models by what truly matters for fiction: 1M-token canon retention, poetic cadence, hard magic causality, polyphonic character voices, and anti-slop resistance.
+            Evaluate models by what truly matters for fiction: 1M-token canon
+            retention, poetic cadence, hard magic causality, polyphonic
+            character voices, and anti-slop resistance.
           </p>
 
           {/* Quick Metrics Bar */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-white/40 mb-8 font-mono">
             <span className="flex items-center gap-1.5">
-              <strong className="text-white">{modelCount}</strong> models tracked
+              <strong className="text-white">{modelCount}</strong> models
+              tracked
             </span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             <span className="flex items-center gap-1.5">
-              <strong className="text-[var(--arc-brand-atlantean-teal)]">{freeCount}</strong> 100% free
+              <strong className="text-[var(--arc-brand-atlantean-teal)]">
+                {freeCount}
+              </strong>{" "}
+              100% free
             </span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             <span className="flex items-center gap-1.5">
-              <strong className="text-[var(--arc-brand-cosmic-blue)]">{oneMillionCount}</strong> 1M+ context titans
+              <strong className="text-[var(--arc-brand-cosmic-blue)]">
+                {oneMillionCount}
+              </strong>{" "}
+              1M+ context
             </span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             {isLive ? (
@@ -141,7 +158,9 @@ export default async function ModelsArenaPage() {
                 Live OpenRouter Sync
               </span>
             ) : (
-              <span>Last updated {MODEL_WEEKLY_UPDATES[0]?.weekOf ?? "recently"}</span>
+              <span>
+                Last updated {MODEL_WEEKLY_UPDATES[0]?.weekOf ?? "recently"}
+              </span>
             )}
           </div>
 
@@ -151,7 +170,7 @@ export default async function ModelsArenaPage() {
               href="#curated-best"
               className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-white/60 hover:text-white hover:border-[var(--arc-brand-arcanean-gold)]/40 transition-all"
             >
-              🏆 Curated Best
+              Curated Picks
             </a>
             <a
               href="#explorer"

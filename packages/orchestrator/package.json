@@ -25,6 +25,10 @@
   ],
   "type": "module",
   "main": "./dist/cli.js",
+  "exports": {
+    ".": "./dist/cli.js",
+    "./pantheon": "./dist/pantheon/index.js"
+  },
   "bin": {
     "arcanea-orchestrator": "./dist/cli.js",
     "arco": "./dist/cli.js"
@@ -42,7 +46,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
-    "test": "pnpm build && tsx --test tests/config.test.ts tests/runtimes.test.ts tests/cli-smoke.test.ts tests/author-council.test.ts tests/ecosystem/*.test.ts",
+    "test": "pnpm build && tsx --test tests/config.test.ts tests/runtimes.test.ts tests/cli-smoke.test.ts tests/author-council.test.ts tests/pantheon.test.ts tests/ecosystem/enrich-github.test.ts tests/ecosystem/infer-status.test.ts tests/ecosystem/merge.test.ts tests/ecosystem/scan-monorepo.test.ts tests/ecosystem/scan-siblings.test.ts tests/ecosystem/schema.test.ts tests/ecosystem/write.test.ts",
     "ecosystem:build": "tsx src/ecosystem/cli.ts build",
     "ecosystem:verify": "tsx src/ecosystem/cli.ts verify",
     "prepublishOnly": "pnpm build"
@@ -54,11 +58,11 @@
     "commander": "^12.1.0",
     "execa": "^9.5.0",
     "kleur": "^4.1.5",
-    "yaml": "^2.9.0",
+    "yaml": "^2.9.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "tsx": "^4.23.13",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "@types/node": "^20.19.43"
   },

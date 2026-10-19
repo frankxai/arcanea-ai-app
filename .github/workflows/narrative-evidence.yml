@@ -1,0 +1,41 @@
+name: Narrative evidence
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/narrative-evidence.yml"
+      - "scripts/narrative-evals/verify-source-evidence.py"
+      - "scripts/tests/narrative-evidence.test.py"
+      - "docs/research/benchmarks/narrative-evidence-2026-10-11/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/narrative-evidence.yml"
+      - "scripts/narrative-evals/verify-source-evidence.py"
+      - "scripts/tests/narrative-evidence.test.py"
+      - "docs/research/benchmarks/narrative-evidence-2026-10-11/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: narrative-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  literal-source:
+    name: Literal source (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+      - name: Golden, refusal and untrusted-input cases
+        run: python -O scripts/tests/narrative-evidence.test.py

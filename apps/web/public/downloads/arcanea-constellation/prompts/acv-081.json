@@ -1,0 +1,95 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an evidence-bound visual study of Crystalpeak for the contracted deliverable.",
+  "subject": {
+    "stableId": "crystalpeak",
+    "displayName": "Crystalpeak",
+    "kind": "world",
+    "identityLock": "Crystalpeak is the floating upper third of the highest Veil Mountain summit, hovering roughly eight hundred meters above its root and reached by a swaying two-person stone causeway without railing. The Luminary is a millennia-grown crystalline academy rather than one palace: living corridors slowly narrow, seven residential wings catch morning light, and learning spaces expose how material, light, attention, and daily labor work together.",
+    "evidenceState": "source-complete",
+    "openIdentityVariables": [],
+    "allowedVariation": "Weather, time of day, and viewpoint may vary; geography, ecology, architecture, labor, inhabitable scale, and material economy may not drift."
+  },
+  "storyBeat": "At breakfast in the Hall of First Light, the sunrise moves as one slow east-to-west wave across shared student and faculty tables; mismatched student-made ceramic cups, warm bread, light-garden herbs, and the living crystal's mineral wear make education and maintenance legible before wonder.",
+  "composition": "16:9 inhabitable environmental plate with foreground work, midground social system, and distant ecological consequence; no empty establishing shot.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "16:9",
+    "intendedSurface": "world-dossier-and-environment-atlas",
+    "deliveryRole": "world system identity candidate plate",
+    "cropSafety": "Protect the foreground action and midground causal evidence inside the central field; distant context may not become the sole story carrier, and no alternate crop is authorized.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "adaptive-primary-pending",
+    "direction": "ADAPTIVE_STYLE_PRIMARY_PENDING_AFTER_ROUND_01",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      "book/chronicles-of-arcanea/series-bible/THE_LUMINARY.md#part-i-architecture [sha256:8059fef15e3af37bdb64de3cac3c31f1e2a0f29296c793fd1ca3f987b0560f12]",
+      "book/chronicles-of-arcanea/series-bible/THE_LUMINARY.md#part-ii-daily-life [sha256:8059fef15e3af37bdb64de3cac3c31f1e2a0f29296c793fd1ca3f987b0560f12]",
+      "book/chronicles-of-arcanea/book-01-the-three-academies/chapter-03-the-crystalpeak.md [sha256:7b4a570732b1f7644b9db284dfb91437d0efed5364e295994d19e40f8be5caa4]"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "perspective, inhabitable scale, ecology, architecture, labor, and material economy remain coherent",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "foreground labor or maintained evidence, midground social system, and distant ecological consequence all derive from cited sources",
+    "geography remains navigable and material economy remains physically plausible",
+    "architecture, ecology, climate, labor, and active phenomenon belong to one causal world system"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal",
+    "empty skyline postcard",
+    "decorative fantasy megacity without food labor water waste transport or maintenance",
+    "portal as the only evidence of a world",
+    "monoculture represented by one costume one temple or one color"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "candidate-after-human-gates",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": []
+  },
+  "contractHash": "ae88bfef87a3007c0b01cf638ffcd9d3566a31a56a83b242c662864d7d37ed8f"
+}

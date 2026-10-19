@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import { FACTS } from '@/lib/facts';
-import Image from 'next/image';
+"use client";
+import { FACTS } from "@/lib/facts";
+import Image from "next/image";
 
 import Link from "next/link";
 import {
@@ -17,7 +17,7 @@ import {
   PhArrowRight,
   PhChevronRight,
   PhSparkle,
-} from '@/lib/phosphor-icons';
+} from "@/lib/phosphor-icons";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -38,8 +38,7 @@ const FEATURES: CodeFeature[] = [
   },
   {
     title: "MCP Server",
-    description:
-      "Model Context Protocol server exposing 30+ specialized tools — memory search, AI invocation, lore queries, and intelligence routing.",
+    description: `Model Context Protocol server exposing ${FACTS.mcpTools} tools — memory search, AI invocation, lore queries, and intelligence routing.`,
     icon: <PhPackage weight="thin" size={24} />,
     accent: "var(--color-atlantean-teal-aqua)",
   },
@@ -60,7 +59,7 @@ const FEATURES: CodeFeature[] = [
   {
     title: "Intelligence Packages",
     description:
-      "9 published packages for council, evolution, memory, rituals, creative-pipeline, and more. Each one battle-tested with 3,000+ passing tests.",
+      "Workspace packages for memory, orchestration, the creative pipeline, and more, each with its own test suite in the monorepo.",
     icon: <PhLightning weight="thin" size={24} />,
     accent: "var(--color-cosmic-blue)",
   },
@@ -95,7 +94,7 @@ const QUICK_START = [
 ];
 
 const VSCODE_FEATURES = [
-  "AI assistant panel — invoke any of the 16 companions inline",
+  `AI assistant panel — invoke any of the ${FACTS.luminors} Luminors inline`,
   "`.arcanea` project config support — per-workspace AI presets",
   "Inline lore lookups — hover a Gate name to see its frequency and domain",
   "AI-powered code explanations — right-click any function",
@@ -118,7 +117,7 @@ export default function ArcaneaCodePage() {
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none"
-         />
+        />
         <div
           className="absolute inset-0 opacity-30"
           style={{
@@ -142,13 +141,15 @@ export default function ArcaneaCodePage() {
             <div
               className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none"
               style={{
-                background: "color-mix(in srgb, var(--color-brand-primary) 8%, transparent)",
+                background:
+                  "color-mix(in srgb, var(--color-brand-primary) 8%, transparent)",
               }}
             />
             <div
               className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl pointer-events-none"
               style={{
-                background: "color-mix(in srgb, var(--color-atlantean-teal-aqua) 6%, transparent)",
+                background:
+                  "color-mix(in srgb, var(--color-atlantean-teal-aqua) 6%, transparent)",
               }}
             />
 
@@ -156,11 +157,17 @@ export default function ArcaneaCodePage() {
               <div
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6"
                 style={{
-                  borderColor: "color-mix(in srgb, var(--color-brand-primary) 30%, transparent)",
-                  background: "color-mix(in srgb, var(--color-brand-primary) 10%, transparent)",
+                  borderColor:
+                    "color-mix(in srgb, var(--color-brand-primary) 30%, transparent)",
+                  background:
+                    "color-mix(in srgb, var(--color-brand-primary) 10%, transparent)",
                 }}
               >
-                <PhCode weight="thin" size={16} className="text-brand-primary" />
+                <PhCode
+                  weight="thin"
+                  size={16}
+                  className="text-brand-primary"
+                />
                 <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
                   Developer Platform
                 </span>
@@ -173,8 +180,8 @@ export default function ArcaneaCodePage() {
 
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 A complete developer platform for building with the Arcanea
-                intelligence layer. TypeScript
-                SDK, an MCP server with {FACTS.mcpTools} tools, intelligent AI agents, and a VS Code
+                intelligence layer. TypeScript SDK, an MCP server with{" "}
+                {FACTS.mcpTools} tools, intelligent AI agents, and a VS Code
                 extension that puts intelligence inside your editor.
               </p>
 
@@ -224,7 +231,8 @@ export default function ArcaneaCodePage() {
                     <code
                       className="block rounded-lg p-3 text-sm font-mono overflow-x-auto mb-2"
                       style={{
-                        background: "color-mix(in srgb, var(--color-cosmic-void) 50%, transparent)",
+                        background:
+                          "color-mix(in srgb, var(--color-cosmic-void) 50%, transparent)",
                         color: "var(--color-atlantean-teal-aqua)",
                       }}
                     >
@@ -314,7 +322,11 @@ export default function ArcaneaCodePage() {
                       "color-mix(in srgb, var(--color-atlantean-teal-aqua) 10%, transparent)",
                   }}
                 >
-                  <PhSparkle weight="thin" size={14} className="text-atlantean-teal-aqua" />
+                  <PhSparkle
+                    weight="thin"
+                    size={14}
+                    className="text-atlantean-teal-aqua"
+                  />
                   <span className="text-xs font-mono tracking-widest uppercase text-atlantean-teal-aqua">
                     VS Code Extension
                   </span>
@@ -347,13 +359,6 @@ export default function ArcaneaCodePage() {
                     Install from Marketplace
                     <PhArrowRight weight="thin" size={14} />
                   </Link>
-                  <Link
-                    href="/arcanea-vault"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold text-sm hover:border-atlantean-teal-aqua/30 transition-all"
-                  >
-                    Download .vsix
-                    <PhChevronRight weight="thin" size={16} />
-                  </Link>
                 </div>
               </div>
 
@@ -382,7 +387,8 @@ export default function ArcaneaCodePage() {
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{
-                  background: "color-mix(in srgb, var(--color-brand-primary) 20%, transparent)",
+                  background:
+                    "color-mix(in srgb, var(--color-brand-primary) 20%, transparent)",
                   color: "var(--color-brand-primary)",
                 }}
               >
@@ -401,7 +407,8 @@ export default function ArcaneaCodePage() {
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{
-                  background: "color-mix(in srgb, var(--color-atlantean-teal-aqua) 20%, transparent)",
+                  background:
+                    "color-mix(in srgb, var(--color-atlantean-teal-aqua) 20%, transparent)",
                   color: "var(--color-atlantean-teal-aqua)",
                 }}
               >
@@ -420,7 +427,8 @@ export default function ArcaneaCodePage() {
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{
-                  background: "color-mix(in srgb, var(--color-gold-bright) 20%, transparent)",
+                  background:
+                    "color-mix(in srgb, var(--color-gold-bright) 20%, transparent)",
                   color: "var(--color-gold-bright)",
                 }}
               >
@@ -430,8 +438,8 @@ export default function ArcaneaCodePage() {
                 Production Ready
               </h3>
               <p className="text-text-secondary text-sm font-body">
-                3,000+ tests passing across 26 packages{/* facts-ok: arcanea-code's own suite */}. Tested against
-                Vercel, Supabase, and Google Gemini in production.
+                Runs the same code paths that serve arcanea.ai on Vercel,
+                Supabase, and Google Gemini.
               </p>
             </div>
           </div>
@@ -450,7 +458,8 @@ export default function ArcaneaCodePage() {
             <div
               className="absolute -top-16 -right-16 w-64 h-64 rounded-full blur-3xl pointer-events-none"
               style={{
-                background: "color-mix(in srgb, var(--color-brand-primary) 6%, transparent)",
+                background:
+                  "color-mix(in srgb, var(--color-brand-primary) 6%, transparent)",
               }}
             />
 

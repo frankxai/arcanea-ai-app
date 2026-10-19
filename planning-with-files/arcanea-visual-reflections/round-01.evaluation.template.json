@@ -1,0 +1,670 @@
+{
+  "schema": "arcanea.visual_round_evaluation.v1",
+  "campaignId": "arcanea-living-constellation-100",
+  "campaignVersion": "1.10.0",
+  "round": 1,
+  "promptPackHash": "1bcd683289fabb76590fa4001defc45db357dd4769861f4f4b1284d7f6067ec5",
+  "rubricId": "arcanea_visual_quality_v1_10x5",
+  "reviewProtocol": {
+    "mode": "style-blind-two-pass",
+    "blindReviewRequired": true,
+    "blindReviewCompleted": false,
+    "completeSeparateScorecardsBeforeUnblinding": true,
+    "referenceMaturity": "text-conditioned-no-accepted-reference",
+    "identityContinuityRule": "Without a verified accepted image reference, score source-fact stability only and cap identity continuity at 4/5.",
+    "benchmarkLimitation": "Round 01 begins without accepted image-reference hashes. Between-style likeness variation is experimental noise; this round may select a rendering hypothesis but cannot lock either identity. Identity continuity claims require later accepted references and regression tests.",
+    "criticPacketHash": null,
+    "unblindingKeyHash": null,
+    "sourceScorecards": {
+      "production": null,
+      "independent": null
+    }
+  },
+  "judges": {
+    "production": {
+      "id": "arcanea-visual-director-critic",
+      "independentFromGeneration": false
+    },
+    "independent": {
+      "id": null,
+      "independentFromGeneration": true
+    }
+  },
+  "candidates": [
+    {
+      "blindId": "BR-01-569EF9B313",
+      "jobId": "ACV-001",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-6F0E3EC3A5",
+      "jobId": "ACV-002",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-48EF8D665F",
+      "jobId": "ACV-003",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-A67DD5C5A1",
+      "jobId": "ACV-004",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-7F244688B3",
+      "jobId": "ACV-005",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-AD15781001",
+      "jobId": "ACV-006",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-7E7465D40B",
+      "jobId": "ACV-007",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-9B851C3F02",
+      "jobId": "ACV-008",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-FE64631C32",
+      "jobId": "ACV-009",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    },
+    {
+      "blindId": "BR-01-4E72708AEF",
+      "jobId": "ACV-010",
+      "referenceState": "text-conditioned-no-image-reference",
+      "identityContinuityCeiling": 4,
+      "outputReceiptPath": null,
+      "production": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "independent": {
+        "scores": {
+          "prompt adherence": null,
+          "source and canon fidelity": null,
+          "identity continuity": null,
+          "silhouette legibility": null,
+          "anatomy and count accuracy": null,
+          "material specificity": null,
+          "composition and hierarchy": null,
+          "emotional story truth": null,
+          "Arcanea distinctiveness": null,
+          "release readiness": null
+        },
+        "evidence": {
+          "prompt adherence": "",
+          "source and canon fidelity": "",
+          "identity continuity": "",
+          "silhouette legibility": "",
+          "anatomy and count accuracy": "",
+          "material specificity": "",
+          "composition and hierarchy": "",
+          "emotional story truth": "",
+          "Arcanea distinctiveness": "",
+          "release readiness": ""
+        },
+        "verdict": "pending"
+      },
+      "humanVerdict": "pending"
+    }
+  ],
+  "decision": {
+    "failurePatterns": [],
+    "retainRules": [],
+    "reviseRules": [],
+    "retireRules": [],
+    "reconciliationNotes": "",
+    "benchmarkReferenceState": "text-conditioned-no-accepted-reference",
+    "benchmarkLimitationAcknowledged": false,
+    "identityComparabilityNotes": "",
+    "crossAnchorPortabilityNotes": "",
+    "primaryStyleDecision": "pending",
+    "secondaryModeDecision": "pending",
+    "humanVerdict": "pending",
+    "nextRoundCompilationAllowed": false
+  }
+}

@@ -1,0 +1,36 @@
+# Generated in pnpm's native format. Lockfile Drift Check and frozen installs
+# remain authoritative; dependency validation is not a Prettier operation.
+pnpm-lock.yaml
+
+# estate-guard pack — vendored from claude-skills-library, formatted and tested upstream
+.claude/ci/estate-guard-scan.mjs
+.claude/ci/estate-guard/
+.claude/skills/estate-guard/
+
+# stack-kits pack — vendored from claude-skills-library (kits verbatim from
+# blencorp/claude-code-kit); reformatting here would make every re-install
+# see local edits and set the kits aside
+.claude/hooks/skill-activation-prompt.mjs
+.claude/skills/nextjs/
+.claude/skills/react/
+.claude/skills/tailwindcss/
+.claude/skills/shadcn/
+.claude/skills/stack-kits.rules.json
+
+# web-excellence pack — vendored from claude-skills-library and tested upstream;
+# reformatting here would make every re-install see local edits
+.claude/ci/web-guidelines-lint.mjs
+.claude/skills/web-release-gate/
+.claude/skills/web-design-guidelines/
+.claude/skills/ui-ux-pro-max/
+.claude/skills/emil-design-eng/
+.claude/skills/apple-design/
+.claude/skills/review-animations/
+.claude/skills/improve-animations/
+.claude/skills/find-animation-opportunities/
+.claude/skills/animation-vocabulary/
+.claude/skills/core-web-vitals/
+.claude/skills/visual-proof/
+.claude/skills/image-to-code/
+.claude/skills/extract-design-system/
+.claude/skills/brandkit/

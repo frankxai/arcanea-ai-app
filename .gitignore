@@ -59,6 +59,9 @@ temp/
 # Asset uploads (development only)
 public/shared-assets/temp-uploads/
 apps/web/public/brand/temp/
+planning-with-files/arcanea-visual-assets/
+planning-with-files/arcanea-visual-blind-review/
+planning-with-files/arcanea-visual-workbench/index.html
 
 # Turbo
 .turbo/
@@ -164,6 +167,12 @@ arcanea-opencode-fork/
 !.claude/skills/visual-proof/
 !.claude/skills/web-design-guidelines/
 !.claude/skills/web-release-gate/
+# stack-kits pack — framework kits + prompt router, committed for the same reason
+!.claude/skills/nextjs/
+!.claude/skills/react/
+!.claude/skills/tailwindcss/
+!.claude/skills/shadcn/
+!.claude/hooks/skill-activation-prompt.mjs
 .codex/
 .codacy/
 .cursor/
@@ -324,3 +333,21 @@ link-checker-report.txt
 .lighthouse.json
 .extract-design-system/
 .claude/skills/.replaced/
+
+# Rebuilt from packages/arcanea-creator-starters before web dev/build.
+/apps/web/public/creator-starters/
+
+# estate-guard pack — per-machine files, never tracked
+.claude/settings.local.json
+.claude/ci/estate-guard/last-scan.json
+
+# estate-guard pack — these must be tracked (an ignored hook is a gate that only exists on one machine)
+!.claude/skills/estate-guard/SKILL.md
+!.claude/hooks/estate-guard-gate.py
+!.claude/hooks/estate-guard-session.py
+!.claude/hooks/estate-guard-taint.py
+!.claude/
+!.claude/hooks/
+!.claude/skills/
+!.claude/skills/estate-guard/
+.claude/skills/**/__pycache__/

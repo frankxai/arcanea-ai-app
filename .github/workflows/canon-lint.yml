@@ -8,6 +8,9 @@ on:
   # check rather than a condition on whether the check reports.
   pull_request:
     branches: [main]
+    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
+    # job skips on the draft and never reports once the PR is marked ready.
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: canon-${{ github.ref }}
@@ -15,6 +18,8 @@ concurrency:
 
 jobs:
   canon-lint:
+    # Cost gate: skip on draft PRs — agents iterate free; the canon check runs when marked ready.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Canon Consistency Check
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -28,7 +33,7 @@ jobs:
         # Pinned to a commit SHA, not a tag: this action supplies the file list the
         # canon verdict is computed over, and a mutable tag lets that code change
         # under the guard. Dependabot's github-actions ecosystem keeps the pin fresh.
-        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
           files: |
             book/**

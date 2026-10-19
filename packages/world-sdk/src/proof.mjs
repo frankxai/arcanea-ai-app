@@ -1,20 +1,30 @@
-// Proof rail — onchain underneath, invisible on top. Onchain stores PROOFS, not the world.
-// Real chains (Solana/Metaplex via Helius, EVM via thirdweb) implement the same two adapters.
+// Local tagged proposals. Claims await an accepted profile-aware shared contract.
 
 import { createHash } from "node:crypto";
-import { readWorld, writeManifest } from "./fs-world.mjs";
-import { contentHash } from "./contenthash.mjs";
+import { CONTENT_HASH_PROFILE } from "./contenthash.mjs";
 import { SCHEMA_VERSION } from "./manifest.mjs";
 
-/** The onchain record shape (see WORLD_REPO_STANDARD.md §5). */
-export function computeProof({ manifest, hash, chain, repoPointer, wallet, now }) {
+/** Local tagged proposal only; the profile-aware shared claim contract is pending. */
+export function computeProof({
+  manifest,
+  hash,
+  chain,
+  repoPointer,
+  wallet,
+  now,
+}) {
   return {
     worldId: manifest.id,
     creatorWallet: wallet,
     contentHash: hash,
+    hashProfile: CONTENT_HASH_PROFILE,
     schemaVersion: SCHEMA_VERSION,
-    licensePointer: manifest.license?.pointer || "licenses/LICENSE.md",
-    royaltyPolicy: manifest.royalty?.policy || "licenses/royalty.json",
+    ...(manifest.license?.pointer
+      ? { licensePointer: manifest.license.pointer }
+      : {}),
+    ...(manifest.royalty?.policy
+      ? { royaltyPolicy: manifest.royalty.policy }
+      : {}),
     repoOrBundlePointer: repoPointer || manifest.repoUrl || "",
     timestamp: now,
     chain,
@@ -30,11 +40,15 @@ export function mockChain(chain = "solana", standard = "metaplex-core") {
   return {
     chain,
     async getOrCreateWallet(handle) {
-      const h = createHash("sha256").update("wallet:" + handle).digest("hex");
+      const h = createHash("sha256")
+        .update("wallet:" + handle)
+        .digest("hex");
       return { pubkey: "So1" + h.slice(0, 41) }; // solana-shaped, deterministic
     },
     async mint(proof) {
-      const ref = createHash("sha256").update(proof.contentHash + proof.worldId + chain).digest("hex");
+      const ref = createHash("sha256")
+        .update(proof.contentHash + proof.worldId + chain)
+        .digest("hex");
       return { ref, standard };
     },
   };
@@ -49,28 +63,11 @@ export function mockChain(chain = "solana", standard = "metaplex-core") {
  * @param {string} [args.repoPointer]
  * @param {string} [args.now]      ISO timestamp (inject for determinism; defaults to wall clock)
  */
-export async function claimWorldProof({ dir, adapter = mockChain(), chain, repoPointer, now }) {
-  const world = await readWorld(dir);
-  const { manifest, files } = world;
-  const hash = contentHash(files, manifest);
-  const targetChain = chain || adapter.chain || "solana";
-
-  const wallet = await adapter.getOrCreateWallet(manifest.creator?.handle || "anon");
-  manifest.creator = { ...(manifest.creator || {}), wallet: wallet.pubkey };
-
-  const proof = computeProof({ manifest, hash, chain: targetChain, repoPointer, wallet: wallet.pubkey, now: now || new Date().toISOString() });
-  const minted = await adapter.mint(proof);
-
-  const entry = {
-    contentHash: hash,
-    chain: targetChain,
-    standard: minted.standard,
-    ref: minted.ref,
-    schemaVersion: SCHEMA_VERSION,
-    timestamp: proof.timestamp,
-  };
-  manifest.provenance = [...(manifest.provenance || []), entry];
-  await writeManifest(dir, manifest);
-
-  return { entry, contentHash: hash, wallet: wallet.pubkey, manifest };
+export async function claimWorldProof() {
+  throw Object.assign(
+    new Error(
+      "Declared-source hashes require an accepted profile-aware proof contract before adapters or provenance writes.",
+    ),
+    { code: "WORLD_HASH_PROFILE_REQUIRES_REVIEW" },
+  );
 }

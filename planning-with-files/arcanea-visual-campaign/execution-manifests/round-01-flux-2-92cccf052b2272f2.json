@@ -1,0 +1,749 @@
+{
+  "schema": "arcanea.provider_execution_manifest.v1",
+  "campaignId": "arcanea-living-constellation-100",
+  "campaignVersion": "1.9.1",
+  "round": 1,
+  "sourceContractSetHash": "9ef8e689880972d45e5202542102b5e5233a81a1f6c8e61bb02322caa01b5e33",
+  "profileId": "flux-2",
+  "promptCompilerVersion": "2.1.3",
+  "profile": {
+    "provider": "black-forest-labs",
+    "lane": "adversarial-interpretation-and-material-rendering",
+    "modelPolicy": "discover-current-FLUX-2-variant-at-runtime",
+    "research": {
+      "url": "https://docs.bfl.ai/guides/prompting_guide_flux2",
+      "verifiedAt": "2026-08-25",
+      "basis": "FLUX.2 prioritizes subject, action, style, then context; has no negative-prompt channel; requires dimensions divisible by 16; permits up to 4MP; and recommends up to approximately 2MP for most work. Multi-reference limits depend on output size."
+    },
+    "supportsNegativeGuidance": false,
+    "maximumPlannedReferences": 7
+  },
+  "jobs": [
+    {
+      "id": "ACV-001",
+      "name": "Draconis — Living Codex",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "691182e7657e08a6f9a2f74bd800b5218d3dfba50012c8cc81b9b36daea2206c",
+      "executionPrompt": "Draconis. Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes. The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; use the described body as one coherent comparison candidate.\n\nAction and story consequence: Beside a flawless blade that shattered before use, Draconis breathes once through its furnace ribs until the old fracture line glows white; the three temper vanes register the brittleness that existed before the break, exposing material truth rather than attacking.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: godbeast dossier and morphology atlas. Crop safety: \n\nVisual direction: museum field plate, restrained vellum-like ground, blank marginal breathing room reserved for off-image annotation, tactile painted realism, crisp silhouette, material truth, one localized impossible behavior. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Use this morphology as the single controlled body proposal for this comparative plate. Hold its topology and exactly 3 Chord terminals constant inside this plate for a clean comparison; vary only the explicitly open detail variables. Keep the Gate relation and grounded functional phenomena fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Limbs, Chords, face architecture, locomotion anatomy, and scale evidence remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Exactly 3 countable Chord terminals in silhouette. Draconis remains wingless with exactly six limbs and exactly three temper vanes. The flawless broken blade and its visible old fracture line remain the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. restrained contemporary field-document surface treatment. one clear hierarchy with generous negative space. edge-to-edge undecorated composition. materially accurate neutral color with localized active accents. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "e7783807c913a3c58b1ac4368c72fcb80fd9aaeeb63663d7217f21ffe0c46652",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 3233,
+        "words": 418,
+        "imageFacingConstraintCount": 8,
+        "withheldGovernanceConstraintCount": 2,
+        "withheldGovernanceConstraintsHash": "ec9c9e1e37d3f3aecd33e2aac0a8bd264b3d9ba9924ea5d5ae1a0f0d10334298",
+        "imageFacingAvoidanceCount": 14,
+        "withheldGovernanceAvoidanceCount": 0,
+        "withheldGovernanceAvoidanceHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "godbeast-dossier-and-morphology-atlas",
+        "deliveryRole": "controlled style benchmark and Godbeast morphology proposal discovery plate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [
+          "Creator explicitly accepts, amends, or rejects the tested morphology candidate against locked canon and the local Godbeast record",
+          "Identity review records the accepted clade, Chord anatomy, limb count, face and sensory architecture, locomotion, scale, ecology, and material system before issuing a reference master",
+          "Grayscale silhouette, orthographic anatomy, action, habitat, and bonded-dyad studies must agree before any public identity approval"
+        ],
+        "imageFacingConstraintsWithheld": [
+          "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+          "the named morphology is a controlled proposal under evaluation, never a canonical portrait or identity master"
+        ],
+        "imageFacingAvoidanceWithheld": []
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-002",
+      "name": "Kael Thornfield — Living Codex",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "05dbca60f64930f5303a862856823c36205e9d2e4805e40151df90bb1b72923d",
+      "executionPrompt": "Kael Thornfield. Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.\n\nAction and story consequence: Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: book character dossier and identity atlas. Crop safety: \n\nVisual direction: museum field plate, restrained vellum-like ground, blank marginal breathing room reserved for off-image annotation, tactile painted realism, crisp silhouette, material truth, one localized impossible behavior. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Camera, pose, and environmental detail may vary; anatomy, age, body, countable silhouette, role, and story truth remain fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Face, hands, limbs, countable anatomy, age, and body proportions remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Series: Chronicles of Arcanea. Kael remains nineteen, six feet tall, warm deep-brown skinned, broad-shouldered, close-cropped, and visibly inclined to compress his posture. The small white scar stays at the base of his left thumb and one reusable stone remains the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. restrained contemporary field-document surface treatment. one clear hierarchy with generous negative space. edge-to-edge undecorated composition. materially accurate neutral color with localized active accents. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "44320553c400785191a2ed2a64c8a0772981696e2e3336c252ad1916741913fb",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2992,
+        "words": 397,
+        "imageFacingConstraintCount": 7,
+        "withheldGovernanceConstraintCount": 1,
+        "withheldGovernanceConstraintsHash": "87d51c68ab5d402818196f173d37a380ef6986e087e359f28c8ad4c498041432",
+        "imageFacingAvoidanceCount": 13,
+        "withheldGovernanceAvoidanceCount": 1,
+        "withheldGovernanceAvoidanceHash": "3318e3707ae267bdd63fc75ca8f8862a796f73529cb0d7b70458ead60e5b1b9f",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "book-character-dossier-and-identity-atlas",
+        "deliveryRole": "controlled style benchmark and source-complete character identity candidate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "candidate-after-human-gates",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [],
+        "imageFacingConstraintsWithheld": [
+          "story-bible evidence outranks name-derived visual shorthand"
+        ],
+        "imageFacingAvoidanceWithheld": [
+          "provisional identity traits presented as locked canon"
+        ]
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-003",
+      "name": "Draconis — Prism Realism",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "316337ba773bbb01f038c01475329762d0a93ef71862c96731cfcca0b7d052d9",
+      "executionPrompt": "Draconis. Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes. The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; use the described body as one coherent comparison candidate.\n\nAction and story consequence: Beside a flawless blade that shattered before use, Draconis breathes once through its furnace ribs until the old fracture line glows white; the three temper vanes register the brittleness that existed before the break, exposing material truth rather than attacking.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: godbeast dossier and morphology atlas. Crop safety: \n\nVisual direction: cinematic tactile naturalism, physically plausible surfaces, controlled lens depth, shaped colored light only where story requires it, quiet emotional presence. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Use this morphology as the single controlled body proposal for this comparative plate. Hold its topology and exactly 3 Chord terminals constant inside this plate for a clean comparison; vary only the explicitly open detail variables. Keep the Gate relation and grounded functional phenomena fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Limbs, Chords, face architecture, locomotion anatomy, and scale evidence remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Exactly 3 countable Chord terminals in silhouette. Draconis remains wingless with exactly six limbs and exactly three temper vanes. The flawless broken blade and its visible old fracture line remain the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "588eb3fd51a8842ae0a47b464842383ed3afe0db18fc64c137abce5902784862",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2973,
+        "words": 390,
+        "imageFacingConstraintCount": 8,
+        "withheldGovernanceConstraintCount": 2,
+        "withheldGovernanceConstraintsHash": "ec9c9e1e37d3f3aecd33e2aac0a8bd264b3d9ba9924ea5d5ae1a0f0d10334298",
+        "imageFacingAvoidanceCount": 15,
+        "withheldGovernanceAvoidanceCount": 0,
+        "withheldGovernanceAvoidanceHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "godbeast-dossier-and-morphology-atlas",
+        "deliveryRole": "controlled style benchmark and Godbeast morphology proposal discovery plate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [
+          "Creator explicitly accepts, amends, or rejects the tested morphology candidate against locked canon and the local Godbeast record",
+          "Identity review records the accepted clade, Chord anatomy, limb count, face and sensory architecture, locomotion, scale, ecology, and material system before issuing a reference master",
+          "Grayscale silhouette, orthographic anatomy, action, habitat, and bonded-dyad studies must agree before any public identity approval"
+        ],
+        "imageFacingConstraintsWithheld": [
+          "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+          "the named morphology is a controlled proposal under evaluation, never a canonical portrait or identity master"
+        ],
+        "imageFacingAvoidanceWithheld": []
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-004",
+      "name": "Kael Thornfield — Prism Realism",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "1188faad457ba5dfd1bdeb4463ab3812578b85648a085bfa43b2e29ff78cb0a9",
+      "executionPrompt": "Kael Thornfield. Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.\n\nAction and story consequence: Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: book character dossier and identity atlas. Crop safety: \n\nVisual direction: cinematic tactile naturalism, physically plausible surfaces, controlled lens depth, shaped colored light only where story requires it, quiet emotional presence. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Camera, pose, and environmental detail may vary; anatomy, age, body, countable silhouette, role, and story truth remain fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Face, hands, limbs, countable anatomy, age, and body proportions remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Series: Chronicles of Arcanea. Kael remains nineteen, six feet tall, warm deep-brown skinned, broad-shouldered, close-cropped, and visibly inclined to compress his posture. The small white scar stays at the base of his left thumb and one reusable stone remains the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "396adfb0da1a8a08a94db06a5803ef864d349ebb1442d2d3851edc6c236f5fbc",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2732,
+        "words": 369,
+        "imageFacingConstraintCount": 7,
+        "withheldGovernanceConstraintCount": 1,
+        "withheldGovernanceConstraintsHash": "87d51c68ab5d402818196f173d37a380ef6986e087e359f28c8ad4c498041432",
+        "imageFacingAvoidanceCount": 14,
+        "withheldGovernanceAvoidanceCount": 1,
+        "withheldGovernanceAvoidanceHash": "3318e3707ae267bdd63fc75ca8f8862a796f73529cb0d7b70458ead60e5b1b9f",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "book-character-dossier-and-identity-atlas",
+        "deliveryRole": "controlled style benchmark and source-complete character identity candidate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "candidate-after-human-gates",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [],
+        "imageFacingConstraintsWithheld": [
+          "story-bible evidence outranks name-derived visual shorthand"
+        ],
+        "imageFacingAvoidanceWithheld": [
+          "provisional identity traits presented as locked canon"
+        ]
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-005",
+      "name": "Draconis — Luminous Atelier",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "c656fe32f9813b6584cc3c261c5233ad913e1de48cb7593fb7107545ec298496",
+      "executionPrompt": "Draconis. Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes. The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; use the described body as one coherent comparison candidate.\n\nAction and story consequence: Beside a flawless blade that shattered before use, Draconis breathes once through its furnace ribs until the old fracture line glows white; the three temper vanes register the brittleness that existed before the break, exposing material truth rather than attacking.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: godbeast dossier and morphology atlas. Crop safety: \n\nVisual direction: restrained painterly realism, visible but disciplined brush intelligence, classical value structure, contemporary character specificity, atmospheric edges. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Use this morphology as the single controlled body proposal for this comparative plate. Hold its topology and exactly 3 Chord terminals constant inside this plate for a clean comparison; vary only the explicitly open detail variables. Keep the Gate relation and grounded functional phenomena fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Limbs, Chords, face architecture, locomotion anatomy, and scale evidence remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Exactly 3 countable Chord terminals in silhouette. Draconis remains wingless with exactly six limbs and exactly three temper vanes. The flawless broken blade and its visible old fracture line remain the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "8a29e8dd03c7a586417f3ccd7363b907463fd40f0cb0f654ca2dbcfd981cb502",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2968,
+        "words": 386,
+        "imageFacingConstraintCount": 8,
+        "withheldGovernanceConstraintCount": 2,
+        "withheldGovernanceConstraintsHash": "ec9c9e1e37d3f3aecd33e2aac0a8bd264b3d9ba9924ea5d5ae1a0f0d10334298",
+        "imageFacingAvoidanceCount": 15,
+        "withheldGovernanceAvoidanceCount": 0,
+        "withheldGovernanceAvoidanceHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "godbeast-dossier-and-morphology-atlas",
+        "deliveryRole": "controlled style benchmark and Godbeast morphology proposal discovery plate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [
+          "Creator explicitly accepts, amends, or rejects the tested morphology candidate against locked canon and the local Godbeast record",
+          "Identity review records the accepted clade, Chord anatomy, limb count, face and sensory architecture, locomotion, scale, ecology, and material system before issuing a reference master",
+          "Grayscale silhouette, orthographic anatomy, action, habitat, and bonded-dyad studies must agree before any public identity approval"
+        ],
+        "imageFacingConstraintsWithheld": [
+          "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+          "the named morphology is a controlled proposal under evaluation, never a canonical portrait or identity master"
+        ],
+        "imageFacingAvoidanceWithheld": []
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-006",
+      "name": "Kael Thornfield — Luminous Atelier",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "9ff118d7e9b67288ac16f6637dc44f29311c448e7fd2ea575187ab774144bc8f",
+      "executionPrompt": "Kael Thornfield. Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.\n\nAction and story consequence: Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: book character dossier and identity atlas. Crop safety: \n\nVisual direction: restrained painterly realism, visible but disciplined brush intelligence, classical value structure, contemporary character specificity, atmospheric edges. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Camera, pose, and environmental detail may vary; anatomy, age, body, countable silhouette, role, and story truth remain fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Face, hands, limbs, countable anatomy, age, and body proportions remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Series: Chronicles of Arcanea. Kael remains nineteen, six feet tall, warm deep-brown skinned, broad-shouldered, close-cropped, and visibly inclined to compress his posture. The small white scar stays at the base of his left thumb and one reusable stone remains the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "22dff2f0d8c7e2a2164b628005096dd4e53bedc839997252387d68340ba73a2f",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2727,
+        "words": 365,
+        "imageFacingConstraintCount": 7,
+        "withheldGovernanceConstraintCount": 1,
+        "withheldGovernanceConstraintsHash": "87d51c68ab5d402818196f173d37a380ef6986e087e359f28c8ad4c498041432",
+        "imageFacingAvoidanceCount": 14,
+        "withheldGovernanceAvoidanceCount": 1,
+        "withheldGovernanceAvoidanceHash": "3318e3707ae267bdd63fc75ca8f8862a796f73529cb0d7b70458ead60e5b1b9f",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "book-character-dossier-and-identity-atlas",
+        "deliveryRole": "controlled style benchmark and source-complete character identity candidate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "candidate-after-human-gates",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [],
+        "imageFacingConstraintsWithheld": [
+          "story-bible evidence outranks name-derived visual shorthand"
+        ],
+        "imageFacingAvoidanceWithheld": [
+          "provisional identity traits presented as locked canon"
+        ]
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-007",
+      "name": "Draconis — Ritual Brutalism",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "b81accc11da42ffbf3e7a52c224307bb3efc5229a5ec9d6e0b41cc95e18c01f5",
+      "executionPrompt": "Draconis. Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes. The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; use the described body as one coherent comparison candidate.\n\nAction and story consequence: Beside a flawless blade that shattered before use, Draconis breathes once through its furnace ribs until the old fracture line glows white; the three temper vanes register the brittleness that existed before the break, exposing material truth rather than attacking.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: godbeast dossier and morphology atlas. Crop safety: \n\nVisual direction: monolithic sculptural composition, stone ceramic and metal, severe negative space, architectural light cuts, small human-scale evidence, countable silhouette. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Use this morphology as the single controlled body proposal for this comparative plate. Hold its topology and exactly 3 Chord terminals constant inside this plate for a clean comparison; vary only the explicitly open detail variables. Keep the Gate relation and grounded functional phenomena fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Limbs, Chords, face architecture, locomotion anatomy, and scale evidence remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Exactly 3 countable Chord terminals in silhouette. Draconis remains wingless with exactly six limbs and exactly three temper vanes. The flawless broken blade and its visible old fracture line remain the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "6c850c906494ca836028df51097558a7771801ec62ec176f38a53e4db6fda316",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2971,
+        "words": 388,
+        "imageFacingConstraintCount": 8,
+        "withheldGovernanceConstraintCount": 2,
+        "withheldGovernanceConstraintsHash": "ec9c9e1e37d3f3aecd33e2aac0a8bd264b3d9ba9924ea5d5ae1a0f0d10334298",
+        "imageFacingAvoidanceCount": 15,
+        "withheldGovernanceAvoidanceCount": 0,
+        "withheldGovernanceAvoidanceHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "godbeast-dossier-and-morphology-atlas",
+        "deliveryRole": "controlled style benchmark and Godbeast morphology proposal discovery plate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [
+          "Creator explicitly accepts, amends, or rejects the tested morphology candidate against locked canon and the local Godbeast record",
+          "Identity review records the accepted clade, Chord anatomy, limb count, face and sensory architecture, locomotion, scale, ecology, and material system before issuing a reference master",
+          "Grayscale silhouette, orthographic anatomy, action, habitat, and bonded-dyad studies must agree before any public identity approval"
+        ],
+        "imageFacingConstraintsWithheld": [
+          "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+          "the named morphology is a controlled proposal under evaluation, never a canonical portrait or identity master"
+        ],
+        "imageFacingAvoidanceWithheld": []
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-008",
+      "name": "Kael Thornfield — Ritual Brutalism",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "741139966b120101d35a8fed262495351e6529e3faa0a41c830aa902900070c8",
+      "executionPrompt": "Kael Thornfield. Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.\n\nAction and story consequence: Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: book character dossier and identity atlas. Crop safety: \n\nVisual direction: monolithic sculptural composition, stone ceramic and metal, severe negative space, architectural light cuts, small human-scale evidence, countable silhouette. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Camera, pose, and environmental detail may vary; anatomy, age, body, countable silhouette, role, and story truth remain fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Face, hands, limbs, countable anatomy, age, and body proportions remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Series: Chronicles of Arcanea. Kael remains nineteen, six feet tall, warm deep-brown skinned, broad-shouldered, close-cropped, and visibly inclined to compress his posture. The small white scar stays at the base of his left thumb and one reusable stone remains the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. specific authored form with physically legible materials.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "4835b51f3bba80f5467821d19941a6db6c125c2ca8217daddf587c6cce79acd3",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2730,
+        "words": 367,
+        "imageFacingConstraintCount": 7,
+        "withheldGovernanceConstraintCount": 1,
+        "withheldGovernanceConstraintsHash": "87d51c68ab5d402818196f173d37a380ef6986e087e359f28c8ad4c498041432",
+        "imageFacingAvoidanceCount": 14,
+        "withheldGovernanceAvoidanceCount": 1,
+        "withheldGovernanceAvoidanceHash": "3318e3707ae267bdd63fc75ca8f8862a796f73529cb0d7b70458ead60e5b1b9f",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "book-character-dossier-and-identity-atlas",
+        "deliveryRole": "controlled style benchmark and source-complete character identity candidate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "candidate-after-human-gates",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [],
+        "imageFacingConstraintsWithheld": [
+          "story-bible evidence outranks name-derived visual shorthand"
+        ],
+        "imageFacingAvoidanceWithheld": [
+          "provisional identity traits presented as locked canon"
+        ]
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-009",
+      "name": "Draconis — Mature Feature",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "b128dfe0ec7e64ba7f33d3cb70d25ef48fc57112d60cc455fed2033fc7f0c728",
+      "executionPrompt": "Draconis. Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes. The local record grounds will amplification, sacred forging flame, material tempering, and draconic sovereignty; use the described body as one coherent comparison candidate.\n\nAction and story consequence: Beside a flawless blade that shattered before use, Draconis breathes once through its furnace ribs until the old fracture line glows white; the three temper vanes register the brittleness that existed before the break, exposing material truth rather than attacking.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: godbeast dossier and morphology atlas. Crop safety: \n\nVisual direction: mature stylized 3D feature design, graphic planes, tactile materials, expressive posture, believable weight, sophisticated lighting, silhouette-first anatomy. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Use this morphology as the single controlled body proposal for this comparative plate. Hold its topology and exactly 3 Chord terminals constant inside this plate for a clean comparison; vary only the explicitly open detail variables. Keep the Gate relation and grounded functional phenomena fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Limbs, Chords, face architecture, locomotion anatomy, and scale evidence remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Exactly 3 countable Chord terminals in silhouette. Draconis remains wingless with exactly six limbs and exactly three temper vanes. The flawless broken blade and its visible old fracture line remain the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. mature proportions, believable weight, and production-grade materials. specific authored form with physically legible materials. anatomically proportionate eyes or non-facial instrument apertures. tactile surfaces with construction, wear, and environmental response.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "2f15fbca8d691656e089f7e15b2ce42a67d499356f12350b00ed402e106509f9",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 3180,
+        "words": 409,
+        "imageFacingConstraintCount": 8,
+        "withheldGovernanceConstraintCount": 2,
+        "withheldGovernanceConstraintsHash": "ec9c9e1e37d3f3aecd33e2aac0a8bd264b3d9ba9924ea5d5ae1a0f0d10334298",
+        "imageFacingAvoidanceCount": 15,
+        "withheldGovernanceAvoidanceCount": 0,
+        "withheldGovernanceAvoidanceHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "godbeast-dossier-and-morphology-atlas",
+        "deliveryRole": "controlled style benchmark and Godbeast morphology proposal discovery plate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "internal-only-until-identity-lock",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [
+          "Creator explicitly accepts, amends, or rejects the tested morphology candidate against locked canon and the local Godbeast record",
+          "Identity review records the accepted clade, Chord anatomy, limb count, face and sensory architecture, locomotion, scale, ecology, and material system before issuing a reference master",
+          "Grayscale silhouette, orthographic anatomy, action, habitat, and bonded-dyad studies must agree before any public identity approval"
+        ],
+        "imageFacingConstraintsWithheld": [
+          "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+          "the named morphology is a controlled proposal under evaluation, never a canonical portrait or identity master"
+        ],
+        "imageFacingAvoidanceWithheld": []
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    },
+    {
+      "id": "ACV-010",
+      "name": "Kael Thornfield — Mature Feature",
+      "generationState": "planned",
+      "executionState": "executable",
+      "blockedReason": null,
+      "promptContractHash": "005f0165b781d5ed44a259357640e54f9feafa65c6e7f05986bc02cc1d2c68d7",
+      "executionPrompt": "Kael Thornfield. Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.\n\nAction and story consequence: Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.\n\nComposition: 4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.\n\nIntended surface: book character dossier and identity atlas. Crop safety: \n\nVisual direction: mature stylized 3D feature design, graphic planes, tactile materials, expressive posture, believable weight, sophisticated lighting, silhouette-first anatomy. 70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent. Tactile, specific materials with wear, weight, construction, and local environmental response.\n\nLight: Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.\n\nIdentity variation boundary: Camera, pose, and environmental detail may vary; anatomy, age, body, countable silhouette, role, and story truth remain fixed.\n\nRequired visible result: Grayscale silhouette remains identifiable. Face, hands, limbs, countable anatomy, age, and body proportions remain coherent. Visible phenomenon serves one story law. Adult premium editorial finish with mature editorial gravity. Series: Chronicles of Arcanea. Kael remains nineteen, six feet tall, warm deep-brown skinned, broad-shouldered, close-cropped, and visibly inclined to compress his posture. The small white scar stays at the base of his left thumb and one reusable stone remains the single evidence object.\n\nDesired qualities: authored Arcanea-specific form and behavior. one localized functional phenomenon in a materially neutral world. hair, fibers, fur, and surfaces obey gravity and material construction. an original visual language independent of living creators and franchises. culturally neutral constructed dress unless a reviewed source contract specifies otherwise. a clean image field containing only intentional visual forms. adult premium nonsexualized proportions and presentation. identity readable through grayscale silhouette, material, and action. mature proportions, believable weight, and production-grade materials. specific authored form with physically legible materials. anatomically proportionate eyes or non-facial instrument apertures. tactile surfaces with construction, wear, and environmental response.\n\nImage surface: clean, caption-free, logo-free, and watermark-free, with only intentional visual forms.",
+      "executionPromptHash": "31986bf8ad6d4397cc816d88d934fea801616e3f7f1afd0d915c72f41ac5dc9c",
+      "promptAudit": {
+        "compilerVersion": "2.1.3",
+        "characters": 2939,
+        "words": 388,
+        "imageFacingConstraintCount": 7,
+        "withheldGovernanceConstraintCount": 1,
+        "withheldGovernanceConstraintsHash": "87d51c68ab5d402818196f173d37a380ef6986e087e359f28c8ad4c498041432",
+        "imageFacingAvoidanceCount": 14,
+        "withheldGovernanceAvoidanceCount": 1,
+        "withheldGovernanceAvoidanceHash": "3318e3707ae267bdd63fc75ca8f8862a796f73529cb0d7b70458ead60e5b1b9f",
+        "operationalTermsPresent": []
+      },
+      "requestHints": {
+        "assetCount": 1,
+        "aspectRatio": "4:5",
+        "intendedSurface": "book-character-dossier-and-identity-atlas",
+        "deliveryRole": "controlled style benchmark and source-complete character identity candidate",
+        "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+        "generatedTextPolicy": "no-generated-text",
+        "apiSurface": "FLUX.2 image generation or multi-reference editing",
+        "width": 1216,
+        "height": 1520,
+        "promptUpsampling": false,
+        "negativePrompt": null,
+        "reason": "controlled comparisons require authored prompt stability, positive exclusion translation, dimensions divisible by 16, and the first-party recommended approximately two-megapixel working range"
+      },
+      "referencePlan": {
+        "maximumPlannedReferences": 7,
+        "currentReferenceHashes": [],
+        "qualifiedIdentityReferenceSet": null,
+        "acceptedReferences": [],
+        "requiredMinimum": 0,
+        "requiredRoles": [],
+        "missingRequiredReference": false,
+        "policy": "Every image reference must be owned or licensed and recorded by SHA-256 with one role: identity, composition, material, or lighting. A style reference never grants permission to imitate its creator.",
+        "stopCondition": "proceed text-only unless an approved reference is intentionally assigned"
+      },
+      "governance": {
+        "releaseEligibility": "candidate-after-human-gates",
+        "rightsState": "internal-draft-source-review-required",
+        "sensitivityReviewRequired": false,
+        "reviewRequirements": [],
+        "imageFacingConstraintsWithheld": [
+          "story-bible evidence outranks name-derived visual shorthand"
+        ],
+        "imageFacingAvoidanceWithheld": [
+          "provisional identity traits presented as locked canon"
+        ]
+      },
+      "receiptRequirements": [
+        "provider, provider-exposed model, and declared model policy",
+        "effective runtime parameters matching the execution grant",
+        "immutable execution manifest path and hash",
+        "exact execution prompt hash",
+        "all reference hashes and roles",
+        "provider generation receipt or request id",
+        "machine preflight receipt path and hash",
+        "narrow execution grant path and hash",
+        "spend approval identity",
+        "fully decoded ingest and stored-copy metadata, declared and measured aspect ratio within tolerance, byte count, and SHA-256, with exact post-copy byte and geometry equality"
+      ]
+    }
+  ],
+  "manifestHash": "92cccf052b2272f2b735a91e6c16c07afdf2cad9900af3a512bb3c800fb17c07"
+}
