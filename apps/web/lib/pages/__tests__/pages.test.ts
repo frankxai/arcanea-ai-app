@@ -10,7 +10,7 @@
  */
 
 import { strict as assert } from 'node:assert';
-import { slugify, extractSources, hasPageModel, formatThreadToPage, isHttpUrl, type ThreadMessage } from '../format';
+import { slugify, extractSources, trimTrailingPunctuation, hasPageModel, formatThreadToPage, isHttpUrl, type ThreadMessage } from '../format';
 import { rowToView, rowToSummary, type PageRow } from '../types';
 
 let passed = 0;
@@ -107,6 +107,31 @@ test('extractSources harvests URLs and derives www-stripped domains', () => {
   assert.equal(sources[0].url, 'https://www.example.com/path');
   assert.equal(sources[0].domain, 'example.com');
   assert.equal(sources[1].domain, 'docs.foo.io');
+});
+
+test('trimTrailingPunctuation strips only trailing . , ;', () => {
+  assert.equal(trimTrailingPunctuation('https://a.io/x.,;'), 'https://a.io/x');
+  assert.equal(trimTrailingPunctuation('https://a.io/a,b.c'), 'https://a.io/a,b.c');
+  assert.equal(trimTrailingPunctuation(',,,'), '');
+  assert.equal(trimTrailingPunctuation(''), '');
+});
+
+test('extractSources stays linear on 50,000 commas inside a URL', () => {
+  const content = 'https://a.io/' + ','.repeat(50_000) + 'x';
+  const started = performance.now();
+  const sources = extractSources([{ role: 'user', content }]);
+  const elapsed = performance.now() - started;
+  assert.equal(sources.length, 1);
+  assert.ok(sources[0].url.endsWith(',x'));
+  assert.ok(elapsed < 50, `took ${elapsed.toFixed(1)}ms, expected under 50ms`);
+});
+
+test('extractSources trims 50,000 trailing commas fast', () => {
+  const content = 'https://a.io/p' + ','.repeat(50_000);
+  const started = performance.now();
+  const sources = extractSources([{ role: 'user', content }]);
+  assert.equal(sources[0].url, 'https://a.io/p');
+  assert.ok(performance.now() - started < 50);
 });
 
 test('extractSources strips trailing punctuation from URLs', () => {

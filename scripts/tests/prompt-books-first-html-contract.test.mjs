@@ -24,7 +24,15 @@ test("prompt-books first HTML is the landing, not an auth null gate", async () =
     false,
     "auth-pending must not return null; crawlers would see chrome-only HTML",
   );
-  assert.match(page, /Your AI Prompt Library/);
+  const landing = await readFile(
+    path.join(
+      repoRoot,
+      "apps/web/components/prompt-books/PromptBooksLanding.tsx",
+    ),
+    "utf8",
+  );
+  assert.match(page, /import.*PromptBooksLanding/);
+  assert.match(landing, /Your AI Prompt Library/);
   assert.match(page, /if \(!userId\)/);
   assert.match(page, /<PromptBooksLanding \/>/);
   assert.match(layout, /title: ['"]Your AI Prompt Library['"]/);
