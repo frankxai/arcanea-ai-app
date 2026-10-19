@@ -1,0 +1,22 @@
+/* CSS media thresholds cannot consume custom properties. Keep this responsive
+ * contract in the design system and compose it through supported CSS Modules. */
+.workspace {
+  --arc-scene-workspace-padding: var(--arc-space-6);
+}
+
+.actions {
+  --arc-scene-actions-end: var(--arc-space-0);
+}
+
+@media (max-width: 480px) {
+  .workspace {
+    --arc-scene-workspace-padding: var(--arc-space-4);
+  }
+  .actions {
+    --arc-scene-actions-end: var(--arc-space-14);
+  }
+  .actions > * {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}

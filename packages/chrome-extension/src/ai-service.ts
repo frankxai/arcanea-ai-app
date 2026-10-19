@@ -1,16 +1,16 @@
-import type { Guardian } from './guardians.js';
-import type { Message } from './utils/storage.js';
-import type { Provider } from '@arcanea/extension-core';
+import type { Guardian } from "./guardians.js";
+import type { Message } from "./utils/storage.js";
+import type { Provider } from "@arcanea/extension-core";
 
 export type { Provider };
 
 export interface ChatMessage {
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
 }
 
 export interface StreamChunk {
-  type: 'delta' | 'done' | 'error';
+  type: "delta" | "done" | "error";
   text?: string;
   error?: string;
 }
@@ -28,17 +28,17 @@ export interface ChatOptions {
 }
 
 interface AnthropicMessage {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
 }
 
 interface GoogleMessage {
-  role: 'user' | 'model';
+  role: "user" | "model";
   parts: Array<{ text: string }>;
 }
 
 interface OpenAIMessage {
-  role: 'system' | 'user' | 'assistant';
+  role: "system" | "user" | "assistant";
   content: string;
 }
 
@@ -47,11 +47,14 @@ const RATE_LIMIT = {
   requests: [] as number[],
 };
 const MAX_PAGE_CONTEXT_CHARS = 12000;
+const ANTHROPIC_MODEL = "claude-opus-5-5";
+const REFUSAL_NOTICE =
+  "The model's safety checks declined this request. Rephrase it and try again.";
 
 function checkRateLimit(): boolean {
   const now = Date.now();
   const oneMinuteAgo = now - 60000;
-  RATE_LIMIT.requests = RATE_LIMIT.requests.filter(t => t > oneMinuteAgo);
+  RATE_LIMIT.requests = RATE_LIMIT.requests.filter((t) => t > oneMinuteAgo);
 
   if (RATE_LIMIT.requests.length >= RATE_LIMIT.maxRequestsPerMinute) {
     return false;
@@ -80,9 +83,9 @@ function formatHistoryForAI(messages: Message[]): AnthropicMessage[] {
   // Take last 20 messages for context
   return messages
     .slice(-20)
-    .filter(m => m.role === 'user' || m.role === 'assistant')
-    .map(m => ({
-      role: m.role as 'user' | 'assistant',
+    .filter((m) => m.role === "user" || m.role === "assistant")
+    .map((m) => ({
+      role: m.role as "user" | "assistant",
       content: m.content,
     }));
 }
@@ -92,24 +95,26 @@ async function streamAnthropic(
   systemPrompt: string,
   history: AnthropicMessage[],
   userMessage: string,
-  onChunk: StreamCallback
+  onChunk: StreamCallback,
 ): Promise<void> {
   const messages: AnthropicMessage[] = [
     ...history,
-    { role: 'user', content: userMessage },
+    { role: "user", content: userMessage },
   ];
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
     },
+    // No sampling parameters: Claude 5.x rejects them with a 400. Opus 5.5
+    // always thinks and thinking counts toward max_tokens, hence the headroom.
     body: JSON.stringify({
-      model: 'claude-opus-4-6',
-      max_tokens: 2048,
+      model: ANTHROPIC_MODEL,
+      max_tokens: 4096,
       system: systemPrompt,
       messages,
       stream: true,
@@ -122,10 +127,10 @@ async function streamAnthropic(
   }
 
   const reader = response.body?.getReader();
-  if (!reader) throw new Error('No response body');
+  if (!reader) throw new Error("No response body");
 
   const decoder = new TextDecoder();
-  let buffer = '';
+  let buffer = "";
 
   try {
     while (true) {
@@ -133,27 +138,39 @@ async function streamAnthropic(
       if (done) break;
 
       buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() ?? '';
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
 
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
+        if (line.startsWith("data: ")) {
           const data = line.slice(6).trim();
-          if (data === '[DONE]') {
-            onChunk({ type: 'done' });
+          if (data === "[DONE]") {
+            onChunk({ type: "done" });
             return;
           }
           try {
             const parsed = JSON.parse(data) as {
               type: string;
-              delta?: { type: string; text?: string };
+              delta?: {
+                type?: string;
+                text?: string;
+                stop_reason?: string | null;
+              };
             };
+            // Safety classifiers decline with HTTP 200 and stop_reason "refusal".
             if (
-              parsed.type === 'content_block_delta' &&
-              parsed.delta?.type === 'text_delta' &&
+              parsed.type === "message_delta" &&
+              parsed.delta?.stop_reason === "refusal"
+            ) {
+              onChunk({ type: "error", error: REFUSAL_NOTICE });
+              return;
+            }
+            if (
+              parsed.type === "content_block_delta" &&
+              parsed.delta?.type === "text_delta" &&
               parsed.delta.text
             ) {
-              onChunk({ type: 'delta', text: parsed.delta.text });
+              onChunk({ type: "delta", text: parsed.delta.text });
             }
           } catch {
             // Skip malformed SSE data
@@ -165,7 +182,7 @@ async function streamAnthropic(
     reader.releaseLock();
   }
 
-  onChunk({ type: 'done' });
+  onChunk({ type: "done" });
 }
 
 async function streamGoogle(
@@ -173,19 +190,23 @@ async function streamGoogle(
   systemPrompt: string,
   history: AnthropicMessage[],
   userMessage: string,
-  onChunk: StreamCallback
+  onChunk: StreamCallback,
 ): Promise<void> {
   const contents: GoogleMessage[] = [
     // Include system as first user turn for Gemini
     {
-      role: 'user',
-      parts: [{ text: `[System Instructions]\n${systemPrompt}\n\n[User Message]\n${userMessage}` }],
+      role: "user",
+      parts: [
+        {
+          text: `[System Instructions]\n${systemPrompt}\n\n[User Message]\n${userMessage}`,
+        },
+      ],
     },
   ];
 
   // Convert history (excluding the user message we just added)
-  const historyMessages: GoogleMessage[] = history.map(m => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
+  const historyMessages: GoogleMessage[] = history.map((m) => ({
+    role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
   }));
 
@@ -193,19 +214,25 @@ async function streamGoogle(
   const finalContents: GoogleMessage[] =
     historyMessages.length > 0
       ? [
-          { role: 'user', parts: [{ text: `[System Instructions]\n${systemPrompt}` }] },
-          { role: 'model', parts: [{ text: 'Understood. I am ready to assist.' }] },
+          {
+            role: "user",
+            parts: [{ text: `[System Instructions]\n${systemPrompt}` }],
+          },
+          {
+            role: "model",
+            parts: [{ text: "Understood. I am ready to assist." }],
+          },
           ...historyMessages,
-          { role: 'user', parts: [{ text: userMessage }] },
+          { role: "user", parts: [{ text: userMessage }] },
         ]
       : contents;
 
-  const model = 'gemini-2.0-flash-exp';
+  const model = "gemini-2.0-flash-exp";
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${apiKey}&alt=sse`;
 
   const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contents: finalContents,
       generationConfig: {
@@ -221,10 +248,10 @@ async function streamGoogle(
   }
 
   const reader = response.body?.getReader();
-  if (!reader) throw new Error('No response body');
+  if (!reader) throw new Error("No response body");
 
   const decoder = new TextDecoder();
-  let buffer = '';
+  let buffer = "";
 
   try {
     while (true) {
@@ -232,11 +259,11 @@ async function streamGoogle(
       if (done) break;
 
       buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() ?? '';
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
 
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
+        if (line.startsWith("data: ")) {
           const data = line.slice(6).trim();
           try {
             const parsed = JSON.parse(data) as {
@@ -247,10 +274,10 @@ async function streamGoogle(
             };
             const text = parsed.candidates?.[0]?.content?.parts?.[0]?.text;
             if (text) {
-              onChunk({ type: 'delta', text });
+              onChunk({ type: "delta", text });
             }
-            if (parsed.candidates?.[0]?.finishReason === 'STOP') {
-              onChunk({ type: 'done' });
+            if (parsed.candidates?.[0]?.finishReason === "STOP") {
+              onChunk({ type: "done" });
               return;
             }
           } catch {
@@ -263,7 +290,7 @@ async function streamGoogle(
     reader.releaseLock();
   }
 
-  onChunk({ type: 'done' });
+  onChunk({ type: "done" });
 }
 
 async function streamOpenAI(
@@ -271,22 +298,25 @@ async function streamOpenAI(
   systemPrompt: string,
   history: AnthropicMessage[],
   userMessage: string,
-  onChunk: StreamCallback
+  onChunk: StreamCallback,
 ): Promise<void> {
   const messages: OpenAIMessage[] = [
-    { role: 'system', content: systemPrompt },
-    ...history.map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-    { role: 'user', content: userMessage },
+    { role: "system", content: systemPrompt },
+    ...history.map((m) => ({
+      role: m.role as "user" | "assistant",
+      content: m.content,
+    })),
+    { role: "user", content: userMessage },
   ];
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: "gpt-4o",
       messages,
       max_tokens: 2048,
       stream: true,
@@ -299,10 +329,10 @@ async function streamOpenAI(
   }
 
   const reader = response.body?.getReader();
-  if (!reader) throw new Error('No response body');
+  if (!reader) throw new Error("No response body");
 
   const decoder = new TextDecoder();
-  let buffer = '';
+  let buffer = "";
 
   try {
     while (true) {
@@ -310,14 +340,14 @@ async function streamOpenAI(
       if (done) break;
 
       buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() ?? '';
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
 
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
+        if (line.startsWith("data: ")) {
           const data = line.slice(6).trim();
-          if (data === '[DONE]') {
-            onChunk({ type: 'done' });
+          if (data === "[DONE]") {
+            onChunk({ type: "done" });
             return;
           }
           try {
@@ -329,7 +359,7 @@ async function streamOpenAI(
             };
             const text = parsed.choices?.[0]?.delta?.content;
             if (text) {
-              onChunk({ type: 'delta', text });
+              onChunk({ type: "delta", text });
             }
           } catch {
             // Skip malformed data
@@ -341,16 +371,25 @@ async function streamOpenAI(
     reader.releaseLock();
   }
 
-  onChunk({ type: 'done' });
+  onChunk({ type: "done" });
 }
 
 export async function streamChat(options: ChatOptions): Promise<void> {
-  const { guardian, messages, userMessage, pageContext, apiKeys, provider, onChunk } = options;
+  const {
+    guardian,
+    messages,
+    userMessage,
+    pageContext,
+    apiKeys,
+    provider,
+    onChunk,
+  } = options;
 
   if (!checkRateLimit()) {
     onChunk({
-      type: 'error',
-      error: 'Rate limit reached. Please wait a moment before sending another message.',
+      type: "error",
+      error:
+        "Rate limit reached. Please wait a moment before sending another message.",
     });
     return;
   }
@@ -360,56 +399,72 @@ export async function streamChat(options: ChatOptions): Promise<void> {
 
   try {
     switch (provider) {
-      case 'anthropic': {
-        const key = apiKeys['anthropic'];
+      case "anthropic": {
+        const key = apiKeys["anthropic"];
         if (!key) {
-          onChunk({ type: 'error', error: 'Anthropic API key not configured. Please add your key in Settings.' });
+          onChunk({
+            type: "error",
+            error:
+              "Anthropic API key not configured. Please add your key in Settings.",
+          });
           return;
         }
         await streamAnthropic(key, systemPrompt, history, userMessage, onChunk);
         break;
       }
-      case 'google': {
-        const key = apiKeys['google'];
+      case "google": {
+        const key = apiKeys["google"];
         if (!key) {
-          onChunk({ type: 'error', error: 'Google AI API key not configured. Please add your key in Settings.' });
+          onChunk({
+            type: "error",
+            error:
+              "Google AI API key not configured. Please add your key in Settings.",
+          });
           return;
         }
         await streamGoogle(key, systemPrompt, history, userMessage, onChunk);
         break;
       }
-      case 'openai': {
-        const key = apiKeys['openai'];
+      case "openai": {
+        const key = apiKeys["openai"];
         if (!key) {
-          onChunk({ type: 'error', error: 'OpenAI API key not configured. Please add your key in Settings.' });
+          onChunk({
+            type: "error",
+            error:
+              "OpenAI API key not configured. Please add your key in Settings.",
+          });
           return;
         }
         await streamOpenAI(key, systemPrompt, history, userMessage, onChunk);
         break;
       }
       default:
-        onChunk({ type: 'error', error: `Unknown provider: ${provider as string}` });
+        onChunk({
+          type: "error",
+          error: `Unknown provider: ${provider as string}`,
+        });
     }
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'An unexpected error occurred';
-    onChunk({ type: 'error', error: message });
+    const message =
+      err instanceof Error ? err.message : "An unexpected error occurred";
+    onChunk({ type: "error", error: message });
   }
 }
 
 export function getProviderName(provider: Provider): string {
   const names: Record<Provider, string> = {
-    anthropic: 'Claude (Anthropic)',
-    google: 'Gemini (Google)',
-    openai: 'GPT-4o (OpenAI)',
+    anthropic: "Claude (Anthropic)",
+    google: "Gemini (Google)",
+    openai: "GPT-4o (OpenAI)",
   };
   return names[provider];
 }
 
 export function getProviderModel(provider: Provider): string {
   const models: Record<Provider, string> = {
-    anthropic: 'claude-opus-4-6',
-    google: 'gemini-2.0-flash-exp',
-    openai: 'gpt-4o',
+    anthropic: ANTHROPIC_MODEL,
+    google: "gemini-2.0-flash-exp",
+    openai: "gpt-4o",
   };
   return models[provider];
 }

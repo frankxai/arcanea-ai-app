@@ -41,14 +41,23 @@ import { NumberTicker } from "@/components/motion/number-ticker";
 import { FACTS } from "@/lib/facts";
 import { Marquee } from "@/components/motion/marquee";
 import { FeatureCard, FeatureIcon } from "@/components/premium/feature-card";
-import { SectionShell, SectionHeader } from "@/components/premium/section-shell";
+import {
+  SectionShell,
+  SectionHeader,
+} from "@/components/premium/section-shell";
 import { ComparisonMatrix } from "@/components/premium/comparison-matrix";
 import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
 import { PersonasShowcase } from "@/components/premium/personas-showcase";
 import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
 import { IntegrationGrid } from "@/components/premium/integration-grid";
 import { PUBLIC_REPOS, PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
-import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from "@arcanea/design-system";
+import {
+  luminorAccents,
+  tierAccents,
+  streamAccents,
+  pillarAccents,
+  brand,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -57,11 +66,11 @@ import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from
 const FAQ_ITEMS = [
   {
     q: "What is a Luminor?",
-    a: "A specialized AI agent runtime built to construct worlds, write code, compose music, and design structures. Arcanea currently ships 13 configured Luminor specialists that coordinate through shared context and creator-owned project memory.",
+    a: `A specialized AI agent runtime built to construct worlds, write code, compose music, and design structures. Arcanea currently ships ${FACTS.luminors} configured Luminor specialists that coordinate through shared context and creator-owned project memory.`,
   },
   {
     q: "What makes the Living Worlds engine different?",
-    a: "Stateless chats forget who you are after a few thousand words. Arcanea compiles your entire universe into a persistent relational graph (backed by local SQLite databases and strict schemas). Characters remember their history, magic laws remain rigid, and lore never drifts. You own the SQLite file; fork it, query it, or deploy it locally.",
+    a: "A chat loses the thread after a few thousand words. Arcanea stores your world as a structured graph of characters, locations, factions, and events in your Arcanea account (Postgres), so history and rules stay attached to the world between sessions. A new world draft downloads as JSON.",
   },
   {
     q: "How do the Luminors work?",
@@ -77,19 +86,19 @@ const FAQ_ITEMS = [
   },
   {
     q: "How does BYOK work?",
-    a: "Bring Your Own Keys. Standard platforms lock you into subscription markups. Arcanea runs entirely on API keys stored locally in your browser. You pay Anthropic, Google, and OpenAI directly at cost. Zero markup. Zero middleman. Complete sovereign control over your compute costs.",
+    a: "Chat runs on your own provider key, and world drafts run on your Gemini key. Keys are saved in your browser, not in your Arcanea account, and travel with each request through Arcanea's servers to the provider. You pay the provider directly; Arcanea adds no markup. Image generation in Imagine uses account credits.",
   },
   {
-    q: "Do you train on my data or log my inputs?",
-    a: "Never. Your keys, your database, your IP. Because all API calls route directly from your local browser context to the model provider, we have no servers to log your inputs or steal your lore. We don't train models on your dreams.",
+    q: "Do you train on my work or store my chats?",
+    a: "Arcanea does not train AI models on your work without your explicit consent. Requests pass through Arcanea's servers to the provider you choose, and that provider's terms apply. When you are signed in, chats and world memory are saved to your account so they persist across sessions. The privacy policy has the details.",
   },
   {
     q: "Can I sell what I create?",
-    a: "Absolutely. You build it, you own it. We claim 0% of your IP or royalties. Publish templates, distribute worlds, or sell premium agent kits directly to the community via built-in Gumroad, Whop, and Stripe integrations.",
+    a: "Yes. You own what you make, and Arcanea takes no share of it. There is no built-in storefront yet: storefronts, memberships, and remix royalties are on the roadmap.",
   },
   {
     q: "What integrations does Arcanea support?",
-    a: "Arcanea hooks directly into your workflow: from local CLI tools, Vercel, and Claude Code to Git, SQLite, and ElevenLabs. Check our /integrations grid to see the exact state (production, beta, roadmap) of every bridge we support.",
+    a: "The integrations page lists every connection with its status: live, beta, or planned. Claude Code, for example, connects today through the Arcanea MCP server.",
   },
   {
     q: "How do I publish my work?",
@@ -155,7 +164,8 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: Books,
     title: "Canon",
-    description: "Books, lore, and magical systems compile into a single source.",
+    description:
+      "Books, lore, and magical systems compile into a single source.",
     href: "/living-lore",
     glowColor: pillarAccents.library,
     status: "Guide",
@@ -163,7 +173,8 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: MagicWand,
     title: "Studio Forge",
-    description: "Image and audio workspaces turn canon into production briefs.",
+    description:
+      "Image and audio workspaces turn canon into production briefs.",
     href: "/studio/image",
     glowColor: pillarAccents.academy,
     status: "Preview",
@@ -193,14 +204,22 @@ function ProductPillarsGrid() {
         <SectionHeader
           label="Creation Logic"
           title="A unified creation cycle"
-          subtitle={<>Prompt, graph, canon, and runtime execute in a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">closed feedback loop</span> instead of scattering across tabs and forgotten sessions.</>}
+          subtitle={
+            <>
+              Prompt, graph, canon, and runtime execute in a{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
+                closed feedback loop
+              </span>{" "}
+              instead of scattering across tabs and forgotten sessions.
+            </>
+          }
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {PRODUCT_PILLARS.map((pillar, i) => {
             const Icon = pillar.Icon;
             return (
-              <a key={pillar.title} href={pillar.href} className="block">
+              <Link key={pillar.title} href={pillar.href} className="block">
                 <FeatureCard
                   glowColor={pillar.glowColor}
                   delay={i * 0.08}
@@ -219,7 +238,7 @@ function ProductPillarsGrid() {
                     {pillar.description}
                   </p>
                 </FeatureCard>
-              </a>
+              </Link>
             );
           })}
         </div>
@@ -341,7 +360,10 @@ function CreatorFlowBoard() {
         <div className="p-5 sm:p-7 md:p-9 lg:p-10">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="font-editorial text-xl italic leading-none" style={{ color: brand.aquamarine }}>
+              <p
+                className="font-editorial text-xl italic leading-none"
+                style={{ color: brand.aquamarine }}
+              >
                 Today&apos;s creator path
               </p>
               <h3 className="mt-3 max-w-xl text-2xl font-display font-semibold leading-tight tracking-tight text-white md:text-4xl">
@@ -349,7 +371,11 @@ function CreatorFlowBoard() {
               </h3>
             </div>
             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/18 bg-[var(--arc-brand-atlantean-teal)]/[0.07] px-3 py-1.5 text-sm text-white/58">
-              <CheckCircle size={15} weight="duotone" color={brand.aquamarine} />
+              <CheckCircle
+                size={15}
+                weight="duotone"
+                color={brand.aquamarine}
+              />
               Live path first
             </div>
           </div>
@@ -363,7 +389,11 @@ function CreatorFlowBoard() {
                   initial={{ opacity: 0, x: -12 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    duration: 0.45,
+                    delay: i * 0.07,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                 >
                   <Link
                     href={step.href}
@@ -407,7 +437,9 @@ function CreatorFlowBoard() {
             Every door tells you what is behind it
           </p>
           <p className="mt-3 text-sm leading-relaxed text-white/42">
-            Live means you can create with it right now. Preview means builders can get hands-on while we tighten it. Roadmap means it ships when it is real — no mystery doors.
+            Live means you can create with it right now. Preview means builders
+            can get hands-on while we tighten it. Roadmap means it ships when it
+            is real — no mystery doors.
           </p>
 
           <div className="mt-8 space-y-4">
@@ -417,7 +449,11 @@ function CreatorFlowBoard() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, delay: 0.16 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.16 + i * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="rounded-2xl border border-white/[0.06] bg-white/[0.022] p-4"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -456,7 +492,20 @@ function LivingWorldSection() {
         <SectionHeader
           label="The Living Worlds Engine"
           title="Compile a world that remembers."
-          subtitle={<>A persistent graph for canon, locations, rules, and agent handoffs. Stop scattering your work across stateless chats. Build inside a <span className="font-editorial italic font-normal text-lg md:text-xl" style={{ color: brand.aquamarine }}>stateful universe</span> where every path is live today or clearly marked preview.</>}
+          subtitle={
+            <>
+              A persistent graph for canon, locations, rules, and agent
+              handoffs. Stop scattering your work across stateless chats. Build
+              inside a{" "}
+              <span
+                className="font-editorial italic font-normal text-lg md:text-xl"
+                style={{ color: brand.aquamarine }}
+              >
+                stateful universe
+              </span>{" "}
+              where every path is live today or clearly marked preview.
+            </>
+          }
           accent="teal"
         />
         <CreatorFlowBoard />
@@ -509,12 +558,26 @@ const PORTAL_ATLAS: Array<{
 
 function PortalAtlasSection() {
   return (
-    <SectionShell ambient="teal" size="default" id="portal-atlas" className="scroll-mt-28">
+    <SectionShell
+      ambient="teal"
+      size="default"
+      id="portal-atlas"
+      className="scroll-mt-28"
+    >
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="The Portal Matrix"
           title="An operating system for new realms"
-          subtitle={<>We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">fork your entire universe</span> as raw code.</>}
+          subtitle={
+            <>
+              We treat creative IP like software. Scaffold your world graph,
+              direct cinematic lanes, spawn agent councils, and{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
+                fork your entire universe
+              </span>{" "}
+              as raw code.
+            </>
+          }
           accent="teal"
         />
         <div className="grid grid-cols-1 gap-4 md:gap-5 lg:auto-rows-fr lg:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.75fr)]">
@@ -530,26 +593,45 @@ function PortalAtlasSection() {
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className={i === 0 ? "lg:row-span-2" : ""}
               >
-                <Link href={portal.href} className="group block h-full focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 rounded-2xl">
-                  <div className={`relative h-full ${cardSize} overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm`}>
+                <Link
+                  href={portal.href}
+                  className="group block h-full focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 rounded-2xl"
+                >
+                  <div
+                    className={`relative h-full ${cardSize} overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm`}
+                  >
                     <Image
                       src={portal.image}
                       alt=""
                       fill
-                      sizes={i === 0 ? "(max-width: 1024px) 100vw, 58vw" : "(max-width: 1024px) 100vw, 30vw"}
+                      sizes={
+                        i === 0
+                          ? "(max-width: 1024px) 100vw, 58vw"
+                          : "(max-width: 1024px) 100vw, 30vw"
+                      }
                       className="object-cover opacity-70 transition-transform duration-700 group-hover:scale-[1.04]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)]/56 to-[var(--arc-cosmic-void)]/12" />
                     <div
                       className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      style={{ background: `radial-gradient(620px circle at 30% 18%, ${portal.accent}22, transparent 62%)` }}
+                      style={{
+                        background: `radial-gradient(620px circle at 30% 18%, ${portal.accent}22, transparent 62%)`,
+                      }}
                     />
                     <div className="absolute inset-x-5 bottom-5 md:inset-x-6 md:bottom-6">
                       <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/35 px-3 py-1.5 backdrop-blur-md">
-                        <Icon size={14} weight="duotone" color={portal.accent} />
+                        <Icon
+                          size={14}
+                          weight="duotone"
+                          color={portal.accent}
+                        />
                         <span className="font-editorial text-sm italic leading-none text-white/55">
                           {portal.label}
                         </span>
@@ -617,15 +699,21 @@ function GuardianCouncilSection() {
               Magical intelligence compiled at the speed of thought.
             </h2>
             <p className="mt-6 text-base md:text-lg leading-relaxed text-white/45">
-              Your system guardians are active runtimes. In Arcanea, each specialist model acts as a validation node, enforcing creative consistency, custom styling, and agent actions. Spawn their logic; execute the generation.
+              Your system guardians are active runtimes. In Arcanea, each
+              specialist model acts as a validation node, enforcing creative
+              consistency, custom styling, and agent actions. Spawn their logic;
+              execute the generation.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-3">
               {[
-                { value: "10", label: "modules" },
-                { value: "10", label: "guardians" },
-                { value: "16", label: "runtimes" },
+                { value: FACTS.luminors, label: "Luminors" },
+                { value: FACTS.guardians, label: "Guardians" },
+                { value: FACTS.gates, label: "Gates" },
               ].map((stat) => (
-                <div key={stat.label} className="rounded-xl border border-white/[0.06] bg-white/[0.025] p-4 text-center">
+                <div
+                  key={stat.label}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.025] p-4 text-center"
+                >
                   <p className="text-2xl font-display font-semibold text-[var(--arc-brand-arcanean-gold)]">
                     {stat.value}
                   </p>
@@ -655,21 +743,31 @@ function GuardianCouncilSection() {
                 initial={{ opacity: 0, x: 18 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
-                <Link href={item.href} className="group grid min-h-[190px] grid-cols-[112px_1fr] overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm transition-colors hover:border-white/[0.16] sm:block lg:grid lg:grid-cols-[180px_1fr]">
+                <Link
+                  href={item.href}
+                  className="group grid min-h-[190px] grid-cols-[112px_1fr] overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm transition-colors hover:border-white/[0.16] sm:block lg:grid lg:grid-cols-[180px_1fr]"
+                >
                   <div className="relative min-h-[190px] overflow-hidden">
                     <Image
-                       src={item.image}
-                       alt=""
-                       fill
-                       sizes="(max-width: 1024px) 33vw, 180px"
-                       className="object-cover object-center opacity-82 transition-transform duration-700 group-hover:scale-[1.06]"
+                      src={item.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1024px) 33vw, 180px"
+                      className="object-cover object-center opacity-82 transition-transform duration-700 group-hover:scale-[1.06]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--arc-cosmic-void)]/35 lg:bg-gradient-to-r" />
                   </div>
                   <div className="relative flex flex-col justify-center p-5 md:p-6">
-                    <span className="text-xs font-body" style={{ color: item.accent }}>
+                    <span
+                      className="text-xs font-body"
+                      style={{ color: item.accent }}
+                    >
                       {item.gate}
                     </span>
                     <h3 className="mt-2 text-lg md:text-xl font-display font-semibold text-white">
@@ -711,7 +809,11 @@ function DragonRiderScaleSection() {
               <m.div
                 className="absolute left-[14%] top-[18%] h-px w-[72%] bg-gradient-to-r from-transparent via-[var(--arc-brand-arcanean-gold)]/45 to-transparent"
                 animate={{ opacity: [0.25, 0.7, 0.25], scaleX: [0.9, 1, 0.9] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
             </div>
             <div className="relative order-1 flex flex-col justify-center p-7 md:p-10 lg:order-2 lg:p-14">
@@ -724,18 +826,37 @@ function DragonRiderScaleSection() {
                   World-building at anime scale, direct to runtime.
                 </h2>
                 <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/45">
-                  Forge dragon-rider sagas, compose cinematic score briefs, and map agent handoffs in a single unified workspace. The cinema lane is a preview surface today: strongest for shot lists, briefs, and world-state handoffs while render pipelines mature.
+                  Forge dragon-rider sagas, compose cinematic score briefs, and
+                  map agent handoffs in a single unified workspace. The cinema
+                  lane is a preview surface today: strongest for shot lists,
+                  briefs, and world-state handoffs while render pipelines
+                  mature.
                 </p>
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
                     { Icon: Sparkle, label: "Canon", body: "source rules" },
                     { Icon: Waveform, label: "Motion", body: "shot rhythm" },
-                    { Icon: Lightning, label: "Runtime", body: "agent handoff" },
+                    {
+                      Icon: Lightning,
+                      label: "Runtime",
+                      body: "agent handoff",
+                    },
                   ].map(({ Icon, label, body }) => (
-                    <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
-                      <Icon size={18} weight="duotone" color="var(--arc-brand-arcanean-gold)" />
-                      <p className="mt-3 text-sm font-display font-semibold text-white/82">{label}</p>
-                      <p className="mt-1 text-xs font-body text-white/36">{body}</p>
+                    <div
+                      key={label}
+                      className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4"
+                    >
+                      <Icon
+                        size={18}
+                        weight="duotone"
+                        color="var(--arc-brand-arcanean-gold)"
+                      />
+                      <p className="mt-3 text-sm font-display font-semibold text-white/82">
+                        {label}
+                      </p>
+                      <p className="mt-1 text-xs font-body text-white/36">
+                        {body}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -778,7 +899,17 @@ function WhyArcaneaSection() {
         <SectionHeader
           label="Why Arcanea"
           title="When chat forgets, worlds drift"
-          subtitle={<>Standard AI chat tools are useful, but they are not built as a long-term canon engine. Arcanea compiles a persistent, <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">relational database</span> of your world graph so characters, places, rules, and release tasks can stay connected.</>}
+          subtitle={
+            <>
+              Standard AI chat tools are useful, but they are not built as a
+              long-term canon engine. Arcanea compiles a persistent,{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
+                relational database
+              </span>{" "}
+              of your world graph so characters, places, rules, and release
+              tasks can stay connected.
+            </>
+          }
           accent="purple"
         />
         <Reveal y={20}>
@@ -786,7 +917,8 @@ function WhyArcaneaSection() {
         </Reveal>
         <Reveal y={10} delay={0.3}>
           <p className="mt-8 text-center text-sm text-white/32">
-            Not a knock on alternatives — a clear statement of what Arcanea is built for.
+            Not a knock on alternatives — a clear statement of what Arcanea is
+            built for.
           </p>
         </Reveal>
       </div>
@@ -805,7 +937,17 @@ function LuminorTeamSection() {
         <SectionHeader
           label="Luminor Specialists"
           title="Specialized AI agents"
-          subtitle={<>Start with one specialist or route work across the council. From Systems Architects to Composers, Storytellers, and Motion Designers, each agent carries its own <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">project context, toolset</span>, and distinct creative voice.</>}
+          subtitle={
+            <>
+              Start with one specialist or route work across the council. From
+              Systems Architects to Composers, Storytellers, and Motion
+              Designers, each agent carries its own{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
+                project context, toolset
+              </span>
+              , and distinct creative voice.
+            </>
+          }
           accent="teal"
         />
         <Reveal y={16}>
@@ -840,7 +982,16 @@ function PersonasSection() {
         <SectionHeader
           label="Who it's for"
           title="Built for makers"
-          subtitle={<>Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">exactly where you work</span>.</>}
+          subtitle={
+            <>
+              Novelists, game designers, filmmakers, developers, solo creators —
+              Arcanea meets you{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
+                exactly where you work
+              </span>
+              .
+            </>
+          }
           accent="purple"
         />
         <PersonasShowcase />
@@ -859,8 +1010,18 @@ function SovereigntySection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="Sovereign Posture"
-          title="Absolute creator sovereignty"
-          subtitle={<>Keep your keys. Keep your IP. Run your graphs locally via SQLite. Arcanea is built on local-first localStorage keys and MIT-licensed clients. <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">Zero vendor lock-in</span>. Zero training on your creations.</>}
+          title="What you keep"
+          subtitle={
+            <>
+              Provider keys stay in your browser and travel with each request.
+              Worlds live in your Arcanea account, and chats export as Markdown
+              or JSON.{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">
+                You own what you make
+              </span>
+              , and Arcanea does not train models on it without your consent.
+            </>
+          }
           accent="gold"
         />
         <SovereigntyPillars />
@@ -868,10 +1029,10 @@ function SovereigntySection() {
           <div className="mt-12 text-center">
             <Magnetic>
               <Link
-                href="/pricing"
+                href="/privacy"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-atlantean-teal)]/25 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:from-[var(--arc-brand-atlantean-teal)]/25 hover:to-[var(--arc-brand-arcanean-gold)]/15 transition-colors"
               >
-                Read the sovereignty promise
+                Read the privacy policy
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>
@@ -895,13 +1056,48 @@ interface PersonaTile {
 }
 
 const VOICE_PERSONAS: PersonaTile[] = [
-  { id: "lumina", name: "Lumina", tagline: "First Light · orchestrator", accent: luminorAccents.lumina },
-  { id: "jarvis", name: "Jarvis", tagline: "Just A Rather Very Intelligent System", accent: luminorAccents.jarvis },
-  { id: "draconia", name: "Draconia", tagline: "Fire Gate · forge & willpower", accent: luminorAccents.draconia },
-  { id: "lyria", name: "Lyria", tagline: "Sight Gate · pattern + vision", accent: luminorAccents.lyria },
-  { id: "alera", name: "Alera", tagline: "Voice Gate · clarity + concision", accent: luminorAccents.alera },
-  { id: "shinkami", name: "Shinkami", tagline: "Source Gate · meta-awareness", accent: luminorAccents.shinkami },
-  { id: "nero", name: "Nero", tagline: "Shadow Gate · contrarian edge", accent: luminorAccents.nero },
+  {
+    id: "lumina",
+    name: "Lumina",
+    tagline: "First Light · orchestrator",
+    accent: luminorAccents.lumina,
+  },
+  {
+    id: "jarvis",
+    name: "Jarvis",
+    tagline: "Just A Rather Very Intelligent System",
+    accent: luminorAccents.jarvis,
+  },
+  {
+    id: "draconia",
+    name: "Draconia",
+    tagline: "Fire Gate · forge & willpower",
+    accent: luminorAccents.draconia,
+  },
+  {
+    id: "lyria",
+    name: "Lyria",
+    tagline: "Sight Gate · pattern + vision",
+    accent: luminorAccents.lyria,
+  },
+  {
+    id: "alera",
+    name: "Alera",
+    tagline: "Voice Gate · clarity + concision",
+    accent: luminorAccents.alera,
+  },
+  {
+    id: "shinkami",
+    name: "Shinkami",
+    tagline: "Source Gate · meta-awareness",
+    accent: luminorAccents.shinkami,
+  },
+  {
+    id: "nero",
+    name: "Nero",
+    tagline: "Shadow Gate · contrarian edge",
+    accent: luminorAccents.nero,
+  },
 ];
 
 function PersonaOrb({ accent }: { accent: string }) {
@@ -909,7 +1105,9 @@ function PersonaOrb({ accent }: { accent: string }) {
     <div className="relative w-12 h-12 shrink-0">
       <div
         className="absolute inset-0 rounded-full blur-[10px] opacity-70 animate-[breathe_3s_ease-in-out_infinite]"
-        style={{ background: `radial-gradient(circle, ${accent}55, transparent 70%)` }}
+        style={{
+          background: `radial-gradient(circle, ${accent}55, transparent 70%)`,
+        }}
       />
       <div
         className="absolute inset-[6px] rounded-full"
@@ -933,7 +1131,16 @@ function VoicePresenceSection() {
         <SectionHeader
           label="Agent Room & Telemetry"
           title="Talk directly to the machine"
-          subtitle={<>A voice and presence preview for Jarvis, Lumina, and custom agents. Whisper/ElevenLabs streams, <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">WebGL audio-reactive particle nodes</span>, and local CLI hooks are being tightened into one creator room.</>}
+          subtitle={
+            <>
+              A voice and presence preview for Jarvis, Lumina, and custom
+              agents. Whisper/ElevenLabs streams,{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">
+                WebGL audio-reactive particle nodes
+              </span>
+              , and local CLI hooks are being tightened into one creator room.
+            </>
+          }
           accent="purple"
         />
         <Reveal y={20}>
@@ -944,7 +1151,11 @@ function VoicePresenceSection() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.06,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 whileHover={{ y: -3 }}
                 className="group relative"
               >
@@ -955,7 +1166,9 @@ function VoicePresenceSection() {
                 >
                   <div
                     className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `radial-gradient(380px circle at 50% 0%, ${p.accent}14, transparent 60%)` }}
+                    style={{
+                      background: `radial-gradient(380px circle at 50% 0%, ${p.accent}14, transparent 60%)`,
+                    }}
                   />
                   <div className="relative flex items-start gap-4">
                     <PersonaOrb accent={p.accent} />
@@ -984,9 +1197,24 @@ function VoicePresenceSection() {
         <Reveal y={12} delay={0.4}>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[
-              { label: "Audio-reactive orb", body: "A living particle orb that glows and moves with your agent's voice in real time.", color: brand.aquamarine, Icon: Waveform },
-              { label: "BYOK presence room", body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.", color: brand.atlanteanTeal, Icon: Microphone },
-              { label: "Local agent CLI", body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.", color: brand.arcaneanGold, Icon: Brain },
+              {
+                label: "Audio-reactive orb",
+                body: "A living particle orb that glows and moves with your agent's voice in real time.",
+                color: brand.aquamarine,
+                Icon: Waveform,
+              },
+              {
+                label: "BYOK presence room",
+                body: "Groq Whisper STT · ElevenLabs TTS · keys saved in your browser and sent with each request.",
+                color: brand.atlanteanTeal,
+                Icon: Microphone,
+              },
+              {
+                label: "Local agent CLI",
+                body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.",
+                color: brand.arcaneanGold,
+                Icon: Brain,
+              },
             ].map(({ label, body, color, Icon }, i) => (
               <m.div
                 key={label}
@@ -1045,7 +1273,16 @@ function StackTeaserSection() {
         <SectionHeader
           label="The Creator Stack"
           title="Built to connect everywhere"
-          subtitle={<>Every integration below is labeled by what it is today — live, beta, or planned. Follow <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">clear status paths</span> instead of mystery doors.</>}
+          subtitle={
+            <>
+              Every integration below is labeled by what it is today — live,
+              beta, or planned. Follow{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">
+                clear status paths
+              </span>{" "}
+              instead of mystery doors.
+            </>
+          }
           accent="teal"
         />
         <Reveal y={16}>
@@ -1074,13 +1311,48 @@ function StackTeaserSection() {
 // ---------------------------------------------------------------------------
 
 function EarnTeaserSection() {
-  const STREAMS: Array<{ Icon: IconComponent; label: string; take: string; accent: string }> = [
-    { Icon: Diamond, label: "Template Marketplace", take: "target 90%", accent: streamAccents.marketplace },
-    { Icon: Crown, label: "Memberships", take: "target 97%", accent: streamAccents.membership },
-    { Icon: Sparkle, label: "Collectible drops", take: "research", accent: streamAccents.nft },
-    { Icon: Coins, label: "Commissions", take: "target 88%", accent: streamAccents.commission },
-    { Icon: Lightning, label: "Gated releases", take: "planned", accent: streamAccents.tokenGated },
-    { Icon: ArrowsClockwise, label: "Remix royalties", take: "planned", accent: streamAccents.royalty },
+  const STREAMS: Array<{
+    Icon: IconComponent;
+    label: string;
+    take: string;
+    accent: string;
+  }> = [
+    {
+      Icon: Diamond,
+      label: "Template Marketplace",
+      take: "target 90%",
+      accent: streamAccents.marketplace,
+    },
+    {
+      Icon: Crown,
+      label: "Memberships",
+      take: "target 97%",
+      accent: streamAccents.membership,
+    },
+    {
+      Icon: Sparkle,
+      label: "Collectible drops",
+      take: "research",
+      accent: streamAccents.nft,
+    },
+    {
+      Icon: Coins,
+      label: "Commissions",
+      take: "target 88%",
+      accent: streamAccents.commission,
+    },
+    {
+      Icon: Lightning,
+      label: "Gated releases",
+      take: "planned",
+      accent: streamAccents.tokenGated,
+    },
+    {
+      Icon: ArrowsClockwise,
+      label: "Remix royalties",
+      take: "planned",
+      accent: streamAccents.royalty,
+    },
   ];
   return (
     <SectionShell ambient="purple" size="compact" id="earn-teaser">
@@ -1094,43 +1366,52 @@ function EarnTeaserSection() {
         <SectionHeader
           label="Creator Posture"
           title="Monetize sovereign IP"
-          subtitle={<>The commerce layer is roadmap, not the main door today. We can collect creator demand now, then ship <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">storefronts, royalties, memberships</span>, and remix economics once the creation loop is proven end to end.</>}
+          subtitle={
+            <>
+              The commerce layer is roadmap, not the main door today. We can
+              collect creator demand now, then ship{" "}
+              <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">
+                storefronts, royalties, memberships
+              </span>
+              , and remix economics once the creation loop is proven end to end.
+            </>
+          }
           accent="purple"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {STREAMS.map((s, i) => {
             const Icon = s.Icon;
             return (
-            <m.div
-              key={s.label}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.14] transition-colors"
-            >
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                style={{
-                  background: `${s.accent}10`,
-                  border: `1px solid ${s.accent}25`,
-                  color: s.accent,
-                }}
+              <m.div
+                key={s.label}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.14] transition-colors"
               >
-                <Icon size={16} weight="duotone" color={s.accent} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-display font-semibold text-white/80 truncate">
-                  {s.label}
-                </p>
-                <p
-                  className="text-xs font-body"
-                  style={{ color: `${s.accent}bb` }}
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                  style={{
+                    background: `${s.accent}10`,
+                    border: `1px solid ${s.accent}25`,
+                    color: s.accent,
+                  }}
                 >
-                  {s.take}
-                </p>
-              </div>
-            </m.div>
+                  <Icon size={16} weight="duotone" color={s.accent} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-display font-semibold text-white/80 truncate">
+                    {s.label}
+                  </p>
+                  <p
+                    className="text-xs font-body"
+                    style={{ color: `${s.accent}bb` }}
+                  >
+                    {s.take}
+                  </p>
+                </div>
+              </m.div>
             );
           })}
         </div>
@@ -1315,7 +1596,7 @@ export function V3BelowFold({
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 2b. Luminor team preview — 13 specialists made visible */}
+        {/* 2b. Luminor team preview — the specialists made visible */}
         <LuminorTeamSection />
 
         <AtmosphericDivider variant="purple" />
@@ -1376,28 +1657,65 @@ export function V3BelowFold({
             </Reveal>
 
             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight leading-[1.1]">
-              <SplitText as="span" text="Built in the open." className="text-white" delay={0.1} stagger={0.035} />
+              <SplitText
+                as="span"
+                text="Built in the open."
+                className="text-white"
+                delay={0.1}
+                stagger={0.035}
+              />
             </h2>
 
             <Reveal y={12} delay={0.4}>
               <p className="text-lg text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed">
-                We track {PUBLIC_REPO_SUMMARY.active} active repositories, with {PUBLIC_REPO_SUMMARY.public} public on GitHub under the MIT license. Pull the code, run components locally, interface via open APIs, and retain absolute data sovereignty.
+                We track {PUBLIC_REPO_SUMMARY.active} active repositories, with{" "}
+                {PUBLIC_REPO_SUMMARY.public} public on GitHub under the MIT
+                license. Pull the code, run components locally, interface via
+                open APIs, and retain absolute data sovereignty.
               </p>
             </Reveal>
 
             <Reveal y={16} delay={0.6}>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
                 {[
-                  { value: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", fixed: false },
-                  { value: PUBLIC_REPO_SUMMARY.packages, suffix: "", label: "npm packages", fixed: false },
-                  { value: FACTS.skills, suffix: "", label: "creator skills", fixed: false },
+                  {
+                    value: PUBLIC_REPO_SUMMARY.public,
+                    suffix: "",
+                    label: "public repos",
+                    fixed: false,
+                  },
+                  {
+                    value: PUBLIC_REPO_SUMMARY.packages,
+                    suffix: "",
+                    label: "npm packages",
+                    fixed: false,
+                  },
+                  {
+                    value: FACTS.skills,
+                    suffix: "",
+                    label: "creator skills",
+                    fixed: false,
+                  },
                   { value: 0, suffix: "", label: "license", fixed: true },
                 ].map(({ value, suffix, label, fixed }, i) => (
-                  <div key={label} className="text-center px-3 py-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+                  <div
+                    key={label}
+                    className="text-center px-3 py-4 rounded-xl bg-white/[0.02] border border-white/[0.05]"
+                  >
                     <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent">
-                      {fixed ? "MIT" : <NumberTicker value={value} delay={0.6 + i * 0.1} suffix={suffix} />}
+                      {fixed ? (
+                        "MIT"
+                      ) : (
+                        <NumberTicker
+                          value={value}
+                          delay={0.6 + i * 0.1}
+                          suffix={suffix}
+                        />
+                      )}
                     </p>
-                    <p className="mt-1 text-xs font-body text-white/35">{label}</p>
+                    <p className="mt-1 text-xs font-body text-white/35">
+                      {label}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -1471,20 +1789,22 @@ export function V3BelowFold({
                   The stack that makes it possible
                 </p>
                 <Marquee duration={40}>
-                  {([
-                    { name: "Next.js 16", tier: "framework" },
-                    { name: "React 19", tier: "framework" },
-                    { name: "TypeScript", tier: "language" },
-                    { name: "Tailwind", tier: "framework" },
-                    { name: "Framer Motion", tier: "motion" },
-                    { name: "Three.js", tier: "motion" },
-                    { name: "Supabase", tier: "infra" },
-                    { name: "Vercel", tier: "infra" },
-                    { name: "Claude", tier: "ai" },
-                    { name: "Gemini", tier: "ai" },
-                    { name: "OpenRouter", tier: "ai" },
-                    { name: "MCP", tier: "ai" },
-                  ] as const).map((t) => {
+                  {(
+                    [
+                      { name: "Next.js 16", tier: "framework" },
+                      { name: "React 19", tier: "framework" },
+                      { name: "TypeScript", tier: "language" },
+                      { name: "Tailwind", tier: "framework" },
+                      { name: "Framer Motion", tier: "motion" },
+                      { name: "Three.js", tier: "motion" },
+                      { name: "Supabase", tier: "infra" },
+                      { name: "Vercel", tier: "infra" },
+                      { name: "Claude", tier: "ai" },
+                      { name: "Gemini", tier: "ai" },
+                      { name: "OpenRouter", tier: "ai" },
+                      { name: "MCP", tier: "ai" },
+                    ] as const
+                  ).map((t) => {
                     const tierColor = tierAccents[t.tier];
                     return (
                       <span

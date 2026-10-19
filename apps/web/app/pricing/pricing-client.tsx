@@ -3,8 +3,15 @@
 import { FACTS } from "@/lib/facts";
 import Image from "next/image";
 import React, { useState } from "react";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Chat,
   ImageSquare,
@@ -21,67 +28,34 @@ import {
   Warning,
   CircleNotch,
 } from "@/lib/phosphor-icons";
+import {
+  ACTION_COSTS,
+  CREDIT_PACKS,
+  PLANS,
+  formatEuro,
+  type CreditPack,
+  type Plan,
+} from "@/lib/billing/catalog";
 
-const TIERS = [
-  {
-    id: "sovereign",
-    name: "Sovereign Engine",
-    price: "$0",
-    period: "free open core",
-    desc: "Your data stays yours. Run completely offline on local file trees.",
-    accent: "var(--arc-brand-atlantean-teal)",
-    features: [
-      "Bring Your Own Key (BYOK)",
-      "Local Markdown / JSONML storage",
-      `Core AI chat with ${FACTS.luminors} Luminors`,
-      "Standard local zip exports",
-      "54 open-source CLI tools & skills",
-    ],
-  },
-  {
-    id: "creator",
-    name: "Cloud Sync (Creator)",
-    price: "$12",
-    period: "per month",
-    desc: "Convenience SaaS layer. Auto-sync, collab, and semantic search.",
-    accent: "var(--arc-brand-arcanean-gold)",
-    featured: true,
-    features: [
-      "Everything in Sovereign",
-      "Encrypted cloud sync & backups",
-      "Semantic search across your worlds",
-      "Multiplayer Canvas collaboration",
-      "500 monthly Cloud Bench credits",
-    ],
-  },
-  {
-    id: "studio",
-    name: "Studio Bench",
-    price: "$39",
-    period: "per month",
-    desc: "Advanced team workspaces, customization, and high-frequency runs.",
-    accent: "var(--arc-brand-cosmic-blue)",
-    features: [
-      "Everything in Creator",
-      "Shared team workspaces & roles",
-      "Custom companion model tuning",
-      "2,500 monthly Cloud Bench credits",
-      "Dedicated API key access endpoint",
-    ],
-  },
-];
+export interface PricingBillingState {
+  /** Checkout can be started for both paid plans. */
+  live: boolean;
+  /** Packs with a configured product id. */
+  packsReady: string[];
+  sandbox: boolean;
+}
 
 const FREE_CAPABILITIES = [
   {
     Icon: Chat,
     name: "AI Chat with Lumina",
-    desc: "Unlimited conversations with 13 specialist Luminors",
+    desc: `Unlimited conversations with ${FACTS.luminors} specialist Luminors on your own keys`,
     accent: "var(--arc-brand-atlantean-teal)",
   },
   {
     Icon: Brain,
     name: "Luminor Forge",
-    desc: "Shape custom AI intelligences — name, domain, voice, personality. Export as JSON.",
+    desc: "Shape custom AI intelligences: name, domain, voice, personality. Export as JSON.",
     accent: "var(--arc-brand-atlantean-teal)",
   },
   {
@@ -99,7 +73,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: ImageSquare,
     name: "Image Generation",
-    desc: "Original images from the Arcanean framework",
+    desc: "Managed images use credits. BYOK images are planned.",
     accent: "var(--arc-void)",
   },
   {
@@ -111,7 +85,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: MusicNote,
     name: "Music Composition",
-    desc: "AI-generated soundtracks and lo-fi for your worlds",
+    desc: "Planned music creation for world soundtracks",
     accent: "var(--arc-brand-arcanean-gold)",
   },
   {
@@ -122,12 +96,211 @@ const FREE_CAPABILITIES = [
   },
 ];
 
-export function PricingClient() {
+type CheckoutState = { sku: string | null; error: string | null };
+
+function useCheckout() {
+  const router = useRouter();
+  const [state, setState] = useState<CheckoutState>({ sku: null, error: null });
+
+  const start = async (sku: string) => {
+    setState({ sku, error: null });
+    try {
+      const res = await fetch("/api/billing/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sku }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+        reason?: string;
+      };
+      if (res.status === 401) {
+        router.push(`/auth/login?next=${encodeURIComponent("/pricing")}`);
+        return;
+      }
+      if (!res.ok || !data.url) {
+        setState({
+          sku: null,
+          error: data.error ?? "Checkout could not be started.",
+        });
+        return;
+      }
+      window.location.assign(data.url);
+    } catch {
+      setState({
+        sku: null,
+        error: "Something went wrong. Please check your connection.",
+      });
+    }
+  };
+
+  return { state, start };
+}
+
+function PlanCard({
+  plan,
+  live,
+  busy,
+  onBuy,
+}: {
+  plan: Plan;
+  live: boolean;
+  busy: boolean;
+  onBuy: (sku: string) => void;
+}) {
+  const isFree = plan.priceCents === 0;
+  const canBuy = !isFree && live;
+
+  return (
+    <div
+      className={`relative rounded-3xl border p-6 backdrop-blur-sm flex flex-col justify-between transition-all duration-300 ${
+        plan.featured
+          ? "border-[var(--arc-brand-arcanean-gold)]/40 bg-[var(--arc-brand-arcanean-gold)]/[0.02] shadow-[var(--arc-shadow-elevation-1)]"
+          : "border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] hover:border-[var(--arc-cosmic-border-bright)]"
+      }`}
+    >
+      {plan.featured && (
+        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)] text-[var(--arc-cosmic-void)] text-xs font-mono font-bold tracking-wider">
+          Creator plan
+        </span>
+      )}
+      <div>
+        <h3 className="font-display text-lg font-bold text-[var(--arc-text-primary)]">
+          {plan.name}
+        </h3>
+        <div className="flex items-baseline gap-2 mt-4 mb-2">
+          <span className="text-4xl font-display font-bold text-[var(--arc-text-primary)]">
+            {formatEuro(plan.priceCents)}
+          </span>
+          <span className="text-xs text-[var(--arc-text-secondary)] font-mono lowercase">
+            {isFree ? "forever" : "per month, VAT included"}
+          </span>
+        </div>
+        <p className="text-xs text-[var(--arc-text-secondary)] leading-relaxed font-body mb-6">
+          {plan.tagline}
+        </p>
+
+        {!isFree && (
+          <p className="text-sm text-[var(--arc-text-secondary)] mb-3">
+            Planned capabilities{!live && "; checkout is closed"}.
+          </p>
+        )}
+        <ul className="space-y-3 border-t border-[var(--arc-cosmic-border-bright)] pt-6 mb-8">
+          {plan.features.map((feat) => (
+            <li
+              key={feat}
+              className="flex items-start gap-2.5 text-xs text-[var(--arc-text-primary)]"
+            >
+              <Check className="w-4 h-4 text-[var(--arc-text-secondary)] shrink-0 mt-0.5" />
+              <span>{feat}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {isFree ? (
+        <Link
+          href="/auth/signup"
+          className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl border border-[var(--arc-cosmic-border-bright)] text-xs font-semibold text-center text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+        >
+          Start free
+        </Link>
+      ) : canBuy ? (
+        <button
+          type="button"
+          onClick={() => onBuy(plan.id)}
+          disabled={busy}
+          className={`w-full min-h-11 flex items-center justify-center py-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] motion-reduce:transition-none disabled:opacity-50 ${
+            plan.featured
+              ? "bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] hover:shadow-[var(--arc-shadow-gold-glow)]"
+              : "border border-[var(--arc-cosmic-border-bright)] text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)]"
+          }`}
+        >
+          {busy ? (
+            <CircleNotch className="w-4 h-4 animate-spin" />
+          ) : (
+            <span>Choose {plan.name}</span>
+          )}
+        </button>
+      ) : (
+        <a
+          href="#founding-circle"
+          className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl border border-dashed border-[var(--arc-cosmic-border-bright)] text-xs font-semibold text-center text-[var(--arc-text-secondary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+        >
+          Join the release list
+        </a>
+      )}
+    </div>
+  );
+}
+
+function PackCard({
+  pack,
+  ready,
+  busy,
+  onBuy,
+}: {
+  pack: CreditPack;
+  ready: boolean;
+  busy: boolean;
+  onBuy: (sku: string) => void;
+}) {
+  const perCredit = (pack.priceCents / pack.credits).toFixed(2);
+  return (
+    <div
+      className={`rounded-2xl border p-5 flex flex-col gap-3 ${
+        pack.popular
+          ? "border-[var(--arc-brand-atlantean-teal)]/40 bg-[var(--arc-brand-atlantean-teal)]/[0.03]"
+          : "border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)]"
+      }`}
+    >
+      <div className="flex items-baseline justify-between">
+        <span className="font-display text-2xl font-bold text-[var(--arc-text-primary)]">
+          {pack.credits.toLocaleString("en-US")}
+        </span>
+        <span className="text-[10px] font-mono text-[var(--arc-text-secondary)] tracking-widest">
+          credits
+        </span>
+      </div>
+      <div className="flex items-baseline gap-2">
+        <span className="text-lg font-display font-semibold text-[var(--arc-text-primary)]">
+          {formatEuro(pack.priceCents)}
+        </span>
+        <span className="text-[10px] font-mono text-[var(--arc-text-secondary)]">
+          {perCredit} ct per credit
+        </span>
+      </div>
+      {ready ? (
+        <button
+          type="button"
+          onClick={() => onBuy(pack.id)}
+          disabled={busy}
+          className="mt-auto min-h-11 py-2.5 rounded-xl border border-[var(--arc-cosmic-border-bright)] text-xs font-semibold text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50"
+        >
+          {busy ? (
+            <CircleNotch className="w-4 h-4 animate-spin mx-auto" />
+          ) : (
+            "Buy credits"
+          )}
+        </button>
+      ) : (
+        <span className="mt-auto min-h-11 py-2.5 rounded-xl border border-dashed border-[var(--arc-cosmic-border-bright)] text-[11px] text-center text-[var(--arc-text-secondary)]">
+          Available with checkout
+        </span>
+      )}
+    </div>
+  );
+}
+
+export function PricingClient({ billing }: { billing: PricingBillingState }) {
+  const reducedMotion = useReducedMotion();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const checkout = useCheckout();
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -157,14 +330,12 @@ export function PricingClient() {
     }
   };
 
+  const visibleCosts = ACTION_COSTS.filter((a) => a.credits > 0);
+
   return (
     <LazyMotion features={domAnimation}>
-      <div className="relative bg-[var(--arc-cosmic-void)] min-h-screen text-white pb-24">
-        {/* Background mesh */}
-        <div className="fixed inset-0 -z-10 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.12),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(167,139,250,0.06),transparent_50%)] pointer-events-none" />
-
+      <div className="relative bg-[var(--arc-cosmic-void)] min-h-screen text-[var(--arc-text-primary)] pb-24">
         <main className="max-w-7xl mx-auto px-6 pt-20">
-          {/* Hero */}
           <section className="text-center mb-16">
             <div className="flex justify-center mb-6">
               <Image
@@ -172,7 +343,7 @@ export function PricingClient() {
                 alt="Arcanea Mascot"
                 width={120}
                 height={120}
-                className="object-contain drop-shadow-[0_0_30px_rgba(127,255,212,0.15)] animate-[mascot-float_3.5s_ease-in-out_infinite]"
+                className="object-contain"
               />
             </div>
 
@@ -181,78 +352,99 @@ export function PricingClient() {
                 size={12}
                 className="text-[var(--arc-brand-atlantean-teal)]"
               />
-              <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest">
-                Sovereign core · optional cloud
+              <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] tracking-widest">
+                {billing.live
+                  ? billing.sandbox
+                    ? "Checkout in sandbox"
+                    : "Checkout open"
+                  : "Plans in preparation"}
               </span>
             </div>
 
             <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight mb-4">
-              Sovereign by default.
-              <span className="block bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent mt-1">
-                SaaS by choice.
+              Your keys are free.
+              <span className="block text-[var(--arc-brand-arcanean-gold)] mt-1">
+                Continuity is what you pay for.
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-white/50 max-w-2xl mx-auto leading-relaxed font-body">
-              Your API keys remain in your browser. Your world graphs, lore
-              bibles, and files remain on your disk. Free and open. Pay only
-              when you want the convenience of encrypted cloud sync, semantic
-              search, and multiplayer bench runs.
+            <p className="text-base md:text-lg text-[var(--arc-text-secondary)] max-w-2xl mx-auto leading-relaxed font-body">
+              Use your own keys for chat and worlds, or credits for managed
+              images. Hosted plans are in preparation.
             </p>
           </section>
 
-          {/* Pricing Tiers Grid */}
-          <section className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
-            {TIERS.map((tier) => (
-              <div
-                key={tier.id}
-                className={`relative rounded-3xl border p-6 backdrop-blur-sm flex flex-col justify-between transition-all duration-300 ${
-                  tier.featured
-                    ? "border-[var(--arc-brand-arcanean-gold)]/40 bg-[var(--arc-brand-arcanean-gold)]/[0.02] shadow-[0_8px_30px_rgba(255,215,0,0.04)]"
-                    : "border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12]"
-                }`}
-              >
-                {tier.featured && (
-                  <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)] text-black text-[9px] font-mono uppercase font-bold tracking-wider">
-                    Most Popular
-                  </span>
-                )}
-                <div>
-                  <h3 className="font-display text-lg font-bold text-white/90">
-                    {tier.name}
-                  </h3>
-                  <div className="flex items-baseline gap-2 mt-4 mb-2">
-                    <span className="text-4xl font-display font-bold text-white">
-                      {tier.price}
-                    </span>
-                    <span className="text-xs text-white/40 font-mono lowercase">
-                      {tier.period}
-                    </span>
-                  </div>
-                  <p className="text-xs text-white/50 leading-relaxed font-body mb-6">
-                    {tier.desc}
-                  </p>
-
-                  <ul className="space-y-3 border-t border-white/[0.04] pt-6 mb-8">
-                    {tier.features.map((feat) => (
-                      <li
-                        key={feat}
-                        className="flex items-start gap-2.5 text-xs text-white/70"
-                      >
-                        <Check className="w-4 h-4 text-white/40 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          <section className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+            {PLANS.map((plan) => (
+              <PlanCard
+                key={plan.id}
+                plan={plan}
+                live={billing.live}
+                busy={checkout.state.sku === plan.id}
+                onBuy={checkout.start}
+              />
             ))}
           </section>
 
-          {/* ─── Founding Circle Waitlist Card (SOTA Funnel) ─── */}
-          <section className="max-w-3xl mx-auto mb-20">
-            <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0c0d12]/90 to-[#050608]/95 p-8 md:p-12 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-hidden">
-              {/* Decorative glows */}
+          {checkout.state.error && (
+            <p className="flex items-center justify-center gap-2 text-xs text-[var(--arc-fire)] mb-10">
+              <Warning className="w-3.5 h-3.5" />
+              {checkout.state.error}
+            </p>
+          )}
+
+          <section className="max-w-5xl mx-auto mb-20 grid lg:grid-cols-[1.1fr_1fr] gap-8">
+            <div>
+              <h2 className="text-xl font-display font-semibold mb-1">
+                Credits, when you want our keys
+              </h2>
+              <p className="text-xs text-[var(--arc-text-secondary)] font-body mb-5">
+                Managed images use credits. The other metered actions and their
+                rates are planned. Credits do not expire.
+              </p>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {CREDIT_PACKS.map((pack) => (
+                  <PackCard
+                    key={pack.id}
+                    pack={pack}
+                    ready={billing.live && billing.packsReady.includes(pack.id)}
+                    busy={checkout.state.sku === pack.id}
+                    onBuy={checkout.start}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] p-5">
+              <h3 className="text-[10px] font-mono text-[var(--arc-text-secondary)] tracking-widest mb-4">
+                Image costs and planned rates
+              </h3>
+              <ul className="divide-y divide-[var(--arc-cosmic-border-bright)]">
+                {visibleCosts.map((cost) => (
+                  <li
+                    key={cost.id}
+                    className="flex items-center justify-between py-2.5 text-xs"
+                  >
+                    <span className="text-[var(--arc-text-primary)]">
+                      {cost.label}
+                      {!cost.id.startsWith("image.") && " (planned)"}
+                    </span>
+                    <span className="font-mono text-[var(--arc-text-primary)]">
+                      {cost.credits}{" "}
+                      <span className="text-[var(--arc-text-secondary)]">
+                        / {cost.unit}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section
+            id="founding-circle"
+            className="max-w-3xl mx-auto mb-20 scroll-mt-24"
+          >
+            <div className="relative rounded-3xl border border-[var(--arc-cosmic-border-bright)] bg-gradient-to-br from-[var(--arc-cosmic-deep)] to-[var(--arc-cosmic-void)] p-8 md:p-12 shadow-[var(--arc-shadow-elevation-3)] overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--arc-brand-arcanean-gold)]/5 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--arc-brand-atlantean-teal)]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -263,31 +455,30 @@ export function PricingClient() {
                       size={12}
                       className="text-[var(--arc-brand-arcanean-gold)]"
                     />
-                    <span className="text-[9px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider font-bold">
-                      Limited Pre-Launch
+                    <span className="text-xs font-mono text-[var(--arc-brand-arcanean-gold)] tracking-wider font-bold">
+                      Founding Circle
                     </span>
                   </div>
                   <h3 className="text-2xl md:text-3xl font-display font-bold tracking-tight mb-3">
-                    Join the Founding Circle
+                    Follow the release
                   </h3>
-                  <p className="text-xs text-white/50 leading-relaxed font-body mb-4">
-                    The first 100 creators to join the waitlist secure a
-                    permanent **40% lifetime discount** on all sync plans,
-                    direct advisory access to the developer, and priority beta
-                    access.
+                  <p className="text-xs text-[var(--arc-text-secondary)] leading-relaxed font-body mb-4">
+                    Leave your email for release updates and confirmed plan
+                    availability. Joining this list does not reserve a purchase
+                    or a discount.
                   </p>
-                  <ul className="space-y-2 text-[11px] text-white/60 font-mono">
+                  <ul className="space-y-2 text-[11px] text-[var(--arc-text-secondary)] font-mono">
                     <li className="flex items-center gap-2">
                       <span className="text-[var(--arc-brand-arcanean-gold)]">
-                        ✦
+                        <Check className="w-4 h-4" aria-hidden="true" />
                       </span>
-                      Permanent lifetime discount
+                      Release updates
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-[var(--arc-brand-arcanean-gold)]">
-                        ✦
+                        <Check className="w-4 h-4" aria-hidden="true" />
                       </span>
-                      Private Discord channels
+                      Confirmed pricing and availability
                     </li>
                   </ul>
                 </div>
@@ -296,45 +487,63 @@ export function PricingClient() {
                   <AnimatePresence mode="wait">
                     {status === "success" ? (
                       <m.div
-                        initial={{ opacity: 0, scale: 0.95 }}
+                        role="status"
+                        aria-live="polite"
+                        initial={
+                          reducedMotion ? false : { opacity: 0, scale: 0.95 }
+                        }
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="rounded-2xl border border-green-500/25 bg-green-500/5 p-6 text-center flex flex-col items-center justify-center gap-3 backdrop-blur-sm"
+                        exit={reducedMotion ? undefined : { opacity: 0 }}
+                        transition={{
+                          duration: reducedMotion ? 0 : 0.2,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/25 bg-[var(--arc-brand-atlantean-teal)]/5 p-6 text-center flex flex-col items-center justify-center gap-3 backdrop-blur-sm"
                       >
-                        <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
-                          <Check className="w-6 h-6 text-green-400" />
+                        <div className="w-12 h-12 rounded-full bg-[var(--arc-brand-atlantean-teal)]/20 flex items-center justify-center border border-[var(--arc-brand-atlantean-teal)]/30">
+                          <Check className="w-6 h-6 text-[var(--arc-brand-atlantean-teal)]" />
                         </div>
                         <h4 className="font-semibold text-sm">
-                          Welcome aboard!
+                          You are on the list.
                         </h4>
-                        <p className="text-[11px] text-green-300/70 font-body">
-                          You are locked into the Founding waitlist. Watch your
-                          inbox for access details.
+                        <p className="text-xs text-[var(--arc-text-secondary)] font-body">
+                          We will email you when plans are available.
                         </p>
                       </m.div>
                     ) : (
                       <m.form
                         onSubmit={handleWaitlistSubmit}
-                        initial={{ opacity: 0 }}
+                        initial={reducedMotion ? false : { opacity: 0 }}
                         animate={{ opacity: 1 }}
+                        transition={{
+                          duration: reducedMotion ? 0 : 0.2,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                         className="space-y-3"
                       >
                         <div>
-                          <label className="block text-[10px] font-mono text-white/40 uppercase tracking-widest mb-2">
-                            Secure your access
+                          <label
+                            htmlFor="release-email"
+                            className="block text-sm font-mono text-[var(--arc-text-secondary)] mb-2"
+                          >
+                            Email for release updates
                           </label>
                           <input
+                            id="release-email"
                             type="email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your creator email..."
-                            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-xs focus:outline-none focus:border-[var(--arc-brand-arcanean-gold)]/50 transition-colors text-white placeholder-white/30 font-body"
+                            placeholder="Your creator email"
+                            className="w-full bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border-bright)] rounded-xl p-3 text-xs focus:outline-none focus:border-[var(--arc-brand-arcanean-gold)]/50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] text-[var(--arc-text-primary)] placeholder-[var(--arc-text-secondary)] font-body"
                           />
                         </div>
 
                         {status === "error" && (
-                          <div className="flex gap-2 text-[10px] text-red-400 items-start">
+                          <div
+                            role="alert"
+                            className="flex gap-2 text-xs text-[var(--arc-fire)] items-start"
+                          >
                             <Warning className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                             <span>{errorMessage}</span>
                           </div>
@@ -343,14 +552,14 @@ export function PricingClient() {
                         <button
                           type="submit"
                           disabled={status === "loading"}
-                          className="w-full py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-xs flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all active:scale-[0.98] disabled:opacity-50"
+                          className="w-full min-h-11 flex items-center justify-center py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-xs flex items-center justify-center gap-2 hover:shadow-[var(--arc-shadow-gold-glow)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)] motion-reduce:transition-none disabled:opacity-50"
                         >
                           {status === "loading" ? (
-                            <CircleNotch className="w-4 h-4 animate-spin text-black" />
+                            <CircleNotch className="w-4 h-4 animate-spin motion-reduce:animate-none text-[var(--arc-cosmic-void)]" />
                           ) : (
                             <>
-                              <Envelope className="w-4 h-4 text-black" />
-                              <span>Join waitlist</span>
+                              <Envelope className="w-4 h-4 text-[var(--arc-cosmic-void)]" />
+                              <span>Join the release list</span>
                             </>
                           )}
                         </button>
@@ -362,14 +571,14 @@ export function PricingClient() {
             </div>
           </section>
 
-          {/* ─── Free Capabilities Grid ─── */}
-          <section className="pb-20 border-t border-white/[0.04] pt-16">
+          <section className="pb-20 border-t border-[var(--arc-cosmic-border-bright)] pt-16">
             <div className="text-center mb-12">
               <h2 className="text-2xl font-display font-semibold mb-2">
-                Included in Free Open Core
+                The creator workspace
               </h2>
-              <p className="text-sm text-white/40 font-body">
-                Full local creation power. No boundaries on your imagination.
+              <p className="text-sm text-[var(--arc-text-secondary)] font-body">
+                Chat and worlds use your keys. Managed images use Arcanea
+                credits.
               </p>
             </div>
 
@@ -377,7 +586,7 @@ export function PricingClient() {
               {FREE_CAPABILITIES.map(({ Icon, name, desc, accent }) => (
                 <div
                   key={name}
-                  className="flex gap-3.5 p-5 rounded-2xl bg-white/[0.015] border border-white/[0.05] hover:border-white/[0.1] transition-all hover:bg-white/[0.03]"
+                  className="flex gap-3.5 p-5 rounded-2xl bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border-bright)] hover:border-[var(--arc-cosmic-border-bright)] transition-all hover:bg-[var(--arc-cosmic-surface)]"
                 >
                   <Icon
                     size={20}
@@ -385,10 +594,10 @@ export function PricingClient() {
                     style={{ color: accent, flexShrink: 0, marginTop: 2 }}
                   />
                   <div>
-                    <h3 className="font-semibold text-sm mb-1 text-white/90">
+                    <h3 className="font-semibold text-sm mb-1 text-[var(--arc-text-primary)]">
                       {name}
                     </h3>
-                    <p className="text-white/40 text-xs leading-relaxed font-body">
+                    <p className="text-[var(--arc-text-secondary)] text-xs leading-relaxed font-body">
                       {desc}
                     </p>
                   </div>
@@ -397,32 +606,32 @@ export function PricingClient() {
             </div>
           </section>
 
-          {/* ─── Open Source Arsenal ─── */}
-          <section className="py-16 border-t border-white/[0.04]">
+          <section className="py-16 border-t border-[var(--arc-cosmic-border-bright)]">
             <div className="text-center mb-10">
               <h2 className="text-2xl font-display font-semibold mb-2">
-                Fully Open Source Foundation
+                Open where it matters
               </h2>
-              <p className="text-sm text-white/45 max-w-lg mx-auto font-body">
-                Extend, modify, or run your own instance. Every layer is built
-                on open standards.
+              <p className="text-sm text-[var(--arc-text-secondary)] max-w-lg mx-auto font-body">
+                The MCP server, the skills, and the world engine are open
+                source. Your worlds export as Markdown and JSON at any time.
+                Your canon stays yours.
               </p>
             </div>
 
             <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
               {[
-                { num: "27", label: "Repositories" },
-                { num: "35", label: "npm Packages" },
-                { num: "54", label: "Agent Skills" },
+                { num: String(FACTS.mcpTools), label: "MCP tools" },
+                { num: String(FACTS.skills), label: "Creator skills" },
+                { num: String(FACTS.luminors), label: "Luminors" },
               ].map(({ num, label }) => (
                 <div
                   key={label}
-                  className="text-center p-6 rounded-2xl bg-white/[0.015] border border-white/[0.06]"
+                  className="text-center p-6 rounded-2xl bg-[var(--arc-cosmic-surface)] border border-[var(--arc-cosmic-border-bright)]"
                 >
                   <div className="text-3xl font-display font-bold text-[var(--arc-brand-atlantean-teal)] mb-1">
                     {num}
                   </div>
-                  <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-1">
+                  <div className="text-xs font-mono text-[var(--arc-text-secondary)] tracking-widest mt-1">
                     {label}
                   </div>
                 </div>
@@ -431,13 +640,13 @@ export function PricingClient() {
 
             <div className="text-center">
               <Link
-                href="https://github.com/frankxai"
+                href="https://github.com/frankxai/arcanea"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-xs font-semibold uppercase tracking-wider text-white/70 hover:bg-white/[0.04] transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[var(--arc-cosmic-border-bright)] text-xs font-semibold tracking-wider text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-surface)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               >
                 <GitBranch size={14} />
-                <span>Browse GitHub</span>
+                <span>Browse the source</span>
               </Link>
             </div>
           </section>

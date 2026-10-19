@@ -5,9 +5,9 @@
 #
 # Exit 0 = SKIP build (cheaper). Exit 1 = PROCEED with build.
 #
-# Skips preview builds for noisy branches that don't need a Vercel preview
-# (Dependabot auto-PRs, backup snapshots, worktree refs, doc-only branches).
-# This is the primary lever for reducing Vercel build minutes.
+# Skips previews only when no deployable file changed since the prior
+# successful deployment, or the author marks an intermediate [agent-wip]
+# checkpoint. Branch names and draft state do not prove the tree is inert.
 
 set -euo pipefail
 
@@ -28,37 +28,17 @@ if [[ "$COMMIT_MESSAGE" == *"[agent-wip]"* ]]; then
 fi
 
 # If the parent was an ignored checkpoint, force this coherent checkpoint to
-# build before any branch/path filters can skip it.
+# build before path comparison can skip it.
 if git log -1 --format=%B HEAD^ 2>/dev/null | grep -Fq "[agent-wip]"; then
   echo "✅ build: coherent checkpoint follows [agent-wip]"
   exit 1
 fi
-
-# Skip patterns (most noise comes from these)
-case "$BRANCH" in
-  dependabot/*)         echo "⏭️  skip: dependabot branch ($BRANCH)"; exit 0 ;;
-  backup/*)             echo "⏭️  skip: backup branch ($BRANCH)"; exit 0 ;;
-  worktree-*)           echo "⏭️  skip: worktree ref ($BRANCH)"; exit 0 ;;
-  copilot/*)            echo "⏭️  skip: copilot branch ($BRANCH)"; exit 0 ;;
-  changeset-release/*)  echo "⏭️  skip: changeset release ($BRANCH)"; exit 0 ;;
-  docs/*)               echo "⏭️  skip: docs-only branch ($BRANCH)"; exit 0 ;;
-esac
 
 # Compare the complete pending tree against the last successful deployment of
 # this project/branch. HEAD^ misses code followed by a docs-only checkpoint.
 # Vercel supplies this variable to the Ignored Build Step:
 # https://vercel.com/docs/environment-variables/system-environment-variables#vercel_git_previous_sha
 PREVIOUS_SHA="${VERCEL_GIT_PREVIOUS_SHA:-}"
-
-# Check if triggering PR is a draft (unauthenticated GitHub API check)
-if [[ -n "${VERCEL_GIT_PULL_REQUEST_ID:-}" && -n "${VERCEL_GIT_REPO_OWNER:-}" && -n "${VERCEL_GIT_REPO_SLUG:-}" ]]; then
-  PR_JSON=$(curl -sf --max-time 5 \
-    "https://api.github.com/repos/${VERCEL_GIT_REPO_OWNER}/${VERCEL_GIT_REPO_SLUG}/pulls/${VERCEL_GIT_PULL_REQUEST_ID}" 2>/dev/null || true)
-  if [[ -n "$PR_JSON" ]] && echo "$PR_JSON" | grep -q '"draft"[[:space:]]*:[[:space:]]*true'; then
-    echo "⏭️  skip: PR #${VERCEL_GIT_PULL_REQUEST_ID} is a draft"
-    exit 0
-  fi
-fi
 
 if [[ ! "$PREVIOUS_SHA" =~ ^([0-9a-fA-F]{40}|[0-9a-fA-F]{64})$ ]] ||
    ! git cat-file -e "${PREVIOUS_SHA}^{commit}" 2>/dev/null; then
@@ -74,4 +54,3 @@ fi
 
 echo "✅ build: $BRANCH"
 exit 1
-

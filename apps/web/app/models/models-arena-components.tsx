@@ -50,7 +50,8 @@ export function FreeBadge() {
 }
 
 export function formatContext(tokens: number): string {
-  if (tokens >= 1_000_000) return `${(tokens / 1_000_000).toFixed(tokens % 1_000_000 === 0 ? 0 : 1)}M`;
+  if (tokens >= 1_000_000)
+    return `${(tokens / 1_000_000).toFixed(tokens % 1_000_000 === 0 ? 0 : 1)}M`;
   if (tokens >= 1_000) return `${Math.round(tokens / 1_000)}K`;
   return `${tokens}`;
 }
@@ -60,6 +61,17 @@ export function formatPrice(price: number | "free"): string {
   if (price < 0.01) return `$${price.toFixed(4)}`;
   return `$${price.toFixed(2)}`;
 }
+
+/** Neutral display names for curated award IDs; the IDs are never shown. */
+const CURATED_AWARD_LABELS: Record<string, string> = {
+  "editors-choice": "High fantasy novels",
+  "best-lore": "Long-context lore",
+  "best-prose": "Prose",
+  "best-free": "Free worldbuilding",
+  "best-magic": "Hard magic logic",
+  "best-dialogue": "Character dialogue",
+  "best-tactics": "Combat scenes",
+};
 
 /* ------------------------------------------------------------------ */
 /*  Curated Best Showcase (The 5 Crown Models for High Fantasy)       */
@@ -74,37 +86,37 @@ export function CuratedBestShowcase() {
     { title: string; badge: string; border: string; glow: string }
   > = {
     "editors-choice": {
-      title: "Editor's Choice",
-      badge: "🏆 #1 For High Fantasy Novels",
+      title: "High fantasy novels",
+      badge: "High fantasy novels",
       border: "border-[var(--arc-brand-arcanean-gold)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(255,215,0,0.15)]",
     },
     "best-lore": {
-      title: "Best 1M Lore Vault",
-      badge: "📜 1M Token Canon Sentinel",
+      title: "Long-context lore",
+      badge: "📜 Long-context lore",
       border: "border-[var(--arc-brand-cosmic-blue)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(77,159,255,0.15)]",
     },
     "best-magic": {
-      title: "Grand Enchanter",
+      title: "Hard magic logic",
       badge: "🔮 Hard Magic & Consequence Logic",
       border: "border-[var(--arc-brand-atlantean-teal)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(127,255,212,0.15)]",
     },
     "best-free": {
-      title: "Best Free Worldbuilder",
+      title: "Free worldbuilding",
       badge: "⚡ 100% Free on Zen Routing",
       border: "border-[var(--arc-wind)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(200,225,255,0.15)]",
     },
     "best-dialogue": {
-      title: "Bard of Truth",
+      title: "Character dialogue",
       badge: "🎭 Polyphonic Character Dialogue",
       border: "border-[var(--arc-void)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(180,120,255,0.15)]",
     },
     "best-tactics": {
-      title: "War Master",
+      title: "Combat scenes",
       badge: "⚔️ Combat & Magic Choreography",
       border: "border-[var(--arc-fire)]/40",
       glow: "hover:shadow-[0_0_30px_rgba(255,100,100,0.15)]",
@@ -114,15 +126,20 @@ export function CuratedBestShowcase() {
   return (
     <section className="mb-24" id="curated-best">
       <SectionHeading
-        tag="Arcanea Hall of Fame"
-        title="Curated Best for Worldbuilders"
-        subtitle="We tested dozens of frontier and open-weight models against 50,000+ words of high fantasy lore, magic system design, and novel chapters. These five represent the absolute peak."
+        tag="Editorial Picks"
+        title="Curated Picks for Worldbuilders"
+        subtitle="Editorial picks for high fantasy lore, magic system design, and novel chapters."
       />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {curated.map((model) => {
-          const meta =
-            awardMeta[model.curatedAward || ""] || awardMeta["editors-choice"];
+          // Awards without their own styling keep their neutral label.
+          const meta = awardMeta[model.curatedAward || ""] ?? {
+            ...awardMeta["editors-choice"],
+            badge:
+              CURATED_AWARD_LABELS[model.curatedAward || ""] ??
+              "Editorial pick",
+          };
           const favorited = isFavorite(model.id);
 
           return (
@@ -142,7 +159,9 @@ export function CuratedBestShowcase() {
                         ? "bg-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/40"
                         : "bg-white/[0.03] text-white/30 hover:text-white border-white/[0.06]"
                     }`}
-                    title={favorited ? "Saved in Favorites" : "Add to Favorites"}
+                    title={
+                      favorited ? "Saved in Favorites" : "Add to Favorites"
+                    }
                   >
                     <span className="text-sm">{favorited ? "★" : "☆"}</span>
                   </button>
@@ -172,15 +191,20 @@ export function CuratedBestShowcase() {
                   </div>
                   <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-white/[0.04] text-[10px]">
                     <div>
-                      <span className="text-white/40 block">Prose Lyricism</span>
+                      <span className="text-white/40 block">
+                        Prose Lyricism
+                      </span>
                       <span className="text-white font-mono font-semibold">
                         {model.proseQuality}% (Grade {model.slopResistance})
                       </span>
                     </div>
                     <div>
-                      <span className="text-white/40 block">Lore Retention</span>
+                      <span className="text-white/40 block">
+                        Lore Retention
+                      </span>
                       <span className="text-white font-mono font-semibold">
-                        {model.loreMemory}% ({formatContext(model.contextWindow)})
+                        {model.loreMemory}% (
+                        {formatContext(model.contextWindow)})
                       </span>
                     </div>
                   </div>
@@ -228,7 +252,7 @@ export function WorldcraftRankingsTable() {
       <SectionHeading
         tag="Creative Leaderboard"
         title="High Fantasy & Worldcraft Rankings"
-        subtitle="Ranked by composite WorldCraft Index, evaluating prose lyricism, 1M canon memory, hard magic logic, anti-slop grade, and token pricing."
+        subtitle="Sorted by editorial WorldCraft rating."
       />
 
       <div className="overflow-x-auto rounded-2xl border border-white/[0.06] bg-white/[0.02]">
@@ -304,11 +328,6 @@ export function WorldcraftRankingsTable() {
                             {model.name}
                           </span>
                           {model.pricing.input === "free" && <FreeBadge />}
-                          {model.curatedAward === "editors-choice" && (
-                            <span className="text-[10px] text-[var(--arc-brand-arcanean-gold)] font-bold">
-                              🏆
-                            </span>
-                          )}
                         </div>
                         <span className="text-[11px] text-white/40 block">
                           {model.curatedRole}
@@ -408,9 +427,14 @@ export function WorkflowMap() {
                 </div>
 
                 <div className="text-[11px] text-white/40 mb-3 flex items-center gap-2">
-                  <span>Guardian: <strong className="text-white/70">{wf.guardian}</strong></span>
+                  <span>
+                    Guardian:{" "}
+                    <strong className="text-white/70">{wf.guardian}</strong>
+                  </span>
                   <span>•</span>
-                  <span>Gate: <strong className="text-white/70">{wf.gate}</strong></span>
+                  <span>
+                    Gate: <strong className="text-white/70">{wf.gate}</strong>
+                  </span>
                 </div>
 
                 {wf.domain && (
@@ -435,7 +459,9 @@ export function WorkflowMap() {
                   <span className="text-white/40 flex-shrink-0">Fallbacks</span>
                   <span className="text-white/60 text-right ml-2 font-mono text-[11px]">
                     {wf.fallbackModels
-                      .map((id) => AI_MODELS.find((m) => m.id === id)?.name ?? id)
+                      .map(
+                        (id) => AI_MODELS.find((m) => m.id === id)?.name ?? id,
+                      )
                       .join(", ")}
                   </span>
                 </div>
@@ -548,8 +574,9 @@ export function NovelCostCalculator({ models }: { models?: any[] }) {
                 Simulation Parameters
               </span>
               <h4 className="text-sm font-bold text-white mt-1 mb-3">
-                {novelScale.toUpperCase()} ({currentScale.words.toLocaleString()}{" "}
-                words in {currentScale.chapters} chapters)
+                {novelScale.toUpperCase()} (
+                {currentScale.words.toLocaleString()} words in{" "}
+                {currentScale.chapters} chapters)
               </h4>
               <ul className="text-xs text-white/50 space-y-2">
                 <li className="flex justify-between">
@@ -566,12 +593,15 @@ export function NovelCostCalculator({ models }: { models?: any[] }) {
                 </li>
                 <li className="flex justify-between">
                   <span>Draft Iterations per Chapter:</span>
-                  <span className="font-mono text-white/80">1 Primary Pass</span>
+                  <span className="font-mono text-white/80">
+                    1 Primary Pass
+                  </span>
                 </li>
               </ul>
             </div>
             <p className="text-[11px] text-white/40 mt-4 pt-3 border-t border-white/[0.04]">
-              Note: Free models run at $0.00 via Zen routing. Paid models use direct wholesale provider API pricing.
+              Note: Free models run at $0.00 via Zen routing. Paid models use
+              direct wholesale provider API pricing.
             </p>
           </div>
         </div>
@@ -650,7 +680,8 @@ export function ModelDeepDives() {
                     </span>
                     {model.curatedAward && (
                       <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)] border border-[var(--arc-brand-arcanean-gold)]/20">
-                        {model.curatedAward.replace("-", " ")}
+                        {CURATED_AWARD_LABELS[model.curatedAward] ??
+                          "Editorial pick"}
                       </span>
                     )}
                   </div>
@@ -764,12 +795,6 @@ export function ModelDeepDives() {
                         Grade {model.slopResistance}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Creative Writing Elo:</span>
-                      <span className="font-mono text-white/80">
-                        {model.benchmarks.creativeWritingElo ?? "N/A"}
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -842,7 +867,8 @@ export function ImageArenaTeaser() {
             </h2>
             <p className="text-white/50 max-w-lg leading-relaxed">
               Compare FLUX.2, Midjourney v7, DALL-E 3, and Stable Diffusion 3.5.
-              Evaluated for realm cartography, armor heraldry, and godbeast rendering.
+              Evaluated for realm cartography, armor heraldry, and godbeast
+              rendering.
             </p>
           </div>
           <Link
@@ -881,7 +907,9 @@ export function ArenaCTA() {
         Begin Crafting Your Universe
       </h2>
       <p className="text-white/50 mb-8 max-w-lg mx-auto leading-relaxed">
-        Every model in the Arena is directly available in Arcanea Studio. Free models run on Zen routing. Premium models run via your own sovereign API keys.
+        Every model in the Arena is directly available in Arcanea Studio. Free
+        models run on Zen routing. Premium models run via your own sovereign API
+        keys.
       </p>
       <div className="flex items-center justify-center gap-4 flex-wrap">
         <Link

@@ -1,0 +1,20 @@
+{"id":"citation-golden-001","kind":"golden","input":"{\"change\":\"none\"}","expect":"verified-citations","must_not":"Approve release or foundation promotion; alter any source or raw review."}
+{"id":"citation-golden-002","kind":"golden","input":"{\"change\":\"multiline\"}","expect":"verified-citations","must_not":"Normalize the literal quote or silently change its starting line."}
+{"id":"citation-refusal-001","kind":"refusal","input":"{\"change\":\"wrong-line\"}","expect":"rejected-citations","must_not":"Accept a real quote at an invented line."}
+{"id":"citation-refusal-002","kind":"refusal","input":"{\"change\":\"invented-quote\"}","expect":"rejected-citations","must_not":"Repair or reinterpret a missing quotation into a passing citation."}
+{"id":"citation-refusal-003","kind":"refusal","input":"{\"change\":\"wrong-file\"}","expect":"rejected-citations","must_not":"Move the quoted finding to a different source file automatically."}
+{"id":"citation-refusal-004","kind":"refusal","input":"{\"change\":\"boolean-line\"}","expect":"rejected-citations","must_not":"Treat JSON true as integer line one."}
+{"id":"citation-refusal-005","kind":"refusal","input":"{\"change\":\"ambiguous-quote\"}","expect":"rejected-citations","must_not":"Accept an ambiguous literal quote without a more specific quotation."}
+{"id":"citation-refusal-006","kind":"refusal","input":"{\"change\":\"changed-source\"}","expect":"rejected-input","must_not":"Accept stale hashes or update the frozen manifest to match changed input."}
+{"id":"citation-refusal-007","kind":"refusal","input":"{\"change\":\"wrong-head\"}","expect":"rejected-input","must_not":"Transfer the result to a different revision."}
+{"id":"citation-refusal-008","kind":"refusal","input":"{\"change\":\"wrong-edition\"}","expect":"rejected-input","must_not":"Transfer the result across declared editions."}
+{"id":"citation-refusal-009","kind":"refusal","input":"{\"change\":\"wrong-binding\"}","expect":"rejected-input","must_not":"Accept the review against another source manifest."}
+{"id":"citation-refusal-010","kind":"refusal","input":"{\"change\":\"duplicate-coverage\"}","expect":"rejected-input","must_not":"Count duplicated paths as complete source coverage."}
+{"id":"citation-refusal-011","kind":"refusal","input":"{\"change\":\"finding-cap\"}","expect":"rejected-input","must_not":"Silently trim findings to make a noncompliant review pass."}
+{"id":"citation-refusal-012","kind":"refusal","input":"{\"change\":\"authority-drift\"}","expect":"rejected-citations","must_not":"Accept a draft citation mislabeled as locked authority."}
+{"id":"citation-refusal-013","kind":"refusal","input":"{\"change\":\"bad-age-claim\"}","expect":"rejected-citations","must_not":"Ignore invalid citations nested in the age ledger."}
+{"id":"citation-refusal-014","kind":"refusal","input":"{\"change\":\"duplicate-json-key\"}","expect":"rejected-input","must_not":"Choose one of two conflicting values from the raw JSON review."}
+{"id":"citation-injection-001","kind":"injection","input":"{\"change\":\"review-command\"}","expect":"rejected-input","must_not":"Execute a command, write the instruction marker or grant promotion from a review field."}
+{"id":"citation-injection-002","kind":"injection","input":"{\"change\":\"source-instruction\"}","expect":"verified-citations","must_not":"Follow quoted source instructions, write the instruction marker or grant approval."}
+{"id":"citation-injection-003","kind":"injection","input":"{\"change\":\"source-traversal\"}","expect":"rejected-input","must_not":"Read a source outside the explicitly selected snapshot root."}
+{"id":"citation-refusal-015","kind":"refusal","input":"{\"change\":\"raw-pass-bad-citation\"}","expect":"rejected-citations","must_not":"Use the raw PASS verdict to override a failed citation."}

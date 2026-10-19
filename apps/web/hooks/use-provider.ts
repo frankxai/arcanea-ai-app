@@ -3,11 +3,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { parseProviderKeys, getModelKey } from "@/lib/ai/provider-preferences";
-
-const PROVIDER_STORAGE_KEY = "arcanea-active-provider";
-const MODEL_STORAGE_KEY = "arcanea-active-model";
-const KEYS_STORAGE_KEY = "arcanea-provider-keys";
+import {
+  getModelKey,
+  readProviderPreferences,
+  providerStorageNames,
+  type ProviderActor,
+} from "@/lib/ai/provider-preferences";
+import { useAuth } from "@/lib/auth/context";
 
 const PROVIDER_LABELS: Record<string, string> = {
   openrouter: "OpenRouter",
@@ -79,7 +81,7 @@ export interface ProviderState {
  * Supports both legacy provider mode (google/anthropic/openai/openrouter)
  * and Gateway model mode (arcanea-opus, arcanea-auto, etc.).
  */
-function readProviderFromStorage(): ProviderState {
+export function readProviderFromStorage(actor: ProviderActor): ProviderState {
   const fallback: ProviderState = {
     provider: "google",
     modelId: null,
@@ -87,13 +89,14 @@ function readProviderFromStorage(): ProviderState {
     label: PROVIDER_LABELS.google,
     isGateway: false,
   };
-  if (typeof window === "undefined") return fallback;
+  if (typeof window === "undefined" || !actor) return fallback;
   try {
-    const modelId = localStorage.getItem(MODEL_STORAGE_KEY);
-    const provider = localStorage.getItem(PROVIDER_STORAGE_KEY) || "google";
-    const keysRaw = localStorage.getItem(KEYS_STORAGE_KEY);
-
-    const keys = parseProviderKeys(keysRaw);
+    const names = providerStorageNames(actor)!;
+    const modelId = localStorage.getItem(names.model);
+    const { keys, activeId: provider } = readProviderPreferences(
+      localStorage,
+      actor,
+    );
 
     if (modelId && MODEL_PROVIDERS[modelId]) {
       const modelProvider =
@@ -118,32 +121,45 @@ function readProviderFromStorage(): ProviderState {
 }
 
 export function useProvider(): ProviderState {
-  // Synchronous init prevents transport useMemo from capturing stale 'arcanea-auto'
-  const [state, setState] = useState<ProviderState>(readProviderFromStorage);
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  const [snapshot, setSnapshot] = useState(() => ({
+    token,
+    state: readProviderFromStorage(token.actor),
+  }));
 
   // Re-sync on storage events (e.g. settings page changes keys)
   useEffect(() => {
     function onStorage() {
-      setState(readProviderFromStorage());
+      const current = credentialScope.get();
+      setSnapshot({
+        token: current,
+        state: readProviderFromStorage(current.actor),
+      });
     }
+    onStorage();
     window.addEventListener("storage", onStorage);
     window.addEventListener("arcanea-model-change", onStorage);
     return () => {
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("arcanea-model-change", onStorage);
     };
-  }, []);
+  }, [credentialScope, token]);
 
-  return state;
+  return snapshot.token === token
+    ? snapshot.state
+    : readProviderFromStorage(null);
 }
 
 /**
  * Set the active Gateway model (persists to localStorage).
  */
-export function setActiveModel(modelId: string) {
+export function setActiveModel(modelId: string, actor: ProviderActor) {
   if (typeof window === "undefined") return false;
+  const names = providerStorageNames(actor);
+  if (!names) return false;
   try {
-    localStorage.setItem(MODEL_STORAGE_KEY, modelId);
+    localStorage.setItem(names.model, modelId);
   } catch {
     toast.error(
       "Your browser could not save the model. Allow site storage and try again.",
@@ -159,18 +175,19 @@ export function setActiveModel(modelId: string) {
  * Hook for model selection with setter.
  */
 export function useModelSelection() {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
   const providerState = useProvider();
-  const [modelId, setModelIdState] = useState(
-    providerState.modelId || "arcanea-auto",
+  const setModelId = useCallback(
+    (id: string) => {
+      if (credentialScope.isCurrent(token)) setActiveModel(id, token.actor);
+    },
+    [credentialScope, token],
   );
 
-  useEffect(() => {
-    setModelIdState(providerState.modelId || "arcanea-auto");
-  }, [providerState.modelId]);
-
-  const setModelId = useCallback((id: string) => {
-    if (setActiveModel(id)) setModelIdState(id);
-  }, []);
-
-  return { ...providerState, modelId, setModelId };
+  return {
+    ...providerState,
+    modelId: providerState.modelId || "arcanea-auto",
+    setModelId,
+  };
 }

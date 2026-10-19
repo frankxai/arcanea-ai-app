@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { PhArrowLeft, PhEye, PhEyeSlash, PhKey } from "@/lib/phosphor-icons";
 import {
@@ -8,7 +8,10 @@ import {
   readProviderPreferences,
   saveProviderPreferences,
   type ProviderKeys,
+  providerStorageNames,
+  type ProviderActor,
 } from "@/lib/ai/provider-preferences";
+import { useAuth } from "@/lib/auth/context";
 
 const PROVIDERS = [
   {
@@ -52,24 +55,51 @@ const control =
 const subscribeToHydration = () => () => {};
 
 export default function ProvidersPage() {
+  const { credentialScope, isLoading } = useAuth();
+  const token = credentialScope.get();
+  const isCurrent = useCallback(
+    () => credentialScope.isCurrent(token),
+    [credentialScope, token],
+  );
   const hydrated = useSyncExternalStore(
     subscribeToHydration,
     () => true,
     () => false,
   );
-  return hydrated ? (
-    <ProviderSettings />
-  ) : (
+  return hydrated && token.actor ? (
+    <ProviderSettings
+      key={token.revision}
+      actor={token.actor}
+      isCurrent={isCurrent}
+    />
+  ) : !hydrated || isLoading ? (
     <p role="status" className="px-5 pb-20 pt-24">
       Loading saved settings…
     </p>
+  ) : (
+    <div role="alert" className="px-5 pb-20 pt-24">
+      <p>Your account could not be loaded. Reload the page to try again.</p>
+      <button
+        type="button"
+        className={`${control} mt-4`}
+        onClick={() => window.location.reload()}
+      >
+        Reload page
+      </button>
+    </div>
   );
 }
 
-function ProviderSettings() {
+function ProviderSettings({
+  actor,
+  isCurrent,
+}: {
+  actor: NonNullable<ProviderActor>;
+  isCurrent: () => boolean;
+}) {
   const [initial] = useState(() => {
     try {
-      return { ...readProviderPreferences(localStorage), error: "" };
+      return { ...readProviderPreferences(localStorage, actor), error: "" };
     } catch {
       return {
         keys: {} as ProviderKeys,
@@ -97,9 +127,10 @@ function ProviderSettings() {
   const dirty = current !== savedState;
   const savedKey = !dirty && Boolean(keys[activeId]?.trim());
 
-  function reloadSavedSettings() {
+  const reloadSavedSettings = useCallback(() => {
+    if (!isCurrent()) return;
     try {
-      const preferences = readProviderPreferences(localStorage);
+      const preferences = readProviderPreferences(localStorage, actor);
       setKeys(preferences.keys);
       setActiveId(preferences.activeId);
       setSavedState(JSON.stringify(preferences));
@@ -111,17 +142,13 @@ function ProviderSettings() {
         "Your browser is blocking site storage. Allow storage and try again.",
       );
     }
-  }
+  }, [actor, isCurrent]);
 
   useEffect(() => {
     function sync(event: StorageEvent) {
       if (
         event.key &&
-        ![
-          "arcanea-provider-keys",
-          "arcanea-active-provider",
-          "arcanea-active-model",
-        ].includes(event.key)
+        !Object.values(providerStorageNames(actor)!).includes(event.key)
       )
         return;
       if (dirty) {
@@ -133,7 +160,7 @@ function ProviderSettings() {
     }
     window.addEventListener("storage", sync);
     return () => window.removeEventListener("storage", sync);
-  }, [dirty]);
+  }, [dirty, actor, reloadSavedSettings]);
 
   function changeKey(id: string, value: string) {
     setKeys((previous) => ({ ...previous, [id]: value }));
@@ -142,18 +169,23 @@ function ProviderSettings() {
   function save() {
     setError("");
     try {
+      if (!isCurrent())
+        throw new Error(
+          "Your account changed. Reload provider settings before saving.",
+        );
       saveProviderPreferences(
         localStorage,
         keys,
         activeId,
+        actor,
         savedState || undefined,
       );
-      const preferences = readProviderPreferences(localStorage);
+      const preferences = readProviderPreferences(localStorage, actor);
       setKeys(preferences.keys);
       setSavedState(JSON.stringify(preferences));
       window.dispatchEvent(new Event("arcanea-model-change"));
       setMessage(
-        "Saved in this browser. Provider access has not been verified.",
+        "Saved for this account in this browser. Provider access has not been verified.",
       );
     } catch (cause) {
       setError(
@@ -253,6 +285,12 @@ function ProviderSettings() {
           <p className="mt-3 text-base leading-relaxed text-[var(--arc-text-secondary)]">
             Choose a provider for chat. Bring your own key and pay that provider
             for your usage.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--arc-text-secondary)]">
+            Keys stay in this browser and are kept separately for each account
+            and guest use. If you previously saved keys, re-enter them here to
+            bind them to your current account or guest settings. Older
+            unassigned keys are preserved and remain unused.
           </p>
         </div>
         <form
