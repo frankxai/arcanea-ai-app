@@ -255,14 +255,17 @@ export async function resumeImages(
     Number(job.count) > 4
   )
     throw wire.pending();
-  const key = process.env.XAI_API_KEY;
-  if (!key && job.provider === "grok") throw wire.pending();
+  const key =
+    job.provider === "gateway"
+      ? process.env.AI_GATEWAY_TOKEN || process.env.VERCEL_OIDC_TOKEN
+      : process.env.XAI_API_KEY;
+  if (!key) throw wire.pending();
   while (wire.now() < wire.deadline) {
     const pollUrl =
       job.provider === "gateway"
         ? `${process.env.AI_GATEWAY_URL || "https://ai-gateway.vercel.sh"}/v1/images/${job.requestId}`
         : `https://api.x.ai/v1/images/${job.requestId}`;
-    const data = await wire.request(pollUrl, key || "");
+    const data = await wire.request(pollUrl, key);
     if (data.status === "failed")
       throw new Error("Image generation failed at the provider");
     if (data.status === "done") {
@@ -320,14 +323,14 @@ export async function generateImages(
 
   const key =
     provider === "gateway"
-      ? process.env.AI_GATEWAY_TOKEN || process.env.VERCEL_OIDC_TOKEN || ""
+      ? process.env.AI_GATEWAY_TOKEN || process.env.VERCEL_OIDC_TOKEN
       : provider === "openrouter"
         ? process.env.OPENROUTER_API_KEY
         : provider === "grok"
           ? process.env.XAI_API_KEY
           : process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
 
-  if (!provider || (provider !== "gateway" && !key))
+  if (!provider || !key)
     throw new Error(
       "No image generation API configured for the selected provider",
     );
@@ -341,20 +344,43 @@ export async function generateImages(
     const targetGatewayId = selectedModelDef.gatewayId;
     const fallbacks = getGatewayFallbackChain(selectedModelDef.id);
 
+    const remaining = wire.deadline - wire.now();
+    if (remaining <= 0) throw wire.pending();
+
+    const job: ImageJob = {
+      provider: "gateway",
+      requestId: runtime.reference.replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 200) || "gateway_job",
+      model: selectedModelDef.id,
+      count,
+    };
+    try {
+      await runtime.checkpoint(job);
+    } catch {
+      throw wire.pending();
+    }
+
     const gatewayClient = createOpenAI({
       baseURL: `${gatewayUrl}/v1`,
-      apiKey: key || "gateway-oidc",
+      apiKey: key,
       headers: fallbacks.length
         ? { "x-gateway-models": JSON.stringify(fallbacks) }
         : undefined,
       fetch: runtime.transport,
     });
 
+    const controller = new AbortController();
+    const timer = setTimeout(
+      () => controller.abort(),
+      Math.min(Math.max(wire.deadline - wire.now(), 1), 15_000),
+    );
+
     try {
       const generated = await generateImage({
         model: gatewayClient.image(targetGatewayId),
         prompt,
         n: count,
+        aspectRatio: aspectRatio as `${number}:${number}`,
+        abortSignal: controller.signal,
         providerOptions: {
           gateway: {
             models: fallbacks,
@@ -375,6 +401,8 @@ export async function generateImages(
     } catch (error) {
       if (error instanceof ProviderRejectedError) throw error;
       throw wire.pending();
+    } finally {
+      clearTimeout(timer);
     }
   }
 

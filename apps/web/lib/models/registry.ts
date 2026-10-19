@@ -6,17 +6,29 @@
 
 export type ModelCapability = "image" | "edit" | "image-to-video" | "text-to-video" | "director";
 
+export interface ModelInputSpec {
+  prompt: boolean;
+  aspectRatio?: readonly string[];
+  maxCount?: number;
+  imageUrl?: boolean;
+  durationSeconds?: readonly number[];
+}
+
 export interface ModelDefinition {
   id: string;
   name: string;
   capability: ModelCapability;
   gatewayId: string;
   fallbackGatewayIds?: string[];
+  inputs: ModelInputSpec;
   unitCostUsd: number;
   creditPrice: number; // FLAGGED FOR FRANK
   isPlaceholderPrice: boolean;
   provider: string;
 }
+
+const IMAGE_RATIOS = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3", "21:9"] as const;
+const VIDEO_RATIOS = ["16:9", "9:16", "1:1"] as const;
 
 export const MODEL_REGISTRY: Record<string, ModelDefinition> = {
   "gpt-image-2": {
@@ -25,6 +37,7 @@ export const MODEL_REGISTRY: Record<string, ModelDefinition> = {
     capability: "image",
     gatewayId: "openai/gpt-image-2",
     fallbackGatewayIds: ["google/gemini-3.1-flash-image-preview", "bfl/flux-2-pro"],
+    inputs: { prompt: true, aspectRatio: IMAGE_RATIOS, maxCount: 4 },
     unitCostUsd: 0.04,
     creditPrice: 1,
     isPlaceholderPrice: true,
@@ -36,6 +49,7 @@ export const MODEL_REGISTRY: Record<string, ModelDefinition> = {
     capability: "image",
     gatewayId: "google/imagen-4.0-ultra-generate-001",
     fallbackGatewayIds: ["google/gemini-3.1-flash-image-preview", "bfl/flux-2-pro"],
+    inputs: { prompt: true, aspectRatio: IMAGE_RATIOS, maxCount: 4 },
     unitCostUsd: 0.03,
     creditPrice: 1,
     isPlaceholderPrice: true,
@@ -47,6 +61,7 @@ export const MODEL_REGISTRY: Record<string, ModelDefinition> = {
     capability: "image",
     gatewayId: "bfl/flux-2-pro",
     fallbackGatewayIds: ["google/gemini-3.1-flash-image-preview"],
+    inputs: { prompt: true, aspectRatio: IMAGE_RATIOS, maxCount: 4 },
     unitCostUsd: 0.05,
     creditPrice: 1,
     isPlaceholderPrice: true,
@@ -58,6 +73,7 @@ export const MODEL_REGISTRY: Record<string, ModelDefinition> = {
     capability: "image",
     gatewayId: "google/gemini-3.1-flash-image-preview",
     fallbackGatewayIds: ["bfl/flux-2-pro"],
+    inputs: { prompt: true, aspectRatio: IMAGE_RATIOS, maxCount: 4 },
     unitCostUsd: 0.01,
     creditPrice: 1,
     isPlaceholderPrice: true,
@@ -69,10 +85,35 @@ export const MODEL_REGISTRY: Record<string, ModelDefinition> = {
     capability: "image",
     gatewayId: "xai/grok-imagine-image",
     fallbackGatewayIds: ["google/gemini-3.1-flash-image-preview"],
+    inputs: { prompt: true, aspectRatio: IMAGE_RATIOS, maxCount: 4 },
     unitCostUsd: 0.02,
     creditPrice: 1,
     isPlaceholderPrice: true,
     provider: "xAI",
+  },
+  "veo-3.1": {
+    id: "veo-3.1",
+    name: "Google Veo 3.1",
+    capability: "text-to-video",
+    gatewayId: "google/veo-3.1-generate-001",
+    fallbackGatewayIds: ["klingai/kling-v2.5-turbo-pro"],
+    inputs: { prompt: true, aspectRatio: VIDEO_RATIOS, durationSeconds: [5, 8] },
+    unitCostUsd: 0.35,
+    creditPrice: 10,
+    isPlaceholderPrice: true,
+    provider: "Google",
+  },
+  "wan-2.5": {
+    id: "wan-2.5",
+    name: "Alibaba Wan 2.5",
+    capability: "image-to-video",
+    gatewayId: "alibaba/wan-2.5-i2v-720p",
+    fallbackGatewayIds: ["google/veo-3.1-generate-001"],
+    inputs: { prompt: true, imageUrl: true, aspectRatio: VIDEO_RATIOS, durationSeconds: [5, 8] },
+    unitCostUsd: 0.25,
+    creditPrice: 8,
+    isPlaceholderPrice: true,
+    provider: "Alibaba",
   },
 };
 
