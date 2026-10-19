@@ -1,81 +1,81 @@
 # Grouped monthly 2026-10-19 (Week 43 inflow throttle).
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: /
-  schedule:
-    interval: monthly
-  open-pull-requests-limit: 3
-  groups:
-    production-patches:
-      applies-to: version-updates
-      dependency-type: production
-      update-types:
-      - patch
-    production-minors:
-      applies-to: version-updates
-      dependency-type: production
-      update-types:
-      - minor
-    dev-patches:
-      applies-to: version-updates
-      dependency-type: development
-      update-types:
-      - patch
-      - minor
-  ignore:
-  - dependency-name: next
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: tailwindcss
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: typescript
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: zod
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: stripe
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: framer-motion
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: openai
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: react-markdown
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: '@types/node'
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: react
-    update-types:
-    - "version-update:semver-major"
-  - dependency-name: react-dom
-    update-types:
-    - "version-update:semver-major"
-  labels:
-  - dependencies
-  - automated
-- package-ecosystem: github-actions
-  directory: /
-  schedule:
-    interval: monthly
-  open-pull-requests-limit: 3
-  ignore:
-  - dependency-name: pnpm/action-setup
-    update-types:
-    - "version-update:semver-major"
-  labels:
-  - github-actions
-  - automated
-  groups:
-    github-actions-minor-patch:
-      patterns:
-      - "*"
-      update-types:
-      - minor
-      - patch
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      production-patches:
+        applies-to: version-updates
+        dependency-type: production
+        update-types:
+          - patch
+      production-minors:
+        applies-to: version-updates
+        dependency-type: production
+        update-types:
+          - minor
+      dev-patches:
+        applies-to: version-updates
+        dependency-type: development
+        update-types:
+          - patch
+          - minor
+    ignore:
+      - dependency-name: next
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: tailwindcss
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: typescript
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: zod
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: stripe
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: framer-motion
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: openai
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: react-markdown
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: react
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: react-dom
+        update-types:
+          - "version-update:semver-major"
+    labels:
+      - dependencies
+      - automated
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    ignore:
+      - dependency-name: pnpm/action-setup
+        update-types:
+          - "version-update:semver-major"
+    labels:
+      - github-actions
+      - automated
+    groups:
+      github-actions-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
