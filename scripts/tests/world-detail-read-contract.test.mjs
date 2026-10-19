@@ -5,7 +5,7 @@ import test from "node:test";
 const page = readFileSync("apps/web/app/worlds/[slug]/page.tsx", "utf8");
 const layout = readFileSync("apps/web/app/worlds/[slug]/layout.tsx", "utf8");
 const deadline = readFileSync("apps/web/lib/async-deadline.ts", "utf8");
-const middleware = readFileSync("apps/web/middleware.ts", "utf8");
+const middleware = readFileSync("apps/web/proxy.ts", "utf8");
 const publicClient = readFileSync("apps/web/lib/supabase/public.ts", "utf8");
 
 function numericConstant(source, name) {

@@ -20,14 +20,15 @@
  *   }
  */
 
-import { NextResponse } from 'next/server';
-import { generateText } from 'ai';
-import { createAnthropic } from '@ai-sdk/anthropic';
-import { LUMINORS } from '@/lib/luminors/config';
-import { BENCHMARKS } from '@/lib/eval/benchmarks';
+import { NextResponse } from "next/server";
+import { generateText } from "ai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { LUMINORS } from "@/lib/luminors/config";
+import { BENCHMARKS } from "@/lib/eval/benchmarks";
+import { claudeFallbackOptions, isRefusal } from "@/lib/ai/claude-safeguards";
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 interface ArenaRequest {
@@ -53,14 +54,14 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   const luminor = LUMINORS[body.luminorId];
   if (!luminor) {
     return NextResponse.json(
       { error: `Luminor "${body.luminorId}" not found` },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
@@ -68,23 +69,25 @@ export async function POST(request: Request) {
   if (!benchmark) {
     return NextResponse.json(
       { error: `Benchmark "${body.benchmarkId}" not found` },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'ANTHROPIC_API_KEY not configured' },
-      { status: 503 }
+      { error: "ANTHROPIC_API_KEY not configured" },
+      { status: 503 },
     );
   }
   const anthropic = createAnthropic({ apiKey });
 
   // Sonnet for the Luminor under test (representative quality)
-  const testModel = anthropic('claude-sonnet-4-6');
+  const testModelId = "claude-sonnet-5-5";
+  const testModel = anthropic(testModelId);
   // Opus for the judge (highest quality evaluation)
-  const judgeModel = anthropic('claude-opus-4-6');
+  const judgeModelId = "claude-opus-5-5";
+  const judgeModel = anthropic(judgeModelId);
 
   // Run all tasks in parallel for speed
   const taskResults = await Promise.all(
@@ -96,8 +99,23 @@ export async function POST(request: Request) {
         model: testModel,
         system: luminor.systemPrompt,
         prompt: task.prompt,
-        temperature: 0.7,
+        // No temperature: Claude 5.5 models reject sampling parameters with a 400.
+        providerOptions: { anthropic: claudeFallbackOptions(testModelId) },
       });
+
+      // A refusal that survived the server-side fallback has no answer to judge.
+      if (isRefusal(response.finishReason)) {
+        return {
+          taskId: task.id,
+          prompt: task.prompt,
+          response: "",
+          score: 0,
+          judgeNotes: "Declined by the model's safety checks; not judged.",
+          durationMs: Date.now() - taskStarted,
+          tokensIn: response.usage?.inputTokens ?? 0,
+          tokensOut: response.usage?.outputTokens ?? 0,
+        } satisfies TaskResult;
+      }
 
       // 2. Judge the response
       const judgment = await generateText({
@@ -118,16 +136,19 @@ ${task.prompt}
 ${response.text}
 
 ## Your Evaluation (JSON only)`,
-        temperature: 0.2,
+        providerOptions: { anthropic: claudeFallbackOptions(judgeModelId) },
       });
 
       // Parse judge output
       let score = 0;
-      let judgeNotes = 'Judge failed to return valid JSON';
+      let judgeNotes = "Judge failed to return valid JSON";
       try {
         const match = judgment.text.match(/\{[\s\S]*?\}/);
         if (match) {
-          const parsed = JSON.parse(match[0]) as { score: number; notes: string };
+          const parsed = JSON.parse(match[0]) as {
+            score: number;
+            notes: string;
+          };
           score = Math.min(100, Math.max(0, parsed.score));
           judgeNotes = parsed.notes;
         }
@@ -145,16 +166,16 @@ ${response.text}
         tokensIn: response.usage?.inputTokens ?? 0,
         tokensOut: response.usage?.outputTokens ?? 0,
       } satisfies TaskResult;
-    })
+    }),
   );
 
   const overallScore = Math.round(
-    taskResults.reduce((sum, r) => sum + r.score, 0) / taskResults.length
+    taskResults.reduce((sum, r) => sum + r.score, 0) / taskResults.length,
   );
 
   const tokensUsed = taskResults.reduce(
     (sum, r) => sum + r.tokensIn + r.tokensOut,
-    0
+    0,
   );
 
   return NextResponse.json({

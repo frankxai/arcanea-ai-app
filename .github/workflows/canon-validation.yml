@@ -1,0 +1,48 @@
+name: MCP canon screening
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "packages/arcanea-mcp/**"
+      - "scripts/verify-mcp-installed-package.mjs"
+      - ".github/workflows/canon-validation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packages/arcanea-mcp/**"
+      - "scripts/verify-mcp-installed-package.mjs"
+      - ".github/workflows/canon-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  consumer:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.28.4"
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Install the existing MCP dependencies
+        run: pnpm --filter @arcanea/mcp-server install --frozen-lockfile
+      - name: Verify fresh installation and real stdio tools through the packed package
+        run: pnpm --dir packages/arcanea-mcp test:consumer
+      - name: Verify the emitted checker
+        env:
+          ARCANEA_CANON_MODULE: packages/arcanea-mcp/dist/tools/validate.js
+        run: node --test packages/arcanea-mcp/tests/canon-validation.test.mjs
+      - name: Verify the MCP suite
+        run: pnpm --dir packages/arcanea-mcp test

@@ -5,19 +5,13 @@ import { useState, useCallback } from "react";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { CosmicParticles } from "@/components/magic/particles";
-import {
-  QUIZ_QUESTIONS,
-  ORIGIN_RESULTS,
-  type OriginClass,
-} from "./quiz-data";
+import { QUIZ_QUESTIONS, ORIGIN_RESULTS, type OriginClass } from "./quiz-data";
 
 // ---------------------------------------------------------------------------
 // Scoring
 // ---------------------------------------------------------------------------
 
-function calculateResult(
-  answers: Record<number, OriginClass>
-): OriginClass {
+function calculateResult(answers: Record<number, OriginClass>): OriginClass {
   const scores: Record<OriginClass, number> = {
     Arcan: 0,
     "Gate-Touched": 0,
@@ -35,7 +29,7 @@ function calculateResult(
 
   return (Object.entries(scores) as [OriginClass, number][]).reduce(
     (best, [origin, score]) => (score > scores[best] ? origin : best),
-    "Arcan" as OriginClass
+    "Arcan" as OriginClass,
   );
 }
 
@@ -54,7 +48,10 @@ function ProgressBar({ current, total }: ProgressBarProps) {
     <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
       <m.div
         className="h-full rounded-full"
-        style={{ background: "linear-gradient(90deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue))" }}
+        style={{
+          background:
+            "linear-gradient(90deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue))",
+        }}
         initial={{ width: 0 }}
         animate={{ width: `${pct}%` }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -81,7 +78,10 @@ function QuestionCard({ question, selected, onSelect }: QuestionCardProps) {
     >
       <div
         className="rounded-2xl border border-white/[0.08] p-8"
-        style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(12px)" }}
+        style={{
+          background: "rgba(255,255,255,0.03)",
+          backdropFilter: "blur(12px)",
+        }}
       >
         <p className="text-xl font-medium text-white/90 mb-6 leading-snug">
           {question.text}
@@ -118,6 +118,7 @@ interface ResultCardProps {
 function ResultCard({ origin, onRetake }: ResultCardProps) {
   const result = ORIGIN_RESULTS[origin];
   const [copied, setCopied] = useState(false);
+  const [copiedDossier, setCopiedDossier] = useState(false);
 
   const handleShare = useCallback(() => {
     const shareMessage = `${result.shareText} — arcanea.ai/quiz`;
@@ -126,6 +127,25 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
       setTimeout(() => setCopied(false), 2000);
     });
   }, [result.shareText]);
+
+  const handleCopyDossier = useCallback(() => {
+    const dossier = {
+      entityArchetype: result.name,
+      originRealm: result.originRealm,
+      dominantGate: `${result.primaryGate} (${result.frequencyHz} Hz)`,
+      linguisticHeritage: result.linguisticRoot,
+      tactilePhysicalAnchor: result.tactileAnchor,
+      sandersonianMagicToll: result.magicTollSummary,
+      monomythStage: result.monomythStage,
+      guardianPairing: result.guardian,
+      powerSource: result.powerSource,
+      canonProvenance: "Kingdom of Light / Solfeggio Harmonic Grid",
+    };
+    navigator.clipboard.writeText(JSON.stringify(dossier, null, 2)).then(() => {
+      setCopiedDossier(true);
+      setTimeout(() => setCopiedDossier(false), 2000);
+    });
+  }, [result]);
 
   return (
     <m.div
@@ -151,18 +171,30 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
           boxShadow: `0 0 40px ${result.color}15`,
         }}
       >
-        {/* Origin class badge */}
-        <div className="flex items-center gap-3">
-          <span
-            className="text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
-            style={{
-              color: result.color,
-              background: `${result.color}18`,
-              border: `1px solid ${result.color}30`,
-            }}
+        {/* Origin class badge & Frequency Pill */}
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <span
+              className="text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
+              style={{
+                color: result.color,
+                background: `${result.color}18`,
+                border: `1px solid ${result.color}30`,
+              }}
+            >
+              Origin Class
+            </span>
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80">
+              {result.frequencyHz} Hz
+            </span>
+          </div>
+
+          <button
+            onClick={handleCopyDossier}
+            className="text-xs font-mono px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors flex items-center gap-1.5"
           >
-            Origin Class
-          </span>
+            {copiedDossier ? "✓ Dossier Copied" : "Copy Provenance JSON"}
+          </button>
         </div>
 
         {/* Name + tagline */}
@@ -179,22 +211,57 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* Description */}
         <p className="text-white/75 leading-relaxed">{result.description}</p>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Multiverse Stats Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Power Source", value: result.powerSource },
-            { label: "Primary Gate", value: result.primaryGate },
+            {
+              label: "Gate & Resonance",
+              value: `${result.primaryGate} (${result.frequencyHz} Hz)`,
+            },
+            { label: "Origin Realm", value: result.originRealm },
             { label: "Guardian", value: result.guardian },
+            { label: "Dialect Root", value: result.linguisticRoot },
           ].map(({ label, value }) => (
             <div
               key={label}
-              className="rounded-xl p-3 text-center"
-              style={{ background: `${result.color}0a`, border: `1px solid ${result.color}20` }}
+              className="rounded-xl p-3 text-left"
+              style={{
+                background: `${result.color}0a`,
+                border: `1px solid ${result.color}20`,
+              }}
             >
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-1">{label}</p>
-              <p className="text-white/90 text-sm font-medium">{value}</p>
+              <p className="text-white/40 text-[10px] uppercase font-mono tracking-wider mb-1">
+                {label}
+              </p>
+              <p className="text-white/90 text-xs font-medium truncate">
+                {value}
+              </p>
             </div>
           ))}
+        </div>
+
+        {/* Tactile Anchor & Sandersonian Magic Toll */}
+        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2 text-xs">
+          <div>
+            <span className="text-white/40 uppercase font-mono text-[10px] block">
+              Physical Sensory Anchor
+            </span>
+            <span className="text-white/80 font-medium">
+              {result.tactileAnchor}
+            </span>
+          </div>
+          <div>
+            <span className="text-white/40 uppercase font-mono text-[10px] block">
+              Concrete Channeling Toll & Remedy
+            </span>
+            <span className="text-white/70">{result.magicTollSummary}</span>
+          </div>
+          <div>
+            <span className="text-white/40 uppercase font-mono text-[10px] block">
+              Monomyth Transformation
+            </span>
+            <span className="text-white/70">{result.monomythStage}</span>
+          </div>
         </div>
 
         {/* Quote */}
@@ -208,10 +275,15 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* Share row */}
         <div
           className="rounded-xl p-4 flex items-start justify-between gap-4"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
         >
           <div className="flex-1 min-w-0">
-            <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Share your origin</p>
+            <p className="text-white/40 text-xs uppercase tracking-wider mb-1">
+              Share your origin
+            </p>
             <p className="text-white/70 text-sm truncate">{result.shareText}</p>
           </div>
           <button
@@ -220,21 +292,12 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
             className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
               color: copied ? "var(--arc-brand-atlantean-teal)" : result.color,
-              background: copied ? "rgba(127,255,212,0.12)" : `${result.color}15`,
+              background: copied
+                ? "rgba(127,255,212,0.12)"
+                : `${result.color}15`,
               border: `1px solid ${copied ? "rgba(127,255,212,0.3)" : result.color + "30"}`,
             }}
           >
-            {/* Inline clipboard SVG */}
-            {copied ? (
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8.5l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <rect x="5" y="1" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M3 5H2.5A1.5 1.5 0 0 0 1 6.5v7A1.5 1.5 0 0 0 2.5 15h7A1.5 1.5 0 0 0 11 13.5V13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-              </svg>
-            )}
             {copied ? "Copied" : "Copy"}
           </button>
         </div>
@@ -242,7 +305,7 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Link
-            href="/worlds/create"
+            href="/atlas"
             className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
               background: `linear-gradient(135deg, ${result.color}35, ${result.color}18)`,
@@ -250,13 +313,13 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
               color: result.color,
             }}
           >
-            Create Your Character
+            Inspect in Multiverse Atlas
           </Link>
           <Link
-            href="/lore"
+            href="/worlds/create"
             className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm border border-white/10 text-white/60 hover:text-white/90 hover:border-white/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
           >
-            Explore the lore
+            Create Your Character
           </Link>
         </div>
 
@@ -299,7 +362,7 @@ export default function QuizClient() {
         }
       }, 320);
     },
-    [answers, currentIndex, total]
+    [answers, currentIndex, total],
   );
 
   const handleRetake = useCallback(() => {
@@ -316,12 +379,18 @@ export default function QuizClient() {
         {/* Background glow orbs */}
         <div
           className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(120,166,255,0.04) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(120,166,255,0.04) 0%, transparent 70%)",
+          }}
           aria-hidden="true"
         />
         <div
           className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(127,255,212,0.04) 0%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(127,255,212,0.04) 0%, transparent 70%)",
+          }}
           aria-hidden="true"
         />
 
@@ -343,7 +412,8 @@ export default function QuizClient() {
               What Is Your Origin Class?
             </h1>
             <p className="text-white/50 text-sm max-w-md mx-auto">
-              Eight questions. Eight possible origins. Discover the source of your power in the Arcanean multiverse.
+              Eight questions. Eight possible origins. Discover the source of
+              your power in the Arcanean multiverse.
             </p>
           </m.div>
 
@@ -352,8 +422,12 @@ export default function QuizClient() {
             <div className="mb-8 space-y-2">
               <ProgressBar current={currentIndex} total={total} />
               <div className="flex justify-between text-xs text-white/30">
-                <span>Question {currentIndex + 1} of {total}</span>
-                <span>{Math.round((currentIndex / total) * 100)}% complete</span>
+                <span>
+                  Question {currentIndex + 1} of {total}
+                </span>
+                <span>
+                  {Math.round((currentIndex / total) * 100)}% complete
+                </span>
               </div>
             </div>
           )}
@@ -362,7 +436,11 @@ export default function QuizClient() {
           <div className="relative">
             <AnimatePresence mode="wait">
               {result ? (
-                <ResultCard key="result" origin={result} onRetake={handleRetake} />
+                <ResultCard
+                  key="result"
+                  origin={result}
+                  onRetake={handleRetake}
+                />
               ) : (
                 <QuestionCard
                   key={currentQuestion.id}

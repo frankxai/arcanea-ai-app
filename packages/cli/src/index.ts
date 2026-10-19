@@ -8,24 +8,24 @@
  * Route tasks through Guardians. Enforce voice. Create worlds.
  */
 
-import { Command } from 'commander';
-import { initCommand } from './commands/init.js';
-import { authCommand } from './commands/auth.js';
-import { statusCommand } from './commands/status.js';
-import { installCommand } from './commands/install.js';
-import { updateCommand } from './commands/update.js';
-import { worldCommand } from './commands/world.js';
-import { createCommand } from './commands/create.js';
-import { routeCommand } from './commands/route.js';
-import { voiceCommand } from './commands/voice.js';
-import { tokensCommand } from './commands/tokens.js';
+import { Command } from "commander";
+import { initCommand } from "./commands/init.js";
+import { authCommand } from "./commands/auth.js";
+import { statusCommand } from "./commands/status.js";
+import { installCommand } from "./commands/install.js";
+import { updateCommand } from "./commands/update.js";
+import { worldCommand } from "./commands/world.js";
+import { createCommand } from "./commands/create.js";
+import { routeCommand } from "./commands/route.js";
+import { voiceCommand } from "./commands/voice.js";
+import { tokensCommand } from "./commands/tokens.js";
 
 const program = new Command();
 
 program
-  .name('arcanea')
-  .description('Arcanea Realm — Overlay any AI tool with arcane intelligence')
-  .version('0.6.0');
+  .name("arcanea")
+  .description("Arcanea Realm — Overlay any AI tool with arcane intelligence")
+  .version("0.7.1");
 
 // Overlay management
 program.addCommand(initCommand);

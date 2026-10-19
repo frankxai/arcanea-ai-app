@@ -11,9 +11,12 @@
  * ISR: revalidates every hour (3600s).
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { ARCANEAN_WORKFLOWS } from '@/lib/models-data';
-import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
+import { NextRequest, NextResponse } from "next/server";
+import { ARCANEAN_WORKFLOWS } from "@/lib/models-data";
+import {
+  getClientIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit/rate-limiter";
 
 // ---------------------------------------------------------------------------
 // ISR cache — revalidate every hour
@@ -65,7 +68,7 @@ interface TransformedModel {
     isFree: boolean;
   };
   sweBench: number | null;
-  category: 'frontier' | 'open-source' | 'free-tier';
+  category: "frontier" | "open-source" | "free-tier";
   modality: string;
   inputModalities: string[];
   outputModalities: string[];
@@ -77,53 +80,51 @@ interface TransformedModel {
 // Constants
 // ---------------------------------------------------------------------------
 
-const OPENROUTER_API = 'https://openrouter.ai/api/v1/models';
+const OPENROUTER_API = "https://openrouter.ai/api/v1/models";
 
 const OPEN_SOURCE_PROVIDERS = new Set([
-  'meta-llama',
-  'deepseek',
-  'mistralai',
-  'qwen',
-  'google',       // gemma variants
-  'microsoft',    // phi variants
-  'nous',
-  'openchat',
-  'teknium',
+  "meta-llama",
+  "deepseek",
+  "mistralai",
+  "qwen",
+  "google", // gemma variants
+  "microsoft", // phi variants
+  "nous",
+  "openchat",
+  "teknium",
 ]);
-
-const SWE_BENCH_RE = /(\d+\.?\d*)\s*(?:score\s+on|on)\s+SWE-bench/i;
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 function extractProvider(id: string): string {
-  const slash = id.indexOf('/');
-  if (slash === -1) return 'Unknown';
+  const slash = id.indexOf("/");
+  if (slash === -1) return "Unknown";
   const raw = id.slice(0, slash);
   // Title-case: "meta-llama" → "Meta Llama"
   return raw
-    .split('-')
+    .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
-function categorize(pricing: OpenRouterModel['pricing'], providerId: string): TransformedModel['category'] {
-  if (pricing.prompt === '0' && pricing.completion === '0') return 'free-tier';
-  const provider = providerId.split('/')[0] ?? '';
-  if (OPEN_SOURCE_PROVIDERS.has(provider)) return 'open-source';
-  return 'frontier';
-}
-
-function parseSweScore(description: string): number | null {
-  const match = SWE_BENCH_RE.exec(description);
-  return match ? parseFloat(match[1]) : null;
+function categorize(
+  pricing: OpenRouterModel["pricing"],
+  providerId: string,
+): TransformedModel["category"] {
+  if (pricing.prompt === "0" && pricing.completion === "0") return "free-tier";
+  const provider = providerId.split("/")[0] ?? "";
+  if (OPEN_SOURCE_PROVIDERS.has(provider)) return "open-source";
+  return "frontier";
 }
 
 /** Check if any Arcanean workflow references this OpenRouter model ID. */
 function isArcaneanModel(openRouterId: string): boolean {
   // Match loosely: our IDs like "claude-sonnet-4" should match "anthropic/claude-sonnet-4"
-  const shortId = openRouterId.includes('/') ? openRouterId.split('/')[1] : openRouterId;
+  const shortId = openRouterId.includes("/")
+    ? openRouterId.split("/")[1]
+    : openRouterId;
   return ARCANEAN_WORKFLOWS.some(
     (w) =>
       w.model === shortId ||
@@ -151,13 +152,15 @@ function transform(raw: OpenRouterModel): TransformedModel {
     pricing: {
       inputPerMillion: perTokenToPerMillion(raw.pricing.prompt),
       outputPerMillion: perTokenToPerMillion(raw.pricing.completion),
-      isFree: raw.pricing.prompt === '0' && raw.pricing.completion === '0',
+      isFree: raw.pricing.prompt === "0" && raw.pricing.completion === "0",
     },
-    sweBench: parseSweScore(raw.description),
+    // Provider descriptions are not a dated primary source, so no SWE-bench
+    // figure is extracted from them.
+    sweBench: null,
     category: categorize(raw.pricing, raw.id),
-    modality: raw.architecture?.modality ?? 'text',
-    inputModalities: raw.architecture?.input_modalities ?? ['text'],
-    outputModalities: raw.architecture?.output_modalities ?? ['text'],
+    modality: raw.architecture?.modality ?? "text",
+    inputModalities: raw.architecture?.input_modalities ?? ["text"],
+    outputModalities: raw.architecture?.output_modalities ?? ["text"],
     created: new Date(raw.created * 1000).toISOString(),
     arcaneanWorkflow: isArcaneanModel(raw.id),
   };
@@ -172,20 +175,20 @@ const MODELS_RATE_LIMIT = { maxRequests: 20, windowMs: 60_000 };
 export async function GET(request: NextRequest) {
   const rl = checkRateLimit(getClientIdentifier(request), MODELS_RATE_LIMIT);
   if (!rl.allowed) {
-    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
   }
 
-  const freeOnly = request.nextUrl.searchParams.get('free') === 'true';
+  const freeOnly = request.nextUrl.searchParams.get("free") === "true";
 
   try {
     const res = await fetch(OPENROUTER_API, {
-      headers: { Accept: 'application/json' },
+      headers: { Accept: "application/json" },
       next: { revalidate: 3600 },
     } as RequestInit);
 
     if (!res.ok) {
       return NextResponse.json(
-        { error: 'OpenRouter API unavailable', fallback: true },
+        { error: "OpenRouter API unavailable", fallback: true },
         { status: 503 },
       );
     }
@@ -208,12 +211,12 @@ export async function GET(request: NextRequest) {
         free: models.filter((m) => m.pricing.isFree).length,
         providers: providers.size,
         lastFetched: new Date().toISOString(),
-        source: 'openrouter' as const,
+        source: "openrouter" as const,
       },
     });
   } catch {
     return NextResponse.json(
-      { error: 'OpenRouter API unavailable', fallback: true },
+      { error: "OpenRouter API unavailable", fallback: true },
       { status: 503 },
     );
   }
