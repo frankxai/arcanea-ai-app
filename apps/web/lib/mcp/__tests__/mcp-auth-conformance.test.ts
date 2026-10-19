@@ -247,6 +247,19 @@ test("Supabase Auth being unreachable is a 503, never a pass", async (t) => {
   await assertNoData(response, "auth down");
 });
 
+test("Supabase Auth rate limiting is a 503, never an invalid token", async (t) => {
+  t.mock.method(globalThis, "fetch", async () =>
+    Response.json(
+      { code: 429, error_code: "over_request_rate_limit", msg: "rate limited" },
+      { status: 429 },
+    ),
+  );
+  const response = await send(mcpRequest("POST", `Bearer ${VALID_TOKEN}`));
+  assert.equal(response.status, 503);
+  assert.equal(response.headers.get("www-authenticate"), null);
+  await assertNoData(response, "auth rate limited");
+});
+
 test("an invalid token is rejected even when the JSON-RPC body is a tools/call", async (t) => {
   const stub = stubSupabase(t);
   const response = await send(

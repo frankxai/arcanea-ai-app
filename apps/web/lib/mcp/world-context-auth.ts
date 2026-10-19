@@ -102,7 +102,9 @@ export async function authenticateWorldContextBearer(
   } = await client.auth.getUser(token);
   if (
     error &&
-    (isAuthRetryableFetchError(error) || (error.status ?? 0) >= 500)
+    (isAuthRetryableFetchError(error) ||
+      error.status === 429 ||
+      (error.status ?? 0) >= 500)
   ) {
     throw new GatewayError("adapter-required");
   }
