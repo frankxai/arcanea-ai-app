@@ -380,3 +380,184 @@ PR591 was externally marked ready and is restored to draft while browser accepta
 fails and the separate paid review approval remains pending. This preserves the
 actual source merge; no high-risk promotion or funded review is authorized by
 readiness alone. Fresh checks are required for the name repair.
+
+## Accepted chat production and bounded interface follow-up
+
+Scope: Complete the chat selector and featured companion controls with Phosphor
+SVGs and visible keyboard/touch targets; require decoded welcome images in render
+captures; make the review verdict policy explicit and support a narrow follow-up
+without dropping complete configured context.
+Owner: codex-provider-account-20261011, programme276. Original PR591 is merged by
+another action; this follow-up needs its own draft PR.
+Files: Owned agent-header.tsx, chat-welcome.tsx, verify-companion-browser.cjs,
+review-companion.py, test_review_companion.py and this state record.
+Non-goals: No provider spending, credentials, migration execution, canon/name
+changes, private-store provisioning or claim of complete creator acceptance.
+Acceptance criteria: Existing send/Stop/account/draft and menu/focus recovery pass;
+selectors render SVGs and featured controls have44px targets; welcome captures
+wait for image decode and include dimensions; all changed files have one review
+owner, all configured complete context is retained, and contradictory verdicts fail.
+Verification: Hosted compiled browser, lint/typecheck/build, source/PNG bindings,
+no-network review regressions, exact-revision independent reconciliation.
+Rollback: Revert only the follow-up commit; retain accepted production ancestry.
+
+Current remote merge7a3cc5db0a42796c55b86074690dfce3ae3120f5 preserves accepted
+private-image maina05de2b978fe97a9c670ecba67bca1a132eb63a8. All29 incoming Git
+objects match that accepted main; integration-only ownership is released. No
+migration or private-storage configuration is executed by this lane. Accepted
+private-image source remains separate from actual supplier/store/customer proof.
+
+CI38170241793 passes Install, Lint, TypeScript, Build and CI Status at7a.
+Reading38170241802 passes. Companion38170241798 compiled114561153399 passes,
+but independent114561153626 times out after one dispatched experience request:
+no response, usage or verdict. The prior43cc independent114560053508 also times
+out; its CI38169875820 Build is terminal cancelled after the newer remote merge.
+Those cancelled/timed-out attempts are retained and are never restarted unchanged.
+No valid current independent source verdict is claimed.
+
+All12 actual7a captures were inspected;31 Git-source hashes and every PNG/sidecar
+hash match both7a and accepted production sourced2285fb74f296ce783d3f0fed9bdef6959e3f9d9.
+Four modes prove close/Stop/identity recovery, menu keyboard selection/Escape/focus,
+shortcut containment/return and no page errors. Each measures14 composer/control
+entries: minimum contrast7.2109 in ordinary/reduced modes and14.0247 in forced
+colors, with44px enabled controls. These are24 synthetic loopback requests and
+zero real provider calls/production writes; owned browser/server cleanup succeeds.
+The desktop welcome capture lacks a completed mascot image, so visual readiness
+is incomplete despite the behavioral pass. The follow-up waits for visible,
+loaded and decoded mascot imagery and records dimensions before capture.
+
+An external action merges591 at20:04:56Z to d2285fb74f296ce783d3f0fed9bdef6959e3f9d9.
+The current arcanea.ai alias points to READY production deployment
+dpl_BqPRrUniUUUB2Kgu8hNMmvEfgfJ7 at that source. This lane does not perform that
+promotion or infer an independent verdict, budget approval or customer success
+from the merge. The review-timeout gap remains explicit.
+
+Raw7be review findings and response hash are preserved. Its pass plus three
+findings is invalid and is not normalized into approval. Lead reconciliation
+traces intentional draft retention/close abort, closed-first dialog/ref timing
+and the stream-only Stop trigger with error reset on the next send. No cited
+failure is reproduced in the stated scenario; source-only gaps remain. The
+prompt now states that pass requires empty findings, including P3 suggestions.
+The validator still rejects contradictory verdicts, false lines/quotes, wrong
+source/model, missing coverage and private/paid inputs.
+
+A follow-up changes four review domains. The contract dispatches only domains
+with changed files, at most the original six; every changed file still has one
+owner and every configured complete context remains supplied. Inherited chat,
+error-display, SDK/account and reader context is added explicitly so accepted
+files stay reviewable after the original changes land. Unregistered context and
+empty changes are denied; aggregate coverage and source/price/scan/support bounds
+remain enforced. No output/context bound, timeout or release assertion is reduced.
+Eleven no-network regressions pass, including complete sparse-follow-up coverage
+and nonempty pass denial for every priority. Two changed TSX files parse; browser
+syntax and owned-file formatting pass. Fresh hosted renders and full checks are
+required for the follow-up. The separate $2 review approval is still unanswered.
+
+The full goal stays active: real read/create/save/reopen/payment and private
+production storage, graph/memory/canvas/studio, operational Queen/SIS, academy/
+community, books/art/music/video, income streams, API/MCP/kits/IP and clients all
+retain their owning acceptance and publication gates.
+
+## Follow-up browser pass and state-record formatting repair
+
+At 49aeae5748da91f6074ced81245873bc0c3da142, compiled companion job
+114566511193 passes all four modes with no browser failures and complete cleanup.
+All four full-chat captures now record decoded mascot images at 140 by 76 pixels.
+Desktop/mobile renders show the actual SVG selectors and featured controls.
+CI 38172051566 Build and TypeScript pass, but Lint job 114566648600 fails only
+the changed-file Prettier step for this appended state record. Its raw log is
+retained. Formatting is repaired in the owned record; application and fixture
+source remains unchanged. Fresh exact-revision CI is required.
+
+Independent job 114566511321 returns one experience response with normal stop,
+89,528 input and 11,955 completion tokens, including 10,741 reasoning tokens,
+and reports zero cost. The source-quote validator rejects it. No verdict or
+remaining-module coverage is accepted, no quote is normalized, and no unchanged
+source is retried. The response and unvalidated findings remain retained. The
+strong independent review and real creator/customer acceptance remain open.
+
+## Featured companion selection and complete type context
+
+Scope: Disclose the missing-key companion state honestly; verify keyboard
+selection of all three featured companions and preparation
+of an editable starter draft without sending a provider request. Remove the
+unnecessary double cast and include the complete actual Luminor configuration in
+the independent experience review and browser source manifest.
+Owner: codex-provider-account-20261011, programme 276, draft PR 597.
+Files: Owned companion-chat.tsx, chat-welcome.tsx, verify-companion-browser.cjs, review-companion.py,
+test_review_companion.py and this record. Accepted configuration is read-only.
+Non-goals: No new model, inference retry, budget approval, private-store changes,
+canon edits, migration, production promotion or broader creator-success claim.
+Acceptance criteria: The companion asks a creator to connect a key until an
+actual current-account key exists, then shows the chosen provider. Every featured SVG control has a 44px target and supports
+Enter; each selects its actual configured companion and lets a creator prepare
+and focus a starter draft. No selection automatically sends. Complete review
+context retains all previous files and now includes LuminorConfig/system prompts.
+Verification: No-network admission regressions, syntax/format checks, hosted
+four-mode browser, full CI and valid exact-revision independent reconciliation.
+Rollback: Revert this follow-up without changing accepted production ancestry.
+
+At 7a046ab7722cb669662af7988f9c6840103ac7c0, CI 38172914296 passes Install,
+Lint, TypeScript, Build and CI Status; compiled companion 114569117863 passes.
+Independent 114569117691 times out after one experience call without a response,
+usage or verdict. That terminal attempt is retained and is not relaunched.
+
+Production aliases arcanea.ai and www.arcanea.ai now resolve to READY production
+dpl_6Sbtb42jH9TW633JDizSnUp3YV5X, source bb403ba15b308aeb424cf801efb3c0eb3417ae45.
+That source is one commit ahead of accepted chat d228; only the voice-credentials
+browser verifier differs. This lane did not perform either production promotion.
+
+The rejected 49ae review cites two findings one line away from their literal
+source, so its verdict remains invalid. Lead tracing finds account-revision
+remounts, actual SDK cancellation checks and current-token callbacks; voice has
+abort/unmount checks both before dispatch and after awaits. The alleged missing
+Luminor fields exist in the actual configuration. The packet omitted that full
+definition; it now includes it. The double cast is unnecessary because
+LuminorConfig supplies all required ActiveLuminor fields and is removed. The
+companion's misleading configured-key label is repaired by checking the actual
+current-account key. The fallback provider and inherited example-backend mock
+remain separate from real authentication/provider/customer qualification;
+synthetic checks cannot qualify those outcomes.
+
+Machine preflight at 20:46:46Z holds new local review workloads: 6,088MB free
+against the 6,144MB reserve. No new agent, local build, browser, server or model is
+started; ordinary edits and small checks continue, with hosted validation used.
+
+Source repairs commit e29c6b60b4d40e8644da0846d71ea4af0bfb7961. Eleven
+no-network review regressions, browser syntax, two modified TSX syntax checks and
+owned-file formatting pass locally. Type compatibility and new rendered selection
+and key-disclosure assertions still require the exact hosted candidate.
+
+Before publication, remote main advances to 4c4e33b2b369ebf12cc98e5ef77ed8f65f193556
+and this lane to 0f5d26f4d05ad55a150260f31aa8301d772bff1f through an external normal
+main merge. Integration commit 170c2e4214bcf13786addba758445f6b4426adc1 preserves
+all eleven incoming accepted Git objects and all seven owned follow-up objects
+exactly. The accepted reader title projection, unchanged manuscript provenance,
+branch-landing inventory and connected-creator backlog are retained. Integration
+does not implement the proposed backlog or requalify the reader customer outcome.
+The eleven integration-only paths are released; only seven follow-up paths remain
+owned. No force push, conflict waiver, migration or provider spend occurs.
+
+The follow-up also removes metadata-only edited events from Companion's PR
+trigger. Updating a title or description must not dispatch another unchanged-source
+review or compiled browser run. Open, source synchronization, reopen and ready
+events remain; job permissions, caller/branch/actor gates, privacy, source pinning,
+checks, zero-price admission and maximum-call bounds are unchanged. The Companion
+workflow is explicitly added to the remaining eight-file ownership scope and
+complete review delta. Fresh source-triggered hosted validation remains required.
+
+The edited-event change above is rejected during integration review and restored
+to exact accepted workflow bytes. CI documents that this event is also the only
+PR event for base retargeting; removing it can retain a head-only green check from
+another base. Avoiding duplicate metadata runs cannot bypass that requirement.
+Any future optimization must distinguish metadata from base changes while
+preserving the prior exact-base verdict and active handle. Both actual Companion
+and CI workflows are now mandatory complete review-protocol context, with denial
+regressions when either is missing. The temporary source and its evidence stay
+retained; no release approval is inferred from its passing browser check.
+
+At dd611802, compiled job 114573899127 passes the new four-mode assertions.
+Independent 114573898937 fails and remains unaccepted. Initial CI 38174508864
+is terminal cancelled after the PR metadata edit; replacement CI 38174626858 is
+observed live. It is not restarted by this lane. Current source/base and published
+draft scope require another exact-revision check after the trigger correction.

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { X, Download, ArrowLeft, ArrowRight } from '@/lib/phosphor-icons';
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
+import { X, Download, ArrowLeft, ArrowRight } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -56,33 +56,38 @@ export function ImageLightbox({
   // Keyboard navigation
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (hasMultiple && e.key === 'ArrowLeft') setIndex((i) => (i - 1 + images.length) % images.length);
-      if (hasMultiple && e.key === 'ArrowRight') setIndex((i) => (i + 1) % images.length);
+      if (e.key === "Escape") onClose();
+      if (hasMultiple && e.key === "ArrowLeft")
+        setIndex((i) => (i - 1 + images.length) % images.length);
+      if (hasMultiple && e.key === "ArrowRight")
+        setIndex((i) => (i + 1) % images.length);
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
   }, [onClose, hasMultiple, images.length]);
 
   // Lock body scroll while open
   useEffect(() => {
     const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
   }, []);
 
   // Double-click to toggle zoom
-  const handleDoubleClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (scale > 1) {
-      setScale(1);
-      setTranslate({ x: 0, y: 0 });
-    } else {
-      setScale(2.5);
-    }
-  }, [scale]);
+  const handleDoubleClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (scale > 1) {
+        setScale(1);
+        setTranslate({ x: 0, y: 0 });
+      } else {
+        setScale(2.5);
+      }
+    },
+    [scale],
+  );
 
   // Pan when zoomed — pointer events
   const handlePointerDown = useCallback(
@@ -90,7 +95,12 @@ export function ImageLightbox({
       if (scale <= 1) return;
       e.preventDefault();
       setDragging(true);
-      dragStart.current = { x: e.clientX, y: e.clientY, tx: translate.x, ty: translate.y };
+      dragStart.current = {
+        x: e.clientX,
+        y: e.clientY,
+        tx: translate.x,
+        ty: translate.y,
+      };
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
     },
     [scale, translate],
@@ -101,7 +111,10 @@ export function ImageLightbox({
       if (!dragging) return;
       const dx = e.clientX - dragStart.current.x;
       const dy = e.clientY - dragStart.current.y;
-      setTranslate({ x: dragStart.current.tx + dx, y: dragStart.current.ty + dy });
+      setTranslate({
+        x: dragStart.current.tx + dx,
+        y: dragStart.current.ty + dy,
+      });
     },
     [dragging],
   );
@@ -127,7 +140,7 @@ export function ImageLightbox({
       const response = await fetch(current.src);
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `arcanea-image-${Date.now()}.png`;
       document.body.appendChild(a);
@@ -135,7 +148,7 @@ export function ImageLightbox({
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      window.open(current.src, '_blank');
+      window.open(current.src, "_blank", "noopener,noreferrer");
     }
   }, [current.src]);
 
@@ -145,7 +158,7 @@ export function ImageLightbox({
       className="fixed inset-0 z-[100] flex items-center justify-center"
       style={{
         opacity: entering ? 0 : 1,
-        transition: 'opacity 200ms ease-out',
+        transition: "opacity 200ms ease-out",
       }}
       onClick={onClose}
       role="dialog"
@@ -229,24 +242,28 @@ export function ImageLightbox({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onWheel={handleWheel}
-        style={{ cursor: scale > 1 ? (dragging ? 'grabbing' : 'grab') : 'zoom-in' }}
+        style={{
+          cursor: scale > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in",
+        }}
       >
         <Image
           src={current.src}
-          alt={current.alt || 'Image'}
+          alt={current.alt || "Image"}
           className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
           style={{
             transform: `scale(${entering ? 0.9 : scale}) translate(${translate.x / scale}px, ${translate.y / scale}px)`,
-            transition: dragging ? 'none' : 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+            transition: dragging
+              ? "none"
+              : "transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)",
           }}
           draggable={false}
-         />
+        />
       </div>
     </div>
   );
 
   // Render into a portal so it escapes any overflow:hidden ancestors
-  if (typeof window === 'undefined') return null;
+  if (typeof window === "undefined") return null;
   return createPortal(overlay, document.body);
 }
 

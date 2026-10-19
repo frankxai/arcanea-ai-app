@@ -68,17 +68,53 @@ export interface RealmLockedAssertion extends Omit<
 > {
   readonly status: "LOCKED";
   readonly validity: null;
-  readonly canonTier: "tier-1" | "tier-2";
+  readonly canonTier: RealmCanonTier;
   readonly sourceVerification: "git-byte-verified";
+}
+export type RealmCanonTier =
+  | "tier-1"
+  | "tier-2"
+  | "tier-3"
+  | "tier-4"
+  | "tier-6"
+  | "terminology"
+  | "extensibility";
+export interface RealmCanonSegment {
+  readonly id: string;
+  readonly title: string;
+  readonly text: string;
+  readonly canonTier: RealmCanonTier;
+  readonly source: RealmSource & {
+    readonly commit: string;
+    readonly lineStart: number;
+    readonly lineEnd: number;
+  };
+}
+export interface RealmCanonAmbiguity {
+  readonly id: "ambiguity:luminor-gates";
+  readonly status: "human-resolution-required";
+  readonly description: string;
+  readonly sources: readonly (RealmSource & {
+    readonly commit: string;
+    readonly lineStart: number;
+    readonly lineEnd: number;
+  })[];
+}
+export interface RealmCanonContext {
+  readonly sourceSegments: readonly RealmCanonSegment[];
+  readonly ambiguities: readonly RealmCanonAmbiguity[];
 }
 export interface RealmGraphSnapshot {
   readonly schemaVersion: "realm.arcanea.graph.v0";
   readonly releaseId: string;
   readonly canonSource: RealmSource & { readonly commit: string };
   readonly locked: {
-    readonly coverage: "primordial-duality-and-ten-gates-tables-only";
+    readonly coverage: "current-locked-sections-and-locked-terminology";
+    readonly generatorVersion: "arcanea.locked-canon-projection.v1";
     readonly entities: readonly RealmEntity[];
     readonly assertions: readonly RealmLockedAssertion[];
+    readonly sourceSegments: readonly RealmCanonSegment[];
+    readonly ambiguities: readonly RealmCanonAmbiguity[];
   };
   readonly staging: RealmStaging;
   readonly canonPromotionAllowed: false;
@@ -106,6 +142,7 @@ export interface RealmContinuity {
     readonly lockedAssertionIds: readonly string[];
     readonly candidateAssertionIds: readonly string[];
   }[];
+  readonly canonContext: RealmCanonContext;
   readonly canonPromotionAllowed: false;
 }
 export interface RealmImpact {

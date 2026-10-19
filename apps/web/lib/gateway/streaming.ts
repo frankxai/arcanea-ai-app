@@ -6,7 +6,7 @@
  * Supports both forwarding provider streams and constructing new ones.
  */
 
-import type { ChatCompletionChunk, StreamChoice } from './types';
+import type { ChatCompletionChunk, StreamChoice, ToolCallDelta } from "./types";
 
 // ─── SSE Stream Construction ─────────────────────────────────────────
 
@@ -17,7 +17,7 @@ export function formatSSEChunk(chunk: ChatCompletionChunk): string {
 
 /** Create the termination signal */
 export function formatSSEDone(): string {
-  return 'data: [DONE]\n\n';
+  return "data: [DONE]\n\n";
 }
 
 /** Generate a unique completion ID */
@@ -26,47 +26,89 @@ export function generateCompletionId(): string {
 }
 
 /** Create the first chunk with role assignment */
-export function createRoleChunk(id: string, model: string): ChatCompletionChunk {
+export function createRoleChunk(
+  id: string,
+  model: string,
+): ChatCompletionChunk {
   return {
     id,
-    object: 'chat.completion.chunk',
+    object: "chat.completion.chunk",
     created: Math.floor(Date.now() / 1000),
     model,
-    choices: [{
-      index: 0,
-      delta: { role: 'assistant' },
-      finish_reason: null,
-    }],
+    choices: [
+      {
+        index: 0,
+        delta: { role: "assistant" },
+        finish_reason: null,
+      },
+    ],
   };
 }
 
 /** Create a content chunk */
-export function createContentChunk(id: string, model: string, content: string): ChatCompletionChunk {
+export function createContentChunk(
+  id: string,
+  model: string,
+  content: string,
+): ChatCompletionChunk {
   return {
     id,
-    object: 'chat.completion.chunk',
+    object: "chat.completion.chunk",
     created: Math.floor(Date.now() / 1000),
     model,
-    choices: [{
-      index: 0,
-      delta: { content },
-      finish_reason: null,
-    }],
+    choices: [
+      {
+        index: 0,
+        delta: { content },
+        finish_reason: null,
+      },
+    ],
   };
 }
 
+type FinishReason = NonNullable<StreamChoice["finish_reason"]>;
+
 /** Create the final chunk with finish reason */
-export function createFinishChunk(id: string, model: string, reason: 'stop' | 'length' | 'tool_calls' = 'stop'): ChatCompletionChunk {
+export function createFinishChunk(
+  id: string,
+  model: string,
+  reason: FinishReason = "stop",
+  servedModel?: string,
+): ChatCompletionChunk {
   return {
     id,
-    object: 'chat.completion.chunk',
+    object: "chat.completion.chunk",
     created: Math.floor(Date.now() / 1000),
     model,
-    choices: [{
-      index: 0,
-      delta: {},
-      finish_reason: reason,
-    }],
+    choices: [
+      {
+        index: 0,
+        delta: {},
+        finish_reason: reason,
+      },
+    ],
+    ...(servedModel ? { served_model: servedModel } : {}),
+  };
+}
+
+/** Create a tool-call delta chunk (OpenAI streaming shape). */
+export function createToolCallChunk(
+  id: string,
+  model: string,
+  toolCall: ToolCallDelta,
+): ChatCompletionChunk {
+  return {
+    id,
+    object: "chat.completion.chunk",
+    created: Math.floor(Date.now() / 1000),
+    model,
+    choices: [
+      {
+        index: 0,
+        delta: { tool_calls: [toolCall] },
+        finish_reason: null,
+      },
+    ],
   };
 }
 
@@ -75,11 +117,11 @@ export function createFinishChunk(id: string, model: string, reason: 'stop' | 'l
 /** Create SSE response headers */
 export function sseHeaders(): HeadersInit {
   return {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache, no-transform',
-    'Connection': 'keep-alive',
-    'X-Accel-Buffering': 'no',
-    'X-Powered-By': 'Arcanea Intelligence Gateway',
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache, no-transform",
+    Connection: "keep-alive",
+    "X-Accel-Buffering": "no",
+    "X-Powered-By": "Arcanea Intelligence Gateway",
   };
 }
 
@@ -101,7 +143,7 @@ export function proxySSEStream(
   const reader = providerResponse.body!.getReader();
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
-  let buffer = '';
+  let buffer = "";
 
   return new ReadableStream({
     async pull(controller) {
@@ -120,35 +162,37 @@ export function proxySSEStream(
         buffer += decoder.decode(value, { stream: true });
 
         // Process complete SSE lines
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || ''; // Keep incomplete line in buffer
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || ""; // Keep incomplete line in buffer
 
         for (const line of lines) {
           const trimmed = line.trim();
           if (!trimmed) {
             // Empty line = end of SSE event, forward the newline
-            controller.enqueue(encoder.encode('\n'));
+            controller.enqueue(encoder.encode("\n"));
             continue;
           }
 
-          if (trimmed === 'data: [DONE]') {
-            controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+          if (trimmed === "data: [DONE]") {
+            controller.enqueue(encoder.encode("data: [DONE]\n\n"));
             continue;
           }
 
-          if (trimmed.startsWith('data: ')) {
+          if (trimmed.startsWith("data: ")) {
             try {
               const json = JSON.parse(trimmed.slice(6));
               // Override model ID with Arcanea's model name
               json.model = arcaneaModelId;
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify(json)}\n`));
+              controller.enqueue(
+                encoder.encode(`data: ${JSON.stringify(json)}\n`),
+              );
             } catch {
               // Forward unparseable lines as-is
-              controller.enqueue(encoder.encode(line + '\n'));
+              controller.enqueue(encoder.encode(line + "\n"));
             }
           } else {
             // Forward non-data lines (comments, event types, etc.)
-            controller.enqueue(encoder.encode(line + '\n'));
+            controller.enqueue(encoder.encode(line + "\n"));
           }
         }
       } catch (error) {
@@ -167,25 +211,44 @@ function processBufferedLines(
   controller: ReadableStreamDefaultController,
   encoder: TextEncoder,
 ) {
-  const lines = buffer.split('\n');
+  const lines = buffer.split("\n");
   for (const line of lines) {
     const trimmed = line.trim();
     if (!trimmed) continue;
-    if (trimmed === 'data: [DONE]') {
-      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-    } else if (trimmed.startsWith('data: ')) {
+    if (trimmed === "data: [DONE]") {
+      controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+    } else if (trimmed.startsWith("data: ")) {
       try {
         const json = JSON.parse(trimmed.slice(6));
         json.model = modelId;
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(json)}\n\n`));
       } catch {
-        controller.enqueue(encoder.encode(line + '\n'));
+        controller.enqueue(encoder.encode(line + "\n"));
       }
     }
   }
 }
 
 // ─── Anthropic SSE Adapter ───────────────────────────────────────────
+
+/**
+ * Map an Anthropic `stop_reason` to its OpenAI `finish_reason`. A safety
+ * refusal (HTTP 200, `stop_reason: "refusal"`) becomes `content_filter`, so
+ * clients can tell it apart from a normal stop.
+ */
+export function mapAnthropicStopReason(stopReason: unknown): FinishReason {
+  switch (stopReason) {
+    case "refusal":
+      return "content_filter";
+    case "max_tokens":
+    case "model_context_window_exceeded":
+      return "length";
+    case "tool_use":
+      return "tool_calls";
+    default:
+      return "stop";
+  }
+}
 
 /**
  * Convert Anthropic's SSE format to OpenAI-compatible format.
@@ -199,8 +262,33 @@ export function adaptAnthropicStream(
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
   const completionId = generateCompletionId();
-  let buffer = '';
+  let buffer = "";
   let sentRole = false;
+  let stopReason: unknown;
+  let finished = false;
+  let servedModel: string | undefined;
+  // Anthropic content-block index -> OpenAI tool_calls index.
+  const toolIndexByBlock = new Map<number, number>();
+
+  // Emit the finish chunk and [DONE] exactly once, whether the provider
+  // sends message_stop or the body simply ends.
+  const finish = (controller: ReadableStreamDefaultController) => {
+    if (finished) return;
+    finished = true;
+    controller.enqueue(
+      encoder.encode(
+        formatSSEChunk(
+          createFinishChunk(
+            completionId,
+            arcaneaModelId,
+            mapAnthropicStopReason(stopReason),
+            servedModel,
+          ),
+        ),
+      ),
+    );
+    controller.enqueue(encoder.encode(formatSSEDone()));
+  };
 
   return new ReadableStream({
     async pull(controller) {
@@ -208,27 +296,23 @@ export function adaptAnthropicStream(
         const { done, value } = await reader.read();
 
         if (done) {
-          // Send finish chunk
-          controller.enqueue(encoder.encode(formatSSEChunk(
-            createFinishChunk(completionId, arcaneaModelId)
-          )));
-          controller.enqueue(encoder.encode(formatSSEDone()));
+          finish(controller);
           controller.close();
           return;
         }
 
         buffer += decoder.decode(value, { stream: true });
-        const events = buffer.split('\n\n');
-        buffer = events.pop() || '';
+        const events = buffer.split("\n\n");
+        buffer = events.pop() || "";
 
         for (const event of events) {
-          const lines = event.split('\n');
-          let eventType = '';
-          let eventData = '';
+          const lines = event.split("\n");
+          let eventType = "";
+          let eventData = "";
 
           for (const line of lines) {
-            if (line.startsWith('event: ')) eventType = line.slice(7);
-            if (line.startsWith('data: ')) eventData = line.slice(6);
+            if (line.startsWith("event: ")) eventType = line.slice(7);
+            if (line.startsWith("data: ")) eventData = line.slice(6);
           }
 
           if (!eventData) continue;
@@ -237,23 +321,86 @@ export function adaptAnthropicStream(
             const data = JSON.parse(eventData);
 
             if (!sentRole) {
-              controller.enqueue(encoder.encode(formatSSEChunk(
-                createRoleChunk(completionId, arcaneaModelId)
-              )));
+              controller.enqueue(
+                encoder.encode(
+                  formatSSEChunk(createRoleChunk(completionId, arcaneaModelId)),
+                ),
+              );
               sentRole = true;
             }
 
-            if (eventType === 'content_block_delta' && data.delta?.text) {
-              controller.enqueue(encoder.encode(formatSSEChunk(
-                createContentChunk(completionId, arcaneaModelId, data.delta.text)
-              )));
+            if (
+              eventType === "message_start" &&
+              typeof data.message?.model === "string"
+            ) {
+              servedModel = data.message.model;
             }
 
-            if (eventType === 'message_stop') {
-              controller.enqueue(encoder.encode(formatSSEChunk(
-                createFinishChunk(completionId, arcaneaModelId)
-              )));
-              controller.enqueue(encoder.encode(formatSSEDone()));
+            if (
+              eventType === "content_block_start" &&
+              data.content_block?.type === "tool_use"
+            ) {
+              const toolIndex = toolIndexByBlock.size;
+              toolIndexByBlock.set(data.index, toolIndex);
+              controller.enqueue(
+                encoder.encode(
+                  formatSSEChunk(
+                    createToolCallChunk(completionId, arcaneaModelId, {
+                      index: toolIndex,
+                      id: data.content_block.id,
+                      type: "function",
+                      function: {
+                        name: data.content_block.name,
+                        arguments: "",
+                      },
+                    }),
+                  ),
+                ),
+              );
+            }
+
+            if (
+              eventType === "content_block_delta" &&
+              data.delta?.type === "input_json_delta" &&
+              toolIndexByBlock.has(data.index) &&
+              data.delta.partial_json
+            ) {
+              controller.enqueue(
+                encoder.encode(
+                  formatSSEChunk(
+                    createToolCallChunk(completionId, arcaneaModelId, {
+                      index: toolIndexByBlock.get(data.index)!,
+                      function: { arguments: data.delta.partial_json },
+                    }),
+                  ),
+                ),
+              );
+            }
+
+            if (
+              eventType === "content_block_delta" &&
+              data.delta?.type === "text_delta" &&
+              data.delta.text
+            ) {
+              controller.enqueue(
+                encoder.encode(
+                  formatSSEChunk(
+                    createContentChunk(
+                      completionId,
+                      arcaneaModelId,
+                      data.delta.text,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            if (eventType === "message_delta" && data.delta?.stop_reason) {
+              stopReason = data.delta.stop_reason;
+            }
+
+            if (eventType === "message_stop") {
+              finish(controller);
             }
           } catch {
             // Skip unparseable events
