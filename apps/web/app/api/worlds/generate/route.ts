@@ -8,6 +8,8 @@ import { extractCustomerKeys } from "@/lib/gateway/credential-policy.mjs";
 import { draftResult } from "@/lib/worlds/draft";
 import {
   WORLD_MODEL,
+  WORLD_CONVERSATION_BYTES,
+  WORLD_REQUEST_BYTES,
   WORLD_FORGE_PROMPT,
   worldGenerationSchema,
   worldGenerationRequestSchema,
@@ -25,6 +27,7 @@ export async function POST(req: NextRequest) {
   const origin = req.headers.get("origin");
   if (origin && origin !== req.nextUrl.origin)
     return reply({ error: "Create the draft from this Arcanea page." }, 403);
+  let actorId: string;
   try {
     const db = await createClient();
     const { data, error } = await withAbortDeadline(
@@ -34,6 +37,7 @@ export async function POST(req: NextRequest) {
     );
     if (error || !data.user)
       return reply({ error: "Sign in to create a world draft." }, 401);
+    actorId = data.user.id;
   } catch {
     return reply(
       { error: "Your session could not be checked. Try again." },
@@ -50,8 +54,18 @@ export async function POST(req: NextRequest) {
     return reply({ error: "Add your Gemini API key to create a draft." }, 402);
   let input;
   try {
-    const body = await readWorldRequest(req);
-    input = worldGenerationRequestSchema.safeParse(JSON.parse(body));
+    const body = await readWorldRequest(req, WORLD_CONVERSATION_BYTES);
+    const candidate: unknown = JSON.parse(body);
+    if (
+      !(
+        candidate &&
+        typeof candidate === "object" &&
+        "conversation" in candidate
+      ) &&
+      new TextEncoder().encode(body).length > WORLD_REQUEST_BYTES
+    )
+      throw new RangeError("Request exceeds the byte limit.");
+    input = worldGenerationRequestSchema.safeParse(candidate);
   } catch (error) {
     if (req.signal.aborted)
       return reply(
@@ -66,9 +80,18 @@ export async function POST(req: NextRequest) {
   if (!input.success)
     return reply(
       {
-        error: "Use a concept of 5 to 500 characters and a listed refinement.",
+        error:
+          "Use a concept of 5 to 500 characters. Conversation context needs the current account, at most 40 text turns and 24,000 characters in total.",
       },
       400,
+    );
+  if (input.data.expected_actor && input.data.expected_actor !== actorId)
+    return reply(
+      {
+        error:
+          "The account changed. Keep this conversation and retry from its owner account.",
+      },
+      409,
     );
   if (req.signal.aborted)
     return reply(
@@ -80,7 +103,13 @@ export async function POST(req: NextRequest) {
     const result = await generateText({
       model: google(WORLD_MODEL),
       system: WORLD_FORGE_PROMPT,
-      prompt: JSON.stringify(input.data),
+      prompt: JSON.stringify({
+        description: input.data.description,
+        ...(input.data.refinement ? { refinement: input.data.refinement } : {}),
+        ...(input.data.conversation
+          ? { conversation: input.data.conversation }
+          : {}),
+      }),
       output: Output.object({ schema: worldGenerationSchema }),
       temperature: 0.9,
       maxOutputTokens: 6000,
@@ -102,7 +131,10 @@ export async function POST(req: NextRequest) {
         },
         502,
       );
-    return reply(draftResult(parsed.data, randomUUID()));
+    return reply({
+      ...draftResult(parsed.data, randomUUID()),
+      ...(input.data.conversation ? { actor_id: actorId } : {}),
+    });
   } catch (error) {
     // Upstream errors can contain the credential and full creator prompt.
     if (APICallError.isInstance(error)) {

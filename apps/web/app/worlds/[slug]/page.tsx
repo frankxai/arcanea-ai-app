@@ -218,7 +218,7 @@ export default async function WorldDetailPage({ params }: Props) {
   const palette = worldDisplayPalette(world.displayElements, world.palette);
 
   return (
-    <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
         {/* Cover image or gradient */}
@@ -336,7 +336,7 @@ export default async function WorldDetailPage({ params }: Props) {
 
       {/* World Intelligence floating panel */}
       <WorldActions slug={slug} />
-    </main>
+    </div>
   );
 }
 
