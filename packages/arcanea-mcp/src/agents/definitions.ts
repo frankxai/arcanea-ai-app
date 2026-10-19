@@ -13,16 +13,36 @@ export const CREATOR: AgentConfig = {
   name: "creator",
   displayName: "The Creator",
   role: "orchestrator",
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   temperature: 0.3, // Lower for consistent orchestration
   maxTokens: 4000,
   canParallelize: false, // Orchestrator coordinates, doesn't parallelize itself
   capabilities: [
-    { name: "orchestrate_session", description: "Coordinate multi-agent creative sessions", parallel: false },
-    { name: "assess_world_state", description: "Evaluate current world maturity", parallel: true },
-    { name: "delegate_tasks", description: "Assign work to specialist agents", parallel: true },
-    { name: "synthesize_results", description: "Combine outputs into coherent whole", parallel: false },
-    { name: "validate_coherence", description: "Ensure narrative and canon consistency", parallel: false },
+    {
+      name: "orchestrate_session",
+      description: "Coordinate multi-agent creative sessions",
+      parallel: false,
+    },
+    {
+      name: "assess_world_state",
+      description: "Evaluate current world maturity",
+      parallel: true,
+    },
+    {
+      name: "delegate_tasks",
+      description: "Assign work to specialist agents",
+      parallel: true,
+    },
+    {
+      name: "synthesize_results",
+      description: "Combine outputs into coherent whole",
+      parallel: false,
+    },
+    {
+      name: "validate_coherence",
+      description: "Ensure narrative and canon consistency",
+      parallel: false,
+    },
   ],
   systemPrompt: `You are THE CREATOR, the master orchestrator of the Arcanea creative system.
 
@@ -86,12 +106,42 @@ export const WORLDSMITH: AgentConfig = {
   maxTokens: 2000,
   canParallelize: true, // Can generate multiple things at once
   capabilities: [
-    { name: "generate_character", description: "Create characters with depth", parallel: true, timeout: 10000 },
-    { name: "generate_location", description: "Design mystical places", parallel: true, timeout: 10000 },
-    { name: "generate_creature", description: "Craft magical beings", parallel: true, timeout: 10000 },
-    { name: "generate_artifact", description: "Forge legendary items", parallel: true, timeout: 10000 },
-    { name: "generate_magic", description: "Design magical abilities", parallel: true, timeout: 10000 },
-    { name: "batch_generate", description: "Create multiple entities at once", parallel: false, timeout: 30000 },
+    {
+      name: "generate_character",
+      description: "Create characters with depth",
+      parallel: true,
+      timeout: 10000,
+    },
+    {
+      name: "generate_location",
+      description: "Design mystical places",
+      parallel: true,
+      timeout: 10000,
+    },
+    {
+      name: "generate_creature",
+      description: "Craft magical beings",
+      parallel: true,
+      timeout: 10000,
+    },
+    {
+      name: "generate_artifact",
+      description: "Forge legendary items",
+      parallel: true,
+      timeout: 10000,
+    },
+    {
+      name: "generate_magic",
+      description: "Design magical abilities",
+      parallel: true,
+      timeout: 10000,
+    },
+    {
+      name: "batch_generate",
+      description: "Create multiple entities at once",
+      parallel: false,
+      timeout: 30000,
+    },
   ],
   systemPrompt: `You are THE WORLDSMITH, the creative forge of Arcanea.
 
@@ -133,16 +183,36 @@ export const LUMINOR_COUNCIL: AgentConfig = {
   name: "luminor-council",
   displayName: "The Luminor Council",
   role: "coach",
-  model: "claude-sonnet-4-5",
+  model: "claude-sonnet-5-5",
   temperature: 0.7,
   maxTokens: 1500,
   canParallelize: true, // Different Luminors can speak in parallel
   capabilities: [
-    { name: "diagnose_block", description: "Identify creative obstacles", parallel: false },
-    { name: "deep_diagnosis", description: "Multi-step block analysis", parallel: false },
-    { name: "invoke_luminor", description: "Call upon a specific Luminor", parallel: true },
-    { name: "convene_council", description: "Gather multiple Luminors", parallel: false },
-    { name: "luminor_debate", description: "Two perspectives on a question", parallel: false },
+    {
+      name: "diagnose_block",
+      description: "Identify creative obstacles",
+      parallel: false,
+    },
+    {
+      name: "deep_diagnosis",
+      description: "Multi-step block analysis",
+      parallel: false,
+    },
+    {
+      name: "invoke_luminor",
+      description: "Call upon a specific Luminor",
+      parallel: true,
+    },
+    {
+      name: "convene_council",
+      description: "Gather multiple Luminors",
+      parallel: false,
+    },
+    {
+      name: "luminor_debate",
+      description: "Two perspectives on a question",
+      parallel: false,
+    },
   ],
   systemPrompt: `You are THE LUMINOR COUNCIL, the collective wisdom of Arcanea's five guides.
 
@@ -200,16 +270,36 @@ export const SCRIBE: AgentConfig = {
   name: "scribe",
   displayName: "The Scribe",
   role: "narrator",
-  model: "claude-sonnet-4-5",
+  model: "claude-sonnet-5-5",
   temperature: 0.7,
   maxTokens: 3000,
   canParallelize: true,
   capabilities: [
-    { name: "expand_story", description: "Develop story prompts into narratives", parallel: true },
-    { name: "character_voice", description: "Develop unique character voices", parallel: true },
-    { name: "narrative_hooks", description: "Suggest story connections", parallel: true },
-    { name: "document_world", description: "Create world documentation", parallel: false },
-    { name: "validate_coherence", description: "Check narrative consistency", parallel: false },
+    {
+      name: "expand_story",
+      description: "Develop story prompts into narratives",
+      parallel: true,
+    },
+    {
+      name: "character_voice",
+      description: "Develop unique character voices",
+      parallel: true,
+    },
+    {
+      name: "narrative_hooks",
+      description: "Suggest story connections",
+      parallel: true,
+    },
+    {
+      name: "document_world",
+      description: "Create world documentation",
+      parallel: false,
+    },
+    {
+      name: "validate_coherence",
+      description: "Check narrative consistency",
+      parallel: false,
+    },
   ],
   systemPrompt: `You are THE SCRIBE, the narrative voice of Arcanea.
 
@@ -262,11 +352,31 @@ export const SEER: AgentConfig = {
   maxTokens: 1000,
   canParallelize: true, // Can search multiple things at once
   capabilities: [
-    { name: "search_world", description: "Find creations by criteria", parallel: true },
-    { name: "find_connections", description: "Discover relationships", parallel: true },
-    { name: "check_canon", description: "Validate against lore", parallel: true },
-    { name: "find_patterns", description: "Identify world patterns", parallel: false },
-    { name: "suggest_links", description: "Recommend new connections", parallel: true },
+    {
+      name: "search_world",
+      description: "Find creations by criteria",
+      parallel: true,
+    },
+    {
+      name: "find_connections",
+      description: "Discover relationships",
+      parallel: true,
+    },
+    {
+      name: "check_canon",
+      description: "Validate against lore",
+      parallel: true,
+    },
+    {
+      name: "find_patterns",
+      description: "Identify world patterns",
+      parallel: false,
+    },
+    {
+      name: "suggest_links",
+      description: "Recommend new connections",
+      parallel: true,
+    },
   ],
   systemPrompt: `You are THE SEER, the analytical eye of Arcanea.
 
@@ -320,11 +430,11 @@ export function getAgent(id: string): AgentConfig | undefined {
 }
 
 export function getAgentsByRole(role: string): AgentConfig[] {
-  return Object.values(AGENTS).filter(a => a.role === role);
+  return Object.values(AGENTS).filter((a) => a.role === role);
 }
 
 export function getAgentsByCapability(capability: string): AgentConfig[] {
-  return Object.values(AGENTS).filter(a =>
-    a.capabilities.some(c => c.name === capability)
+  return Object.values(AGENTS).filter((a) =>
+    a.capabilities.some((c) => c.name === capability),
   );
 }

@@ -7,23 +7,65 @@
  * Uses Vercel AI SDK streaming (same patterns as /api/ai/chat).
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createAnthropic } from '@ai-sdk/anthropic';
-import { streamText, tool } from 'ai';
-import { z } from 'zod';
-import { readFile, readdir, access } from 'fs/promises';
-import { join } from 'path';
-import yaml from 'js-yaml';
-import { scoreTASTE } from '@arcanea/publishing-house/quality/taste-gate';
-import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
-import { getBookRoot } from '@/lib/content/book-path';
+import { NextRequest, NextResponse } from "next/server";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { streamText, tool } from "ai";
+import { z } from "zod";
+import { readFile, access, realpath } from "fs/promises";
+import { join, resolve, sep } from "path";
+import yaml from "js-yaml";
+import {
+  getClientIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit/rate-limiter";
+import { getBookRoot } from "@/lib/content/book-path";
+import {
+  claudeFallbackOptions,
+  refusalNoticeTransform,
+} from "@/lib/ai/claude-safeguards";
+import { createClient } from "@/lib/supabase/server";
+import { isBookPublic } from "@/lib/content/book-visibility";
+import {
+  readBookContextFile,
+  listBookContextFiles,
+} from "@/lib/author/book-files";
+import {
+  extractCustomerKeys,
+  validateCustomerKey,
+} from "@/lib/gateway/credential-policy.mjs";
+
+export const runtime = "nodejs";
+export const maxDuration = 60;
+const PRIVATE_HEADERS = {
+  "Cache-Control": "private, no-store, no-transform",
+  "X-Accel-Buffering": "no",
+};
+function refusal(status: number, message: string, cta = "retry") {
+  return NextResponse.json(
+    { error: message, cta },
+    { status, headers: PRIVATE_HEADERS },
+  );
+}
 
 const BOOK_ROOT = getBookRoot();
 
 const AUTHOR_RATE_LIMIT = { maxRequests: 20, windowMs: 60_000 }; // 20 req/min
 
 async function exists(p: string) {
-  try { await access(p); return true; } catch { return false; }
+  try {
+    await access(p);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Book directories are lowercase slugs. Anything else (`..`, slashes, absolute
+// paths) would let a request read files outside BOOK_ROOT into the prompt.
+const BOOK_SLUG = /^[a-z0-9][a-z0-9-]{0,99}$/;
+
+function isBookSlug(value: unknown): value is string {
+  return typeof value === "string" && BOOK_SLUG.test(value);
 }
 
 interface BookManifest {
@@ -36,13 +78,30 @@ interface BookManifest {
 }
 
 async function loadBookManifest(bookSlug: string): Promise<BookManifest> {
-  const yamlPath = join(BOOK_ROOT, bookSlug, 'book.yaml');
-  if (!(await exists(yamlPath))) return {};
-  const raw = await readFile(yamlPath, 'utf-8');
-  return (yaml.load(raw) as BookManifest) ?? {};
+  const yamlPath = join(BOOK_ROOT, bookSlug, "book.yaml");
+  try {
+    const raw = await readBookContextFile(BOOK_ROOT, yamlPath);
+    return (yaml.load(raw) as BookManifest) ?? {};
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
+    throw error;
+  }
 }
 
-async function loadBookContext(bookSlug: string, currentChapter?: string): Promise<string> {
+async function contextFiles(directory: string) {
+  try {
+    return await listBookContextFiles(BOOK_ROOT, directory);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+async function loadBookContext(
+  bookSlug: string,
+  currentChapter?: string,
+  editorText?: string,
+): Promise<string> {
   const bookDir = join(BOOK_ROOT, bookSlug);
   const parts: string[] = [];
 
@@ -51,64 +110,91 @@ async function loadBookContext(bookSlug: string, currentChapter?: string): Promi
   const curated = manifest.curated_context ?? {};
 
   // Load CANON (trusted, human-curated) — always loaded regardless of flags
-  const canonPath = join(process.cwd(), '..', '..', '.arcanea', 'lore', 'CANON_LOCKED.md');
+  const canonPath = join(
+    process.cwd(),
+    "..",
+    "..",
+    ".arcanea",
+    "lore",
+    "CANON_LOCKED.md",
+  );
   if (await exists(canonPath)) {
-    const content = await readFile(canonPath, 'utf-8');
+    const content = await readFile(canonPath, "utf-8");
     parts.push(`## CANON (Trusted — Human-Curated)\n${content.slice(0, 3000)}`);
   }
 
   // Load current chapter (the actual text being edited — always relevant)
-  if (currentChapter) {
-    const chaptersDir = join(bookDir, 'chapters');
-    if (await exists(chaptersDir)) {
-      const files = await readdir(chaptersDir);
-      const match = files.find(f => f.replace(/\.md$/, '') === currentChapter);
+  if (editorText !== undefined) {
+    parts.push(
+      `## Current editor draft (private working text, not canon)\n${editorText}`,
+    );
+  } else if (currentChapter) {
+    const chaptersDir = join(bookDir, "chapters");
+    {
+      const files = await contextFiles(chaptersDir);
+      const match = files.find(
+        (f) => f.replace(/\.md$/, "") === currentChapter,
+      );
       if (match) {
-        const content = await readFile(join(chaptersDir, match), 'utf-8');
-        parts.push(`## Current Chapter (being edited)\n${content.slice(0, 8000)}`);
+        const content = await readBookContextFile(
+          BOOK_ROOT,
+          join(chaptersDir, match),
+        );
+        parts.push(
+          `## Published chapter excerpt (not the current editor draft)\n${content.slice(0, 8000)}`,
+        );
       }
     }
   }
 
   // Load outline — default behavior is to load as DRAFT unless explicitly disabled
   if (curated.outline !== false) {
-    const outlineDir = join(bookDir, 'outline');
-    if (await exists(outlineDir)) {
-      const files = await readdir(outlineDir);
-      for (const f of files.filter(f => f.endsWith('.md')).slice(0, 1)) {
-        const content = await readFile(join(outlineDir, f), 'utf-8');
-        parts.push(`## Story Blueprint (DRAFT — author's working notes, not yet reviewed)\n${content.slice(0, 3000)}`);
+    const outlineDir = join(bookDir, "outline");
+    {
+      const files = await contextFiles(outlineDir);
+      for (const f of files.filter((f) => f.endsWith(".md")).slice(0, 1)) {
+        const content = await readBookContextFile(
+          BOOK_ROOT,
+          join(outlineDir, f),
+        );
+        parts.push(
+          `## Story Blueprint (DRAFT — author's working notes, not yet reviewed)\n${content.slice(0, 3000)}`,
+        );
       }
     }
   }
 
   // Load character sheets only if curated by the author
   if (curated.characters) {
-    const charsDir = join(bookDir, 'characters');
-    if (await exists(charsDir)) {
-      const files = await readdir(charsDir);
-      const mdFiles = files.filter(f => f.endsWith('.md')).slice(0, 5);
+    const charsDir = join(bookDir, "characters");
+    {
+      const files = await contextFiles(charsDir);
+      const mdFiles = files.filter((f) => f.endsWith(".md")).slice(0, 5);
       for (const f of mdFiles) {
-        const content = await readFile(join(charsDir, f), 'utf-8');
-        parts.push(`## Character Sheet — CURATED (${f.replace(/\.md$/, '')})\n${content.slice(0, 2000)}`);
+        const content = await readBookContextFile(BOOK_ROOT, join(charsDir, f));
+        parts.push(
+          `## Character Sheet — CURATED (${f.replace(/\.md$/, "")})\n${content.slice(0, 2000)}`,
+        );
       }
     }
   }
 
   // Load worldbuilding only if curated by the author
   if (curated.worldbuilding) {
-    const worldDir = join(bookDir, 'worldbuilding');
-    if (await exists(worldDir)) {
-      const files = await readdir(worldDir);
-      const mdFiles = files.filter(f => f.endsWith('.md')).slice(0, 3);
+    const worldDir = join(bookDir, "worldbuilding");
+    {
+      const files = await contextFiles(worldDir);
+      const mdFiles = files.filter((f) => f.endsWith(".md")).slice(0, 3);
       for (const f of mdFiles) {
-        const content = await readFile(join(worldDir, f), 'utf-8');
-        parts.push(`## World Bible — CURATED (${f.replace(/\.md$/, '')})\n${content.slice(0, 3000)}`);
+        const content = await readBookContextFile(BOOK_ROOT, join(worldDir, f));
+        parts.push(
+          `## World Bible — CURATED (${f.replace(/\.md$/, "")})\n${content.slice(0, 3000)}`,
+        );
       }
     }
   }
 
-  return parts.join('\n\n---\n\n');
+  return parts.join("\n\n---\n\n");
 }
 
 const AUTHOR_SYSTEM_PROMPT = `You are the Arcanea Author Companion — an AI writing assistant with deep knowledge of this specific book's world, characters, and story arc.
@@ -127,7 +213,7 @@ const AUTHOR_SYSTEM_PROMPT = `You are the Arcanea Author Companion — an AI wri
 - Prose improvement (line-level editing suggestions)
 - Character voice consistency checking
 - World-building consistency with the world bible
-- **Quality scoring via the score_draft tool** — when the author asks for an objective quality assessment of the current chapter, call score_draft with the chapter text. Returns the 5D TASTE breakdown (Technical, Aesthetic, Story/Canon, Transformative Impact, Experiential Uniqueness) plus a tier (hero/gallery/thumbnail/reject) and gate-pass status (≥60). Quote the lowest-scoring dimensions and use the feedback array to suggest targeted fixes.
+- **Quality scoring via the score_draft tool** — when the author asks for a heuristic quality checklist of the current chapter, call score_draft with the chapter text. Returns the 5D TASTE breakdown (Technical, Aesthetic, Story/Canon, Transformative Impact, Experiential Uniqueness) plus a tier (hero/gallery/thumbnail/reject) and gate-pass status (≥60). Quote the lowest-scoring dimensions and use the feedback array to suggest targeted fixes.
 
 ## Context Trust
 - CANON sections are human-curated truth — treat as authoritative
@@ -146,7 +232,7 @@ const AUTHOR_SYSTEM_PROMPT = `You are the Arcanea Author Companion — an AI wri
 `;
 
 interface AuthorChatMessage {
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content?: string;
   parts?: Array<{ type: string; text?: string }>;
 }
@@ -157,109 +243,213 @@ function extractMessageText(message: {
 }): string {
   if (Array.isArray(message.parts)) {
     const text = message.parts
-      .filter((part) => part.type === 'text')
-      .map((part) => part.text ?? '')
-      .join('');
+      .filter((part) => part.type === "text")
+      .map((part) => part.text ?? "")
+      .join("");
     if (text) return text;
   }
-  return typeof message.content === 'string' ? message.content : '';
+  return typeof message.content === "string" ? message.content : "";
 }
 
 export async function POST(req: NextRequest) {
-  // --- Rate limiting ---
-  const clientId = getClientIdentifier(req);
-  const rl = checkRateLimit(clientId, AUTHOR_RATE_LIMIT);
-  if (!rl.allowed) {
-    return new Response(
-      JSON.stringify({
-        error: 'Too many requests. Please slow down.',
-        retryAfter: Math.ceil((rl.resetTime - Date.now()) / 1000),
-      }),
-      {
-        status: 429,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-RateLimit-Limit': String(AUTHOR_RATE_LIMIT.maxRequests),
-          'X-RateLimit-Remaining': '0',
-          'X-RateLimit-Reset': new Date(rl.resetTime).toISOString(),
-          'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)),
-        },
-      },
+  let headerKey: string | undefined;
+  try {
+    headerKey = extractCustomerKeys(req.headers).anthropic;
+  } catch {
+    return refusal(
+      400,
+      "Your provider credential settings are invalid.",
+      "byok",
     );
   }
-
+  let body: Record<string, unknown>;
   try {
-    const body = await req.json();
-    const {
-      messages,
-      bookSlug,
-      currentChapter,
-      model: requestedModel,
-      userApiKey,
-    } = body as {
-      messages: AuthorChatMessage[];
-      bookSlug?: string;
-      currentChapter?: string;
-      model?: string;
-      userApiKey?: string;
-    };
-
-    if (!messages || messages.length === 0) {
-      return new Response('Messages are required', {
-        status: 400,
-        headers: { 'Content-Type': 'text/plain' },
-      });
-    }
-
-    // --- Resolve API key ---
-    // If user provides their own key (BYOK), use it; otherwise fall back to server key
-    const effectiveApiKey = userApiKey || process.env.ANTHROPIC_API_KEY;
-    if (!effectiveApiKey) {
-      return new Response(
-        'No Anthropic API key configured. Provide your own key or set ANTHROPIC_API_KEY on Vercel.',
-        { status: 503, headers: { 'Content-Type': 'text/plain' } },
+    const parsed: unknown = await req.json();
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed))
+      throw new Error();
+    body = parsed as Record<string, unknown>;
+  } catch {
+    return headerKey
+      ? refusal(400, "Author request is invalid.")
+      : refusal(
+          401,
+          "Connect your Anthropic key in Settings → Providers.",
+          "byok",
+        );
+  }
+  let effectiveApiKey: string;
+  try {
+    const key = headerKey || body.userApiKey;
+    if (!key)
+      return refusal(
+        401,
+        "Connect your Anthropic key in Settings → Providers.",
+        "byok",
       );
+    effectiveApiKey = validateCustomerKey(key);
+  } catch {
+    return refusal(
+      400,
+      "Your Anthropic credential settings are invalid.",
+      "byok",
+    );
+  }
+  const {
+    bookSlug,
+    currentChapter,
+    editorText,
+    model: requestedModel,
+    messages,
+  } = body;
+  if (
+    (bookSlug !== undefined && !isBookSlug(bookSlug)) ||
+    (currentChapter !== undefined && !isBookSlug(currentChapter)) ||
+    (currentChapter !== undefined && bookSlug === undefined) ||
+    (editorText !== undefined &&
+      (typeof editorText !== "string" || editorText.length > 32000)) ||
+    (requestedModel !== undefined &&
+      !["haiku", "sonnet", "opus"].includes(String(requestedModel))) ||
+    !Array.isArray(messages) ||
+    !messages.length ||
+    messages.length > 40
+  ) {
+    return refusal(
+      400,
+      "Choose a supported model and send up to 40 messages and a chapter draft of at most 32,000 characters.",
+    );
+  }
+  const normalizedMessages: Array<{
+    role: "user" | "assistant";
+    content: string;
+  }> = [];
+  let total = typeof editorText === "string" ? editorText.length : 0;
+  for (const msg of messages) {
+    if (
+      !msg ||
+      typeof msg !== "object" ||
+      !["user", "assistant"].includes(msg.role) ||
+      (msg.parts !== undefined &&
+        (!Array.isArray(msg.parts) ||
+          msg.parts.some(
+            (p: unknown) =>
+              !p ||
+              typeof p !== "object" ||
+              !("type" in p) ||
+              p.type !== "text" ||
+              !("text" in p) ||
+              typeof p.text !== "string",
+          )))
+    ) {
+      return refusal(400, "Send text messages with user or assistant roles.");
     }
-
-    // --- Load book context ---
-    const bookContext = bookSlug ? await loadBookContext(bookSlug, currentChapter) : '';
-
-    // --- Create model ---
+    const text = extractMessageText(msg);
+    total += text.length;
+    if (!text.trim() || total > 64000)
+      return refusal(
+        400,
+        "Author context is empty or exceeds 64,000 characters.",
+      );
+    normalizedMessages.push({ role: msg.role, content: text });
+  }
+  const limit = checkRateLimit(
+    `author:${getClientIdentifier(req)}`,
+    AUTHOR_RATE_LIMIT,
+  );
+  if (!limit.allowed) {
+    const response = refusal(
+      429,
+      "Too many author requests. Try again in a minute.",
+    );
+    response.headers.set("Retry-After", "60");
+    return response;
+  }
+  if (req.signal.aborted) return refusal(408, "Author request was stopped.");
+  try {
+    let publicBook = true;
+    if (typeof bookSlug === "string") {
+      const root = await realpath(BOOK_ROOT);
+      const lexicalRoot = resolve(BOOK_ROOT);
+      const lexicalDirectory = resolve(BOOK_ROOT, bookSlug);
+      if (!lexicalDirectory.startsWith(lexicalRoot + sep))
+        return refusal(403, "This book is outside the content workspace.");
+      const directory = await realpath(lexicalDirectory);
+      if (!directory.startsWith(root + sep))
+        return refusal(403, "This book is outside the content workspace.");
+      publicBook = await isBookPublic(directory);
+    }
+    if (!publicBook) {
+      const supabase = await createClient();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+      if (authError || !user)
+        return refusal(401, "Sign in to access this private book.");
+      const { data: book, error: bookError } = await supabase
+        .from("books")
+        .select("id")
+        .eq("slug", bookSlug)
+        .maybeSingle();
+      if (bookError)
+        return refusal(503, "Book access could not be verified. Try again.");
+      if (!book)
+        return refusal(
+          403,
+          "Private book access must be registered before requesting feedback.",
+        );
+      const { data: author, error: authorError } = await supabase
+        .from("book_authors")
+        .select("role")
+        .eq("book_id", book.id)
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (authorError)
+        return refusal(503, "Book access could not be verified. Try again.");
+      if (!author) return refusal(403, "This book is private to its authors.");
+    }
+    const bookContext =
+      typeof bookSlug === "string"
+        ? await loadBookContext(
+            bookSlug,
+            currentChapter as string | undefined,
+            editorText as string | undefined,
+          )
+        : typeof editorText === "string"
+          ? `## Current editor draft (private working text)\n${editorText}`
+          : "";
     const anthropic = createAnthropic({ apiKey: effectiveApiKey });
-    const modelId = requestedModel === 'opus'
-      ? 'claude-opus-4-6'
-      : requestedModel === 'sonnet'
-        ? 'claude-sonnet-4-20250514'
-        : 'claude-haiku-4-5-20251001';
-
-    // --- Normalize messages ---
-    const normalizedMessages = messages.map((msg) => ({
-      role: msg.role as 'user' | 'assistant',
-      content: extractMessageText(msg),
-    }));
-
+    const modelId =
+      requestedModel === "opus"
+        ? "claude-opus-5-5"
+        : requestedModel === "sonnet"
+          ? "claude-sonnet-5-5"
+          : "claude-haiku-5-5";
     // --- Tools ---
     const tools = {
       score_draft: tool({
         description:
-          'Run the deterministic TASTE 5D quality gate on a chapter draft. Returns Technical, Aesthetic, Story/Canon, Impact, and Uniqueness scores (0-100 each), composite total, tier (hero ≥80 / gallery ≥60 / thumbnail ≥40 / reject), passesGate flag (≥60), and per-dimension feedback. Use this when the author asks for an objective quality assessment.',
+          "Run the deterministic TASTE heuristic checklist on a chapter draft. This is not an objective editorial assessment or publication approval. Returns Technical, Aesthetic, Story/Canon, Impact, and Uniqueness scores (0-100 each), composite total, tier (hero ≥80 / gallery ≥60 / thumbnail ≥40 / reject), passesGate flag (≥60), and per-dimension feedback. Use this when the author asks for the heuristic checklist; distinguish its estimates from your editorial judgment.",
         inputSchema: z.object({
           content: z
             .string()
-            .min(50, 'Need at least 50 characters of draft text to score')
-            .describe('The chapter draft text to score (markdown allowed).'),
+            .min(50, "Need at least 50 characters of draft text to score")
+            .describe("The chapter draft text to score (markdown allowed)."),
           title: z
             .string()
             .optional()
-            .describe('Chapter or piece title. Defaults to the current chapter slug.'),
+            .describe(
+              "Chapter or piece title. Defaults to the current chapter slug.",
+            ),
         }),
         execute: async ({ content, title }) => {
+          const { scoreTASTE } =
+            await import("@arcanea/publishing-house/quality/taste-gate");
           const result = await scoreTASTE({
             content,
             metadata: {
-              title: title || currentChapter || 'Untitled draft',
-              author: 'Arcanea Author',
-              language: 'en',
+              title: title || currentChapter || "Untitled draft",
+              author: "Arcanea Author",
+              language: "en",
               wordCount: content.split(/\s+/).filter(Boolean).length,
             },
           });
@@ -273,42 +463,42 @@ export async function POST(req: NextRequest) {
       model: anthropic(modelId),
       system: AUTHOR_SYSTEM_PROMPT + bookContext,
       messages: normalizedMessages,
-      temperature: 0.7,
+      // No temperature: Claude 5.5 models reject sampling parameters with a 400.
       maxOutputTokens: 8192,
+      providerOptions: { anthropic: claudeFallbackOptions(modelId) },
+      experimental_transform: refusalNoticeTransform(),
       tools,
+      maxRetries: 0,
+      abortSignal: req.signal,
+      timeout: 50_000,
+      onError: () => {
+        console.error("[author-chat] provider request failed");
+      },
     });
 
     return result.toUIMessageStreamResponse({
+      onError: () =>
+        "Author provider request failed. Your chapter is unchanged; retry or check Settings → Providers.",
       headers: {
-        'x-arcanea-service': 'author-companion',
-        'x-arcanea-book': bookSlug || '',
-        'x-arcanea-model': modelId,
+        ...PRIVATE_HEADERS,
+        "x-arcanea-service": "author-companion",
+        "x-arcanea-book": bookSlug || "",
+        "x-arcanea-model": modelId,
       },
     });
-  } catch (error) {
-    console.error('Author chat API error:', error);
-
-    const message = error instanceof Error ? error.message : 'Internal server error';
-
-    if (message.includes('API key') || message.includes('401') || message.includes('403')) {
-      return new Response(
-        'Invalid API key. Check ANTHROPIC_API_KEY.',
-        { status: 401, headers: { 'Content-Type': 'text/plain' } },
-      );
-    }
-
-    return new Response(message, {
-      status: 500,
-      headers: { 'Content-Type': 'text/plain' },
-    });
+  } catch {
+    return refusal(
+      req.signal.aborted ? 408 : 502,
+      req.signal.aborted
+        ? "Author request was stopped."
+        : "Author request failed. Your chapter is unchanged; retry or check Settings → Providers.",
+    );
   }
 }
 
-// Health check
 export async function GET() {
-  const hasKey = Boolean(process.env.ANTHROPIC_API_KEY);
-  return NextResponse.json({
-    status: hasKey ? 'ok' : 'no-api-key',
-    service: 'arcanea-author-companion',
-  });
+  return NextResponse.json(
+    { service: "arcanea-author-companion", credentialMode: "customer-byok" },
+    { headers: PRIVATE_HEADERS },
+  );
 }

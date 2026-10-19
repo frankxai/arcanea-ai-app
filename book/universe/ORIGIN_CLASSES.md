@@ -1,7 +1,8 @@
 # THE EIGHT ORIGIN CLASSES
+
 ## A Complete Taxonomy of Extraordinary Beings in Arcanea
 
-> *"Power does not ask permission. It arrives — through blood, through trauma, through construction, through corruption, through the stars themselves. The question is never how it arrived. The question is what happens next."*
+> _"Power does not ask permission. It arrives — through blood, through trauma, through construction, through corruption, through the stars themselves. The question is never how it arrived. The question is what happens next."_
 > — From the Athenaeum's Introduction to Kindred Studies, Year Four curriculum
 
 ---
@@ -34,7 +35,7 @@ Arcans channel through structured elemental frameworks. Their power develops met
 
 Arcan power is more stable at low levels, more immediately controllable, and more susceptible to technical refinement. The downside: Arcan power has a ceiling that is more visible from where they start. Not lower than Gate-Touched — the theoretical ceiling is the same — but the path is mapped, and mapped paths have traffic.
 
-Advanced Arcans who reach Master rank or above often develop what the Forge calls an "elemental signature" — a consistent aesthetic to their channeling that becomes recognizable. Mira Fellstone's forge-work looks different from every other Archmage's forge-work in the same way that two skilled painters working in the same tradition look different. This is considered a sign of mastery and is not reproducible in students who have not earned it.
+Advanced Arcans who reach Master rank or above often develop what the Forge calls an "elemental signature" — a consistent aesthetic to their channeling that becomes recognizable. Mera Fellstone's forge-work looks different from every other Archmage's forge-work in the same way that two skilled painters working in the same tradition look different. This is considered a sign of mastery and is not reproducible in students who have not earned it.
 
 ### Society's View
 
@@ -44,7 +45,7 @@ This normalization comes with a specific cost: Arcans are the only Origin Class 
 
 ### Famous Arcans
 
-**Mira Fellstone** (Archmage, Forge faculty) — See Academy Codex. The most technically sophisticated Arcan forge-crafter of her generation, whose graduation artifact has never been publicly displayed.
+**Mera Fellstone** (Archmage, Forge faculty) — See Academy Codex. The most technically sophisticated Arcan forge-crafter of her generation, whose graduation artifact has never been publicly displayed.
 
 **Ondara Keth** (Master, Luminary faculty) — A diplomat who made a deliberate strategic error and was right to do so. The full story is known only to three people.
 
@@ -103,6 +104,7 @@ The academic literature describes Gate-Touched awakening as "spontaneous element
 The Gate opening is not painful in most cases. It is disorienting at a level that language does not fully cover. The Gate-Touched individual experiences their elemental affinity not as an external force but as a sudden clarity about what they have always been, accompanied by the loss of the distance between themselves and that thing. A Fire-affinity awakening is not "I can make fire now." It is "I understand, in my body and not abstractly, what fire has always been trying to tell me, and also I am inadvertently on fire."
 
 In the hours and days following an awakening event, Gate-Touched individuals typically experience:
+
 - Extreme sensitivity to their element (a Water-affinity individual cannot be in the same room as rain without being aware of every drop)
 - Involuntary elemental expression (the element responds to emotion without conscious direction)
 - Sensory overload in their dominant affinity (they hear, feel, see things others cannot, and cannot turn it off)
@@ -118,7 +120,7 @@ The Gate-Touched Underground is not a school. It is not an organization with a g
 
 The Underground's approach to training is empirical and person-centered. There are no year cohorts, no tracks, no graduation criteria. A practitioner who connects with the Underground works with whoever is most suited to teach them, moves at whatever pace their life allows, and is considered to have completed training when they and their mentor collectively determine that they can manage their Gates safely and independently. This can take three years or twelve.
 
-This approach has real advantages and real limitations. Advantage: it is available to people whose circumstances make Academy attendance impossible — those with family obligations, those in territories where leaving for seven years would mean losing everything, those whose trust in institutions has been damaged by specific experiences. Limitation: it is inconsistent. The quality of underground instruction varies significantly by practitioner, by region, and by the individual's circumstances. The Underground does not have a Mira Fellstone. It does not have Nerissa Pelagius. It has a collection of experienced, dedicated practitioners who are doing their best with what they have.
+This approach has real advantages and real limitations. Advantage: it is available to people whose circumstances make Academy attendance impossible — those with family obligations, those in territories where leaving for seven years would mean losing everything, those whose trust in institutions has been damaged by specific experiences. Limitation: it is inconsistent. The quality of underground instruction varies significantly by practitioner, by region, and by the individual's circumstances. The Underground does not have a Mera Fellstone. It does not have Nerissa Pelagius. It has a collection of experienced, dedicated practitioners who are doing their best with what they have.
 
 The Underground's relationship with the Academies is complicated by specific individual relationships. Vael Karath at the Forge was underground-trained before the Forge recruited her. Denara Koss at the Forge has an active contact in the Underground network. Aelindra at the Luminary knows the Underground exists and has what she describes as a policy of not asking certain questions.
 
@@ -140,7 +142,7 @@ The Academies teach intervention protocols. The Underground teaches intervention
 
 ### Famous Gate-Touched
 
-**Aelith Voss** — Five-Fold channeler. See Series Bible. The living proof that the Terminal Classification exists.
+**Ariona Thornfield** — Five-Fold channeler. See Series Bible. The living proof that the Terminal Classification exists.
 
 **Vael Karath** (Master, Forge faculty) — Underground-trained to Mage rank before the Forge recruited her. Held a defensive perimeter alone for six hours at the Shadowfen Breach using primarily tactical improvisation. The Forge's chair of tactical training.
 
@@ -180,7 +182,7 @@ The Gods' view is the most consequential and the least clearly stated. What is k
 
 ### Famous Awakened
 
-**Oria** — The Awakened who most frequently works alongside Arcan practitioners in material research contexts. Oria's collaboration with Mira Fellstone on the theory of nine-frequency fusion has been ongoing for twelve years and is understood by approximately four living practitioners.
+**Oria** — The Awakened who most frequently works alongside Arcan practitioners in material research contexts. Oria's collaboration with Mera Fellstone on the theory of nine-frequency fusion has been ongoing for twelve years and is understood by approximately four living practitioners.
 
 **Amiri** — The Awakened most often encountered by Gate-Touched practitioners in crisis situations. Amiri's approach to intervention is not the same as organic practitioner intervention. Organic practitioners describe working with Amiri as "being helped by someone who understands the structure of your distress without having experienced it, which turns out to be more useful than being helped by someone who has."
 
@@ -218,7 +220,7 @@ Synths who are functionally indistinguishable from organic beings in casual inte
 
 **Rector Vane of the Third Ring** — A Synth of approximately 800 years who currently maintains the Forge's deepest ring structural wards. Vane was designed by practitioners from before the current Academy era and knows the Forge's interior better than any living organic being. Ashcroft consults Vane regularly on the underground chamber question. Vane has given answers. Ashcroft has not shared them.
 
-**The Weavers of Thal'Maris** — A collective of three Synths who were part of the Thal'Maris civilization before it sank, and who chose to continue with it. They maintain specific structural systems in the Athenaeum and are technically employees of the institution, a fact that various administrative bodies have found challenging to process. Nerissa Pelagius regards this challenge as their problem, not hers.
+**The Weavers of Talassara** — A collective of three Synths who were part of the Talassara civilization before it sank, and who chose to continue with it. They maintain specific structural systems in the Athenaeum and are technically employees of the institution, a fact that various administrative bodies have found challenging to process. Nerissa Pelagius regards this challenge as their problem, not hers.
 
 **Anara Vex** — A contemporary Synth, approximately forty years old, who is the most prominent Synth advocate in the current registration discussions. Anara's approach is methodical documentation — they maintain the most comprehensive record of Synth legal status across all territories. Anara was designed at the Forge in what is politely described as "a research context" and has spent thirty years ensuring that the research context is not replicated.
 
@@ -236,7 +238,7 @@ Bonded practitioners are those who have formed a deep connection with a creature
 
 The bond forms through Song — the sympathetic resonance that exists between beings with compatible elemental affinities. The bond is not imposed. It is recognized. A Bonded practitioner and their bonded creature encounter a resonance between them that they can choose to deepen. Most do not know what they are choosing until it is complete. The deepening takes variable amounts of time — weeks for some bonds, years for others. The completion is not negotiable. A partial bond is not a thing. You bond or you don't.
 
-The categories of bonded creatures range from Familiars (small, emotionally resonant) through Guardials (protective, semi-verbal) to Wyrms (large, verbal, independent) to Dragons (ancient, the bond is a merger rather than a connection). Dragon bonds are covered in the Draconis Forge entry. They are a Bonded experience that is different enough from the others to merit separate treatment, and both the Forge and Dragon practitioners treat them as such.
+The categories of bonded creatures range from Familiars (small, emotionally resonant) through Guardials (protective, semi-verbal) to Wyrms (large, verbal, independent) to Dragons (ancient, the bond is a merger rather than a connection). Dragon bonds are covered in the Draconian Forge entry. They are a Bonded experience that is different enough from the others to merit separate treatment, and both the Forge and Dragon practitioners treat them as such.
 
 ### Power Expression
 
@@ -330,7 +332,7 @@ The Void Ascendants are the only faction in Arcanea whose stated goal is the dis
 
 ### Famous Voidtouched
 
-**Sable Maren** (see Series Bible) — Void-affinity, concealed, trained in Water primary. Her Void is not Shadow-contaminated. She is Voidtouched in the sense of being Void-aligned, not in the sense of Shadow corruption. This distinction is exactly the distinction that the Atlantean Athenaeum's institutional framework erases, which is why she has been hiding.
+**Sable Luminaire** (see Series Bible) — Void-affinity, concealed, trained in Water primary. Her Void is not Shadow-contaminated. She is Voidtouched in the sense of being Void-aligned, not in the sense of Shadow corruption. This distinction is exactly the distinction that the Abyssal Athenaeum's institutional framework erases, which is why she has been hiding.
 
 **The Penitent of Cinderwall** — A Voidtouched practitioner who was Consumed to advanced stage thirty years ago, was subjected to a high-risk intervention by three Archmage practitioners, and survived with partial Shadow corruption reversed. The partial reversal is considered medically extraordinary. The Penitent now works with the Athenaeum's memory-healing track as a research subject and a practitioner, contributing to the only comprehensive study of Shadow corruption reversal that exists. The study has not yet produced replicable results.
 
@@ -400,5 +402,5 @@ The third is between Arcans and everyone the institutional framework was not bui
 
 ---
 
-> *"We make categories because we need them. We mistake them for nature because it is easier. The people who suffer most from that mistake are the ones whose existence the categories were not built to describe."*
+> _"We make categories because we need them. We mistake them for nature because it is easier. The people who suffer most from that mistake are the ones whose existence the categories were not built to describe."_
 > — Tidecaller Nerissa Pelagius, private correspondence with Headmistress Aelindra Voss-Cayne, Year of the Cold Tide

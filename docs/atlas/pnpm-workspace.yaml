@@ -1,0 +1,10 @@
+packages:
+  - .
+
+# Atlas has its own graph outside the application workspace.
+# Native verification uses packaged binaries without lifecycle builds.
+allowBuilds: {}
+
+overrides:
+  "sharp@>=0.35.0 <0.35.5": "0.35.5"
+  "source-map-js@>=1.0.0 <1.2.2": "1.2.2"

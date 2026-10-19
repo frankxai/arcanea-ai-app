@@ -1,220 +1,322 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
+import { useState, useRef, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
+import { readProviderPreferences } from "@/lib/ai/provider-preferences";
+import { validateCustomerKey } from "@/lib/gateway/credential-policy.mjs";
+import { useAuth } from "@/lib/auth/context";
+import type { createCredentialScope } from "@/lib/ai/provider-preferences";
+type CredentialScope = ReturnType<typeof createCredentialScope>;
 
-// AI SDK v6 removed input/setInput/handleSubmit/isLoading/api from useChat —
-// we manage input state manually and derive isLoading from status.
-function extractMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
-  if (!Array.isArray(msg.parts)) return '';
-  return msg.parts
-    .filter((p) => p.type === 'text')
-    .map((p) => p.text ?? '')
-    .join('');
-}
-
-type ModelTier = 'haiku' | 'sonnet' | 'opus';
-
+type ModelTier = "haiku" | "sonnet" | "opus";
 interface AuthorAIPanelProps {
   bookSlug: string;
   currentChapter: string;
+  getEditorText?: () => string;
+  draftReady?: boolean;
+}
+class AuthorRecoveryError extends Error {}
+const PROMPTS = [
+  "Review this scene for pacing",
+  "Check this dialogue against the supplied character notes",
+  "Identify continuity questions in this chapter",
+  "Suggest the next scene from the draft outline",
+  "Show a sharper revision of one paragraph",
+];
+function messageText(msg: { parts?: Array<{ type: string; text?: string }> }) {
+  return (
+    msg.parts
+      ?.filter((part) => part.type === "text")
+      .map((part) => part.text ?? "")
+      .join("") || ""
+  );
+}
+export function AuthorAIPanel(props: AuthorAIPanelProps) {
+  const { credentialScope } = useAuth();
+  const token = credentialScope.get();
+  if (!token.actor) return <p role="status">Loading your account…</p>;
+  return (
+    <AuthorAIPanelSession
+      key={token.revision}
+      {...props}
+      credentialScope={credentialScope}
+      credentialToken={token}
+    />
+  );
 }
 
-const SUGGESTED_PROMPTS = [
-  'Review this scene for pacing',
-  'Is this dialogue consistent with the character?',
-  'Check continuity with previous chapters',
-  'Suggest what happens next',
-  'Improve this prose — make it sharper',
-  'Does this scene advance both plot and character?',
-];
-
-const STORAGE_KEY = 'arcanea-author-api-key';
-
-export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) {
-  const [collapsed, setCollapsed] = useState(false);
-  const [apiKey, setApiKey] = useState('');
-  const [model, setModel] = useState<ModelTier>('haiku');
+function AuthorAIPanelSession({
+  bookSlug,
+  currentChapter,
+  getEditorText,
+  draftReady = true,
+  credentialScope,
+  credentialToken,
+}: AuthorAIPanelProps & {
+  credentialScope: CredentialScope;
+  credentialToken: ReturnType<CredentialScope["get"]>;
+}) {
+  const [input, setInput] = useState("");
+  const inputRef = useRef("");
+  const sentRef = useRef("");
+  const [model, setModel] = useState<ModelTier>("sonnet");
+  const [recovery, setRecovery] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Load API key from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      setApiKey(saved);
-      setModel('sonnet'); // Auto-upgrade when key is present
-    }
-  }, []);
-
-  const saveKey = useCallback((key: string) => {
-    setApiKey(key);
-    if (key) {
-      localStorage.setItem(STORAGE_KEY, key);
-      setModel('sonnet');
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-      setModel('haiku');
-    }
-  }, []);
-
-  const [input, setInput] = useState('');
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({
-      api: '/api/ai/author-chat',
-      body: { bookSlug, currentChapter, model, userApiKey: apiKey || undefined },
-    }),
-  });
-  const isLoading = status === 'streaming' || status === 'submitted';
-
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      const text = input.trim();
-      if (!text) return;
-      sendMessage({ text });
-      setInput('');
-    },
-    [input, sendMessage],
+  const sendingRef = useRef(false);
+  const [transport] = useState(
+    () =>
+      new DefaultChatTransport({
+        api: "/api/ai/author-chat",
+        headers: () => {
+          try {
+            if (!credentialScope.isCurrent(credentialToken)) throw new Error();
+            const store = window.localStorage;
+            const key = readProviderPreferences(store, credentialToken.actor)
+              .keys.anthropic;
+            if (!key) throw new Error();
+            return { "x-anthropic-key": validateCustomerKey(key) };
+          } catch {
+            throw new AuthorRecoveryError(
+              "Connect your Anthropic key in Settings → Providers, then retry this request.",
+            );
+          }
+        },
+        fetch: async (url, options) => {
+          if (!credentialScope.isCurrent(credentialToken))
+            throw new AuthorRecoveryError(
+              "Your account changed. Retry from your current account.",
+            );
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            await response.body?.cancel().catch(() => {});
+            throw new AuthorRecoveryError(
+              response.status === 401
+                ? "Sign in and connect your Anthropic key in Settings → Providers, then retry. Your question is still here."
+                : response.status === 429
+                  ? "Too many requests. Wait a moment, then retry. Your question is still here."
+                  : response.status === 400
+                    ? "Use a supported model, a chapter draft of at most 32,000 characters and up to 40 text messages (64,000 characters total). Your question is still here."
+                    : "Author request failed. Your chapter and question are still here; retry or check Settings → Providers.",
+            );
+          }
+          return response;
+        },
+      }),
   );
-
+  const { messages, sendMessage, status, stop, clearError } = useChat({
+    transport,
+    onError: (error) => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
+      sendingRef.current = false;
+      setRecovery(
+        error instanceof AuthorRecoveryError
+          ? error.message
+          : "Author request failed. Your question is still here; retry.",
+      );
+    },
+    onFinish: ({ isAbort, isError }) => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
+      sendingRef.current = false;
+      if (!isAbort && !isError && inputRef.current === sentRef.current) {
+        inputRef.current = "";
+        setInput("");
+      }
+    },
+  });
+  const busy = status === "submitted" || status === "streaming";
+  useEffect(
+    () => () => {
+      void stop();
+    },
+    [stop],
+  );
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
-
-  if (collapsed) {
-    return (
-      <button
-        onClick={() => setCollapsed(false)}
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-30 px-2 py-4 bg-white/[0.03] border border-white/[0.06] rounded-l-lg text-white/40 hover:text-white/60 transition-colors"
-        title="Show AI companion"
-      >
-        <span className="text-xs [writing-mode:vertical-rl]">AI Companion</span>
-      </button>
-    );
-  }
-
+  const submit = useCallback(() => {
+    if (!credentialScope.isCurrent(credentialToken)) return;
+    if (!draftReady || busy || sendingRef.current || !inputRef.current.trim())
+      return;
+    sendingRef.current = true;
+    sentRef.current = inputRef.current;
+    setRecovery("");
+    clearError();
+    void sendMessage(
+      { text: sentRef.current.trim() },
+      {
+        body: {
+          bookSlug,
+          currentChapter,
+          model,
+          editorText: getEditorText?.(),
+        },
+      },
+    ).catch(() => {
+      if (!credentialScope.isCurrent(credentialToken)) return;
+      sendingRef.current = false;
+      setRecovery(
+        "Author request failed. Your question is still here; retry or check Settings → Providers.",
+      );
+    });
+  }, [
+    clearError,
+    sendMessage,
+    bookSlug,
+    currentChapter,
+    model,
+    getEditorText,
+    draftReady,
+    busy,
+    credentialScope,
+    credentialToken,
+  ]);
+  const control =
+    "min-h-11 rounded-lg border border-white/15 px-3 text-sm text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40";
   return (
-    <aside className="w-80 flex-shrink-0 border-l border-white/[0.06] bg-[var(--arc-cosmic-void)]/80 backdrop-blur-sm flex flex-col h-full">
-      {/* Header */}
-      <div className="p-4 border-b border-white/[0.06]">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="font-display text-sm font-semibold text-white/70">Author Companion</h2>
-            <p className="text-[10px] text-[var(--arc-brand-atlantean-teal)]/60 mt-0.5">Canon-aware &middot; Character-aware</p>
-          </div>
-          <button
-            onClick={() => setCollapsed(true)}
-            className="text-white/30 hover:text-white/50 text-xs"
-            title="Collapse"
+    <aside
+      aria-label="Author companion"
+      className="flex min-h-96 min-w-0 flex-col border-t border-white/10 lg:border-l lg:border-t-0"
+    >
+      <div className="border-b border-white/10 p-4">
+        <h2 className="font-display text-base text-white/90">
+          Author companion
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-white/70">
+          Feedback uses your current chapter draft and available curated book
+          notes. Suggestions remain separate from your manuscript.
+        </p>
+        {!draftReady && (
+          <p role="status" className="mt-2 text-sm text-white/70">
+            Load your saved draft before requesting feedback.
+          </p>
+        )}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <label className="text-sm text-white/70" htmlFor="author-model">
+            Model
+          </label>
+          <select
+            id="author-model"
+            className={`${control} bg-[var(--arc-cosmic-void)]`}
+            value={model}
+            onChange={(event) => setModel(event.target.value as ModelTier)}
           >
-            &rarr;
-          </button>
+            <option value="haiku">Haiku 4.5</option>
+            <option value="sonnet">Sonnet 4.6</option>
+            <option value="opus">Opus 4.6</option>
+          </select>
+          <Link
+            href="/settings/providers"
+            className={`${control} inline-flex items-center`}
+          >
+            Provider settings
+          </Link>
         </div>
-
-        {/* BYOK Settings */}
-        <details className="mt-2">
-          <summary className="text-[10px] text-white/20 cursor-pointer hover:text-white/40">
-            Model: {model === 'haiku' ? 'Haiku (free)' : model === 'sonnet' ? 'Sonnet (your key)' : 'Opus (your key)'}
-          </summary>
-          <div className="mt-2 space-y-2">
-            <input
-              type="password"
-              value={apiKey}
-              onChange={(e) => saveKey(e.target.value)}
-              placeholder="sk-ant-... (your Anthropic API key)"
-              className="w-full px-2 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-white/60 placeholder:text-white/15 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30"
-            />
-            <p className="text-[9px] text-white/15">
-              Your key stays in your browser. Only sent to our API route to proxy the request.
-              Get one at console.anthropic.com
-            </p>
-            {apiKey && (
-              <div className="flex gap-1">
-                {(['haiku', 'sonnet', 'opus'] as const).map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setModel(m)}
-                    className={`px-2 py-1 rounded text-[10px] ${
-                      model === m
-                        ? 'bg-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/30'
-                        : 'bg-white/[0.03] text-white/30 border border-white/[0.06]'
-                    }`}
-                  >
-                    {m.charAt(0).toUpperCase() + m.slice(1)}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </details>
+        <p className="mt-2 text-xs text-white/70">
+          Uses your Anthropic key and provider billing.
+        </p>
       </div>
-
-      {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.length === 0 && (
-          <div className="space-y-3">
-            <p className="text-xs text-white/30 text-center mb-4">
-              I&apos;ve read your characters, world bible, and story blueprint. Ask me anything about your book.
-            </p>
-            <div className="grid gap-2">
-              {SUGGESTED_PROMPTS.map((prompt) => (
-                <button
-                  key={prompt}
-                  onClick={() => { setInput(prompt); }}
-                  className="text-left px-3 py-2 rounded-lg bg-white/[0.02] border border-white/[0.06] text-xs text-white/40 hover:text-white/60 hover:bg-white/[0.04] transition-all"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
+      <div
+        ref={scrollRef}
+        className="max-h-[32rem] flex-1 space-y-4 overflow-y-auto p-4"
+      >
+        {!messages.length && (
+          <div className="space-y-2">
+            {PROMPTS.map((prompt) => (
+              <button
+                key={prompt}
+                className={`${control} w-full py-2 text-left`}
+                onClick={() => {
+                  inputRef.current = prompt;
+                  setInput(prompt);
+                }}
+              >
+                {prompt}
+              </button>
+            ))}
           </div>
         )}
-
-        {messages.map((msg) => (
-          <div key={msg.id} className={`${msg.role === 'user' ? 'ml-8' : 'mr-4'}`}>
-            <div className={`px-3 py-2 rounded-lg text-xs leading-relaxed ${
-              msg.role === 'user'
-                ? 'bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-white/80'
-                : 'bg-white/[0.02] border border-white/[0.06] text-white/60'
-            }`}>
-              <div className="whitespace-pre-wrap">{extractMessageText(msg)}</div>
-            </div>
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className="rounded-xl border border-white/10 p-3"
+          >
+            <p className="mb-1 text-xs text-white/70">
+              {message.role === "user" ? "You" : "Companion"}
+            </p>
+            <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-white/80">
+              {messageText(message)}
+            </p>
           </div>
         ))}
-
-        {isLoading && (
-          <div className="mr-4">
-            <div className="px-3 py-2 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-              <div className="flex gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/40 animate-pulse" />
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/40 animate-pulse [animation-delay:150ms]" />
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/40 animate-pulse [animation-delay:300ms]" />
-              </div>
-            </div>
-          </div>
+        {busy && (
+          <p role="status" className="text-sm text-white/70">
+            Reading your supplied draft…
+          </p>
         )}
       </div>
-
-      {/* Input */}
-      <form onSubmit={handleSubmit} className="p-4 border-t border-white/[0.06]">
-        <div className="flex gap-2">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about your book..."
-            className="flex-1 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            className="px-3 py-2 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] text-xs font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/20 disabled:opacity-30 transition-all"
+      {recovery && (
+        <div
+          role="alert"
+          aria-label="Author feedback recovery"
+          className="p-4 text-sm text-white/80"
+        >
+          <p>{recovery}</p>
+          <Link
+            className={`${control} mt-2 inline-flex items-center`}
+            href="/settings/providers"
           >
-            Send
+            Provider settings
+          </Link>
+        </div>
+      )}
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          submit();
+        }}
+        className="border-t border-white/10 p-4"
+      >
+        <label
+          htmlFor="author-question"
+          className="mb-2 block text-sm text-white/80"
+        >
+          Ask about this chapter
+        </label>
+        <textarea
+          id="author-question"
+          value={input}
+          onChange={(event) => {
+            inputRef.current = event.target.value;
+            setInput(event.target.value);
+          }}
+          rows={3}
+          className="w-full resize-y rounded-xl border border-white/15 bg-[var(--arc-cosmic-void)] p-3 text-base text-white/90 focus-visible:outline focus-visible:outline-2"
+        />
+        <div className="mt-2 flex gap-2">
+          <button
+            className={control}
+            type="submit"
+            disabled={!draftReady || busy || !input.trim()}
+          >
+            Ask companion
           </button>
+          {busy && (
+            <button
+              className={control}
+              type="button"
+              onClick={() => {
+                void stop();
+                sendingRef.current = false;
+                setRecovery(
+                  "Request stopped. Your question and chapter are still here.",
+                );
+              }}
+            >
+              Stop feedback
+            </button>
+          )}
         </div>
       </form>
     </aside>

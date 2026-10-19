@@ -27,11 +27,13 @@
  *     later but drive.readonly is simpler for ingestion MVP)
  */
 
-import type { SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from "@supabase/supabase-js";
 
-export const GOOGLE_DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
-export const GOOGLE_DRIVE_BASE = 'https://www.googleapis.com/drive/v3';
-export const GOOGLE_DOCS_EXPORT_BASE = 'https://docs.googleapis.com/v1/documents';
+export const GOOGLE_DRIVE_SCOPE =
+  "https://www.googleapis.com/auth/drive.readonly";
+export const GOOGLE_DRIVE_BASE = "https://www.googleapis.com/drive/v3";
+export const GOOGLE_DOCS_EXPORT_BASE =
+  "https://docs.googleapis.com/v1/documents";
 
 export interface DriveFile {
   id: string;
@@ -62,9 +64,11 @@ export async function listDriveFiles(
   } = {},
 ): Promise<DriveListResponse> {
   const pageSize = Math.min(opts.pageSize ?? 25, 100);
-  const mimeFilter = (opts.mimeTypes ?? ['application/vnd.google-apps.document'])
+  const mimeFilter = (
+    opts.mimeTypes ?? ["application/vnd.google-apps.document"]
+  )
     .map((m) => `mimeType = '${m}'`)
-    .join(' or ');
+    .join(" or ");
 
   const qParts = [`(${mimeFilter})`, `trashed = false`];
   if (opts.query) {
@@ -73,18 +77,19 @@ export async function listDriveFiles(
 
   const params = new URLSearchParams({
     pageSize: String(pageSize),
-    orderBy: 'modifiedTime desc',
-    fields: 'nextPageToken, files(id, name, mimeType, modifiedTime, webViewLink, iconLink, size)',
-    q: qParts.join(' and '),
+    orderBy: "modifiedTime desc",
+    fields:
+      "nextPageToken, files(id, name, mimeType, modifiedTime, webViewLink, iconLink, size)",
+    q: qParts.join(" and "),
   });
-  if (opts.pageToken) params.set('pageToken', opts.pageToken);
+  if (opts.pageToken) params.set("pageToken", opts.pageToken);
 
   const res = await fetch(`${GOOGLE_DRIVE_BASE}/files?${params.toString()}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      Accept: 'application/json',
+      Accept: "application/json",
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   if (!res.ok) {
@@ -108,11 +113,15 @@ export async function fetchDriveDocAsText(
   fileId: string,
   mimeType: string,
 ): Promise<{ title: string; content: string }> {
-  if (mimeType === 'application/vnd.google-apps.document') {
+  // Drive file ids are URL-safe base64; anything else (e.g. "..") is refused.
+  if (!/^[A-Za-z0-9_-]+$/.test(fileId)) {
+    throw new Error("Invalid Drive file id");
+  }
+  if (mimeType === "application/vnd.google-apps.document") {
     // Google Docs native — use export endpoint, prefer markdown if available
-    const exportMime = 'text/plain';
-    const exportUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}/export?mimeType=${encodeURIComponent(exportMime)}`;
-    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}?fields=id,name,mimeType`;
+    const exportMime = "text/plain";
+    const exportUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}/export?mimeType=${encodeURIComponent(exportMime)}`;
+    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}?fields=id,name,mimeType`;
 
     const [metaRes, textRes] = await Promise.all([
       fetch(metaUrl, { headers: { Authorization: `Bearer ${accessToken}` } }),
@@ -132,16 +141,18 @@ export async function fetchDriveDocAsText(
   }
 
   if (
-    mimeType === 'text/plain' ||
-    mimeType === 'text/markdown' ||
-    mimeType === 'text/x-markdown'
+    mimeType === "text/plain" ||
+    mimeType === "text/markdown" ||
+    mimeType === "text/x-markdown"
   ) {
-    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}?fields=id,name,mimeType`;
-    const contentUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}?alt=media`;
+    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}?fields=id,name,mimeType`;
+    const contentUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}?alt=media`;
 
     const [metaRes, textRes] = await Promise.all([
       fetch(metaUrl, { headers: { Authorization: `Bearer ${accessToken}` } }),
-      fetch(contentUrl, { headers: { Authorization: `Bearer ${accessToken}` } }),
+      fetch(contentUrl, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }),
     ]);
     if (!metaRes.ok) throw new Error(`meta: ${metaRes.status}`);
     if (!textRes.ok) throw new Error(`content: ${textRes.status}`);
@@ -171,6 +182,7 @@ export async function getDriveAccessToken(
 ): Promise<string | null> {
   const { data } = await supabase.auth.getSession();
   // Supabase exposes provider_token only during the live session after OAuth
-  const token = (data.session as { provider_token?: string } | null)?.provider_token;
+  const token = (data.session as { provider_token?: string } | null)
+    ?.provider_token;
   return token ?? null;
 }

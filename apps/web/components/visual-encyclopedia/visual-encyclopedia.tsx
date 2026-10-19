@@ -533,12 +533,6 @@ function Inspector({
             >
               Full dossier <PhArrowUpRight className="h-3.5 w-3.5" />
             </Link>
-            <Link
-              href="/command/inbox"
-              className="flex items-center gap-1.5 text-[var(--arc-brand-atlantean-teal)] hover:text-white"
-            >
-              Review desk <PhArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
           </div>
         </div>
       </div>

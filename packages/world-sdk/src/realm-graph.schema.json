@@ -1,0 +1,491 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Arcanea Realm Graph v0: local projection and declared staging overlay",
+  "description": "Shape validation does not establish canon, source, human approval, rights or tenant authority. Runtime also checks referential integrity, interval order, JSON data/depth/byte bounds and exact trusted Git source bytes. LOCKED is compiler output only; an overlay cannot supply it.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/overlay"
+    },
+    {
+      "$ref": "#/$defs/snapshot"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9]+(?:[a-zA-Z0-9:._-]*[a-zA-Z0-9])?$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[a-zA-Z0-9._/-]+(?<!/)$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "lineStart": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "lineEnd": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": ["path", "sha256"],
+      "dependentRequired": {
+        "lineStart": ["lineEnd"],
+        "lineEnd": ["lineStart"]
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "character",
+            "place",
+            "faction",
+            "creature",
+            "artifact",
+            "world-rule",
+            "event",
+            "timeline",
+            "series",
+            "work",
+            "scene",
+            "quest",
+            "asset",
+            "release"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "\\S"
+        },
+        "workId": {
+          "$ref": "#/$defs/id"
+        },
+        "timelineId": {
+          "$ref": "#/$defs/id"
+        },
+        "moment": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 8000
+        }
+      },
+      "required": ["id", "type", "label"],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "scene"
+              }
+            }
+          },
+          "then": {
+            "required": ["workId", "timelineId", "moment", "participants"]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": ["workId"]
+                },
+                {
+                  "required": ["timelineId"]
+                },
+                {
+                  "required": ["moment"]
+                },
+                {
+                  "required": ["participants"]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "candidateAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/id"
+        },
+        "predicate": {
+          "type": "string",
+          "maxLength": 80,
+          "pattern": "^[a-zA-Z][a-zA-Z0-9._-]*$"
+        },
+        "value": {},
+        "cardinality": {
+          "enum": ["one", "many"]
+        },
+        "status": {
+          "enum": ["STAGING", "CANDIDATE"]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "validity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "timelineId": {
+                  "$ref": "#/$defs/id"
+                },
+                "from": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "to": {
+                  "type": ["integer", "null"],
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": ["timelineId", "from", "to"]
+            }
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "affectedArtifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 8000
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 8000
+        }
+      },
+      "required": [
+        "id",
+        "subjectId",
+        "predicate",
+        "value",
+        "cardinality",
+        "status",
+        "confidence",
+        "validity",
+        "source",
+        "affectedArtifacts",
+        "supersedes"
+      ]
+    },
+    "lockedAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/id"
+        },
+        "predicate": {
+          "type": "string",
+          "maxLength": 80,
+          "pattern": "^[a-zA-Z][a-zA-Z0-9._-]*$"
+        },
+        "value": {},
+        "cardinality": {
+          "enum": ["one", "many"]
+        },
+        "status": {
+          "const": "LOCKED"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "validity": {
+          "type": "null"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "affectedArtifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 8000
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "maxItems": 8000
+        },
+        "canonTier": {
+          "$ref": "#/$defs/canonTier"
+        },
+        "sourceVerification": {
+          "const": "git-byte-verified"
+        }
+      },
+      "required": [
+        "id",
+        "subjectId",
+        "predicate",
+        "value",
+        "cardinality",
+        "status",
+        "confidence",
+        "validity",
+        "source",
+        "affectedArtifacts",
+        "supersedes",
+        "canonTier",
+        "sourceVerification"
+      ]
+    },
+    "canonTier": {
+      "enum": [
+        "tier-1",
+        "tier-2",
+        "tier-3",
+        "tier-4",
+        "tier-6",
+        "terminology",
+        "extensibility"
+      ]
+    },
+    "canonCitation": {
+      "allOf": [
+        { "$ref": "#/$defs/source" },
+        { "required": ["commit", "lineStart", "lineEnd"] }
+      ]
+    },
+    "canonSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 128000 },
+        "canonTier": { "$ref": "#/$defs/canonTier" },
+        "source": { "$ref": "#/$defs/canonCitation" }
+      },
+      "required": ["id", "title", "text", "canonTier", "source"]
+    },
+    "canonAmbiguity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "const": "ambiguity:luminor-gates" },
+        "status": { "const": "human-resolution-required" },
+        "description": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "sources": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/canonCitation" }
+        }
+      },
+      "required": ["id", "status", "description", "sources"]
+    },
+    "overlay": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "realm.arcanea.graph.v0"
+        },
+        "releaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "\\S"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "pattern": "\\S"
+        },
+        "entities": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "$ref": "#/$defs/entity"
+          }
+        },
+        "assertions": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "$ref": "#/$defs/candidateAssertion"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "maxItems": 8000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "dependsOn": {
+                "$ref": "#/$defs/id"
+              },
+              "artifactId": {
+                "$ref": "#/$defs/id"
+              }
+            },
+            "required": ["dependsOn", "artifactId"]
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "releaseId",
+        "entities",
+        "assertions",
+        "dependencies"
+      ]
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "realm.arcanea.graph.v0"
+        },
+        "releaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "\\S"
+        },
+        "canonSource": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "const": ".arcanea/lore/CANON_LOCKED.md"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            },
+            "sha256": {
+              "const": "58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f"
+            }
+          },
+          "required": ["path", "commit", "sha256"]
+        },
+        "locked": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "coverage": {
+              "const": "current-locked-sections-and-locked-terminology"
+            },
+            "generatorVersion": {
+              "const": "arcanea.locked-canon-projection.v1"
+            },
+            "entities": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/entity"
+              }
+            },
+            "assertions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/lockedAssertion"
+              }
+            },
+            "sourceSegments": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/canonSegment" }
+            },
+            "ambiguities": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/canonAmbiguity" }
+            }
+          },
+          "required": [
+            "coverage",
+            "generatorVersion",
+            "entities",
+            "assertions",
+            "sourceSegments",
+            "ambiguities"
+          ]
+        },
+        "staging": {
+          "$ref": "#/$defs/overlay"
+        },
+        "canonPromotionAllowed": {
+          "const": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "releaseId",
+        "canonSource",
+        "locked",
+        "staging",
+        "canonPromotionAllowed"
+      ]
+    }
+  }
+}
