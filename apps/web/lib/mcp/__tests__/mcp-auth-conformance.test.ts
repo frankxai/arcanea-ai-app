@@ -22,11 +22,12 @@ const MCP_URL = `${ORIGIN}/api/mcp`;
 const METADATA_URL = `${ORIGIN}/.well-known/oauth-protected-resource/api/mcp`;
 const USER_ID = "20000000-0000-4000-8000-000000000001";
 const ISSUER = `${SUPABASE_URL}/auth/v1`;
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
 const WWW_AUTHENTICATE = new RegExp(
-  `^Bearer resource_metadata="${METADATA_URL.replace(/[./]/g, "\\$&")}"$`,
+  `^Bearer resource_metadata="${escapeRegExp(METADATA_URL)}"$`,
 );
 const WWW_AUTHENTICATE_INVALID = new RegExp(
-  `^Bearer error="invalid_token", error_description="[^"]+", resource_metadata="${METADATA_URL.replace(/[./]/g, "\\$&")}"$`,
+  `^Bearer error="invalid_token", error_description="[^"]+", resource_metadata="${escapeRegExp(METADATA_URL)}"$`,
 );
 
 // Tokens the stubbed Supabase Auth accepts (stands in for its signature check).
