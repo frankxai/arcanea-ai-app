@@ -10,7 +10,15 @@ type SessionRow = {
   luminor_id: string | null;
   created_at: string;
   updated_at: string;
+  chat_messages?: Array<{ count?: number }> | null;
 };
+
+export function extractSessionMessageCount(session: SessionRow): number {
+  const count = session.chat_messages?.[0]?.count;
+  return typeof count === "number" && Number.isFinite(count) && count >= 0
+    ? count
+    : 0;
+}
 
 function respond(data: unknown, error: string | null, status = 200) {
   return NextResponse.json(
@@ -39,7 +47,7 @@ export async function GET(req: NextRequest) {
   try {
     let query = auth.client
       .from("chat_sessions")
-      .select("*")
+      .select("*, chat_messages(count)")
       .eq("user_id", auth.userId)
       .order("updated_at", { ascending: false });
     const luminorId = req.nextUrl.searchParams.get("luminorId");
@@ -54,7 +62,7 @@ export async function GET(req: NextRequest) {
         luminorId: session.luminor_id,
         createdAt: session.created_at,
         updatedAt: session.updated_at,
-        messageCount: 0,
+        messageCount: extractSessionMessageCount(session),
       })),
       null,
     );

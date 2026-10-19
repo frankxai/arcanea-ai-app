@@ -1,0 +1,131 @@
+{
+  "purpose": "Diagnostic fixture enumeration only; not engine import or player playtest",
+  "paths": [
+    {
+      "name": "care_allow",
+      "actions": ["ask-care", "private-care", "care-allow"],
+      "expectedState": "care_allow",
+      "expectedVariables": {
+        "focus": "care",
+        "supportPlan": "name-fear-to-chosen-listener",
+        "notesPermission": "allow-with-check-in",
+        "destination": "Atlantean",
+        "historicalFileChanged": false,
+        "notesScope": "new-kael-observations-only",
+        "notesSharingAllowed": false,
+        "notesRevocable": true,
+        "stopAgreement": true,
+        "firstRoadQuestion": "What do you notice before the feeling becomes frightening?",
+        "nextDiscussion": "check-before-each-new-record"
+      }
+    },
+    {
+      "name": "care_defer",
+      "actions": ["ask-care", "private-care", "care-defer"],
+      "expectedState": "care_defer",
+      "expectedVariables": {
+        "focus": "care",
+        "supportPlan": "name-fear-to-chosen-listener",
+        "notesPermission": "defer-until-discussed",
+        "destination": "Atlantean",
+        "historicalFileChanged": false,
+        "notesScope": "new-kael-observations-only",
+        "notesSharingAllowed": false,
+        "notesRevocable": true,
+        "stopAgreement": true,
+        "firstRoadQuestion": "none-until-agreement-reviewed",
+        "nextDiscussion": "Would you prefer to speak without a notebook today?"
+      }
+    },
+    {
+      "name": "control_allow",
+      "actions": ["ask-control", "private-control", "control-allow"],
+      "expectedState": "control_allow",
+      "expectedVariables": {
+        "focus": "control",
+        "supportPlan": "agree-on-stop-before-training",
+        "notesPermission": "allow-with-check-in",
+        "destination": "Atlantean",
+        "historicalFileChanged": false,
+        "notesScope": "new-kael-observations-only",
+        "notesSharingAllowed": false,
+        "notesRevocable": true,
+        "stopAgreement": true,
+        "firstRoadQuestion": "What do you notice now, and do you want to continue?",
+        "nextDiscussion": "check-before-each-new-record"
+      }
+    },
+    {
+      "name": "control_defer",
+      "actions": ["ask-control", "private-control", "control-defer"],
+      "expectedState": "control_defer",
+      "expectedVariables": {
+        "focus": "control",
+        "supportPlan": "agree-on-stop-before-training",
+        "notesPermission": "defer-until-discussed",
+        "destination": "Atlantean",
+        "historicalFileChanged": false,
+        "notesScope": "new-kael-observations-only",
+        "notesSharingAllowed": false,
+        "notesRevocable": true,
+        "stopAgreement": true,
+        "firstRoadQuestion": "none-until-agreement-reviewed",
+        "nextDiscussion": "What should I do when you ask to stop a question?"
+      }
+    },
+    {
+      "name": "evidence_allow",
+      "actions": ["ask-evidence", "private-evidence", "evidence-allow"],
+      "expectedState": "evidence_allow",
+      "expectedVariables": {
+        "focus": "evidence",
+        "supportPlan": "separate-observation-from-theory",
+        "notesPermission": "allow-with-check-in",
+        "destination": "Atlantean",
+        "historicalFileChanged": false,
+        "notesScope": "new-kael-observations-only",
+        "notesSharingAllowed": false,
+        "notesRevocable": true,
+        "stopAgreement": true,
+        "firstRoadQuestion": "Which part did you perceive, and which part are we inferring?",
+        "nextDiscussion": "check-before-each-new-record"
+      }
+    },
+    {
+      "name": "evidence_defer",
+      "actions": ["ask-evidence", "private-evidence", "evidence-defer"],
+      "expectedState": "evidence_defer",
+      "expectedVariables": {
+        "focus": "evidence",
+        "supportPlan": "separate-observation-from-theory",
+        "notesPermission": "defer-until-discussed",
+        "destination": "Atlantean",
+        "historicalFileChanged": false,
+        "notesScope": "new-kael-observations-only",
+        "notesSharingAllowed": false,
+        "notesRevocable": true,
+        "stopAgreement": true,
+        "firstRoadQuestion": "none-until-agreement-reviewed",
+        "nextDiscussion": "Would you like the purpose of a question explained before deciding?"
+      }
+    }
+  ],
+  "denials": [
+    {
+      "name": "unknown action",
+      "prefix": [],
+      "action": "demonstrate-five-elements"
+    },
+    {
+      "name": "wrong-scene action",
+      "prefix": ["ask-care"],
+      "action": "ask-control"
+    },
+    {
+      "name": "terminal action",
+      "prefix": ["ask-care", "private-care", "care-allow"],
+      "action": "private-care"
+    }
+  ],
+  "recovery": "Rejected actions preserve diagnostic snapshot; reset returns declared initial state and variables. No disk save or crash recovery implementation."
+}
