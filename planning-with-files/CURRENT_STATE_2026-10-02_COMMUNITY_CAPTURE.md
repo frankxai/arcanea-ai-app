@@ -138,3 +138,32 @@ must verify this exact correction. Source behavior and tests remain unchanged.
 
 Official references consulted: [React useId](https://react.dev/reference/react/useId)
 and [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController).
+
+## October 3: built-browser recovery verification
+
+Scope: existing draft493 at27ad6204, one sequential text/CI workload. Owner: Codex,
+same worktree/branch. Files: bounded browser verifier, additive native CI step,
+this record and, only after a reproduced defect, the existing community form.
+No dependency installation, local build/browser, new repo/worktree/API or live signup.
+Storage is bounded at13.6percent free. Missing progressive-skill-gateway/capability
+guides on the local config checkout remain limitations; no substitute is invented.
+
+The browser drives the production-built React form in desktop,375px touch and
+reduced motion. All writes are intercepted transport fixtures: native required/email
+validity, associated label/status, in-flight exclusion, literal-success receipt,
+HTTP failure, connection loss, the actual ten-second timeout, retry and editing
+after success. JSON binds built checkout and PR source separately, with source hashes
+and partial failure evidence. No screenshot/visual approval, full accessibility,
+Supabase persistence, email delivery, paid demand or release acceptance follows.
+First native run must reproduce any stale confirmation before its form correction;
+retain its failing artifact. Current-source independent review remains separate.
+
+Correction to earlier task wording: the existing migration is UNIQUE(email,source),
+not email alone. Different sources can create distinct waitlist rows; duplicate
+handling makes a retry for the same email/source idempotent. The browser fixture
+does not verify the live database's deployed schema. Neither API nor migration changes.
+The serious alternative is the existing source/HTTP fixture proof; it does not
+exercise hydration, native constraint handling or the visible retry interaction.
+Keep original403, pricing494/shared submit helper, parent work and280/408/427.
+Rollback: scoped revert of these owned additions/correction only. Native CI and
+actual browser results will be recorded on493/276 with source identities.
