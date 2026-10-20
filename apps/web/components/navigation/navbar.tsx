@@ -311,7 +311,7 @@ export function Navbar() {
             ? { backgroundColor: "var(--arc-story-night)" }
             : undefined
         }
-        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ${
           scrolled
             ? "liquid-surface liquid-tier-control !border-x-0 !border-t-0"
             : "bg-transparent border-b border-transparent"
