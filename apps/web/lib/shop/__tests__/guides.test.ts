@@ -53,7 +53,10 @@ test("Pillar guide 2 includes sourced and dated platform rules for Steam, KDP, a
   // Amazon KDP rule verification (including that AI-created drafts stay AI-generated after substantial human edits)
   assert.match(fullText, /Amazon KDP AI Guidelines/i);
   assert.match(fullText, /September 2023/i);
-  assert.match(fullText, /https:\/\/kdp\.amazon\.com\/en_US\/help\/topic\/G200672300/);
+  assert.match(
+    fullText,
+    /https:\/\/kdp\.amazon\.com\/en_US\/help\/topic\/G200672300/,
+  );
   assert.match(
     fullText,
     /still classifies as AI-generated even if a human later applies substantial edits/i,
@@ -79,7 +82,10 @@ test("Pillar guide 2 worked example preserves mandatory KDP AI-generated disclos
   assert.match(fullText, /canonState: 'in_review'/i);
   assert.match(fullText, /canonState: 'accepted'/i);
   assert.match(fullText, /human transformation delta/i);
-  assert.match(fullText, /mandatory `'AI-generated'` disclosure on Amazon KDP/i);
+  assert.match(
+    fullText,
+    /mandatory `'AI-generated'` disclosure on Amazon KDP/i,
+  );
   assert.match(
     fullText,
     /supporting production records.*do not constitute legal advice or guarantee copyright eligibility/i,
@@ -113,4 +119,3 @@ test("Pillar guide 2 includes capture links with UTM parameters and guide page r
     /The example is an AI-assisted proposal outside official Arcanea\s+canon/i,
   );
 });
-

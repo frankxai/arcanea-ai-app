@@ -27,20 +27,38 @@ export interface VideoStepResult {
 type LooseAdminClient = {
   from: (table: string) => {
     select: (cols: string) => {
-      eq: (col: string, val: string) => {
-        single: () => PromiseLike<{ data: Record<string, unknown> | null; error: { message: string } | null }>;
+      eq: (
+        col: string,
+        val: string,
+      ) => {
+        single: () => PromiseLike<{
+          data: Record<string, unknown> | null;
+          error: { message: string } | null;
+        }>;
       };
     };
     insert: (row: Record<string, unknown>) => {
       select: (cols: string) => {
-        single: () => PromiseLike<{ data: Record<string, unknown> | null; error: { message: string } | null }>;
+        single: () => PromiseLike<{
+          data: Record<string, unknown> | null;
+          error: { message: string } | null;
+        }>;
       };
     };
     update: (row: Record<string, unknown>) => {
-      eq: (col: string, val: string) => PromiseLike<{ data: unknown; error: { message: string } | null }>;
+      eq: (
+        col: string,
+        val: string,
+      ) => PromiseLike<{ data: unknown; error: { message: string } | null }>;
     };
   };
-  rpc: (fn: string, args: Record<string, unknown>) => PromiseLike<{ data: Record<string, unknown> | null; error: { message: string } | null }>;
+  rpc: (
+    fn: string,
+    args: Record<string, unknown>,
+  ) => PromiseLike<{
+    data: Record<string, unknown> | null;
+    error: { message: string } | null;
+  }>;
 };
 
 function adminDb(): LooseAdminClient {
@@ -59,7 +77,8 @@ function getVideoUrl(file: unknown): string {
 
 function resolveVideoModel(gatewayId: string) {
   const hasGatewayCreds = Boolean(
-    process.env.AI_GATEWAY_TOKEN?.trim() || process.env.VERCEL_OIDC_TOKEN?.trim()
+    process.env.AI_GATEWAY_TOKEN?.trim() ||
+    process.env.VERCEL_OIDC_TOKEN?.trim(),
   );
   if (
     !hasGatewayCreds &&
@@ -76,7 +95,7 @@ async function recordStep(
   status: string,
   stepName: string,
   data?: Record<string, unknown>,
-  error?: string
+  error?: string,
 ): Promise<boolean> {
   try {
     const supabase = adminDb();
@@ -111,33 +130,60 @@ async function recordStep(
   }
 }
 
-export async function admitStep(inputs: VideoWorkflowInputs): Promise<VideoStepResult> {
+export async function admitStep(
+  inputs: VideoWorkflowInputs,
+): Promise<VideoStepResult> {
   "use step";
   if (!inputs.userId || !inputs.prompt || !inputs.jobId || !inputs.requestKey) {
-    return { step: "admit", status: "failed", error: "Invalid workflow inputs" };
+    return {
+      step: "admit",
+      status: "failed",
+      error: "Invalid workflow inputs",
+    };
   }
   if (
     inputs.duration !== undefined &&
-    (!Number.isInteger(inputs.duration) || inputs.duration < 3 || inputs.duration > 30)
+    (!Number.isInteger(inputs.duration) ||
+      inputs.duration < 3 ||
+      inputs.duration > 30)
   ) {
-    return { step: "admit", status: "failed", error: "Duration must be between 3 and 30 seconds" };
+    return {
+      step: "admit",
+      status: "failed",
+      error: "Duration must be between 3 and 30 seconds",
+    };
   }
   if (inputs.operation === "image-to-video") {
     if (!inputs.imageUrl) {
-      return { step: "admit", status: "failed", error: "Image URL required for image-to-video" };
+      return {
+        step: "admit",
+        status: "failed",
+        error: "Image URL required for image-to-video",
+      };
     }
     if (!isHttpsImageUrl(inputs.imageUrl)) {
-      return { step: "admit", status: "failed", error: "Valid HTTPS image URL required for image-to-video" };
+      return {
+        step: "admit",
+        status: "failed",
+        error: "Valid HTTPS image URL required for image-to-video",
+      };
     }
   }
   const recorded = await recordStep(inputs.jobId, "admitted", "admit");
   if (!recorded) {
-    return { step: "admit", status: "failed", error: "Failed to persist admission state" };
+    return {
+      step: "admit",
+      status: "failed",
+      error: "Failed to persist admission state",
+    };
   }
   return { step: "admit", status: "success" };
 }
 
-export async function debitStep(inputs: VideoWorkflowInputs, cost: number): Promise<VideoStepResult> {
+export async function debitStep(
+  inputs: VideoWorkflowInputs,
+  cost: number,
+): Promise<VideoStepResult> {
   "use step";
   if (!Number.isInteger(cost) || cost < 0) {
     return { step: "debit", status: "failed", error: "Invalid credit cost" };
@@ -146,21 +192,32 @@ export async function debitStep(inputs: VideoWorkflowInputs, cost: number): Prom
   const reference = `${inputs.userId}:${inputs.requestKey}`;
   const supabase = adminDb();
 
-  const { data: reservation, error: rpcError } = await supabase.rpc("billing_reserve_credits", {
-    p_user: inputs.userId,
-    p_amount: cost,
-    p_action: "video.clip",
-    p_reference: reference,
-    p_metadata: {
-      jobId: inputs.jobId,
-      fingerprint: `${inputs.prompt}:${inputs.operation || "text-to-video"}:${inputs.duration || 5}`,
+  const { data: reservation, error: rpcError } = await supabase.rpc(
+    "billing_reserve_credits",
+    {
+      p_user: inputs.userId,
+      p_amount: cost,
+      p_action: "video.clip",
+      p_reference: reference,
+      p_metadata: {
+        jobId: inputs.jobId,
+        fingerprint: `${inputs.prompt}:${inputs.operation || "text-to-video"}:${inputs.duration || 5}`,
+      },
     },
-  });
+  );
 
   if (rpcError || (reservation && reservation.ok === false)) {
     const errReason =
-      (reservation?.reason as string) || rpcError?.message || "Insufficient credits or reservation error";
-    await recordStep(inputs.jobId, "failed", "debit", { debitId, cost }, errReason);
+      (reservation?.reason as string) ||
+      rpcError?.message ||
+      "Insufficient credits or reservation error";
+    await recordStep(
+      inputs.jobId,
+      "failed",
+      "debit",
+      { debitId, cost },
+      errReason,
+    );
     return { step: "debit", status: "failed", error: errReason };
   }
 
@@ -178,27 +235,47 @@ export async function debitStep(inputs: VideoWorkflowInputs, cost: number): Prom
     return { step: "debit", status: "failed", error: jobErr.message };
   }
 
-  const recorded = await recordStep(inputs.jobId, "debited", "debit", { debitId, cost, reference });
+  const recorded = await recordStep(inputs.jobId, "debited", "debit", {
+    debitId,
+    cost,
+    reference,
+  });
   if (!recorded) {
-    return { step: "debit", status: "failed", error: "Failed to record debit step" };
+    return {
+      step: "debit",
+      status: "failed",
+      error: "Failed to record debit step",
+    };
   }
-  return { step: "debit", status: "success", data: { debitId, cost, reference } };
+  return {
+    step: "debit",
+    status: "success",
+    data: { debitId, cost, reference },
+  };
 }
 
-export async function generateStep(inputs: VideoWorkflowInputs): Promise<VideoStepResult> {
+export async function generateStep(
+  inputs: VideoWorkflowInputs,
+): Promise<VideoStepResult> {
   "use step";
   const isI2V = inputs.operation === "image-to-video";
   const registryEntry = getModel(isI2V ? "wan-2.5" : "veo-3.1");
   const primaryModelId =
-    registryEntry?.gatewayId || (isI2V ? "alibaba/wan-2.5-i2v-720p" : "google/veo-3.1-generate-001");
+    registryEntry?.gatewayId ||
+    (isI2V ? "alibaba/wan-2.5-i2v-720p" : "google/veo-3.1-generate-001");
   const fallbackModelId =
-    registryEntry?.fallbackGatewayIds?.[0] || (isI2V ? "google/veo-3.1-generate-001" : "klingai/kling-v2.5-turbo-pro");
+    registryEntry?.fallbackGatewayIds?.[0] ||
+    (isI2V ? "google/veo-3.1-generate-001" : "klingai/kling-v2.5-turbo-pro");
 
   const promptPayload =
-    isI2V && inputs.imageUrl ? { text: inputs.prompt, image: inputs.imageUrl } : inputs.prompt;
+    isI2V && inputs.imageUrl
+      ? { text: inputs.prompt, image: inputs.imageUrl }
+      : inputs.prompt;
   const durationOpt = inputs.duration ? { duration: inputs.duration } : {};
 
-  await recordStep(inputs.jobId, "generating", "generate_start", { model: primaryModelId });
+  await recordStep(inputs.jobId, "generating", "generate_start", {
+    model: primaryModelId,
+  });
 
   try {
     const res = await experimental_generateVideo({
@@ -208,11 +285,21 @@ export async function generateStep(inputs: VideoWorkflowInputs): Promise<VideoSt
     });
     const url = getVideoUrl(res.video);
     if (url) {
-      await recordStep(inputs.jobId, "generating", "generate_complete", { model: primaryModelId, url });
-      return { step: "generate", status: "success", data: { videoUrl: url, model: primaryModelId } };
+      await recordStep(inputs.jobId, "generating", "generate_complete", {
+        model: primaryModelId,
+        url,
+      });
+      return {
+        step: "generate",
+        status: "success",
+        data: { videoUrl: url, model: primaryModelId },
+      };
     }
   } catch (err) {
-    console.warn(`Primary model ${primaryModelId} failed, trying fallback ${fallbackModelId}:`, err);
+    console.warn(
+      `Primary model ${primaryModelId} failed, trying fallback ${fallbackModelId}:`,
+      err,
+    );
   }
 
   try {
@@ -223,29 +310,59 @@ export async function generateStep(inputs: VideoWorkflowInputs): Promise<VideoSt
     });
     const fbUrl = getVideoUrl(fbRes.video);
     if (fbUrl) {
-      await recordStep(inputs.jobId, "generating", "generate_complete", { model: fallbackModelId, url: fbUrl });
-      return { step: "generate", status: "success", data: { videoUrl: fbUrl, model: fallbackModelId } };
+      await recordStep(inputs.jobId, "generating", "generate_complete", {
+        model: fallbackModelId,
+        url: fbUrl,
+      });
+      return {
+        step: "generate",
+        status: "success",
+        data: { videoUrl: fbUrl, model: fallbackModelId },
+      };
     }
   } catch (fallbackErr) {
-    const errMsg = fallbackErr instanceof Error ? fallbackErr.message : "Generation failed";
-    await recordStep(inputs.jobId, "failed", "generate_error", undefined, errMsg);
+    const errMsg =
+      fallbackErr instanceof Error ? fallbackErr.message : "Generation failed";
+    await recordStep(
+      inputs.jobId,
+      "failed",
+      "generate_error",
+      undefined,
+      errMsg,
+    );
     return { step: "generate", status: "failed", error: errMsg };
   }
 
-  await recordStep(inputs.jobId, "failed", "generate_error", undefined, "No video returned");
+  await recordStep(
+    inputs.jobId,
+    "failed",
+    "generate_error",
+    undefined,
+    "No video returned",
+  );
   return { step: "generate", status: "failed", error: "No video returned" };
 }
 
-export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): Promise<VideoStepResult> {
+export async function storeStep(
+  inputs: VideoWorkflowInputs,
+  videoUrl: string,
+): Promise<VideoStepResult> {
   "use step";
   if (!videoUrl) {
-    return { step: "store", status: "failed", error: "Missing video URL to store" };
+    return {
+      step: "store",
+      status: "failed",
+      error: "Missing video URL to store",
+    };
   }
   // Playback stays on the provider URL: private media has no signed delivery yet, so swapping in
   // the private object URL would hand the browser a link it cannot play.
   const storedUrl = videoUrl;
   let privateCopy: { bucket: string; key: string } | undefined;
-  if (process.env.STARLIGHT_MEDIA_API_KEY?.trim() && videoUrl.startsWith("data:")) {
+  if (
+    process.env.STARLIGHT_MEDIA_API_KEY?.trim() &&
+    videoUrl.startsWith("data:")
+  ) {
     const match = videoUrl.match(/^data:([^;]+);base64,(.+)$/);
     if (match) {
       try {
@@ -260,15 +377,23 @@ export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): 
         });
         privateCopy = { bucket: uploaded.bucket, key: uploaded.key };
       } catch (err) {
-        const msg = err instanceof Error ? err.message : "Private media upload failed";
+        const msg =
+          err instanceof Error ? err.message : "Private media upload failed";
         await recordStep(inputs.jobId, "failed", "store", undefined, msg);
         return { step: "store", status: "failed", error: msg };
       }
     }
   }
-  const recorded = await recordStep(inputs.jobId, "storing", "store", { videoUrl: storedUrl, privateCopy });
+  const recorded = await recordStep(inputs.jobId, "storing", "store", {
+    videoUrl: storedUrl,
+    privateCopy,
+  });
   if (!recorded) {
-    return { step: "store", status: "failed", error: "Failed to record store step" };
+    return {
+      step: "store",
+      status: "failed",
+      error: "Failed to record store step",
+    };
   }
   return { step: "store", status: "success", data: { storedUrl, privateCopy } };
 }
@@ -299,7 +424,13 @@ export async function linkStep(
     .single();
 
   if (assetErr) {
-    await recordStep(inputs.jobId, "failed", "link", undefined, assetErr.message);
+    await recordStep(
+      inputs.jobId,
+      "failed",
+      "link",
+      undefined,
+      assetErr.message,
+    );
     return { step: "link", status: "failed", error: assetErr.message };
   }
 
@@ -328,9 +459,15 @@ export async function linkStep(
     p_metadata: { jobId: inputs.jobId, assetId },
   });
 
-  const recorded = await recordStep(inputs.jobId, "completed", "link", { assetId });
+  const recorded = await recordStep(inputs.jobId, "completed", "link", {
+    assetId,
+  });
   if (!recorded) {
-    return { step: "link", status: "failed", error: "Failed to record link completion" };
+    return {
+      step: "link",
+      status: "failed",
+      error: "Failed to record link completion",
+    };
   }
   return { step: "link", status: "success", data: { assetId } };
 }
@@ -338,18 +475,22 @@ export async function linkStep(
 export async function notifyStep(
   inputs: VideoWorkflowInputs,
   status: "completed" | "failed",
-  extra?: Record<string, unknown>
+  extra?: Record<string, unknown>,
 ): Promise<VideoStepResult> {
   "use step";
   await recordStep(inputs.jobId, status, "notify", extra);
-  return { step: "notify", status: "success", data: { notified: true, jobStatus: status, ...extra } };
+  return {
+    step: "notify",
+    status: "success",
+    data: { notified: true, jobStatus: status, ...extra },
+  };
 }
 
 export async function refundStep(
   inputs: VideoWorkflowInputs,
   debitId: string,
   cost: number,
-  reason: string
+  reason: string,
 ): Promise<VideoStepResult> {
   "use step";
   const supabase = adminDb();
@@ -358,20 +499,43 @@ export async function refundStep(
     p_user: inputs.userId,
     p_reference: reference,
   });
-  const { error: releaseErr } = await supabase.rpc("billing_release_reservation", {
-    p_user: inputs.userId,
-    p_reference: reference,
-    p_metadata: { jobId: inputs.jobId, debitId, reason },
-  });
+  const { error: releaseErr } = await supabase.rpc(
+    "billing_release_reservation",
+    {
+      p_user: inputs.userId,
+      p_reference: reference,
+      p_metadata: { jobId: inputs.jobId, debitId, reason },
+    },
+  );
   if (releaseErr) {
-    await recordStep(inputs.jobId, "failed", "refund_error", { debitId, cost }, releaseErr.message);
+    await recordStep(
+      inputs.jobId,
+      "failed",
+      "refund_error",
+      { debitId, cost },
+      releaseErr.message,
+    );
     return { step: "refund", status: "failed", error: releaseErr.message };
   }
-  const recorded = await recordStep(inputs.jobId, "refunded", "refund", { debitId, cost }, reason);
+  const recorded = await recordStep(
+    inputs.jobId,
+    "refunded",
+    "refund",
+    { debitId, cost },
+    reason,
+  );
   if (!recorded) {
-    return { step: "refund", status: "failed", error: "Failed to record refund state" };
+    return {
+      step: "refund",
+      status: "failed",
+      error: "Failed to record refund state",
+    };
   }
-  return { step: "refund", status: "success", data: { refunded: true, debitId, cost } };
+  return {
+    step: "refund",
+    status: "success",
+    data: { refunded: true, debitId, cost },
+  };
 }
 
 export async function runVideoWorkflow(inputs: VideoWorkflowInputs) {
@@ -388,7 +552,9 @@ export async function runVideoWorkflow(inputs: VideoWorkflowInputs) {
     return { success: false, error: debit.error };
   }
 
-  const debitId = (debit.data?.debitId as string) || `debit_${inputs.jobId}_${inputs.requestKey}`;
+  const debitId =
+    (debit.data?.debitId as string) ||
+    `debit_${inputs.jobId}_${inputs.requestKey}`;
 
   try {
     const gen = await generateStep(inputs);
@@ -410,7 +576,8 @@ export async function runVideoWorkflow(inputs: VideoWorkflowInputs) {
 
     const storedVideoUrl = (store.data?.storedUrl as string) || rawVideoUrl;
 
-    const privateCopy = store.data?.privateCopy as { bucket: string; key: string } | undefined;
+    const privateCopy = store.data?.privateCopy as
+      { bucket: string; key: string } | undefined;
     const link = await linkStep(inputs, storedVideoUrl, model, privateCopy);
     if (link.status === "failed") {
       await refundStep(inputs, debitId, cost, link.error || "Link failed");
@@ -418,10 +585,19 @@ export async function runVideoWorkflow(inputs: VideoWorkflowInputs) {
       return { success: false, error: link.error };
     }
 
-    await notifyStep(inputs, "completed", { videoUrl: storedVideoUrl, assetId: link.data?.assetId });
-    return { success: true, jobId: inputs.jobId, videoUrl: storedVideoUrl, assetId: link.data?.assetId };
+    await notifyStep(inputs, "completed", {
+      videoUrl: storedVideoUrl,
+      assetId: link.data?.assetId,
+    });
+    return {
+      success: true,
+      jobId: inputs.jobId,
+      videoUrl: storedVideoUrl,
+      assetId: link.data?.assetId,
+    };
   } catch (err) {
-    const errMsg = err instanceof Error ? err.message : "Unhandled workflow error";
+    const errMsg =
+      err instanceof Error ? err.message : "Unhandled workflow error";
     await refundStep(inputs, debitId, cost, errMsg);
     await notifyStep(inputs, "failed", { error: errMsg });
     return { success: false, error: errMsg };

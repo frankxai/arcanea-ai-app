@@ -271,7 +271,12 @@ export async function resumeImages(
     if (data.status === "done") {
       const images = items(data.data);
       if (images.length > Number(job.count)) throw wire.pending();
-      return result(images, isGateway ? "gateway" : "grok", String(job.model), wire);
+      return result(
+        images,
+        isGateway ? "gateway" : "grok",
+        String(job.model),
+        wire,
+      );
     }
     if (data.status !== "pending") throw wire.pending();
     await wire.sleep(Math.min(2000, Math.max(0, wire.deadline - wire.now())));
@@ -349,7 +354,9 @@ export async function generateImages(
 
     const job: ImageJob = {
       provider: "gateway",
-      requestId: runtime.reference.replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 200) || "gateway_job",
+      requestId:
+        runtime.reference.replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 200) ||
+        "gateway_job",
       model: selectedModelDef.id,
       count,
     };
@@ -392,7 +399,10 @@ export async function generateImages(
         provider: "gateway",
         model: selectedModelDef.id,
         images: generated.images.map((img) => ({
-          url: imageUrl(`data:${img.mediaType || "image/png"};base64,${img.base64}`, wire.pending),
+          url: imageUrl(
+            `data:${img.mediaType || "image/png"};base64,${img.base64}`,
+            wire.pending,
+          ),
         })),
       };
     } catch (error) {
