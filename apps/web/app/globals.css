@@ -372,6 +372,39 @@
       0 0 0 1px rgba(255, 255, 255, 0.08);
   }
 
+  /* --- Liquid Surface: the floating layer only (nav, sheets, composer, one hero card) ---
+     Content cards keep the TASTE.md recipe; glass on everything reads as flat.
+     Refraction (#arc-liquid-lens) is switched on by <LiquidRefraction/> only where
+     backdrop-filter url() renders (Chromium, fine pointer); elsewhere this frosted base is final. */
+  .liquid-surface {
+    --liquid-tint: 55%;
+    --liquid-blur: 18px;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--arc-text-primary, #fff) 7%, transparent) 0%,
+        color-mix(in srgb, var(--arc-text-primary, #fff) 1.5%, transparent) 40%,
+        transparent 65%
+      ),
+      color-mix(in srgb, var(--arc-cosmic-void, #09090b) var(--liquid-tint), transparent);
+    backdrop-filter: blur(var(--liquid-blur)) saturate(1.6);
+    -webkit-backdrop-filter: blur(var(--liquid-blur)) saturate(1.6);
+    border: 1px solid color-mix(in srgb, var(--arc-text-primary, #fff) 9%, transparent);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--arc-text-primary, #fff) 14%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--arc-text-primary, #fff) 3%, transparent),
+      0 12px 40px -12px color-mix(in srgb, var(--arc-cosmic-void, #09090b) 85%, transparent);
+  }
+
+  /* Text sits on these, so the tint floor is set by contrast, not by looks. */
+  .liquid-tier-control  { --liquid-tint: 62%; --liquid-blur: 16px; }
+  .liquid-tier-floating { --liquid-tint: 58%; --liquid-blur: 22px; }
+  .liquid-tier-hero     { --liquid-tint: 46%; --liquid-blur: 14px; }
+
+  :root[data-liquid="refract"] .liquid-surface {
+    backdrop-filter: url(#arc-liquid-lens) blur(var(--liquid-blur)) saturate(1.6);
+  }
+
   /* --- Tier 6: Iridescent Glass (prismatic, premium/featured) --- */
   .iridescent-glass {
     background: linear-gradient(
@@ -1172,6 +1205,21 @@ p a, span a, li a {
   .liquid-glass-elevated {
     backdrop-filter: blur(12px) saturate(1.4) !important;
     -webkit-backdrop-filter: blur(12px) saturate(1.4) !important;
+  }
+
+  .liquid-surface {
+    --liquid-blur: 12px;
+  }
+}
+
+/* Users who asked for less transparency or more contrast get solid surfaces. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .liquid-surface,
+  .liquid-glass,
+  .liquid-glass-elevated {
+    background: var(--arc-cosmic-void, #09090b) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
 

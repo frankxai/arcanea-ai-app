@@ -19,6 +19,7 @@ import {
   DeferredOverlays,
 } from "@/components/layout/deferred-globals";
 import { Toaster } from "@/components/ui/sonner";
+import { LiquidRefraction } from "@/components/ui/liquid-refraction";
 
 function CosmicBackgroundFallback() {
   return (
@@ -203,6 +204,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <CosmicBackground />
             </DeferredBackground>
             <DeferredGlowTracker />
+            <LiquidRefraction />
             <Navbar />
             <main
               id="main-content"
