@@ -270,13 +270,14 @@ export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): 
   if (!recorded) {
     return { step: "store", status: "failed", error: "Failed to record store step" };
   }
-  return { step: "store", status: "success", data: { storedUrl } };
+  return { step: "store", status: "success", data: { storedUrl, privateCopy } };
 }
 
 export async function linkStep(
   inputs: VideoWorkflowInputs,
   videoUrl: string,
-  model: string
+  model: string,
+  privateCopy?: { bucket: string; key: string },
 ): Promise<VideoStepResult> {
   "use step";
   const supabase = adminDb();
@@ -285,8 +286,8 @@ export async function linkStep(
     .insert({
       owner_id: inputs.userId,
       kind: "video",
-      storage_bucket: "arcanea-media-private",
-      object_key: videoUrl,
+      storage_bucket: privateCopy?.bucket ?? "arcanea-media-private",
+      object_key: privateCopy?.key ?? videoUrl,
       duration_seconds: inputs.duration || 5,
       model_id: model,
       prompt: inputs.prompt,
@@ -409,7 +410,8 @@ export async function runVideoWorkflow(inputs: VideoWorkflowInputs) {
 
     const storedVideoUrl = (store.data?.storedUrl as string) || rawVideoUrl;
 
-    const link = await linkStep(inputs, storedVideoUrl, model);
+    const privateCopy = store.data?.privateCopy as { bucket: string; key: string } | undefined;
+    const link = await linkStep(inputs, storedVideoUrl, model, privateCopy);
     if (link.status === "failed") {
       await refundStep(inputs, debitId, cost, link.error || "Link failed");
       await notifyStep(inputs, "failed", { error: link.error });
