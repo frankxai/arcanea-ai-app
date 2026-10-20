@@ -1228,7 +1228,7 @@ async function main() {
         stage = "public-marketing-footer-newsletter-visible";
         await expect(
           publicFooter.getByRole("textbox", {
-            name: "Email address for newsletter",
+            name: "Email address for Arcanea updates",
           }),
         ).toBeVisible();
         stage = "public-marketing-footer-subscribe-visible";
@@ -1239,7 +1239,7 @@ async function main() {
           }),
         ).toBeVisible();
         const newsletter = publicFooter.getByRole("textbox", {
-          name: "Email address for newsletter",
+          name: "Email address for Arcanea updates",
         });
         const inspectNewsletter = () =>
           newsletter.evaluate((element) => {
