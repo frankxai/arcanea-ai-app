@@ -260,13 +260,16 @@ jobs:
         run: pnpm --dir apps/web test:billing
 
       - name: Verify waitlist signups are saved or honestly refused
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/capture-email.test.ts lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
 
       - name: Verify reader arguments against observed remote schema
         run: pnpm --dir apps/web exec tsx --test lib/mcp/__tests__/reader-catalog.test.ts
 
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
+
+      - name: Verify waitlist capture fails closed and unknown locales 404
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/route.test.ts lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/faults.test.ts lib/__tests__/locale-catch-all.test.ts
 
       - name: Verify reader title presentation and unchanged scene source
         run: node --test scripts/tests/reader-presentation.test.cjs
