@@ -126,6 +126,16 @@ export const glass = {
     "bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.06] backdrop-blur-md",
 } as const;
 
+/** Mirrors the --arc-liquid-* CSS variables in tokens.css. Tints are contrast floors. */
+export const liquidSurface = {
+  tint: { control: "85%", floating: "82%", hero: "62%" },
+  blur: { control: "16px", floating: "22px", hero: "14px", compact: "12px" },
+  saturate: 1.5,
+  borderMix: "8%",
+  sheenMix: "6%",
+  edgeMix: "12%",
+} as const;
+
 /**
  * Luminor character accents — the locked per-character palette.
  * Used wherever a Luminor needs identification color (orb gradient,

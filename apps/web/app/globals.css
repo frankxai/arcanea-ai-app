@@ -395,54 +395,61 @@
 
   /* --- Liquid Surface: the floating layer only (nav, sheets, composer) ---
      Content cards keep the TASTE.md recipe; glass on everything reads as flat.
-     Tints are contrast floors: white/68 nav links over a white page composite to 7.1:1 at 85%
-     and 3.7:1 at 62%, so do not lower them for looks. */
+     Values live in @arcanea/design-system (--arc-liquid-*); tints there are contrast floors. */
   .liquid-surface {
-    --liquid-tint: 85%;
-    --liquid-blur: 18px;
+    --liquid-tint: var(--arc-liquid-tint-control);
+    --liquid-blur: var(--arc-liquid-blur-control);
     background: color-mix(
       in srgb,
-      var(--arc-cosmic-void, #09090b) var(--liquid-tint),
+      var(--arc-cosmic-void) var(--liquid-tint),
       transparent
     );
     /* Unprefixed only: the CSS minifier collapses a backdrop-filter/-webkit- pair into the
        -webkit- form alone, which Chromium ignores, so the surface would not blur at all. */
-    backdrop-filter: blur(var(--liquid-blur)) saturate(1.5);
+    backdrop-filter: blur(var(--liquid-blur))
+      saturate(var(--arc-liquid-saturate));
     border: 1px solid
-      color-mix(in srgb, var(--arc-text-primary, #fff) 8%, transparent);
-    box-shadow: 0 12px 40px -12px
-      color-mix(in srgb, var(--arc-cosmic-void, #09090b) 85%, transparent);
+      color-mix(
+        in srgb,
+        var(--arc-text-primary) var(--arc-liquid-border-mix),
+        transparent
+      );
+    box-shadow: var(--arc-shadow-liquid);
   }
 
   .liquid-tier-control {
-    --liquid-tint: 85%;
-    --liquid-blur: 16px;
+    --liquid-tint: var(--arc-liquid-tint-control);
+    --liquid-blur: var(--arc-liquid-blur-control);
   }
   .liquid-tier-floating {
-    --liquid-tint: 82%;
-    --liquid-blur: 22px;
+    --liquid-tint: var(--arc-liquid-tint-floating);
+    --liquid-blur: var(--arc-liquid-blur-floating);
   }
 
   /* The one primary action gets the only light-catching edge on the page. */
   .liquid-tier-hero {
-    --liquid-tint: 62%;
-    --liquid-blur: 14px;
+    --liquid-tint: var(--arc-liquid-tint-hero);
+    --liquid-blur: var(--arc-liquid-blur-hero);
     background:
       linear-gradient(
         180deg,
-        color-mix(in srgb, var(--arc-text-primary, #fff) 6%, transparent) 0%,
+        color-mix(
+            in srgb,
+            var(--arc-text-primary) var(--arc-liquid-sheen-mix),
+            transparent
+          )
+          0%,
         transparent 45%
       ),
-      color-mix(
-        in srgb,
-        var(--arc-cosmic-void, #09090b) var(--liquid-tint),
-        transparent
-      );
+      color-mix(in srgb, var(--arc-cosmic-void) var(--liquid-tint), transparent);
     box-shadow:
       inset 0 1px 0
-        color-mix(in srgb, var(--arc-text-primary, #fff) 12%, transparent),
-      0 12px 40px -12px
-        color-mix(in srgb, var(--arc-cosmic-void, #09090b) 85%, transparent);
+        color-mix(
+          in srgb,
+          var(--arc-text-primary) var(--arc-liquid-edge-mix),
+          transparent
+        ),
+      var(--arc-shadow-liquid);
   }
 
   /* --- Tier 6: Iridescent Glass (prismatic, premium/featured) --- */
@@ -1432,7 +1439,7 @@ li a {
   }
 
   .liquid-surface {
-    --liquid-blur: 12px;
+    --liquid-blur: var(--arc-liquid-blur-compact);
   }
 }
 
@@ -1441,7 +1448,7 @@ li a {
   .liquid-surface,
   .liquid-glass,
   .liquid-glass-elevated {
-    background: var(--arc-cosmic-void, #09090b) !important;
+    background: var(--arc-cosmic-void) !important;
     backdrop-filter: none !important;
   }
 }
