@@ -28,7 +28,7 @@ const sceneSchema = z.object({
   source: sourceSchema,
   brief: z.string().min(12).max(2000),
   model: z.string().min(1).max(100),
-  provider: z.enum(["grok", "openrouter", "gemini"]),
+  provider: z.enum(["grok", "openrouter", "gemini", "gateway"]),
   image: z.object({
     data: z
       .string()

@@ -241,7 +241,10 @@ export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): 
   if (!videoUrl) {
     return { step: "store", status: "failed", error: "Missing video URL to store" };
   }
-  let storedUrl = videoUrl;
+  // Playback stays on the provider URL: private media has no signed delivery yet, so swapping in
+  // the private object URL would hand the browser a link it cannot play.
+  const storedUrl = videoUrl;
+  let privateCopy: { bucket: string; key: string } | undefined;
   if (process.env.STARLIGHT_MEDIA_API_KEY?.trim() && videoUrl.startsWith("data:")) {
     const match = videoUrl.match(/^data:([^;]+);base64,(.+)$/);
     if (match) {
@@ -255,7 +258,7 @@ export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): 
           category: "video",
           visibility: "private",
         });
-        storedUrl = uploaded.url;
+        privateCopy = { bucket: uploaded.bucket, key: uploaded.key };
       } catch (err) {
         const msg = err instanceof Error ? err.message : "Private media upload failed";
         await recordStep(inputs.jobId, "failed", "store", undefined, msg);
@@ -263,7 +266,7 @@ export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): 
       }
     }
   }
-  const recorded = await recordStep(inputs.jobId, "storing", "store", { videoUrl: storedUrl });
+  const recorded = await recordStep(inputs.jobId, "storing", "store", { videoUrl: storedUrl, privateCopy });
   if (!recorded) {
     return { step: "store", status: "failed", error: "Failed to record store step" };
   }
