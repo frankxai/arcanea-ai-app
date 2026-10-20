@@ -15,7 +15,7 @@ export interface GenerationSafety {
 export interface ImagineGenerationResponse {
   generationId: string;
   status: "completed";
-  provider: "grok" | "openrouter" | "gemini";
+  provider: "grok" | "openrouter" | "gemini" | "gateway";
   model: string;
   prompt: string;
   revisedPrompt?: string;

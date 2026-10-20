@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
-import { SHOP_GUIDES, findGuide } from "../guides.ts";
+import { SHOP_GUIDES, findGuide } from "../guides";
 
 test("all shop guides have required metadata and valid sections", () => {
   assert.ok(SHOP_GUIDES.length >= 3);

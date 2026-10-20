@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
   formatNextTraceCursor,
   parseTraceCursor,
-} from '../trace-cursor.ts';
+} from '../trace-cursor';
 
 describe('trace-cursor validation and pagination', () => {
   it('accepts empty or absent cursors as initial page', () => {

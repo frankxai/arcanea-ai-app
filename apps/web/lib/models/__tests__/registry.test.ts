@@ -118,7 +118,7 @@ test("generateImages and resumeImages support AI Gateway provider with credentia
   process.env.AI_GATEWAY_TOKEN = "test-gateway-token";
   process.env.XAI_API_KEY = "test-xai-secret-must-not-leak";
 
-  let capturedBody: Record<string, unknown> | null = null;
+  let capturedBody = null as Record<string, unknown> | null;
   let capturedHeaders: Record<string, string> | null = null;
   let checkpointedJob: ImageJob | null = null;
 

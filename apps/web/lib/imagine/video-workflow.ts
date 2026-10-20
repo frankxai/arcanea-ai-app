@@ -192,7 +192,7 @@ export async function generateStep(inputs: VideoWorkflowInputs): Promise<VideoSt
   const primaryModelId =
     registryEntry?.gatewayId || (isI2V ? "alibaba/wan-2.5-i2v-720p" : "google/veo-3.1-generate-001");
   const fallbackModelId =
-    registryEntry?.fallbackId || (isI2V ? "google/veo-3.1-generate-001" : "klingai/kling-v2.5-turbo-pro");
+    registryEntry?.fallbackGatewayIds?.[0] || (isI2V ? "google/veo-3.1-generate-001" : "klingai/kling-v2.5-turbo-pro");
 
   const promptPayload =
     isI2V && inputs.imageUrl ? { text: inputs.prompt, image: inputs.imageUrl } : inputs.prompt;
@@ -248,10 +248,11 @@ export async function storeStep(inputs: VideoWorkflowInputs, videoUrl: string): 
       try {
         const mediaStore = createMediaStore();
         const bytes = Buffer.from(match[2], "base64");
+        const contentType = match[1] || "video/mp4";
         const uploaded = await mediaStore.put(bytes, {
-          contentType: match[1] || "video/mp4",
-          ownerId: inputs.userId,
-          kind: "video",
+          key: `video/${inputs.userId}/${inputs.jobId}.${contentType.split("/")[1] || "mp4"}`,
+          contentType,
+          category: "video",
           visibility: "private",
         });
         storedUrl = uploaded.url;
