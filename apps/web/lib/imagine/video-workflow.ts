@@ -4,7 +4,6 @@ import { google } from "@ai-sdk/google";
 import { experimental_generateVideo } from "ai";
 import { createAdminClient } from "../supabase/server";
 import { getModel } from "../models/registry";
-import { createMediaStore } from "../media/media-store";
 import { isHttpsImageUrl } from "./video-admission";
 
 export interface VideoWorkflowInputs {
@@ -355,38 +354,11 @@ export async function storeStep(
       error: "Missing video URL to store",
     };
   }
-  // Playback stays on the provider URL: private media has no signed delivery yet, so swapping in
-  // the private object URL would hand the browser a link it cannot play.
+  // Durable private copies wait for signed playback on Vercel Blob (#671); the registry
+  // forbids expanding R2, which is where MediaStore's private path writes.
   const storedUrl = videoUrl;
-  let privateCopy: { bucket: string; key: string } | undefined;
-  if (
-    process.env.STARLIGHT_MEDIA_API_KEY?.trim() &&
-    videoUrl.startsWith("data:")
-  ) {
-    const match = videoUrl.match(/^data:([^;]+);base64,(.+)$/);
-    if (match) {
-      try {
-        const mediaStore = createMediaStore();
-        const bytes = Buffer.from(match[2], "base64");
-        const contentType = match[1] || "video/mp4";
-        const uploaded = await mediaStore.put(bytes, {
-          key: `video/${inputs.userId}/${inputs.jobId}.${contentType.split("/")[1] || "mp4"}`,
-          contentType,
-          category: "video",
-          visibility: "private",
-        });
-        privateCopy = { bucket: uploaded.bucket, key: uploaded.key };
-      } catch (err) {
-        const msg =
-          err instanceof Error ? err.message : "Private media upload failed";
-        await recordStep(inputs.jobId, "failed", "store", undefined, msg);
-        return { step: "store", status: "failed", error: msg };
-      }
-    }
-  }
   const recorded = await recordStep(inputs.jobId, "storing", "store", {
     videoUrl: storedUrl,
-    privateCopy,
   });
   if (!recorded) {
     return {
@@ -395,14 +367,13 @@ export async function storeStep(
       error: "Failed to record store step",
     };
   }
-  return { step: "store", status: "success", data: { storedUrl, privateCopy } };
+  return { step: "store", status: "success", data: { storedUrl } };
 }
 
 export async function linkStep(
   inputs: VideoWorkflowInputs,
   videoUrl: string,
   model: string,
-  privateCopy?: { bucket: string; key: string },
 ): Promise<VideoStepResult> {
   "use step";
   const supabase = adminDb();
@@ -411,8 +382,8 @@ export async function linkStep(
     .insert({
       owner_id: inputs.userId,
       kind: "video",
-      storage_bucket: privateCopy?.bucket ?? "arcanea-media-private",
-      object_key: privateCopy?.key ?? videoUrl,
+      storage_bucket: "arcanea-media-private",
+      object_key: videoUrl,
       duration_seconds: inputs.duration || 5,
       model_id: model,
       prompt: inputs.prompt,
@@ -576,9 +547,7 @@ export async function runVideoWorkflow(inputs: VideoWorkflowInputs) {
 
     const storedVideoUrl = (store.data?.storedUrl as string) || rawVideoUrl;
 
-    const privateCopy = store.data?.privateCopy as
-      { bucket: string; key: string } | undefined;
-    const link = await linkStep(inputs, storedVideoUrl, model, privateCopy);
+    const link = await linkStep(inputs, storedVideoUrl, model);
     if (link.status === "failed") {
       await refundStep(inputs, debitId, cost, link.error || "Link failed");
       await notifyStep(inputs, "failed", { error: link.error });

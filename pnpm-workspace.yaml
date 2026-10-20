@@ -87,8 +87,10 @@ patchedDependencies:
 
 # Approved by Frank 2026-10-20 (PR #670). GHSA-vfj7-8cjw-p6xm: braces <=3.0.3 stack exhaustion on
 # deeply nested patterns, with no patched release to override to. braces arrives only through
-# chokidar and micromatch (fast-glob, tailwindcss), build and dev tooling fed by our own config;
-# no apps/web code imports a glob library, so request input never reaches a brace pattern.
+# chokidar and micromatch (fast-glob, tailwindcss). No apps/web code imports a glob library, so
+# web request input never reaches a brace pattern. The one runtime caller is the @arcanea/media
+# CLI watcher (packages/media/src/watcher.ts), whose pattern is the local operator's own argument:
+# a hostile pattern can only crash the operator's own process.
 # Remove this entry as soon as braces ships a fix; re-check by 2026-11-20 either way.
 audit:
   ignore:
