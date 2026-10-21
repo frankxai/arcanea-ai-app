@@ -77,10 +77,13 @@ overrides:
   "form-data@<4.0.6": ">=4.0.6"
   "vite@<8.0.16": ">=8.0.16"
   "@babel/core@<7.29.7": ">=7.29.7"
-  "markdown-it@<=14.1.1": ">=14.2.0"
+  "markdown-it@<=14.1.1": ">=15.0.3"
   "@opentelemetry/core@<2.8.0": ">=2.8.0"
   "@opentelemetry/propagator-jaeger@<2.9.0": "2.9.0"
   "sharp@<0.35.0": "0.35.3"
+  "vite@>=8.3.0 <8.3.3": ">=8.3.3"
+  "launch-editor@<2.14.2": ">=2.14.2"
+  "markdown-it@>=15.0.0 <15.0.3": ">=15.0.3"
 
 patchedDependencies:
   minimatch@3.1.5: patches/minimatch@3.1.5.patch
