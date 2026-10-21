@@ -311,9 +311,9 @@ export function Navbar() {
             ? { backgroundColor: "var(--arc-story-night)" }
             : undefined
         }
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ${
           scrolled
-            ? "liquid-glass bg-[var(--arc-cosmic-void)]/85 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_36px_rgba(0,0,0,0.32)]"
+            ? "liquid-surface liquid-tier-control !border-x-0 !border-t-0"
             : "bg-transparent border-b border-transparent"
         }`}
       >
@@ -477,7 +477,7 @@ export function Navbar() {
           >
             <nav
               aria-label="Mobile navigation"
-              className="mx-4 rounded-2xl liquid-glass-elevated border border-white/[0.08] overflow-hidden"
+              className="mx-4 rounded-2xl liquid-surface liquid-tier-floating overflow-hidden"
             >
               <div className="p-3 space-y-0.5">
                 {navLinks.map((link, i) => {

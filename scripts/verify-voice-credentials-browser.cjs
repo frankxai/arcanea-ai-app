@@ -175,7 +175,7 @@ async function verifyChatRecovery(browser, mode) {
         JSON.stringify({ groq: "test-customer-groq" }),
       );
       localStorage.setItem(
-        "arcanea_chat_sessions",
+        "arcanea_chat_sessions:v2:guest",
         JSON.stringify([
           {
             id: "voice-recovery-fixture",

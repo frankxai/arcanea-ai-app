@@ -199,6 +199,23 @@
   --arc-shadow-elevation-1: 0 2px 8px rgba(0, 0, 0, 0.4);
   --arc-shadow-elevation-2: 0 8px 24px rgba(0, 0, 0, 0.5);
   --arc-shadow-elevation-3: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --arc-shadow-liquid: 0 12px 40px -12px
+    color-mix(in srgb, var(--arc-cosmic-void) 85%, transparent);
+
+  /* Liquid surfaces: the floating layer only (nav, sheets, the primary composer).
+     Tints are contrast floors: white/68 text over a white page composites to
+     7.1:1 at 85% and 3.7:1 at 62%. */
+  --arc-liquid-tint-control: 85%;
+  --arc-liquid-tint-floating: 82%;
+  --arc-liquid-tint-hero: 62%;
+  --arc-liquid-blur-control: 16px;
+  --arc-liquid-blur-floating: 22px;
+  --arc-liquid-blur-hero: 14px;
+  --arc-liquid-blur-compact: 12px;
+  --arc-liquid-saturate: 1.5;
+  --arc-liquid-border-mix: 8%;
+  --arc-liquid-sheen-mix: 6%;
+  --arc-liquid-edge-mix: 12%;
 
   /* Easings */
   --arc-ease-expo-out: cubic-bezier(0.22, 1, 0.36, 1);

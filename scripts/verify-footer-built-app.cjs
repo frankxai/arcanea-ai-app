@@ -34,7 +34,7 @@ const sourceFiles = [
   "apps/web/app/layout.tsx",
   "apps/web/app/globals.css",
   "packages/design-system/src/tokens.css",
-  "apps/web/middleware.ts",
+  "apps/web/proxy.ts",
 ];
 function sourceEvidence() {
   const checkoutCommit = execFileSync("git", ["rev-parse", "HEAD"], {

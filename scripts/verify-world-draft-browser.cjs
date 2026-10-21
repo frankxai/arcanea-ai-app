@@ -226,7 +226,7 @@ const draft = {
       );
       for (const control of [
         page.getByRole("textbox", {
-          name: "Email address for newsletter",
+          name: "Email address for Arcanea updates",
           exact: true,
         }),
         page

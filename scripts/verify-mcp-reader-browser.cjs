@@ -39,7 +39,7 @@ const sourceFiles = [
   "apps/web/app/layout.tsx",
   "apps/web/app/globals.css",
   "packages/design-system/src/tokens.css",
-  "apps/web/middleware.ts",
+  "apps/web/proxy.ts",
   "scripts/verify-mcp-reader-browser.cjs",
   ".github/workflows/ci.yml",
 ];

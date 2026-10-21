@@ -103,7 +103,9 @@ export function restoreScene(
           typeof s.result.model !== "string" ||
           !s.result.model.length ||
           s.result.model.length > 100 ||
-          !["grok", "openrouter", "gemini"].includes(s.result.provider) ||
+          !["grok", "openrouter", "gemini", "gateway"].includes(
+            s.result.provider,
+          ) ||
           s.result.generationId !== `gen_${s.requestKey}` ||
           !Array.isArray(s.result.images) ||
           s.result.images.length !== 1 ||

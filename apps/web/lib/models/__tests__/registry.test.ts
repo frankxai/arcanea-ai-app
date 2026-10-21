@@ -8,7 +8,11 @@ import {
   DEFAULT_IMAGE_MODEL_ID,
 } from "../registry";
 import { createMediaStore } from "../../media/media-store";
-import { generateImages, resumeImages, type ImageJob } from "../../imagine/generate";
+import {
+  generateImages,
+  resumeImages,
+  type ImageJob,
+} from "../../imagine/generate";
 
 test("Model Registry contains expected image and video models with required fields and input specs", () => {
   assert.ok(MODEL_REGISTRY[DEFAULT_IMAGE_MODEL_ID]);
@@ -103,7 +107,12 @@ test("MediaStore handles Starlight Media Platform and fails closed on private up
     );
 
     await assert.rejects(
-      unconfiguredStore.promote("portfolio-media-private", "test/item.png", "creations", "1234"),
+      unconfiguredStore.promote(
+        "portfolio-media-private",
+        "test/item.png",
+        "creations",
+        "1234",
+      ),
       /Media promotion failed/,
     );
   } finally {
@@ -118,7 +127,7 @@ test("generateImages and resumeImages support AI Gateway provider with credentia
   process.env.AI_GATEWAY_TOKEN = "test-gateway-token";
   process.env.XAI_API_KEY = "test-xai-secret-must-not-leak";
 
-  let capturedBody: Record<string, unknown> | null = null;
+  let capturedBody = null as Record<string, unknown> | null;
   let capturedHeaders: Record<string, string> | null = null;
   let checkpointedJob: ImageJob | null = null;
 
@@ -138,7 +147,12 @@ test("generateImages and resumeImages support AI Gateway provider with credentia
     }
     return Response.json({
       created: 123456789,
-      data: [{ b64_json: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" }],
+      data: [
+        {
+          b64_json:
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+        },
+      ],
     });
   };
 
@@ -185,7 +199,10 @@ test("generateImages and resumeImages support AI Gateway provider with credentia
       runtime,
     );
     assert.equal(resumed.provider, "gateway");
-    assert.equal(resumed.images[0].url, "https://images.arcanea.test/gateway-resumed.png");
+    assert.equal(
+      resumed.images[0].url,
+      "https://images.arcanea.test/gateway-resumed.png",
+    );
     assert.equal(capturedHeaders["Authorization"], "Bearer test-gateway-token");
   } finally {
     globalThis.fetch = oldFetch;
