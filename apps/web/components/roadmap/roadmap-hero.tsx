@@ -7,6 +7,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Stars, Float } from "@react-three/drei";
 import * as THREE from "three";
 import { brand, elements } from "@arcanea/design-system/tokens";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 const THREE_COLORS = {
   atlanteanTeal: brand.atlanteanTeal,
@@ -26,8 +27,8 @@ function subscribeReducedMotion(onChange: () => void) {
   return () => query.removeEventListener("change", onChange);
 }
 
-// three.js renders through WebGL2 only; without it the Canvas throws and the
-// route error boundary replaces the whole page.
+// three.js renders through WebGL2 only. Checking first skips the Canvas, and the
+// renderer error it would log, on devices without it.
 function hasWebGL2() {
   const gl = document.createElement("canvas").getContext("webgl2");
   gl?.getExtension("WEBGL_lose_context")?.loseContext();
@@ -44,12 +45,22 @@ function SceneClock({ playing }: { playing: boolean }) {
   const advance = useThree((state) => state.advance);
   const size = useThree((state) => state.size);
   const dpr = useThree((state) => state.viewport.dpr);
+  const gl = useThree((state) => state.gl);
   const time = useRef(STILL_TIME);
 
   // A resize clears the drawing buffer, and frameloop="never" does not repaint on its own.
   useEffect(() => {
     advance(time.current);
   }, [advance, size, dpr]);
+
+  // three.js rebuilds its GPU state on restore (its listener was added first), but
+  // with no loop running the canvas stays blank until something draws a frame.
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const repaint = () => advance(time.current);
+    canvas.addEventListener("webglcontextrestored", repaint);
+    return () => canvas.removeEventListener("webglcontextrestored", repaint);
+  }, [advance, gl]);
 
   useEffect(() => {
     if (!playing) return;
@@ -254,16 +265,21 @@ export function RoadmapHero() {
       {/* Three.js canvas — non-interactive background. Without WebGL2 the page background and vignette carry the section. */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {webgl && (
-          <Canvas
-            camera={{ position: [0, 0, 8], fov: 60 }}
-            gl={{ antialias: true, alpha: true }}
-            dpr={[1, 1.5]}
-            frameloop="never"
-            style={{ background: "transparent" }}
-          >
-            <SceneClock playing={inView && !reduced} />
-            <HeroScene still={reduced} />
-          </Canvas>
+          // The probe can pass while three.js still fails to create its renderer; the
+          // boundary keeps that failure inside this layer. The fallback is an empty
+          // fragment because the boundary shows its error card for a falsy one.
+          <ErrorBoundary fallback={<></>}>
+            <Canvas
+              camera={{ position: [0, 0, 8], fov: 60 }}
+              gl={{ antialias: true, alpha: true }}
+              dpr={[1, 1.5]}
+              frameloop="never"
+              style={{ background: "transparent" }}
+            >
+              <SceneClock playing={inView && !reduced} />
+              <HeroScene still={reduced} />
+            </Canvas>
+          </ErrorBoundary>
         )}
       </div>
 
