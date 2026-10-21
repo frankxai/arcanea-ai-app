@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 // @ts-nocheck -- R3F JSX elements (mesh, points, ambientLight, etc.) require @types/three symlinked; suppressed per project convention
-'use client';
+"use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Stars, Float } from '@react-three/drei';
-import * as THREE from 'three';
-import { brand, elements } from '@arcanea/design-system/tokens';
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Stars, Float } from "@react-three/drei";
+import * as THREE from "three";
+import { brand, elements } from "@arcanea/design-system/tokens";
 
 const THREE_COLORS = {
   atlanteanTeal: brand.atlanteanTeal,
@@ -18,19 +18,19 @@ const THREE_COLORS = {
 // Picked by eye: at 5.25s the star twinkle, 3 + sin(0.4t + 100), peaks; at 0 it is near its low.
 const STILL_TIME = 5.25;
 
-const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 
 function subscribeReducedMotion(onChange: () => void) {
   const query = window.matchMedia(REDUCED_MOTION);
-  query.addEventListener('change', onChange);
-  return () => query.removeEventListener('change', onChange);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
 }
 
 // three.js renders through WebGL2 only; without it the Canvas throws and the
 // route error boundary replaces the whole page.
 function hasWebGL2() {
-  const gl = document.createElement('canvas').getContext('webgl2');
-  gl?.getExtension('WEBGL_lose_context')?.loseContext();
+  const gl = document.createElement("canvas").getContext("webgl2");
+  gl?.getExtension("WEBGL_lose_context")?.loseContext();
   return Boolean(gl);
 }
 
@@ -92,7 +92,12 @@ function FloatingOrb({
 
   return (
     // Float starts from a random offset; disabled, the orb rests at its declared position.
-    <Float enabled={!still} speed={1.2} rotationIntensity={0.4} floatIntensity={0.8}>
+    <Float
+      enabled={!still}
+      speed={1.2}
+      rotationIntensity={0.4}
+      floatIntensity={0.8}
+    >
       <mesh ref={meshRef} position={position} scale={scale}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
@@ -117,7 +122,7 @@ function buildParticleGeo(): THREE.BufferGeometry {
     positions[i * 3 + 2] = (Math.random() - 0.5) * 18;
   }
   const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   return geo;
 }
 
@@ -128,7 +133,8 @@ function ParticleField() {
   useFrame((state) => {
     if (!pointsRef.current) return;
     pointsRef.current.rotation.y = state.clock.elapsedTime * 0.018;
-    pointsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.006) * 0.06;
+    pointsRef.current.rotation.x =
+      Math.sin(state.clock.elapsedTime * 0.006) * 0.06;
   });
 
   return (
@@ -150,8 +156,16 @@ function HeroScene({ still }: { still: boolean }) {
   return (
     <>
       <ambientLight intensity={0.3} />
-      <pointLight position={[6, 6, 4]} color={THREE_COLORS.atlanteanTeal} intensity={1.2} />
-      <pointLight position={[-6, -4, 2]} color={THREE_COLORS.cosmicBlue} intensity={0.8} />
+      <pointLight
+        position={[6, 6, 4]}
+        color={THREE_COLORS.atlanteanTeal}
+        intensity={1.2}
+      />
+      <pointLight
+        position={[-6, -4, 2]}
+        color={THREE_COLORS.cosmicBlue}
+        intensity={0.8}
+      />
 
       <Stars
         radius={80}
@@ -165,9 +179,24 @@ function HeroScene({ still }: { still: boolean }) {
 
       <ParticleField />
 
-      <FloatingOrb position={[4.5, 1.5, -4]} color={THREE_COLORS.atlanteanTeal} scale={1.8} still={still} />
-      <FloatingOrb position={[-5, -2, -6]} color={THREE_COLORS.cosmicBlue} scale={2.4} still={still} />
-      <FloatingOrb position={[0, 3, -8]} color={THREE_COLORS.void} scale={1.2} still={still} />
+      <FloatingOrb
+        position={[4.5, 1.5, -4]}
+        color={THREE_COLORS.atlanteanTeal}
+        scale={1.8}
+        still={still}
+      />
+      <FloatingOrb
+        position={[-5, -2, -6]}
+        color={THREE_COLORS.cosmicBlue}
+        scale={2.4}
+        still={still}
+      />
+      <FloatingOrb
+        position={[0, 3, -8]}
+        color={THREE_COLORS.void}
+        scale={1.2}
+        still={still}
+      />
     </>
   );
 }
@@ -210,7 +239,9 @@ export function RoadmapHero() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
+    const observer = new IntersectionObserver(([entry]) =>
+      setInView(entry.isIntersecting),
+    );
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
@@ -228,7 +259,7 @@ export function RoadmapHero() {
             gl={{ antialias: true, alpha: true }}
             dpr={[1, 1.5]}
             frameloop="never"
-            style={{ background: 'transparent' }}
+            style={{ background: "transparent" }}
           >
             <SceneClock playing={inView && !reduced} />
             <HeroScene still={reduced} />
@@ -241,7 +272,7 @@ export function RoadmapHero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, hsl(240 6% 4%) 100%)',
+            "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, hsl(240 6% 4%) 100%)",
         }}
         aria-hidden="true"
       />
@@ -259,14 +290,14 @@ export function RoadmapHero() {
         </div>
 
         <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl text-text-primary mb-6 leading-[1.05]">
-          The Journey{' '}
+          The Journey{" "}
           <span
             style={{
               background:
-                'linear-gradient(135deg, hsl(160 100% 75%), hsl(195 80% 55%), hsl(265 60% 65%))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+                "linear-gradient(135deg, hsl(160 100% 75%), hsl(195 80% 55%), hsl(265 60% 65%))",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
             }}
           >
             Ahead

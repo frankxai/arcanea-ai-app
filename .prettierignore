@@ -34,3 +34,8 @@ pnpm-lock.yaml
 .claude/skills/image-to-code/
 .claude/skills/extract-design-system/
 .claude/skills/brandkit/
+.claude/skills/gpu-surface/
+.claude/skills/web-steward/
+.claude/agents/worker-web-builder.md
+.claude/agents/worker-visual-qa.md
+.claude/agents/worker-web-steward.md
