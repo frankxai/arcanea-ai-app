@@ -14,6 +14,7 @@ import { costFor } from "../catalog";
 import { z } from "zod";
 import * as legacyCredits from "../../types/credits";
 import * as privateAssets from "../../imagine/private-assets";
+import { checkBotId } from "../../security/bot-id";
 function load(
   path: string,
   imports: Record<string, unknown>,
@@ -44,6 +45,116 @@ function load(
   });
   return exports;
 }
+test("checkBotId identifies bots from Vercel headers and user agents", () => {
+  assert.equal(
+    checkBotId(new Request("https://test.invalid", { headers: { "x-vercel-bot-id": "true" } })).isBot,
+    true,
+  );
+  assert.equal(
+    checkBotId(new Request("https://test.invalid", { headers: { "x-vercel-bot-score": "10" } })).isBot,
+    true,
+  );
+  assert.equal(
+    checkBotId(new Request("https://test.invalid", { headers: { "x-vercel-bot-score": "80" } })).isBot,
+    false,
+  );
+  assert.equal(
+    checkBotId(new Request("https://test.invalid", { headers: { "user-agent": "python-requests/2.28.1" } })).isBot,
+    true,
+  );
+  assert.equal(
+    checkBotId(
+      new Request("https://test.invalid", {
+        headers: {
+          "user-agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        },
+      }),
+    ).isBot,
+    false,
+  );
+});
+
+test("paid routes refuse bot requests before credit admission or provider work", async () => {
+  const requestKey = "00000000-0000-0000-0000-000000000001";
+  let generateWorkCalled = false;
+  const generateRoute = load("../../../app/api/imagine/generate/route.ts", {
+    "node:crypto": { createHash: () => ({ update: () => ({ digest: () => "fp" }) }) },
+    "next/server": { NextResponse: Response },
+    "@/lib/security/bot-id": { checkBotId },
+    "@/lib/supabase/server": {
+      createClient: async () => {
+        throw Error("Auth must not be reached for bot");
+      },
+    },
+    "@/lib/imagine/enhance-image-prompt": { enhanceImagePrompt: async () => "" },
+    "@/lib/imagine/styles": { applyStyle: (p: string) => ({ prompt: p }) },
+    "@/lib/billing/catalog": { costFor },
+    "@/lib/imagine/generate": { OPENROUTER_IMAGE_MODELS: [] },
+    "@/lib/imagine/video-jobs": { checkpointImageJob: async () => {}, readImageJob: async () => null },
+    "@/lib/billing/ledger": {
+      BillingError,
+      withReservation: async () => {
+        generateWorkCalled = true;
+      },
+    },
+  });
+
+  const resGen = await generateRoute.POST(
+    new Request("https://www.arcanea.ai/api/imagine/generate", {
+      method: "POST",
+      headers: { "x-vercel-bot-id": "1" },
+      body: JSON.stringify({ prompt: "A test prompt", requestKey, count: 1 }),
+    }),
+  );
+
+  assert.equal(resGen.status, 403);
+  assert.equal((await resGen.json()).reason, "bot_detected");
+  assert.equal(generateWorkCalled, false);
+
+  let animateWorkCalled = false;
+  const animateRoute = load("../../../app/api/imagine/animate/route.ts", {
+    "node:crypto": { createHash: () => ({ update: () => ({ digest: () => "fp" }) }) },
+    "next/server": { NextResponse: Response },
+    "@/lib/security/bot-id": { checkBotId },
+    "@/lib/supabase/server": {
+      createClient: async () => {
+        throw Error("Auth must not be reached for bot");
+      },
+    },
+    "@/lib/billing/catalog": { costFor },
+    "@/lib/billing/ledger": {
+      BillingError,
+      withReservation: async () => {
+        animateWorkCalled = true;
+      },
+    },
+    "@/lib/imagine/video-jobs": { checkpointVideoJob: async () => {}, readVideoJob: async () => null },
+    "@/lib/imagine/video": { generateVideo: async () => {} },
+    "@/lib/imagine/video-admission": {
+      isHttpsImageUrl: () => true,
+      MAX_ANIMATION_PROMPT_LENGTH: 1000,
+    },
+    "@/lib/imagine/private-assets": privateAssets,
+    "@/lib/imagine/private-assets-server": { readOwnedPrivateImage: async () => {} },
+  });
+
+  const resAnim = await animateRoute.POST(
+    new Request("https://www.arcanea.ai/api/imagine/animate", {
+      method: "POST",
+      headers: { "x-vercel-bot-score": "15" },
+      body: JSON.stringify({
+        imageUrl: "https://images.test/frame.png",
+        requestKey,
+      }),
+    }),
+  );
+
+  assert.equal(resAnim.status, 403);
+  assert.equal((await resAnim.json()).reason, "bot_detected");
+  assert.equal(animateWorkCalled, false);
+});
+
 test("a failed legacy balance read must never grant provider admission", async () => {
   const route = load("../../../app/api/credits/spend/route.ts", {
     "next/server": { NextResponse: Response },
@@ -106,6 +217,7 @@ test("animation validates requests, denies missing accounts and credit, and maps
         createHash: () => ({ update: () => ({ digest: () => "hash" }) }),
       },
       "next/server": { NextResponse: Response },
+      "@/lib/security/bot-id": { checkBotId },
       "@/lib/supabase/server": {
         createClient: async () => ({
           auth: {
@@ -215,6 +327,7 @@ test("actual animation route checks private ownership and bytes before credit re
     const route = load("../../../app/api/imagine/animate/route.ts", {
       "node:crypto": { createHash },
       "next/server": { NextResponse: Response },
+      "@/lib/security/bot-id": { checkBotId },
       "@/lib/supabase/server": {
         createClient: async () => ({
           auth: {
@@ -335,6 +448,7 @@ test("anonymous and zero-credit image denial call neither enhancer nor image pro
         createHash: () => ({ update: () => ({ digest: () => "fingerprint" }) }),
       },
       "next/server": { NextResponse: Response },
+      "@/lib/security/bot-id": { checkBotId },
       "@/lib/imagine/enhance-image-prompt": {
         enhanceImagePrompt: async () => {
           enhancements++;
@@ -408,6 +522,7 @@ test("unknown models are refused; catalog models charge their quoted tier and co
         createHash: () => ({ update: () => ({ digest: () => "fingerprint" }) }),
       },
       "next/server": { NextResponse: Response },
+      "@/lib/security/bot-id": { checkBotId },
       "@/lib/imagine/enhance-image-prompt": {
         enhanceImagePrompt: async (p: string) => p,
       },
@@ -619,6 +734,7 @@ test("the actual image handler admits once and recovers only an actor-bound chec
         }),
       },
       "next/server": { NextResponse: Response },
+      "@/lib/security/bot-id": { checkBotId },
       "@/lib/supabase/server": {
         createClient: async () => ({
           auth: {
