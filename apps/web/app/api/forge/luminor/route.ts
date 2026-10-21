@@ -10,7 +10,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { createOpenAI } from '@ai-sdk/openai';
+import {
+  platformDefaultModelId,
+  platformGatewayAvailable,
+  platformGatewayOptions,
+  platformLanguageModel,
+} from '@/lib/ai/platform-gateway';
 import { generateText } from 'ai';
 
 export const runtime = 'edge';
@@ -74,20 +79,19 @@ export async function POST(req: NextRequest) {
     if (element) userPrompt += `\nPreferred element: ${element}`;
     if (domain) userPrompt += `\nPreferred domain: ${domain}`;
 
-    // Try Google first (fast + free tier), fall back to OpenRouter
+    // Platform credentials route through Vercel AI Gateway. The direct Google
+    // key is a transitional fallback for environments without the gateway.
     let model;
     const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-    const openrouterKey = process.env.OPENROUTER_API_KEY;
 
-    if (googleKey) {
+    if (platformGatewayAvailable()) {
+      model = platformLanguageModel(platformDefaultModelId());
+    } else if (googleKey) {
       const google = createGoogleGenerativeAI({ apiKey: googleKey });
       model = google('gemini-2.0-flash');
-    } else if (openrouterKey) {
-      const openrouter = createOpenAI({ apiKey: openrouterKey, baseURL: 'https://openrouter.ai/api/v1' });
-      model = openrouter('google/gemini-2.5-flash');
     } else {
       return NextResponse.json(
-        { error: 'No AI provider configured. Set GOOGLE_GENERATIVE_AI_API_KEY on Vercel.' },
+        { error: 'No AI provider configured. Enable AI Gateway on Vercel.' },
         { status: 503 }
       );
     }
@@ -98,6 +102,7 @@ export async function POST(req: NextRequest) {
       prompt: userPrompt,
       temperature: 0.8,
       maxOutputTokens: 1024,
+      providerOptions: platformGatewayOptions('forge-luminor'),
     });
 
     // Parse the JSON response

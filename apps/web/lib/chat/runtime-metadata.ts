@@ -3,7 +3,7 @@ export interface ArcaneaRuntimeMetadata {
   modelLabel?: string | null;
   provider?: string | null;
   routeMode?: 'gateway' | 'legacy' | 'auto-detected' | 'unknown';
-  apiKeySource?: 'server-env' | 'client-byok' | 'unknown';
+  apiKeySource?: 'platform-gateway' | 'server-env' | 'client-byok' | 'unknown';
   retrievalMode?: 'graph+selection' | 'selection-only' | 'none';
   selectedSessionCount?: number;
   availableSessionCount?: number;

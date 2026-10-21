@@ -6,7 +6,7 @@ export interface ProjectProviderRoutingTraceInput {
   requestedProvider?: string | null;
   resolvedProvider: string;
   routeMode: 'gateway' | 'legacy' | 'auto-detected';
-  apiKeySource: 'server-env' | 'client-byok' | 'unknown';
+  apiKeySource: 'platform-gateway' | 'server-env' | 'client-byok' | 'unknown';
   gatewayModel?: string | null;
   modelLabel: string;
   enabledTools?: string[];
