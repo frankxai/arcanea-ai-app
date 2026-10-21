@@ -684,6 +684,22 @@ test("UI chat and its alias deny missing keys and advertise customer credentials
   );
 });
 
+test("UI chat stays customer-key only even when AI Gateway credentials exist", async () => {
+  const ui = await import("../../../app/api/ai/chat/route");
+  const previous = process.env.AI_GATEWAY_API_KEY;
+  process.env.AI_GATEWAY_API_KEY = "test-gateway-key";
+  try {
+    const response = await ui.POST(
+      request({}, { messages: [{ role: "user", content: "Draft a scene." }] }),
+    );
+    assert.equal(response.status, 401);
+    assert.equal(calls.length, 0);
+  } finally {
+    if (previous === undefined) delete process.env.AI_GATEWAY_API_KEY;
+    else process.env.AI_GATEWAY_API_KEY = previous;
+  }
+});
+
 test("UI malformed JSON and non-object bodies return a private client error before transport", async () => {
   const ui = await import("../../../app/api/ai/chat/route");
   for (const body of ["{invalid", "null", "[]", "7"]) {
