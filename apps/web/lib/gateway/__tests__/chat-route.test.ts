@@ -690,10 +690,7 @@ test("UI chat stays customer-key only even when AI Gateway credentials exist", a
   process.env.AI_GATEWAY_API_KEY = "test-gateway-key";
   try {
     const response = await ui.POST(
-      request(
-        {},
-        { messages: [{ role: "user", content: "Draft a scene." }] },
-      ),
+      request({}, { messages: [{ role: "user", content: "Draft a scene." }] }),
     );
     assert.equal(response.status, 401);
     assert.equal(calls.length, 0);

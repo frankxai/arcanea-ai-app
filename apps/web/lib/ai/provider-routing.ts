@@ -42,7 +42,9 @@ const GATEWAY_MODEL_ID = /^[a-z0-9][a-z0-9-]*\/[A-Za-z0-9][A-Za-z0-9._:-]*$/;
 
 export function isGatewayModelId(value: unknown): value is string {
   return (
-    typeof value === "string" && value.length <= 200 && GATEWAY_MODEL_ID.test(value)
+    typeof value === "string" &&
+    value.length <= 200 &&
+    GATEWAY_MODEL_ID.test(value)
   );
 }
 
@@ -61,7 +63,9 @@ export function resolvePlatformDefaultModel(
 export function platformGatewayApiKey(
   env: Record<string, string | undefined>,
 ): string | undefined {
-  return env.AI_GATEWAY_API_KEY?.trim() || env.AI_GATEWAY_TOKEN?.trim() || undefined;
+  return (
+    env.AI_GATEWAY_API_KEY?.trim() || env.AI_GATEWAY_TOKEN?.trim() || undefined
+  );
 }
 
 /** True when AI Gateway can authenticate: an API key, an OIDC token, or a Vercel runtime that issues one. */
@@ -69,7 +73,9 @@ export function isPlatformGatewayConfigured(
   env: Record<string, string | undefined>,
 ): boolean {
   return Boolean(
-    platformGatewayApiKey(env) || env.VERCEL_OIDC_TOKEN?.trim() || env.VERCEL === "1",
+    platformGatewayApiKey(env) ||
+    env.VERCEL_OIDC_TOKEN?.trim() ||
+    env.VERCEL === "1",
   );
 }
 

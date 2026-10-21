@@ -155,7 +155,12 @@ test("explicit platform models need a gateway id or fail closed", () => {
   assert.equal(result.gatewayModelId, "google-gw");
   assert.throws(
     () =>
-      resolveProviderRoute({ gatewayModel: "openai-model" }, providers, gwModels, env),
+      resolveProviderRoute(
+        { gatewayModel: "openai-model" },
+        providers,
+        gwModels,
+        env,
+      ),
     /needs your own provider key/,
   );
   assert.throws(

@@ -31,7 +31,10 @@ test("the default model follows ARCANEA_DEFAULT_MODEL", () => {
 });
 
 test("malformed platform model ids are rejected before any call", () => {
-  assert.throws(() => platformLanguageModel("gemini-2.5-flash", {}), /provider\/model/);
+  assert.throws(
+    () => platformLanguageModel("gemini-2.5-flash", {}),
+    /provider\/model/,
+  );
 });
 
 test("gateway availability needs a key, OIDC token or Vercel runtime", () => {

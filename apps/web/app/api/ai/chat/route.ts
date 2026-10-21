@@ -360,7 +360,9 @@ export async function POST(req: NextRequest) {
       ? GATEWAY_MODELS[route.gatewayModelId]
       : undefined;
     const providerRouteMode: "gateway" | "legacy" =
-      resolvedGateway || route.kind === "platform-gateway" ? "gateway" : "legacy";
+      resolvedGateway || route.kind === "platform-gateway"
+        ? "gateway"
+        : "legacy";
     if (route.kind === "platform-gateway") {
       // Platform credentials only ever reach Vercel AI Gateway.
       model = platformLanguageModel(route.platformModelId);
