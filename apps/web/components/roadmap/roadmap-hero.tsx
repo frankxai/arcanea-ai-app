@@ -2,8 +2,8 @@
 // @ts-nocheck -- R3F JSX elements (mesh, points, ambientLight, etc.) require @types/three symlinked; suppressed per project convention
 'use client';
 
-import { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Stars, Float } from '@react-three/drei';
 import * as THREE from 'three';
 import { brand, elements } from '@arcanea/design-system/tokens';
@@ -14,16 +14,73 @@ const THREE_COLORS = {
   void: elements.void.base,
 } as const;
 
+// Scene time (seconds) shown under reduced motion, and where the animation starts.
+// Picked by eye: at 5.25s the star twinkle, 3 + sin(0.4t + 100), peaks; at 0 it is near its low.
+const STILL_TIME = 5.25;
+
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
+
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION);
+  query.addEventListener('change', onChange);
+  return () => query.removeEventListener('change', onChange);
+}
+
+// three.js renders through WebGL2 only; without it the Canvas throws and the
+// route error boundary replaces the whole page.
+function hasWebGL2() {
+  const gl = document.createElement('canvas').getContext('webgl2');
+  gl?.getExtension('WEBGL_lose_context')?.loseContext();
+  return Boolean(gl);
+}
+
+// ─── Scene clock ─────────────────────────────────────────────────────────────
+
+// R3F's own loop keeps rendering off-screen, and changing `frameloop` resets the
+// clock to 0, which would snap every orb back to its first pose. The canvas runs
+// frameloop="never" and this advances the clock by hand: one frame for the still,
+// a rAF loop only while `playing`, resuming from the time it stopped at.
+function SceneClock({ playing }: { playing: boolean }) {
+  const advance = useThree((state) => state.advance);
+  const size = useThree((state) => state.size);
+  const dpr = useThree((state) => state.viewport.dpr);
+  const time = useRef(STILL_TIME);
+
+  // A resize clears the drawing buffer, and frameloop="never" does not repaint on its own.
+  useEffect(() => {
+    advance(time.current);
+  }, [advance, size, dpr]);
+
+  useEffect(() => {
+    if (!playing) return;
+    let frame = 0;
+    let last = -1;
+    const tick = (now: number) => {
+      // Capped so a tab returning from the background resumes instead of jumping ahead.
+      if (last >= 0) time.current += Math.min((now - last) / 1000, 0.25);
+      last = now;
+      advance(time.current);
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [advance, playing]);
+
+  return null;
+}
+
 // ─── Floating orb geometry ───────────────────────────────────────────────────
 
 function FloatingOrb({
   position,
   color,
   scale,
+  still,
 }: {
   position: [number, number, number];
   color: string;
   scale: number;
+  still: boolean;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
@@ -34,7 +91,8 @@ function FloatingOrb({
   });
 
   return (
-    <Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.8}>
+    // Float starts from a random offset; disabled, the orb rests at its declared position.
+    <Float enabled={!still} speed={1.2} rotationIntensity={0.4} floatIntensity={0.8}>
       <mesh ref={meshRef} position={position} scale={scale}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
@@ -88,7 +146,7 @@ function ParticleField() {
 
 // ─── Scene ────────────────────────────────────────────────────────────────────
 
-function HeroScene() {
+function HeroScene({ still }: { still: boolean }) {
   return (
     <>
       <ambientLight intensity={0.3} />
@@ -107,9 +165,9 @@ function HeroScene() {
 
       <ParticleField />
 
-      <FloatingOrb position={[4.5, 1.5, -4]} color={THREE_COLORS.atlanteanTeal} scale={1.8} />
-      <FloatingOrb position={[-5, -2, -6]} color={THREE_COLORS.cosmicBlue} scale={2.4} />
-      <FloatingOrb position={[0, 3, -8]} color={THREE_COLORS.void} scale={1.2} />
+      <FloatingOrb position={[4.5, 1.5, -4]} color={THREE_COLORS.atlanteanTeal} scale={1.8} still={still} />
+      <FloatingOrb position={[-5, -2, -6]} color={THREE_COLORS.cosmicBlue} scale={2.4} still={still} />
+      <FloatingOrb position={[0, 3, -8]} color={THREE_COLORS.void} scale={1.2} still={still} />
     </>
   );
 }
@@ -138,17 +196,44 @@ function ScrollIndicator() {
 // ─── Hero component ───────────────────────────────────────────────────────────
 
 export function RoadmapHero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION).matches,
+    () => true,
+  );
+  const [webgl, setWebgl] = useState(false);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => setWebgl(hasWebGL2()), []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-      {/* Three.js canvas — non-interactive background */}
+    <section
+      ref={sectionRef}
+      className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Three.js canvas — non-interactive background. Without WebGL2 the page background and vignette carry the section. */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <Canvas
-          camera={{ position: [0, 0, 8], fov: 60 }}
-          gl={{ antialias: true, alpha: true }}
-          style={{ background: 'transparent' }}
-        >
-          <HeroScene />
-        </Canvas>
+        {webgl && (
+          <Canvas
+            camera={{ position: [0, 0, 8], fov: 60 }}
+            gl={{ antialias: true, alpha: true }}
+            dpr={[1, 1.5]}
+            frameloop="never"
+            style={{ background: 'transparent' }}
+          >
+            <SceneClock playing={inView && !reduced} />
+            <HeroScene still={reduced} />
+          </Canvas>
+        )}
       </div>
 
       {/* Radial vignette */}
