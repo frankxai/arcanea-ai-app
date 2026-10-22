@@ -8,7 +8,7 @@
 # build; production is never skipped.
 #
 # Agents that use previews instead of local `pnpm dev` get one by:
-#   - putting [preview] anywhere in the commit message
+#   - putting [preview] in the commit subject line
 #   - pushing the branch as preview/<name>
 #   - running `vercel deploy` (CLI deploys bypass this step)
 #
@@ -32,7 +32,10 @@ fi
 case "$REF" in
   preview/*) echo "[preview-gate] preview/* branch — BUILDING."; exit 1 ;;
 esac
-case "$MESSAGE" in
+# Subject line only: a commit body that merely describes the marker must not
+# opt in. Measured 2026-10-22: the commit introducing this gate explained
+# [preview] in its body and built itself on all three projects.
+case "$SUBJECT" in
   *"[preview]"*) echo "[preview-gate] [preview] requested — BUILDING."; exit 1 ;;
 esac
 
