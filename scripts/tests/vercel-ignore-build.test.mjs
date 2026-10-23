@@ -56,7 +56,7 @@ function fixture(t) {
       env: {
         ...process.env,
         VERCEL_ENV: "preview",
-        VERCEL_GIT_COMMIT_REF: "codex/preview-fixture",
+        VERCEL_GIT_COMMIT_REF: "feature/preview-fixture",
         VERCEL_GIT_COMMIT_MESSAGE: git("log", "-1", "--format=%B"),
         VERCEL_GIT_PREVIOUS_SHA: base,
         ...extra,
@@ -183,12 +183,13 @@ test("pending code survives several ignored and docs-only checkpoints", (t) => {
   expectDecision(f.run(), 1, /build:/);
 });
 
-test("a branch name never hides deployable code, including a dependency PR", (t) => {
+test("a non-gated branch name never hides deployable code", (t) => {
   const f = fixture(t);
   f.write("src/app.js", "export const version = 2;\n");
   f.commit("change deployable code");
+  // dependabot/* previews are now skipped by the preview gate (tested below);
+  // GitHub Actions CI still builds and tests them.
   for (const branch of [
-    "dependabot/deps",
     "backup/snapshot",
     "worktree-example",
     "copilot/fix",
@@ -205,8 +206,8 @@ test("documentation-only changes skip regardless of branch name", (t) => {
   f.commit();
   for (const branch of [
     "docs/guide",
-    "dependabot/deps",
-    "codex/preview-fixture",
+    "feature/preview-fixture",
+    "preview/docs",
   ]) {
     expectDecision(f.run({ VERCEL_GIT_COMMIT_REF: branch }), 0, /docs-only/);
   }
@@ -263,4 +264,132 @@ test("a Git diff error builds without claiming a docs-only change", (t) => {
   const result = f.run({ BASH_ENV: join(f.root, "fail-diff.bash") });
   expectDecision(result, 1, /build:/);
   assert.doesNotMatch(result.stdout, /docs-only/);
+});
+
+// Bot and agent preview gate (chore/preview-build-gate). Production must build
+// exactly as before; previews on bot/agent branches skip unless opted in.
+// GitHub Actions CI is unaffected: it still runs on every one of these branches.
+test("preview gate: production on main always builds", (t) => {
+  const f = fixture(t);
+  expectDecision(
+    f.run({ VERCEL_ENV: "production", VERCEL_GIT_COMMIT_REF: "main" }),
+    1,
+    /production deploy/,
+  );
+});
+
+test("preview gate: production builds even from a bot-looking ref", (t) => {
+  const f = fixture(t);
+  for (const ref of [
+    "dependabot/npm_and_yarn/vite-8.3.4",
+    "agent/claude/x",
+    "ccr-cb0551ef-mlbwjk",
+  ]) {
+    expectDecision(
+      f.run({ VERCEL_ENV: "production", VERCEL_GIT_COMMIT_REF: ref }),
+      1,
+      /production deploy/,
+    );
+  }
+});
+
+test("preview gate: a human feature branch preview with code builds", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit("feat: change");
+  expectDecision(
+    f.run({ VERCEL_GIT_COMMIT_REF: "fix/auth-callback-service-role" }),
+    1,
+    /build: fix\/auth-callback-service-role/,
+  );
+});
+
+test("preview gate: dependabot previews skip, even with [preview]", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit("chore(deps): bump vite");
+  for (const message of [
+    "chore(deps): bump vite",
+    "chore(deps): bump vite [preview]",
+  ]) {
+    expectDecision(
+      f.run({
+        VERCEL_GIT_COMMIT_REF: "dependabot/npm_and_yarn/vite-8.3.4",
+        VERCEL_GIT_COMMIT_MESSAGE: message,
+      }),
+      0,
+      /skip: dependabot preview/,
+    );
+  }
+});
+
+test("preview gate: agent and bot branches skip without an opt-in", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit("feat: change");
+  for (const ref of [
+    "agent/claude/liquid-surface",
+    "agent/jules/5763313057218637442",
+    "agent/codex/chat-world-handoff-20261011",
+    "grok/webdev/a11y",
+    "claude/ai-gateway-platform-routing",
+    "codex/media-apl-boundary-20260925",
+    "jules-16122521610008969658-a785b329",
+    "google-labs-jules-fix",
+    "ccr-cb0551ef-mlbwjk",
+    "auto-fix-1792404611033",
+  ]) {
+    expectDecision(
+      f.run({ VERCEL_GIT_COMMIT_REF: ref }),
+      0,
+      /skip: agent branch .* without \[preview\]/,
+    );
+  }
+});
+
+test("preview gate: an agent branch with [preview] builds", (t) => {
+  const f = fixture(t);
+  for (const message of [
+    "feat(ui): liquid tiers [preview]",
+    "feat(ui): liquid tiers\n\nVisual check needed [preview]",
+  ]) {
+    expectDecision(
+      f.run({
+        VERCEL_GIT_COMMIT_REF: "agent/claude/liquid-surface",
+        VERCEL_GIT_COMMIT_MESSAGE: message,
+      }),
+      1,
+      /opted in with \[preview\]/,
+    );
+  }
+});
+
+test("preview gate: preview/* and cto/* branches are never gated", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit("feat: change");
+  for (const ref of [
+    "preview/liquid-surface",
+    "cto/pricing-review",
+    "preview/run-1792404611033",
+  ]) {
+    const result = f.run({ VERCEL_GIT_COMMIT_REF: ref });
+    expectDecision(result, 1, /build:/);
+    assert.doesNotMatch(result.stdout, /agent branch|dependabot preview/);
+  }
+});
+
+test("preview gate: an unset ref or other env keeps existing logic", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "export const version = 2;\n");
+  f.commit("feat: change");
+  for (const env of [
+    { VERCEL_GIT_COMMIT_REF: "" },
+    { VERCEL_ENV: "development", VERCEL_GIT_COMMIT_REF: "agent/codex/x" },
+    { VERCEL_ENV: "", VERCEL_GIT_COMMIT_REF: "dependabot/x" },
+  ]) {
+    const result = f.run(env);
+    expectDecision(result, 1, /build:/);
+    assert.doesNotMatch(result.stdout, /agent branch|dependabot preview/);
+  }
 });

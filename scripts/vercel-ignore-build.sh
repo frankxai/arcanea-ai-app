@@ -7,7 +7,8 @@
 #
 # Skips previews only when no deployable file changed since the prior
 # successful deployment, or the author marks an intermediate [agent-wip]
-# checkpoint. Branch names and draft state do not prove the tree is inert.
+# checkpoint, or the preview comes from a bot/agent branch that did not opt in
+# (see the preview gate below). Draft state does not prove the tree is inert.
 
 set -euo pipefail
 
@@ -17,6 +18,42 @@ BRANCH="${VERCEL_GIT_COMMIT_REF:-${GITHUB_REF_NAME:-unknown}}"
 if [[ "${VERCEL_ENV:-}" == "production" ]]; then
   echo "✅ production deploy — building"
   exit 1
+fi
+
+# Bot and agent preview gate (chore/preview-build-gate).
+# Measured 2026-10-22 on this project: 34 of the last 44 preview builds that
+# actually ran came from dependabot/*, agent/*, claude/* and codex/* branches
+# (40 of 44 including ccr-* Claude Code remote branches). GitHub Actions CI
+# still runs on every one of those branches, so skipping the Vercel preview
+# does not skip any quality check. This deliberately reverses the earlier
+# "branch names never hide deployable code" rule FOR PREVIEWS ONLY: the code
+# is still built and tested by CI, and production always builds above.
+#   - preview/* and cto/* are explicit opt-in branches and are never gated.
+#   - dependabot/* previews always skip.
+#   - agent branches skip unless the commit message contains [preview].
+# Development and an unset VERCEL_ENV or ref fall through unchanged.
+# [[ ]] / case only — under `set -euo pipefail` a pipeline here could fail
+# and be mistaken for a skip, so none is used.
+GATE_MSG="${VERCEL_GIT_COMMIT_MESSAGE:-}"
+if [[ "${VERCEL_ENV:-}" == "preview" && -n "${VERCEL_GIT_COMMIT_REF:-}" ]]; then
+  GATE_BOT=""
+  case "$BRANCH" in
+    preview/* | cto/*) GATE_BOT="" ;;
+    dependabot/*)
+      echo "⏭️  skip: dependabot preview ($BRANCH) — GitHub Actions CI still runs"
+      exit 0
+      ;;
+    agent/* | grok/* | claude/* | codex/* | jules* | google-labs-jules* | ccr-*) GATE_BOT="1" ;;
+    *) if [[ "$BRANCH" =~ -[0-9]{10,}$ ]]; then GATE_BOT="1"; fi ;;
+  esac
+  if [[ -n "$GATE_BOT" ]]; then
+    if [[ "$GATE_MSG" == *"[preview]"* ]]; then
+      echo "✅ build: agent branch $BRANCH opted in with [preview]"
+      exit 1
+    fi
+    echo "⏭️  skip: agent branch $BRANCH without [preview] — GitHub Actions CI still runs; add [preview] to a commit message or push preview/<name>"
+    exit 0
+  fi
 fi
 
 # Agents may push intermediate commits without spending preview minutes.
