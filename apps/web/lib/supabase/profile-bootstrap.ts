@@ -1,23 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import type { User } from '@supabase/supabase-js';
-import { createAdminClient, type createClient } from '@/lib/supabase/server';
+import type { User } from "@supabase/supabase-js";
+import { createAdminClient, type createClient } from "@/lib/supabase/server";
 
 type SessionSupabaseClient = Awaited<ReturnType<typeof createClient>>;
 
 export type ProfileBootstrapResult =
-  | { ok: true; via: 'session' | 'admin' }
-  | { ok: false; reason: string };
+  { ok: true; via: "session" | "admin" } | { ok: false; reason: string };
 
 function buildProfileRow(user: User) {
   const displayName =
-    (typeof user.user_metadata?.display_name === 'string' && user.user_metadata.display_name) ||
-    (typeof user.user_metadata?.name === 'string' && user.user_metadata.name) ||
-    (typeof user.user_metadata?.full_name === 'string' && user.user_metadata.full_name) ||
-    user.email?.split('@')[0] ||
-    'Creator';
+    (typeof user.user_metadata?.display_name === "string" &&
+      user.user_metadata.display_name) ||
+    (typeof user.user_metadata?.name === "string" && user.user_metadata.name) ||
+    (typeof user.user_metadata?.full_name === "string" &&
+      user.user_metadata.full_name) ||
+    user.email?.split("@")[0] ||
+    "Creator";
 
   const avatarUrl =
-    (typeof user.user_metadata?.avatar_url === 'string' && user.user_metadata.avatar_url) ||
+    (typeof user.user_metadata?.avatar_url === "string" &&
+      user.user_metadata.avatar_url) ||
     null;
 
   return {
@@ -25,7 +27,7 @@ function buildProfileRow(user: User) {
     display_name: displayName,
     avatar_url: avatarUrl,
     gates_open: 0,
-    magic_rank: 'Apprentice',
+    magic_rank: "Apprentice",
     streak_days: 0,
     xp: 0,
     level: 1,
@@ -38,17 +40,20 @@ async function insertProfileIfMissing(
 ): Promise<string | null> {
   // INSERT ... ON CONFLICT (id) DO NOTHING — never overwrites an existing profile.
   const { error } = await client
-    .from('profiles')
-    .upsert(buildProfileRow(user), { onConflict: 'id', ignoreDuplicates: true });
+    .from("profiles")
+    .upsert(buildProfileRow(user), {
+      onConflict: "id",
+      ignoreDuplicates: true,
+    });
   return error ? error.message : null;
 }
 
 function warn(event: string, user: User, detail: Record<string, unknown>) {
   console.warn(
     JSON.stringify({
-      level: 'warn',
+      level: "warn",
       event,
-      scope: 'auth.profile_bootstrap',
+      scope: "auth.profile_bootstrap",
       userId: user.id,
       ...detail,
     }),
@@ -79,11 +84,11 @@ export async function ensureProfileForUser(
     sessionError = error instanceof Error ? error.message : String(error);
   }
 
-  if (!sessionError) return { ok: true, via: 'session' };
+  if (!sessionError) return { ok: true, via: "session" };
 
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    warn('profile_bootstrap_skipped', user, {
-      reason: 'session_insert_failed_and_no_service_role_key',
+    warn("profile_bootstrap_skipped", user, {
+      reason: "session_insert_failed_and_no_service_role_key",
       sessionError,
     });
     return { ok: false, reason: sessionError };
@@ -91,12 +96,12 @@ export async function ensureProfileForUser(
 
   try {
     const adminError = await insertProfileIfMissing(createAdminClient(), user);
-    if (!adminError) return { ok: true, via: 'admin' };
-    warn('profile_bootstrap_failed', user, { sessionError, adminError });
+    if (!adminError) return { ok: true, via: "admin" };
+    warn("profile_bootstrap_failed", user, { sessionError, adminError });
     return { ok: false, reason: adminError };
   } catch (error) {
     const adminError = error instanceof Error ? error.message : String(error);
-    warn('profile_bootstrap_failed', user, { sessionError, adminError });
+    warn("profile_bootstrap_failed", user, { sessionError, adminError });
     return { ok: false, reason: adminError };
   }
 }
