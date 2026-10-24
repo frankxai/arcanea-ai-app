@@ -247,7 +247,7 @@ Rollback: (how to undo if it breaks)
 
 ```text
 pnpm run verify:project-workspaces
-cd apps/web && pnpm exec tsx lib/media/__tests__/gallery-contract.test.ts
+pnpm --dir apps/web test:media
 ```
 
 ## Planning With Files
