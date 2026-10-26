@@ -98,7 +98,7 @@ export function HeroChatBox() {
         }`}
       >
         {/* Glass fill with gradient */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.035] via-white/[0.02] to-white/[0.025] backdrop-blur-2xl" />
+        <div className="absolute inset-0 rounded-2xl liquid-surface liquid-tier-hero !border-0" />
         {/* Gradient border overlay */}
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
