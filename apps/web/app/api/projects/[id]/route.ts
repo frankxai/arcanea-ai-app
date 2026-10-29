@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest } from 'next/server';
-import { z } from 'zod';
-import { errorResponse, handleApiError, successResponse } from '@/lib/api-utils';
+import { NextRequest } from "next/server";
+import { z } from "zod";
+import {
+  errorResponse,
+  handleApiError,
+  successResponse,
+} from "@/lib/api-utils";
 import {
   getProjectAuthContext,
   deleteProjectForCurrentUser,
   getProjectForCurrentUser,
   updateProjectForCurrentUser,
-} from '@/lib/projects/server';
-import { recordProjectTrace } from '@/lib/projects/trace';
+} from "@/lib/projects/server";
+import { recordProjectTrace } from "@/lib/projects/trace";
 
 const updateProjectSchema = z.object({
   title: z.string().trim().min(1).max(120).optional(),
@@ -32,7 +36,7 @@ export async function GET(
     const { id } = await params;
     const project = await projectRouteDeps.getProjectForCurrentUser(id);
     if (!project) {
-      return errorResponse('NOT_FOUND', 'Project not found', 404);
+      return errorResponse("NOT_FOUND", "Project not found", 404);
     }
 
     return successResponse({ project });
@@ -49,30 +53,33 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json().catch(() => null);
     if (!body) {
-      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
+      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
     }
 
     const validation = updateProjectSchema.safeParse(body);
     if (!validation.success) {
-      return errorResponse('VALIDATION_ERROR', 'Invalid project patch', 400, {
-        errors: validation.error.errors,
+      return errorResponse("VALIDATION_ERROR", "Invalid project patch", 400, {
+        errors: validation.error.issues,
       });
     }
 
     const { supabase, user } = await projectRouteDeps.getProjectAuthContext();
     if (!user) {
-      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+      return errorResponse("UNAUTHORIZED", "Authentication required", 401);
     }
 
-    const project = await projectRouteDeps.updateProjectForCurrentUser(id, validation.data);
+    const project = await projectRouteDeps.updateProjectForCurrentUser(
+      id,
+      validation.data,
+    );
     if (!project) {
-      return errorResponse('NOT_FOUND', 'Project not found', 404);
+      return errorResponse("NOT_FOUND", "Project not found", 404);
     }
 
     await projectRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: project.id,
-      action: 'project_updated',
+      action: "project_updated",
       metadata: validation.data,
     });
 
@@ -90,18 +97,18 @@ export async function DELETE(
     const { id } = await params;
     const { supabase, user } = await projectRouteDeps.getProjectAuthContext();
     if (!user) {
-      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+      return errorResponse("UNAUTHORIZED", "Authentication required", 401);
     }
 
     const deleted = await projectRouteDeps.deleteProjectForCurrentUser(id);
     if (!deleted) {
-      return errorResponse('NOT_FOUND', 'Project not found', 404);
+      return errorResponse("NOT_FOUND", "Project not found", 404);
     }
 
     await projectRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: id,
-      action: 'project_deleted',
+      action: "project_deleted",
     });
 
     return successResponse({ deleted: true });

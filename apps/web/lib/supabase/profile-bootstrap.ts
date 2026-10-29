@@ -14,7 +14,6 @@ function buildProfileRow(user: User) {
     (typeof user.user_metadata?.name === "string" && user.user_metadata.name) ||
     (typeof user.user_metadata?.full_name === "string" &&
       user.user_metadata.full_name) ||
-    user.email?.split("@")[0] ||
     "Creator";
 
   const avatarUrl =
@@ -66,10 +65,10 @@ function warn(event: string, user: User, detail: Record<string, unknown>) {
  * The DB trigger `on_auth_user_created` handles most cases,
  * but OAuth sign-ins may race — this insert catches any gaps.
  *
- * Uses the caller's authenticated session client: RLS policy
- * "Users can insert own profile" (WITH CHECK auth.uid() = id) permits a user
- * to create their own row, so no service-role key is required. Only if that
- * fails AND a service-role key is configured do we retry with the admin client.
+ * Tries the caller's authenticated session first. Creating a missing row
+ * requires a suitable profiles INSERT policy; a table grant alone is not enough.
+ * Only if that fails AND a service-role key is configured do we retry with
+ * the admin client.
  *
  * Never throws — sign-in must not fail because of profile bootstrap.
  */

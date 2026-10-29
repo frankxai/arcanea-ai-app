@@ -23,6 +23,34 @@ const input = saveWorldDraftSchema.parse({
   },
 });
 
+test("minimal worlds retain defaults without inventing optional content", () => {
+  const world = worldDraftSchema.parse({
+    name: "A new world",
+    slug: "a-new-world",
+  });
+  assert.deepEqual(world, {
+    name: "A new world",
+    slug: "a-new-world",
+    tagline: "",
+    description: "",
+    elements: [],
+    laws: [],
+    systems: [],
+    characters: [],
+    locations: [],
+    image_prompt: "",
+  });
+  const withCharacter = worldDraftSchema.parse({
+    name: "A new world",
+    slug: "a-new-world",
+    characters: [{ name: "Mara", personality: {} }],
+  });
+  assert.deepEqual(withCharacter.characters[0], {
+    name: "Mara",
+    personality: { traits: [] },
+  });
+});
+
 function database() {
   const tables = new Map<string, Map<string, Record<string, unknown>>>();
   let failedTable: string | null = null;
