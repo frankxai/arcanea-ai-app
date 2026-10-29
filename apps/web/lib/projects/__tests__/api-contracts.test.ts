@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { strict as assert } from 'node:assert';
-import { NextRequest } from 'next/server';
+import { strict as assert } from "node:assert";
+import { NextRequest } from "next/server";
 import {
   DELETE as deleteProjectRoute,
   GET as getProjectRoute,
   PATCH as patchProjectRoute,
   projectRouteDeps,
-} from '@/app/api/projects/[id]/route';
+} from "@/app/api/projects/[id]/route";
 import {
   GET as getProjectGraphRoute,
   projectGraphRouteDeps,
-} from '@/app/api/projects/[id]/graph/route';
-import type { ProjectWorkspaceSnapshot } from '@/lib/projects/server';
-import type { ProjectTraceInput } from '@/lib/projects/trace';
+} from "@/app/api/projects/[id]/graph/route";
+import type { ProjectWorkspaceSnapshot } from "@/lib/projects/server";
+import type { ProjectTraceInput } from "@/lib/projects/trace";
 
 let passed = 0;
 let failed = 0;
@@ -32,49 +32,49 @@ async function test(name: string, fn: () => Promise<void> | void) {
 function createWorkspace(): ProjectWorkspaceSnapshot {
   return {
     project: {
-      id: 'project_1',
-      title: 'Atlas Launch',
-      description: 'Atlas launch workspace',
-      goal: 'Ship a complete launch story.',
-      createdAt: '2026-03-30T10:00:00.000Z',
-      updatedAt: '2026-03-30T10:10:00.000Z',
+      id: "project_1",
+      title: "Atlas Launch",
+      description: "Atlas launch workspace",
+      goal: "Ship a complete launch story.",
+      createdAt: "2026-03-30T10:00:00.000Z",
+      updatedAt: "2026-03-30T10:10:00.000Z",
     },
     sessions: [
       {
-        id: 'chat_1',
-        title: 'Launch planning',
-        updatedAt: '2026-03-30T10:05:00.000Z',
-        luminorId: 'alera',
-        modelId: 'claude-sonnet-4',
+        id: "chat_1",
+        title: "Launch planning",
+        updatedAt: "2026-03-30T10:05:00.000Z",
+        luminorId: "alera",
+        modelId: "claude-sonnet-4",
       },
     ],
     creations: [
       {
-        id: 'creation_1',
-        title: 'Atlas key visual',
-        type: 'image',
-        status: 'published',
+        id: "creation_1",
+        title: "Atlas key visual",
+        type: "image",
+        status: "published",
         thumbnailUrl: null,
-        createdAt: '2026-03-30T10:07:00.000Z',
-        sourceSessionId: 'chat_1',
+        createdAt: "2026-03-30T10:07:00.000Z",
+        sourceSessionId: "chat_1",
       },
     ],
     docs: [
       {
-        id: 'doc_1',
-        title: 'Launch brief',
-        docType: 'brief',
-        status: 'active',
-        updatedAt: '2026-03-30T10:07:30.000Z',
+        id: "doc_1",
+        title: "Launch brief",
+        docType: "brief",
+        status: "active",
+        updatedAt: "2026-03-30T10:07:30.000Z",
         wordCount: 320,
-        excerpt: 'Launch brief excerpt.',
+        excerpt: "Launch brief excerpt.",
       },
     ],
     memories: [
       {
-        id: 'memory_1',
-        content: 'Atlas relies on harmonic engines.',
-        createdAt: '2026-03-30T10:08:00.000Z',
+        id: "memory_1",
+        content: "Atlas relies on harmonic engines.",
+        createdAt: "2026-03-30T10:08:00.000Z",
       },
     ],
     stats: {
@@ -92,7 +92,7 @@ async function parseJson<T>(response: Response): Promise<T> {
 
 type ErrorPayload = {
   success: false;
-  error: { code: string };
+  error: { code: string; details?: { errors: Array<{ path: string[] }> } };
 };
 
 type ProjectPayload = {
@@ -118,84 +118,91 @@ async function main() {
   const originalGraphDeps = { ...projectGraphRouteDeps };
 
   try {
-    await test('GET /api/projects/[id] returns not found when project is missing', async () => {
+    await test("GET /api/projects/[id] returns not found when project is missing", async () => {
       projectRouteDeps.getProjectForCurrentUser = async () => null;
 
       const response = await getProjectRoute(
-        new NextRequest('http://localhost/api/projects/project_1'),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        new NextRequest("http://localhost/api/projects/project_1"),
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<ErrorPayload>(response);
 
       assert.equal(response.status, 404);
       assert.equal(payload.success, false);
-      assert.equal(payload.error.code, 'NOT_FOUND');
+      assert.equal(payload.error.code, "NOT_FOUND");
     });
 
-    await test('PATCH /api/projects/[id] rejects invalid patch payloads', async () => {
+    await test("PATCH /api/projects/[id] rejects invalid patch payloads", async () => {
       const response = await patchProjectRoute(
-        new NextRequest('http://localhost/api/projects/project_1', {
-          method: 'PATCH',
-          body: JSON.stringify({ title: '' }),
-          headers: { 'Content-Type': 'application/json' },
+        new NextRequest("http://localhost/api/projects/project_1", {
+          method: "PATCH",
+          body: JSON.stringify({ title: "" }),
+          headers: { "Content-Type": "application/json" },
         }),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<ErrorPayload>(response);
 
       assert.equal(response.status, 400);
       assert.equal(payload.success, false);
-      assert.equal(payload.error.code, 'VALIDATION_ERROR');
+      assert.equal(payload.error.code, "VALIDATION_ERROR");
+      assert.ok(Array.isArray(payload.error.details?.errors));
+      assert.deepEqual(payload.error.details.errors[0].path, ["title"]);
     });
 
-    await test('PATCH /api/projects/[id] returns updated project contract', async () => {
+    await test("PATCH /api/projects/[id] returns updated project contract", async () => {
       const traces: ProjectTraceInput[] = [];
       projectRouteDeps.getProjectAuthContext = async () => ({
         supabase: {} as never,
         db: {} as never,
-        user: { id: 'user_1' } as never,
+        user: { id: "user_1" } as never,
       });
-      projectRouteDeps.updateProjectForCurrentUser = async (_id, patch) => ({
-        id: 'project_1',
-        title: patch.title ?? 'Atlas Launch',
-        description: patch.description ?? null,
-        goal: patch.goal ?? null,
-        createdAt: '2026-03-30T10:00:00.000Z',
-        updatedAt: '2026-03-30T10:20:00.000Z',
-      });
+      projectRouteDeps.updateProjectForCurrentUser = async (_id, patch) => {
+        assert.deepEqual({ ...patch }, { title: "Atlas Revised" });
+        return {
+          id: "project_1",
+          title: patch.title ?? "Atlas Launch",
+          description: patch.description ?? null,
+          goal: patch.goal ?? null,
+          createdAt: "2026-03-30T10:00:00.000Z",
+          updatedAt: "2026-03-30T10:20:00.000Z",
+        };
+      };
       projectRouteDeps.recordProjectTrace = async (_supabase, input) => {
         traces.push(input);
       };
 
       const response = await patchProjectRoute(
-        new NextRequest('http://localhost/api/projects/project_1', {
-          method: 'PATCH',
-          body: JSON.stringify({ title: 'Atlas Revised' }),
-          headers: { 'Content-Type': 'application/json' },
+        new NextRequest("http://localhost/api/projects/project_1", {
+          method: "PATCH",
+          body: JSON.stringify({ title: "Atlas Revised" }),
+          headers: { "Content-Type": "application/json" },
         }),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<ProjectPayload>(response);
 
       assert.equal(response.status, 200);
       assert.equal(payload.success, true);
-      assert.equal(payload.data.project.title, 'Atlas Revised');
+      assert.equal(payload.data.project.title, "Atlas Revised");
       assert.equal(traces.length, 1);
-      assert.equal(traces[0].action, 'project_updated');
+      assert.equal(traces[0].action, "project_updated");
     });
 
-    await test('DELETE /api/projects/[id] returns deleted true', async () => {
+    await test("DELETE /api/projects/[id] returns deleted true", async () => {
       projectRouteDeps.getProjectAuthContext = async () => ({
         supabase: {} as never,
         db: {} as never,
-        user: { id: 'user_1' } as never,
+        user: { id: "user_1" } as never,
       });
       projectRouteDeps.deleteProjectForCurrentUser = async () => true;
       projectRouteDeps.recordProjectTrace = async () => undefined;
 
       const response = await deleteProjectRoute(
-        new NextRequest('http://localhost/api/projects/project_1', { method: 'DELETE' }),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        new NextRequest("http://localhost/api/projects/project_1", {
+          method: "DELETE",
+        }),
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<DeletePayload>(response);
 
@@ -204,34 +211,40 @@ async function main() {
       assert.equal(payload.data.deleted, true);
     });
 
-    await test('GET /api/projects/[id]/graph returns workspace, evaluation, and graph', async () => {
+    await test("GET /api/projects/[id]/graph returns workspace, evaluation, and graph", async () => {
       const workspace = createWorkspace();
       const traces: ProjectTraceInput[] = [];
-      projectGraphRouteDeps.getProjectWorkspaceForCurrentUser = async () => workspace;
+      projectGraphRouteDeps.getProjectWorkspaceForCurrentUser = async () =>
+        workspace;
       projectGraphRouteDeps.getProjectAuthContext = async () => ({
         supabase: {} as never,
         db: {} as never,
-        user: { id: 'user_1' } as never,
+        user: { id: "user_1" } as never,
       });
-      projectGraphRouteDeps.getProjectGraphSummaryForCurrentUser = async () => null;
+      projectGraphRouteDeps.getProjectGraphSummaryForCurrentUser = async () =>
+        null;
       projectGraphRouteDeps.evaluateProjectWorkspace = () => ({
         score: 100,
         checks: [
-          { name: 'has_project', passed: true, detail: 'Workspace exists.' },
+          { name: "has_project", passed: true, detail: "Workspace exists." },
         ],
       });
       projectGraphRouteDeps.buildProjectGraphView = () => ({
         evaluation: {
           score: 100,
-          checks: [{ name: 'has_project', passed: true, detail: 'Workspace exists.' }],
+          checks: [
+            { name: "has_project", passed: true, detail: "Workspace exists." },
+          ],
         },
         graph: {
-          summary: 'Atlas Launch is an active workspace.',
-          tags: ['atlas'],
-          facts: ['Goal: Ship a complete launch story.'],
+          summary: "Atlas Launch is an active workspace.",
+          tags: ["atlas"],
+          facts: ["Goal: Ship a complete launch story."],
           score: 100,
-          checks: [{ name: 'has_project', passed: true, detail: 'Workspace exists.' }],
-          source: 'derived',
+          checks: [
+            { name: "has_project", passed: true, detail: "Workspace exists." },
+          ],
+          source: "derived",
         },
       });
       projectGraphRouteDeps.recordProjectTrace = async (_supabase, input) => {
@@ -239,16 +252,19 @@ async function main() {
       };
 
       const response = await getProjectGraphRoute(
-        new NextRequest('http://localhost/api/projects/project_1/graph'),
-        { params: Promise.resolve({ id: 'project_1' }) },
+        new NextRequest("http://localhost/api/projects/project_1/graph"),
+        { params: Promise.resolve({ id: "project_1" }) },
       );
       const payload = await parseJson<GraphPayload>(response);
 
       assert.equal(response.status, 200);
       assert.equal(payload.success, true);
-      assert.equal(payload.data.workspace.project.id, 'project_1');
-      assert.equal(payload.data.graph.summary, 'Atlas Launch is an active workspace.');
-      assert.equal(traces[0].action, 'project_graph_viewed');
+      assert.equal(payload.data.workspace.project.id, "project_1");
+      assert.equal(
+        payload.data.graph.summary,
+        "Atlas Launch is an active workspace.",
+      );
+      assert.equal(traces[0].action, "project_graph_viewed");
     });
   } finally {
     Object.assign(projectRouteDeps, originalProjectDeps);

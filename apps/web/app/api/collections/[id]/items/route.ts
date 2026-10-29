@@ -6,15 +6,15 @@
  * DELETE /api/collections/[id]/items - Remove a creation from the collection
  */
 
-import { NextRequest } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest } from "next/server";
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
 import {
   successResponse,
   errorResponse,
   handleApiError,
   parseRequestBody,
-} from '@/lib/api-utils';
+} from "@/lib/api-utils";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
     const body = await parseRequestBody(request);
     if (!body) {
-      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
+      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
     }
 
     const addSchema = z.object({
@@ -42,8 +42,8 @@ export async function POST(request: NextRequest, context: RouteContext) {
     const validation = addSchema.safeParse(body);
 
     if (!validation.success) {
-      return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, {
-        errors: validation.error.errors,
+      return errorResponse("VALIDATION_ERROR", "Invalid input", 400, {
+        errors: validation.error.issues,
       });
     }
 
@@ -57,39 +57,43 @@ export async function POST(request: NextRequest, context: RouteContext) {
     ] = await Promise.all([
       // Verify collection exists
       supabaseServer
-        .from('collections')
-        .select('id')
-        .eq('id', collectionId)
+        .from("collections")
+        .select("id")
+        .eq("id", collectionId)
         .single(),
       // Check for duplicate
       supabaseServer
-        .from('collection_items')
-        .select('id')
-        .eq('collection_id', collectionId)
-        .eq('creation_id', creationId)
+        .from("collection_items")
+        .select("id")
+        .eq("collection_id", collectionId)
+        .eq("creation_id", creationId)
         .maybeSingle(),
       // Determine next sort_order
       supabaseServer
-        .from('collection_items')
-        .select('sort_order')
-        .eq('collection_id', collectionId)
-        .order('sort_order', { ascending: false })
+        .from("collection_items")
+        .select("sort_order")
+        .eq("collection_id", collectionId)
+        .order("sort_order", { ascending: false })
         .limit(1)
         .single(),
     ]);
 
     if (collError || !collection) {
-      return errorResponse('NOT_FOUND', 'Collection not found', 404);
+      return errorResponse("NOT_FOUND", "Collection not found", 404);
     }
 
     if (existing) {
-      return errorResponse('ALREADY_EXISTS', 'Creation is already in this collection', 409);
+      return errorResponse(
+        "ALREADY_EXISTS",
+        "Creation is already in this collection",
+        409,
+      );
     }
 
     const nextSortOrder = lastItem ? lastItem.sort_order + 1 : 0;
 
     const { data, error } = await supabaseServer
-      .from('collection_items')
+      .from("collection_items")
       .insert({
         collection_id: collectionId,
         creation_id: creationId,
@@ -99,8 +103,12 @@ export async function POST(request: NextRequest, context: RouteContext) {
       .single();
 
     if (error) {
-      console.error('[collection items POST] Supabase error:', error);
-      return errorResponse('DATABASE_ERROR', 'Failed to add item to collection', 500);
+      console.error("[collection items POST] Supabase error:", error);
+      return errorResponse(
+        "DATABASE_ERROR",
+        "Failed to add item to collection",
+        500,
+      );
     }
 
     return successResponse(
@@ -113,7 +121,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
           addedAt: data.added_at,
         },
       },
-      201
+      201,
     );
   } catch (error) {
     return handleApiError(error);
@@ -132,7 +140,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
 
     const body = await parseRequestBody(request);
     if (!body) {
-      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
+      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
     }
 
     const removeSchema = z.object({
@@ -142,22 +150,26 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
     const validation = removeSchema.safeParse(body);
 
     if (!validation.success) {
-      return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, {
-        errors: validation.error.errors,
+      return errorResponse("VALIDATION_ERROR", "Invalid input", 400, {
+        errors: validation.error.issues,
       });
     }
 
     const { creationId } = validation.data;
 
     const { error } = await supabaseServer
-      .from('collection_items')
+      .from("collection_items")
       .delete()
-      .eq('collection_id', collectionId)
-      .eq('creation_id', creationId);
+      .eq("collection_id", collectionId)
+      .eq("creation_id", creationId);
 
     if (error) {
-      console.error('[collection items DELETE] Supabase error:', error);
-      return errorResponse('DATABASE_ERROR', 'Failed to remove item from collection', 500);
+      console.error("[collection items DELETE] Supabase error:", error);
+      return errorResponse(
+        "DATABASE_ERROR",
+        "Failed to remove item from collection",
+        500,
+      );
     }
 
     return successResponse({ removed: true });
