@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { z } from 'zod';
-import { NextRequest, NextResponse } from 'next/server';
+import { z } from "zod";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Zod validation schemas for API endpoints
  */
 
 // Common validation patterns
-const uuidSchema = z.string().uuid({ message: 'Invalid UUID format' });
+const uuidSchema = z.string().uuid({ message: "Invalid UUID format" });
 const paginationSchema = z.object({
   page: z.number().int().positive().default(1),
   pageSize: z.number().int().positive().max(100).default(20),
@@ -31,8 +31,8 @@ export const createCommentSchema = z.object({
   creationId: uuidSchema,
   content: z
     .string()
-    .min(1, 'Comment cannot be empty')
-    .max(2000, 'Comment must be less than 2000 characters')
+    .min(1, "Comment cannot be empty")
+    .max(2000, "Comment must be less than 2000 characters")
     .trim(),
   parentCommentId: uuidSchema.optional(),
 });
@@ -86,8 +86,10 @@ export const activityFeedQuerySchema = z.object({
  */
 export async function validateBody<T extends z.ZodType>(
   req: NextRequest,
-  schema: T
-): Promise<{ success: true; data: z.infer<T> } | { success: false; error: NextResponse }> {
+  schema: T,
+): Promise<
+  { success: true; data: z.infer<T> } | { success: false; error: NextResponse }
+> {
   try {
     const body = await req.json();
     const validated = schema.parse(body);
@@ -99,13 +101,13 @@ export async function validateBody<T extends z.ZodType>(
         error: NextResponse.json(
           {
             success: false,
-            error: 'Validation failed',
-            details: error.errors.map((err) => ({
-              field: err.path.join('.'),
+            error: "Validation failed",
+            details: error.issues.map((err) => ({
+              field: err.path.join("."),
               message: err.message,
             })),
           },
-          { status: 400 }
+          { status: 400 },
         ),
       };
     }
@@ -115,9 +117,9 @@ export async function validateBody<T extends z.ZodType>(
       error: NextResponse.json(
         {
           success: false,
-          error: 'Invalid request body',
+          error: "Invalid request body",
         },
-        { status: 400 }
+        { status: 400 },
       ),
     };
   }
@@ -128,8 +130,10 @@ export async function validateBody<T extends z.ZodType>(
  */
 export function validateQuery<T extends z.ZodType>(
   req: NextRequest,
-  schema: T
-): { success: true; data: z.infer<T> } | { success: false; error: NextResponse } {
+  schema: T,
+):
+  | { success: true; data: z.infer<T> }
+  | { success: false; error: NextResponse } {
   try {
     const { searchParams } = new URL(req.url);
     const params: Record<string, any> = {};
@@ -150,13 +154,13 @@ export function validateQuery<T extends z.ZodType>(
         error: NextResponse.json(
           {
             success: false,
-            error: 'Validation failed',
-            details: error.errors.map((err) => ({
-              field: err.path.join('.'),
+            error: "Validation failed",
+            details: error.issues.map((err) => ({
+              field: err.path.join("."),
               message: err.message,
             })),
           },
-          { status: 400 }
+          { status: 400 },
         ),
       };
     }
@@ -166,9 +170,9 @@ export function validateQuery<T extends z.ZodType>(
       error: NextResponse.json(
         {
           success: false,
-          error: 'Invalid query parameters',
+          error: "Invalid query parameters",
         },
-        { status: 400 }
+        { status: 400 },
       ),
     };
   }
@@ -180,7 +184,7 @@ export function validateQuery<T extends z.ZodType>(
 export function sanitizeInput(input: string): string {
   return input
     .trim()
-    .replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
+    .replace(/[<>]/g, "") // Remove < and > to prevent HTML injection
     .substring(0, 10000); // Limit length
 }
 
@@ -191,9 +195,9 @@ export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
   const sanitized = { ...obj };
 
   for (const key in sanitized) {
-    if (typeof sanitized[key] === 'string') {
+    if (typeof sanitized[key] === "string") {
       sanitized[key] = sanitizeInput(sanitized[key] as string) as any;
-    } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
+    } else if (typeof sanitized[key] === "object" && sanitized[key] !== null) {
       sanitized[key] = sanitizeObject(sanitized[key]);
     }
   }

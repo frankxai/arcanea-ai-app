@@ -7,17 +7,17 @@
  * DELETE  /api/memories?id=   — Delete a specific memory
  */
 
-import { NextRequest } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest } from "next/server";
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
 import {
   successResponse,
   errorResponse,
   handleApiError,
-} from '@/lib/api-utils';
-import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
-import { enrichProjectGraph } from '@/lib/projects/enrichment';
-import { recordProjectTrace } from '@/lib/projects/trace';
+} from "@/lib/api-utils";
+import { getProjectWorkspaceForCurrentUser } from "@/lib/projects/server";
+import { enrichProjectGraph } from "@/lib/projects/enrichment";
+import { recordProjectTrace } from "@/lib/projects/trace";
 
 const MAX_MEMORIES_PER_USER = 100;
 // The user_memories table exists at runtime but is currently missing from the
@@ -35,20 +35,20 @@ interface MemoryRow {
 }
 
 const VALID_CATEGORIES = [
-  'preference',
-  'background',
-  'goal',
-  'project',
-  'style',
-  'general',
+  "preference",
+  "background",
+  "goal",
+  "project",
+  "style",
+  "general",
 ] as const;
 
 const createMemorySchema = z.object({
   content: z
     .string()
-    .min(1, 'Content is required')
-    .max(500, 'Content must be 500 characters or fewer'),
-  category: z.enum(VALID_CATEGORIES).default('general'),
+    .min(1, "Content is required")
+    .max(500, "Content must be 500 characters or fewer"),
+  category: z.enum(VALID_CATEGORIES).default("general"),
   projectId: z.string().uuid().optional(),
 });
 
@@ -65,18 +65,18 @@ export async function GET() {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+      return errorResponse("UNAUTHORIZED", "Authentication required", 401);
     }
 
     const { data: memories, error } = await supabase
-      .from('user_memories')
-      .select('id, content, category, created_at, updated_at')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
+      .from("user_memories")
+      .select("id, content, category, created_at, updated_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
 
     if (error) {
-      console.error('Failed to fetch memories:', error);
-      return errorResponse('INTERNAL_ERROR', 'Failed to fetch memories', 500);
+      console.error("Failed to fetch memories:", error);
+      return errorResponse("INTERNAL_ERROR", "Failed to fetch memories", 500);
     }
 
     // Group by category
@@ -114,48 +114,52 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+      return errorResponse("UNAUTHORIZED", "Authentication required", 401);
     }
 
     let body: unknown;
     try {
       body = await request.json();
     } catch {
-      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
+      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
     }
 
     const validation = createMemorySchema.safeParse(body);
     if (!validation.success) {
-      return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, {
-        errors: validation.error.errors,
+      return errorResponse("VALIDATION_ERROR", "Invalid input", 400, {
+        errors: validation.error.issues,
       });
     }
 
     // Check memory count limit
     const { count, error: countError } = await supabase
-      .from('user_memories')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', user.id);
+      .from("user_memories")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id);
 
     if (countError) {
-      console.error('Failed to count memories:', countError);
-      return errorResponse('INTERNAL_ERROR', 'Failed to check memory limit', 500);
+      console.error("Failed to count memories:", countError);
+      return errorResponse(
+        "INTERNAL_ERROR",
+        "Failed to check memory limit",
+        500,
+      );
     }
 
     if ((count ?? 0) >= MAX_MEMORIES_PER_USER) {
       return errorResponse(
-        'CONFLICT',
+        "CONFLICT",
         `Memory limit reached (${MAX_MEMORIES_PER_USER}). Delete old memories before adding new ones.`,
-        422
+        422,
       );
     }
 
     // Check for duplicate/similar memories before inserting
     const { data: existing } = await supabase
-      .from('user_memories')
-      .select('id, content')
-      .eq('user_id', user.id)
-      .eq('category', validation.data.category);
+      .from("user_memories")
+      .select("id, content")
+      .eq("user_id", user.id)
+      .eq("category", validation.data.category);
 
     if (existing) {
       const newContentLower = validation.data.content.toLowerCase();
@@ -170,26 +174,27 @@ export async function POST(request: NextRequest) {
       if (duplicate) {
         // Update existing memory instead of creating a duplicate
         await supabase
-          .from('user_memories')
+          .from("user_memories")
           .update({
             content: validation.data.content,
             updated_at: new Date().toISOString(),
           })
-          .eq('id', duplicate.id);
+          .eq("id", duplicate.id);
 
         if (validation.data.projectId) {
-          await supabase
-            .from('project_memory_links')
-            .upsert({
+          await supabase.from("project_memory_links").upsert(
+            {
               project_id: validation.data.projectId,
               user_id: user.id,
               memory_id: duplicate.id,
-            }, { onConflict: 'project_id,memory_id' });
+            },
+            { onConflict: "project_id,memory_id" },
+          );
 
           await recordProjectTrace(supabase, {
             userId: user.id,
             projectId: validation.data.projectId,
-            action: 'project_memory_linked',
+            action: "project_memory_linked",
             metadata: {
               memoryId: duplicate.id,
               updated: true,
@@ -197,54 +202,62 @@ export async function POST(request: NextRequest) {
             },
           });
 
-          const workspace = await getProjectWorkspaceForCurrentUser(validation.data.projectId);
+          const workspace = await getProjectWorkspaceForCurrentUser(
+            validation.data.projectId,
+          );
           if (workspace) {
             await enrichProjectGraph(supabase, user.id, workspace);
           }
         }
 
         // Fire-and-forget: re-embed the updated memory
-        import('@/lib/memory/semantic').then(({ embedMemory }) => {
-          embedMemory(supabase, duplicate.id, validation.data.content).catch(() => {});
+        import("@/lib/memory/semantic").then(({ embedMemory }) => {
+          embedMemory(supabase, duplicate.id, validation.data.content).catch(
+            () => {},
+          );
         });
 
         return successResponse(
-          { memory: { ...duplicate, content: validation.data.content }, updated: true },
+          {
+            memory: { ...duplicate, content: validation.data.content },
+            updated: true,
+          },
           200,
         );
       }
     }
 
     const { data: memory, error: insertError } = await supabase
-      .from('user_memories')
+      .from("user_memories")
       .insert({
         user_id: user.id,
         content: validation.data.content,
         category: validation.data.category,
       })
-      .select('id, content, category, created_at')
+      .select("id, content, category, created_at")
       .single();
 
     if (insertError) {
-      console.error('Failed to insert memory:', insertError);
-      return errorResponse('INTERNAL_ERROR', 'Failed to save memory', 500);
+      console.error("Failed to insert memory:", insertError);
+      return errorResponse("INTERNAL_ERROR", "Failed to save memory", 500);
     }
 
     // Fire-and-forget: embed the new memory for semantic search
     if (memory?.id) {
       if (validation.data.projectId) {
-        await supabase
-          .from('project_memory_links')
-          .upsert({
+        await supabase.from("project_memory_links").upsert(
+          {
             project_id: validation.data.projectId,
             user_id: user.id,
             memory_id: memory.id,
-          }, { onConflict: 'project_id,memory_id' });
+          },
+          { onConflict: "project_id,memory_id" },
+        );
 
         await recordProjectTrace(supabase, {
           userId: user.id,
           projectId: validation.data.projectId,
-          action: 'project_memory_linked',
+          action: "project_memory_linked",
           metadata: {
             memoryId: memory.id,
             updated: false,
@@ -252,14 +265,18 @@ export async function POST(request: NextRequest) {
           },
         });
 
-        const workspace = await getProjectWorkspaceForCurrentUser(validation.data.projectId);
+        const workspace = await getProjectWorkspaceForCurrentUser(
+          validation.data.projectId,
+        );
         if (workspace) {
           await enrichProjectGraph(supabase, user.id, workspace);
         }
       }
 
-      import('@/lib/memory/semantic').then(({ embedMemory }) => {
-        embedMemory(supabase, memory.id, validation.data.content).catch(() => {});
+      import("@/lib/memory/semantic").then(({ embedMemory }) => {
+        embedMemory(supabase, memory.id, validation.data.content).catch(
+          () => {},
+        );
       });
     }
 
@@ -282,32 +299,36 @@ export async function DELETE(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+      return errorResponse("UNAUTHORIZED", "Authentication required", 401);
     }
 
     const { searchParams } = new URL(request.url);
-    const memoryId = searchParams.get('id');
+    const memoryId = searchParams.get("id");
 
     if (!memoryId) {
-      return errorResponse('INVALID_INPUT', 'Memory ID is required (?id=<uuid>)', 400);
+      return errorResponse(
+        "INVALID_INPUT",
+        "Memory ID is required (?id=<uuid>)",
+        400,
+      );
     }
 
     // UUID format validation
     const uuidSchema = z.string().uuid();
     const uuidResult = uuidSchema.safeParse(memoryId);
     if (!uuidResult.success) {
-      return errorResponse('INVALID_INPUT', 'Invalid memory ID format', 400);
+      return errorResponse("INVALID_INPUT", "Invalid memory ID format", 400);
     }
 
     const { error: deleteError } = await supabase
-      .from('user_memories')
+      .from("user_memories")
       .delete()
-      .eq('id', memoryId)
-      .eq('user_id', user.id);
+      .eq("id", memoryId)
+      .eq("user_id", user.id);
 
     if (deleteError) {
-      console.error('Failed to delete memory:', deleteError);
-      return errorResponse('INTERNAL_ERROR', 'Failed to delete memory', 500);
+      console.error("Failed to delete memory:", deleteError);
+      return errorResponse("INTERNAL_ERROR", "Failed to delete memory", 500);
     }
 
     return successResponse({ deleted: memoryId });
