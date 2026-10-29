@@ -46,6 +46,14 @@ files were all inspected or replace an existing approved library.
 
 ## Direction selection
 
+The install manifest also referenced a separate flat-A icon and a missing
+`/icon-512.png`, and used CSS variables as JSON colour values. This change
+routes both declared install sizes and shortcuts to `/brand-icon/192` and
+`/brand-icon/512`, rendering the same existing artwork with cover fit, and
+serializes literal colours from runtime tokens. The historical icon remains.
+The regression check decodes each declared PNG, checks its actual dimensions,
+and verifies that unsupported sizes fail without allocating an image.
+
 1. **Living atlas — selected for the next art cycle.** Original inhabited worlds,
    readable geography, mineral depth and one luminous signal; neutral controls.
 2. **Cinematic relic — supporting art.** Retain the current chamber for material

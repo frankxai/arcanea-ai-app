@@ -13,6 +13,11 @@ Use `ArcaneanMark` from `components/brand/arcanea-mark` for square interface pla
 
 The original 784 × 1168 image composes a symbol, wordmark and atmosphere. It is not an editable vector master. Square crops are interface applications, not a complete identity family.
 
+Installed-app icons and shortcuts use `/brand-icon/192` and `/brand-icon/512`,
+which render the declared PNG sizes from this same artwork. The old flat-A
+`/icon-192.png` is retained as a historical asset. Manifest colours serialize
+literal values from runtime tokens; CSS variables do not resolve in manifest JSON.
+
 ## Historical SVGs
 
 `arcanea-logo.svg` and `arcanea-wordmark.svg` remain historical references. Their symbols differ; the latter uses live system-font text and violet gradients. Neither is the current product wordmark. Do not introduce them into new placements. The runtime brand kit omits an optional wordmark until a coherent family has been reviewed.
