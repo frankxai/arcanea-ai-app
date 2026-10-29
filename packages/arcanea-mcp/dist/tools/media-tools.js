@@ -13,90 +13,101 @@
  *   media_dedup   — Archive all duplicates
  *   media_process — Run image conversion + thumbnails
  */
-import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { isAbsolute, resolve } from 'node:path';
-const MANIFEST_DEFAULT = resolve(process.env.HOME ?? homedir(), 'arcanea-manifest.json');
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { isAbsolute, resolve } from "node:path";
+const MANIFEST_DEFAULT = resolve(process.env.HOME ?? homedir(), "arcanea-manifest.json");
 function loadManifest(manifestPath) {
     if (!existsSync(manifestPath))
         return null;
     try {
-        return JSON.parse(readFileSync(manifestPath, 'utf-8'));
+        return JSON.parse(readFileSync(manifestPath, "utf-8"));
     }
     catch {
         return null;
     }
 }
 function saveManifest(data, manifestPath) {
-    writeFileSync(manifestPath, JSON.stringify(data, null, 2), 'utf-8');
+    writeFileSync(manifestPath, JSON.stringify(data, null, 2), "utf-8");
 }
 // ── Tool definitions for MCP server registration ──────────────────────────────
 export const MEDIA_TOOLS = [
     {
-        name: 'media_scan',
-        description: 'Scan a directory tree for images and videos, build the Arcanea media catalog with Guardian tags, scene descriptions, and deduplication.',
+        name: "media_scan",
+        description: "Scan a directory tree for images and videos, build the Arcanea media catalog with Guardian tags, scene descriptions, and deduplication.",
         inputSchema: {
-            type: 'object',
+            type: "object",
             properties: {
                 root_path: {
-                    type: 'string',
+                    type: "string",
                     description: 'Directory to scan (e.g. "G:/My Drive/Arcanea")',
                 },
                 manifest_path: {
-                    type: 'string',
-                    description: 'Where to save the manifest JSON',
+                    type: "string",
+                    description: "Where to save the manifest JSON",
                     default: MANIFEST_DEFAULT,
                 },
             },
-            required: ['root_path'],
+            required: ["root_path"],
         },
     },
     {
-        name: 'media_stats',
-        description: 'Get statistics from the Arcanea media catalog: total files, size, Guardian breakdown, source breakdown, duplicate count.',
+        name: "media_stats",
+        description: "Get statistics from the Arcanea media catalog: total files, size, Guardian breakdown, source breakdown, duplicate count.",
         inputSchema: {
-            type: 'object',
+            type: "object",
             properties: {
-                manifest_path: { type: 'string', description: 'Path to manifest JSON' },
+                manifest_path: { type: "string", description: "Path to manifest JSON" },
             },
         },
     },
     {
-        name: 'media_search',
-        description: 'Search the media catalog by Guardian name, scene description, or tag.',
+        name: "media_search",
+        description: "Search the media catalog by Guardian name, scene description, or tag.",
         inputSchema: {
-            type: 'object',
+            type: "object",
             properties: {
-                query: { type: 'string', description: 'Search query (Guardian name, scene, tag)' },
-                manifest_path: { type: 'string' },
-                limit: { type: 'number', default: 20 },
+                query: {
+                    type: "string",
+                    description: "Search query (Guardian name, scene, tag)",
+                },
+                manifest_path: { type: "string" },
+                limit: { type: "number", default: 20 },
             },
-            required: ['query'],
+            required: ["query"],
         },
     },
     {
-        name: 'media_approve',
-        description: 'Set status (approved/archived/review) and quality tier (1=hero, 2=gallery, 3=archive) on media entries.',
+        name: "media_approve",
+        description: "Set status (approved/archived/review) and quality tier (1=hero, 2=gallery, 3=archive) on media entries.",
         inputSchema: {
-            type: 'object',
+            type: "object",
             properties: {
-                ids: { type: 'array', items: { type: 'string' }, description: 'Entry IDs to update' },
-                status: { type: 'string', enum: ['approved', 'archived', 'review'] },
-                quality_tier: { type: 'number', enum: [1, 2, 3] },
-                manifest_path: { type: 'string' },
+                ids: {
+                    type: "array",
+                    items: { type: "string" },
+                    description: "Entry IDs to update",
+                },
+                status: { type: "string", enum: ["approved", "archived", "review"] },
+                quality_tier: { type: "number", enum: [1, 2, 3] },
+                manifest_path: { type: "string" },
             },
-            required: ['ids'],
+            required: ["ids"],
         },
     },
     {
-        name: 'media_dedup',
-        description: 'Find and optionally archive all duplicate media files in the catalog.',
+        name: "media_dedup",
+        description: "Find and optionally archive all duplicate media files in the catalog.",
         inputSchema: {
-            type: 'object',
+            type: "object",
             properties: {
-                apply: { type: 'boolean', description: 'Actually archive dupes (default: dry run)', default: false },
-                manifest_path: { type: 'string' },
+                apply: {
+                    type: "boolean",
+                    description: "Actually archive dupes (default: dry run)",
+                    default: false,
+                },
+                manifest_path: { type: "string" },
             },
         },
     },
@@ -105,37 +116,53 @@ export const MEDIA_TOOLS = [
 export async function handleMediaTool(name, args) {
     const manifestPath = args.manifest_path ?? MANIFEST_DEFAULT;
     switch (name) {
-        case 'media_scan': {
+        case "media_scan": {
             const root = args.root_path;
-            if (!root || typeof root !== 'string' || !isAbsolute(root) || root.includes('\0')) {
-                return 'ERROR: Invalid root_path: must be an absolute path without NUL bytes.';
+            if (!root ||
+                typeof root !== "string" ||
+                !isAbsolute(root) ||
+                root.includes("\0")) {
+                return "ERROR: Invalid root_path: must be an absolute path without NUL bytes.";
             }
-            if (!manifestPath || typeof manifestPath !== 'string' || !isAbsolute(manifestPath) || manifestPath.includes('\0')) {
-                return 'ERROR: Invalid manifest_path: must be an absolute path without NUL bytes.';
+            if (!manifestPath ||
+                typeof manifestPath !== "string" ||
+                !isAbsolute(manifestPath) ||
+                manifestPath.includes("\0")) {
+                return "ERROR: Invalid manifest_path: must be an absolute path without NUL bytes.";
             }
             if (!existsSync(root))
                 return `ERROR: Path not found: ${root}`;
-            const cliPath = resolve(import.meta.dirname ?? '.', '../../../media/dist/cli.js');
-            try {
-                const output = execFileSync(process.execPath, [cliPath, 'scan', root, '--manifest', manifestPath], { timeout: 300_000, encoding: 'utf-8' });
-                return output;
+            const cliPath = resolve(import.meta.dirname ?? ".", "../../../media/dist/cli.js");
+            const scriptPath = resolve(import.meta.dirname ?? ".", "../../../../scripts/media-catalog.ps1");
+            const hasNodeScanner = existsSync(cliPath);
+            if (!hasNodeScanner && !existsSync(scriptPath)) {
+                return "ERROR: Media scanner unavailable. Build @arcanea/media in the repository before scanning.";
             }
-            catch {
-                // Fallback: use PowerShell catalog if Node not built
-                const scriptPath = resolve(import.meta.dirname ?? '.', '../../../../scripts/media-catalog.ps1');
-                try {
-                    execFileSync('powershell.exe', ['-ExecutionPolicy', 'Bypass', '-File', scriptPath, '-Root', root, '-Output', manifestPath], { timeout: 300_000, encoding: 'utf-8' });
-                    const manifest = loadManifest(manifestPath);
-                    if (!manifest)
-                        return 'Scan complete but manifest unreadable.';
-                    return `Scanned ${manifest.total_files} files (${manifest.total_size_mb} MB). Manifest: ${manifestPath}`;
+            try {
+                if (hasNodeScanner) {
+                    return execFileSync(process.execPath, [cliPath, "scan", root, "--manifest", manifestPath], { timeout: 300_000, encoding: "utf-8", shell: false });
                 }
-                catch (e2) {
-                    return `Scan error: ${String(e2).slice(0, 200)}`;
-                }
+                // Choose a runtime before execution; a failed scan may have already written output.
+                execFileSync("powershell.exe", [
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    scriptPath,
+                    "-Root",
+                    root,
+                    "-Output",
+                    manifestPath,
+                ], { timeout: 300_000, encoding: "utf-8", shell: false });
+                const manifest = loadManifest(manifestPath);
+                if (!manifest)
+                    return "Scan complete but manifest unreadable.";
+                return `Scanned ${manifest.total_files} files (${manifest.total_size_mb} MB). Manifest: ${manifestPath}`;
+            }
+            catch (error) {
+                return `Scan error: ${String(error).slice(0, 200)}`;
             }
         }
-        case 'media_stats': {
+        case "media_stats": {
             const manifest = loadManifest(manifestPath);
             if (!manifest)
                 return `No manifest found at: ${manifestPath}\nRun media_scan first.`;
@@ -145,21 +172,21 @@ export async function handleMediaTool(name, args) {
                 `Total size:  ${s.total_size_mb} MB`,
                 `Duplicates:  ${s.duplicates}`,
                 `Generated:   ${s.generated?.slice(0, 10)}`,
-                '',
-                'BY GUARDIAN:',
+                "",
+                "BY GUARDIAN:",
                 ...Object.entries(s.by_guardian ?? {})
                     .sort(([, a], [, b]) => b - a)
                     .map(([g, c]) => `  ${g.padEnd(14)} ${c}`),
-                '',
-                'BY TYPE:',
+                "",
+                "BY TYPE:",
                 ...Object.entries(s.by_type ?? {}).map(([k, v]) => `  ${k}: ${v}`),
-                '',
-                'BY SOURCE:',
+                "",
+                "BY SOURCE:",
                 ...Object.entries(s.by_source ?? {}).map(([k, v]) => `  ${k}: ${v}`),
             ];
-            return lines.join('\n');
+            return lines.join("\n");
         }
-        case 'media_search': {
+        case "media_search": {
             const manifest = loadManifest(manifestPath);
             if (!manifest)
                 return `No manifest found at: ${manifestPath}`;
@@ -168,14 +195,16 @@ export async function handleMediaTool(name, args) {
             const hits = manifest.media
                 .filter((e) => e.scene?.toLowerCase().includes(q) ||
                 e.original_name?.toLowerCase().includes(q) ||
-                (e.guardian ?? '').toLowerCase().includes(q) ||
+                (e.guardian ?? "").toLowerCase().includes(q) ||
                 e.tags?.some((t) => t.includes(q)))
                 .slice(0, limit);
             if (!hits.length)
                 return `No results for: ${q}`;
-            return hits.map(e => `[${e.id}] ${e.suggested_name}\n  scene: ${e.scene}\n  guardian: ${e.guardian ?? 'none'}  status: ${e.status}`).join('\n\n');
+            return hits
+                .map((e) => `[${e.id}] ${e.suggested_name}\n  scene: ${e.scene}\n  guardian: ${e.guardian ?? "none"}  status: ${e.status}`)
+                .join("\n\n");
         }
-        case 'media_approve': {
+        case "media_approve": {
             const manifest = loadManifest(manifestPath);
             if (!manifest)
                 return `No manifest found at: ${manifestPath}`;
@@ -195,21 +224,23 @@ export async function handleMediaTool(name, args) {
             saveManifest(manifest, manifestPath);
             return `Updated ${updated} entries.`;
         }
-        case 'media_dedup': {
+        case "media_dedup": {
             const manifest = loadManifest(manifestPath);
             if (!manifest)
                 return `No manifest found at: ${manifestPath}`;
-            const dupes = manifest.media
-                .filter((e) => e.duplicate_of);
+            const dupes = manifest.media.filter((e) => e.duplicate_of);
             if (!args.apply) {
-                return `Found ${dupes.length} duplicates.\nSample:\n` +
-                    dupes.slice(0, 5).map(e => `  ${e.original_name}`).join('\n') +
-                    '\n\nCall with apply:true to archive them.';
+                return (`Found ${dupes.length} duplicates.\nSample:\n` +
+                    dupes
+                        .slice(0, 5)
+                        .map((e) => `  ${e.original_name}`)
+                        .join("\n") +
+                    "\n\nCall with apply:true to archive them.");
             }
             let count = 0;
             for (const e of manifest.media) {
-                if (e.duplicate_of && e.status !== 'archived') {
-                    e.status = 'archived';
+                if (e.duplicate_of && e.status !== "archived") {
+                    e.status = "archived";
                     count++;
                 }
             }
