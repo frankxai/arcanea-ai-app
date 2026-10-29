@@ -14,11 +14,12 @@
  *   media_process — Run image conversion + thumbnails
  */
 
-import { execSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { homedir } from 'node:os';
+import { isAbsolute, join, resolve } from 'node:path';
 
-const MANIFEST_DEFAULT = join(process.env.HOME ?? '~', 'arcanea-manifest.json');
+const MANIFEST_DEFAULT = resolve(process.env.HOME ?? homedir(), 'arcanea-manifest.json');
 
 function loadManifest(manifestPath: string) {
   if (!existsSync(manifestPath)) return null;
@@ -111,16 +112,31 @@ export async function handleMediaTool(name: string, args: Record<string, unknown
 
     case 'media_scan': {
       const root = args.root_path as string;
+      if (!root || typeof root !== 'string' || !isAbsolute(root) || root.includes('\0')) {
+        return 'ERROR: Invalid root_path: must be an absolute path without NUL bytes.';
+      }
+      if (!manifestPath || typeof manifestPath !== 'string' || !isAbsolute(manifestPath) || manifestPath.includes('\0')) {
+        return 'ERROR: Invalid manifest_path: must be an absolute path without NUL bytes.';
+      }
       if (!existsSync(root)) return `ERROR: Path not found: ${root}`;
+
+      const cliPath = resolve(import.meta.dirname ?? '.', '../../../media/dist/cli.js');
       try {
-        const cmd = `node "${join(import.meta.dirname ?? '.', '../../../media/dist/cli.js')}" scan "${root}" --manifest "${manifestPath}"`;
-        const output = execSync(cmd, { timeout: 300_000, encoding: 'utf-8' });
+        const output = execFileSync(
+          process.execPath,
+          [cliPath, 'scan', root, '--manifest', manifestPath],
+          { timeout: 300_000, encoding: 'utf-8' }
+        );
         return output;
       } catch {
         // Fallback: use PowerShell catalog if Node not built
-        const ps = `powershell.exe -ExecutionPolicy Bypass -File "C:\\Users\\frank\\Arcanea\\scripts\\media-catalog.ps1" -Root "${root}" -Output "${manifestPath}"`;
+        const scriptPath = resolve(import.meta.dirname ?? '.', '../../../../scripts/media-catalog.ps1');
         try {
-          execSync(ps, { timeout: 300_000 });
+          execFileSync(
+            'powershell.exe',
+            ['-ExecutionPolicy', 'Bypass', '-File', scriptPath, '-Root', root, '-Output', manifestPath],
+            { timeout: 300_000, encoding: 'utf-8' }
+          );
           const manifest = loadManifest(manifestPath);
           if (!manifest) return 'Scan complete but manifest unreadable.';
           return `Scanned ${manifest.total_files} files (${manifest.total_size_mb} MB). Manifest: ${manifestPath}`;
