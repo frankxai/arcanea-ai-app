@@ -1,64 +1,26 @@
-# Arcanea Brand Assets
+# Arcanea identity assets
 
-This directory contains static brand assets that are version-controlled with the codebase.
+The product-selected artwork is `apps/web/assets/brand/arcanea-mark.jpg`.
+Use `ArcaneanMark` from `components/brand/arcanea-mark` for square interface placements. It preserves proportions with the established cover crop and fixes both rendered dimensions.
 
-## Directory Structure
+| Placement                      | Source                | Rendering                                                 |
+| ------------------------------ | --------------------- | --------------------------------------------------------- |
+| Navigation, footer, chat       | `ArcaneanMark`        | Square cover slot; existing inline WebP at or below 24 px |
+| Homepage                       | `ArcaneanMark`, 44 px | Same construction as navigation                           |
+| Homepage prompt box            | `ArcaneanMark`, 28 px | Same construction; decorative                             |
+| Browser icon                   | `/icon`               | 32 × 32 PNG, cover crop                                   |
+| Apple icon / brand-kit primary | `/apple-icon`         | 180 × 180 PNG, cover crop                                 |
 
-```
-brand/
-├── logos/           # Arcanea logos (SVG, PNG variants)
-├── icons/           # App icons and favicons
-├── backgrounds/     # Hero backgrounds and patterns
-├── ui-elements/     # Design system elements
-├── characters/      # Brand character illustrations
-└── mockups/         # Marketing and showcase mockups
-```
+The original 784 × 1168 image composes a symbol, wordmark and atmosphere. It is not an editable vector master. Square crops are interface applications, not a complete identity family.
 
-## Production 2026-06-16 Update (Visual Ecosystem Overhaul)
+## Historical SVGs
 
-New subdirs populated from .arcanea/visual-assets/ (source of truth + MANIFEST):
+`arcanea-logo.svg` and `arcanea-wordmark.svg` remain historical references. Their symbols differ; the latter uses live system-font text and violet gradients. Neither is the current product wordmark. Do not introduce them into new placements. The runtime brand kit omits an optional wordmark until a coherent family has been reviewed.
 
-- heroes/ — site + github 16:9 (worlds living engine, arcanea main per VISUAL_ECOSYSTEM prompt, onchain web3, guardian variants etc)
-- factions/ — 8 Academy Houses + Starlight Corps cards/lineups (VISUAL_DOCTRINE grammar + franchise eq)
-- stellaris/ — mascot solos + contexts (exact STELLARIS.md prompts + full profile)
-- godbeasts/full/ — 10+ godbeast variants (v2 base + new per lore + VISUAL)
-- diagrams/ — ecosystem constellation, SIS network, web3/web4 graphs, living worlds (Ethereum-style partner + multi-lab + agentic OS luminous)
-- icons/custom/ — 40-60+ SVG (Gates, Elements, MCPs, Origins, features; token colors, sacred geometry, no emoji per TASTE)
+`/brand/arcanea-mark.jpg` is not a public source path. Import the image inside the app or use the existing icon routes for external square applications.
 
-All assets: next/image + sizes/WebP, non-orphan (archivedPath in .arcanea/visual-assets/ + public copy), god-mode quality (full TASTE 7 gates + DESIGN tokens + VISUAL_DOCTRINE franchise/faction/origin + 48px silhouette where applicable). Brand kit "arcanea" active for arcanea.ai (see packages/design-system/src/brand-kits.ts). See root plan for full matrix/wiring/MCP github updates.
+## Media and provenance
 
-Usage example remains; import from new subdirs as needed. All tracked in .arcanea/visual-assets/MANIFEST.json with verbatim prompts + qualityNotes.
+The JPG hero/OG and premium PNG/MP4 files are existing media applications, not identity masters. Use responsive sizes, a static motion fallback and text that remains legible over artwork. File presence does not establish source rights, prompt history or approval; preserve unknown fields.
 
-## Asset Guidelines
-
-### Logos
-
-- Use SVG format for scalability
-- Provide PNG fallbacks in multiple sizes
-- Include light/dark variants
-
-### Icons
-
-- 16x16, 32x32, 180x180, 512x512 sizes
-- SVG and PNG formats
-- Follow app icon guidelines
-
-### Backgrounds
-
-- High resolution (2x for retina)
-- WebP format preferred for web
-- Include dark mode variants
-
-## Usage
-
-Import assets in components:
-
-```tsx
-import Arcanea from "/brand/logos/arcanea.svg";
-```
-
-Reference in HTML:
-
-```html
-<img src="/brand/logos/arcanea-logo.png" alt="Arcanea" />
-```
+See `docs/design/BRAND_FIDELITY_REVIEW_2026-10-29.md` for source pins, findings, Figma review, generation briefs and release limits.
