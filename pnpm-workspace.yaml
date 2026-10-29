@@ -86,6 +86,7 @@ overrides:
   "zod@>=4.0.0 <4.6.6": ">=4.6.6"
   "body-parser@>=2.0.0 <2.4.0": ">=2.4.0"
   "@azure/msal-node@>=5.0.0-beta.0 <7.1.0": ">=7.1.0"
+  "systeminformation@<5.33.16": "5.33.16"
 
 patchedDependencies:
   minimatch@3.1.5: patches/minimatch@3.1.5.patch
