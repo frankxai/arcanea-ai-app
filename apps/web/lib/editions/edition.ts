@@ -1,5 +1,6 @@
 /** Local edition assembly. No provider calls, public writes, or verification claims. */
 export const EDITION_LIMIT = 1_000_000;
+export const EDITION_RECORD_LIMIT = EDITION_LIMIT * 2;
 export const SECTION_LIMIT = 24;
 export type EditionScope = { owner: string; project: string };
 export type EditionSource = { docId: string; revision: number; sha256: string };
@@ -159,8 +160,8 @@ export async function importEdition(
   current: () => boolean,
 ): Promise<EditionDraft> {
   if (!current()) throw new Error("Your account changed. Import stopped.");
-  if (new TextEncoder().encode(raw).length > EDITION_LIMIT)
-    throw new Error("This edition exceeds the 1 MB import limit.");
+  if (new TextEncoder().encode(raw).length > EDITION_RECORD_LIMIT)
+    throw new Error("This source record exceeds the 2 MB import limit.");
   const value: unknown = JSON.parse(raw);
   if (
     !record(value) ||
@@ -176,7 +177,16 @@ export async function importEdition(
       version: 1,
       scope,
       title: value.title,
-      sections: value.sections,
+      sections: value.sections.map((section: unknown) => {
+        if (!record(section))
+          throw new Error("A saved section could not be read.");
+        return {
+          id: section.id,
+          title: section.title,
+          text: section.text,
+          source: section.source,
+        };
+      }),
     }),
     scope,
   );

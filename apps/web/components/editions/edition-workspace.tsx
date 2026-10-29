@@ -14,7 +14,7 @@ import {
   importEdition,
   readEditionSource,
   SECTION_LIMIT,
-  EDITION_LIMIT,
+  EDITION_RECORD_LIMIT,
   type EditionDraft,
 } from "@/lib/editions/edition";
 import styles from "./edition-workspace.module.css";
@@ -266,8 +266,8 @@ function Composer({ owner, project, docs }: Props) {
     setLoading("restore");
     const before = liveDraft.current;
     try {
-      if (file.size > EDITION_LIMIT)
-        throw new Error("This edition exceeds the 1 MB import limit.");
+      if (file.size > EDITION_RECORD_LIMIT)
+        throw new Error("This source record exceeds the 2 MB import limit.");
       const restored = await importEdition(
         await file.text(),
         before.scope,

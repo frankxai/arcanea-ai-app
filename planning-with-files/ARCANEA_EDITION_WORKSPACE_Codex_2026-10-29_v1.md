@@ -91,3 +91,9 @@ independent review; real creator comparison; review imagery/logo options after
 machine admission and provenance context. The 21 October focus-window policy was
 found in the hub; this local feature preparation is explicitly requested by Frank,
 and no new feature PR, promotion or broad policy exception is claimed.
+
+Follow-up: a boundary regression reproduced an export/restore size mismatch: pretty
+JSON and hashes can exceed the compact draft limit. Transport records now have a
+separate 2 MB bound; normalized draft content still must fit 1 MB. The regression
+failed before the repair and all ten tests pass afterward. No source content was
+removed to fit the limit. The initial checkpoint is preserved in Git history.

@@ -11,9 +11,31 @@ import {
   readEditionSource,
   moveSection,
   type EditionDraft,
+  EDITION_LIMIT,
 } from "./edition.ts";
 
 const scope = { owner: "creator-a", project: "project-a" };
+test("an edition at the draft size boundary can restore its own formatted export", async () => {
+  const original: EditionDraft = {
+    ...emptyEdition(scope, "Boundary edition"),
+    sections: Array.from({ length: 24 }, (_, i) => ({
+      id: `part-${i}`,
+      title: `Scene ${i}`,
+      text: "",
+      source: null,
+    })),
+  };
+  original.sections[0].text = "x".repeat(
+    EDITION_LIMIT - JSON.stringify(original).length - 1,
+  );
+  const output = await exportEdition(original, () => true);
+  assert.ok(new TextEncoder().encode(output.json).length > EDITION_LIMIT);
+  const restored = await importEdition(output.json, scope, () => true);
+  assert.equal(
+    restored.sections[0].text.length,
+    original.sections[0].text.length,
+  );
+});
 const draft = () => ({
   ...emptyEdition(scope, "An edition"),
   sections: [
