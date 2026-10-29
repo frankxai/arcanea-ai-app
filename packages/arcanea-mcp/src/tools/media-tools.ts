@@ -17,7 +17,7 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { isAbsolute, join, resolve } from 'node:path';
+import { isAbsolute, resolve } from 'node:path';
 
 const MANIFEST_DEFAULT = resolve(process.env.HOME ?? homedir(), 'arcanea-manifest.json');
 

@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
-import { test } from 'node:test';
+import { isAbsolute as isAbsolutePath, join, resolve } from 'node:path';
+import { test, mock } from 'node:test';
+import childProcess from 'node:child_process';
+import { syncBuiltinESMExports } from 'node:module';
 import { handleMediaTool } from '../dist/tools/media-tools.js';
 
 test('media_scan input validation rejects non-absolute paths and NUL bytes', async () => {
@@ -25,31 +27,57 @@ test('media_scan input validation rejects non-absolute paths and NUL bytes', asy
   assert.match(result4, /ERROR: Invalid manifest_path/);
 });
 
-test('media_scan safely passes root_path containing "; rm -rf /" as a single argv entry without shell execution', async () => {
+test('media_scan passes shell metacharacters as one argv value', async () => {
   const tempDir = mkdtempSync(join(tmpdir(), 'media-test-'));
-  const injectionPath = resolve(tempDir, 'dir; rm -rf /');
-
+  const root = join(tempDir, 'scene; echo injected & scene');
+  const manifest = resolve(tempDir, 'manifest with spaces.json');
+  mkdirSync(root);
+  const shell = mock.method(childProcess, 'execSync', () => { throw new Error('Shell execution forbidden'); });
+  const run = mock.method(childProcess, 'execFileSync', () => 'scan complete');
+  syncBuiltinESMExports();
   try {
-    // Non-existent path check
-    const nonExistentResult = await handleMediaTool('media_scan', {
-      root_path: injectionPath,
-      manifest_path: resolve(tempDir, 'manifest.json'),
-    });
-    assert.equal(nonExistentResult, `ERROR: Path not found: ${injectionPath}`);
-
-    // Existing path check
-    mkdirSync(injectionPath);
-    const existingResult = await handleMediaTool('media_scan', {
-      root_path: injectionPath,
-      manifest_path: resolve(tempDir, 'manifest.json'),
-    });
-
-    // execFileSync runs node or powershell directly with argv array [..., injectionPath, ...].
-    // Since powershell.exe is not installed on Linux, it throws ENOENT in the fallback block,
-    // and returns "Scan error: Error: spawnSync powershell.exe ENOENT...".
-    // Crucially, the string `dir; rm -rf /` was passed strictly as an argument value, not executed in a shell.
-    assert.match(existingResult, /Scan error: Error: spawnSync/);
+    assert.equal(await handleMediaTool('media_scan', {
+      root_path: root, manifest_path: manifest,
+    }), 'scan complete');
+    assert.equal(run.mock.callCount(), 1);
+    const [command, argv, options] = run.mock.calls[0].arguments;
+    assert.equal(command, process.execPath);
+    assert.deepEqual(argv.slice(1), ['scan', root, '--manifest', manifest]);
+    assert.equal(isAbsolutePath(argv[0]), true);
+    assert.notEqual(options.shell, true);
   } finally {
+    run.mock.restore();
+    shell.mock.restore();
+    syncBuiltinESMExports();
     rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('media_scan fallback uses a script argument array and reads its manifest', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'media-fallback-'));
+  const manifest = join(root, 'manifest.json');
+  const shell = mock.method(childProcess, 'execSync', () => { throw new Error('Shell execution forbidden'); });
+  const run = mock.method(childProcess, 'execFileSync', (command) => {
+    if (command === process.execPath) throw new Error('scanner unavailable');
+    writeFileSync(manifest, JSON.stringify({ total_files: 2, total_size_mb: 3 }));
+    return '';
+  });
+  syncBuiltinESMExports();
+  try {
+    assert.match(await handleMediaTool('media_scan', {
+      root_path: root, manifest_path: manifest,
+    }), /Scanned 2 files/);
+    assert.equal(run.mock.callCount(), 2);
+    const [command, argv, options] = run.mock.calls[1].arguments;
+    assert.equal(command, 'powershell.exe');
+    assert.deepEqual(argv.slice(0, 3), ['-ExecutionPolicy', 'Bypass', '-File']);
+    assert.equal(isAbsolutePath(argv[3]), true);
+    assert.deepEqual(argv.slice(4), ['-Root', root, '-Output', manifest]);
+    assert.notEqual(options.shell, true);
+  } finally {
+    run.mock.restore();
+    shell.mock.restore();
+    syncBuiltinESMExports();
+    rmSync(root, { recursive: true, force: true });
   }
 });
