@@ -133,6 +133,9 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
+            <Button asChild variant="ghost">
+              <Link href={`/projects/${workspace.project.id}/edition`}>Make an edition</Link>
+            </Button>
             <OpenProjectChatButton projectId={workspace.project.id} />
             <Button asChild variant="ghost">
               <Link href="/chat">View Chat Shell</Link>
