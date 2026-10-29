@@ -114,7 +114,7 @@
     "three": "^0.186.1",
     "typescript": "^5.9.3",
     "unpdf": "^1.8.1",
-    "zod": "^3.25.76",
+    "zod": "^4.6.6",
     "zustand": "^5.0.15"
   },
   "devDependencies": {

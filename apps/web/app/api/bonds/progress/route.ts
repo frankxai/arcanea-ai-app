@@ -5,16 +5,19 @@
  * POST /api/bonds/progress - Update bond XP and progress
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { updateBondProgress, getXpReward } from '@/lib/database/services/bond-service';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
+import {
+  updateBondProgress,
+  getXpReward,
+} from "@/lib/database/services/bond-service";
 import {
   successResponse,
   errorResponse,
   handleApiError,
   parseRequestBody,
-} from '@/lib/api-utils';
+} from "@/lib/api-utils";
 
 /**
  * POST /api/bonds/progress
@@ -35,7 +38,7 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await parseRequestBody(request);
     if (!body) {
-      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
+      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
     }
 
     // Validate input using Zod
@@ -43,22 +46,22 @@ export async function POST(request: NextRequest) {
       userId: z.string().uuid(),
       luminorId: z.string().uuid(),
       xpGained: z.number().positive().optional(),
-      interactionType: z.enum(['message', 'creation', 'achievement', 'daily_streak']).optional(),
-      metadata: z.record(z.any()).optional(),
+      interactionType: z
+        .enum(["message", "creation", "achievement", "daily_streak"])
+        .optional(),
+      metadata: z.record(z.string(), z.any()).optional(),
     });
 
     const validation = progressSchema.safeParse(body);
 
     if (!validation.success) {
-      return errorResponse(
-        'VALIDATION_ERROR',
-        'Invalid input',
-        400,
-        { errors: validation.error.errors }
-      );
+      return errorResponse("VALIDATION_ERROR", "Invalid input", 400, {
+        errors: validation.error.issues,
+      });
     }
 
-    const { userId, luminorId, xpGained, interactionType, metadata } = validation.data;
+    const { userId, luminorId, xpGained, interactionType, metadata } =
+      validation.data;
 
     // Determine XP amount
     let xp: number;
@@ -68,9 +71,9 @@ export async function POST(request: NextRequest) {
       xp = getXpReward(interactionType);
     } else {
       return errorResponse(
-        'INVALID_INPUT',
-        'Either xpGained or interactionType must be provided',
-        400
+        "INVALID_INPUT",
+        "Either xpGained or interactionType must be provided",
+        400,
       );
     }
 
@@ -84,14 +87,14 @@ export async function POST(request: NextRequest) {
     });
 
     if (!updatedBond) {
-      return errorResponse('NOT_FOUND', 'Bond not found', 404);
+      return errorResponse("NOT_FOUND", "Bond not found", 404);
     }
 
     const bondLevel = updatedBond.bondLevel ?? updatedBond.level ?? 1;
     return successResponse({
       bond: updatedBond,
       xpGained: xp,
-      message: bondLevel > 1 ? `Bond level ${bondLevel}` : 'Progress updated',
+      message: bondLevel > 1 ? `Bond level ${bondLevel}` : "Progress updated",
     });
   } catch (error) {
     return handleApiError(error);

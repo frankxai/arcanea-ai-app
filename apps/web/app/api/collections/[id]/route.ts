@@ -7,16 +7,19 @@
  * DELETE /api/collections/[id] - Delete collection
  */
 
-import { NextRequest } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest } from "next/server";
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
 import {
   successResponse,
   errorResponse,
   handleApiError,
   parseRequestBody,
-} from '@/lib/api-utils';
-import { VALIDATION_RULES, type Visibility } from '@/lib/database/types/api-responses';
+} from "@/lib/api-utils";
+import {
+  VALIDATION_RULES,
+  type Visibility,
+} from "@/lib/database/types/api-responses";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -34,19 +37,20 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Fetch the collection
     const { data: collection, error: collError } = await supabaseServer
-      .from('collections')
-      .select('*')
-      .eq('id', id)
+      .from("collections")
+      .select("*")
+      .eq("id", id)
       .single();
 
     if (collError || !collection) {
-      return errorResponse('NOT_FOUND', 'Collection not found', 404);
+      return errorResponse("NOT_FOUND", "Collection not found", 404);
     }
 
     // Fetch items with joined creation data
     const { data: items, error: itemsError } = await supabaseServer
-      .from('collection_items')
-      .select(`
+      .from("collection_items")
+      .select(
+        `
         id,
         sort_order,
         added_at,
@@ -69,12 +73,13 @@ export async function GET(request: NextRequest, context: RouteContext) {
           created_at,
           updated_at
         )
-      `)
-      .eq('collection_id', id)
-      .order('sort_order', { ascending: true });
+      `,
+      )
+      .eq("collection_id", id)
+      .order("sort_order", { ascending: true });
 
     if (itemsError) {
-      console.error('[collection GET items] Supabase error:', itemsError);
+      console.error("[collection GET items] Supabase error:", itemsError);
     }
 
     const mappedItems = (items || []).map((item: any) => {
@@ -130,13 +135,21 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
     const body = await parseRequestBody(request);
     if (!body) {
-      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
+      return errorResponse("INVALID_INPUT", "Invalid request body", 400);
     }
 
     const updateSchema = z.object({
-      title: z.string().min(VALIDATION_RULES.title.minLength).max(VALIDATION_RULES.title.maxLength).optional(),
-      description: z.string().max(VALIDATION_RULES.description.maxLength).nullable().optional(),
-      visibility: z.enum(['public', 'private', 'unlisted']).optional(),
+      title: z
+        .string()
+        .min(VALIDATION_RULES.title.minLength)
+        .max(VALIDATION_RULES.title.maxLength)
+        .optional(),
+      description: z
+        .string()
+        .max(VALIDATION_RULES.description.maxLength)
+        .nullable()
+        .optional(),
+      visibility: z.enum(["public", "private", "unlisted"]).optional(),
       coverUrl: z.string().url().nullable().optional(),
       sortOrder: z.number().int().min(0).optional(),
     });
@@ -144,8 +157,8 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const validation = updateSchema.safeParse(body);
 
     if (!validation.success) {
-      return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, {
-        errors: validation.error.errors,
+      return errorResponse("VALIDATION_ERROR", "Invalid input", 400, {
+        errors: validation.error.issues,
       });
     }
 
@@ -153,29 +166,35 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const payload: Record<string, unknown> = {};
 
     if (updates.title !== undefined) payload.title = updates.title;
-    if (updates.description !== undefined) payload.description = updates.description;
-    if (updates.visibility !== undefined) payload.visibility = updates.visibility;
+    if (updates.description !== undefined)
+      payload.description = updates.description;
+    if (updates.visibility !== undefined)
+      payload.visibility = updates.visibility;
     if (updates.coverUrl !== undefined) payload.cover_url = updates.coverUrl;
     if (updates.sortOrder !== undefined) payload.sort_order = updates.sortOrder;
 
     if (Object.keys(payload).length === 0) {
-      return errorResponse('INVALID_INPUT', 'No fields to update', 400);
+      return errorResponse("INVALID_INPUT", "No fields to update", 400);
     }
 
     const { data, error } = await supabaseServer
-      .from('collections')
+      .from("collections")
       .update(payload)
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
     if (error) {
-      console.error('[collection PATCH] Supabase error:', error);
-      return errorResponse('DATABASE_ERROR', 'Failed to update collection', 500);
+      console.error("[collection PATCH] Supabase error:", error);
+      return errorResponse(
+        "DATABASE_ERROR",
+        "Failed to update collection",
+        500,
+      );
     }
 
     if (!data) {
-      return errorResponse('NOT_FOUND', 'Collection not found', 404);
+      return errorResponse("NOT_FOUND", "Collection not found", 404);
     }
 
     return successResponse({ collection: mapCollection(data) });
@@ -196,18 +215,22 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
 
     // Delete all collection_items first (in case no FK cascade)
     await supabaseServer
-      .from('collection_items')
+      .from("collection_items")
       .delete()
-      .eq('collection_id', id);
+      .eq("collection_id", id);
 
     const { error } = await supabaseServer
-      .from('collections')
+      .from("collections")
       .delete()
-      .eq('id', id);
+      .eq("id", id);
 
     if (error) {
-      console.error('[collection DELETE] Supabase error:', error);
-      return errorResponse('DATABASE_ERROR', 'Failed to delete collection', 500);
+      console.error("[collection DELETE] Supabase error:", error);
+      return errorResponse(
+        "DATABASE_ERROR",
+        "Failed to delete collection",
+        500,
+      );
     }
 
     return successResponse({ deleted: true });
@@ -223,7 +246,7 @@ function mapCollection(data: Record<string, unknown>) {
     title: data.title as string,
     description: data.description as string | null,
     coverUrl: data.cover_url as string | null,
-    visibility: (data.visibility || 'private') as Visibility,
+    visibility: (data.visibility || "private") as Visibility,
     sortOrder: (data.sort_order ?? 0) as number,
     metadata: data.metadata as Record<string, unknown> | null,
     createdAt: data.created_at as string,
