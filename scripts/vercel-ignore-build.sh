@@ -61,33 +61,33 @@ esac
 
 # 5. Draft / no-PR check through the public GitHub API (repo is public, no token).
 #    PR_STATE: ready | draft | none | unknown. Rate limits and network errors
-#    land on "unknown", never on a skip.
+#    land on "unknown"; agent branches then require an explicit opt-in.
 PR_STATE="unknown"
 OWNER="${VERCEL_GIT_REPO_OWNER:-}"
 SLUG="${VERCEL_GIT_REPO_SLUG:-}"
 if [ -n "$OWNER" ] && [ -n "$SLUG" ]; then
   if [ -n "${VERCEL_GIT_PULL_REQUEST_ID:-}" ]; then
-    PR_JSON="$(curl -sf --max-time 5 "https://api.github.com/repos/${OWNER}/${SLUG}/pulls/${VERCEL_GIT_PULL_REQUEST_ID}" 2>/dev/null)"
-    if [ -n "$PR_JSON" ]; then
-      if printf '%s' "$PR_JSON" | grep -q '"draft"[[:space:]]*:[[:space:]]*true'; then
-        PR_STATE="draft"
-      elif printf '%s' "$PR_JSON" | grep -q '"draft"[[:space:]]*:[[:space:]]*false'; then
-        PR_STATE="ready"
-      fi
-    fi
+    PR_JSON="$(curl -sf --max-time 5 "https://api.github.com/repos/${OWNER}/${SLUG}/pulls/${VERCEL_GIT_PULL_REQUEST_ID}" 2>/dev/null)" || PR_JSON=""
   else
-    PR_JSON="$(curl -sf --max-time 5 "https://api.github.com/repos/${OWNER}/${SLUG}/pulls?head=${OWNER}:${REF}&state=open" 2>/dev/null)"
-    if [ -n "$PR_JSON" ]; then
-      CLEAN="$(printf '%s' "$PR_JSON" | tr -d '[:space:]')"
-      if [ "$CLEAN" = "[]" ]; then
-        PR_STATE="none"
-      elif printf '%s' "$PR_JSON" | grep -q '"draft"[[:space:]]*:[[:space:]]*false'; then
-        PR_STATE="ready"
-      elif printf '%s' "$PR_JSON" | grep -q '"draft"[[:space:]]*:[[:space:]]*true'; then
-        PR_STATE="draft"
-      fi
-    fi
+    PR_JSON="$(curl -sf --max-time 5 --get --data-urlencode "head=${OWNER}:${REF}" --data-urlencode 'state=open' "https://api.github.com/repos/${OWNER}/${SLUG}/pulls" 2>/dev/null)" || PR_JSON=""
   fi
+  # Parse API fields, not text in PR titles, bodies or nested objects.
+  PR_STATE="$(printf '%s' "$PR_JSON" | node -e '
+    let input = "";
+    process.stdin.setEncoding("utf8");
+    process.stdin.on("data", chunk => input += chunk);
+    process.stdin.on("end", () => {
+      try {
+        const value = JSON.parse(input);
+        const prs = Array.isArray(value) ? value : [value];
+        if (prs.length === 0) { console.log("none"); return; }
+        if (prs.some(pr => !pr || typeof pr.draft !== "boolean" || pr.state !== "open")) {
+          console.log("unknown"); return;
+        }
+        console.log(prs.some(pr => !pr.draft) ? "ready" : "draft");
+      } catch { console.log("unknown"); }
+    });
+  ' 2>/dev/null)"
 fi
 
 case "$PR_STATE" in
