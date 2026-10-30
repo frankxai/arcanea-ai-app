@@ -58,8 +58,8 @@
 .firstlight-trial .ft-scene {
   display: block;
   width: 100%;
-  max-height: var(--arc-size-media-rail-max);
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   aspect-ratio: var(--arc-scene-aspect-ratio);
 }
 .firstlight-trial .ft-scene-copy {
