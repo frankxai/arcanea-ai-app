@@ -10,8 +10,82 @@ import {
   loadWorldFromDisk,
   listSavedWorlds,
 } from "../tools/world-persistence.js";
+import {
+  exportWorldBundle,
+  inspectWorldBundle,
+  importWorldBundle,
+  WORLD_BUNDLE_HANDOFF,
+  MAX_WORLD_BUNDLE_BYTES,
+} from "../tools/world-transfer.js";
 
 export function registerWorldPersistenceTools(server: McpServer) {
+  server.registerTool(
+    "export_world_bundle",
+    {
+      description:
+        "Export a bounded, checksummed local creation graph with metadata and a handoff for another agent. Media bytes and hosted world records are not included. This does not publish or certify canon.",
+      inputSchema: z.object({ sessionId: z.string() }),
+    },
+    async ({ sessionId }) => ({
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify({
+            bundleJson: exportWorldBundle(sessionId),
+            handoff: WORLD_BUNDLE_HANDOFF,
+          }),
+        },
+      ],
+    }),
+  );
+  server.registerTool(
+    "inspect_world_bundle",
+    {
+      description:
+        "Validate a portable creation graph without importing it or fetching its media references. A checksum is not author authentication or canon approval.",
+      inputSchema: z.object({
+        bundleJson: z.string().max(MAX_WORLD_BUNDLE_BYTES),
+      }),
+    },
+    async ({ bundleJson }) => {
+      const bundle = inspectWorldBundle(bundleJson);
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify({
+              valid: true,
+              source: bundle.payload.source,
+              policy: bundle.payload.policy,
+              payloadHash: bundle.integrity.payloadHash,
+              nodeCount: bundle.payload.graph.nodes.length,
+              edgeCount: bundle.payload.graph.edges.length,
+              handoff: WORLD_BUNDLE_HANDOFF,
+            }),
+          },
+        ],
+      };
+    },
+  );
+  server.registerTool(
+    "import_world_bundle",
+    {
+      description:
+        "Import a validated local creation graph into a new in-memory session. Refuses to replace an existing session. Use save_world separately for disk persistence. Grants no permissions or canon approval.",
+      inputSchema: z.object({
+        bundleJson: z.string().max(MAX_WORLD_BUNDLE_BYTES),
+        targetSessionId: z.string(),
+      }),
+    },
+    async ({ bundleJson, targetSessionId }) => ({
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(importWorldBundle(bundleJson, targetSessionId)),
+        },
+      ],
+    }),
+  );
   // =========================================================================
   // WORLD PERSISTENCE
   // =========================================================================

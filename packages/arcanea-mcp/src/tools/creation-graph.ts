@@ -83,6 +83,19 @@ export function restoreGraph(
   });
 }
 
+/** Import is create-only, including when an existing graph is empty. */
+export function restoreNewGraph(
+  sessionId: string,
+  nodes: unknown,
+  edges: unknown,
+): void {
+  if (graphs.has(sessionId))
+    throw new Error(
+      "Target world session already exists. Choose a new session id.",
+    );
+  restoreGraph(sessionId, nodes, edges);
+}
+
 export function addCreationToGraph(
   sessionId: string,
   creation: CreationRef,
@@ -342,6 +355,13 @@ export function exportGraph(sessionId: string): {
     nodes: Array.from(graph.nodes.values()),
     edges: graph.edges,
   };
+}
+
+/** Read-only transfers must not create an absent session as a side effect. */
+export function exportExistingGraph(sessionId: string) {
+  const graph = graphs.get(sessionId);
+  if (!graph) throw new Error("Source world session does not exist.");
+  return { nodes: [...graph.nodes.values()], edges: graph.edges };
 }
 
 // Find path between two creations
