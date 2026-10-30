@@ -1,0 +1,445 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "arcanea-firstlight-02",
+  "state": "exhibition_reviewed_canon_pending",
+  "canon_state": "proposal",
+  "visibility": "public",
+  "updated_on": "2026-10-30",
+  "source_authority": {
+    "artifact_id": "artifact_arcanean_library_fiction",
+    "canonical_repository": "frankxai/arcanean-library",
+    "canonical_path": "content/proposals/firstlight-02",
+    "registry_repository": "frankxai/agentic-ops",
+    "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+    "lore_base_commit": "f7348fb881ea10e1323a65822bacdefb5dff8750",
+    "product_consumer": "frankxai/arcanea-ai-app",
+    "source_state": "generated_proposals_authorized_for_public_review"
+  },
+  "review_contract": {
+    "decision_values": ["accept_display_revision", "revise", "reject", "defer"],
+    "canonical_acceptance": "A separate explicit owner/canon decision is required to change canon_state.",
+    "required_receipt_fields": [
+      "review_id",
+      "target_id",
+      "source_commit",
+      "asset_sha256",
+      "lens",
+      "reviewer_id",
+      "reviewed_on",
+      "decision",
+      "findings",
+      "evidence_refs"
+    ],
+    "passing_rule": "No open blocking findings across visual_identity, story_and_canon, gameplay and runtime_boundary. Pending review is never a pass.",
+    "mutation_route": "Submit a review receipt by GitHub pull request against this batch. Do not edit a different agent’s receipt or record a review on their behalf."
+  },
+  "lenses": [
+    {
+      "id": "visual_identity",
+      "responsibility": "Character/visual reviewer",
+      "checks": [
+        "distinct silhouette at thumbnail size",
+        "two images preserve identity locks",
+        "allies read as welcoming and opponents carry threat",
+        "visible action, emotion and earned result",
+        "no unreadable baked-in explanatory text",
+        "camera, anatomy, scale and material integrity"
+      ],
+      "evidence": ["asset hashes", "annotated image observations"]
+    },
+    {
+      "id": "story_and_canon",
+      "responsibility": "Canon reviewer",
+      "checks": [
+        "proposal state and visibility retained",
+        "no collision with inspected source lore",
+        "Field behavior has cost and explicit limit",
+        "relationships are labelled proposals",
+        "no new cosmological office accepted by implication",
+        "source and rights locators present"
+      ],
+      "evidence": [
+        "pinned source locators",
+        "named contradictions or explicit none within scope"
+      ]
+    },
+    {
+      "id": "gameplay",
+      "responsibility": "Game designer / play reviewer",
+      "checks": [
+        "one useful teammate action per role",
+        "failure is legible and recoverable",
+        "finite reserve visible",
+        "cooperative acknowledgement can be learned",
+        "companions remain characters rather than dashboards",
+        "no simulation win represented as real work"
+      ],
+      "evidence": [
+        "encounter fixture",
+        "observed interaction receipt when implemented"
+      ]
+    },
+    {
+      "id": "runtime_boundary",
+      "responsibility": "Agent systems reviewer",
+      "checks": [
+        "fiction never authorizes tools",
+        "fixed budget, retry and stop contracts",
+        "independent artifact acceptance",
+        "provenance and source revision preserved",
+        "duplicate work and missing acknowledgements are tested",
+        "no live-agent execution claimed without observed receipts"
+      ],
+      "evidence": [
+        "bounded task fixture",
+        "runtime test receipts",
+        "clear implemented/planned state"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "review_id": "review:fl02:seli",
+      "target_id": "arcanea.fl02.seli",
+      "portable_character_ref": "character:seli",
+      "asset_ids": ["fl02-seli-sheet", "fl02-seli-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [
+        {
+          "severity": "note",
+          "asset_id": "fl02-seli-hero",
+          "finding": "Scale exploration differs from hand-sized 0.22m lore proposal.",
+          "required_presentation": "Visible asset continuity note; no exact scale or rig acceptance."
+        }
+      ],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+        "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:tovan",
+      "target_id": "arcanea.fl02.tovan",
+      "portable_character_ref": "character:tovan",
+      "asset_ids": ["fl02-tovan-sheet", "fl02-tovan-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+        "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:aven",
+      "target_id": "arcanea.fl02.aven",
+      "portable_character_ref": "character:aven",
+      "asset_ids": ["fl02-aven-sheet", "fl02-aven-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+        "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:orra",
+      "target_id": "arcanea.fl02.orra",
+      "portable_character_ref": "character:orra",
+      "asset_ids": ["fl02-orra-sheet", "fl02-orra-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+        "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:caelis",
+      "target_id": "arcanea.fl02.caelis",
+      "portable_character_ref": "character:caelis",
+      "asset_ids": ["fl02-caelis-sheet", "fl02-caelis-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+        "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:velis",
+      "target_id": "arcanea.fl02.velis",
+      "portable_character_ref": "character:velis",
+      "asset_ids": ["fl02-velis-sheet", "fl02-velis-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+        "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:pelora",
+      "target_id": "arcanea.fl02.pelora",
+      "portable_character_ref": "character:pelora",
+      "asset_ids": ["fl02-pelora-sheet", "fl02-pelora-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+        "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:brambletide",
+      "target_id": "arcanea.fl02.brambletide",
+      "portable_character_ref": "character:brambletide",
+      "asset_ids": ["fl02-brambletide-sheet", "fl02-brambletide-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+        "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:kethr",
+      "target_id": "arcanea.fl02.kethr",
+      "portable_character_ref": "character:kethr",
+      "asset_ids": ["fl02-kethr-sheet", "fl02-kethr-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [
+        {
+          "severity": "note",
+          "asset_id": "fl02-kethr-hero",
+          "finding": "Pointed spearhead differs from blunt pole-lance brief.",
+          "required_presentation": "Visible asset continuity note; production prop unresolved."
+        }
+      ],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+        "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f"
+      ],
+      "canon_acceptance": false
+    },
+    {
+      "review_id": "review:fl02:vessakar",
+      "target_id": "arcanea.fl02.vessakar",
+      "portable_character_ref": "character:vessakar",
+      "asset_ids": ["fl02-vessakar-sheet", "fl02-vessakar-hero"],
+      "state": "reviewed",
+      "reviewer_id": "agent:/root/review",
+      "decision": "accept_display_revision",
+      "findings": [
+        {
+          "severity": "note",
+          "asset_id": "fl02-vessakar-hero",
+          "finding": "Some specified six limbs occluded by vault and perspective.",
+          "required_presentation": "Preserve six-leg spec; authored model/rig validation required."
+        }
+      ],
+      "evidence_refs": ["review/independent-visual-v1.json"],
+      "review_scope": "public_concept_exhibition_only",
+      "inspected_asset_sha256": [
+        "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+        "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd"
+      ],
+      "canon_acceptance": false
+    }
+  ],
+  "integration_checks": [
+    {
+      "id": "batch-count",
+      "criterion": "10 new characters; 20 generated images; 2 intended assets per character",
+      "state": "pending_asset_manifest"
+    },
+    {
+      "id": "public-route",
+      "criterion": "Gallery route serves each asset and labels proposal state",
+      "state": "pending_production_verification"
+    },
+    {
+      "id": "canonical-registration",
+      "criterion": "Lore packet exists in a PR against the fictional canon authority",
+      "state": "pending_pr"
+    },
+    {
+      "id": "production-receipt",
+      "criterion": "Vercel receipt pins team, project, environment, deployment and source revision",
+      "state": "pending_deployment"
+    }
+  ],
+  "review_scope": "public_concept_exhibition_only",
+  "canon_acceptance": false,
+  "projection_source_commit": "8c64a0aab586a0f98ab0ba4670cf378c51f5a27b",
+  "projection_source_hashes": {
+    "characters_sha256": "35dab3c1d884b877f64a6f3fd5378f1183b2454570449f2fc3a4c9026352a6ed",
+    "assets_sha256": "084bcaeefdd046eb8453d38be2baedbd6240e7d52d0e5acbd422d9e747c962d4",
+    "review_queue_sha256": "c6c09a7b57c37e4dc1d7d611a8fde5dc2a14aca711f414b449bc72eae2980425"
+  },
+  "asset_bindings": [
+    {
+      "id": "fl02-aven-sheet",
+      "character_id": "arcanea.fl02.aven",
+      "sha256": "4cb42d580404288d54c46168a1db678a2949f41e80591b2be56e0fe7514b12ec",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-aven-sheet-web/4cb42d580404288d54c46168a1db678a2949f41e80591b2be56e0fe7514b12ec.webp"
+    },
+    {
+      "id": "fl02-aven-hero",
+      "character_id": "arcanea.fl02.aven",
+      "sha256": "86d944d826c9757abf9c235dd53d936a0822e7f57763d9a542aa57c0a58bdf9e",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-aven-hero-web/86d944d826c9757abf9c235dd53d936a0822e7f57763d9a542aa57c0a58bdf9e.webp"
+    },
+    {
+      "id": "fl02-brambletide-sheet",
+      "character_id": "arcanea.fl02.brambletide",
+      "sha256": "1b04b9b0a0da0b796963902443a44cc4a7aa98f9931994100505df95da68ba53",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-brambletide-sheet-web/1b04b9b0a0da0b796963902443a44cc4a7aa98f9931994100505df95da68ba53.webp"
+    },
+    {
+      "id": "fl02-brambletide-hero",
+      "character_id": "arcanea.fl02.brambletide",
+      "sha256": "eaffba8202319784cee2e364af609a7d8cb436471720ba91bd453fb27fba59a7",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-brambletide-hero-web/eaffba8202319784cee2e364af609a7d8cb436471720ba91bd453fb27fba59a7.webp"
+    },
+    {
+      "id": "fl02-caelis-sheet",
+      "character_id": "arcanea.fl02.caelis",
+      "sha256": "4a518137314bc99cd949b2b85c0bc67bf608a12c06ec42a590253fcf871afdf9",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-caelis-sheet-web/4a518137314bc99cd949b2b85c0bc67bf608a12c06ec42a590253fcf871afdf9.webp"
+    },
+    {
+      "id": "fl02-caelis-hero",
+      "character_id": "arcanea.fl02.caelis",
+      "sha256": "f25cc8c5d3cff39fee1cd17d5b624755a16600d29b8f5e6c799055a083cef889",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-caelis-hero-web/f25cc8c5d3cff39fee1cd17d5b624755a16600d29b8f5e6c799055a083cef889.webp"
+    },
+    {
+      "id": "fl02-kethr-sheet",
+      "character_id": "arcanea.fl02.kethr",
+      "sha256": "5452b0970d97b45ff8c5b063ec5dda611506a47b0359a7574d4f5fff0b855c3b",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-kethr-sheet-web/5452b0970d97b45ff8c5b063ec5dda611506a47b0359a7574d4f5fff0b855c3b.webp"
+    },
+    {
+      "id": "fl02-kethr-hero",
+      "character_id": "arcanea.fl02.kethr",
+      "sha256": "6cb1da68510d3e7528f92c2e03b78ec007d05fa374304d7b6c1ef5a59802083a",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-kethr-hero-web/6cb1da68510d3e7528f92c2e03b78ec007d05fa374304d7b6c1ef5a59802083a.webp"
+    },
+    {
+      "id": "fl02-orra-sheet",
+      "character_id": "arcanea.fl02.orra",
+      "sha256": "5c68c29a6b91cb9ed0a64fcd9f05fb4ca13f29846c85884648a73493053d3a38",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-orra-sheet-web/5c68c29a6b91cb9ed0a64fcd9f05fb4ca13f29846c85884648a73493053d3a38.webp"
+    },
+    {
+      "id": "fl02-orra-hero",
+      "character_id": "arcanea.fl02.orra",
+      "sha256": "5085d31b526ec7f29a3b9b27e1ec168aa1d2429f4f02120b5b115ca30fc5fc61",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-orra-hero-web/5085d31b526ec7f29a3b9b27e1ec168aa1d2429f4f02120b5b115ca30fc5fc61.webp"
+    },
+    {
+      "id": "fl02-pelora-sheet",
+      "character_id": "arcanea.fl02.pelora",
+      "sha256": "fe64a667bf08b6069c83c355a1618ebf7eeee1056426afdecfaec865a7075286",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-pelora-sheet-web/fe64a667bf08b6069c83c355a1618ebf7eeee1056426afdecfaec865a7075286.webp"
+    },
+    {
+      "id": "fl02-pelora-hero",
+      "character_id": "arcanea.fl02.pelora",
+      "sha256": "3e3d8296be5ac8488b01ef2baebe5cd7b71541c596edab7ba2d0abeb3ddd05db",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-pelora-hero-web/3e3d8296be5ac8488b01ef2baebe5cd7b71541c596edab7ba2d0abeb3ddd05db.webp"
+    },
+    {
+      "id": "fl02-seli-sheet",
+      "character_id": "arcanea.fl02.seli",
+      "sha256": "61c0d2d71b8aac680b8836157e429213d241f1d82321443d133de3ce4e8e9c71",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-seli-sheet-web/61c0d2d71b8aac680b8836157e429213d241f1d82321443d133de3ce4e8e9c71.webp"
+    },
+    {
+      "id": "fl02-seli-hero",
+      "character_id": "arcanea.fl02.seli",
+      "sha256": "eeed3f8c9abb2851ffff83968fa2dec028990a6906fe8598a7dda95ac7017181",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-seli-hero-web/eeed3f8c9abb2851ffff83968fa2dec028990a6906fe8598a7dda95ac7017181.webp"
+    },
+    {
+      "id": "fl02-tovan-sheet",
+      "character_id": "arcanea.fl02.tovan",
+      "sha256": "1fbc7be94b42aecd067cfd5d00c13d251043bb84a94ef27a09ec47a97b180089",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-tovan-sheet-web/1fbc7be94b42aecd067cfd5d00c13d251043bb84a94ef27a09ec47a97b180089.webp"
+    },
+    {
+      "id": "fl02-tovan-hero",
+      "character_id": "arcanea.fl02.tovan",
+      "sha256": "2c1046109d632bacaf382aef4dfa9ca86a3dcdfbe7af2488111ab5dbe0d54840",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-tovan-hero-web/2c1046109d632bacaf382aef4dfa9ca86a3dcdfbe7af2488111ab5dbe0d54840.webp"
+    },
+    {
+      "id": "fl02-velis-sheet",
+      "character_id": "arcanea.fl02.velis",
+      "sha256": "7cb09ad35c17e5c7c35eeb4bd0b64fd52e03193bb330d9653845203abd25752d",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-velis-sheet-web/7cb09ad35c17e5c7c35eeb4bd0b64fd52e03193bb330d9653845203abd25752d.webp"
+    },
+    {
+      "id": "fl02-velis-hero",
+      "character_id": "arcanea.fl02.velis",
+      "sha256": "3b643943d02c672491cedddedbcd3840fb956b1ff05cdfa25f47557bed160389",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-velis-hero-web/3b643943d02c672491cedddedbcd3840fb956b1ff05cdfa25f47557bed160389.webp"
+    },
+    {
+      "id": "fl02-vessakar-sheet",
+      "character_id": "arcanea.fl02.vessakar",
+      "sha256": "bcab58c77d4f566ea26d3b4be358174f57363f1252a0a282706cf38eeb2caa49",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-vessakar-sheet-web/bcab58c77d4f566ea26d3b4be358174f57363f1252a0a282706cf38eeb2caa49.webp"
+    },
+    {
+      "id": "fl02-vessakar-hero",
+      "character_id": "arcanea.fl02.vessakar",
+      "sha256": "2bab42ffe904e638614637d47357ef635813b609ff72ff2f85519bbbeffcdba4",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-vessakar-hero-web/2bab42ffe904e638614637d47357ef635813b609ff72ff2f85519bbbeffcdba4.webp"
+    }
+  ]
+}

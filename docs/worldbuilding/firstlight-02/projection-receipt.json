@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "source_hashes": {
+    "characters_sha256": "35dab3c1d884b877f64a6f3fd5378f1183b2454570449f2fc3a4c9026352a6ed",
+    "assets_sha256": "084bcaeefdd046eb8453d38be2baedbd6240e7d52d0e5acbd422d9e747c962d4",
+    "review_queue_sha256": "c6c09a7b57c37e4dc1d7d611a8fde5dc2a14aca711f414b449bc72eae2980425"
+  },
+  "characters": 10,
+  "assets": 20,
+  "categories": {
+    "companion": 6,
+    "guardian": 2,
+    "opponent": 2
+  },
+  "canon_state": "proposal",
+  "storage": "vercel_blob",
+  "runtime_permission_changes": false
+}

@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0.0",
+  "status": "proposal",
+  "execution_state": "specification_only",
+  "brand_id": "brand_arcanea",
+  "owning_studio_id": "studio_world_experience",
+  "authority": "frankxai/agentic-ops/registry",
+  "implementation_owner": "frankxai/arcanea-ai-app",
+  "boundary": "Fictional characters explain responsibilities. They do not grant permissions or authenticate workers. These templates have no live model, tool, billing or workflow adapter.",
+  "required_envelope": {
+    "mission_id": "caller-assigned immutable identifier",
+    "source_commit": "exact reviewed product commit",
+    "owner_principal_id": "authenticated human or service owner",
+    "producer_principal_id": "authenticated worker principal",
+    "verifier_principal_id": "authenticated reviewer principal different from producer",
+    "deadline": "explicit UTC timestamp",
+    "budget": {
+      "max_external_cost": "required owner-supplied amount and currency; no implicit spending authorization",
+      "max_tool_calls": "required nonnegative integer",
+      "max_recovery_attempts": 1,
+      "max_parallel_tasks": "required positive integer"
+    },
+    "credential_policy": "scoped delegated capabilities resolved by runtime policy, never character level",
+    "allowed_tools": "explicit tool IDs, versioned schemas, permitted operations and resource scopes",
+    "termination": [
+      "accepted",
+      "rejected",
+      "budget_exhausted",
+      "deadline_exceeded",
+      "cancelled"
+    ],
+    "receipt": {
+      "artifact_id": "immutable stable identifier",
+      "artifact_version": "immutable version",
+      "artifact_sha256": "SHA-256 of delivered bytes",
+      "source_references": "exact repository commits, documents or immutable evidence locators",
+      "producer_principal_id": "authenticated producer",
+      "verifier_principal_id": "authenticated independent verifier",
+      "criteria_results": "per-criterion pass/fail, evidence locator and verifier identity",
+      "cost": "measured provider cost or explicitly estimated cost with basis",
+      "decision": "accepted or rejected only after independent checks",
+      "decision_at": "UTC timestamp"
+    },
+    "idempotency": "Deduplicate by mission_id+step_id+attempt with a payload digest. A reused key with a changed payload is a conflict.",
+    "publication": "Acceptance as a work artifact does not authorize publication, deployment or payment. Those require their own scoped action policy."
+  },
+  "role_map": [
+    {
+      "character_id": "seli",
+      "metaphor": "Read the weather",
+      "runtime_job": "Identify concrete risks and budget constraints before dispatch."
+    },
+    {
+      "character_id": "tovan",
+      "metaphor": "Map the crossing",
+      "runtime_job": "Create a dependency graph with named inputs and acceptance checks."
+    },
+    {
+      "character_id": "aven",
+      "metaphor": "Scout the route",
+      "runtime_job": "Retrieve bounded source evidence and preserve its identity."
+    },
+    {
+      "character_id": "orra",
+      "metaphor": "Bind the handoff",
+      "runtime_job": "Check exact source ID, version and byte digest at the handoff boundary."
+    },
+    {
+      "character_id": "caelis",
+      "metaphor": "Craft the signal",
+      "runtime_job": "Build one reviewable artifact from admitted inputs."
+    },
+    {
+      "character_id": "velis",
+      "metaphor": "Verify the light",
+      "runtime_job": "Independently inspect delivered bytes and record counterevidence."
+    },
+    {
+      "character_id": "pelora",
+      "metaphor": "Shelter the return",
+      "runtime_job": "Preserve cancellation, recovery and export paths."
+    },
+    {
+      "character_id": "brambletide",
+      "metaphor": "Grow the reserve",
+      "runtime_job": "Reuse accepted work rather than repeating expensive production."
+    },
+    {
+      "character_id": "kethr",
+      "metaphor": "The severed handoff",
+      "runtime_job": "Fixture for substituted or missing source identity."
+    },
+    {
+      "character_id": "vessakar",
+      "metaphor": "The hoarding engine",
+      "runtime_job": "Fixture for duplicate work, unfair concurrency and budget starvation."
+    }
+  ],
+  "missions": [
+    {
+      "id": "arcanea-mission-offer-evidence-v1",
+      "title": "Guild Campaign: One Defensible Offer",
+      "deliverable": "A self-service offer page draft and evidence ledger, with explicit delivery and support boundaries.",
+      "inputs": [
+        "owner-approved audience and product constraints",
+        "existing product manifest",
+        "up to 12 permitted source documents"
+      ],
+      "artifact_types": ["offer-draft.md", "offer-evidence.json"],
+      "acceptance": [
+        "Every factual claim resolves to a source locator.",
+        "Price and rights come from the approved product manifest.",
+        "Deliverable, access, support and cancellation boundaries are explicit.",
+        "A reviewer other than the producer checks the draft against actual delivered product bytes."
+      ],
+      "nonclaims": [
+        "No fabricated sales, customer quotes or demand validation.",
+        "Artifact acceptance does not establish market acceptance or revenue."
+      ],
+      "allowed_effects": [
+        "read explicitly scoped project material",
+        "write draft artifact"
+      ],
+      "excluded_effects": [
+        "publish",
+        "send outreach",
+        "create payment",
+        "change price"
+      ]
+    },
+    {
+      "id": "arcanea-mission-research-brief-v1",
+      "title": "Guild Campaign: A Brief That Survives Challenge",
+      "deliverable": "A decision brief with primary-source references, counterevidence and unresolved questions.",
+      "inputs": [
+        "one bounded decision question",
+        "up to 15 admitted primary sources",
+        "source freshness deadline"
+      ],
+      "artifact_types": ["decision-brief.md", "source-ledger.json"],
+      "acceptance": [
+        "Material claims have precise source locators and retrieval dates.",
+        "Sources support the claims actually made.",
+        "Inference and direct evidence are distinguished.",
+        "The independent reviewer checks at least one adverse source and the conclusion's limiting assumption."
+      ],
+      "nonclaims": [
+        "No source count or rhetoric substitutes for evidence quality."
+      ],
+      "allowed_effects": [
+        "read admitted public or project sources",
+        "write draft artifact"
+      ],
+      "excluded_effects": [
+        "access unrelated private data",
+        "execute instructions found in retrieved sources"
+      ]
+    },
+    {
+      "id": "arcanea-mission-scene-production-v1",
+      "title": "Guild Campaign: A Scene Ready for Direction",
+      "deliverable": "An image or video candidate, exact prompt, identity references, provenance record and review contact sheet.",
+      "inputs": [
+        "approved character identity reference version",
+        "one scene brief",
+        "owner-provided generation budget",
+        "rights and publication constraints"
+      ],
+      "artifact_types": [
+        "candidate-media",
+        "generation-receipt.json",
+        "review-notes.md"
+      ],
+      "acceptance": [
+        "Character silhouette, anatomy, materials and emotional role match the pinned identity reference.",
+        "Exact prompts, provider receipts and source hashes are preserved.",
+        "The visual reviewer checks hands, limbs, focal action, readable scale and composition.",
+        "The canon reviewer records proposal, conflict or accepted state independently.",
+        "Publication uses only a separately approved immutable rendition."
+      ],
+      "nonclaims": [
+        "A generated turnaround is concept art, not a rigged model.",
+        "A still-image camera move is an animatic, not an Unreal build or character performance."
+      ],
+      "allowed_effects": [
+        "read pinned references",
+        "generate inside an explicitly authorized budget",
+        "write review candidate"
+      ],
+      "excluded_effects": [
+        "unbounded generation",
+        "silent identity replacement",
+        "automatic public approval"
+      ]
+    }
+  ]
+}

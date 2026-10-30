@@ -3,7 +3,8 @@
  * OpenRouter Live Data Fetcher
  *
  * Fetches live model data from OpenRouter API for the /models page.
- * Used at build/revalidation time with ISR (1 hour).
+ * Used at runtime revalidation time with ISR (1 hour).
+ * Production builds use the existing static fallback without contacting a supplier.
  * Returns null on failure so the page falls back to static data.
  */
 
@@ -32,8 +33,9 @@ export interface LiveModelData {
 }
 
 export async function fetchLiveModels(): Promise<LiveModelData | null> {
+  if (process.env.NEXT_PHASE === "phase-production-build") return null;
   try {
-    const res = await fetch('https://openrouter.ai/api/v1/models', {
+    const res = await fetch("https://openrouter.ai/api/v1/models", {
       next: { revalidate: 3600 },
     });
     if (!res.ok) return null;
@@ -53,11 +55,11 @@ export async function fetchLiveModels(): Promise<LiveModelData | null> {
     if (!raw.length) return null;
 
     const models: LiveModel[] = raw.map((m) => {
-      const promptPrice = parseFloat(m.pricing?.prompt ?? '0') * 1_000_000;
+      const promptPrice = parseFloat(m.pricing?.prompt ?? "0") * 1_000_000;
       const completionPrice =
-        parseFloat(m.pricing?.completion ?? '0') * 1_000_000;
+        parseFloat(m.pricing?.completion ?? "0") * 1_000_000;
       const isFree = promptPrice === 0 && completionPrice === 0;
-      const provider = m.id.split('/')[0] ?? 'unknown';
+      const provider = m.id.split("/")[0] ?? "unknown";
 
       return {
         id: m.id,
@@ -68,8 +70,8 @@ export async function fetchLiveModels(): Promise<LiveModelData | null> {
         pricing_completion_per_mtok: Math.round(completionPrice * 100) / 100,
         is_free: isFree,
         max_completion: m.top_provider?.max_completion_tokens ?? 0,
-        modality: m.architecture?.modality ?? 'text',
-        description: m.description ?? '',
+        modality: m.architecture?.modality ?? "text",
+        description: m.description ?? "",
         created: m.created ?? 0,
       };
     });

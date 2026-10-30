@@ -10,6 +10,7 @@ import { SOVEREIGN_DEPTHS } from "@/lib/visual-encyclopedia/sovereign-depths";
 import { WONDER_BY_SLUG } from "@/lib/visual-encyclopedia/weight-of-wonders";
 import styles from "./sovereign-depths/sovereign-depths.module.css";
 import wonderStyles from "./weight-of-wonders/weight-of-wonders.module.css";
+import { FirstlightFeature } from "./firstlight-02/feature";
 
 export const revalidate = 300;
 
@@ -58,6 +59,7 @@ export default async function GalleryPage() {
           </div>
         </div>
       </section>
+      <FirstlightFeature />
       {wonder && (
         <section
           className={wonderStyles.galleryFeature}
