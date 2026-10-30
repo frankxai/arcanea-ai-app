@@ -13,7 +13,10 @@ function loadWebhook(grant: (g: Grant) => Promise<{ applied: boolean }>) {
     "utf8",
   );
   const js = transpileModule(source, {
-    compilerOptions: { module: ModuleKind.CommonJS, target: ScriptTarget.ES2022 },
+    compilerOptions: {
+      module: ModuleKind.CommonJS,
+      target: ScriptTarget.ES2022,
+    },
   }).outputText;
   const legacyWrites: string[] = [];
   const exports: Record<string, (r: Request) => Promise<Response>> = {};
@@ -22,19 +25,26 @@ function loadWebhook(grant: (g: Grant) => Promise<{ applied: boolean }>) {
     require: (id: string) => {
       const imports: Record<string, unknown> = {
         "next/server": { NextResponse: Response },
-        "next/headers": { headers: async () => new Headers({ "stripe-signature": "sig" }) },
+        "next/headers": {
+          headers: async () => new Headers({ "stripe-signature": "sig" }),
+        },
         "@/lib/types/credits": legacyCredits,
         "@/lib/supabase/server": {
           createAdminClient: () => ({
             from(table: string) {
               legacyWrites.push(table);
-              throw Error(`legacy table ${table} must not be written for purchases`);
+              throw Error(
+                `legacy table ${table} must not be written for purchases`,
+              );
             },
           }),
         },
         "@/lib/billing/ledger": {
-          grantPurchasedCredits: (userId: string, amount: number, reference: string) =>
-            grant({ userId, amount, reference }),
+          grantPurchasedCredits: (
+            userId: string,
+            amount: number,
+            reference: string,
+          ) => grant({ userId, amount, reference }),
         },
         stripe: {
           default: class {
@@ -48,7 +58,12 @@ function loadWebhook(grant: (g: Grant) => Promise<{ applied: boolean }>) {
     Request,
     Response,
     Headers,
-    process: { env: { STRIPE_SECRET_KEY: "sk_test", STRIPE_WEBHOOK_SECRET: "whsec_test" } },
+    process: {
+      env: {
+        STRIPE_SECRET_KEY: "sk_test",
+        STRIPE_WEBHOOK_SECRET: "whsec_test",
+      },
+    },
     console: { error() {}, warn() {}, log() {} },
   });
   return { POST: exports.POST, legacyWrites };
@@ -64,7 +79,11 @@ function checkoutEvent(session: Record<string, unknown>) {
         object: {
           id: "cs_test_1",
           mode: "payment",
-          metadata: { user_id: "00000000-0000-0000-0000-000000000001", pack_id: "pack-250", credits: "250" },
+          metadata: {
+            user_id: "00000000-0000-0000-0000-000000000001",
+            pack_id: "pack-250",
+            credits: "250",
+          },
           ...session,
         },
       },
