@@ -14,6 +14,9 @@
  *   STRIPE_SECRET_KEY          -- Stripe API key (sk_live_... or sk_test_...)
  *   STRIPE_WEBHOOK_SECRET      -- Webhook signing secret (whsec_...)
  *
+ * Credit pack purchases are granted through the billing kernel ledger
+ * (billing_grant_credits), which is unique on (kind, reference).
+ *
  * Note: credit_balances, credit_transactions, and forge_subscriptions tables
  * are not yet in the generated Supabase types. The admin client is cast to
  * `any` for `.from()` calls until types are regenerated.
@@ -22,6 +25,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
+import { grantPurchasedCredits } from "@/lib/billing/ledger";
 import { CREDIT_PACKS } from "@/lib/types/credits";
 
 // ─── Local type shapes for Stripe objects we handle ─────────────────────────
@@ -29,6 +33,7 @@ import { CREDIT_PACKS } from "@/lib/types/credits";
 // `import type Stripe from 'stripe'` when stripe types are installed.
 
 interface StripeCheckoutSession {
+  id?: string;
   mode?: string;
   metadata?: Record<string, string> | null;
   customer?: string | null;
@@ -146,44 +151,34 @@ export async function POST(req: Request) {
             ? session.payment_intent
             : session.payment_intent?.id ?? null;
 
+        // Stripe may deliver the same event more than once, concurrently. Keying
+        // the grant on the payment makes every redelivery a no-op in the ledger.
+        const paymentRef = paymentIntentId ?? session.id;
+        if (!paymentRef) {
+          console.error("Stripe webhook: checkout.session.completed has no payment reference");
+          break;
+        }
+
         console.log(
-          `Stripe webhook: crediting ${credits} credits to user ${userId} (pack: ${packId}, pi: ${paymentIntentId})`,
+          `Stripe webhook: crediting ${credits} credits to user ${userId} (pack: ${packId}, ref: ${paymentRef})`,
         );
 
-        // Credit the user's balance and log transaction
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const adminCheckout = createAdminClient() as any;
-
-        // 1. Upsert balance row (create if first purchase)
-        const { data: existing } = await adminCheckout
-          .from("credit_balances")
-          .select("purchased")
-          .eq("user_id", userId)
-          .single();
-
-        const newPurchased = (existing?.purchased ?? 0) + credits;
-
-        await adminCheckout
-          .from("credit_balances")
-          .upsert(
-            {
-              user_id: userId,
-              purchased: newPurchased,
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "user_id" },
+        try {
+          const result = await grantPurchasedCredits(userId, credits, `stripe:${paymentRef}`, {
+            provider: "stripe",
+            pack_id: packId,
+          });
+          if (!result.applied) {
+            console.log(`Stripe webhook: ${paymentRef} was already credited`);
+          }
+        } catch (grantError) {
+          console.error(
+            "Stripe webhook: credit grant failed:",
+            grantError instanceof Error ? grantError.message : grantError,
           );
-
-        // 2. Log transaction
-        await adminCheckout.from("credit_transactions").insert({
-          user_id: userId,
-          type: "purchase",
-          amount: credits,
-          balance_after: newPurchased,
-          stripe_payment_id: paymentIntentId,
-          pack_id: packId,
-          description: `Purchased ${credits} credits (${packId})`,
-        });
+          // A retry is safe because the grant is idempotent on the payment.
+          return NextResponse.json({ error: "Credit grant failed" }, { status: 500 });
+        }
 
         break;
       }
