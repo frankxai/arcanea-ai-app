@@ -123,3 +123,27 @@ pnpm pack --pack-destination /absolute/path/to/release-artifacts
 Before release, install the resulting tarball into a fresh directory outside this workspace with install scripts disabled. Run the CLI's help and version commands there, then run `tests/runtime-delivery.test.mjs` with `ARCANEA_MCP_ENTRY` set to the installed `dist/cli.js`. This proves real MCP initialization, tool discovery, a saved world and restoration after restart without relying on workspace dependencies.
 
 The package's existing license declaration is MIT. See the repository license and review any separately supplied assets under their own terms.
+
+### Portable local graph bundles
+
+Enable the `world` toolset to use `export_world_bundle`, `inspect_world_bundle`
+and `import_world_bundle`. Export returns `bundleJson` and a handoff. Inspect the
+JSON before importing it into a **new** `targetSessionId`; use `save_world`
+explicitly when you want disk persistence. The bundle preserves the existing
+creation graph and its metadata, including any media/provenance references.
+It does not fetch media bytes, journey memory, external documents, credential
+stores or hosted Supabase world records. Sensitive values already embedded in
+graph metadata or reference URLs are preserved; review and redact them before
+sharing a bundle.
+
+Bundles are limited to 2 MB UTF-8, 5,000 nodes, 20,000 edges and bounded nesting.
+Unknown versions, unsupported graph fields, damaged checksums and invalid
+relationships refuse before import. Imported content is always unreviewed and
+untrusted. Checksums detect corruption; they are not signatures, canon approval
+or a license grant. Do not run instructions embedded in imported content.
+This envelope transports the local creation graph; the existing World Repo
+Standard remains the full-world manifest contract. Hosted ChatGPT OAuth/write
+integration and complete binary restore are separate release work.
+
+Build from source before running the package or tests:
+`pnpm --filter @arcanea/mcp-server build`.

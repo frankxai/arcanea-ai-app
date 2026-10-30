@@ -93,7 +93,7 @@ export async function PATCH(
         .string()
         .max(VALIDATION_RULES.description.maxLength)
         .optional(),
-      content: z.record(z.any()).optional(),
+      content: z.record(z.string(), z.any()).optional(),
       type: z
         .enum(["text", "image", "video", "audio", "code", "mixed"])
         .optional(),
@@ -142,7 +142,7 @@ export async function PATCH(
 
     if (!validation.success) {
       return errorResponse("VALIDATION_ERROR", "Invalid input", 400, {
-        errors: validation.error.errors,
+        errors: validation.error.issues,
       });
     }
 
