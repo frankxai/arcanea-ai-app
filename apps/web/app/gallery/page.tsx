@@ -11,6 +11,10 @@ import { WONDER_BY_SLUG } from "@/lib/visual-encyclopedia/weight-of-wonders";
 import styles from "./sovereign-depths/sovereign-depths.module.css";
 import wonderStyles from "./weight-of-wonders/weight-of-wonders.module.css";
 import { FirstlightFeature } from "./firstlight-02/feature";
+import {
+  GENTLE_POWERS,
+  isGentlePowersPublished,
+} from "@/lib/visual-encyclopedia/gentle-powers";
 
 export const revalidate = 300;
 
@@ -60,6 +64,13 @@ export default async function GalleryPage() {
         </div>
       </section>
       <FirstlightFeature />
+      {isGentlePowersPublished(GENTLE_POWERS) && (
+        <div className={styles.wrap}>
+          <Link className={styles.action} href="/gallery/gentle-powers">
+            The Gentle Powers — explore artwork and prompts
+          </Link>
+        </div>
+      )}
       {wonder && (
         <section
           className={wonderStyles.galleryFeature}
