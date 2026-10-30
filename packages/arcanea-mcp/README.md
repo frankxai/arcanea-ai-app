@@ -131,8 +131,10 @@ and `import_world_bundle`. Export returns `bundleJson` and a handoff. Inspect th
 JSON before importing it into a **new** `targetSessionId`; use `save_world`
 explicitly when you want disk persistence. The bundle preserves the existing
 creation graph and its metadata, including any media/provenance references.
-It does not fetch or include media bytes, journey memory, external documents,
-credentials or hosted Supabase world records.
+It does not fetch media bytes, journey memory, external documents, credential
+stores or hosted Supabase world records. Sensitive values already embedded in
+graph metadata or reference URLs are preserved; review and redact them before
+sharing a bundle.
 
 Bundles are limited to 2 MB UTF-8, 5,000 nodes, 20,000 edges and bounded nesting.
 Unknown versions, unsupported graph fields, damaged checksums and invalid

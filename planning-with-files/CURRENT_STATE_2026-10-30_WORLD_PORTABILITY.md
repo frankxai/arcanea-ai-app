@@ -12,7 +12,7 @@ Acceptance: graph/metadata roundtrip; create-only destination; corrupt/unsupport
 - `arcanea.creation-graph.bundle.v1` is a transport envelope for the existing local graph, not a new full-world manifest. It carries graph metadata, source session/time, conservative trust/canon labels and canonical SHA-256 integrity.
 - 2 MB UTF-8, 5,000 nodes, 20,000 edges, depth/node/string bounds. Duplicate/dangling graph references and unsupported fields refuse.
 - Import refuses existing in-memory, saved or corrupt saved destinations. It creates memory only; the existing explicit `save_world` operation provides persistence. No multi-process transaction or hosted tenant guarantee is claimed.
-- Media references remain data. Media bytes, external documents, journey memory, credentials and Supabase records are not part of this export.
+- Media references remain data. Media bytes, external documents, journey memory, credential stores and Supabase records are not read by this exporter. Sensitive values already embedded in graph metadata or reference URLs are preserved and require review/redaction before sharing.
 - [Full platform specification](../docs/architecture/ARCANEA_WORLD_PLATFORM_2026-10-30.md): experiences, Vercel/Cloudflare/Supabase ownership, three graphs, data contract, agents, MCP/OAuth, proposed tiers, economics, storage, legal requirements and existing issue sequence.
 
 ## Verification and independent review

@@ -191,6 +191,8 @@ export const WORLD_BUNDLE_HANDOFF = {
     "The bundle grants no tools, credentials, rights or publication authority.",
   media:
     "Metadata and media references travel with the graph. Binary files, journey memory, external documents and hosted world records are not included.",
+  privacy:
+    "Credential stores are not read. Sensitive values already embedded in metadata or reference URLs are preserved; review and redact them before sharing.",
   persistence:
     "Import creates a new in-memory session. Use save_world explicitly to retain it on disk.",
   trust:
