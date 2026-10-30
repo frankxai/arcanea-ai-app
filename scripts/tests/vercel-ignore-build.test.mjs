@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  rmSync,
+  chmodSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -48,6 +54,14 @@ function fixture(t) {
   };
   write("src/app.js", "export const version = 1;\n");
   const base = commit();
+  const bin = join(root, ".git", "fake-bin");
+  mkdirSync(bin);
+  const curl = join(bin, "curl");
+  writeFileSync(
+    curl,
+    '#!/usr/bin/env bash\nprintf "%s" "$FIXTURE_PR_JSON"\nexit "${FIXTURE_CURL_STATUS:-0}"\n',
+  );
+  chmodSync(curl, 0o755);
   const run = (extra = {}) => {
     const result = spawnSync("bash", [script], {
       cwd: root,
@@ -55,6 +69,11 @@ function fixture(t) {
       timeout: 10000,
       env: {
         ...process.env,
+        PATH: bin + ":" + process.env.PATH,
+        FIXTURE_PR_JSON: JSON.stringify([{ draft: false, state: "open" }]),
+        VERCEL_GIT_REPO_OWNER: "frankxai",
+        VERCEL_GIT_REPO_SLUG: "arcanea-ai-app",
+        VERCEL_GIT_PULL_REQUEST_ID: "",
         VERCEL_ENV: "preview",
         VERCEL_GIT_COMMIT_REF: "codex/preview-fixture",
         VERCEL_GIT_COMMIT_MESSAGE: git("log", "-1", "--format=%B"),
@@ -80,7 +99,7 @@ test("code followed by docs builds the complete pending change", (t) => {
   f.commit("runtime correction");
   f.write("docs/review.md", "Review evidence\n");
   f.commit("record review");
-  expectDecision(f.run(), 1, /build:/);
+  expectDecision(f.run(), 1, /BUILDING/);
 });
 
 test("docs-only pending changes skip, including multiple commits", (t) => {
@@ -148,7 +167,7 @@ test("production builds even when checkpoint and branch filters would skip", (t)
       VERCEL_GIT_COMMIT_MESSAGE: "[agent-wip]",
     }),
     1,
-    /production deploy/,
+    /production\/main/,
   );
 });
 
@@ -157,7 +176,7 @@ test("explicit preview checkpoints still skip", (t) => {
   expectDecision(
     f.run({ VERCEL_GIT_COMMIT_MESSAGE: "work [agent-wip]" }),
     0,
-    /work-in-progress/,
+    /checkpoint/,
   );
 });
 
@@ -180,10 +199,10 @@ test("pending code survives several ignored and docs-only checkpoints", (t) => {
   f.commit("review [agent-wip]");
   f.commit("ready");
   f.commit("final review");
-  expectDecision(f.run(), 1, /build:/);
+  expectDecision(f.run(), 1, /BUILDING/);
 });
 
-test("a branch name never hides deployable code, including a dependency PR", (t) => {
+test("explicit preview requests build bot and tooling branches", (t) => {
   const f = fixture(t);
   f.write("src/app.js", "export const version = 2;\n");
   f.commit("change deployable code");
@@ -195,7 +214,14 @@ test("a branch name never hides deployable code, including a dependency PR", (t)
     "changeset-release/main",
     "docs/guide",
   ]) {
-    expectDecision(f.run({ VERCEL_GIT_COMMIT_REF: branch }), 1, /build:/);
+    expectDecision(
+      f.run({
+        VERCEL_GIT_COMMIT_REF: branch,
+        VERCEL_GIT_COMMIT_MESSAGE: "fix [preview]",
+      }),
+      1,
+      /BUILDING/,
+    );
   }
 });
 
@@ -205,25 +231,26 @@ test("documentation-only changes skip regardless of branch name", (t) => {
   f.commit();
   for (const branch of [
     "docs/guide",
-    "dependabot/deps",
+    "feature/guide",
     "codex/preview-fixture",
   ]) {
     expectDecision(f.run({ VERCEL_GIT_COMMIT_REF: branch }), 0, /docs-only/);
   }
 });
 
-test("draft PR state does not suppress a code preview", (t) => {
+test("a draft PR skips a code preview until explicitly requested", (t) => {
   const f = fixture(t);
   f.write("src/app.js", "export const version = 2;\n");
   f.commit();
   expectDecision(
     f.run({
       VERCEL_GIT_PULL_REQUEST_ID: "123",
+      FIXTURE_PR_JSON: JSON.stringify({ draft: true, state: "open" }),
       VERCEL_GIT_REPO_OWNER: "frankxai",
       VERCEL_GIT_REPO_SLUG: "arcanea-ai-app",
     }),
-    1,
-    /build:/,
+    0,
+    /PR is a draft/,
   );
 });
 
@@ -231,7 +258,7 @@ test("renaming source into an ignored documentation path still builds", (t) => {
   const f = fixture(t);
   f.git("mv", "src/app.js", "renamed.md");
   f.commit();
-  expectDecision(f.run(), 1, /build:/);
+  expectDecision(f.run(), 1, /BUILDING/);
 });
 
 test("a force-pushed branch compares deployed and current trees", (t) => {
@@ -241,7 +268,7 @@ test("a force-pushed branch compares deployed and current trees", (t) => {
   f.git("checkout", "--detach", f.base);
   f.write("readme.md", "different branch history\n");
   f.commit();
-  expectDecision(f.run({ VERCEL_GIT_PREVIOUS_SHA: deployed }), 1, /build:/);
+  expectDecision(f.run({ VERCEL_GIT_PREVIOUS_SHA: deployed }), 1, /BUILDING/);
 });
 
 test("a net code revert to the deployed tree can skip its documentation delta", (t) => {
@@ -261,6 +288,177 @@ test("a Git diff error builds without claiming a docs-only change", (t) => {
     'git() { if [[ "${1:-}" == diff ]]; then return 42; fi; command git "$@"; }\n',
   );
   const result = f.run({ BASH_ENV: join(f.root, "fail-diff.bash") });
-  expectDecision(result, 1, /build:/);
+  expectDecision(result, 1, /BUILDING/);
   assert.doesNotMatch(result.stdout, /docs-only/);
+});
+
+test("production, main and unknown refs build before every preview skip rule", (t) => {
+  const f = fixture(t);
+  for (const extra of [
+    { VERCEL_ENV: "production", VERCEL_GIT_COMMIT_REF: "dependabot/deps" },
+    { VERCEL_GIT_COMMIT_REF: "main" },
+    { VERCEL_GIT_COMMIT_REF: "" },
+  ]) {
+    expectDecision(
+      f.run({
+        FIXTURE_PR_JSON: "[]",
+        VERCEL_GIT_COMMIT_MESSAGE: "checkpoint [agent-wip]",
+        ...extra,
+      }),
+      1,
+      /production\/main/,
+    );
+  }
+});
+
+test("preview opt-ins override draft, bot, catch-up and checkpoint skips", (t) => {
+  const f = fixture(t);
+  for (const extra of [
+    { VERCEL_GIT_COMMIT_REF: "preview/release" },
+    {
+      VERCEL_GIT_COMMIT_REF: "dependabot/deps",
+      VERCEL_GIT_COMMIT_MESSAGE: "fix [preview]",
+    },
+    { VERCEL_GIT_COMMIT_MESSAGE: "Merge branch 'main' [preview]" },
+    { VERCEL_GIT_COMMIT_MESSAGE: "checkpoint [agent-wip] [preview]" },
+  ]) {
+    expectDecision(
+      f.run({
+        FIXTURE_PR_JSON: JSON.stringify({ draft: true, state: "open" }),
+        ...extra,
+      }),
+      1,
+      /BUILDING/,
+    );
+  }
+});
+
+test("markers in commit bodies do not change the subject decision", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "changed\n");
+  f.commit();
+  expectDecision(
+    f.run({ VERCEL_GIT_COMMIT_MESSAGE: "ready\n\nmentions [agent-wip]" }),
+    1,
+    /BUILDING/,
+  );
+  expectDecision(
+    f.run({
+      VERCEL_GIT_COMMIT_REF: "dependabot/deps",
+      VERCEL_GIT_COMMIT_MESSAGE: "fix\n\nmentions [preview]",
+    }),
+    0,
+    /bot\/tooling/,
+  );
+});
+
+test("missing, malformed and failed API responses cannot confirm an agent PR", (t) => {
+  const f = fixture(t);
+  for (const json of [
+    "",
+    "{",
+    "null",
+    "{}",
+    '{"draft":false}',
+    '{"draft":"false","state":"open"}',
+    '{"draft":false,"state":"closed"}',
+    '{"message":"draft: false","nested":{"draft":false}}',
+  ]) {
+    expectDecision(
+      f.run({ FIXTURE_PR_JSON: json }),
+      0,
+      /without a confirmed ready PR/,
+    );
+  }
+  expectDecision(
+    f.run({ FIXTURE_PR_JSON: "", FIXTURE_CURL_STATUS: "22" }),
+    0,
+    /without a confirmed ready PR/,
+  );
+  expectDecision(f.run({ FIXTURE_PR_JSON: "[]" }), 0, /no open PR/);
+  expectDecision(
+    f.run({ VERCEL_GIT_REPO_OWNER: "" }),
+    0,
+    /without a confirmed ready PR/,
+  );
+});
+
+test("PR text and nested fields cannot masquerade as the API draft flag", (t) => {
+  const f = fixture(t);
+  const draft = {
+    draft: true,
+    state: "open",
+    title: 'example "draft":false',
+    nested: { draft: false },
+  };
+  expectDecision(
+    f.run({ FIXTURE_PR_JSON: JSON.stringify(draft) }),
+    0,
+    /PR is a draft/,
+  );
+  expectDecision(
+    f.run({ FIXTURE_PR_JSON: JSON.stringify([draft]) }),
+    0,
+    /PR is a draft/,
+  );
+});
+
+test("a ready PR is not made draft by nested data", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "changed\n");
+  f.commit();
+  expectDecision(
+    f.run({
+      FIXTURE_PR_JSON: JSON.stringify({
+        draft: false,
+        state: "open",
+        nested: { draft: true },
+      }),
+    }),
+    1,
+    /BUILDING/,
+  );
+  expectDecision(
+    f.run({
+      FIXTURE_PR_JSON: JSON.stringify({ draft: false, state: "open" }),
+      FIXTURE_CURL_STATUS: "28",
+    }),
+    0,
+    /without a confirmed ready PR/,
+  );
+});
+
+test("unconfirmed non-agent branches preserve the Git history fallback", (t) => {
+  const f = fixture(t);
+  f.write("src/app.js", "changed\n");
+  f.commit();
+  expectDecision(
+    f.run({ VERCEL_GIT_COMMIT_REF: "feature/fix", FIXTURE_PR_JSON: "{broken" }),
+    1,
+    /BUILDING/,
+  );
+});
+
+test("bot and catch-up branches skip without an opt-in", (t) => {
+  const f = fixture(t);
+  for (const branch of [
+    "dependabot/deps",
+    "renovate/deps",
+    "copilot/fix",
+    "changeset-release/main",
+    "backup/snapshot",
+    "worktree-example",
+  ]) {
+    expectDecision(f.run({ VERCEL_GIT_COMMIT_REF: branch }), 0, /bot\/tooling/);
+  }
+  for (const subject of [
+    "Merge branch 'main' into feature",
+    "Merge remote-tracking branch 'origin/main' into feature",
+  ]) {
+    expectDecision(
+      f.run({ VERCEL_GIT_COMMIT_MESSAGE: subject }),
+      0,
+      /catch-up merge/,
+    );
+  }
 });
