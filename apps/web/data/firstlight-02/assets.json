@@ -1,0 +1,1993 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "arcanea-firstlight-02",
+  "title": "The Kindred Realms",
+  "canon_state": "proposal",
+  "expected_assets": 20,
+  "verified_assets": 20,
+  "media_receipt": "media-receipt.json",
+  "assets": [
+    {
+      "id": "fl02-aven-sheet",
+      "asset_id": "arcanea.fl02.aven.sheet.v1",
+      "character_id": "arcanea.fl02.aven",
+      "slug": "aven",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Aven",
+      "title": "The Windskipper",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 264556,
+      "sha256": "4cb42d580404288d54c46168a1db678a2949f41e80591b2be56e0fe7514b12ec",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Aven — The Windskipper, a companion. Subject identity: a nimble small river-otter glider with cinnamon-and-cream soft fur, a long expressive tail, dark bright intelligent eyes, an honest open smile, two folded teal ripstop glider membranes built into a handmade mustard sailcloth harness, little copper goggle frames pushed above the eyes and a single red seed pouch; believable otter anatomy, paws rather than human hands. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "079a5c59eaf7df7714e5cfd4d6b4db16b6b6f46fde0349e8ba6863a30dcfb60b",
+      "prompt_file": "prompts/aven-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:10:48.244399+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Aven, The Windskipper: a nimble small river-otter glider with cinnamon-and-cream soft fur, a long expressive tail, dark bright intelligent eyes, an honest open smile, two folded teal ripstop glider membranes built into a handmade mustard sailcloth harness, little copper goggle frames pushed above the eyes and a single red seed pouch; believable otter anatomy, paws rather than human hands",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-aven-sheet-web/4cb42d580404288d54c46168a1db678a2949f41e80591b2be56e0fe7514b12ec.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-aven-sheet-master/e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278.png",
+      "master_sha256": "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+      "derived_from_sha256": "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+      "master_bytes": 2850919,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Appealing quadrupedal otter with consistent goggles, mustard harness, teal folded membranes and red seed pouch. Distinct from Miri through locomotion silhouette and gear; shared first name with Aven Tor in the separate public proposal encyclopedia is acknowledged as scope limitation."
+        ]
+      },
+      "review_notes": [
+        "Appealing quadrupedal otter with consistent goggles, mustard harness, teal folded membranes and red seed pouch. Distinct from Miri through locomotion silhouette and gear; shared first name with Aven Tor in the separate public proposal encyclopedia is acknowledged as scope limitation."
+      ],
+      "continuity_notes": [
+        "Appealing quadrupedal otter with consistent goggles, mustard harness, teal folded membranes and red seed pouch. Distinct from Miri through locomotion silhouette and gear; shared first name with Aven Tor in the separate public proposal encyclopedia is acknowledged as scope limitation."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "4cb42d580404288d54c46168a1db678a2949f41e80591b2be56e0fe7514b12ec",
+        "master_verified_sha256": "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-aven-hero",
+      "asset_id": "arcanea.fl02.aven.hero.v1",
+      "character_id": "arcanea.fl02.aven",
+      "slug": "aven",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Aven",
+      "title": "The Windskipper",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 285862,
+      "sha256": "86d944d826c9757abf9c235dd53d936a0822e7f57763d9a542aa57c0a58bdf9e",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Aven — The Windskipper. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a nimble small river-otter glider with cinnamon-and-cream soft fur, a long expressive tail, dark bright intelligent eyes, an honest open smile, two folded teal ripstop glider membranes built into a handmade mustard sailcloth harness, little copper goggle frames pushed above the eyes and a single red seed pouch; believable otter anatomy, paws rather than human hands. Story event: Aven rides a bank of sun-warmed air over an enormous terraced valley of hanging gardens, teal glider membranes held wide, carrying a single red pouch of seeds toward a ruined nursery where a handful of gardeners wave. One wind route ends in storm; Aven visibly chooses the clear longer route, with airborne paper streamers showing wind direction. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "fa0af32a93609d0dee5a9eba8898f3e11a7d2509554cd6b5b486dc511fe602e4",
+      "prompt_file": "prompts/aven-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.aven.sheet.v1"],
+      "generated_at": "2026-10-30T13:18:04.361968+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Aven, The Windskipper: Aven rides a bank of sun-warmed air over an enormous terraced valley of hanging gardens, teal glider membranes held wide, carrying a single red pouch of seeds toward a ruined nursery where a handful of gardeners wave. One wind route ends in storm; Aven visibly chooses the clear longer route, with airborne paper streamers showing wind direction",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-aven-hero-web/86d944d826c9757abf9c235dd53d936a0822e7f57763d9a542aa57c0a58bdf9e.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-aven-hero-master/34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104.png",
+      "master_sha256": "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104",
+      "derived_from_sha256": "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104",
+      "master_bytes": 2774409,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Joyful gliding toward a welcoming nursery, visible red seed pouch and storm alternative. Goggles, muzzle and harness colors preserve identity; deployed glider mechanics remain concept reference rather than a rig blueprint."
+        ]
+      },
+      "review_notes": [
+        "Joyful gliding toward a welcoming nursery, visible red seed pouch and storm alternative. Goggles, muzzle and harness colors preserve identity; deployed glider mechanics remain concept reference rather than a rig blueprint."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "86d944d826c9757abf9c235dd53d936a0822e7f57763d9a542aa57c0a58bdf9e",
+        "master_verified_sha256": "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-brambletide-sheet",
+      "asset_id": "arcanea.fl02.brambletide.sheet.v1",
+      "character_id": "arcanea.fl02.brambletide",
+      "slug": "brambletide",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Brambletide",
+      "title": "The Orchard Colossus",
+      "role": "guardian",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 504306,
+      "sha256": "1b04b9b0a0da0b796963902443a44cc4a7aa98f9931994100505df95da68ba53",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Brambletide — The Orchard Colossus, a guardian. Subject identity: an enormously gentle 180-metre-tall capybara-shaped earth guardian with a broad reassuring blunt muzzle, soft tiny alert ears, slow kind dark eyes, weighty basalt feet, spring-green moss and peach-blossom fur, living terraced orchard growing along the immense broad back, warm sandstone cheek plates; its belly has an architectural arch that shelters migrating families without making it a building, wholesome colossal animal anatomy. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "27614214570287517360b644b68ecf7d6c59200949a263a6ce72e5c2ace75946",
+      "prompt_file": "prompts/brambletide-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:13:05.972939+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Brambletide, The Orchard Colossus: an enormously gentle 180-metre-tall capybara-shaped earth guardian with a broad reassuring blunt muzzle, soft tiny alert ears, slow kind dark eyes, weighty basalt feet, spring-green moss and peach-blossom fur, living terraced orchard growing along the immense broad back, warm sandstone cheek plates; its belly has an architectural arch that shelters migrating families without making it a building, wholesome colossal animal anatomy",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-brambletide-sheet-web/1b04b9b0a0da0b796963902443a44cc4a7aa98f9931994100505df95da68ba53.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-brambletide-sheet-master/4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2.png",
+      "master_sha256": "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+      "derived_from_sha256": "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+      "master_bytes": 3717039,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Strongly affectionate capybara, living orchard terraces, sandstone cheeks, basalt feet and underbelly passage. All major views coherent; tiny people are illustrative scale cues, not a dimensioned 180m drawing."
+        ]
+      },
+      "review_notes": [
+        "Strongly affectionate capybara, living orchard terraces, sandstone cheeks, basalt feet and underbelly passage. All major views coherent; tiny people are illustrative scale cues, not a dimensioned 180m drawing."
+      ],
+      "continuity_notes": [
+        "Strongly affectionate capybara, living orchard terraces, sandstone cheeks, basalt feet and underbelly passage. All major views coherent; tiny people are illustrative scale cues, not a dimensioned 180m drawing."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "1b04b9b0a0da0b796963902443a44cc4a7aa98f9931994100505df95da68ba53",
+        "master_verified_sha256": "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-brambletide-hero",
+      "asset_id": "arcanea.fl02.brambletide.hero.v1",
+      "character_id": "arcanea.fl02.brambletide",
+      "slug": "brambletide",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Brambletide",
+      "title": "The Orchard Colossus",
+      "role": "guardian",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 431358,
+      "sha256": "eaffba8202319784cee2e364af609a7d8cb436471720ba91bd453fb27fba59a7",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Brambletide — The Orchard Colossus. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: an enormously gentle 180-metre-tall capybara-shaped earth guardian with a broad reassuring blunt muzzle, soft tiny alert ears, slow kind dark eyes, weighty basalt feet, spring-green moss and peach-blossom fur, living terraced orchard growing along the immense broad back, warm sandstone cheek plates; its belly has an architectural arch that shelters migrating families without making it a building, wholesome colossal animal anatomy. Story event: Brambletide stands motionless in a mist-cleared spring valley as a festive migration of families walks beneath the enormous sheltering belly arch; its broad back carries blossoming peach orchards where tiny distant gardeners tend trees, and one enormous branch lowers a ripe peach toward a dry village square. Golden morning light, mountain scale, patches of normal-sized blossom trees prove gigantic but gentle scale. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "ac276e7e3c0420a7f5635f780f6f3903f73e58ed92885eea299182843b45db8a",
+      "prompt_file": "prompts/brambletide-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.brambletide.sheet.v1"],
+      "generated_at": "2026-10-30T13:20:07.522376+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Brambletide, The Orchard Colossus: Brambletide stands motionless in a mist-cleared spring valley as a festive migration of families walks beneath the enormous sheltering belly arch; its broad back carries blossoming peach orchards where tiny distant gardeners tend trees, and one enormous branch lowers a ripe peach toward a dry village square. Golden morning light, mountain scale, patches of normal-sized blossom trees prove gigantic but gentle scale",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-brambletide-hero-web/eaffba8202319784cee2e364af609a7d8cb436471720ba91bd453fb27fba59a7.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-brambletide-hero-master/aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84.png",
+      "master_sha256": "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84",
+      "derived_from_sha256": "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84",
+      "master_bytes": 3358661,
+      "master_width": 1672,
+      "master_height": 940,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Magnificent reassuring orchard guardian; underbelly migration, normal-scale people and fruit branch give readable social purpose and immense scale. Exact height remains a proposed world dimension, not measured from artwork."
+        ]
+      },
+      "review_notes": [
+        "Magnificent reassuring orchard guardian; underbelly migration, normal-scale people and fruit branch give readable social purpose and immense scale. Exact height remains a proposed world dimension, not measured from artwork."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "eaffba8202319784cee2e364af609a7d8cb436471720ba91bd453fb27fba59a7",
+        "master_verified_sha256": "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-caelis-sheet",
+      "asset_id": "arcanea.fl02.caelis.sheet.v1",
+      "character_id": "arcanea.fl02.caelis",
+      "slug": "caelis",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Caelis",
+      "title": "The Hearthwright",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 351802,
+      "sha256": "4a518137314bc99cd949b2b85c0bc67bf608a12c06ec42a590253fcf871afdf9",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Caelis — The Hearthwright, a companion. Subject identity: a lovable squat small ceramic workshop automaton, articulated cream porcelain barrel body with cobalt repair seams, two slightly mismatched amber glass eyes, four small jointed sturdy fingers per hand, copper hinges, rounded rectangular head with one tiny vent like a smiling dimple; warm amber kiln visible through a round window in the chest, little apron in faded terracotta, carries a repaired blue teacup, handcrafted practical silhouette not generic robot. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "6a704858f6f4997db190c229e478010f31e02d4c04f572177512d34dec1dd296",
+      "prompt_file": "prompts/caelis-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:06:12.939354+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Caelis, The Hearthwright: a lovable squat small ceramic workshop automaton, articulated cream porcelain barrel body with cobalt repair seams, two slightly mismatched amber glass eyes, four small jointed sturdy fingers per hand, copper hinges, rounded rectangular head with one tiny vent like a smiling dimple; warm amber kiln visible through a round window in the chest, little apron in faded terracotta, carries a repaired blue teacup, handcrafted practical silhouette not generic robot",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-caelis-sheet-web/4a518137314bc99cd949b2b85c0bc67bf608a12c06ec42a590253fcf871afdf9.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-caelis-sheet-master/938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67.png",
+      "master_sha256": "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+      "derived_from_sha256": "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+      "master_bytes": 3122104,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Lovable squat ceramic artisan; repaired cobalt cracks, amber mismatched eyes, chest kiln and teacup provide a distinct practical identity."
+        ]
+      },
+      "review_notes": [
+        "Lovable squat ceramic artisan; repaired cobalt cracks, amber mismatched eyes, chest kiln and teacup provide a distinct practical identity."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "4a518137314bc99cd949b2b85c0bc67bf608a12c06ec42a590253fcf871afdf9",
+        "master_verified_sha256": "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-caelis-hero",
+      "asset_id": "arcanea.fl02.caelis.hero.v1",
+      "character_id": "arcanea.fl02.caelis",
+      "slug": "caelis",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Caelis",
+      "title": "The Hearthwright",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 271246,
+      "sha256": "f25cc8c5d3cff39fee1cd17d5b624755a16600d29b8f5e6c799055a083cef889",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Caelis — The Hearthwright. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a lovable squat small ceramic workshop automaton, articulated cream porcelain barrel body with cobalt repair seams, two slightly mismatched amber glass eyes, four small jointed sturdy fingers per hand, copper hinges, rounded rectangular head with one tiny vent like a smiling dimple; warm amber kiln visible through a round window in the chest, little apron in faded terracotta, carries a repaired blue teacup, handcrafted practical silhouette not generic robot. Story event: Caelis sits at a communal workshop table at sunset, holding two halves of a child's cracked blue ceramic bird toy together while warm kiln light shines from its chest, then placing the newly mended toy into waiting human hands. Several artisans have gathered around the hearth, honest useful tools and offcuts on table, emotional focus on careful hands and trust. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "89cd2dba4fbd9b311b2b4aaa2c47d851c5df6c0392210b2768d1966b701428f3",
+      "prompt_file": "prompts/caelis-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.caelis.sheet.v1"],
+      "generated_at": "2026-10-30T13:11:47.112632+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Caelis, The Hearthwright: Caelis sits at a communal workshop table at sunset, holding two halves of a child's cracked blue ceramic bird toy together while warm kiln light shines from its chest, then placing the newly mended toy into waiting human hands. Several artisans have gathered around the hearth, honest useful tools and offcuts on table, emotional focus on careful hands and trust",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-caelis-hero-web/f25cc8c5d3cff39fee1cd17d5b624755a16600d29b8f5e6c799055a083cef889.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-caelis-hero-master/af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359.png",
+      "master_sha256": "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359",
+      "derived_from_sha256": "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359",
+      "master_bytes": 2573745,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Warm believable repaired-toy handoff with child and family. Amber asymmetrical eyes, cobalt porcelain cracks, kiln window and apron preserve identity."
+        ]
+      },
+      "review_notes": [
+        "Warm believable repaired-toy handoff with child and family. Amber asymmetrical eyes, cobalt porcelain cracks, kiln window and apron preserve identity."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "f25cc8c5d3cff39fee1cd17d5b624755a16600d29b8f5e6c799055a083cef889",
+        "master_verified_sha256": "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-kethr-sheet",
+      "asset_id": "arcanea.fl02.kethr.sheet.v1",
+      "character_id": "arcanea.fl02.kethr",
+      "slug": "kethr",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Kethr",
+      "title": "The Severed Standard",
+      "role": "opponent",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 296598,
+      "sha256": "5452b0970d97b45ff8c5b063ec5dda611506a47b0359a7574d4f5fff0b855c3b",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Kethr — The Severed Standard, a opponent. Subject identity: a fearsome disciplined armoured duel opponent, tall lean nonhuman knight with jointed obsidian lamellar armour, single narrow pale amber visor, a broken red standard attached to a blunt pole-lance held vertical, split asymmetrical shoulder plates showing a visible gap where two connection rings should meet; restrained threatening elegance, no skulls, no spikes collage, no gore, extremely clear silhouette. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The frightening disciplined presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "3cb5efe3a0fd6ddfedf29cc6e883d91370b2c584fe6350fbaf7a0d72545de986",
+      "prompt_file": "prompts/kethr-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:07:04.351508+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Kethr, The Severed Standard: a fearsome disciplined armoured duel opponent, tall lean nonhuman knight with jointed obsidian lamellar armour, single narrow pale amber visor, a broken red standard attached to a blunt pole-lance held vertical, split asymmetrical shoulder plates showing a visible gap where two connection rings should meet; restrained threatening elegance, no skulls, no spikes collage, no gore, extremely clear silhouette",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-kethr-sheet-web/5452b0970d97b45ff8c5b063ec5dda611506a47b0359a7574d4f5fff0b855c3b.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-kethr-sheet-master/7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3.png",
+      "master_sha256": "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+      "derived_from_sha256": "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+      "master_bytes": 2950907,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Severe closed visor, red torn standard and lamellar armour distinguish an opponent without bleeding threat into allies. Pole-lance top is cropped in large view; sheet is concept reference, not orthographic production plan."
+        ]
+      },
+      "review_notes": [
+        "Severe closed visor, red torn standard and lamellar armour distinguish an opponent without bleeding threat into allies. Pole-lance top is cropped in large view; sheet is concept reference, not orthographic production plan."
+      ],
+      "continuity_notes": [
+        "Severe closed visor, red torn standard and lamellar armour distinguish an opponent without bleeding threat into allies. Pole-lance top is cropped in large view; sheet is concept reference, not orthographic production plan."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "5452b0970d97b45ff8c5b063ec5dda611506a47b0359a7574d4f5fff0b855c3b",
+        "master_verified_sha256": "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-kethr-hero",
+      "asset_id": "arcanea.fl02.kethr.hero.v1",
+      "character_id": "arcanea.fl02.kethr",
+      "slug": "kethr",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Kethr",
+      "title": "The Severed Standard",
+      "role": "opponent",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 335218,
+      "sha256": "6cb1da68510d3e7528f92c2e03b78ec007d05fa374304d7b6c1ef5a59802083a",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Kethr — The Severed Standard. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a fearsome disciplined armoured duel opponent, tall lean nonhuman knight with jointed obsidian lamellar armour, single narrow pale amber visor, a broken red standard attached to a blunt pole-lance held vertical, split asymmetrical shoulder plates showing a visible gap where two connection rings should meet; restrained threatening elegance, no skulls, no spikes collage, no gore, extremely clear silhouette. Story event: Kethr blocks a vast narrow basalt causeway under red stormlight; severed lengths of red signal cloth hang between isolated bridge posts, and a small brave expedition team in warm lamplight restores one continuous line across the abyss behind the knight. The opponent's pole-lance is lowered across the path without attacking; visible restored connection, dramatic threatening scale and real strategy rather than random combat. Compose one immersive breathtaking film still, emotionally tense and strategically legible, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "76c9e44ba9cbf750950791938bc3a012ab3adaec0ad48c7dd16575904c67e606",
+      "prompt_file": "prompts/kethr-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.kethr.sheet.v1"],
+      "generated_at": "2026-10-30T13:12:34.204829+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Kethr, The Severed Standard: Kethr blocks a vast narrow basalt causeway under red stormlight; severed lengths of red signal cloth hang between isolated bridge posts, and a small brave expedition team in warm lamplight restores one continuous line across the abyss behind the knight. The opponent's pole-lance is lowered across the path without attacking; visible restored connection, dramatic threatening scale and real strategy rather than random combat",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-kethr-hero-web/6cb1da68510d3e7528f92c2e03b78ec007d05fa374304d7b6c1ef5a59802083a.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-kethr-hero-master/7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f.png",
+      "master_sha256": "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f",
+      "derived_from_sha256": "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f",
+      "master_bytes": 2858758,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Opposing knight blocks route while visible teammates restore red signal cloth; threat confined to opponent and no gore.",
+          "Prop exploration: cinematic image has a pointed spearhead although the brief calls for a blunt pole-lance. Final production prop remains unresolved."
+        ]
+      },
+      "review_notes": [
+        "Opposing knight blocks route while visible teammates restore red signal cloth; threat confined to opponent and no gore.",
+        "Prop exploration: cinematic image has a pointed spearhead although the brief calls for a blunt pole-lance. Final production prop remains unresolved."
+      ],
+      "continuity_notes": [
+        "Prop exploration: cinematic image has a pointed spearhead although the brief calls for a blunt pole-lance. Final production prop remains unresolved."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "6cb1da68510d3e7528f92c2e03b78ec007d05fa374304d7b6c1ef5a59802083a",
+        "master_verified_sha256": "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-orra-sheet",
+      "asset_id": "arcanea.fl02.orra.sheet.v1",
+      "character_id": "arcanea.fl02.orra",
+      "slug": "orra",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Orra",
+      "title": "The Threadkeeper",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 249844,
+      "sha256": "5c68c29a6b91cb9ed0a64fcd9f05fb4ca13f29846c85884648a73493053d3a38",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Orra — The Threadkeeper, a companion. Subject identity: a charming compact ivory-and-ginger fox with a square little muzzle, plush tail ending in three soft braided strands, large expressive ears woven from living copper and pale silk, hazel eyes and a cobalt ceramic bobbin worn on a simple linen sash; friendly attentive face, four real paws, copper ear weave functional rather than jewelry. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "a7ec63a7e9d3371649f84321aa77a30fcc0a30249f6c9f8ee68bb548b7b288f9",
+      "prompt_file": "prompts/orra-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:12:19.536771+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Orra, The Threadkeeper: a charming compact ivory-and-ginger fox with a square little muzzle, plush tail ending in three soft braided strands, large expressive ears woven from living copper and pale silk, hazel eyes and a cobalt ceramic bobbin worn on a simple linen sash; friendly attentive face, four real paws, copper ear weave functional rather than jewelry",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-orra-sheet-web/5c68c29a6b91cb9ed0a64fcd9f05fb4ca13f29846c85884648a73493053d3a38.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-orra-sheet-master/5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57.png",
+      "master_sha256": "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+      "derived_from_sha256": "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+      "master_bytes": 2809762,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Inviting fox with copper/silk ears, cobalt bobbin and three braided tail strands. Main/side/rear continuity is readable; final tail topology needs authored 3D work rather than averaging concept views."
+        ]
+      },
+      "review_notes": [
+        "Inviting fox with copper/silk ears, cobalt bobbin and three braided tail strands. Main/side/rear continuity is readable; final tail topology needs authored 3D work rather than averaging concept views."
+      ],
+      "continuity_notes": [
+        "Inviting fox with copper/silk ears, cobalt bobbin and three braided tail strands. Main/side/rear continuity is readable; final tail topology needs authored 3D work rather than averaging concept views."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "5c68c29a6b91cb9ed0a64fcd9f05fb4ca13f29846c85884648a73493053d3a38",
+        "master_verified_sha256": "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-orra-hero",
+      "asset_id": "arcanea.fl02.orra.hero.v1",
+      "character_id": "arcanea.fl02.orra",
+      "slug": "orra",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Orra",
+      "title": "The Threadkeeper",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 246052,
+      "sha256": "5085d31b526ec7f29a3b9b27e1ec168aa1d2429f4f02120b5b115ca30fc5fc61",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Orra — The Threadkeeper. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a charming compact ivory-and-ginger fox with a square little muzzle, plush tail ending in three soft braided strands, large expressive ears woven from living copper and pale silk, hazel eyes and a cobalt ceramic bobbin worn on a simple linen sash; friendly attentive face, four real paws, copper ear weave functional rather than jewelry. Story event: Orra stands at the seam between two miniature floating wooden delivery platforms in a golden afternoon makers market, drawing a vivid single copper-silk thread from a cobalt bobbin to connect a blue parcel's stamped sender tag with its receiving basket; the two makers on opposite sides can now exchange the parcel. Warm thoughtful close camera, visible joyful handoff. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "75c08ee5adaf6343b86e5f3553a5990eaff6cf6e98fddf8749b43373836b9bf4",
+      "prompt_file": "prompts/orra-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.orra.sheet.v1"],
+      "generated_at": "2026-10-30T13:18:38.258089+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Orra, The Threadkeeper: Orra stands at the seam between two miniature floating wooden delivery platforms in a golden afternoon makers market, drawing a vivid single copper-silk thread from a cobalt bobbin to connect a blue parcel's stamped sender tag with its receiving basket; the two makers on opposite sides can now exchange the parcel. Warm thoughtful close camera, visible joyful handoff",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-orra-hero-web/5085d31b526ec7f29a3b9b27e1ec168aa1d2429f4f02120b5b115ca30fc5fc61.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-orra-hero-master/35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465.png",
+      "master_sha256": "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465",
+      "derived_from_sha256": "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465",
+      "master_bytes": 2573612,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Affectionate fox with readable woven ears, cobalt bobbin and tail braids; visible copper-silk thread connects the blue parcel handoff. Natural golden lighting and clear relationship make the team metaphor concrete."
+        ]
+      },
+      "review_notes": [
+        "Affectionate fox with readable woven ears, cobalt bobbin and tail braids; visible copper-silk thread connects the blue parcel handoff. Natural golden lighting and clear relationship make the team metaphor concrete."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "5085d31b526ec7f29a3b9b27e1ec168aa1d2429f4f02120b5b115ca30fc5fc61",
+        "master_verified_sha256": "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-pelora-sheet",
+      "asset_id": "arcanea.fl02.pelora.sheet.v1",
+      "character_id": "arcanea.fl02.pelora",
+      "slug": "pelora",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Pelora",
+      "title": "The Tide Cradle",
+      "role": "guardian",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 375444,
+      "sha256": "fe64a667bf08b6069c83c355a1618ebf7eeee1056426afdecfaec865a7075286",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Pelora — The Tide Cradle, a guardian. Subject identity: a monumental gentle seahorse-like marine guardian 250 metres tall, upright curled sculptural silhouette with crownless rounded head, layered pearl limestone plates over translucent turquoise tidal organs, small attentive golden eye, broad rib cages containing living protected coral nurseries and hanging inhabited habitat ledges, massive curled tail creating a sheltered lagoon, no rider saddle, no antlers, no wings; its architecture grows from living anatomy. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "3a71012e242194504ef08c50f518a721d5b1bc280751942feb0e12ee5b9edda1",
+      "prompt_file": "prompts/pelora-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:07:49.491660+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Pelora, The Tide Cradle: a monumental gentle seahorse-like marine guardian 250 metres tall, upright curled sculptural silhouette with crownless rounded head, layered pearl limestone plates over translucent turquoise tidal organs, small attentive golden eye, broad rib cages containing living protected coral nurseries and hanging inhabited habitat ledges, massive curled tail creating a sheltered lagoon, no rider saddle, no antlers, no wings; its architecture grows from living anatomy",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-pelora-sheet-web/fe64a667bf08b6069c83c355a1618ebf7eeee1056426afdecfaec865a7075286.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-pelora-sheet-master/739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb.png",
+      "master_sha256": "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+      "derived_from_sha256": "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+      "master_bytes": 3196740,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Protective monumental seahorse-habitat silhouette and coral tiers are clear, consistent across major views. Human scale silhouette is illustrative, not a dimensioned 250m blueprint; cinematic harbour must establish scale."
+        ]
+      },
+      "review_notes": [
+        "Protective monumental seahorse-habitat silhouette and coral tiers are clear, consistent across major views. Human scale silhouette is illustrative, not a dimensioned 250m blueprint; cinematic harbour must establish scale."
+      ],
+      "continuity_notes": [
+        "Protective monumental seahorse-habitat silhouette and coral tiers are clear, consistent across major views. Human scale silhouette is illustrative, not a dimensioned 250m blueprint; cinematic harbour must establish scale."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "fe64a667bf08b6069c83c355a1618ebf7eeee1056426afdecfaec865a7075286",
+        "master_verified_sha256": "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-pelora-hero",
+      "asset_id": "arcanea.fl02.pelora.hero.v1",
+      "character_id": "arcanea.fl02.pelora",
+      "slug": "pelora",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Pelora",
+      "title": "The Tide Cradle",
+      "role": "guardian",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 393294,
+      "sha256": "3e3d8296be5ac8488b01ef2baebe5cd7b71541c596edab7ba2d0abeb3ddd05db",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Pelora — The Tide Cradle. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a monumental gentle seahorse-like marine guardian 250 metres tall, upright curled sculptural silhouette with crownless rounded head, layered pearl limestone plates over translucent turquoise tidal organs, small attentive golden eye, broad rib cages containing living protected coral nurseries and hanging inhabited habitat ledges, massive curled tail creating a sheltered lagoon, no rider saddle, no antlers, no wings; its architecture grows from living anatomy. Story event: Pelora curls its colossal tail around a storm-battered island harbour to form a calm turquoise lagoon while its long upright body rises beyond limestone sea cliffs; tiny fishing boats return safely inside the coil and people illuminate the habitat nurseries along its ribs. The warm sun breaks through a storm at sea, protective gesture scale proven by the port, terraced city and ships. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "86d339aea3f9a422959fcc90c438c58607fd129bfc11eda1ccd29d4c64b0d5d6",
+      "prompt_file": "prompts/pelora-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.pelora.sheet.v1"],
+      "generated_at": "2026-10-30T13:10:31.940334+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Pelora, The Tide Cradle: Pelora curls its colossal tail around a storm-battered island harbour to form a calm turquoise lagoon while its long upright body rises beyond limestone sea cliffs; tiny fishing boats return safely inside the coil and people illuminate the habitat nurseries along its ribs. The warm sun breaks through a storm at sea, protective gesture scale proven by the port, terraced city and ships",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-pelora-hero-web/3e3d8296be5ac8488b01ef2baebe5cd7b71541c596edab7ba2d0abeb3ddd05db.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-pelora-hero-master/c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0.png",
+      "master_sha256": "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0",
+      "derived_from_sha256": "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0",
+      "master_bytes": 3214631,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Harbour, ships, terraces and sheltered water prove monumental protective presence. Pearl plates, golden eye and curled tidal habitat match the concept; reassuring rather than threatening."
+        ]
+      },
+      "review_notes": [
+        "Harbour, ships, terraces and sheltered water prove monumental protective presence. Pearl plates, golden eye and curled tidal habitat match the concept; reassuring rather than threatening."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "3e3d8296be5ac8488b01ef2baebe5cd7b71541c596edab7ba2d0abeb3ddd05db",
+        "master_verified_sha256": "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-seli-sheet",
+      "asset_id": "arcanea.fl02.seli.sheet.v1",
+      "character_id": "arcanea.fl02.seli",
+      "slug": "seli",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Seli",
+      "title": "The Pocket Weatherkeeper",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 200358,
+      "sha256": "61c0d2d71b8aac680b8836157e429213d241f1d82321443d133de3ce4e8e9c71",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Seli — The Pocket Weatherkeeper, a companion. Subject identity: a small delightful floating rain-ray with a chubby pear-shaped translucent sea-glass body, six tiny soft petal fins, luminous amber bead eyes and a curled copper feeler holding a single dew bell; a warm peach cloud visibly swirls inside its round belly, gentle curious expression, tiny scale fits in two cupped hands. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "4305e59754c88138da4568dddf3a25979d0219e854b457f07ca9233e16773b8a",
+      "prompt_file": "prompts/seli-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:05:35.207236+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Seli, The Pocket Weatherkeeper: a small delightful floating rain-ray with a chubby pear-shaped translucent sea-glass body, six tiny soft petal fins, luminous amber bead eyes and a curled copper feeler holding a single dew bell; a warm peach cloud visibly swirls inside its round belly, gentle curious expression, tiny scale fits in two cupped hands",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-seli-sheet-web/61c0d2d71b8aac680b8836157e429213d241f1d82321443d133de3ce4e8e9c71.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-seli-sheet-master/e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d.png",
+      "master_sha256": "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+      "derived_from_sha256": "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+      "master_bytes": 2504414,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Appealing warm glass/cloud body and dew bell read immediately; multi-angle material/face continuity clear. Keep same fin arrangement in hero."
+        ]
+      },
+      "review_notes": [
+        "Appealing warm glass/cloud body and dew bell read immediately; multi-angle material/face continuity clear. Keep same fin arrangement in hero."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "61c0d2d71b8aac680b8836157e429213d241f1d82321443d133de3ce4e8e9c71",
+        "master_verified_sha256": "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-seli-hero",
+      "asset_id": "arcanea.fl02.seli.hero.v1",
+      "character_id": "arcanea.fl02.seli",
+      "slug": "seli",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Seli",
+      "title": "The Pocket Weatherkeeper",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 287722,
+      "sha256": "eeed3f8c9abb2851ffff83968fa2dec028990a6906fe8598a7dda95ac7017181",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Seli — The Pocket Weatherkeeper. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a small delightful floating rain-ray with a chubby pear-shaped translucent sea-glass body, six tiny soft petal fins, luminous amber bead eyes and a curled copper feeler holding a single dew bell; a warm peach cloud visibly swirls inside its round belly, gentle curious expression, tiny scale fits in two cupped hands. Story event: Seli shelters two tired travelling artisans beneath a tiny umbrella-shaped raincloud that becomes a thousand warm droplets; morning light, terraced glasshouse town after a shower, a child safely places a little copper cup beneath the dew bell, a literal rainbow reflected in puddles. Seli is choosing to spend the last internal warm cloud to refill a dry seedling trough. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "ccabd5663780566c10a4c635ac0f6adc65b1ce36d50302795ecb8a5f5d973638",
+      "prompt_file": "prompts/seli-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.seli.sheet.v1"],
+      "generated_at": "2026-10-30T13:09:56.940185+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Seli, The Pocket Weatherkeeper: Seli shelters two tired travelling artisans beneath a tiny umbrella-shaped raincloud that becomes a thousand warm droplets; morning light, terraced glasshouse town after a shower, a child safely places a little copper cup beneath the dew bell, a literal rainbow reflected in puddles. Seli is choosing to spend the last internal warm cloud to refill a dry seedling trough",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-seli-hero-web/eeed3f8c9abb2851ffff83968fa2dec028990a6906fe8598a7dda95ac7017181.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-seli-hero-master/7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417.png",
+      "master_sha256": "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417",
+      "derived_from_sha256": "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417",
+      "master_bytes": 2687769,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Inviting shared act of watering seedlings, warm expression and cloud/bell identity retained.",
+          "Scale exploration: Seli reads larger relative to the nearby child than the hand-sized 0.22m proposal. This image is not a dimensioned character or rig reference."
+        ]
+      },
+      "review_notes": [
+        "Inviting shared act of watering seedlings, warm expression and cloud/bell identity retained.",
+        "Scale exploration: Seli reads larger relative to the nearby child than the hand-sized 0.22m proposal. This image is not a dimensioned character or rig reference."
+      ],
+      "continuity_notes": [
+        "Scale exploration: Seli reads larger relative to the nearby child than the hand-sized 0.22m proposal. This image is not a dimensioned character or rig reference."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "eeed3f8c9abb2851ffff83968fa2dec028990a6906fe8598a7dda95ac7017181",
+        "master_verified_sha256": "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-tovan-sheet",
+      "asset_id": "arcanea.fl02.tovan.sheet.v1",
+      "character_id": "arcanea.fl02.tovan",
+      "slug": "tovan",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Tovan",
+      "title": "The Mapmender",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 258350,
+      "sha256": "1fbc7be94b42aecd067cfd5d00c13d251043bb84a94ef27a09ec47a97b180089",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Tovan — The Mapmender, a companion. Subject identity: a warmly charismatic adult male expedition engineer with deep brown skin, broad rounded nose, short tightly curled silver-tipped black hair, subtle smile lines, an asymmetrical ochre canvas field jacket over indigo workwear, sturdy prosthetic right forearm made of articulated ivory ceramic and warm copper with a mechanical thumb, a fold-out brass bridge-rule and stitched sky-blue map folio; relaxed capable attitude, no weapons. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "371b6797bf9de12ad09f604cab4f107d8c7ce588f520b0fd35f97ba73c1e7e39",
+      "prompt_file": "prompts/tovan-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:11:52.712654+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Tovan, The Mapmender: a warmly charismatic adult male expedition engineer with deep brown skin, broad rounded nose, short tightly curled silver-tipped black hair, subtle smile lines, an asymmetrical ochre canvas field jacket over indigo workwear, sturdy prosthetic right forearm made of articulated ivory ceramic and warm copper with a mechanical thumb, a fold-out brass bridge-rule and stitched sky-blue map folio; relaxed capable attitude, no weapons",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-tovan-sheet-web/1fbc7be94b42aecd067cfd5d00c13d251043bb84a94ef27a09ec47a97b180089.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-tovan-sheet-master/932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50.png",
+      "master_sha256": "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+      "derived_from_sha256": "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+      "master_bytes": 2836034,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Warm adult engineer, distinct ceramic/copper right forearm, blue map folio and ochre/indigo workwear. Three body angles and face/hand details preserve readable identity."
+        ]
+      },
+      "review_notes": [
+        "Warm adult engineer, distinct ceramic/copper right forearm, blue map folio and ochre/indigo workwear. Three body angles and face/hand details preserve readable identity."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "1fbc7be94b42aecd067cfd5d00c13d251043bb84a94ef27a09ec47a97b180089",
+        "master_verified_sha256": "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-tovan-hero",
+      "asset_id": "arcanea.fl02.tovan.hero.v1",
+      "character_id": "arcanea.fl02.tovan",
+      "slug": "tovan",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Tovan",
+      "title": "The Mapmender",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 315646,
+      "sha256": "2c1046109d632bacaf382aef4dfa9ca86a3dcdfbe7af2488111ab5dbe0d54840",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Tovan — The Mapmender. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a warmly charismatic adult male expedition engineer with deep brown skin, broad rounded nose, short tightly curled silver-tipped black hair, subtle smile lines, an asymmetrical ochre canvas field jacket over indigo workwear, sturdy prosthetic right forearm made of articulated ivory ceramic and warm copper with a mechanical thumb, a fold-out brass bridge-rule and stitched sky-blue map folio; relaxed capable attitude, no weapons. Story event: Tovan kneels on a broken suspended footbridge high above a sunlit gorge, carefully connecting two scale-model bridge sections with his ceramic and copper hand, while a small group of neighbours steadies the tension ropes; actual bridge sections in the midground are coming into alignment. A little bell hanging on the far side marks the promised homeward route. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "80c4220f2cbeb128d03689005b8958e9cb1cbf37007bc2de999cd25d135364de",
+      "prompt_file": "prompts/tovan-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.tovan.sheet.v1"],
+      "generated_at": "2026-10-30T13:17:33.421861+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Tovan, The Mapmender: Tovan kneels on a broken suspended footbridge high above a sunlit gorge, carefully connecting two scale-model bridge sections with his ceramic and copper hand, while a small group of neighbours steadies the tension ropes; actual bridge sections in the midground are coming into alignment. A little bell hanging on the far side marks the promised homeward route",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-tovan-hero-web/2c1046109d632bacaf382aef4dfa9ca86a3dcdfbe7af2488111ab5dbe0d54840.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-tovan-hero-master/b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77.png",
+      "master_sha256": "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77",
+      "derived_from_sha256": "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77",
+      "master_bytes": 2838174,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Useful bridge-making action, cooperative background rope work and warm eye contact. Right ceramic prosthesis, silver curls, ochre jacket and blue map case match reference."
+        ]
+      },
+      "review_notes": [
+        "Useful bridge-making action, cooperative background rope work and warm eye contact. Right ceramic prosthesis, silver curls, ochre jacket and blue map case match reference."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "2c1046109d632bacaf382aef4dfa9ca86a3dcdfbe7af2488111ab5dbe0d54840",
+        "master_verified_sha256": "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-velis-sheet",
+      "asset_id": "arcanea.fl02.velis.sheet.v1",
+      "character_id": "arcanea.fl02.velis",
+      "slug": "velis",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Velis",
+      "title": "The Aurora Archivist",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 256636,
+      "sha256": "7cb09ad35c17e5c7c35eeb4bd0b64fd52e03193bb330d9653845203abd25752d",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Velis — The Aurora Archivist, a companion. Subject identity: an inspiring adult female archivist with dark umber skin, delicate angular face, thoughtful warm eyes, black coiled hair arranged in a broad practical braided crown, deep teal ankle-length field coat over ivory fitted practical work clothes, one asymmetrical saffron sleeve, copper ring binder holding thin translucent glass record leaves, flat boots and a single imperfect aurora-glass monocle held in hand; grounded capable warm presence, functional elegant tailoring, no mystical staff. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The warm expression and lovable or protective presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "7bf6e0cb532baef1f283ff3dd8168f7a8f61513c96963e67988b548c80816b83",
+      "prompt_file": "prompts/velis-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:13:41.205069+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Velis, The Aurora Archivist: an inspiring adult female archivist with dark umber skin, delicate angular face, thoughtful warm eyes, black coiled hair arranged in a broad practical braided crown, deep teal ankle-length field coat over ivory fitted practical work clothes, one asymmetrical saffron sleeve, copper ring binder holding thin translucent glass record leaves, flat boots and a single imperfect aurora-glass monocle held in hand; grounded capable warm presence, functional elegant tailoring, no mystical staff",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-velis-sheet-web/7cb09ad35c17e5c7c35eeb4bd0b64fd52e03193bb330d9653845203abd25752d.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-velis-sheet-master/d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c.png",
+      "master_sha256": "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+      "derived_from_sha256": "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+      "master_bytes": 2874277,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Grounded warm adult archivist. Hair crown, teal coat/single saffron sleeve, ivory workwear, translucent leaves and monocle are consistent across views."
+        ]
+      },
+      "review_notes": [
+        "Grounded warm adult archivist. Hair crown, teal coat/single saffron sleeve, ivory workwear, translucent leaves and monocle are consistent across views."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "7cb09ad35c17e5c7c35eeb4bd0b64fd52e03193bb330d9653845203abd25752d",
+        "master_verified_sha256": "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-velis-hero",
+      "asset_id": "arcanea.fl02.velis.hero.v1",
+      "character_id": "arcanea.fl02.velis",
+      "slug": "velis",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Velis",
+      "title": "The Aurora Archivist",
+      "role": "companion",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 334496,
+      "sha256": "3b643943d02c672491cedddedbcd3840fb956b1ff05cdfa25f47557bed160389",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Velis — The Aurora Archivist. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: an inspiring adult female archivist with dark umber skin, delicate angular face, thoughtful warm eyes, black coiled hair arranged in a broad practical braided crown, deep teal ankle-length field coat over ivory fitted practical work clothes, one asymmetrical saffron sleeve, copper ring binder holding thin translucent glass record leaves, flat boots and a single imperfect aurora-glass monocle held in hand; grounded capable warm presence, functional elegant tailoring, no mystical staff. Story event: Velis sits with an elderly sailor and a young apprentice at an open-air archive overlooking a turquoise harbour at dawn, gently placing a translucent glass memory leaf beside a weathered real logbook; visible contrasting routes indicate the beautiful remembered map was wrong. She chooses the ordinary true route, and a reunited little fishing boat safely returns below. Focus on attentive faces, honest craft and the light through glass. Compose one immersive breathtaking film still, emotionally inspirational, welcoming and deeply moving, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "6bee7ad22144a11d7902d0c4bb35cc3e5025a3a27f687520a29ae9fa77da3a2d",
+      "prompt_file": "prompts/velis-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.velis.sheet.v1"],
+      "generated_at": "2026-10-30T13:19:36.202281+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Velis, The Aurora Archivist: Velis sits with an elderly sailor and a young apprentice at an open-air archive overlooking a turquoise harbour at dawn, gently placing a translucent glass memory leaf beside a weathered real logbook; visible contrasting routes indicate the beautiful remembered map was wrong. She chooses the ordinary true route, and a reunited little fishing boat safely returns below. Focus on attentive faces, honest craft and the light through glass",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-velis-hero-web/3b643943d02c672491cedddedbcd3840fb956b1ff05cdfa25f47557bed160389.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-velis-hero-master/79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad.png",
+      "master_sha256": "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad",
+      "derived_from_sha256": "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad",
+      "master_bytes": 2883303,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Human warmth and concrete comparison of glass record to logbook; consistent braided crown, single saffron sleeve, teal coat and monocle. Illustrated map marks are scene design, not a factual navigational chart."
+        ]
+      },
+      "review_notes": [
+        "Human warmth and concrete comparison of glass record to logbook; consistent braided crown, single saffron sleeve, teal coat and monocle. Illustrated map marks are scene design, not a factual navigational chart."
+      ],
+      "continuity_notes": [],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "3b643943d02c672491cedddedbcd3840fb956b1ff05cdfa25f47557bed160389",
+        "master_verified_sha256": "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-vessakar-sheet",
+      "asset_id": "arcanea.fl02.vessakar.sheet.v1",
+      "character_id": "arcanea.fl02.vessakar",
+      "slug": "vessakar",
+      "kind": "sheet",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Vessakar",
+      "title": "The Hoarding Engine",
+      "role": "opponent",
+      "mime_type": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 406308,
+      "sha256": "bcab58c77d4f566ea26d3b4be358174f57363f1252a0a282706cf38eeb2caa49",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: identity reference sheet for Vessakar — The Hoarding Engine, a opponent. Subject identity: a gigantic frightening but beautifully designed six-legged hoarding-engine boss, a heavy low obsidian and tarnished brass body shaped like an immense folded treasure vault, six widely separated articulated stone piston legs, a narrow furnace slit like a hungry eye, pale glass storage canisters recessed along the spine, many copper intake ribbons pulling loose unclaimed lanterns into its chest; no human face, no human body horror, no wings, no gore, enormous strong low silhouette. Create one elegant LANDSCAPE 3:2 concept-sheet image on a warm light mineral-paper background. Show exactly four clearly separated views of the SAME complete character: large three-quarter front hero on the left taking 45 percent of image, smaller full side view and back view in the right half, and a single close material/face detail bottom right. Consistent proportions, materials and identifiers in every view, feet/tail visible, no overlapping views, no duplicate heads on one body. The frightening disciplined presence must read at thumbnail scale. Directional studio daylight, excellent contact shadows, tangible fine texture. Small unobtrusive scale silhouette at bottom left is allowed for giant guardians only. No text, no labels.",
+      "prompt_sha256": "7d674c2e33fd2b757c0894bdb39cd52a3d1d7f7f5e4e79365e2724c15d238ad5",
+      "prompt_file": "prompts/vessakar-concept.txt",
+      "reference_asset_ids": [],
+      "generated_at": "2026-10-30T13:13:51.585108+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Vessakar, The Hoarding Engine: a gigantic frightening but beautifully designed six-legged hoarding-engine boss, a heavy low obsidian and tarnished brass body shaped like an immense folded treasure vault, six widely separated articulated stone piston legs, a narrow furnace slit like a hungry eye, pale glass storage canisters recessed along the spine, many copper intake ribbons pulling loose unclaimed lanterns into its chest; no human face, no human body horror, no wings, no gore, enormous strong low silhouette",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-vessakar-sheet-web/bcab58c77d4f566ea26d3b4be358174f57363f1252a0a282706cf38eeb2caa49.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-vessakar-sheet-master/eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d.png",
+      "master_sha256": "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+      "derived_from_sha256": "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+      "master_bytes": 3288428,
+      "master_width": 1536,
+      "master_height": 1024,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Imposing folded-vault engine with lantern hoard, obsidian/brass and articulated legs reads as resource-hoarding boss; no human body horror. Multi-angle design suitable for proposal display; exact leg topology requires authored model inspection."
+        ]
+      },
+      "review_notes": [
+        "Imposing folded-vault engine with lantern hoard, obsidian/brass and articulated legs reads as resource-hoarding boss; no human body horror. Multi-angle design suitable for proposal display; exact leg topology requires authored model inspection."
+      ],
+      "continuity_notes": [
+        "Imposing folded-vault engine with lantern hoard, obsidian/brass and articulated legs reads as resource-hoarding boss; no human body horror. Multi-angle design suitable for proposal display; exact leg topology requires authored model inspection."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "bcab58c77d4f566ea26d3b4be358174f57363f1252a0a282706cf38eeb2caa49",
+        "master_verified_sha256": "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    },
+    {
+      "id": "fl02-vessakar-hero",
+      "asset_id": "arcanea.fl02.vessakar.hero.v1",
+      "character_id": "arcanea.fl02.vessakar",
+      "slug": "vessakar",
+      "kind": "hero",
+      "version": 1,
+      "canon_state": "proposal",
+      "visibility": "public_review",
+      "name": "Vessakar",
+      "title": "The Hoarding Engine",
+      "role": "opponent",
+      "mime_type": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 400110,
+      "sha256": "2bab42ffe904e638614637d47357ef635813b609ff72ff2f85519bbbeffcdba4",
+      "prompt": "Use case: stylized-concept. Arcanea Firstlight / The Kindred Realms, original premium game world visual development. Emphasize appealing character design, tactile craftsmanship, believable anatomy, extremely high visual specificity, purposeful technology integrated with living material, physically motivated lighting and mature cinematic art direction. This is an original proposed character, never a redesign of an earlier Arcanea character. No franchise references, no imitation of a named artist, no watermarks, no logos, no factual UI, no text blocks, no decorative magic circles, no stock fantasy castles or arbitrary purple glow. Pin-sharp readable focal subject, rich natural color, controlled bloom, beautiful composition. Asset type: cinematic LANDSCAPE 16:9 website-gallery hero for Vessakar — The Hoarding Engine. Maintain EXACT identity and anatomical proportions from the provided character reference sheet; this is the same character in a real world scene, not a sheet or collage. Subject identity: a gigantic frightening but beautifully designed six-legged hoarding-engine boss, a heavy low obsidian and tarnished brass body shaped like an immense folded treasure vault, six widely separated articulated stone piston legs, a narrow furnace slit like a hungry eye, pale glass storage canisters recessed along the spine, many copper intake ribbons pulling loose unclaimed lanterns into its chest; no human face, no human body horror, no wings, no gore, enormous strong low silhouette. Story event: Vessakar looms in the abandoned transfer hall of a mountain citadel, unreturned lanterns dimming inside the great chest vault; an organized small team on three separated illuminated platforms turns off redundant intake channels and routes one honest lantern back to the common hearth. Its huge six legs frame the cooperative action, cold charcoal background and fierce contained orange furnace, strong deliberate threat with a comprehensible repair objective. Compose one immersive breathtaking film still, emotionally tense and strategically legible, premium authored game-cinematic quality with tactile materials, environmental depth, realistic scale references, natural vivid light and plausible atmospheric perspective. Camera sees the character's expressive face or iconic head clearly. Use background people sparingly with coherent limbs, clothing and scale, never tiny uncanny cloned faces. Make extraordinary function visibly understandable through action. Leave a little natural negative space at top left for later HTML caption, bake NO text or logos into image.",
+      "prompt_sha256": "5f98921413fd110863c5b3ffcfe8b48510b2887e2b366a3aabf3393fde1f8276",
+      "prompt_file": "prompts/vessakar-hero.txt",
+      "reference_asset_ids": ["arcanea.fl02.vessakar.sheet.v1"],
+      "generated_at": "2026-10-30T13:20:40.302489+00:00",
+      "generation": {
+        "provider": "OpenAI",
+        "tool": "image_gen.imagegen",
+        "model": null,
+        "seed": null,
+        "model_seed_status": "not_exposed_by_tool",
+        "transparent_background": false
+      },
+      "alt": "Vessakar, The Hoarding Engine: Vessakar looms in the abandoned transfer hall of a mountain citadel, unreturned lanterns dimming inside the great chest vault; an organized small team on three separated illuminated platforms turns off redundant intake channels and routes one honest lantern back to the common hearth. Its huge six legs frame the cooperative action, cold charcoal background and fierce contained orange furnace, strong deliberate threat with a comprehensible repair objective",
+      "review": {
+        "state": "exhibition_approved_canon_pending",
+        "scope": "Independent visual review approved this exact revision for the owner-authorized public concept exhibition; fictional canon acceptance and final human art approval remain pending.",
+        "canon_acceptance": false,
+        "human_final_art_approval": "pending"
+      },
+      "rights": {
+        "status": "generated_original_concept_pending_human_rights_review",
+        "third_party_reference": "none_requested",
+        "license": "Arcanea proprietary fictional proposal; no new license grant"
+      },
+      "takedown": {
+        "method": "remove placement and invalidate asset ID in release manifest",
+        "owner": "Arcanea product maintainer"
+      },
+      "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+      "design_commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+      "availability": "registered",
+      "url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-vessakar-hero-web/2bab42ffe904e638614637d47357ef635813b609ff72ff2f85519bbbeffcdba4.webp",
+      "original_url": "https://074zeen3w1vmjdo6.public.blob.vercel-storage.com/arcanea/firstlight-02/fl02-vessakar-hero-master/20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd.png",
+      "master_sha256": "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd",
+      "derived_from_sha256": "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd",
+      "master_bytes": 3160192,
+      "master_width": 1672,
+      "master_height": 941,
+      "rendition": "web",
+      "transformation": {
+        "encoder": "sharp",
+        "format": "webp",
+        "quality": 86,
+        "effort": 6,
+        "max_width": 1600,
+        "max_height": 1600,
+        "fit": "inside",
+        "without_enlargement": true
+      },
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Threatening lantern-hoarding engine with clear team platforms and intake ribbons. Armor/canister/vault identity matches reference and threat stays in boss encounter. Six-leg specification has occluded legs; exact limb topology needs authored rig inspection before engine production."
+        ]
+      },
+      "review_notes": [
+        "Threatening lantern-hoarding engine with clear team platforms and intake ribbons. Armor/canister/vault identity matches reference and threat stays in boss encounter. Six-leg specification has occluded legs; exact limb topology needs authored rig inspection before engine production."
+      ],
+      "continuity_notes": [
+        "Threatening lantern-hoarding engine with clear team platforms and intake ribbons. Armor/canister/vault identity matches reference and threat stays in boss encounter. Six-leg specification has occluded legs; exact limb topology needs authored rig inspection before engine production."
+      ],
+      "asset_control_plane": {
+        "durable_review_queue": "github",
+        "media_delivery": "vercel_blob",
+        "supabase_dam_adapter": "not_admitted"
+      },
+      "integrity": {
+        "public_http_status": 200,
+        "verified_sha256": "2bab42ffe904e638614637d47357ef635813b609ff72ff2f85519bbbeffcdba4",
+        "master_verified_sha256": "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd",
+        "checked_at": "2026-10-30T13:24:44.217Z"
+      }
+    }
+  ]
+}

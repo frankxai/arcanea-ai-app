@@ -1,0 +1,392 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "arcanea-firstlight-02",
+  "scope": "Public concept review exhibition only",
+  "canon_state": "proposal",
+  "reviewer": "agent:/root/review",
+  "source_review_receipt_sha256": "2bf1cd0950dcc69bbf6af6af55a464624ed55fbfb141286de36a64dd1d2d0ad9",
+  "assets": [
+    {
+      "asset_id": "fl02-aven-sheet",
+      "sha256": "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Appealing quadrupedal otter with consistent goggles, mustard harness, teal folded membranes and red seed pouch. Distinct from Miri through locomotion silhouette and gear; shared first name with Aven Tor in the separate public proposal encyclopedia is acknowledged as scope limitation."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-aven-hero",
+      "sha256": "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Joyful gliding toward a welcoming nursery, visible red seed pouch and storm alternative. Goggles, muzzle and harness colors preserve identity; deployed glider mechanics remain concept reference rather than a rig blueprint."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-brambletide-sheet",
+      "sha256": "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Strongly affectionate capybara, living orchard terraces, sandstone cheeks, basalt feet and underbelly passage. All major views coherent; tiny people are illustrative scale cues, not a dimensioned 180m drawing."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-brambletide-hero",
+      "sha256": "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Magnificent reassuring orchard guardian; underbelly migration, normal-scale people and fruit branch give readable social purpose and immense scale. Exact height remains a proposed world dimension, not measured from artwork."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-caelis-sheet",
+      "sha256": "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Lovable squat ceramic artisan; repaired cobalt cracks, amber mismatched eyes, chest kiln and teacup provide a distinct practical identity."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-caelis-hero",
+      "sha256": "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Warm believable repaired-toy handoff with child and family. Amber asymmetrical eyes, cobalt porcelain cracks, kiln window and apron preserve identity."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-kethr-sheet",
+      "sha256": "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Severe closed visor, red torn standard and lamellar armour distinguish an opponent without bleeding threat into allies. Pole-lance top is cropped in large view; sheet is concept reference, not orthographic production plan."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-kethr-hero",
+      "sha256": "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Opposing knight blocks route while visible teammates restore red signal cloth; threat confined to opponent and no gore.",
+          "Prop exploration: cinematic image has a pointed spearhead although the brief calls for a blunt pole-lance. Final production prop remains unresolved."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-orra-sheet",
+      "sha256": "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Inviting fox with copper/silk ears, cobalt bobbin and three braided tail strands. Main/side/rear continuity is readable; final tail topology needs authored 3D work rather than averaging concept views."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-orra-hero",
+      "sha256": "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Affectionate fox with readable woven ears, cobalt bobbin and tail braids; visible copper-silk thread connects the blue parcel handoff. Natural golden lighting and clear relationship make the team metaphor concrete."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-pelora-sheet",
+      "sha256": "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Protective monumental seahorse-habitat silhouette and coral tiers are clear, consistent across major views. Human scale silhouette is illustrative, not a dimensioned 250m blueprint; cinematic harbour must establish scale."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-pelora-hero",
+      "sha256": "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Harbour, ships, terraces and sheltered water prove monumental protective presence. Pearl plates, golden eye and curled tidal habitat match the concept; reassuring rather than threatening."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-seli-sheet",
+      "sha256": "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Appealing warm glass/cloud body and dew bell read immediately; multi-angle material/face continuity clear. Keep same fin arrangement in hero."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-seli-hero",
+      "sha256": "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Inviting shared act of watering seedlings, warm expression and cloud/bell identity retained.",
+          "Scale exploration: Seli reads larger relative to the nearby child than the hand-sized 0.22m proposal. This image is not a dimensioned character or rig reference."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-tovan-sheet",
+      "sha256": "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Warm adult engineer, distinct ceramic/copper right forearm, blue map folio and ochre/indigo workwear. Three body angles and face/hand details preserve readable identity."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-tovan-hero",
+      "sha256": "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Useful bridge-making action, cooperative background rope work and warm eye contact. Right ceramic prosthesis, silver curls, ochre jacket and blue map case match reference."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-velis-sheet",
+      "sha256": "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Grounded warm adult archivist. Hair crown, teal coat/single saffron sleeve, ivory workwear, translucent leaves and monocle are consistent across views."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-velis-hero",
+      "sha256": "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Human warmth and concrete comparison of glass record to logbook; consistent braided crown, single saffron sleeve, teal coat and monocle. Illustrated map marks are scene design, not a factual navigational chart."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-vessakar-sheet",
+      "sha256": "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Imposing folded-vault engine with lantern hoard, obsidian/brass and articulated legs reads as resource-hoarding boss; no human body horror. Multi-angle design suitable for proposal display; exact leg topology requires authored model inspection."
+        ]
+      }
+    },
+    {
+      "asset_id": "fl02-vessakar-hero",
+      "sha256": "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd",
+      "exhibition_release": {
+        "state": "approved",
+        "scope": "public concept review exhibition only",
+        "reviewer": "agent:/root/review",
+        "authorization_ref": "owner-instruction:2026-10-30-next20-github-vercel-public-review",
+        "authorization": "Current owner instruction on 2026-10-30 to generate, store/register for agent review and build in production.",
+        "source_sha256": "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd",
+        "canon_acceptance": false,
+        "new_external_license_grant": false,
+        "review_receipt": "media-exhibition-approval.json",
+        "review_decision": "accept_display_revision",
+        "review_notes": [
+          "Threatening lantern-hoarding engine with clear team platforms and intake ribbons. Armor/canister/vault identity matches reference and threat stays in boss encounter. Six-leg specification has occluded legs; exact limb topology needs authored rig inspection before engine production."
+        ]
+      }
+    }
+  ]
+}

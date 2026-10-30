@@ -1,0 +1,177 @@
+.dialog {
+  width: min(94vw, 82rem);
+  max-width: none;
+  max-height: 92svh;
+  padding: 0;
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-sm);
+  color: var(--arc-text-primary);
+  background: var(--arc-cosmic-void);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.dialog::backdrop {
+  background: color-mix(in srgb, var(--arc-cosmic-void) 87%, transparent);
+  backdrop-filter: blur(8px);
+}
+.dialogInner {
+  padding: 2rem;
+}
+.dialogHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.dialogHeader h2 {
+  font-family: var(--arc-font-editorial);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-block: 0.5rem;
+}
+.dialogHeader > div > p:last-child {
+  color: var(--arc-text-secondary);
+  font-size: 0.9rem;
+}
+.dialogHeader button {
+  flex-shrink: 0;
+}
+.imageTabs {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-block: 1rem;
+}
+.detailArt {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--arc-radius-sm);
+  background: var(--arc-cosmic-deep);
+}
+.detailArt img {
+  object-fit: contain;
+}
+.detailContent {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+.detailContent h3 {
+  font-family: var(--arc-font-editorial);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-block: 0.7rem 1.25rem;
+}
+.detailContent p,
+.storyFacts dd {
+  color: var(--arc-text-secondary);
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+.affection {
+  margin-top: 1rem;
+}
+.storyFacts {
+  margin-top: 1.5rem;
+}
+.storyFacts > div {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  padding-block: 0.8rem;
+  border-top: 1px solid var(--arc-cosmic-border);
+}
+.storyFacts dt {
+  font-size: 0.75rem;
+  color: var(--arc-text-secondary);
+}
+.storyFacts dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.teamwork {
+  padding: 1.5rem;
+  border: 1px solid var(--arc-cosmic-border);
+  border-radius: var(--arc-radius-sm);
+  background: var(--arc-cosmic-deep);
+  align-self: start;
+}
+.teamwork h4 {
+  font-size: 0.85rem;
+  margin-block: 1.6rem 0.6rem;
+}
+.teamwork .boundary {
+  font-size: 0.75rem;
+  margin-top: 1.6rem;
+}
+.provenance {
+  margin-top: 2rem;
+  border-top: 1px solid var(--arc-cosmic-border);
+  padding-top: 1.5rem;
+}
+.provenance summary {
+  cursor: pointer;
+  min-height: var(--arc-touch-target);
+  font-size: 0.85rem;
+}
+.provenance label {
+  display: block;
+  font-size: 0.8rem;
+  margin-block: 1rem 0.5rem;
+}
+.provenance textarea {
+  width: 100%;
+  min-width: 0;
+  resize: vertical;
+  background: var(--arc-cosmic-deep);
+  color: var(--arc-text-secondary);
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-sm);
+  padding: 1rem;
+  font-family: var(--arc-font-mono);
+  font-size: 0.75rem;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.provenance code {
+  font-size: 0.7rem;
+}
+
+.dialog button:focus-visible,
+.dialog a:focus-visible,
+.dialog summary:focus-visible,
+.dialog textarea:focus-visible {
+  outline: 2px solid var(--arc-brand-atlantean-teal);
+  outline-offset: 4px;
+}
+@media (max-width: 768px) {
+  .detailContent {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .dialogInner {
+    padding: 1rem;
+  }
+}
+@media (max-width: 560px) {
+  .storyFacts > div {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+  .dialogHeader {
+    gap: 0.75rem;
+  }
+  .dialogHeader button {
+    padding-inline: 0.9rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialog::backdrop {
+    backdrop-filter: none;
+  }
+}

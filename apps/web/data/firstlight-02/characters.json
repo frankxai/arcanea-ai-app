@@ -1,0 +1,1248 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "arcanea-firstlight-02",
+  "title": "Arcanea Firstlight II — The Kindred Realms",
+  "canon_state": "proposal",
+  "visibility": "public",
+  "created_on": "2026-10-30",
+  "modified_on": "2026-10-30",
+  "authority": {
+    "artifact_id": "artifact_arcanean_library_fiction",
+    "canonical_repository": "frankxai/arcanean-library",
+    "canonical_path": "content/proposals/firstlight-02",
+    "registry_repository": "frankxai/agentic-ops",
+    "registry_commit": "f9761fe052a5fb14b26e18dd1f2200e591904082",
+    "lore_base_commit": "f7348fb881ea10e1323a65822bacdefb5dff8750",
+    "product_consumer": "frankxai/arcanea-ai-app",
+    "source_state": "generated_proposals_authorized_for_public_review",
+    "projection_source_commit": "8c64a0aab586a0f98ab0ba4670cf378c51f5a27b",
+    "projection_source_path": "content/proposals/firstlight-02/characters.json"
+  },
+  "sources": [
+    {
+      "id": "owner-2026-10-30",
+      "kind": "current_owner_request",
+      "summary": "20 new images; inspirational companions and protective guardians; fear limited to bosses/opponents; story metadata and GitHub/Vercel review registration."
+    },
+    {
+      "id": "firstlight-01",
+      "kind": "previous_generated_proposal_pack",
+      "library_file_id": "libfile_8df8a46486a481918f5900ada4355c11",
+      "file": "Arcanea-Firstlight-Studio-Pack.zip",
+      "inspected_paths": [
+        "world/CHARACTER-REGISTER.md",
+        "world/characters/*.json",
+        "substrate/schemas/character.schema.json"
+      ],
+      "state": "proposal"
+    },
+    {
+      "id": "lore-authority",
+      "kind": "repository",
+      "repository": "frankxai/arcanean-library",
+      "commit": "f7348fb881ea10e1323a65822bacdefb5dff8750",
+      "inspected_paths": [
+        "AGENTS.md",
+        "README.md",
+        "LICENSE",
+        "LICENSING.md",
+        "content/arcanea-codex.ts",
+        "content/codex/arcanea-codex.json",
+        "content/codex/arcanea-atelier-codex.json",
+        "content/codex/arcanea-oracles-codex.json"
+      ]
+    }
+  ],
+  "rights": {
+    "rights_holder": "Frank Riemer",
+    "notice": "All rights reserved, subject to protectability and applicable provider terms. Generated output is not proof of originality, registration or exclusive rights.",
+    "source_policy": "New generated fiction and visual concepts; no third-party character or franchise used as a production reference.",
+    "licensing_source": "frankxai/arcanean-library/LICENSING.md",
+    "training_or_adaptation_license_granted": false
+  },
+  "collision_check": {
+    "status": "checked_within_named_sources",
+    "scope": "Prior Firstlight 15-character dossiers and current Arcanean Library tracked content; additional public-proposal component-name overlap is recorded separately. No worldwide name clearance or access to all unpublished canon is claimed.",
+    "renamed": [
+      {
+        "from": "Veya",
+        "to": "Velis",
+        "reason": "Veya of Convergence already appears in the Oracles Proto Codex."
+      }
+    ],
+    "additional_advisories": [
+      {
+        "name": "Aven",
+        "related_names": ["Aven Tor", "Sel Aven"],
+        "relationship": "First-name or component overlap; distinct full names and stable IDs. Aven — The Windskipper remains the locked new batch identity.",
+        "source_repository": "frankxai/arcanea-ai-app",
+        "source_commit": "83bda2865a8fc3a512a8080c466780305f9cefa8",
+        "source_path": "apps/web/lib/visual-encyclopedia/characters.ts",
+        "source_locators": [
+          "line 6, id C21 / slug aven-tor",
+          "line 28, id C36 / slug sel-aven"
+        ],
+        "reviewer": "agent:/root/review",
+        "state": "public_proposal_scope_advisory_not_canon_or_rights_clearance"
+      }
+    ],
+    "previous_character_names": [
+      "Miri",
+      "Numa",
+      "Pip",
+      "Edda",
+      "Vorr",
+      "Orryn",
+      "Naelith",
+      "Varkesh",
+      "Solvar",
+      "Ilyra",
+      "Thaum",
+      "Nyssara",
+      "Khorvan",
+      "Maeroth",
+      "Sevrin"
+    ]
+  },
+  "characters": [
+    {
+      "id": "arcanea.fl02.seli",
+      "character_id": "character:seli",
+      "slug": "seli",
+      "name": "Seli",
+      "title": "The Pocket Weatherkeeper",
+      "display_name": "Seli — The Pocket Weatherkeeper",
+      "category": "companion",
+      "entity_class": "companion",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "SELL-ee",
+        "status": "performance_suggestion"
+      },
+      "tagline": "A small kindness can change the weather.",
+      "description": "A rainray small enough for two cupped hands, Seli carries a peach-coloured cloud inside a pear-shaped sea-glass body. Six petal fins keep it hovering; a copper feeler holds the dew bell that rings before a local change in pressure.",
+      "emotional_core": "Tenderness, reassurance and the pleasure of noticing a small life.",
+      "world_function": "Warns riverside workshops of pressure changes and releases a brief mist over vulnerable seedlings.",
+      "story": {
+        "vow": "No small voice is lost in the storm.",
+        "cost": "Each mist spends the warm cloud in its belly; replenishment requires drinking and a warm rest.",
+        "limitation": "Cannot command a storm, purify unknown water or predict beyond the local pressure horizon.",
+        "flaw": "Hides inside a cup when its warning is ignored.",
+        "affection_detail": "Chooses the warmest handmade cup, then leaves one pearl of dew on its rim.",
+        "hook": "A crowded festival hears only the drums. Seli must find someone willing to pause before the river changes.",
+        "repair_outcome": "The party lowers the music, checks the river markers together and moves the lanterns to higher ground."
+      },
+      "visual": {
+        "silhouette": "a small delightful floating rain-ray with a chubby pear-shaped translucent sea-glass body, six tiny soft petal fins, luminous amber bead eyes and a curled copper feeler holding a single dew bell; a warm peach cloud visibly swirls inside its round belly, gentle curious expression, tiny scale fits in two cupped hands",
+        "palette": ["pearl", "apricot", "clear aqua", "copper"],
+        "materials": [
+          "translucent sea-glass living membrane",
+          "warm cloud",
+          "copper dew bell"
+        ],
+        "scale_m": 0.22,
+        "habitat": "Cupwarm Quay, a proposed tributary of the Mossbridge Rivercourse.",
+        "gesture": "Tilts its whole body toward a quiet voice.",
+        "identity_locks": [
+          "pear-shaped translucent body",
+          "six soft petal fins",
+          "amber bead eyes",
+          "peach belly cloud",
+          "copper feeler and dew bell"
+        ],
+        "locked_identity": "a small delightful floating rain-ray with a chubby pear-shaped translucent sea-glass body, six tiny soft petal fins, luminous amber bead eyes and a curled copper feeler holding a single dew bell; a warm peach cloud visibly swirls inside its round belly, gentle curious expression, tiny scale fits in two cupped hands",
+        "story_scene": "Seli shelters two tired travelling artisans beneath a tiny umbrella-shaped raincloud that becomes a thousand warm droplets; morning light, terraced glasshouse town after a shower, a child safely places a little copper cup beneath the dew bell, a literal rainbow reflected in puddles. Seli is choosing to spend the last internal warm cloud to refill a dry seedling trough",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Observe",
+        "metaphor": "Local health signal and early-warning observer.",
+        "acceptance_criterion": "A timestamped observation identifies the measured variable, local scope and uncertainty; a second source verifies a consequential change.",
+        "failure_encounter": "Mistaken certainty from a single sensor.",
+        "permission_boundary": "Observation never grants control of infrastructure."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:numa",
+          "relation": "asks for a safe place to recover its water reserve",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:pip",
+          "relation": "learns that a warning is a testable observation",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:tovan",
+          "relation": "rides in a cup attached to his map case",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-seli-sheet", "fl02-seli-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "e4668853b1e218bd37aba2bb80ea42ce22bf2b052552b9958426452a6a066c3d",
+          "7a3079009df39bc438f6323b1d5d7a640725cb6828cd27c304f9d0a105509417"
+        ],
+        "continuity_notes": [
+          "Scale exploration differs from hand-sized 0.22m lore proposal."
+        ]
+      }
+    },
+    {
+      "id": "arcanea.fl02.tovan",
+      "character_id": "character:tovan",
+      "slug": "tovan",
+      "name": "Tovan",
+      "title": "The Mapmender",
+      "display_name": "Tovan — The Mapmender",
+      "category": "companion",
+      "entity_class": "companion",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "TOH-van",
+        "status": "performance_suggestion"
+      },
+      "tagline": "He makes a path another person can trust.",
+      "description": "A patient adult engineer whose maps show their repairs. Tovan carries a brass bridge-rule and a stitched sky-blue folio; his ivory ceramic and copper right forearm is a familiar practical tool. He smiles when a returning traveller corrects his route.",
+      "emotional_core": "Warm competence, grounded courage and trust earned through craft.",
+      "world_function": "Surveys crossings, repairs route charts and leaves explicit handoff marks for the next guild.",
+      "story": {
+        "vow": "Leave a path that another pair of hands can follow.",
+        "cost": "A route can be certified only after walking, measuring and recording its weakest span.",
+        "limitation": "Cannot guarantee an unvisited path or make a damaged bridge safe by redrawing it.",
+        "flaw": "Overworks a map until someone reminds him that a usable draft can be tested.",
+        "affection_detail": "Keeps tiny hand-drawn thank-you maps folded inside his coat.",
+        "hook": "A beautiful old chart leads to a vanished bridge. Tovan must mark the uncertainty publicly and ask for a second survey.",
+        "repair_outcome": "Two surveyors agree a recoverable route and leave a versioned map for the next party."
+      },
+      "visual": {
+        "silhouette": "a warmly charismatic adult male expedition engineer with deep brown skin, broad rounded nose, short tightly curled silver-tipped black hair, subtle smile lines, an asymmetrical ochre canvas field jacket over indigo workwear, sturdy prosthetic right forearm made of articulated ivory ceramic and warm copper with a mechanical thumb, a fold-out brass bridge-rule and stitched sky-blue map folio; relaxed capable attitude, no weapons",
+        "palette": ["saffron", "walnut", "weathered teal", "graphite"],
+        "materials": [
+          "ochre canvas",
+          "indigo workwear",
+          "ivory ceramic",
+          "copper",
+          "brass"
+        ],
+        "scale_m": 1.86,
+        "habitat": "The Mossbridge Survey Rooms and Lantern Crossing.",
+        "gesture": "Offers his map open-palmed so the next person can correct it.",
+        "identity_locks": [
+          "adult man with deep brown skin",
+          "silver-tipped curls",
+          "ivory ceramic and copper prosthetic right forearm",
+          "ochre jacket",
+          "sky-blue map folio"
+        ],
+        "locked_identity": "a warmly charismatic adult male expedition engineer with deep brown skin, broad rounded nose, short tightly curled silver-tipped black hair, subtle smile lines, an asymmetrical ochre canvas field jacket over indigo workwear, sturdy prosthetic right forearm made of articulated ivory ceramic and warm copper with a mechanical thumb, a fold-out brass bridge-rule and stitched sky-blue map folio; relaxed capable attitude, no weapons",
+        "story_scene": "Tovan kneels on a broken suspended footbridge high above a sunlit gorge, carefully connecting two scale-model bridge sections with his ceramic and copper hand, while a small group of neighbours steadies the tension ropes; actual bridge sections in the midground are coming into alignment. A little bell hanging on the far side marks the promised homeward route",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Plan",
+        "metaphor": "Dependency planning and explicit handoff contracts.",
+        "acceptance_criterion": "The plan names dependencies, acceptance evidence, recovery path and the person or agent receiving each output.",
+        "failure_encounter": "An elegant plan whose dependency is missing.",
+        "permission_boundary": "A planned action remains subject to its runtime authorization."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:miri",
+          "relation": "turns the discovered route into a reproducible crossing",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:edda",
+          "relation": "leaves clear assembly and review instructions",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:seli",
+          "relation": "listens to its pressure warning before surveying",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-tovan-sheet", "fl02-tovan-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "932b83cf251b3439ec6d66559d76787f33da2a3c01f97bf225281b6346ec0b50",
+          "b4eca21ab0332becdbb578fdd312fd03b428eba36a8ac92d889598174739af77"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.aven",
+      "character_id": "character:aven",
+      "slug": "aven",
+      "name": "Aven",
+      "title": "The Windskipper",
+      "display_name": "Aven — The Windskipper",
+      "category": "companion",
+      "entity_class": "companion",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "AY-ven",
+        "status": "performance_suggestion"
+      },
+      "tagline": "Adventure feels better when everyone arrives.",
+      "description": "A buoyant river otter with teal glider membranes in a mustard sailcloth harness. Aven carries a red seed pouch toward a ruined nursery, but chooses the longer clear wind route so the seeds and their next season arrive safely.",
+      "emotional_core": "Playful courage, shared excitement and delighted relief.",
+      "world_function": "Carries lightweight tools across gaps and scouts a landing before the whole party crosses.",
+      "story": {
+        "vow": "No leap leaves a friend behind.",
+        "cost": "Each crossing requires a usable wind window and a physically anchored return line.",
+        "limitation": "Cannot lift an adult, fly in still air or certify a landing it has not touched.",
+        "flaw": "Treats a new gust as an invitation before checking the tether.",
+        "affection_detail": "Brings one polished river stone to the gardeners after a successful seed delivery.",
+        "hook": "The short wind route is turning into storm. Aven chooses a longer passage that protects the seed pouch and leaves the route usable for the next carrier.",
+        "repair_outcome": "The party arrives together with its tools, return line and wind observations intact."
+      },
+      "visual": {
+        "silhouette": "a nimble small river-otter glider with cinnamon-and-cream soft fur, a long expressive tail, dark bright intelligent eyes, an honest open smile, two folded teal ripstop glider membranes built into a handmade mustard sailcloth harness, little copper goggle frames pushed above the eyes and a single red seed pouch; believable otter anatomy, paws rather than human hands",
+        "palette": ["cinnamon", "sky blue", "scarlet", "oat"],
+        "materials": [
+          "dense river fur",
+          "woven reed silk",
+          "brass eyelets",
+          "red rescue cord"
+        ],
+        "scale_m": 0.72,
+        "habitat": "The Windstep Locks above Mossbridge.",
+        "gesture": "Two quick tugs on a tether, then a patient backward glance.",
+        "identity_locks": [
+          "otter anatomy with paws",
+          "cinnamon-and-cream fur",
+          "teal membranes",
+          "mustard sailcloth harness",
+          "copper goggles",
+          "red seed pouch"
+        ],
+        "locked_identity": "a nimble small river-otter glider with cinnamon-and-cream soft fur, a long expressive tail, dark bright intelligent eyes, an honest open smile, two folded teal ripstop glider membranes built into a handmade mustard sailcloth harness, little copper goggle frames pushed above the eyes and a single red seed pouch; believable otter anatomy, paws rather than human hands",
+        "story_scene": "Aven rides a bank of sun-warmed air over an enormous terraced valley of hanging gardens, teal glider membranes held wide, carrying a single red pouch of seeds toward a ruined nursery where a handful of gardeners wave. One wind route ends in storm; Aven visibly chooses the clear longer route, with airborne paper streamers showing wind direction",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Explore",
+        "metaphor": "Bounded parallel exploration with a return contract.",
+        "acceptance_criterion": "Exploration returns a cited result, a timeout and a recovery route before dependent work starts.",
+        "failure_encounter": "Fast parallel work stranded without a return path.",
+        "permission_boundary": "Exploration uses only the tools and destinations named in the task envelope."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:miri",
+          "relation": "scouts the next short crossing",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:orra",
+          "relation": "asks her to inspect every anchor",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:khorvan",
+          "relation": "learns the difference between courage and haste",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-aven-sheet", "fl02-aven-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "e4abc9c8d72f844549550baa2f102554df25eb2ea5c680bc46715ec3f4517278",
+          "34a220f25befdb0076c7f7ca6a714ad5b579c622f190ef6c46d2e4a81c0d2104"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.orra",
+      "character_id": "character:orra",
+      "slug": "orra",
+      "name": "Orra",
+      "title": "The Threadkeeper",
+      "display_name": "Orra — The Threadkeeper",
+      "category": "companion",
+      "entity_class": "companion",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "OR-ah",
+        "status": "performance_suggestion"
+      },
+      "tagline": "The bond matters as much as the leap.",
+      "description": "An attentive ivory-and-ginger thread fox whose woven copper ears turn toward the slightest strain. Orra works from a cobalt ceramic bobbin; her plush tail ends in three soft braids. She joins two true edges and leaves the repair visible for the next maker.",
+      "emotional_core": "Affection, loyalty and the satisfaction of a trustworthy connection.",
+      "world_function": "Finds strained joins in woven bridges, sacks and expedition gear before they separate.",
+      "story": {
+        "vow": "A bond is kept by both ends.",
+        "cost": "Every repair uses real thread and the consent of both sides of the join.",
+        "limitation": "Cannot join absent edges, undo someone else’s choice or hide a damaged load-bearing structure.",
+        "flaw": "Clings to a failed connection after its purpose has ended.",
+        "affection_detail": "Mends a different tiny stitch into each friend’s cuff so no one is anonymous to her.",
+        "hook": "A severed signal line carries two incompatible requests. Orra must refuse the seamless-looking shortcut and ask both ends to agree.",
+        "repair_outcome": "The repaired join includes its limits and can be inspected by a teammate."
+      },
+      "visual": {
+        "silhouette": "a charming compact ivory-and-ginger fox with a square little muzzle, plush tail ending in three soft braided strands, large expressive ears woven from living copper and pale silk, hazel eyes and a cobalt ceramic bobbin worn on a simple linen sash; friendly attentive face, four real paws, copper ear weave functional rather than jewelry",
+        "palette": ["russet", "cream", "soft copper", "petrol blue"],
+        "materials": [
+          "dense fur",
+          "woven copper ribbon",
+          "indigo thread",
+          "ceramic spools"
+        ],
+        "scale_m": 0.48,
+        "habitat": "The Threadwalk workshops on the Mossbridge banks.",
+        "gesture": "Presses nose to each side of a seam before pulling the final knot.",
+        "identity_locks": [
+          "ivory-and-ginger fox",
+          "copper-and-silk woven ears",
+          "three soft tail braids",
+          "cobalt ceramic bobbin",
+          "linen sash"
+        ],
+        "locked_identity": "a charming compact ivory-and-ginger fox with a square little muzzle, plush tail ending in three soft braided strands, large expressive ears woven from living copper and pale silk, hazel eyes and a cobalt ceramic bobbin worn on a simple linen sash; friendly attentive face, four real paws, copper ear weave functional rather than jewelry",
+        "story_scene": "Orra stands at the seam between two miniature floating wooden delivery platforms in a golden afternoon makers market, drawing a vivid single copper-silk thread from a cobalt bobbin to connect a blue parcel's stamped sender tag with its receiving basket; the two makers on opposite sides can now exchange the parcel. Warm thoughtful close camera, visible joyful handoff",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Connect",
+        "metaphor": "Typed handoffs and interface compatibility.",
+        "acceptance_criterion": "The receiver validates the output schema, version and required context before acknowledging the handoff.",
+        "failure_encounter": "A silent schema mismatch between successful steps.",
+        "permission_boundary": "A compatible interface does not expand the tool’s authority."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:aven",
+          "relation": "checks the shared tether before a leap",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:caelis",
+          "relation": "keeps repaired seams readable",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:edda",
+          "relation": "records the contract before the last stitch",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-orra-sheet", "fl02-orra-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "5dd797ac78d68db88bc9caafdf20b61dd116a9610715243ff58618d3d83c0a57",
+          "35bcad1d8e00da8bef4be005dfb93484b0575872ddc969ce463a0a41928b4465"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.caelis",
+      "character_id": "character:caelis",
+      "slug": "caelis",
+      "name": "Caelis",
+      "title": "The Hearthwright",
+      "display_name": "Caelis — The Hearthwright",
+      "category": "companion",
+      "entity_class": "companion",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "KAY-liss",
+        "status": "performance_suggestion"
+      },
+      "tagline": "Good work leaves room for the next maker.",
+      "description": "A lovable small hearthwright with a squat porcelain body and two slightly mismatched amber-glass eyes. Cobalt repair seams remain visible around copper hinges, while a warm kiln glows through a round chest window. Caelis proudly offers a repaired blue teacup for inspection.",
+      "emotional_core": "Belonging, quiet pride and affection for imperfect useful things.",
+      "world_function": "Builds expedition tools, restores damaged fittings and preserves repair records in the Haven Atelier.",
+      "story": {
+        "vow": "A repair must remain readable.",
+        "cost": "Fusion spends stored heat; Caelis must cool between joins and cannot work safely while overheated.",
+        "limitation": "Cannot turn an unverified part into a reliable assembly or certify its own critical work.",
+        "flaw": "Tries to rescue every fragment, even when a damaged part should be retired.",
+        "affection_detail": "Keeps a repaired blue teacup warm for the next tired maker and collects their imperfect handmade buttons.",
+        "hook": "A polished replacement arrives without a provenance mark. Caelis must delay the unveiling until Pip checks the part.",
+        "repair_outcome": "The finished tool carries its source marks, seam and independent inspection record."
+      },
+      "visual": {
+        "silhouette": "a lovable squat small ceramic workshop automaton, articulated cream porcelain barrel body with cobalt repair seams, two slightly mismatched amber glass eyes, four small jointed sturdy fingers per hand, copper hinges, rounded rectangular head with one tiny vent like a smiling dimple; warm amber kiln visible through a round window in the chest, little apron in faded terracotta, carries a repaired blue teacup, handcrafted practical silhouette not generic robot",
+        "palette": [
+          "warm porcelain",
+          "brushed copper",
+          "honey gold",
+          "faded blue"
+        ],
+        "materials": [
+          "cream porcelain",
+          "cobalt seams",
+          "copper hinges",
+          "terracotta cloth",
+          "amber glass"
+        ],
+        "scale_m": 0.68,
+        "habitat": "The Haven Atelier’s small west kiln.",
+        "gesture": "Turns a finished object so another maker can inspect the seam.",
+        "identity_locks": [
+          "squat cream porcelain barrel body",
+          "cobalt repair seams",
+          "two mismatched amber eyes",
+          "round chest kiln window",
+          "terracotta apron",
+          "four fingers per hand",
+          "repaired blue teacup"
+        ],
+        "locked_identity": "a lovable squat small ceramic workshop automaton, articulated cream porcelain barrel body with cobalt repair seams, two slightly mismatched amber glass eyes, four small jointed sturdy fingers per hand, copper hinges, rounded rectangular head with one tiny vent like a smiling dimple; warm amber kiln visible through a round window in the chest, little apron in faded terracotta, carries a repaired blue teacup, handcrafted practical silhouette not generic robot",
+        "story_scene": "Caelis sits at a communal workshop table at sunset, holding two halves of a child's cracked blue ceramic bird toy together while warm kiln light shines from its chest, then placing the newly mended toy into waiting human hands. Several artisans have gathered around the hearth, honest useful tools and offcuts on table, emotional focus on careful hands and trust",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Build",
+        "metaphor": "Artifact assembly from verified dependencies.",
+        "acceptance_criterion": "A build receipt records source revision, dependency identity, artifact hash and an independent functional check.",
+        "failure_encounter": "A beautiful artifact assembled from unknown components.",
+        "permission_boundary": "A craft persona cannot self-approve a release or gain deployment credentials."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:edda",
+          "relation": "prepares useful work for her review",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:pip",
+          "relation": "requests independent inspection",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:orra",
+          "relation": "shares the rule that a repair must remain inspectable",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-caelis-sheet", "fl02-caelis-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "938d1b558db8f1bf8d33d2c5f5ba5a1cb43698331781943c736f4c15fd935c67",
+          "af876ac72f192f5f15da17c39b91d4470ede42b81c73ef5c84f19b141c330359"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.velis",
+      "character_id": "character:velis",
+      "slug": "velis",
+      "name": "Velis",
+      "title": "The Aurora Archivist",
+      "display_name": "Velis — The Aurora Archivist",
+      "category": "companion",
+      "entity_class": "companion",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "VEH-liss",
+        "status": "performance_suggestion"
+      },
+      "tagline": "A memory becomes a gift when it can be found.",
+      "description": "An adult archivist who carries translucent glass record leaves in a copper ring binder. Velis wears a long practical teal field coat with one saffron sleeve and holds an imperfect aurora-glass monocle. She finds a witnessed fragment without pretending its missing pages exist.",
+      "emotional_core": "Intellectual wonder, human warmth and the relief of being understood.",
+      "world_function": "Returns a precisely sourced local memory fragment and marks what remains unknown.",
+      "story": {
+        "vow": "Never invent the page someone needs.",
+        "cost": "Opening a memory leaf consumes its stored light until it is returned to a witness lamp.",
+        "limitation": "Cannot retrieve a memory never recorded, reveal a private leaf without permission or replace a witness.",
+        "flaw": "Withholds a useful partial answer because she wishes the record were complete.",
+        "affection_detail": "Leaves a small hand-lettered note where a returning reader is most likely to find it.",
+        "hook": "An old promise has two versions and the final leaf is missing. Velis must show both versions without inventing closure.",
+        "repair_outcome": "The party acts on a bounded account that preserves its source, gaps and disagreement."
+      },
+      "visual": {
+        "silhouette": "an inspiring adult female archivist with dark umber skin, delicate angular face, thoughtful warm eyes, black coiled hair arranged in a broad practical braided crown, deep teal ankle-length field coat over ivory fitted practical work clothes, one asymmetrical saffron sleeve, copper ring binder holding thin translucent glass record leaves, flat boots and a single imperfect aurora-glass monocle held in hand; grounded capable warm presence, functional elegant tailoring, no mystical staff",
+        "palette": ["deep teal", "saffron", "amber", "warm brown"],
+        "materials": [
+          "teal woven wool",
+          "translucent record glass",
+          "aurora glass",
+          "brushed copper",
+          "ivory work cloth"
+        ],
+        "scale_m": 1.76,
+        "habitat": "The Witness Lamps beside Thaum’s river halt.",
+        "gesture": "Offers a memory leaf edge-first, with the source label facing its reader.",
+        "identity_locks": [
+          "adult woman with dark umber skin",
+          "practical braided crown",
+          "ankle-length teal field coat",
+          "one saffron sleeve",
+          "copper leaf binder",
+          "handheld aurora-glass monocle"
+        ],
+        "locked_identity": "an inspiring adult female archivist with dark umber skin, delicate angular face, thoughtful warm eyes, black coiled hair arranged in a broad practical braided crown, deep teal ankle-length field coat over ivory fitted practical work clothes, one asymmetrical saffron sleeve, copper ring binder holding thin translucent glass record leaves, flat boots and a single imperfect aurora-glass monocle held in hand; grounded capable warm presence, functional elegant tailoring, no mystical staff",
+        "story_scene": "Velis sits with an elderly sailor and a young apprentice at an open-air archive overlooking a turquoise harbour at dawn, gently placing a translucent glass memory leaf beside a weathered real logbook; visible contrasting routes indicate the beautiful remembered map was wrong. She chooses the ordinary true route, and a reunited little fishing boat safely returns below. Focus on attentive faces, honest craft and the light through glass",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Remember",
+        "metaphor": "Scoped retrieval, provenance and honest partial context.",
+        "acceptance_criterion": "The answer names the source revision and locator, distinguishes inference from quotation and explicitly states unavailable context.",
+        "failure_encounter": "A fluent answer that fills a missing record.",
+        "permission_boundary": "Retrieval respects the source’s visibility; a narrative memory role is not data access."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:thaum",
+          "relation": "studies careful stewardship of an archive",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:pip",
+          "relation": "makes each retrieved claim independently traceable",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:tovan",
+          "relation": "preserves both the previous and revised map",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-velis-sheet", "fl02-velis-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "d50a362b400c83cce5a04bddfb91e1acd5dc6f7fe34ec62a654c5605684bfa2c",
+          "79d54bd035490389d1b7fda454a24c1788019f95adedf4f71e9c1143a70b50ad"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.pelora",
+      "character_id": "character:pelora",
+      "slug": "pelora",
+      "name": "Pelora",
+      "title": "The Tide Cradle",
+      "display_name": "Pelora — The Tide Cradle",
+      "category": "guardian",
+      "entity_class": "guardian",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "peh-LOR-ah",
+        "status": "performance_suggestion"
+      },
+      "tagline": "An ocean of strength, held gently.",
+      "description": "A colossal seahorse guardian that steadies an entire floating nursery with the slow curve of its tail. Open reef chambers shelter fish, boats and travelling gardens; its pearl-gold eye watches the smallest vessel first.",
+      "emotional_core": "Monumental reassurance, oceanic wonder and the joy of protected life.",
+      "world_function": "Provides a temporary calm-water cradle while a coastal community repairs its nursery and moorings.",
+      "story": {
+        "vow": "What is sheltered must one day travel freely.",
+        "cost": "Holding a calm cradle strains the living reef along its ribs and requires a quiet tide for recovery.",
+        "limitation": "Cannot end a sea storm, hold a city indefinitely or keep inhabitants against their choice.",
+        "flaw": "Protects a haven so carefully that it delays the moment its people can leave.",
+        "affection_detail": "Keeps a shoal’s smallest blue fish beside its largest pearl rib.",
+        "hook": "The nursery is safe inside Pelora’s curve, but the coast will starve if the fleet never leaves. The party must repair the moorings rather than extend shelter forever.",
+        "repair_outcome": "The harbour can operate without Pelora holding the entire burden."
+      },
+      "visual": {
+        "silhouette": "a monumental gentle seahorse-like marine guardian 250 metres tall, upright curled sculptural silhouette with crownless rounded head, layered pearl limestone plates over translucent turquoise tidal organs, small attentive golden eye, broad rib cages containing living protected coral nurseries and hanging inhabited habitat ledges, massive curled tail creating a sheltered lagoon, no rider saddle, no antlers, no wings; its architecture grows from living anatomy",
+        "palette": ["seafoam", "pearl gold", "deep turquoise", "coral cream"],
+        "materials": [
+          "living coral ceramic",
+          "translucent seawater chambers",
+          "weathered pearl",
+          "sea grass"
+        ],
+        "scale_m": 250,
+        "habitat": "The Cradle Shoals beyond Pearl Reach.",
+        "gesture": "Lowers its eye to the level of the smallest boat.",
+        "identity_locks": [
+          "seahorse-like upright anatomy",
+          "rounded crownless head",
+          "pearl limestone plates",
+          "translucent turquoise organs",
+          "coral nurseries in broad ribs",
+          "massive lagoon-forming tail"
+        ],
+        "locked_identity": "a monumental gentle seahorse-like marine guardian 250 metres tall, upright curled sculptural silhouette with crownless rounded head, layered pearl limestone plates over translucent turquoise tidal organs, small attentive golden eye, broad rib cages containing living protected coral nurseries and hanging inhabited habitat ledges, massive curled tail creating a sheltered lagoon, no rider saddle, no antlers, no wings; its architecture grows from living anatomy",
+        "story_scene": "Pelora curls its colossal tail around a storm-battered island harbour to form a calm turquoise lagoon while its long upright body rises beyond limestone sea cliffs; tiny fishing boats return safely inside the coil and people illuminate the habitat nurseries along its ribs. The warm sun breaks through a storm at sea, protective gesture scale proven by the port, terraced city and ships",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Protect",
+        "metaphor": "Bounded resource isolation and recoverable operating envelopes.",
+        "acceptance_criterion": "The run remains within its declared budget and access scope; recovery restores useful operation without permanent dependence on the guard.",
+        "failure_encounter": "Protective control that never hands agency back.",
+        "permission_boundary": "A guardian’s fictional scale does not imply real access or spending power."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:naelith",
+          "relation": "shelters a nursery after a difficult passage",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:numa",
+          "relation": "teaches recovery with an explicit end condition",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:aven",
+          "relation": "makes room for a small visiting expedition",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-pelora-sheet", "fl02-pelora-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "739388f5f0cb073a2a85ebc6a50449cd2d7d53d37f1c915912e9952e20f9cedb",
+          "c8497f968f194b7712f0f469eeb92a3e81f07f7810e77c6bf84d53eaeb4513e0"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.brambletide",
+      "character_id": "character:brambletide",
+      "slug": "brambletide",
+      "name": "Brambletide",
+      "title": "The Orchard Colossus",
+      "display_name": "Brambletide — The Orchard Colossus",
+      "category": "guardian",
+      "entity_class": "guardian",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "BRAM-bul-tide",
+        "status": "performance_suggestion"
+      },
+      "tagline": "The great world makes room for small lives.",
+      "description": "A vast warm-eyed capybara whose orchard terraces grow along a broad moss-and-blossom back. Its basalt feet open measured irrigation channels, while a great belly arch shelters migrating families. It rests when the next valley has enough.",
+      "emotional_core": "Affectionate awe, abundance without urgency and a home worth caring for.",
+      "world_function": "Carries seasonal orchard terraces and opens a measured water route between neighbouring fields.",
+      "story": {
+        "vow": "The harvest belongs to those who tend its return.",
+        "cost": "Every valley watered draws from a finite rain cistern beneath its orchard; the terraces need pruning, rest and replenishment.",
+        "limitation": "Cannot create water or food without ecological inputs, carry an unlimited settlement or replace a community’s cultivation.",
+        "flaw": "Answers a neighbour’s urgent request before checking the next valley’s reserve.",
+        "affection_detail": "Closes one eye contentedly when children brush moss from the smallest paw.",
+        "hook": "Two valleys ask for the last safe irrigation release. Brambletide must let the gardeners measure need and agree the split.",
+        "repair_outcome": "The shared harvest plan preserves a named reserve for the next dry week."
+      },
+      "visual": {
+        "silhouette": "an enormously gentle 180-metre-tall capybara-shaped earth guardian with a broad reassuring blunt muzzle, soft tiny alert ears, slow kind dark eyes, weighty basalt feet, spring-green moss and peach-blossom fur, living terraced orchard growing along the immense broad back, warm sandstone cheek plates; its belly has an architectural arch that shelters migrating families without making it a building, wholesome colossal animal anatomy",
+        "palette": ["chestnut", "spring green", "terracotta", "butter yellow"],
+        "materials": [
+          "spring-green moss",
+          "peach-blossom fur",
+          "basalt feet",
+          "warm sandstone cheek plates",
+          "living orchard trees"
+        ],
+        "scale_m": 180,
+        "habitat": "The Returning Orchard above Seedward Valley.",
+        "gesture": "Lowers its chin so someone can scratch the crease behind its small ear.",
+        "identity_locks": [
+          "capybara anatomy",
+          "blunt warm muzzle",
+          "tiny ears",
+          "orchard terraces",
+          "basalt feet",
+          "sandstone cheek plates",
+          "sheltering belly arch"
+        ],
+        "locked_identity": "an enormously gentle 180-metre-tall capybara-shaped earth guardian with a broad reassuring blunt muzzle, soft tiny alert ears, slow kind dark eyes, weighty basalt feet, spring-green moss and peach-blossom fur, living terraced orchard growing along the immense broad back, warm sandstone cheek plates; its belly has an architectural arch that shelters migrating families without making it a building, wholesome colossal animal anatomy",
+        "story_scene": "Brambletide stands motionless in a mist-cleared spring valley as a festive migration of families walks beneath the enormous sheltering belly arch; its broad back carries blossoming peach orchards where tiny distant gardeners tend trees, and one enormous branch lowers a ripe peach toward a dry village square. Golden morning light, mountain scale, patches of normal-sized blossom trees prove gigantic but gentle scale",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Sustain",
+        "metaphor": "Shared capacity planning and reserve-aware resource allocation.",
+        "acceptance_criterion": "Allocation records actual capacity, competing demands and a protected reserve; success is accepted output per budget, not gross activity.",
+        "failure_encounter": "Generosity that exhausts the shared budget.",
+        "permission_boundary": "The campaign cannot spend beyond its real approved envelope."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:varkesh",
+          "relation": "prepares the living soil that follows a repaired water route",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:seli",
+          "relation": "listens to its finite local rain observations",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:tovan",
+          "relation": "maps irrigation decisions for the next guild",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-brambletide-sheet", "fl02-brambletide-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "4cbdc73a321a640ff312e7597081139fe793f76096aa67fd79553abb9d03c4a2",
+          "aba342dc7dd14c904b59bcdc99769b50f407aa5ed1066086aa4d5570efc27c84"
+        ],
+        "continuity_notes": []
+      }
+    },
+    {
+      "id": "arcanea.fl02.kethr",
+      "character_id": "character:kethr",
+      "slug": "kethr",
+      "name": "Kethr",
+      "title": "The Severed Standard",
+      "display_name": "Kethr — The Severed Standard",
+      "category": "opponent",
+      "entity_class": "rival",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "KETH-er",
+        "status": "performance_suggestion"
+      },
+      "tagline": "A flawless salute cannot replace an answer.",
+      "description": "A formidable armoured challenger carrying a broken red signal standard on a blunt pole-lance. Kethr repeats the dispatch perfectly and advances before any reply. A gap between two shoulder rings reveals the costly elegance of a team that has stopped listening.",
+      "emotional_core": "Encounter-specific tension, resolve and the relief of restored coordination.",
+      "world_function": "Blocks a broken relay causeway until the party demonstrates a complete handoff under pressure.",
+      "story": {
+        "vow": "The command must arrive unchanged.",
+        "cost": "Each unacknowledged dispatch cracks another link in the signal standard.",
+        "limitation": "Cannot hear a reply while attacking; its pattern has a clear, learnable pause.",
+        "flaw": "Confuses perfect transmission with successful communication.",
+        "affection_detail": "An old small bell tied inside the banner still rings when someone answers its original call.",
+        "hook": "Every correct message accelerates the assault. The party must observe the pause, name the receiver and wait for an acknowledgement.",
+        "repair_outcome": "Both halves of the standard carry the same acknowledged relay; Kethr opens the gate and stands down."
+      },
+      "visual": {
+        "silhouette": "a fearsome disciplined armoured duel opponent, tall lean nonhuman knight with jointed obsidian lamellar armour, single narrow pale amber visor, a broken red standard attached to a blunt pole-lance held vertical, split asymmetrical shoulder plates showing a visible gap where two connection rings should meet; restrained threatening elegance, no skulls, no spikes collage, no gore, extremely clear silhouette",
+        "palette": [
+          "blackened steel",
+          "cold silver",
+          "ember red",
+          "weathered ivory"
+        ],
+        "materials": [
+          "obsidian lamellar armour",
+          "broken red signal cloth",
+          "pale amber visor",
+          "dark connection rings"
+        ],
+        "scale_m": 2.9,
+        "habitat": "The Unanswered Causeway, a proposed training encounter.",
+        "gesture": "Signals with perfect precision, then moves before the return signal.",
+        "identity_locks": [
+          "split standard",
+          "closed narrow helm",
+          "asymmetric banner silhouette",
+          "controlled intimidating posture"
+        ],
+        "locked_identity": "a fearsome disciplined armoured duel opponent, tall lean nonhuman knight with jointed obsidian lamellar armour, single narrow pale amber visor, a broken red standard attached to a blunt pole-lance held vertical, split asymmetrical shoulder plates showing a visible gap where two connection rings should meet; restrained threatening elegance, no skulls, no spikes collage, no gore, extremely clear silhouette",
+        "story_scene": "Kethr blocks a vast narrow basalt causeway under red stormlight; severed lengths of red signal cloth hang between isolated bridge posts, and a small brave expedition team in warm lamplight restores one continuous line across the abyss behind the knight. The opponent's pole-lance is lowered across the path without attacking; visible restored connection, dramatic threatening scale and real strategy rather than random combat",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Challenge",
+        "metaphor": "Missing acknowledgement, ownership and backpressure.",
+        "acceptance_criterion": "A handoff commits only after the receiving role validates and acknowledges the expected artifact; bounded retries stop when ownership remains unresolved.",
+        "failure_encounter": "Messages delivered repeatedly without a receiver accepting responsibility.",
+        "permission_boundary": "A contained challenge uses fixture data; it is not a mandate to attack a service."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:orra",
+          "relation": "requires proof that both ends agree before mending the relay",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:tovan",
+          "relation": "must name the receiver in the crossing plan",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:aven",
+          "relation": "must wait for the answering tug",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-kethr-sheet", "fl02-kethr-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "7e31fa1ae9f93180472b1121793e0c2c466b2b1fc94848e04b176c696b3367b3",
+          "7e39d68b16b8218dfe0aa5edbeac95e4b8a2d9a5bed223ee78e7fc803202414f"
+        ],
+        "continuity_notes": [
+          "Pointed spearhead differs from blunt pole-lance brief."
+        ]
+      }
+    },
+    {
+      "id": "arcanea.fl02.vessakar",
+      "character_id": "character:vessakar",
+      "slug": "vessakar",
+      "name": "Vessakar",
+      "title": "The Hoarding Engine",
+      "display_name": "Vessakar — The Hoarding Engine",
+      "category": "opponent",
+      "entity_class": "boss",
+      "canon_state": "proposal",
+      "visibility": "public",
+      "design_revision": "firstlight-02-v1",
+      "pronunciation": {
+        "display_hint": "VESS-ah-kar",
+        "status": "performance_suggestion"
+      },
+      "tagline": "Power without a stopping rule consumes its own world.",
+      "description": "A colossal frightening hoarding engine with a low folded-vault body, six stone piston legs and a narrow hungry furnace slit. Pale canisters hold unreturned light along its spine while copper intake ribbons draw more lanterns into its chest.",
+      "emotional_core": "Awe and dread confined to the boss arena, followed by collective agency and earned daylight.",
+      "world_function": "A contained boss encounter about runaway accumulation, resource contention and stopping useful-looking work.",
+      "story": {
+        "vow": "Nothing precious will ever run out.",
+        "cost": "Each stolen reserve overheats its chest and darkens another public lantern.",
+        "limitation": "Cannot maintain the hoard once its intake gates are closed in the correct shared sequence.",
+        "flaw": "Mistakes accumulation for security and cannot choose to stop alone.",
+        "affection_detail": "At its inert core is one small nursery lantern it once tried to protect; the recovery scene returns that lamp to its community.",
+        "hook": "Fighting the armour feeds the furnace. The party must measure the shared reserve, isolate the intake and verify that every lantern returns.",
+        "repair_outcome": "The intake is shut, reserves are reconciled, the nursery lamp is returned and the engine becomes an inert, inspectable monument."
+      },
+      "visual": {
+        "silhouette": "a gigantic frightening but beautifully designed six-legged hoarding-engine boss, a heavy low obsidian and tarnished brass body shaped like an immense folded treasure vault, six widely separated articulated stone piston legs, a narrow furnace slit like a hungry eye, pale glass storage canisters recessed along the spine, many copper intake ribbons pulling loose unclaimed lanterns into its chest; no human face, no human body horror, no wings, no gore, enormous strong low silhouette",
+        "palette": [
+          "basalt black",
+          "oxidised bronze",
+          "furnace amber",
+          "ash white"
+        ],
+        "materials": [
+          "interlocked basalt vaults",
+          "bronze ribs",
+          "heat-cracked ceramic",
+          "captured lantern glass"
+        ],
+        "scale_m": 48,
+        "habitat": "The darkened Reserve Basin; spectacle and threat stay within this arena.",
+        "gesture": "Reaches to gather light even as its own joints seize.",
+        "identity_locks": [
+          "low folded-vault body",
+          "six separated stone piston legs",
+          "obsidian and tarnished brass",
+          "narrow furnace slit",
+          "pale spinal canisters",
+          "copper intake ribbons"
+        ],
+        "locked_identity": "a gigantic frightening but beautifully designed six-legged hoarding-engine boss, a heavy low obsidian and tarnished brass body shaped like an immense folded treasure vault, six widely separated articulated stone piston legs, a narrow furnace slit like a hungry eye, pale glass storage canisters recessed along the spine, many copper intake ribbons pulling loose unclaimed lanterns into its chest; no human face, no human body horror, no wings, no gore, enormous strong low silhouette",
+        "story_scene": "Vessakar looms in the abandoned transfer hall of a mountain citadel, unreturned lanterns dimming inside the great chest vault; an organized small team on three separated illuminated platforms turns off redundant intake channels and routes one honest lantern back to the common hearth. Its huge six legs frame the cooperative action, cold charcoal background and fierce contained orange furnace, strong deliberate threat with a comprehensible repair objective",
+        "spec_source": "visual-specs.json"
+      },
+      "teamwork": {
+        "role": "Bound",
+        "metaphor": "Runaway work, shared-budget exhaustion and independently verified shutdown.",
+        "acceptance_criterion": "The supervisor stops intake at the declared threshold, rejects duplicated work and proves resources reconciled before accepting recovery.",
+        "failure_encounter": "Every apparently useful retry consumes the capacity needed for recovery.",
+        "permission_boundary": "Boss logic is a simulation; real stop and authorization controls remain outside the narrative layer."
+      },
+      "relationships": [
+        {
+          "target_character_id": "character:pelora",
+          "relation": "demonstrates the difference between shelter and possession",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:brambletide",
+          "relation": "makes the finite shared reserve visible",
+          "canon_state": "proposal"
+        },
+        {
+          "target_character_id": "character:pip",
+          "relation": "must independently reconcile every returned lantern",
+          "canon_state": "proposal"
+        }
+      ],
+      "asset_ids": ["fl02-vessakar-sheet", "fl02-vessakar-hero"],
+      "power_authority": "fictional_presentation_only",
+      "world_anchor": {
+        "layer": "Field",
+        "state": "proposal",
+        "boundary": "Local Field behavior and habitat responsibilities only; no accepted Gate, Godbeast, Guardian rank or cosmological office is asserted."
+      },
+      "created_on": "2026-10-30",
+      "modified_on": "2026-10-30",
+      "review": {
+        "status": "display_approved_canon_pending",
+        "required_lenses": [
+          "visual_identity",
+          "story_and_canon",
+          "gameplay",
+          "runtime_boundary"
+        ],
+        "decision": "accept_display_revision",
+        "reviewer": "agent:/root/review"
+      },
+      "peer_review": {
+        "status": "approved_for_exhibition",
+        "verdict": "accept_display_revision",
+        "reviewer": "agent:/root/review",
+        "receipt_ref": "review/independent-visual-v1.json",
+        "scope": "Public concept review exhibition under current owner instruction; not canon, rig or commercial rights acceptance.",
+        "canon_acceptance": false,
+        "inspected_asset_sha256": [
+          "eda315433951a71e146b7a3acc8bc3f148f3b662943ceb5ca1c92dec6286108d",
+          "20667209120b5a019873a40b8d81fc47a16f87eac5cf84b6b1b79272b0d8a4dd"
+        ],
+        "continuity_notes": [
+          "Some specified six limbs occluded by vault and perspective."
+        ]
+      }
+    }
+  ],
+  "runtime_boundary": "Characters and fiction describe roles. Only separately reviewed task envelopes, tool contracts, credentials and runtime policies authorize real actions. Art and narrative success never certify a useful business result.",
+  "design_authority": {
+    "repository": "Starlight-Intelligence/starlight-design-intelligence",
+    "commit": "99794fdae86db53fb8b090c66028818edd3dba66",
+    "pack": "arcanea",
+    "primary_studio": "studio_world_experience",
+    "visual_identity_source": "visual-specs.json"
+  }
+}
