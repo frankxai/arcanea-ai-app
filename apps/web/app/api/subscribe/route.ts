@@ -4,7 +4,7 @@ import {
   getClientIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit/rate-limiter";
-import { joinWaitlist } from "@/lib/waitlist/join";
+import { captureEmail } from "@/lib/waitlist/capture-email";
 
 const SUBSCRIBE_RATE_LIMIT = { maxRequests: 3, windowMs: 60_000 };
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     typeof payload?.source === "string" && payload.source.trim()
       ? payload.source.trim().slice(0, 50)
       : "footer";
-  const result = await joinWaitlist(
+  const result = await captureEmail(
     payload?.email,
     async (row) => {
       try {
