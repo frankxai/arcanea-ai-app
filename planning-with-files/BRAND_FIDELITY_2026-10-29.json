@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-29",
+  "state": "BLOCKED",
+  "base": "a42ddc8d3f6a3426feecbf646bc762d863bb77fe",
+  "scope": "Identity geometry, install-icon consistency, asset recommendations and hero text contrast",
+  "figma": {
+    "fileKey": "zRheday2Jer3ZxWsUWVKyq",
+    "sessionId": "f4018fc8-261c-4dfb-949f-9e7ecbe9fb75",
+    "createdNodeIds": [
+      "4:10",
+      "4:11",
+      "4:12",
+      "4:13",
+      "4:14",
+      "4:15",
+      "4:16",
+      "4:17",
+      "4:18",
+      "4:19",
+      "4:20",
+      "4:21",
+      "4:22",
+      "4:23",
+      "4:24",
+      "4:25",
+      "4:26",
+      "4:27",
+      "4:28",
+      "4:29",
+      "4:30",
+      "4:31",
+      "4:32",
+      "4:33",
+      "4:34",
+      "4:35",
+      "4:36",
+      "4:37",
+      "4:38",
+      "4:39",
+      "4:40",
+      "4:41",
+      "4:42",
+      "4:43",
+      "4:44",
+      "4:45",
+      "4:46",
+      "4:47",
+      "4:48",
+      "4:49",
+      "4:50",
+      "4:51",
+      "4:52",
+      "4:53",
+      "4:54",
+      "4:55",
+      "4:56",
+      "4:57",
+      "4:58",
+      "4:59"
+    ],
+    "mutatedNodeIds": ["0:1"],
+    "collectionId": "VariableCollectionId:4:2",
+    "variableIds": [
+      "VariableID:4:3",
+      "VariableID:4:4",
+      "VariableID:4:5",
+      "VariableID:4:6",
+      "VariableID:4:7"
+    ],
+    "styleIds": [
+      "S:73cd931cd4d053d7e95fbaf56ece9d48b0147b8d,",
+      "S:fce75b83a6ff9c906f809cc2b5d623eed8789910,"
+    ],
+    "boardId": "4:10",
+    "masterId": "4:22",
+    "imageHash": "38a8b3f871f912286438d34db1534bba1d8e8d4d",
+    "bounds": {
+      "w": 1280,
+      "h": 1323
+    }
+  },
+  "checks": {
+    "lint": "passed",
+    "typecheck": "Initial tree passed with 6 GB heap; expanded local run terminated with exit 137. Final candidate Vercel TypeScript pending.",
+    "build": "Initial candidate 7269bfeacd5741cdaa2ffdc6cf5bfe99e65c66bc READY on Vercel; current expanded candidate pending",
+    "responsiveBrowser": "blocked: Vercel rejected its own temporary review link; local server not accessible to cloud browser",
+    "independentReview": "Initial remote tree independently reviewed; expanded icon source reviewed with no confirmed blocker. Cache finding repaired; final exact-head binding pending.",
+    "install_icons": "2 tests passed: decode both PNG sizes, validate manifest colours and reject unsupported sizes",
+    "gallery_media": "3 existing contract tests passed via node --import tsx"
+  },
+  "production": {
+    "changed": false,
+    "observedDeployment": "dpl_E3hH2JfPfDPvEBL9sHLDKrKNA2cb"
+  },
+  "review": "docs/design/BRAND_FIDELITY_REVIEW_2026-10-29.md",
+  "preview": {
+    "deploymentId": "dpl_5wn9Ju7ReWoBTW5Cvwupj9fz46EJ",
+    "source": "7269bfeacd5741cdaa2ffdc6cf5bfe99e65c66bc",
+    "state": "READY",
+    "renderedInspection": "blocked_by_preview_authentication"
+  }
+}
