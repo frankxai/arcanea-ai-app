@@ -157,6 +157,7 @@ arcanea-opencode-fork/
 !.claude/skills/apple-design/
 !.claude/skills/brandkit/
 !.claude/skills/core-web-vitals/
+!.claude/skills/gpu-surface/
 !.claude/skills/emil-design-eng/
 !.claude/skills/extract-design-system/
 !.claude/skills/find-animation-opportunities/
@@ -167,6 +168,7 @@ arcanea-opencode-fork/
 !.claude/skills/visual-proof/
 !.claude/skills/web-design-guidelines/
 !.claude/skills/web-release-gate/
+!.claude/skills/web-steward/
 # stack-kits pack — framework kits + prompt router, committed for the same reason
 !.claude/skills/nextjs/
 !.claude/skills/react/
@@ -351,3 +353,4 @@ link-checker-report.txt
 !.claude/skills/
 !.claude/skills/estate-guard/
 .claude/skills/**/__pycache__/
+.claude/agents.replaced/
