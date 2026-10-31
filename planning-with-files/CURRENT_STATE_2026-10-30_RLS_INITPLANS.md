@@ -21,6 +21,12 @@ It can be applied twice. Rollback restores the exact original predicates under t
 The migration filename was created by Supabase CLI 2.122.0 with `supabase migration new cache_request_identity_in_rls`.
 The SQL is reproducible with `node scripts/rls-initplans.mjs`.
 Rollback SQL: `node scripts/rls-initplans.mjs --rollback`.
+Execute forward and rollback SQL inside a transaction. The statement and lock
+timeouts are now armed with top-level `SET LOCAL` statements before entering
+the policy-editing DO block; configuring statement_timeout inside the running
+block does not start its timer. Six Node tests cover the forward/rollback
+placement and the existing policy-preservation guards. Hosted PostgreSQL 17
+verification and independent review must cover this repair's exact revision.
 Never feed the rollback to production without first reconciling any intervening policy changes.
 
 ## Verification

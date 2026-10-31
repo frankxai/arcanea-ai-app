@@ -9,6 +9,21 @@ const snapshot = JSON.parse(
   ),
 );
 
+test("forward and rollback arm the statement timer before entering the DO block", () => {
+  for (const rollback of [false, true]) {
+    const sql = compile(snapshot, { rollback });
+    const doIndex = sql.indexOf("DO $migration$");
+    const statementIndex = sql.indexOf("SET LOCAL statement_timeout = '15s';");
+    const lockIndex = sql.indexOf("SET LOCAL lock_timeout = '2s';");
+    assert.ok(statementIndex >= 0 && statementIndex < doIndex);
+    assert.ok(lockIndex >= 0 && lockIndex < doIndex);
+    assert.doesNotMatch(
+      sql.slice(doIndex),
+      /set_config\('(?:statement|lock)_timeout'/,
+    );
+  }
+});
+
 test("only the 68 observed policy identities are in the bounded patch", () => {
   assert.equal(validateSnapshot(snapshot).length, 68);
   const sql = compile(snapshot);
