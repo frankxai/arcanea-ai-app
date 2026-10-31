@@ -11,6 +11,7 @@ import { enhanceImagePrompt } from "@/lib/imagine/enhance-image-prompt";
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { checkBotId } from "@/lib/security/bot-id";
 import {
   generateImages,
   resumeImages,
@@ -43,6 +44,14 @@ function imageAction(model: string | undefined): ActionId {
 export async function POST(req: NextRequest) {
   const startedAt = new Date();
   try {
+    const botCheck = checkBotId(req);
+    if (botCheck.isBot) {
+      return NextResponse.json(
+        { error: "Automated request denied", reason: "bot_detected" },
+        { status: 403, headers: { "Cache-Control": "private, no-store" } },
+      );
+    }
+
     const {
       prompt,
       requestKey,
