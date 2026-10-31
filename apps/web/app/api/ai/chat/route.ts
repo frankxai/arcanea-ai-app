@@ -4,8 +4,9 @@
  *
  * Streams AI responses using Vercel AI SDK.
  * Supports 17+ curated models via the Intelligence Gateway,
- * plus legacy provider fallback (Google, Anthropic, OpenAI, OpenRouter).
+ * plus legacy customer-key providers (Google, Anthropic, OpenAI, OpenRouter).
  * Explicit customer keys take priority and remain bound to their provider.
+ * Platform credentials, when enabled, route only through Vercel AI Gateway.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -27,6 +28,10 @@ import {
   resolveProviderRoute,
   ProviderRoutingError,
 } from "@/lib/ai/provider-routing";
+import {
+  platformGatewayOptions,
+  platformLanguageModel,
+} from "@/lib/ai/platform-gateway";
 import {
   CredentialPolicyError,
   validateCustomerKey,
@@ -75,7 +80,9 @@ const GATE_WISDOM: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Provider configuration (legacy — used when no Gateway model specified)
+// Customer-key providers (legacy — used when no Gateway model specified).
+// Platform credentials never use this table: they route through Vercel AI
+// Gateway (lib/ai/platform-gateway.ts). `openrouter` here is BYOK only.
 // ---------------------------------------------------------------------------
 
 interface ProviderConfig {
@@ -352,10 +359,16 @@ export async function POST(req: NextRequest) {
     const resolvedGateway = route.gatewayModelId
       ? GATEWAY_MODELS[route.gatewayModelId]
       : undefined;
-    const providerRouteMode: "gateway" | "legacy" = resolvedGateway
-      ? "gateway"
-      : "legacy";
-    if (resolvedGateway) {
+    const providerRouteMode: "gateway" | "legacy" =
+      resolvedGateway || route.kind === "platform-gateway"
+        ? "gateway"
+        : "legacy";
+    if (route.kind === "platform-gateway") {
+      // Platform credentials only ever reach Vercel AI Gateway.
+      model = platformLanguageModel(route.platformModelId);
+      label = resolvedGateway?.label ?? route.platformModelId;
+      resolvedModelId = route.platformModelId;
+    } else if (resolvedGateway) {
       const { apiKey } = route;
       if (resolvedProviderId === "google") {
         model = createGoogleGenerativeAI({ apiKey })(resolvedGateway.modelId);
@@ -906,7 +919,12 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
         ? {}
         : { temperature: temperature ?? 0.7 }),
       maxOutputTokens: maxTokens ?? 8192,
-      providerOptions: { anthropic: claudeFallbackOptions(resolvedModelId) },
+      providerOptions: {
+        anthropic: claudeFallbackOptions(resolvedModelId),
+        ...(route.kind === "platform-gateway"
+          ? platformGatewayOptions("chat")
+          : {}),
+      },
       experimental_transform: refusalNoticeTransform(),
       onError: () => {
         console.error("Chat provider stream failed.");

@@ -1,7 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { resolveProviderRoute } from "../../apps/web/lib/ai/provider-routing.ts";
+import {
+  PLATFORM_DEFAULT_MODEL,
+  resolvePlatformDefaultModel,
+  resolveProviderRoute,
+} from "../../apps/web/lib/ai/provider-routing.ts";
 
 const providers = {
   google: { envKeys: ["GOOGLE_KEY"] },
@@ -80,9 +84,109 @@ test("extended providers select a model from their own catalog", () => {
     "xai-model",
   );
 });
-test("missing keys fail and automatic server routing remains available", () => {
+test("missing keys fail closed when no platform gateway is configured", () => {
   assert.throws(() => route({ requestedProvider: "openai" }), /No API key/);
-  assert.equal(route({}, { GOOGLE_KEY: "server" }).providerId, "google");
+  assert.throws(() => route({}), /No API key configured/);
+  // Per-provider server keys no longer route anything.
+  assert.throws(
+    () => route({}, { GOOGLE_KEY: "server", OPENROUTER_KEY: "server" }),
+    /No API key configured/,
+  );
+});
+
+test("an OpenRouter customer key still routes to OpenRouter unchanged", () => {
+  const result = route(
+    { requestedProvider: "openrouter", clientApiKey: "or-customer" },
+    { AI_GATEWAY_API_KEY: "platform" },
+  );
+  assert.deepEqual(result, {
+    kind: "byok",
+    providerId: "openrouter",
+    gatewayModelId: undefined,
+    apiKey: "or-customer",
+    apiKeySource: "client-byok",
+  });
+});
+
+test("platform credentials route only through AI Gateway", () => {
+  for (const env of [
+    { AI_GATEWAY_API_KEY: "gw" },
+    { AI_GATEWAY_TOKEN: "gw" },
+    { VERCEL_OIDC_TOKEN: "oidc" },
+    { VERCEL: "1" },
+  ]) {
+    const result = route({}, { ...env, OPENROUTER_KEY: "server" });
+    assert.equal(result.kind, "platform-gateway");
+    assert.equal(result.providerId, "gateway");
+    assert.equal(result.apiKeySource, "platform-gateway");
+    assert.equal(result.platformModelId, PLATFORM_DEFAULT_MODEL);
+    assert.equal("apiKey" in result, false);
+  }
+});
+
+test("platform default model is configurable and validated", () => {
+  const gw = { AI_GATEWAY_API_KEY: "gw" };
+  assert.equal(
+    route({}, { ...gw, ARCANEA_DEFAULT_MODEL: "anthropic/claude-x" })
+      .platformModelId,
+    "anthropic/claude-x",
+  );
+  for (const invalid of ["", "no-slash", "a/b/c", "https://evil/x", " /x"]) {
+    assert.equal(
+      resolvePlatformDefaultModel({ ARCANEA_DEFAULT_MODEL: invalid }),
+      PLATFORM_DEFAULT_MODEL,
+    );
+  }
+});
+
+test("explicit platform models need a gateway id or fail closed", () => {
+  const gwModels = {
+    ...models,
+    "google-gw": { provider: "google", platformGatewayId: "google/gw-model" },
+  };
+  const env = { AI_GATEWAY_API_KEY: "gw" };
+  const result = resolveProviderRoute(
+    { gatewayModel: "google-gw" },
+    providers,
+    gwModels,
+    env,
+  );
+  assert.equal(result.platformModelId, "google/gw-model");
+  assert.equal(result.gatewayModelId, "google-gw");
+  assert.throws(
+    () =>
+      resolveProviderRoute(
+        { gatewayModel: "openai-model" },
+        providers,
+        gwModels,
+        env,
+      ),
+    /needs your own provider key/,
+  );
+  assert.throws(
+    () =>
+      resolveProviderRoute(
+        { requestedProvider: "openai", gatewayModel: "google-gw" },
+        providers,
+        gwModels,
+        env,
+      ),
+    /does not match/,
+  );
+});
+
+test("migrated platform call sites never reach OpenRouter", () => {
+  for (const file of [
+    "apps/web/lib/ai/provider-routing.ts",
+    "apps/web/lib/ai/platform-gateway.ts",
+    "apps/web/app/api/imagine/enhance/route.ts",
+    "apps/web/app/api/apl/enhance/route.ts",
+    "apps/web/app/api/forge/luminor/route.ts",
+    "apps/web/lib/imagine/enhance-image-prompt.ts",
+  ]) {
+    const source = readRepoFile(file);
+    assert.doesNotMatch(source, /openrouter\.ai|OPENROUTER_API_KEY/, file);
+  }
 });
 
 const readRepoFile = (relativePath) =>
