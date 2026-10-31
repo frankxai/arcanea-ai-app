@@ -1,18 +1,22 @@
 # Arcanean Godbeasts — Foundation Review and Production Packet
+
 Date: 30 October 2026 · Status: proposal and repository audit · Owner: Frank Riemer
 Reviewed repository main: bff204b254b7358f8db8c64ecbf576c099d1c9bd.
 
 ## Decision
+
 Preserve the ten names, Gate assignments and bonds. Develop the Godbeasts as sovereign living powers whose anatomy, relationships and ecological consequences express their domains. Resolve conflicting depictions before promoting any identity master. Later Gates add responsibilities, not a universal combat hierarchy.
 
 This packet supplies recommendations, not creator acceptance. The current request authorizes development and review; it does not select one of the previously contradictory physical identities. No locked source is edited.
 
 ## Evidence and limits
+
 Read: CANON_LOCKED.md; all ten local Godbeast records; identity readiness v1.10.0; its JSON projection; the Godbeast Codex; the web Godbeasts component; root AGENTS and current production notes. This is a source and design-brief review. Existing image pixels, turnarounds, rigs and live deployment were not visually inspected in this cycle. No image quality score or deployment success is claimed.
 
 The readiness index reports eight discovery-only, two blocked, zero source-complete identities. Only Veloura's Phoenix-Serpent and Laeylinn's Worldtree Deer base forms have explicit approval in the locked source. Complete anatomy remains unresolved. The index calls several candidates “tested”, but campaign metadata says planned / not-generated with null public image URLs: do not claim completed visual experiments from that wording.
 
 ## Authority
+
 1. Locked repository statements and explicit dated creator decisions.
 2. Local profiles, with their uncertainty and inference language retained.
 3. Proposed identity atlas and story actions.
@@ -22,43 +26,47 @@ The readiness index reports eight discovery-only, two blocked, zero source-compl
 The locked file itself mixes locked and staging sections. Its February header predates March/April entries. The approval log retains an older Heart frequency entry while the later unique-frequency table sets Heart to 417 Hz. Version and section status matter more than filename or header alone. Frequencies here are fictional world conventions, not real therapeutic claims.
 
 ## Current roster
-| Godbeast | Gate / Guardian | Earlier Codex depiction | Current app depiction | Atlas candidate |
-|---|---|---|---|---|
-| Kaelith | Foundation / Lyssandria | Obsidian-basalt serpent | Stone serpent-dragon | Ringback; six load-limbs |
-| Veloura | Flow / Leyla | Transforming Phoenix-Serpent | Phoenix-Serpent | Phase Wyrm; two phase terminals |
-| Draconis | Fire / Draconia | Kingdom-spanning winged dragon | Solar lion-dragon | Wingless ceramic draconic progenitor; six limbs |
-| Laeylinn | Heart / Maylinn | Deer with living-tree antlers | Glowing forest stag | Worldtree Deer; four canopy boughs, one broken |
-| Otome | Voice / Alera | Storm Moth | Deep-song whale | Non-aquatic Resonance Leviathan; five tuning ribs |
-| Yumiko | Sight / Lyria | Silver three-tailed fox | Owl-serpent title, nine-tail prose | Aperture Owl-Serpent; six body segments |
-| Sol | Crown / Aiyami | Hand-sized stationary flame | Crystallized-light dragon | Lens-bodied Heliostat; disputed four/six limbs |
-| Vaelith | Starweave / Elara | Fractal eye; old “Shift” Gate | Eight-tailed fox | Eightfold Parallax Fox |
-| Kyuro | Unity / Ino | Two-headed living bridge | Tiger-dragon; nine plasma tails | Two-headed bridge body; nine pillar-limbs |
-| Source | Source / Shinkami | Awareness of the unity of all beasts | Cosmic wolf and complete fusion | Nine-being convergence; conflicts with distinct bonded Source |
+
+| Godbeast | Gate / Guardian         | Earlier Codex depiction              | Current app depiction              | Atlas candidate                                               |
+| -------- | ----------------------- | ------------------------------------ | ---------------------------------- | ------------------------------------------------------------- |
+| Kaelith  | Foundation / Lyssandria | Obsidian-basalt serpent              | Stone serpent-dragon               | Ringback; six load-limbs                                      |
+| Veloura  | Flow / Leyla            | Transforming Phoenix-Serpent         | Phoenix-Serpent                    | Phase Wyrm; two phase terminals                               |
+| Draconis | Fire / Draconia         | Kingdom-spanning winged dragon       | Solar lion-dragon                  | Wingless ceramic draconic progenitor; six limbs               |
+| Laeylinn | Heart / Maylinn         | Deer with living-tree antlers        | Glowing forest stag                | Worldtree Deer; four canopy boughs, one broken                |
+| Otome    | Voice / Alera           | Storm Moth                           | Deep-song whale                    | Non-aquatic Resonance Leviathan; five tuning ribs             |
+| Yumiko   | Sight / Lyria           | Silver three-tailed fox              | Owl-serpent title, nine-tail prose | Aperture Owl-Serpent; six body segments                       |
+| Sol      | Crown / Aiyami          | Hand-sized stationary flame          | Crystallized-light dragon          | Lens-bodied Heliostat; disputed four/six limbs                |
+| Vaelith  | Starweave / Elara       | Fractal eye; old “Shift” Gate        | Eight-tailed fox                   | Eightfold Parallax Fox                                        |
+| Kyuro    | Unity / Ino             | Two-headed living bridge             | Tiger-dragon; nine plasma tails    | Two-headed bridge body; nine pillar-limbs                     |
+| Source   | Source / Shinkami       | Awareness of the unity of all beasts | Cosmic wolf and complete fusion    | Nine-being convergence; conflicts with distinct bonded Source |
 
 ## Quality judgment
+
 The best foundation is the relation between power and responsibility. The bond is recognition rather than ownership; each domain can become harmful when isolated from the others. Laeylinn and Veloura have the strongest established base forms. Kaelith's load redistribution, Draconis's tempering anatomy, Otome's acoustic anatomy and Kyuro's shared crossing are promising functional concepts.
 
 The weaker pattern is descriptive escalation: older, larger, brighter, omnipresent. Absolute truth detection, perfect prophecy and universal clarity remove the uncertainty stories need. The newer designs improve causality, but several become anatomical puzzles before they become animals. Every creature needs plausible rest, attention, refusal, movement and a relationship someone can recognize.
 
 ## Conflict repair register
-| ID | Evidence | Recommended repair | Acceptance condition |
-|---|---|---|---|
-| GB-01 | Public component asserts disputed bodies | Make public cards consume a reviewed projection with explicit depiction status; preserve URLs | No unaccepted body is labeled settled canon |
-| GB-02 | Yumiko owl-serpent title / nine tails / older fox | Prefer aperture body as a proposal; remove incompatible nine-tail prose in its approved adaptation | One coherent body and motion sheet |
-| GB-03 | Sol four limbs / proposed six-limb draconic rule | Prefer compact non-draconic four-limbed Heliostat; retain Crown bond | Creator decides clade exception or reclassification |
-| GB-04 | Source bonded entity / convergence / cosmic wolf | Preserve Source identity and bond; propose convergence as manifestation, not deletion of the entity | Explicit ontology decision with affected references |
-| GB-05 | Kyuro bridge / plasma tails / nine limbs | Prefer bridge behavior, but test locomotion before committing odd limb count | Stable stance and walk cycle; terminals distinguished from legs |
-| GB-06 | Chord number forces body-part counts | Preserve Chords as resonance functions; visible terminals need not all be limbs or tails | Each terminal has a function and countable view |
-| GB-07 | Material correspondences are staging and profiles infer anatomy from them | Mark the derivation as inference; a named mineral does not prove a creature's body | Claim-level source and state fields |
-| GB-08 | “Tested” candidates have planned generation metadata | Rename to proposed candidates or attach actual experiment receipts | Actual asset, prompt, reviewer and result |
-| GB-09 | Source profile says only Malachar fully opened Source; rank definitions differ | Reconcile opened/attempted forced fusion and Luminor rank in a dedicated lore decision | Timeline and rank assertions agree |
-| GB-10 | Nero is not evil; later “Nero Shards” imply automatic corruption | Distinguish primordial Void from corrupted fragments in every material description | Neutral Void remains visibly possible |
-| GB-11 | Older Codex says Shift; locked table says Starweave | Update adaptation terminology through a scoped content repair | No unlabeled historical name on current cards |
-| GB-12 | Source's absolute awareness and other omniscient powers flatten plot | Define viewpoint, range, cost, failure and refusal separately | Each power can fail without arbitrary suppression |
+
+| ID    | Evidence                                                                       | Recommended repair                                                                                  | Acceptance condition                                            |
+| ----- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| GB-01 | Public component asserts disputed bodies                                       | Make public cards consume a reviewed projection with explicit depiction status; preserve URLs       | No unaccepted body is labeled settled canon                     |
+| GB-02 | Yumiko owl-serpent title / nine tails / older fox                              | Prefer aperture body as a proposal; remove incompatible nine-tail prose in its approved adaptation  | One coherent body and motion sheet                              |
+| GB-03 | Sol four limbs / proposed six-limb draconic rule                               | Prefer compact non-draconic four-limbed Heliostat; retain Crown bond                                | Creator decides clade exception or reclassification             |
+| GB-04 | Source bonded entity / convergence / cosmic wolf                               | Preserve Source identity and bond; propose convergence as manifestation, not deletion of the entity | Explicit ontology decision with affected references             |
+| GB-05 | Kyuro bridge / plasma tails / nine limbs                                       | Prefer bridge behavior, but test locomotion before committing odd limb count                        | Stable stance and walk cycle; terminals distinguished from legs |
+| GB-06 | Chord number forces body-part counts                                           | Preserve Chords as resonance functions; visible terminals need not all be limbs or tails            | Each terminal has a function and countable view                 |
+| GB-07 | Material correspondences are staging and profiles infer anatomy from them      | Mark the derivation as inference; a named mineral does not prove a creature's body                  | Claim-level source and state fields                             |
+| GB-08 | “Tested” candidates have planned generation metadata                           | Rename to proposed candidates or attach actual experiment receipts                                  | Actual asset, prompt, reviewer and result                       |
+| GB-09 | Source profile says only Malachar fully opened Source; rank definitions differ | Reconcile opened/attempted forced fusion and Luminor rank in a dedicated lore decision              | Timeline and rank assertions agree                              |
+| GB-10 | Nero is not evil; later “Nero Shards” imply automatic corruption               | Distinguish primordial Void from corrupted fragments in every material description                  | Neutral Void remains visibly possible                           |
+| GB-11 | Older Codex says Shift; locked table says Starweave                            | Update adaptation terminology through a scoped content repair                                       | No unlabeled historical name on current cards                   |
+| GB-12 | Source's absolute awareness and other omniscient powers flatten plot           | Define viewpoint, range, cost, failure and refusal separately                                       | Each power can fail without arbitrary suppression               |
 
 Smallest ontology repair for GB-04: “Source is Shinkami's bonded Godbeast. Its manifestation may be relational rather than a stable animal body.” This is proposed replacement language, not a canon lock. The convergence interpretation still requires a decision.
 
 ## World structure
+
 Godbeasts should shape conditions under which stories happen. Their movement changes waterways, load paths, migration, building practice and ritual. Mortals build institutions around those consequences and sometimes misunderstand them. Give each region at least one industry, one species and one conflict independent of its Godbeast.
 
 Keep four distinct scales: ordinary fauna; extraordinary local creatures; historic or sacred regional beings; the ten Godbeasts. These are proposed narrative categories, not new locked species classes. A wolf, whale or turtle can be memorable without becoming a primordial god. Preserve local specificity and ordinary stakes.
@@ -68,6 +76,7 @@ A city can depend on a Godbeast and reject its priesthood. A beast can be belove
 Proposed relationships to test: Kaelith's stability versus Veloura's circulation; Draconis's transformation versus Laeylinn's consent; Otome's public speech versus Yumiko's incomplete knowledge; Sol's illumination versus Vaelith's irreversible choice; Kyuro mediating without dissolving disagreement. Source cannot settle these disputes for the cast.
 
 ## Studio lessons
+
 Framestore brought animators into Fantastic Beasts during concept development, used movement tests to assess creatures in scenes, and developed the Niffler from animal references and comic behavior. Its account describes extensive Niffler and Pickett iteration. Adopt the sequence: behavior question → anatomy → movement test → scene → surface refinement.
 Source: https://www.framestore.com/work/fantastic-beasts-and-where-find-them
 
@@ -78,9 +87,11 @@ The official Naruto Kurama and Baryon Mode entries describe a partnership whose 
 Sources: https://naruto-official.com/en/news/01_1896 and https://naruto-official.com/en/news/01_1895
 
 ## Production contract
+
 Each beast needs: identity ID; canonical relationship; claim status; physical invariants; permissible variations; scale; material; sensory anatomy; locomotion; rest; attention; refusal; wound; desire; history; ecosystem dependencies; three relationships; power source/range/cost/limit/trace; story-time state; approved references; prompt/model provenance; reviewer decision.
 
 Keep four artifacts per identity:
+
 - identity.md: reviewed facts and decisions with source revision.
 - visual.md: anatomy, material, motion, expression and forbidden drift.
 - story.md: desire, wound, refusal, relationships, ecological effects and scene tests.
@@ -89,6 +100,7 @@ Keep four artifacts per identity:
 These are proposed file responsibilities. Extend the current atlas and lore records rather than introducing a second competing canon registry. The app must consume a projection, not maintain its own handwritten pantheon.
 
 ## Validation and release
+
 1. Black silhouette at thumbnail size; recognizable with names and colors hidden.
 2. Front, side, rear, top views agree on anatomy and terminal count.
 3. Rest → attention → locomotion → refusal → action all preserve the same organism.
@@ -101,11 +113,13 @@ These are proposed file responsibilities. Extend the current atlas and lore reco
 10. Pass the repository's lore and release checks before promotion. No production claim from this document.
 
 ## Execution order
+
 First: reconcile the Source/Sol ontology and public-card status. Next: finish Laeylinn and Veloura as the two already grounded base forms. Then prove Kaelith and Otome through anatomy and action. Resolve Yumiko/Vaelith separation and Kyuro locomotion before ensemble art. Produce Draconis with differentiated scale and thermal behavior. Only after identity decisions produce Source/Sol final masters.
 
 Target batch after identity decisions: four grayscale silhouettes per unresolved body; one selected turnaround; five behavior frames; three world/dyad scenes. These are planned deliverables, not generated assets.
 
 ## Task contract
+
 Scope: documentation and review packet; no runtime or canon mutation.
 Owner: Codex prepares; Frank decides locked identity changes.
 Files: this review and a portable machine-readable proposal export.
@@ -115,6 +129,7 @@ Rollback: remove the new proposal document. Existing canon and application behav
 Build/typecheck/lint: not run; this packet changes no application code. Runtime integration remains a separate tested patch.
 
 ## Kaelith — Foundation
+
 Bond: Lyssandria. Fictional carrier: 174 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Tested morphology candidate — the Ringback: a colossal stone wyrm closed into a load-bearing annulus, with six load-limbs, a face recessed inside the ring, and the single unbroken annulus as its countable Chord.
@@ -138,6 +153,7 @@ Bond: Lyssandria. Fictional carrier: 174 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Veloura — Flow
+
 Bond: Leyla. Fictional carrier: 285 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Locally grounded base form with tested detail candidate — the Phase Wyrm, a Phoenix-Serpent whose two distinct Chord terminals are one condensing feather-fin and one ember edge that ignites only at phase boundaries.
@@ -161,6 +177,7 @@ Bond: Leyla. Fictional carrier: 285 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Draconis — Fire
+
 Bond: Draconia. Fictional carrier: 396 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Tested morphology candidate — the Solar Crucible: a wingless, six-limbed, ceramic-plated draconic progenitor with a recessed mask-face, furnace ribcage, and exactly three functionally distinct temper vanes.
@@ -184,6 +201,7 @@ Bond: Draconia. Fictional carrier: 396 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Laeylinn — Heart
+
 Bond: Maylinn. Fictional carrier: 417 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Locally grounded base form with tested detail candidate — a Worldtree Deer and scion of Enarys, bearing four countable canopy boughs with one visibly self-broken bough that is never regrown.
@@ -207,6 +225,7 @@ Bond: Maylinn. Fictional carrier: 417 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Otome — Voice
+
 Bond: Alera. Fictional carrier: 528 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Tested morphology candidate — the Resonance Leviathan: a non-aquatic pressure-being with no conventional whale head, one concentrated eye, and exactly five functionally distinct tuning ribs that alter pressure and architecture.
@@ -230,6 +249,7 @@ Bond: Alera. Fictional carrier: 528 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Yumiko — Sight
+
 Bond: Lyria. Fictional carrier: 639 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Tested morphology candidate — the Aperture Owl-Serpent: a six-segment non-draconic body with a non-avian face, still forward eyes, and a peripheral sensory mantle; extraordinary behavior is limited to occlusion and aperture.
@@ -253,6 +273,7 @@ Bond: Lyria. Fictional carrier: 639 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Sol — Crown
+
 Bond: Aiyami. Fictional carrier: 741 Hz. Readiness: blocked.
 
 **Existing candidate:** Conflicted morphology candidate — the Heliostat: a compact lens-bodied draconid with one emotionally readable eye and exactly seven radial lens plates; the proposal specifies four limbs while its own proposed draconic-clade law requires six.
@@ -276,6 +297,7 @@ Bond: Aiyami. Fictional carrier: 741 Hz. Readiness: blocked.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Vaelith — Starweave
+
 Bond: Elara. Fictional carrier: 852 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Tested morphology candidate — the Eightfold Parallax Fox, the pantheon's only fox, with exactly eight functionally distinct path-tails and no masks, shrine iconography, wisp-fire, or ninth tail.
@@ -299,6 +321,7 @@ Bond: Elara. Fictional carrier: 852 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Kyuro — Unity
+
 Bond: Ino. Fictional carrier: 963 Hz. Readiness: discovery-only.
 
 **Existing candidate:** Tested morphology candidate — the Bridge: one arched body with two opposite-facing heads of tigrine cranial architecture, nine countable pillar-limbs, and the shared ninth limb acting as keystone; no tails.
@@ -322,6 +345,7 @@ Bond: Ino. Fictional carrier: 963 Hz. Readiness: discovery-only.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Source / Ten-Chorded — Source
+
 Bond: Shinkami. Fictional carrier: 1111 Hz. Readiness: blocked.
 
 **Existing candidate:** Unresolved ontology candidate — locked repo canon names Source as Shinkami's Godbeast, while the creator proposal replaces a tenth creature with the relational convergence silhouette of all nine Godbeasts plus the Arc.
@@ -345,6 +369,7 @@ Bond: Shinkami. Fictional carrier: 1111 Hz. Readiness: blocked.
 **Next iteration:** prove rest and locomotion before polishing this scene. Compare against the other nine in grayscale; retain only details that carry biology, history or function.
 
 ## Source map
+
 - [Locked truths](https://github.com/frankxai/arcanea-ai-app/blob/bff204b254b7358f8db8c64ecbf576c099d1c9bd/.arcanea/lore/CANON_LOCKED.md)
 - [Ten local profiles](https://github.com/frankxai/arcanea-ai-app/blob/bff204b254b7358f8db8c64ecbf576c099d1c9bd/.arcanea/lore/godbeasts)
 - [Readiness index](https://github.com/frankxai/arcanea-ai-app/blob/bff204b254b7358f8db8c64ecbf576c099d1c9bd/docs/design/ARCANEA_GODBEAST_IDENTITY_READINESS_V1.md)
