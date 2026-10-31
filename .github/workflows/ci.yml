@@ -438,6 +438,9 @@ jobs:
       - name: Run package tests
         run: pnpm test:quick
 
+      - name: Verify public browser tool boundaries
+        run: pnpm --dir apps/web test:webmcp
+
       - name: Verify model routing and native CLI adapters
         timeout-minutes: 2
         run: |
