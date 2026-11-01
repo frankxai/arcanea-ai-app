@@ -1,0 +1,101 @@
+{
+  "description": "Actual browser screenshots at all six viewport/theme settings per state. Page uses its existing dark cosmic design in either preference. Lossless WebP files retain all original dark-preference pixels. Before: original Atlas route; after: geography tab, moment50, eastern region selected. Local Chrome130 headless shell; dev server. No production or field-performance claim.",
+  "captures": [
+    {
+      "state": "before",
+      "width": 375,
+      "theme": "light",
+      "pixels": [375, 5929],
+      "sourceScreenshotSha256": "42d62e59602c5ed165ff5bcd2a3c8439137f7a0eca5929fa712b21bbfc4e9434"
+    },
+    {
+      "state": "before",
+      "width": 375,
+      "theme": "dark",
+      "pixels": [375, 5929],
+      "sourceScreenshotSha256": "05766d4092273470801fa4b1fafd0b02dfa305984ef65ffd57fa81c77243d19a",
+      "losslessReviewFile": "before-375.webp",
+      "reviewFileSha256": "551b64d4dffd1d1476aa93c7516303b9c3eb6cfe2291441a88cc9745c2bcb540"
+    },
+    {
+      "state": "before",
+      "width": 768,
+      "theme": "light",
+      "pixels": [768, 4269],
+      "sourceScreenshotSha256": "ff832986e4ebdfd2993465064e3d57cf1309162218acfdcd3cd4bbf5537aa096"
+    },
+    {
+      "state": "before",
+      "width": 768,
+      "theme": "dark",
+      "pixels": [768, 4269],
+      "sourceScreenshotSha256": "8e59b15c850f73fb97609e0447451f3d312d9e4428e7b9b2de5e6fcaf02d8ea8",
+      "losslessReviewFile": "before-768.webp",
+      "reviewFileSha256": "47938317f4c340e2423eb4d60be97258821f48567708cfd8a76ebcc690e060c9"
+    },
+    {
+      "state": "before",
+      "width": 1440,
+      "theme": "light",
+      "pixels": [1440, 3562],
+      "sourceScreenshotSha256": "b1d4e7d25b6a6da3e596fba21cead6219b083cbc8849e87b4187bbd6c474818c"
+    },
+    {
+      "state": "before",
+      "width": 1440,
+      "theme": "dark",
+      "pixels": [1440, 3562],
+      "sourceScreenshotSha256": "182b794f8a51761d884fac7a1579c819acf7550502479de7b207486372ecb95d",
+      "losslessReviewFile": "before-1440.webp",
+      "reviewFileSha256": "d262de82f1f0d528a9281d4e20e6c9a9a159105036c265c380d288ff1f9990b6"
+    },
+    {
+      "state": "after",
+      "width": 375,
+      "theme": "light",
+      "pixels": [375, 4881],
+      "sourceScreenshotSha256": "9f2b3ce00dbd4532650562c458dcee9a71da4430e26c0ac3fd4dcc33126c5c89"
+    },
+    {
+      "state": "after",
+      "width": 375,
+      "theme": "dark",
+      "pixels": [375, 4881],
+      "sourceScreenshotSha256": "516e17e66308d95b402ef9b2cb95c6a58e979d88da7fcf45a71994d49640697a",
+      "losslessReviewFile": "after-375.webp",
+      "reviewFileSha256": "044ddb6f556012798fe31f61b694ac38055ea80305f153e1ca9bb6960d69f4e3"
+    },
+    {
+      "state": "after",
+      "width": 768,
+      "theme": "light",
+      "pixels": [768, 4032],
+      "sourceScreenshotSha256": "982c9c7cac2ab185a199d5524cb34cf8faea41b66a31798a3c3cc6682935e736"
+    },
+    {
+      "state": "after",
+      "width": 768,
+      "theme": "dark",
+      "pixels": [768, 4032],
+      "sourceScreenshotSha256": "f17b606453ab16a8ae5daf7f117e214aa72247fcf2f1183ea4d5768a51b87afb",
+      "losslessReviewFile": "after-768.webp",
+      "reviewFileSha256": "64f88de33f22cf7ce90e5e7202a61a2a3985ded71e2ae45a23836075951c4e77"
+    },
+    {
+      "state": "after",
+      "width": 1440,
+      "theme": "light",
+      "pixels": [1440, 2981],
+      "sourceScreenshotSha256": "47cf6b48a791941eac9453ed4eb08c1c4e0b41fed83b47f5732e5f80dccf608d"
+    },
+    {
+      "state": "after",
+      "width": 1440,
+      "theme": "dark",
+      "pixels": [1440, 2981],
+      "sourceScreenshotSha256": "47cf6b48a791941eac9453ed4eb08c1c4e0b41fed83b47f5732e5f80dccf608d",
+      "losslessReviewFile": "after-1440.webp",
+      "reviewFileSha256": "10f548469d267958237092b390fbdea1e40d22c11c5a4bebdbcf7ffd76217d7b"
+    }
+  ]
+}
