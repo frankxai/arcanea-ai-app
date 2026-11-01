@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import type {
   RealmDefinition,
@@ -16,6 +17,7 @@ import {
   traceEntityProvenance,
   type CanonicalGuardianEntity,
   type MonomythStage,
+  type GeographicAtlas,
 } from "@arcanea/world-engine";
 import {
   Compass,
@@ -29,6 +31,9 @@ import {
   Scroll,
 } from "@/lib/phosphor-icons";
 import { RealmConstellation } from "./realm-constellation";
+const GeographicMap = dynamic(() => import("./geographic-map"), {
+  loading: () => <p role="status">Loading geographic survey…</p>,
+});
 
 // ---------------------------------------------------------------------------
 // Props Interface
@@ -40,10 +45,16 @@ interface AtlasClientProps {
   epochs: TemporalEpoch[];
   guardians: CanonicalGuardianEntity[];
   monomythStages: MonomythStage[];
+  geographicAtlas: GeographicAtlas;
 }
 
 type TabKey =
-  "cartography" | "linguistics" | "magic_toll" | "monomyth" | "provenance";
+  | "cartography"
+  | "geography"
+  | "linguistics"
+  | "magic_toll"
+  | "monomyth"
+  | "provenance";
 
 const TABS: {
   id: TabKey;
@@ -51,6 +62,7 @@ const TABS: {
   icon: React.ComponentType<{ className?: string }>;
 }[] = [
   { id: "cartography", label: "Realms & Corridors", icon: MapTrifold },
+  { id: "geography", label: "Geography & history", icon: Compass },
   { id: "linguistics", label: "Linguistic Matrices", icon: Scroll },
   { id: "magic_toll", label: "Sandersonian Tolls", icon: Scales },
   { id: "monomyth", label: "12-Stage Monomyth", icon: Compass },
@@ -63,6 +75,7 @@ export function AtlasClient({
   epochs,
   guardians,
   monomythStages,
+  geographicAtlas,
 }: AtlasClientProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("cartography");
 
@@ -169,6 +182,7 @@ export function AtlasClient({
         tabParam &&
         [
           "cartography",
+          "geography",
           "linguistics",
           "magic_toll",
           "monomyth",
@@ -220,16 +234,26 @@ export function AtlasClient({
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs font-medium tracking-wide text-white/70 uppercase">
               <Sparkle className="w-3.5 h-3.5 text-[var(--arc-brand-arcanean-gold,#d4af37)]" />
-              <span>Universal Acoustic Cartography</span>
+              <span>
+                {activeTab === "geography"
+                  ? "World geography and continuity"
+                  : "Universal Acoustic Cartography"}
+              </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-light tracking-tight font-serif text-white">
               The Multiverse Atlas
             </h1>
             <p className="text-base sm:text-lg text-white/60 leading-relaxed font-sans">
-              Inspect the physical leylines of the Kingdom of Light. Calculate
-              Solfeggio standing-wave resonance across Realm Corridors, explore
-              Tolkien-grade linguistic matrices, and measure the tactile toll of
-              Sandersonian magic.
+              {activeTab === "geography" ? (
+                "Explore a fictional geographic survey across story moments, with versioned boundaries and linked character and event locations."
+              ) : (
+                <>
+                  Inspect the physical leylines of the Kingdom of Light.
+                  Calculate Solfeggio standing-wave resonance across Realm
+                  Corridors, explore Tolkien-grade linguistic matrices, and
+                  measure the tactile toll of Sandersonian magic.
+                </>
+              )}
             </p>
           </div>
 
@@ -259,6 +283,9 @@ export function AtlasClient({
             </nav>
           </div>
 
+          {activeTab === "geography" && (
+            <GeographicMap atlas={geographicAtlas} />
+          )}
           {/* TAB 1: CARTOGRAPHY & CORRIDORS */}
           {activeTab === "cartography" && (
             <m.div

@@ -1,0 +1,390 @@
+{
+  "schemaVersion": "realm.arcanea.graph.v0",
+  "releaseId": "ATLAS-FIXTURE-001",
+  "description": "Fictional geographic interaction fixture. All map features, timeline moments, character locations and events are STAGING test data, never locked Arcanea canon.",
+  "entities": [
+    {
+      "id": "place:fixture-world",
+      "type": "place",
+      "label": "Survey world"
+    },
+    {
+      "id": "timeline:atlas-fixture",
+      "type": "timeline",
+      "label": "Survey chronology"
+    },
+    {
+      "id": "place:fixture-west",
+      "type": "place",
+      "label": "Western reach"
+    },
+    {
+      "id": "place:fixture-east",
+      "type": "place",
+      "label": "Eastern basin"
+    },
+    {
+      "id": "place:fixture-west-port",
+      "type": "place",
+      "label": "West port"
+    },
+    {
+      "id": "place:fixture-east-port",
+      "type": "place",
+      "label": "East port"
+    },
+    {
+      "id": "character:fixture-cartographer",
+      "type": "character",
+      "label": "Test cartographer"
+    },
+    {
+      "id": "event:fixture-flood",
+      "type": "event",
+      "label": "The survey flood"
+    },
+    {
+      "id": "work:atlas-fixture",
+      "type": "work",
+      "label": "Synthetic atlas proof"
+    },
+    {
+      "id": "scene:fixture-after",
+      "type": "scene",
+      "label": "Synthetic survey after the flood",
+      "workId": "work:atlas-fixture",
+      "timelineId": "timeline:atlas-fixture",
+      "moment": 50,
+      "participants": ["character:fixture-cartographer"]
+    }
+  ],
+  "assertions": [
+    {
+      "id": "geo:west:before",
+      "subjectId": "place:fixture-west",
+      "predicate": "geography",
+      "value": {
+        "schemaVersion": "atlas.feature.v1",
+        "worldId": "place:fixture-world",
+        "kind": "region",
+        "parentId": null,
+        "description": "The original western survey boundary follows the old river channel. Compare it with the post-flood survey at moment 50.",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [140, 170],
+            [230, 110],
+            [390, 135],
+            [500, 220],
+            [470, 330],
+            [510, 430],
+            [390, 520],
+            [210, 480],
+            [160, 350],
+            [140, 170]
+          ]
+        }
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 0,
+        "to": 50
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "geo:west:after",
+      "subjectId": "place:fixture-west",
+      "predicate": "geography",
+      "value": {
+        "schemaVersion": "atlas.feature.v1",
+        "worldId": "place:fixture-world",
+        "kind": "region",
+        "parentId": null,
+        "description": "The flood redraws the eastern edge of this fictional region. The earlier boundary is retained as a separate sourced version.",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [140, 170],
+            [230, 110],
+            [390, 135],
+            [440, 235],
+            [400, 325],
+            [425, 425],
+            [390, 520],
+            [210, 480],
+            [160, 350],
+            [140, 170]
+          ]
+        }
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 50,
+        "to": null
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "geo:east:before",
+      "subjectId": "place:fixture-east",
+      "predicate": "geography",
+      "value": {
+        "schemaVersion": "atlas.feature.v1",
+        "worldId": "place:fixture-world",
+        "kind": "region",
+        "parentId": null,
+        "description": "The eastern basin before the survey flood. Its western edge adjoins the original channel.",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [500, 220],
+            [600, 140],
+            [775, 185],
+            [855, 305],
+            [800, 455],
+            [650, 515],
+            [510, 430],
+            [470, 330],
+            [500, 220]
+          ]
+        }
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 0,
+        "to": 50
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "geo:east:after",
+      "subjectId": "place:fixture-east",
+      "predicate": "geography",
+      "value": {
+        "schemaVersion": "atlas.feature.v1",
+        "worldId": "place:fixture-world",
+        "kind": "region",
+        "parentId": null,
+        "description": "The eastern basin expands to the new river channel after the fictional flood.",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [440, 235],
+            [600, 140],
+            [775, 185],
+            [855, 305],
+            [800, 455],
+            [650, 515],
+            [425, 425],
+            [400, 325],
+            [440, 235]
+          ]
+        }
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 50,
+        "to": null
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "geo:west-port",
+      "subjectId": "place:fixture-west-port",
+      "predicate": "geography",
+      "value": {
+        "schemaVersion": "atlas.feature.v1",
+        "worldId": "place:fixture-world",
+        "kind": "settlement",
+        "parentId": "place:fixture-west",
+        "description": "A test settlement used to check parent-region containment and character locations.",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [290, 355]
+        }
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 0,
+        "to": null
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "geo:east-port",
+      "subjectId": "place:fixture-east-port",
+      "predicate": "geography",
+      "value": {
+        "schemaVersion": "atlas.feature.v1",
+        "worldId": "place:fixture-world",
+        "kind": "settlement",
+        "parentId": "place:fixture-east",
+        "description": "The cartographer arrives here at moment 50. This location is fictional test data.",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [675, 330]
+        }
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 0,
+        "to": null
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "location:cartographer:before",
+      "subjectId": "character:fixture-cartographer",
+      "predicate": "location",
+      "value": "place:fixture-west-port",
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 0,
+        "to": 50
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "location:cartographer:after",
+      "subjectId": "character:fixture-cartographer",
+      "predicate": "location",
+      "value": "place:fixture-east-port",
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 50,
+        "to": null
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "location:flood",
+      "subjectId": "event:fixture-flood",
+      "predicate": "location",
+      "value": "place:fixture-east",
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": {
+        "timelineId": "timeline:atlas-fixture",
+        "from": 50,
+        "to": 51
+      },
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    },
+    {
+      "id": "timeline:atlas-definition",
+      "subjectId": "timeline:atlas-fixture",
+      "predicate": "atlasTimeline",
+      "value": {
+        "schemaVersion": "atlas.timeline.v1",
+        "worldId": "place:fixture-world",
+        "from": 0,
+        "to": 100,
+        "eras": [
+          {
+            "moment": 0,
+            "label": "Before the flood"
+          },
+          {
+            "moment": 50,
+            "label": "The flood"
+          },
+          {
+            "moment": 75,
+            "label": "Later survey"
+          }
+        ]
+      },
+      "cardinality": "one",
+      "status": "STAGING",
+      "confidence": 1,
+      "validity": null,
+      "source": {
+        "path": "packages/world-engine/fixtures/atlas-source.md",
+        "sha256": "65fd0e00c98b0b8dbf20b9bb602872811028aa668d1fe5e998d396b9ed33594e"
+      },
+      "affectedArtifacts": ["scene:fixture-after"],
+      "supersedes": []
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": "place:fixture-west",
+      "artifactId": "scene:fixture-after"
+    },
+    {
+      "dependsOn": "scene:fixture-after",
+      "artifactId": "work:atlas-fixture"
+    }
+  ]
+}
