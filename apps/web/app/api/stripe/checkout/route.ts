@@ -6,9 +6,9 @@
  * Fail-closed: see lib/billing/stripe-gate.ts for the go-live conditions.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { stripeCheckoutGate } from '@/lib/billing/stripe-gate';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { stripeCheckoutGate } from "@/lib/billing/stripe-gate";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,27 +20,29 @@ export async function POST(req: NextRequest) {
     if (!gate.ok) {
       return NextResponse.json(
         { error: gate.error, code: gate.refusal, refusal: gate.refusal },
-        { status: gate.status }
+        { status: gate.status },
       );
     }
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Dynamic import to avoid build errors when stripe isn't installed
-    const Stripe = (await import('stripe')).default;
+    const Stripe = (await import("stripe")).default;
     const stripe = new Stripe(gate.secretKey);
 
     const session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
-      payment_method_types: ['card'],
+      mode: "subscription",
+      payment_method_types: ["card"],
       line_items: [{ price: gate.priceId, quantity: 1 }],
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/settings?payment=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/pricing?payment=cancelled`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai"}/settings?payment=success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai"}/pricing?payment=cancelled`,
       customer_email: user.email,
       metadata: {
         user_id: user.id,
@@ -50,15 +52,15 @@ export async function POST(req: NextRequest) {
 
     if (!session.url) {
       return NextResponse.json(
-        { error: 'Checkout session created without a redirect URL.' },
-        { status: 502 }
+        { error: "Checkout session created without a redirect URL." },
+        { status: 502 },
       );
     }
 
     return NextResponse.json({ url: session.url });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Checkout failed';
-    console.error('Stripe checkout error:', message);
+    const message = error instanceof Error ? error.message : "Checkout failed";
+    console.error("Stripe checkout error:", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

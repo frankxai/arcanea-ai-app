@@ -16,7 +16,10 @@ test("a Stripe key alone does not open checkout", () => {
 });
 
 test("billing switch on but tier not marked for sale stays gated", () => {
-  const result = stripeCheckoutGate("studio", { ...configured, ARCANEA_BILLING_ENABLED: "true" });
+  const result = stripeCheckoutGate("studio", {
+    ...configured,
+    ARCANEA_BILLING_ENABLED: "true",
+  });
   assert.equal(!result.ok && result.refusal, "checkout_gated");
 });
 
@@ -27,7 +30,10 @@ test("shipped tier statuses are all closed", () => {
 });
 
 test("for sale but missing price id is unconfigured, not a Stripe call", () => {
-  const env = { ARCANEA_BILLING_ENABLED: "true", STRIPE_SECRET_KEY: "sk_test_x" };
+  const env = {
+    ARCANEA_BILLING_ENABLED: "true",
+    STRIPE_SECRET_KEY: "sk_test_x",
+  };
   const result = stripeCheckoutGate("creator", env, forSale);
   assert.equal(!result.ok && result.refusal, "checkout_unconfigured");
 });
@@ -38,6 +44,14 @@ test("unknown tier is a 400", () => {
 });
 
 test("all gates pass only with switch, for-sale status, key and price", () => {
-  const result = stripeCheckoutGate("creator", { ...configured, ARCANEA_BILLING_ENABLED: "true" }, forSale);
-  assert.deepEqual(result, { ok: true, secretKey: "sk_test_x", priceId: "price_creator" });
+  const result = stripeCheckoutGate(
+    "creator",
+    { ...configured, ARCANEA_BILLING_ENABLED: "true" },
+    forSale,
+  );
+  assert.deepEqual(result, {
+    ok: true,
+    secretKey: "sk_test_x",
+    priceId: "price_creator",
+  });
 });

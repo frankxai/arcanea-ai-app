@@ -37,18 +37,40 @@ export function stripeCheckoutGate(
   statuses: Record<StripeTier, string> = STRIPE_TIER_STATUS,
 ): StripeGateResult {
   if (!isStripeTier(tier)) {
-    return { ok: false, status: 400, refusal: "invalid_tier", error: "Invalid tier" };
+    return {
+      ok: false,
+      status: 400,
+      refusal: "invalid_tier",
+      error: "Invalid tier",
+    };
   }
   if (env.ARCANEA_BILLING_ENABLED !== "true") {
-    return { ok: false, status: 503, refusal: "billing_disabled", error: "Payments are not open yet." };
+    return {
+      ok: false,
+      status: 503,
+      refusal: "billing_disabled",
+      error: "Payments are not open yet.",
+    };
   }
-  if (!statuses[tier].trim().toLowerCase().startsWith(PURCHASABLE_STATUS_PREFIX)) {
-    return { ok: false, status: 503, refusal: "checkout_gated", error: "This plan is not available for purchase yet." };
+  if (
+    !statuses[tier].trim().toLowerCase().startsWith(PURCHASABLE_STATUS_PREFIX)
+  ) {
+    return {
+      ok: false,
+      status: 503,
+      refusal: "checkout_gated",
+      error: "This plan is not available for purchase yet.",
+    };
   }
   const secretKey = env.STRIPE_SECRET_KEY?.trim();
   const priceId = env[PRICE_ENV[tier]]?.trim();
   if (!secretKey || !priceId) {
-    return { ok: false, status: 503, refusal: "checkout_unconfigured", error: "This plan is not configured for purchase." };
+    return {
+      ok: false,
+      status: 503,
+      refusal: "checkout_unconfigured",
+      error: "This plan is not configured for purchase.",
+    };
   }
   return { ok: true, secretKey, priceId };
 }
