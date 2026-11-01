@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState } from "react";
+import { atlasMap } from "@arcanea/design-system/tokens";
 import {
   atlasAtMoment,
   type AtlasFeature,
@@ -206,7 +207,7 @@ export default function GeographicMap({ atlas }: { atlas: GeographicAtlas }) {
                     }}
                   />
                   <g aria-hidden="true" className={styles.contours}>
-                    {[0.8, 0.6, 0.4].map((scale) => (
+                    {atlasMap.contourScales.map((scale) => (
                       <polygon
                         key={scale}
                         points={points(feature)}
@@ -216,7 +217,7 @@ export default function GeographicMap({ atlas }: { atlas: GeographicAtlas }) {
                   </g>
                   <text
                     x={x}
-                    y={y - 25}
+                    y={y + atlasMap.regionLabelOffset}
                     textAnchor="middle"
                     className={styles.regionLabel}
                     aria-hidden="true"
@@ -225,7 +226,7 @@ export default function GeographicMap({ atlas }: { atlas: GeographicAtlas }) {
                   </text>
                   <text
                     x={x}
-                    y={y - 40}
+                    y={y + atlasMap.mobileRegionLabelOffset}
                     textAnchor="middle"
                     className={styles.mobileRegionLabel}
                     aria-hidden="true"
@@ -278,14 +279,17 @@ export default function GeographicMap({ atlas }: { atlas: GeographicAtlas }) {
                       }
                     }}
                   >
-                    <circle cx={x} cy={y} r="24" className={styles.hitArea} />
+                    <circle cx={x} cy={y} className={styles.hitArea} />
                     <circle
                       cx={x}
                       cy={y}
-                      r={present ? 12 : 7}
                       className={present ? styles.occupied : styles.unoccupied}
                     />
-                    <text x={x} y={y + 37} textAnchor="middle">
+                    <text
+                      x={x}
+                      y={y + atlasMap.portLabelOffset}
+                      textAnchor="middle"
+                    >
                       {feature.label}
                     </text>
                   </g>

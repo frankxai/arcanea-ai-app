@@ -107,19 +107,19 @@
 }
 .grid {
   stroke: var(--arc-cosmic-border);
-  stroke-width: 1;
+  stroke-width: var(--arc-border-width);
   fill: none;
 }
 .region {
   fill: var(--arc-cosmic-raised);
   stroke: var(--arc-text-secondary);
-  stroke-width: 2;
+  stroke-width: var(--arc-border-accent-width);
   cursor: pointer;
 }
 .region[data-selected="true"] {
   fill: var(--arc-cosmic-overlay);
   stroke: var(--arc-brand-atlantean-teal);
-  stroke-width: 3;
+  stroke-width: var(--arc-atlas-emphasis-stroke);
 }
 .region:hover,
 .region:focus-visible {
@@ -129,7 +129,7 @@
   pointer-events: none;
   fill: none;
   stroke: var(--arc-text-muted);
-  stroke-width: 1;
+  stroke-width: var(--arc-border-width);
   opacity: var(--arc-disabled-opacity);
 }
 .regionLabel {
@@ -147,13 +147,13 @@
 .earlier {
   fill: none;
   stroke: var(--arc-brand-arcanean-gold);
-  stroke-width: 2;
-  stroke-dasharray: 8 7;
+  stroke-width: var(--arc-border-accent-width);
+  stroke-dasharray: var(--arc-atlas-history-dash);
   pointer-events: none;
 }
 .compass {
   stroke: var(--arc-text-secondary);
-  stroke-width: 2;
+  stroke-width: var(--arc-border-accent-width);
   fill: var(--arc-text-secondary);
   font-size: var(--arc-font-size-heading);
 }
@@ -168,16 +168,19 @@
 }
 .hitArea {
   fill: transparent;
+  r: var(--arc-atlas-hit-radius);
 }
 .occupied {
   fill: var(--arc-brand-arcanean-gold);
   stroke: var(--arc-cosmic-void);
-  stroke-width: 3;
+  stroke-width: var(--arc-atlas-emphasis-stroke);
+  r: var(--arc-atlas-presence-radius);
 }
 .unoccupied {
   fill: none;
   stroke: var(--arc-text-primary);
-  stroke-width: 3;
+  stroke-width: var(--arc-atlas-emphasis-stroke);
+  r: var(--arc-atlas-marker-radius);
 }
 .legend {
   padding: var(--arc-space-3) var(--arc-space-5);
@@ -330,10 +333,10 @@
   }
   .mobileRegionLabel {
     display: initial;
-    font-size: calc(var(--arc-type-media-section-title) * 2);
+    font-size: var(--arc-atlas-region-label-mobile);
   }
   .port {
-    font-size: calc(var(--arc-font-size-heading) * 2);
+    font-size: var(--arc-atlas-port-label-mobile);
   }
   .heading {
     display: block;
