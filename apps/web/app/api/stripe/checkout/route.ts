@@ -3,31 +3,24 @@
  * Stripe Checkout Session API
  *
  * Creates a Stripe Checkout session for upgrading to Creator or Studio tier.
- * Requires STRIPE_SECRET_KEY and STRIPE_PRICE_* env vars.
+ * Fail-closed: see lib/billing/stripe-gate.ts for the go-live conditions.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-
-const PRICE_IDS: Record<'creator' | 'studio', string> = {
-  creator: process.env.STRIPE_PRICE_CREATOR || '',
-  studio: process.env.STRIPE_PRICE_STUDIO || '',
-};
-
-function isCheckoutTier(tier: unknown): tier is keyof typeof PRICE_IDS {
-  return tier === 'creator' || tier === 'studio';
-}
+import { stripeCheckoutGate } from '@/lib/billing/stripe-gate';
 
 export async function POST(req: NextRequest) {
   try {
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    if (!stripeKey) {
+    const { tier } = await req.json();
+
+    // Fail closed before auth or Stripe: the billing switch, a reviewed
+    // for-sale tier status, the key and the price id must all be present.
+    const gate = stripeCheckoutGate(tier);
+    if (!gate.ok) {
       return NextResponse.json(
-        {
-          error: 'Payments are not configured yet.',
-          code: 'stripe_not_configured',
-        },
-        { status: 503 }
+        { error: gate.error, code: gate.refusal, refusal: gate.refusal },
+        { status: gate.status }
       );
     }
 
@@ -38,33 +31,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { tier } = await req.json();
-
-    if (!isCheckoutTier(tier)) {
-      return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
-    }
-
-    const priceId = PRICE_IDS[tier];
-
-    if (!priceId) {
-      return NextResponse.json(
-        {
-          error: 'This plan is not available for purchase yet.',
-          code: 'price_not_configured',
-          tier,
-        },
-        { status: 503 }
-      );
-    }
-
     // Dynamic import to avoid build errors when stripe isn't installed
     const Stripe = (await import('stripe')).default;
-    const stripe = new Stripe(stripeKey);
+    const stripe = new Stripe(gate.secretKey);
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [{ price: gate.priceId, quantity: 1 }],
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/settings?payment=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/pricing?payment=cancelled`,
       customer_email: user.email,
