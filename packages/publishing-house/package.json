@@ -132,7 +132,8 @@
   "license": "BSL-1.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea-ai-app"
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/publishing-house"
   },
   "engines": {
     "node": ">=20"
@@ -144,5 +145,9 @@
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.11.1",
     "typescript": "^5.9.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/publishing-house"
 }
