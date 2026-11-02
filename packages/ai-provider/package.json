@@ -46,12 +46,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/ai-provider"
   },
-  "homepage": "https://arcanea.ai/developers/api",
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/ai-provider",
   "bugs": {
-    "url": "https://github.com/frankxai/arcanea/issues"
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   },
   "engines": {
     "node": ">=18.0.0"

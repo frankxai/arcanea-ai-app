@@ -2,7 +2,7 @@
   "name": "@arcanea/cli",
   "version": "0.7.1",
   "description": "Arcanea Realm — Your AI Creation Realm. Overlay any AI tool with arcane intelligence.",
-  "homepage": "https://github.com/frankxai/arcanea/tree/main/packages/cli#readme",
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/cli",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -49,7 +49,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea.git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/cli"
   },
   "dependencies": {
@@ -73,5 +73,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   }
 }
