@@ -30,8 +30,13 @@
     "ai"
   ],
   "license": "MIT",
-  "files": ["dist", "README.md"],
-  "publishConfig": { "access": "public" },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@arcanea/core": "workspace:*"
   },

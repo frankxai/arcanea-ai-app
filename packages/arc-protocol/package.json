@@ -43,8 +43,15 @@
   },
   "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/arc-protocol",
   "keywords": [
-    "arc-protocol", "creation-genome", "ai-human-cocreation",
-    "creative-lifecycle", "provenance", "arcanea", "agentic",
-    "ai-agent", "creative-ai", "world-building"
+    "arc-protocol",
+    "creation-genome",
+    "ai-human-cocreation",
+    "creative-lifecycle",
+    "provenance",
+    "arcanea",
+    "agentic",
+    "ai-agent",
+    "creative-ai",
+    "world-building"
   ]
 }
