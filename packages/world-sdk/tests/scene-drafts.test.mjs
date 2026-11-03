@@ -339,6 +339,7 @@ test("real CLI capture, prompt, revision and export preserve provenance and refu
   const receipt = JSON.parse(
     await fs.readFile(path.join(output, "scene.provenance.json"), "utf8"),
   );
+  assert.equal(receipt.schema, "arcanea.scene-export.v1");
   assert.equal(markdown, "# The last crossing\n\n" + prose + "\n");
   assert.equal(
     receipt.markdownSha256,

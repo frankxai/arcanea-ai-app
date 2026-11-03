@@ -438,10 +438,10 @@ export async function exportSceneDraft(dir, sceneId) {
     receipt:
       JSON.stringify(
         {
+          ...draft.record,
           schema: "arcanea.scene-export.v1",
           revisionSha256: draft.sha256,
           markdownSha256: sha(Buffer.from(markdown)),
-          ...draft.record,
         },
         null,
         2,
