@@ -5,8 +5,10 @@ import {
   getCanonicalEpochs,
   getCanonicalGuardians,
   getMonomythStages,
+  projectAtlasStaging,
 } from "@arcanea/world-engine";
 import { AtlasClient } from "./atlas-client";
+import atlasFixture from "../../../../packages/world-engine/fixtures/atlas-staging.json";
 
 export const metadata: Metadata = {
   title: "Multiverse Atlas — Realms, Corridors & Dialects — Arcanea",
@@ -34,6 +36,7 @@ export default function AtlasPage() {
       epochs={epochs}
       guardians={guardians}
       monomythStages={monomythStages}
+      geographicAtlas={projectAtlasStaging(atlasFixture)}
     />
   );
 }

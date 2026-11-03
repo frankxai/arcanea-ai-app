@@ -95,6 +95,15 @@
   --arc-scene-layer: 60;
   --arc-scene-aspect-ratio: 16 / 9;
 
+  /* SVG survey styling — mirror of atlasMap. */
+  --arc-atlas-emphasis-stroke: 3px;
+  --arc-atlas-history-dash: 8 7;
+  --arc-atlas-marker-radius: 7px;
+  --arc-atlas-presence-radius: 12px;
+  --arc-atlas-hit-radius: 24px;
+  --arc-atlas-region-label-mobile: 3rem;
+  --arc-atlas-port-label-mobile: 2.25rem;
+
   /* Radii */
   --arc-radius-sm: 0.25rem;
   --arc-radius-md: 0.5rem;

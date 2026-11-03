@@ -111,3 +111,10 @@ export type {
   MonomythStage,
   CanonicalGuardianEntity,
 } from "./temporal-multiverse-engine.js";
+export { projectAtlasStaging, atlasAtMoment } from "./geography.js";
+export type {
+  AtlasStagingInput,
+  AtlasFeature,
+  AtlasPresence,
+  GeographicAtlas,
+} from "./geography.js";

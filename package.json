@@ -85,7 +85,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@supabase/ssr": "^0.12.7",
-    "@supabase/supabase-js": "^2.117.2",
+    "@supabase/supabase-js": "^2.118.0",
     "dotenv": "^16.4.5",
     "glob": "^11.0.0",
     "stripe": "^20.4.1"

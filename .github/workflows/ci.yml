@@ -379,6 +379,9 @@ jobs:
           node packages/arcanea-creator-starters/scripts/build.mjs --compat --check
           node scripts/build-creator-starters.mjs --check
 
+      - name: Verify timeline geography against the Realm Graph
+        run: node --test packages/world-engine/tests/geography.test.mjs
+
       - name: Verify registry public-read boundary
         run: node --test scripts/tests/registry-public-read-contract.test.mjs
 
@@ -498,6 +501,31 @@ jobs:
           trap 'kill "$firstlight_server_pid" 2>/dev/null || true' EXIT
           node --input-type=module -e 'for (let i=0;i<60;i++) { try { const r=await fetch("http://127.0.0.1:3001/gallery/firstlight-02"); if(r.ok) process.exit(0); } catch {} await new Promise(resolve=>setTimeout(resolve,1000)); } process.exit(1);'
           pnpm --dir apps/web exec playwright test --config playwright.firstlight.config.ts
+
+      - name: Verify geographic timeline and linked map metadata
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+        timeout-minutes: 4
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+          PLAYWRIGHT_NO_WEB_SERVER: "1"
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3001
+        run: |
+          # Reuse the production build and Chromium from the reader step.
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/atlas-next.log" 2>&1 &
+          atlas_server_pid=$!
+          trap 'kill "$atlas_server_pid" 2>/dev/null || true' EXIT
+          node --input-type=module -e 'for (let i=0;i<60;i++) { try { const r=await fetch("http://127.0.0.1:3001/atlas"); if(r.ok) process.exit(0); } catch {} await new Promise(resolve=>setTimeout(resolve,1000)); } process.exit(1);'
+          pnpm --dir apps/web exec playwright test e2e/atlas-geography.spec.ts
+
+      - name: Retain geographic map review evidence
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: atlas-geography-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: .visual-proof/atlas-after/
+          retention-days: 7
+          if-no-files-found: warn
 
       - name: Upload Firstlight review evidence
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)

@@ -69,6 +69,21 @@ export const typeScale = {
   lineHeight: { compact: 1.5, body: 1.6, reading: 1.7 },
 } as const;
 
+/** SVG survey styling. Keep the CSS mirror in tokens.css in sync. */
+export const atlasMap = {
+  emphasisStroke: "3px",
+  historyDash: "8 7",
+  markerRadius: "7px",
+  presenceRadius: "12px",
+  hitRadius: "24px",
+  regionLabelMobile: "3rem",
+  portLabelMobile: "2.25rem",
+  contourScales: [0.8, 0.6, 0.4],
+  regionLabelOffset: -25,
+  mobileRegionLabelOffset: -40,
+  portLabelOffset: 37,
+} as const;
+
 export const controlGeometry = {
   touchTarget: "44px",
   border: "1px",
