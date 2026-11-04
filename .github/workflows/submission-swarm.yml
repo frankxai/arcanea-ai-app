@@ -35,7 +35,7 @@ jobs:
           fetch-depth: 0 # Full history needed for structural plagiarism and author checks
 
       - name: Set up Python
-        uses: actions/setup-python@v7.0.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.11"
 
