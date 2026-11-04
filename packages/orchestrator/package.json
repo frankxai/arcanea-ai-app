@@ -7,8 +7,10 @@
     "url": "https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/orchestrator"
   },
-  "homepage": "https://arcanea.ai/orchestrator",
-  "bugs": "https://github.com/frankxai/arcanea-ai-app/issues",
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/orchestrator",
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
   "author": "Arcanea (frankxai)",
   "license": "MIT",
   "keywords": [

@@ -6,8 +6,10 @@
     "url": "https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/router-spec"
   },
-  "homepage": "https://arcanea.ai/orchestrator",
-  "bugs": "https://github.com/frankxai/arcanea-ai-app/issues",
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/router-spec",
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
   "author": "Arcanea (frankxai)",
   "license": "MIT",
   "description": "Canonical model routing spec for the Arcanea ecosystem. Single source of truth consumed by claude-arcanea, oh-my-arcanea, arcanea-flow, and arcanea.ai/models.",

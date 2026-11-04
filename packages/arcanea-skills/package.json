@@ -35,12 +35,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frankxai/arcanea.git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/arcanea-skills"
   },
-  "homepage": "https://arcanea.ai",
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/arcanea-skills",
   "bugs": {
-    "url": "https://github.com/frankxai/arcanea/issues"
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   },
   "engines": {
     "node": ">=16.0.0"

@@ -23,6 +23,13 @@
   "keywords": ["arcanea", "luminor", "agent", "orchestration", "ai", "prompt-engineering", "mcp"],
   "author": "FrankX <frank@frankx.ai>",
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/frankxai/arcanea" },
-  "homepage": "https://arcanea.ai"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/arcanea-flow"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/arcanea-flow",
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  }
 }
