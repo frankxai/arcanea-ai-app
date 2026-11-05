@@ -39,5 +39,14 @@
   "devDependencies": {
     "@types/node": "^20.19.41",
     "typescript": "^5.9.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/schemas"
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/schemas"
 }

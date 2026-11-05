@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "verify:npm-metadata": "node scripts/verify-npm-metadata.mjs && node --test scripts/tests/npm-metadata.test.mjs",
     "dev": "turbo run dev",
     "dev:academy": "turbo run dev --filter=@arcanea/academy",
     "dev:web": "turbo run dev --filter=@arcanea/web",

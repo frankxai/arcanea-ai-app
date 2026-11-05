@@ -42,7 +42,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea.git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/creative-pipeline"
   },
   "devDependencies": {
@@ -51,5 +51,9 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/creative-pipeline"
 }

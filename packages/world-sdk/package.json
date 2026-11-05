@@ -16,11 +16,29 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs"
   },
-  "keywords": ["arcanea", "world", "standard", "manifest", "provenance", "worldbuilding"],
+  "keywords": [
+    "arcanea",
+    "world",
+    "standard",
+    "manifest",
+    "provenance",
+    "worldbuilding"
+  ],
   "author": "FrankX",
   "license": "MIT",
-  "engines": { "node": ">=18.0.0" },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "optionalDependencies": {
     "@arcanea/world-engine": "workspace:*"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/world-sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/world-sdk"
 }

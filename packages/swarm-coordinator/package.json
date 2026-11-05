@@ -42,5 +42,14 @@
   "devDependencies": {
     "@types/node": "^20.19.43",
     "typescript": "^5.9.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/swarm-coordinator"
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/swarm-coordinator"
 }

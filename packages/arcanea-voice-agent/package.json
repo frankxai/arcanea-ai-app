@@ -36,5 +36,14 @@
   },
   "dependencies": {
     "ws": "^8.22.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/arcanea-voice-agent"
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
+  },
+  "homepage": "https://github.com/frankxai/arcanea-ai-app/tree/main/packages/arcanea-voice-agent"
 }
