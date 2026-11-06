@@ -1,0 +1,147 @@
+{
+  "schema": "arcanea.rights_manifest.v0",
+  "manifestId": "urn:arcanea:rights:fixture:exclusive-commission-approved",
+  "createdAt": "2026-10-01T09:00:00+02:00",
+  "updatedAt": "2026-10-20T17:30:00+02:00",
+  "status": "approved",
+  "asset": {
+    "assetId": "fixture:commission:guardian-portrait-01",
+    "title": "FIXTURE — Commissioned Guardian Portrait",
+    "kind": "image",
+    "description": "Illustrative fixture only. Demonstrates a fully documented, counsel-reviewed exclusive commission. Not a real sale.",
+    "contentHash": {
+      "algorithm": "sha256",
+      "value": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+    },
+    "sourceFiles": [
+      {
+        "uri": "blob://fixtures/guardian-portrait-01/master.png",
+        "role": "master",
+        "mimeType": "image/png",
+        "hash": {
+          "algorithm": "sha256",
+          "value": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        }
+      },
+      {
+        "uri": "blob://fixtures/guardian-portrait-01/preview.webp",
+        "role": "preview",
+        "mimeType": "image/webp"
+      }
+    ],
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "at": "2026-10-18T10:00:00+02:00",
+        "note": "Final delivery"
+      }
+    ],
+    "parentAssetIds": [],
+    "canonStatus": "not-applicable"
+  },
+  "creators": [
+    {
+      "id": "creator:fixture-artist",
+      "displayName": "Fixture Artist",
+      "role": "author",
+      "verified": true,
+      "sharePercent": 100
+    }
+  ],
+  "authorship": {
+    "humanContribution": "substantial",
+    "aiInvolvement": "generative-with-human-direction",
+    "description": "Concept sketches, composition, colour script and final paint-over by the artist; AI image model used for background variations under the artist's direction.",
+    "aiTools": [
+      {
+        "provider": "Fixture Image Model",
+        "model": "fim-2",
+        "planOrLicense": "Business plan",
+        "commercialUseAllowed": true,
+        "termsUrl": "https://example.invalid/terms",
+        "termsCheckedAt": "2026-10-18T10:00:00+02:00",
+        "generation": {
+          "promptHash": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae",
+          "seed": 4242
+        }
+      }
+    ],
+    "disclosure": {
+      "required": true,
+      "label": "Painted by Fixture Artist with AI-assisted background variations.",
+      "machineReadableMark": "c2pa",
+      "c2paManifestRef": "c2pa://fixtures/guardian-portrait-01",
+      "basis": "EU AI Act Art. 50"
+    }
+  },
+  "sourceMaterial": [
+    {
+      "description": "Artist's own sketches and references",
+      "kind": "own-work",
+      "rightsHolder": "Fixture Artist"
+    }
+  ],
+  "thirdPartyPermissions": [],
+  "ownership": {
+    "copyrightClaim": "partial",
+    "claimant": "Fixture Artist",
+    "basis": "Human-authored composition and paint-over claimed; AI background elements not claimed.",
+    "trademarks": []
+  },
+  "licenses": [
+    {
+      "licenseId": "lic:fixture:exclusive",
+      "templateId": "arcanea.exclusive-commission.v0",
+      "templateVersion": "0.1.0",
+      "licensee": "named-party",
+      "licenseeRef": "client:fixture-studio",
+      "permissions": {
+        "personalUse": "allowed",
+        "commercialUse": "allowed",
+        "derivatives": "allowed",
+        "redistribution": "conditional",
+        "publicDisplay": "allowed",
+        "interactiveUse": "allowed",
+        "sync": "conditional",
+        "sublicensing": "conditional",
+        "aiTraining": "prohibited"
+      },
+      "exclusivity": "exclusive",
+      "territories": ["WW"],
+      "duration": {
+        "type": "perpetual"
+      },
+      "attribution": {
+        "required": true,
+        "text": "Artwork by Fixture Artist"
+      },
+      "feeModel": "one-time",
+      "revenueShare": [],
+      "revocation": {
+        "revocable": false,
+        "conditions": []
+      },
+      "status": "proposed",
+      "agreementText": {
+        "uri": "urn:arcanea:legal:license:fixture:exclusive-commission:1.0.0",
+        "hash": {
+          "algorithm": "sha256",
+          "value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "language": "en",
+        "version": "1.0.0"
+      },
+      "acceptance": [],
+      "conditions": ["Creator retains portfolio display rights."]
+    }
+  ],
+  "disputes": [],
+  "review": {
+    "counselReviewed": true,
+    "counselRef": "fixture:counsel-review-2026-10-19",
+    "reviewedAt": "2026-10-19T15:00:00+02:00",
+    "humanApprovalReceiptRef": "fixture:approval-receipt-001",
+    "notes": "Fixture values."
+  },
+  "notes": "FIXTURE. Every identifier here is synthetic."
+}
