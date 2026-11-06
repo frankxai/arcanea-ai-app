@@ -5,13 +5,20 @@
  * POST /api/apl/enhance
  * Body: { prompt: string, mode?: "text" | "image" | "music" }
  *
- * Uses Grok via OpenRouter to rewrite a generic prompt into full
+ * Uses a platform model on Vercel AI Gateway to rewrite a generic prompt into full
  * SPARK.SHAPE.SHARPEN format. Returns structured JSON with the
  * enhanced prompt, spark detail, palette, sharpen constraints,
  * and before/after quality scores from the local enhance() engine.
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { generateText } from "ai";
+import {
+  platformDefaultModelId,
+  platformGatewayAvailable,
+  platformGatewayOptions,
+  platformLanguageModel,
+} from "@/lib/ai/platform-gateway";
 import { enhance } from "@/lib/apl/enhance";
 import { buildLocalGuidance } from "@/lib/apl/local-guidance";
 
@@ -143,9 +150,8 @@ export async function POST(req: NextRequest) {
     const before = enhance(prompt);
     const qualityBefore = QUALITY_SCORES[before.qualityLevel] ?? 25;
 
-    // --- LLM enhancement via OpenRouter / Grok ---
-    const apiKey = process.env.OPENROUTER_API_KEY;
-    if (!apiKey) {
+    // --- LLM enhancement via Vercel AI Gateway (platform credentials) ---
+    if (!platformGatewayAvailable()) {
       // The local APL engine can give useful, deterministic guidance without
       // billing a model or pretending to have rewritten the creator's ideas.
       const { guidance, enhanced } = buildLocalGuidance(
@@ -170,46 +176,29 @@ export async function POST(req: NextRequest) {
       ? `${SYSTEM_PROMPT}\n\n${MODE_HINTS[mode]}`
       : SYSTEM_PROMPT;
 
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://arcanea.ai",
-        "X-Title": "Arcanea APL Enhance",
-      },
-      body: JSON.stringify({
-        model: "x-ai/grok-2-1212",
-        messages: [
-          { role: "system", content: systemContent },
-          {
-            role: "user",
-            content: `Transform this ${mode} prompt using SPARK.SHAPE.SHARPEN:\n\n"${prompt}"`,
-          },
-        ],
-        max_tokens: 600,
+    let raw: string;
+    try {
+      const result = await generateText({
+        model: platformLanguageModel(platformDefaultModelId()),
+        system: systemContent,
+        prompt: `Transform this ${mode} prompt using SPARK.SHAPE.SHARPEN:\n\n"${prompt}"`,
+        maxOutputTokens: 600,
         temperature: 0.85,
-        response_format: { type: "json_object" },
-      }),
-    });
-
-    if (!res.ok) {
+        providerOptions: platformGatewayOptions("apl-enhance"),
+      });
+      raw = result.text.trim();
+    } catch (error) {
+      const rateLimited =
+        (error as { statusCode?: unknown })?.statusCode === 429;
       return NextResponse.json(
         {
-          error:
-            res.status === 429
-              ? "Enhancement provider rate limited."
-              : "Enhancement provider unavailable.",
+          error: rateLimited
+            ? "Enhancement provider rate limited."
+            : "Enhancement provider unavailable.",
         },
-        { status: res.status === 429 ? 429 : 502 },
+        { status: rateLimited ? 429 : 502 },
       );
     }
-
-    const data = await res.json();
-    const raw =
-      (
-        data as { choices?: { message?: { content?: string } }[] }
-      )?.choices?.[0]?.message?.content?.trim() || "";
 
     // --- Parse LLM JSON response ---
     let parsed: {

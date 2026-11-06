@@ -14,6 +14,11 @@ export interface GatewayModel {
   provider: string;
   modelId: string;
   label: string;
+  /**
+   * Vercel AI Gateway id (`provider/model`) for platform-credential calls.
+   * Models without one are BYOK-only.
+   */
+  platformGatewayId?: string;
 }
 
 /**
@@ -53,6 +58,7 @@ export const GATEWAY_MODELS: Record<string, GatewayModel> = {
     provider: "anthropic",
     modelId: "claude-sonnet-5-5",
     label: "Sonnet 5.5",
+    platformGatewayId: "anthropic/claude-sonnet-5.5",
   },
   "arcanea-haiku": {
     provider: "anthropic",
@@ -73,6 +79,7 @@ export const GATEWAY_MODELS: Record<string, GatewayModel> = {
     provider: "google",
     modelId: "gemini-2.5-flash",
     label: "Gemini 2.5 Flash",
+    platformGatewayId: "google/gemini-2.5-flash",
   },
   "arcanea-grok": { provider: "xai", modelId: "grok-4.20", label: "Grok 4.2" },
   "arcanea-deepseek-r1": {

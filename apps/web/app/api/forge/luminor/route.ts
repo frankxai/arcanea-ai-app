@@ -8,12 +8,17 @@
  * This is the superintelligence helping creators build their own intelligence agents.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { createOpenAI } from '@ai-sdk/openai';
-import { generateText } from 'ai';
+import { NextRequest, NextResponse } from "next/server";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import {
+  platformDefaultModelId,
+  platformGatewayAvailable,
+  platformGatewayOptions,
+  platformLanguageModel,
+} from "@/lib/ai/platform-gateway";
+import { generateText } from "ai";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 interface ForgeRequest {
   /** Creator's natural language description of what they want their Luminor to do */
@@ -63,8 +68,11 @@ export async function POST(req: NextRequest) {
 
     if (!description || description.length < 10) {
       return NextResponse.json(
-        { error: 'Describe what your Luminor should do (at least 10 characters).' },
-        { status: 400 }
+        {
+          error:
+            "Describe what your Luminor should do (at least 10 characters).",
+        },
+        { status: 400 },
       );
     }
 
@@ -74,21 +82,20 @@ export async function POST(req: NextRequest) {
     if (element) userPrompt += `\nPreferred element: ${element}`;
     if (domain) userPrompt += `\nPreferred domain: ${domain}`;
 
-    // Try Google first (fast + free tier), fall back to OpenRouter
+    // Platform credentials route through Vercel AI Gateway. The direct Google
+    // key is a transitional fallback for environments without the gateway.
     let model;
     const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-    const openrouterKey = process.env.OPENROUTER_API_KEY;
 
-    if (googleKey) {
+    if (platformGatewayAvailable()) {
+      model = platformLanguageModel(platformDefaultModelId());
+    } else if (googleKey) {
       const google = createGoogleGenerativeAI({ apiKey: googleKey });
-      model = google('gemini-2.0-flash');
-    } else if (openrouterKey) {
-      const openrouter = createOpenAI({ apiKey: openrouterKey, baseURL: 'https://openrouter.ai/api/v1' });
-      model = openrouter('google/gemini-2.5-flash');
+      model = google("gemini-2.0-flash");
     } else {
       return NextResponse.json(
-        { error: 'No AI provider configured. Set GOOGLE_GENERATIVE_AI_API_KEY on Vercel.' },
-        { status: 503 }
+        { error: "No AI provider configured. Enable AI Gateway on Vercel." },
+        { status: 503 },
       );
     }
 
@@ -98,6 +105,7 @@ export async function POST(req: NextRequest) {
       prompt: userPrompt,
       temperature: 0.8,
       maxOutputTokens: 1024,
+      providerOptions: platformGatewayOptions("forge-luminor"),
     });
 
     // Parse the JSON response
@@ -105,22 +113,25 @@ export async function POST(req: NextRequest) {
     try {
       // Strip any markdown code fences if present
       let text = result.text.trim();
-      if (text.startsWith('```')) {
-        text = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+      if (text.startsWith("```")) {
+        text = text.replace(/^```(?:json)?\s*/, "").replace(/\s*```$/, "");
       }
       spec = JSON.parse(text);
     } catch {
       return NextResponse.json(
-        { error: 'Failed to generate Luminor spec. Try again with a more detailed description.' },
-        { status: 500 }
+        {
+          error:
+            "Failed to generate Luminor spec. Try again with a more detailed description.",
+        },
+        { status: 500 },
       );
     }
 
     // Validate required fields
     if (!spec.name || !spec.domain || !spec.voice || !spec.element) {
       return NextResponse.json(
-        { error: 'Generated spec is incomplete. Try again.' },
-        { status: 500 }
+        { error: "Generated spec is incomplete. Try again." },
+        { status: 500 },
       );
     }
 
@@ -129,10 +140,10 @@ export async function POST(req: NextRequest) {
       message: `Lumina has shaped ${spec.name}, ${spec.title}. Review and customize before forging.`,
     });
   } catch (error) {
-    console.error('Forge API error:', error);
+    console.error("Forge API error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Forge failed' },
-      { status: 500 }
+      { error: error instanceof Error ? error.message : "Forge failed" },
+      { status: 500 },
     );
   }
 }
