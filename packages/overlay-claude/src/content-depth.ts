@@ -217,9 +217,9 @@ Every piece of content should embody this:
 \`\`\`
 
 ## Typography
-- **Display**: Cinzel (serif) — heroes, titles, Guardian names
-- **Body**: Crimson Pro (serif) — readable body text, lore
-- **UI**: Inter (sans-serif) — buttons, labels, navigation
+- **Display**: Geist — heroes, titles, Guardian names
+- **Body**: Geist — readable body text
+- **Editorial accent**: Instrument Serif — lore, pull quotes
 - **Code**: JetBrains Mono — code blocks, technical content
 
 ## Glass Morphism Pattern
