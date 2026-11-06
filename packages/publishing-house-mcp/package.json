@@ -35,7 +35,7 @@
     "directory": "packages/publishing-house-mcp"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@arcanea/publishing-house": "workspace:*",
     "zod": "^4.3.6"
   },
