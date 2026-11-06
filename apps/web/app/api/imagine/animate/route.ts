@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { checkBotId } from "@/lib/security/bot-id";
 import { createClient } from "@/lib/supabase/server";
 import { costFor } from "@/lib/billing/catalog";
 import {
@@ -34,6 +35,13 @@ const respond = (body: unknown, status = 200) =>
 export async function POST(req: NextRequest) {
   let requestKey: string | undefined;
   try {
+    const botCheck = checkBotId(req);
+    if (botCheck.isBot)
+      return respond(
+        { error: "Automated request denied", reason: "bot_detected" },
+        403,
+      );
+
     const supabase = await createClient();
     const {
       data: { user },
