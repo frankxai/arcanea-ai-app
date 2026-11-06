@@ -1,0 +1,682 @@
+[
+  {
+    "schemaname": "public",
+    "tablename": "agent_reviews",
+    "policyname": "reviews_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "agent_reviews",
+    "policyname": "reviews_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "analytics_events",
+    "policyname": "Users can view own analytics",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_chapters",
+    "policyname": "Authors can manage chapters",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.uid() IN ( SELECT book_authors.user_id\n   FROM book_authors\n  WHERE (book_authors.book_id = book_chapters.book_id)))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_chapters",
+    "policyname": "Published chapters are publicly readable",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "((status = 'published'::text) OR (auth.uid() IS NOT NULL))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_covers",
+    "policyname": "Active book covers are publicly readable",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "((status = 'active'::text) OR (auth.uid() IS NOT NULL))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_covers",
+    "policyname": "Authors can update their book covers",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() IN ( SELECT book_authors.user_id\n   FROM book_authors\n  WHERE (book_authors.book_id = book_covers.book_id)))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_covers",
+    "policyname": "Authors can upload covers for their books",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() IN ( SELECT book_authors.user_id\n   FROM book_authors\n  WHERE (book_authors.book_id = book_covers.book_id)))"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_ratings",
+    "policyname": "Users can delete their own ratings",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_ratings",
+    "policyname": "Users can rate books (not their own)",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "((auth.uid() = user_id) AND (NOT (auth.uid() IN ( SELECT book_authors.user_id\n   FROM book_authors\n  WHERE (book_authors.book_id = book_ratings.book_id)))))"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "book_ratings",
+    "policyname": "Users can update their own ratings",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "books",
+    "policyname": "Authors can insert their own books",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() IS NOT NULL)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "books",
+    "policyname": "Authors can update their own books",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() IN ( SELECT book_authors.user_id\n   FROM book_authors\n  WHERE ((book_authors.book_id = books.id) AND (book_authors.role = ANY (ARRAY['creator'::text, 'co_author'::text, 'co_creator'::text, 'editor'::text])))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chapter_notes",
+    "policyname": "Users create notes",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chapter_notes",
+    "policyname": "Users delete own notes",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chapter_notes",
+    "policyname": "Users manage own notes",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chapter_notes",
+    "policyname": "Users read own notes",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chapter_reactions",
+    "policyname": "Users manage own reactions",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chapter_reactions",
+    "policyname": "Users remove own reactions",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chat_projects",
+    "policyname": "Users can delete their own chat projects",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chat_projects",
+    "policyname": "Users can insert their own chat projects",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chat_projects",
+    "policyname": "Users can update their own chat projects",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "chat_projects",
+    "policyname": "Users can view their own chat projects",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "creators",
+    "policyname": "creators_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "creators",
+    "policyname": "creators_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "credit_transactions",
+    "policyname": "Users read own transactions",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "credits",
+    "policyname": "credits_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "credits",
+    "policyname": "credits_select",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "credits",
+    "policyname": "credits_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "deployments",
+    "policyname": "deployments_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = deployer_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "deployments",
+    "policyname": "deployments_select",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "((auth.uid() = deployer_id) OR (platform_id IN ( SELECT platforms.id\n   FROM platforms\n  WHERE (platforms.owner_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "deployments",
+    "policyname": "deployments_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "((auth.uid() = deployer_id) OR (platform_id IN ( SELECT platforms.id\n   FROM platforms\n  WHERE (platforms.owner_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "leaderboard_cache",
+    "policyname": "Service role manages leaderboard",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.role() = 'service_role'::text)",
+    "with_check": "(auth.role() = 'service_role'::text)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "marketplace_agents",
+    "policyname": "agents_delete",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = creator_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "marketplace_agents",
+    "policyname": "agents_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = creator_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "marketplace_agents",
+    "policyname": "agents_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = creator_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "message_reactions",
+    "policyname": "Users can manage their own reactions",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "((auth.uid() = user_id) OR (user_id IS NULL))",
+    "with_check": "((auth.uid() = user_id) OR (user_id IS NULL))"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "platforms",
+    "policyname": "platforms_delete",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = owner_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "platforms",
+    "policyname": "platforms_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = owner_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "platforms",
+    "policyname": "platforms_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = owner_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "project_doc_content",
+    "policyname": "Users can view own doc content",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(doc_id IN ( SELECT project_docs.id\n   FROM project_docs\n  WHERE (project_docs.user_id = auth.uid())))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "project_doc_versions",
+    "policyname": "Users can view own doc versions",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(doc_id IN ( SELECT project_docs.id\n   FROM project_docs\n  WHERE (project_docs.user_id = auth.uid())))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "project_docs",
+    "policyname": "Users can delete own docs",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "project_docs",
+    "policyname": "Users can insert own docs",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "project_docs",
+    "policyname": "Users can update own docs",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "project_docs",
+    "policyname": "Users can view own docs",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "revenue_events",
+    "policyname": "revenue_select",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "((auth.uid() = creator_id) OR (auth.uid() = affiliate_id) OR (platform_id IN ( SELECT platforms.id\n   FROM platforms\n  WHERE (platforms.owner_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "skill_registry",
+    "policyname": "skills_delete",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = creator_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "skill_registry",
+    "policyname": "skills_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = creator_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "skill_registry",
+    "policyname": "skills_update",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = creator_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "usage_events",
+    "policyname": "usage_insert",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "usage_events",
+    "policyname": "usage_select",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "((auth.uid() = user_id) OR (deployment_id IN ( SELECT deployments.id\n   FROM deployments\n  WHERE (deployments.deployer_id = auth.uid()))) OR (platform_id IN ( SELECT platforms.id\n   FROM platforms\n  WHERE (platforms.owner_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "user_credits",
+    "policyname": "Users read own credits",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "user_progression",
+    "policyname": "Users manage own progression",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_characters",
+    "policyname": "Characters follow world visibility",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_characters.world_id) AND ((w.visibility = 'public'::text) OR (w.creator_id = auth.uid())))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_characters",
+    "policyname": "Creators manage own characters",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_characters.world_id) AND (w.creator_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_collaborators",
+    "policyname": "Collaborators can view membership",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "((auth.uid() = user_id) OR (EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_collaborators.world_id) AND (w.creator_id = auth.uid())))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_collaborators",
+    "policyname": "World owners manage collaborators",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_collaborators.world_id) AND (w.creator_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_creations",
+    "policyname": "Creators manage own creations",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.uid() = creator_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_events",
+    "policyname": "Creators manage own events",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_events.world_id) AND (w.creator_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_events",
+    "policyname": "Events follow world visibility",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_events.world_id) AND ((w.visibility = 'public'::text) OR (w.creator_id = auth.uid())))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_factions",
+    "policyname": "Creators manage own factions",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_factions.world_id) AND (w.creator_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_factions",
+    "policyname": "Factions follow world visibility",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_factions.world_id) AND ((w.visibility = 'public'::text) OR (w.creator_id = auth.uid())))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_forks",
+    "policyname": "Users create own forks",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "INSERT",
+    "qual": null,
+    "with_check": "(auth.uid() = forked_by)"
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_locations",
+    "policyname": "Creators manage own locations",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_locations.world_id) AND (w.creator_id = auth.uid()))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_locations",
+    "policyname": "Locations follow world visibility",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "SELECT",
+    "qual": "(EXISTS ( SELECT 1\n   FROM worlds w\n  WHERE ((w.id = world_locations.world_id) AND ((w.visibility = 'public'::text) OR (w.creator_id = auth.uid())))))",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "world_stars",
+    "policyname": "Users manage own stars",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.uid() = user_id)",
+    "with_check": null
+  },
+  {
+    "schemaname": "public",
+    "tablename": "worlds",
+    "policyname": "Creators manage own worlds",
+    "permissive": "PERMISSIVE",
+    "roles": "{public}",
+    "cmd": "ALL",
+    "qual": "(auth.uid() = creator_id)",
+    "with_check": null
+  }
+]

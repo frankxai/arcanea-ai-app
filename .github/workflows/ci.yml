@@ -210,6 +210,14 @@ jobs:
           node --test scripts/tests/safe-fetch-network.test.cjs
           node --test scripts/tests/studio-ingest-cache.test.cjs
 
+      - name: Verify bounded RLS identity caching and access preservation
+        env:
+          PGPASSWORD: disposable-author-fixture
+        run: |
+          node --test scripts/tests/rls-initplans.test.mjs
+          createdb -h localhost -U postgres arcanea_auth_initplans_fixture
+          node scripts/test-rls-initplans-sql.mjs | psql -h localhost -U postgres -d arcanea_auth_initplans_fixture -v ON_ERROR_STOP=1
+
       - name: Verify author draft ownership, persistence and migration recovery
         env:
           PGPASSWORD: disposable-author-fixture
