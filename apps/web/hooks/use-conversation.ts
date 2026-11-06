@@ -93,20 +93,50 @@ export function parseFollowUps(text: string): {
 // @mention parsing: models first (higher priority), then Luminors
 // ---------------------------------------------------------------------------
 
-const MODEL_MENTION_ALIASES = [
-  "opus",
-  "sonnet",
-  "gemini",
-  "grok",
-  "gpt5",
-  "haiku",
-  "flash",
-] as const;
+export const MODEL_ALIAS_TO_GATEWAY_ID: Record<string, string> = {
+  auto: "arcanea-auto",
+  opus: "arcanea-opus",
+  sonnet: "arcanea-sonnet",
+  claude: "arcanea-sonnet",
+  haiku: "arcanea-haiku",
+  gpt: "arcanea-gpt5",
+  gpt5: "arcanea-gpt5",
+  openai: "arcanea-gpt5",
+  gemini: "arcanea-gemini-pro",
+  flash: "arcanea-gemini-flash",
+  grok: "arcanea-grok",
+  deepseek: "arcanea-deepseek",
+  r1: "arcanea-deepseek-r1",
+  kimi: "arcanea-kimi",
+  qwen: "arcanea-qwen",
+  maverick: "arcanea-maverick",
+  mistral: "arcanea-mistral",
+  bolt: "arcanea-bolt",
+  thunder: "arcanea-thunder",
+  lightning: "arcanea-lightning",
+};
+
+export const MODEL_MENTION_ALIASES = Object.keys(MODEL_ALIAS_TO_GATEWAY_ID);
+
+export function resolveModelMentionAlias(alias: string): string | null {
+  const normalized = alias.trim().toLowerCase();
+  if (MODEL_ALIAS_TO_GATEWAY_ID[normalized]) {
+    return MODEL_ALIAS_TO_GATEWAY_ID[normalized];
+  }
+  const model = CHAT_MODELS.find(
+    (m) =>
+      m.shortName.toLowerCase() === normalized ||
+      m.id === `arcanea-${normalized}` ||
+      m.provider === normalized,
+  );
+  return model?.id ?? null;
+}
 
 export interface MentionParseResult {
   cleanText: string;
   mentionedLuminor?: string;
   mentionedModel?: string;
+  resolvedGatewayModelId?: string;
 }
 
 export function parseMention(text: string): MentionParseResult {
@@ -117,9 +147,11 @@ export function parseMention(text: string): MentionParseResult {
   );
   const modelMatch = text.match(modelPattern);
   if (modelMatch) {
+    const alias = modelMatch[1].toLowerCase();
     return {
       cleanText: text.replace(modelPattern, "").trim(),
-      mentionedModel: modelMatch[1].toLowerCase(),
+      mentionedModel: alias,
+      resolvedGatewayModelId: resolveModelMentionAlias(alias) ?? undefined,
     };
   }
 
@@ -711,17 +743,12 @@ export function useConversation(
       const mention = parseMention(text);
 
       if (mention.mentionedModel) {
-        // Map alias to a CHAT_MODELS entry
-        const alias = mention.mentionedModel;
-        const model = CHAT_MODELS.find(
-          (m) =>
-            m.shortName.toLowerCase() === alias ||
-            m.id === `arcanea-${alias}` ||
-            m.provider === alias,
-        );
+        const resolvedId =
+          mention.resolvedGatewayModelId ??
+          resolveModelMentionAlias(mention.mentionedModel);
         return {
           cleanText: mention.cleanText,
-          overrideModel: model?.id ?? null,
+          overrideModel: resolvedId,
           overrideLuminor: null,
         };
       }

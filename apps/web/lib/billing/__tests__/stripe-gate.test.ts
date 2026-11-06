@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { stripeCheckoutGate, STRIPE_TIER_STATUS } from "../stripe-gate";
+import {
+  stripeCheckoutGate,
+  stripeCreditPackCheckoutGate,
+  STRIPE_TIER_STATUS,
+  STRIPE_PACK_STATUS,
+} from "../stripe-gate";
 
 const configured = {
   STRIPE_SECRET_KEY: "sk_test_x",
@@ -54,4 +59,31 @@ test("all gates pass only with switch, for-sale status, key and price", () => {
     secretKey: "sk_test_x",
     priceId: "price_creator",
   });
+});
+
+test("shipped credit pack statuses are all closed and fail closed even with a Stripe key", () => {
+  for (const status of Object.values(STRIPE_PACK_STATUS)) {
+    assert.ok(!status.toLowerCase().startsWith("for sale"), status);
+  }
+  const withoutFlag = stripeCreditPackCheckoutGate("starter", {
+    STRIPE_SECRET_KEY: "sk_test_x",
+  });
+  assert.equal(withoutFlag.ok, false);
+  assert.equal(!withoutFlag.ok && withoutFlag.refusal, "billing_disabled");
+
+  const withFlagDefaultStatus = stripeCreditPackCheckoutGate("starter", {
+    STRIPE_SECRET_KEY: "sk_test_x",
+    ARCANEA_BILLING_ENABLED: "true",
+  });
+  assert.equal(withFlagDefaultStatus.ok, false);
+  assert.equal(
+    !withFlagDefaultStatus.ok && withFlagDefaultStatus.refusal,
+    "checkout_gated",
+  );
+
+  const unknownPack = stripeCreditPackCheckoutGate("unknown", {
+    STRIPE_SECRET_KEY: "sk_test_x",
+    ARCANEA_BILLING_ENABLED: "true",
+  });
+  assert.equal(!unknownPack.ok && unknownPack.status, 400);
 });

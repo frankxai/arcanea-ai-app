@@ -2,11 +2,13 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   ACTION_COSTS,
+  CREDIT_BUDGET_PRESETS,
   CREDIT_PACKS,
   PLANS,
   WELCOME_CREDITS,
   billingReadiness,
   costFor,
+  estimateCreditCapacity,
   formatEuro,
   isPaidSku,
   polarProductForSku,
@@ -111,4 +113,24 @@ test("billing is live only after explicit release with token, webhook secret and
     }).live,
     false,
   );
+});
+
+test("estimateCreditCapacity calculates accurate single-action capacity for every preset", () => {
+  assert.equal(CREDIT_BUDGET_PRESETS.length, 5);
+  const creatorCap = estimateCreditCapacity(2_000);
+  assert.deepEqual(creatorCap, {
+    credits: 2_000,
+    standardImages: 200,
+    premiumImages: 80,
+    voiceMinutes: 1_000,
+    musicTracks: 33,
+    videoClips: 13,
+    frontierMessages: 400,
+    standardMessages: 2_000,
+    byokChatAndWorldsCost: 0,
+  });
+
+  const zeroCap = estimateCreditCapacity(0);
+  assert.equal(zeroCap.standardImages, 0);
+  assert.equal(zeroCap.byokChatAndWorldsCost, 0);
 });

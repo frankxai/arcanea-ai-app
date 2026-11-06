@@ -10,6 +10,7 @@ import {
   CHAT_MODELS,
   ProviderLogo,
 } from "@/components/chat/model-selector";
+import { useProvider, isGatewayModelConfigured } from "@/hooks/use-provider";
 import { FOCUS_MODES, type FocusMode } from "./focus-modes";
 import { AiDisclosure } from "./ai-disclosure";
 
@@ -38,6 +39,8 @@ export function AgentHeader({
 }: AgentHeaderProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const model = getModelById(currentModel);
+  const providerState = useProvider();
+  const keyMap = providerState.keys || {};
   const activeFocus =
     FOCUS_MODES.find((m) => m.id === focusMode) ?? FOCUS_MODES[0];
 
@@ -115,23 +118,37 @@ export function AgentHeader({
                 value={currentModel}
                 onValueChange={onModelChange}
               >
-                {CHAT_MODELS.map((m) => (
-                  <DropdownMenu.RadioItem
-                    key={m.id}
-                    value={m.id}
-                    className="w-full text-left px-3 py-2 text-sm flex items-center justify-between gap-3"
-                  >
-                    <div className="flex items-center gap-2">
-                      <ProviderLogo provider={m.provider} size={18} />
-                      <span>{m.shortName ?? m.name}</span>
-                    </div>
-                    {m.tier && (
-                      <span className="text-xs text-[var(--arc-text-secondary)]">
-                        {m.tier}
-                      </span>
-                    )}
-                  </DropdownMenu.RadioItem>
-                ))}
+                {CHAT_MODELS.map((m) => {
+                  const ready = isGatewayModelConfigured(
+                    m.id,
+                    keyMap,
+                    providerState.provider,
+                  );
+                  return (
+                    <DropdownMenu.RadioItem
+                      key={m.id}
+                      value={m.id}
+                      className="w-full text-left px-3 py-2 text-sm flex items-center justify-between gap-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ProviderLogo provider={m.provider} size={18} />
+                        <span>{m.shortName ?? m.name}</span>
+                        {ready && (
+                          <i
+                            className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"
+                            title="API key configured"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </div>
+                      {m.tier && (
+                        <span className="text-xs text-[var(--arc-text-secondary)]">
+                          {m.tier}
+                        </span>
+                      )}
+                    </DropdownMenu.RadioItem>
+                  );
+                })}
               </DropdownMenu.RadioGroup>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>

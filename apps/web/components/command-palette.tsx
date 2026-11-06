@@ -71,6 +71,15 @@ const ACTION_ITEMS: PaletteItem[] = [
     description: "Discover your elemental resonance",
   },
   {
+    name: "Configure AI Provider Keys (BYOK)",
+    href: "/settings/providers",
+    shortcut: "K",
+    group: "Actions",
+    icon: Gear,
+    description:
+      "Connect Gemini, Claude, OpenAI, OpenRouter, Groq, or Cerebras",
+  },
+  {
     name: "Read Book 1: Chapter 7",
     href: "/saga",
     shortcut: "R",
@@ -142,6 +151,19 @@ const NAV_ITEMS: PaletteItem[] = [
     group: "Studio & Creation",
     icon: Sparkle,
   },
+  {
+    name: "Imagine Visual Studio",
+    href: "/imagine",
+    shortcut: "I",
+    group: "Studio & Creation",
+    icon: Sparkle,
+  },
+  {
+    name: "Lumina Voice Room",
+    href: "/room",
+    group: "Studio & Creation",
+    icon: ChatCircle,
+  },
 
   // Hub 3: Academy & Mastery
   {
@@ -166,6 +188,30 @@ const NAV_ITEMS: PaletteItem[] = [
 
   // Hub 4: Platform & Infrastructure
   {
+    name: "AI Models & Gateway Catalog",
+    href: "/models",
+    group: "Platform & Infrastructure",
+    icon: Cpu,
+  },
+  {
+    name: "Model Arena",
+    href: "/models/arena",
+    group: "Platform & Infrastructure",
+    icon: Cpu,
+  },
+  {
+    name: "Shop & Editions",
+    href: "/shop",
+    group: "Platform & Infrastructure",
+    icon: Coins,
+  },
+  {
+    name: "Install Mobile & Desktop App",
+    href: "/install",
+    group: "Platform & Infrastructure",
+    icon: Compass,
+  },
+  {
     name: "Starlight Vaults (SIS)",
     href: "/arcanea-vault",
     shortcut: "V",
@@ -184,6 +230,18 @@ const NAV_ITEMS: PaletteItem[] = [
     shortcut: "P",
     group: "Platform & Infrastructure",
     icon: Coins,
+  },
+  {
+    name: "Billing & Credit Ledger",
+    href: "/settings/billing",
+    group: "Platform & Infrastructure",
+    icon: Coins,
+  },
+  {
+    name: "AI Provider Keys (BYOK)",
+    href: "/settings/providers",
+    group: "Platform & Infrastructure",
+    icon: Gear,
   },
   {
     name: "Settings & BYOK",
@@ -247,7 +305,7 @@ export function CommandPalette({
       />
 
       {/* Command dialog container */}
-      <div className="relative w-full max-w-xl rounded-2xl border border-white/[0.1] bg-[#09090b]/95 backdrop-blur-2xl shadow-[0_32px_96px_-16px_rgba(0,0,0,0.85),0_0_0_1px_rgba(0,188,212,0.15)_inset] overflow-hidden">
+      <div className="relative w-full max-w-xl rounded-2xl border border-white/[0.1] bg-[var(--arc-cosmic-void)]/95 backdrop-blur-2xl shadow-[0_32px_96px_-16px_rgba(0,0,0,0.85),0_0_0_1px_rgba(0,188,212,0.15)_inset] overflow-hidden">
         <Command>
           <div className="relative">
             <CommandInput placeholder="Search canon, saga chapters, studio tools... (Cmd+K)" />

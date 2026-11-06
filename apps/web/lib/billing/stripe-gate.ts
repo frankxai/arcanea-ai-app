@@ -74,3 +74,68 @@ export function stripeCheckoutGate(
   }
   return { ok: true, secretKey, priceId };
 }
+
+export type StripeCreditPackId = "starter" | "creator" | "studio";
+
+/** Legacy Stripe credit pack route remains closed unless reviewed and explicitly set to "for sale". */
+export const STRIPE_PACK_STATUS: Record<StripeCreditPackId, string> = {
+  starter: "pre-stage (not for sale)",
+  creator: "pre-stage (not for sale)",
+  studio: "pre-stage (not for sale)",
+};
+
+const PACK_PRICE_ENV: Record<StripeCreditPackId, string> = {
+  starter: "STRIPE_PRICE_CREDITS_100",
+  creator: "STRIPE_PRICE_CREDITS_500",
+  studio: "STRIPE_PRICE_CREDITS_2000",
+};
+
+export function isStripeCreditPackId(
+  packId: unknown,
+): packId is StripeCreditPackId {
+  return packId === "starter" || packId === "creator" || packId === "studio";
+}
+
+export function stripeCreditPackCheckoutGate(
+  packId: unknown,
+  env: Record<string, string | undefined> = process.env,
+  statuses: Record<StripeCreditPackId, string> = STRIPE_PACK_STATUS,
+): StripeGateResult {
+  if (!isStripeCreditPackId(packId)) {
+    return {
+      ok: false,
+      status: 400,
+      refusal: "invalid_pack",
+      error: "Invalid credit pack",
+    };
+  }
+  if (env.ARCANEA_BILLING_ENABLED !== "true") {
+    return {
+      ok: false,
+      status: 503,
+      refusal: "billing_disabled",
+      error: "Payments are not open yet.",
+    };
+  }
+  if (
+    !statuses[packId].trim().toLowerCase().startsWith(PURCHASABLE_STATUS_PREFIX)
+  ) {
+    return {
+      ok: false,
+      status: 503,
+      refusal: "checkout_gated",
+      error: "This credit pack is not available for purchase yet.",
+    };
+  }
+  const secretKey = env.STRIPE_SECRET_KEY?.trim();
+  const priceId = env[PACK_PRICE_ENV[packId]]?.trim();
+  if (!secretKey || !priceId) {
+    return {
+      ok: false,
+      status: 503,
+      refusal: "checkout_unconfigured",
+      error: "This credit pack is not configured for purchase.",
+    };
+  }
+  return { ok: true, secretKey, priceId };
+}

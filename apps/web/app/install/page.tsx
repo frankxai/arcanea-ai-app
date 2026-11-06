@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Globe,
@@ -62,7 +62,7 @@ const PATHS: PathOption[] = [
     title: "Use the Platform",
     subtitle: "arcanea.ai",
     description:
-      "The fastest way to start. No installation required. Open the browser and begin creating with AI companions, the Library, and the Academy.",
+      "The direct way to start. No installation required. Open the browser and begin creating with AI companions, the Library, and the Academy.",
     icon: Globe,
     accent: "text-[var(--arc-brand-atlantean-teal)]",
     gradient: "from-[var(--arc-brand-atlantean-teal)]/15 to-transparent",
@@ -320,9 +320,42 @@ function PathCard({ path, index }: { path: PathOption; index: number }) {
   );
 }
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 export default function InstallPage() {
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [installOutcome, setInstallOutcome] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      setIsStandalone(true);
+    }
+    const handler = (event: Event) => {
+      event.preventDefault();
+      setDeferredPrompt(event as BeforeInstallPromptEvent);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstallPwa = async () => {
+    if (!deferredPrompt) return;
+    await deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    setInstallOutcome(choice.outcome);
+    if (choice.outcome === "accepted") {
+      setDeferredPrompt(null);
+    }
+  };
+
   return (
     <MotionProvider>
       <div className="relative min-h-screen">
@@ -369,6 +402,98 @@ export default function InstallPage() {
               {PATHS.map((path, i) => (
                 <PathCard key={path.id} path={path} index={i} />
               ))}
+            </div>
+          </section>
+
+          {/* ── Mobile & Desktop Native App (PWA) ────────────────────── */}
+          <section id="mobile-app" className="mb-20">
+            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                  <p className="text-xs font-mono text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest mb-1">
+                    Mobile & Desktop Native Experience
+                  </p>
+                  <h2 className="text-2xl font-display font-bold text-white">
+                    Install Arcanea on Home Screen or Dock
+                  </h2>
+                  <p className="text-white/40 text-sm mt-1">
+                    Full-screen standalone window, OS-level shortcuts for Chat,
+                    Imagine, Worlds, Studio, and Voice Room, with zero app-store
+                    friction.
+                  </p>
+                </div>
+                <div className="shrink-0">
+                  {isStandalone ? (
+                    <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-500/15 border border-green-500/30 text-green-300 text-xs font-mono">
+                      <Check className="w-4 h-4" /> Running in standalone app
+                      mode
+                    </span>
+                  ) : deferredPrompt ? (
+                    <button
+                      type="button"
+                      onClick={handleInstallPwa}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold text-sm hover:brightness-110 transition-all"
+                    >
+                      <Lightning className="w-4 h-4" weight="fill" /> Install
+                      Arcanea App
+                    </button>
+                  ) : (
+                    <Link
+                      href="/chat"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white text-xs font-semibold hover:bg-white/10 transition-all"
+                    >
+                      Launch Web App <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+
+              {installOutcome === "accepted" && (
+                <p className="mb-6 text-xs font-mono text-green-400">
+                  Arcanea has been installed to your device.
+                </p>
+              )}
+
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
+                  <p className="text-xs font-mono text-[var(--arc-brand-atlantean-teal)] mb-1">
+                    iOS & iPadOS (Safari)
+                  </p>
+                  <p className="text-sm font-semibold text-white mb-1">
+                    Add to Home Screen
+                  </p>
+                  <p className="text-xs text-white/40 leading-relaxed">
+                    Tap the Share button in Safari, scroll down, and choose
+                    &ldquo;Add to Home Screen&rdquo; for full-screen standalone
+                    launch.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
+                  <p className="text-xs font-mono text-[var(--arc-brand-arcanean-gold)] mb-1">
+                    Android (Chrome)
+                  </p>
+                  <p className="text-sm font-semibold text-white mb-1">
+                    Install App + Home Shortcuts
+                  </p>
+                  <p className="text-xs text-white/40 leading-relaxed">
+                    Tap the browser menu and select &ldquo;Install app&rdquo;.
+                    Long-press the app icon to jump directly into Chat, Imagine,
+                    Worlds, or Voice Room.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
+                  <p className="text-xs font-mono text-green-400 mb-1">
+                    macOS & Windows
+                  </p>
+                  <p className="text-sm font-semibold text-white mb-1">
+                    Add to Dock / Desktop App
+                  </p>
+                  <p className="text-xs text-white/40 leading-relaxed">
+                    In Chrome or Edge, click the install icon in the address
+                    bar. In macOS Safari, select File → Add to Dock.
+                  </p>
+                </div>
+              </div>
             </div>
           </section>
 

@@ -11,6 +11,7 @@ import {
   providerStorageNames,
   type ProviderActor,
 } from "@/lib/ai/provider-preferences";
+import { getProviderGatewayModels } from "@/lib/gateway/catalog";
 import { useAuth } from "@/lib/auth/context";
 
 const PROVIDERS = [
@@ -120,6 +121,10 @@ function ProviderSettings({
 
   const selected =
     PROVIDERS.find((provider) => provider.id === activeId) || PROVIDERS[0];
+  const selectedModels = getProviderGatewayModels(selected.id);
+  const configuredChatCount = PROVIDERS.filter((p) =>
+    Boolean(keys[p.id]?.trim()),
+  ).length;
   const current = JSON.stringify({
     keys: parseProviderKeys(JSON.stringify(keys)),
     activeId,
@@ -328,6 +333,25 @@ function ProviderSettings({
               Saving makes this your default. You can choose a model from the
               same provider in chat.
             </p>
+            <div className="pt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--arc-text-secondary)]">
+              <span className="font-mono text-[11px] px-2 py-0.5 rounded-md border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)]">
+                {configuredChatCount} of {PROVIDERS.length} providers with a key
+                entered
+              </span>
+              {selected.id === "openrouter" ? (
+                <span>
+                  OpenRouter can route across all 16 Gateway models when used as
+                  fallback.
+                </span>
+              ) : selectedModels.length > 0 ? (
+                <span>
+                  Gateway models:{" "}
+                  <span className="font-mono text-[var(--arc-text-primary)]">
+                    {selectedModels.map((m) => m.label).join(", ")}
+                  </span>
+                </span>
+              ) : null}
+            </div>
           </div>
           {keyField(selected)}
           <p className="text-sm text-[var(--arc-text-secondary)]">

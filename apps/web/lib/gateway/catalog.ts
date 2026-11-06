@@ -108,12 +108,12 @@ export const GATEWAY_MODELS: Record<string, GatewayModel> = {
   "arcanea-bolt": {
     provider: "cerebras",
     modelId: "llama3.1-8b",
-    label: "Bolt (2200 tok/s)",
+    label: "Bolt (Llama 3.1 8B)",
   },
   "arcanea-thunder": {
     provider: "cerebras",
     modelId: "llama3.3-70b",
-    label: "Thunder (450 tok/s)",
+    label: "Thunder (Llama 3.3 70B)",
   },
   "arcanea-lightning": {
     provider: "groq",
@@ -121,6 +121,31 @@ export const GATEWAY_MODELS: Record<string, GatewayModel> = {
     label: "GPT OSS 20B",
   },
 };
+
+export interface GatewayModelEntry extends GatewayModel {
+  id: string;
+}
+
+/** Resolve the underlying provider ID for a gateway model (undefined for arcanea-auto or unknown IDs). */
+export function getGatewayModelProvider(modelId: string): string | undefined {
+  if (!modelId || modelId === "arcanea-auto") return undefined;
+  return GATEWAY_MODELS[modelId]?.provider;
+}
+
+/** Resolve the canonical display label for a gateway model ID. */
+export function getGatewayModelLabel(modelId: string): string {
+  if (!modelId || modelId === "arcanea-auto") return "Auto";
+  return GATEWAY_MODELS[modelId]?.label ?? modelId;
+}
+
+/** Return all curated gateway models backed by a given provider ID. */
+export function getProviderGatewayModels(
+  providerId: string,
+): GatewayModelEntry[] {
+  return Object.entries(GATEWAY_MODELS)
+    .filter(([, meta]) => meta.provider === providerId)
+    .map(([id, meta]) => ({ id, ...meta }));
+}
 
 /** Extended providers — OpenAI-compatible APIs that need a custom base URL */
 export const EXTENDED_PROVIDERS: Record<

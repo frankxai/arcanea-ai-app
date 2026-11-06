@@ -7,6 +7,7 @@ import {
   CREDIT_PACKS,
   ENTITLEMENTS,
   billingReadiness,
+  estimateCreditCapacity,
   getPlan,
 } from "@/lib/billing/catalog";
 import {
@@ -53,6 +54,7 @@ export default async function BillingPage({
 
   const plan = account ? getPlan(account.plan) : null;
   const entitlements = account ? ENTITLEMENTS[account.plan] : null;
+  const capacity = account ? estimateCreditCapacity(account.balance) : null;
 
   return (
     <main className="mx-auto max-w-3xl px-6 pt-16 pb-24 text-[var(--arc-text-primary)]">
@@ -81,7 +83,7 @@ export default async function BillingPage({
       )}
 
       {account && (
-        <section className="grid sm:grid-cols-3 gap-4 mb-10">
+        <section className="grid sm:grid-cols-3 gap-4 mb-6">
           <Stat
             label="Plan"
             value={plan?.name ?? account.plan}
@@ -118,6 +120,47 @@ export default async function BillingPage({
                   : "no subscription"
             }
           />
+        </section>
+      )}
+
+      {capacity && (
+        <section className="mb-10 rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] p-5">
+          <p className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-3">
+            Current balance capacity ({capacity.credits.toLocaleString("en-US")}{" "}
+            credits)
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div>
+              <p className="font-mono text-base font-bold">
+                {capacity.standardImages}
+              </p>
+              <p className="text-[var(--arc-text-secondary)]">
+                Standard images
+              </p>
+            </div>
+            <div>
+              <p className="font-mono text-base font-bold">
+                {capacity.premiumImages}
+              </p>
+              <p className="text-[var(--arc-text-secondary)]">Premium images</p>
+            </div>
+            <div>
+              <p className="font-mono text-base font-bold">
+                {capacity.musicTracks}
+              </p>
+              <p className="text-[var(--arc-text-secondary)]">
+                Music tracks (planned)
+              </p>
+            </div>
+            <div>
+              <p className="font-mono text-base font-bold">
+                {capacity.videoClips}
+              </p>
+              <p className="text-[var(--arc-text-secondary)]">
+                Video clips (planned)
+              </p>
+            </div>
+          </div>
         </section>
       )}
 

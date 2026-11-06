@@ -16,9 +16,9 @@
  * Uses Node.js runtime (cookie-based Supabase auth requires next/headers).
  */
 
-import { NextResponse } from 'next/server';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
-import type { CreditTransaction } from '@/lib/agents/marketplace/types';
+import { NextResponse } from "next/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
+import type { CreditTransaction } from "@/lib/agents/marketplace/types";
 
 const INITIAL_CREDITS = 100;
 
@@ -26,10 +26,12 @@ export async function GET() {
   try {
     // ── Authenticate ────────────────────────────────────────────────────────
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Cast to any: marketplace credit tables not yet in generated Database type
@@ -41,35 +43,56 @@ export async function GET() {
 
     try {
       const { data: row, error } = await admin
-        .from('credits')
-        .select('balance, updated_at')
-        .eq('user_id', user.id)
+        .from("credits")
+        .select("balance, updated_at")
+        .eq("user_id", user.id)
         .single();
 
-      if (error || !row) {
+      if (error && error.code !== "PGRST116") {
+        throw error;
+      }
+
+      if (!row) {
         // First visit — bootstrap with 100 free credits
-        const { data: newRow } = await admin
-          .from('credits')
-          .insert({ user_id: user.id, balance: INITIAL_CREDITS, updated_at: new Date().toISOString() })
-          .select('balance')
+        const { data: newRow, error: insertError } = await admin
+          .from("credits")
+          .insert({
+            user_id: user.id,
+            balance: INITIAL_CREDITS,
+            updated_at: new Date().toISOString(),
+          })
+          .select("balance")
           .single();
 
-        balance = newRow?.balance ?? INITIAL_CREDITS;
+        if (insertError || !newRow) {
+          throw insertError ?? new Error("Failed to initialize credit balance");
+        }
+
+        balance = newRow.balance;
 
         // Log the initial grant
-        await admin.from('credit_transactions').insert({
+        await admin.from("credit_transactions").insert({
           user_id: user.id,
           amount: INITIAL_CREDITS,
-          type: 'bonus',
+          type: "bonus",
           agent_id: null,
-          description: 'Welcome gift — 100 starter credits',
+          description: "Welcome gift — 100 starter credits",
         });
       } else {
         balance = row.balance ?? 0;
       }
     } catch (dbError) {
-      console.warn('[GET /api/credits] DB query failed, using default balance:', dbError);
-      balance = INITIAL_CREDITS;
+      console.error(
+        "[GET /api/credits] DB query failed (failing closed):",
+        dbError,
+      );
+      return NextResponse.json(
+        {
+          error: "Credit ledger is temporarily unavailable.",
+          code: "ledger_unavailable",
+        },
+        { status: 503 },
+      );
     }
 
     // ── Fetch recent transactions ────────────────────────────────────────────
@@ -77,10 +100,10 @@ export async function GET() {
 
     try {
       const { data: rows } = await admin
-        .from('credit_transactions')
-        .select('id, user_id, amount, type, agent_id, description, created_at')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
+        .from("credit_transactions")
+        .select("id, user_id, amount, type, agent_id, description, created_at")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
         .limit(20);
 
       if (rows) {
@@ -97,7 +120,7 @@ export async function GET() {
             id: r.id,
             userId: r.user_id,
             amount: r.amount,
-            type: r.type as CreditTransaction['type'],
+            type: r.type as CreditTransaction["type"],
             agentId: r.agent_id,
             description: r.description,
             createdAt: r.created_at,
@@ -105,13 +128,14 @@ export async function GET() {
         );
       }
     } catch (dbError) {
-      console.warn('[GET /api/credits] Failed to fetch transactions:', dbError);
+      console.warn("[GET /api/credits] Failed to fetch transactions:", dbError);
     }
 
     return NextResponse.json({ balance, transactions });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Failed to fetch credits';
-    console.error('[GET /api/credits] Error:', message);
+    const message =
+      error instanceof Error ? error.message : "Failed to fetch credits";
+    console.error("[GET /api/credits] Error:", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -30,8 +30,10 @@ import {
 } from "@/lib/phosphor-icons";
 import {
   ACTION_COSTS,
+  CREDIT_BUDGET_PRESETS,
   CREDIT_PACKS,
   PLANS,
+  estimateCreditCapacity,
   formatEuro,
   type CreditPack,
   type Plan,
@@ -300,7 +302,9 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedBudgetCredits, setSelectedBudgetCredits] = useState(1500);
   const checkout = useCheckout();
+  const capacity = estimateCreditCapacity(selectedBudgetCredits);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -437,6 +441,114 @@ export function PricingClient({ billing }: { billing: PricingBillingState }) {
                   </li>
                 ))}
               </ul>
+            </div>
+          </section>
+
+          <section className="max-w-5xl mx-auto mb-20">
+            <div className="rounded-3xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-surface)] p-6 md:p-8">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                  <p className="text-[10px] font-mono tracking-widest text-[var(--arc-brand-atlantean-teal)] mb-1">
+                    Transparent Credit Math
+                  </p>
+                  <h2 className="text-xl font-display font-semibold">
+                    What {selectedBudgetCredits.toLocaleString("en-US")} credits
+                    produce
+                  </h2>
+                  <p className="text-xs text-[var(--arc-text-secondary)] font-body mt-1">
+                    Select a credit budget to see equivalent managed outputs at
+                    list rates. Credits never expire.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {CREDIT_BUDGET_PRESETS.map((preset) => {
+                    const active = selectedBudgetCredits === preset.credits;
+                    return (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => setSelectedBudgetCredits(preset.credits)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-mono border transition-colors ${
+                          active
+                            ? "border-[var(--arc-brand-atlantean-teal)] bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-text-primary)]"
+                            : "border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-void)] text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)]"
+                        }`}
+                      >
+                        {preset.label} ({preset.credits.toLocaleString("en-US")}
+                        )
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+                {[
+                  {
+                    label: "Standard Images",
+                    value: capacity.standardImages,
+                    unit: "10 cr each",
+                  },
+                  {
+                    label: "Premium Images",
+                    value: capacity.premiumImages,
+                    unit: "25 cr each",
+                  },
+                  {
+                    label: "Voice Synthesis",
+                    value: capacity.voiceMinutes,
+                    unit: "2 cr / min (planned)",
+                  },
+                  {
+                    label: "Music Tracks",
+                    value: capacity.musicTracks,
+                    unit: "60 cr / track (planned)",
+                  },
+                  {
+                    label: "Video Clips",
+                    value: capacity.videoClips,
+                    unit: "150 cr / clip (planned)",
+                  },
+                  {
+                    label: "Frontier Chat",
+                    value: capacity.frontierMessages,
+                    unit: "5 cr / msg (or €0 BYOK)",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-2xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-void)] p-4"
+                  >
+                    <p className="font-display text-2xl font-bold text-[var(--arc-text-primary)]">
+                      {item.value.toLocaleString("en-US")}
+                    </p>
+                    <p className="text-xs font-medium text-[var(--arc-text-primary)] mt-1">
+                      {item.label}
+                    </p>
+                    <p className="text-[10px] font-mono text-[var(--arc-text-secondary)] mt-0.5">
+                      {item.unit}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[var(--arc-cosmic-border-bright)] text-xs">
+                <p className="text-[var(--arc-text-secondary)]">
+                  Using your own Gemini, Claude, OpenAI, OpenRouter, Groq, or
+                  Cerebras keys? Chat, Luminors, worlds, and portable exports
+                  cost{" "}
+                  <span className="font-mono font-semibold text-[var(--arc-brand-atlantean-teal)]">
+                    0 credits
+                  </span>
+                  .
+                </p>
+                <Link
+                  href="/settings/providers"
+                  className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-xl border border-[var(--arc-cosmic-border-bright)] font-semibold text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-void)] transition-colors"
+                >
+                  Configure BYOK Keys →
+                </Link>
+              </div>
             </div>
           </section>
 

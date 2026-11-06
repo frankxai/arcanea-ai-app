@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { CREDIT_PACKS } from "@/lib/types/credits";
+import { stripeCreditPackCheckoutGate } from "@/lib/billing/stripe-gate";
 
 /** Derive valid pack IDs from the canonical CREDIT_PACKS array */
 const VALID_PACK_IDS = CREDIT_PACKS.map((p) => p.id) as [string, ...string[]];
@@ -49,7 +50,10 @@ export async function POST(req: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: "Invalid request", details: parsed.error.flatten().fieldErrors },
+        {
+          error: "Invalid request",
+          details: parsed.error.flatten().fieldErrors,
+        },
         { status: 400 },
       );
     }
@@ -66,48 +70,34 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Stripe checkout (fail-closed) ─────────────────────────────────────
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-
-    if (!stripeKey) {
+    const gate = stripeCreditPackCheckoutGate(packId);
+    if (!gate.ok) {
       return NextResponse.json(
         {
-          error: "Payments are not configured yet.",
-          code: "stripe_not_configured",
+          error: gate.error,
+          code: gate.refusal,
           pack: {
             id: pack.id,
             credits: pack.credits,
             priceUsd: pack.priceUsd,
           },
         },
-        { status: 503 },
+        { status: gate.status },
       );
     }
 
-    if (!pack.stripePriceId) {
-      return NextResponse.json(
-        {
-          error: "This credit pack is not available for purchase yet.",
-          code: "price_not_configured",
-          packId: pack.id,
-        },
-        { status: 503 },
-      );
-    }
-
-    const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai";
 
     const Stripe = (await import("stripe")).default;
-    const stripe = new Stripe(stripeKey);
+    const stripe = new Stripe(gate.secretKey);
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      line_items: [{ price: pack.stripePriceId, quantity: 1 }],
+      line_items: [{ price: gate.priceId, quantity: 1 }],
       success_url:
         successUrl || `${siteUrl}/studio?payment=success&pack=${packId}`,
-      cancel_url:
-        cancelUrl || `${siteUrl}/pricing?payment=cancelled`,
+      cancel_url: cancelUrl || `${siteUrl}/pricing?payment=cancelled`,
       customer_email: user.email,
       metadata: {
         user_id: user.id,
@@ -134,8 +124,7 @@ export async function POST(req: NextRequest) {
       amountUsd: pack.priceUsd,
     });
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Checkout failed";
+    const message = error instanceof Error ? error.message : "Checkout failed";
     console.error("Credits checkout error:", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
