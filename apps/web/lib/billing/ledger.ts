@@ -77,6 +77,22 @@ export async function getAccount(userId: string): Promise<BillingAccount> {
   });
 }
 
+/** Purchase grant keyed on the payment, so a redelivered webhook credits once. */
+export async function grantPurchasedCredits(
+  userId: string,
+  amount: number,
+  reference: string,
+  metadata: Record<string, unknown> = {},
+): Promise<BillingAccount & { applied: boolean }> {
+  return call("billing_grant_credits", {
+    p_user: userId,
+    p_amount: amount,
+    p_kind: "purchase",
+    p_reference: reference,
+    p_metadata: metadata,
+  });
+}
+
 export async function applyEvent(
   id: string,
   type: string,
