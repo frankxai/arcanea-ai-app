@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
 import { LibraryHero } from "./library-hero";
+import { LibraryWebMCP } from "@/components/library-webmcp";
 import { getCollections, getTextsInCollection } from "../../lib/content";
 
 export const dynamic = 'force-dynamic';
@@ -66,6 +67,7 @@ export default async function LibraryPage() {
 
   return (
     <div className="relative min-h-screen">
+      <LibraryWebMCP collections={collections} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

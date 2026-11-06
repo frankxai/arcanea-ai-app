@@ -28,7 +28,8 @@
     "type-check": "node -e \"require('fs').rmSync('.next/types',{recursive:true,force:true});require('fs').rmSync('.next/dev/types',{recursive:true,force:true});require('fs').rmSync('tsconfig.tsbuildinfo',{force:true})\" && next typegen && tsc --noEmit",
     "check:env": "tsx ../../scripts/check-env.ts",
     "db:push": "echo 'Use Supabase CLI for migrations'",
-    "db:studio": "echo 'Use Supabase Studio at https://supabase.com/dashboard'"
+    "db:studio": "echo 'Use Supabase Studio at https://supabase.com/dashboard'",
+    "test:webmcp": "node --test scripts/tests/webmcp.test.mjs scripts/tests/public-catalog.test.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.0",
