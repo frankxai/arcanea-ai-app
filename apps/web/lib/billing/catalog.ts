@@ -317,3 +317,60 @@ export const ENTITLEMENTS: Record<
     priorityQueue: true,
   },
 };
+
+export interface CreditCapacityEstimate {
+  credits: number;
+  standardImages: number;
+  premiumImages: number;
+  voiceMinutes: number;
+  musicTracks: number;
+  videoClips: number;
+  frontierMessages: number;
+  standardMessages: number;
+  byokChatAndWorldsCost: 0;
+}
+
+/**
+ * Computes exact output equivalents for a credit budget using ACTION_COSTS.
+ * BYOK chat, worlds, and exports always cost 0 credits.
+ */
+export function estimateCreditCapacity(
+  credits: number,
+): CreditCapacityEstimate {
+  const safeCredits =
+    Number.isFinite(credits) && credits > 0 ? Math.floor(credits) : 0;
+  return {
+    credits: safeCredits,
+    standardImages: Math.floor(safeCredits / getActionCost("image.standard")),
+    premiumImages: Math.floor(safeCredits / getActionCost("image.premium")),
+    voiceMinutes: Math.floor(safeCredits / getActionCost("voice.minute")),
+    musicTracks: Math.floor(safeCredits / getActionCost("music.track")),
+    videoClips: Math.floor(safeCredits / getActionCost("video.clip")),
+    frontierMessages: Math.floor(safeCredits / getActionCost("chat.frontier")),
+    standardMessages: Math.floor(safeCredits / getActionCost("chat.standard")),
+    byokChatAndWorldsCost: 0,
+  };
+}
+
+export const CREDIT_BUDGET_PRESETS = [
+  {
+    id: "welcome",
+    label: "Spark Welcome",
+    credits: WELCOME_CREDITS,
+    note: "Included free",
+  },
+  { id: "pack-500", label: "500 Pack", credits: 500, note: "€5 one-time" },
+  {
+    id: "creator",
+    label: "Creator Monthly",
+    credits: 1500,
+    note: "€19 / month",
+  },
+  { id: "pack-2500", label: "2,500 Pack", credits: 2500, note: "€19 one-time" },
+  {
+    id: "studio",
+    label: "Studio / 8,000 Pack",
+    credits: 8000,
+    note: "€79/mo or €49 pack",
+  },
+] as const;

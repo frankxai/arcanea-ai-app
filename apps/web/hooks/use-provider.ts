@@ -9,6 +9,7 @@ import {
   providerStorageNames,
   type ProviderActor,
 } from "@/lib/ai/provider-preferences";
+import { GATEWAY_MODELS } from "@/lib/gateway/catalog";
 import { useAuth } from "@/lib/auth/context";
 
 const PROVIDER_LABELS: Record<string, string> = {
@@ -24,46 +25,87 @@ const PROVIDER_LABELS: Record<string, string> = {
   moonshot: "Moonshot",
 };
 
-// Gateway model ID → provider mapping for the chat API
-const MODEL_PROVIDERS: Record<string, string> = {
+const AUTO_PROVIDER_FALLBACK_ORDER = [
+  "openrouter",
+  "google",
+  "anthropic",
+  "openai",
+  "groq",
+  "cerebras",
+  "xai",
+  "deepseek",
+  "mistral",
+  "moonshot",
+] as const;
+
+// Gateway model ID → provider mapping for the chat API, derived from canonical GATEWAY_MODELS
+export const MODEL_PROVIDERS: Record<string, string> = {
   "arcanea-auto": "gateway",
-  "arcanea-opus": "anthropic",
-  "arcanea-sonnet": "anthropic",
-  "arcanea-gpt5": "openai",
-  "arcanea-gemini-pro": "google",
-  "arcanea-grok": "xai",
-  "arcanea-deepseek-r1": "deepseek",
-  "arcanea-kimi": "moonshot",
-  "arcanea-deepseek": "deepseek",
-  "arcanea-haiku": "anthropic",
-  "arcanea-gemini-flash": "google",
-  "arcanea-qwen": "cerebras",
-  "arcanea-maverick": "groq",
-  "arcanea-mistral": "mistral",
-  "arcanea-bolt": "cerebras",
-  "arcanea-thunder": "cerebras",
-  "arcanea-lightning": "groq",
+  ...Object.fromEntries(
+    Object.entries(GATEWAY_MODELS).map(([id, meta]) => [id, meta.provider]),
+  ),
 };
 
-const MODEL_LABELS: Record<string, string> = {
+export const MODEL_LABELS: Record<string, string> = {
   "arcanea-auto": "Auto",
-  "arcanea-opus": "Opus 4.6",
-  "arcanea-sonnet": "Sonnet 4.6",
-  "arcanea-gpt5": "GPT-5",
+  ...Object.fromEntries(
+    Object.entries(GATEWAY_MODELS).map(([id, meta]) => [id, meta.label]),
+  ),
+  "arcanea-opus": "Claude Opus 4.6",
+  "arcanea-sonnet": "Claude Sonnet 4.6",
   "arcanea-gemini-pro": "Gemini 3.1 Pro",
-  "arcanea-grok": "Grok 4.2",
+  "arcanea-gpt5": "GPT-5",
   "arcanea-deepseek-r1": "DeepSeek R1",
-  "arcanea-kimi": "Kimi K2.5",
-  "arcanea-deepseek": "DeepSeek V3",
-  "arcanea-haiku": "Haiku 4.5",
+  "arcanea-grok": "Grok 4.2",
   "arcanea-gemini-flash": "Gemini Flash",
+  "arcanea-haiku": "Haiku",
+  "arcanea-deepseek": "DeepSeek V3",
+  "arcanea-kimi": "Kimi K2.5",
   "arcanea-qwen": "Qwen 3",
-  "arcanea-maverick": "Maverick",
+  "arcanea-maverick": "Llama 4",
   "arcanea-mistral": "Mistral Large",
   "arcanea-bolt": "Bolt",
   "arcanea-thunder": "Thunder",
   "arcanea-lightning": "Lightning",
 };
+
+/**
+ * Resolves the effective provider and API key for Auto / legacy mode.
+ * Uses the preferred active provider when it has a key (or OpenRouter fallback),
+ * and otherwise falls back to the first provider the user actually configured.
+ */
+export function resolveAutoProvider(
+  keys: Record<string, string>,
+  preferredProvider: string,
+): { provider: string; clientApiKey: string | undefined } {
+  const directKey = getModelKey(keys, preferredProvider);
+  if (directKey) {
+    return { provider: preferredProvider, clientApiKey: directKey };
+  }
+  for (const candidate of AUTO_PROVIDER_FALLBACK_ORDER) {
+    const candidateKey = keys[candidate]?.trim();
+    if (candidateKey) {
+      return { provider: candidate, clientApiKey: candidateKey };
+    }
+  }
+  return { provider: preferredProvider, clientApiKey: undefined };
+}
+
+/**
+ * Checks whether a Gateway model ID has a configured BYOK key in the given key map.
+ */
+export function isGatewayModelConfigured(
+  modelId: string,
+  keys: Record<string, string>,
+  activeProvider = "google",
+): boolean {
+  if (!modelId || modelId === "arcanea-auto") {
+    return Boolean(resolveAutoProvider(keys, activeProvider).clientApiKey);
+  }
+  const provider = MODEL_PROVIDERS[modelId];
+  if (!provider) return false;
+  return Boolean(getModelKey(keys, provider));
+}
 
 export interface ProviderState {
   /** Legacy provider ID or 'gateway' for Gateway models */
@@ -74,6 +116,10 @@ export interface ProviderState {
   label: string;
   /** Whether using Gateway model selection vs legacy provider mode */
   isGateway: boolean;
+  /** Provider IDs that currently have a non-empty key saved for this actor */
+  configuredProviders?: string[];
+  /** Current actor's provider key map for readiness checks */
+  keys?: Record<string, string>;
 }
 
 /**
@@ -88,6 +134,8 @@ export function readProviderFromStorage(actor: ProviderActor): ProviderState {
     clientApiKey: undefined,
     label: PROVIDER_LABELS.google,
     isGateway: false,
+    configuredProviders: [],
+    keys: {},
   };
   if (typeof window === "undefined" || !actor) return fallback;
   try {
@@ -97,10 +145,26 @@ export function readProviderFromStorage(actor: ProviderActor): ProviderState {
       localStorage,
       actor,
     );
+    const configuredProviders = Object.entries(keys)
+      .filter(
+        ([, value]) => typeof value === "string" && value.trim().length > 0,
+      )
+      .map(([id]) => id);
 
     if (modelId && MODEL_PROVIDERS[modelId]) {
-      const modelProvider =
-        modelId === "arcanea-auto" ? provider : MODEL_PROVIDERS[modelId];
+      if (modelId === "arcanea-auto") {
+        const resolved = resolveAutoProvider(keys, provider);
+        return {
+          provider: resolved.provider,
+          modelId,
+          clientApiKey: resolved.clientApiKey,
+          label: MODEL_LABELS[modelId] || "Auto",
+          isGateway: true,
+          configuredProviders,
+          keys,
+        };
+      }
+      const modelProvider = MODEL_PROVIDERS[modelId];
       const clientApiKey = getModelKey(keys, modelProvider);
       const label = MODEL_LABELS[modelId] || modelId;
       return {
@@ -109,11 +173,22 @@ export function readProviderFromStorage(actor: ProviderActor): ProviderState {
         clientApiKey,
         label,
         isGateway: true,
+        configuredProviders,
+        keys,
       };
     } else {
-      const clientApiKey = getModelKey(keys, provider);
-      const label = PROVIDER_LABELS[provider] || PROVIDER_LABELS.google;
-      return { provider, modelId: null, clientApiKey, label, isGateway: false };
+      const resolved = resolveAutoProvider(keys, provider);
+      const label =
+        PROVIDER_LABELS[resolved.provider] || PROVIDER_LABELS.google;
+      return {
+        provider: resolved.provider,
+        modelId: null,
+        clientApiKey: resolved.clientApiKey,
+        label,
+        isGateway: false,
+        configuredProviders,
+        keys,
+      };
     }
   } catch {
     return fallback;
