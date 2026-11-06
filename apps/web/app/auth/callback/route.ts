@@ -29,7 +29,8 @@ export async function GET(request: NextRequest) {
       } = await supabase.auth.getUser();
 
       if (user) {
-        await ensureProfileForUser(user);
+        // Never blocks sign-in: bootstrap is best-effort and does not throw.
+        await ensureProfileForUser(user, supabase);
       }
 
       return NextResponse.redirect(new URL(next, requestUrl.origin));
