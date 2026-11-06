@@ -51,6 +51,22 @@ export const MODEL_LABELS: Record<string, string> = {
   ...Object.fromEntries(
     Object.entries(GATEWAY_MODELS).map(([id, meta]) => [id, meta.label]),
   ),
+  "arcanea-opus": "Claude Opus 4.6",
+  "arcanea-sonnet": "Claude Sonnet 4.6",
+  "arcanea-gemini-pro": "Gemini 3.1 Pro",
+  "arcanea-gpt5": "GPT-5",
+  "arcanea-deepseek-r1": "DeepSeek R1",
+  "arcanea-grok": "Grok 4.2",
+  "arcanea-gemini-flash": "Gemini Flash",
+  "arcanea-haiku": "Haiku",
+  "arcanea-deepseek": "DeepSeek V3",
+  "arcanea-kimi": "Kimi K2.5",
+  "arcanea-qwen": "Qwen 3",
+  "arcanea-maverick": "Llama 4",
+  "arcanea-mistral": "Mistral Large",
+  "arcanea-bolt": "Bolt",
+  "arcanea-thunder": "Thunder",
+  "arcanea-lightning": "Lightning",
 };
 
 /**
