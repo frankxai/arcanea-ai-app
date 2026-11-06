@@ -1,0 +1,144 @@
+.page {
+  background: var(--arc-cosmic-void);
+  color: var(--arc-text-primary);
+  font-family: var(--arc-font-body);
+}
+.header,
+.wrap,
+.footer {
+  width: min(100% - 3rem, 75rem);
+  margin-inline: auto;
+}
+.header {
+  padding-block: 6rem 3rem;
+}
+.header h1 {
+  font: 400 clamp(3.5rem, 10vw, 8rem)/0.98 var(--arc-font-editorial);
+  letter-spacing: -0.045em;
+  margin-block: 2rem;
+  max-width: 10ch;
+}
+.header > p {
+  max-width: 45rem;
+}
+.lede {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+}
+.eyebrow {
+  color: var(--arc-text-secondary);
+  font: 0.75rem/1.7 var(--arc-font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1.25rem;
+  padding-block: 1rem;
+}
+.controls label {
+  display: grid;
+  gap: 0.5rem;
+}
+.controls .checkbox {
+  display: flex;
+  align-items: center;
+  min-height: var(--arc-touch-target);
+}
+.page input,
+.page button,
+.page textarea {
+  font: inherit;
+  color: var(--arc-text-primary);
+  background: var(--arc-cosmic-deep);
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-sm);
+  padding: 0.75rem 1rem;
+  max-width: 100%;
+}
+.page button {
+  cursor: pointer;
+  min-height: var(--arc-touch-target);
+}
+.page :is(button, input, textarea, summary, a):focus-visible {
+  outline: 2px solid var(--arc-text-primary);
+  outline-offset: 4px;
+}
+.page a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.entry {
+  border-top: 1px solid var(--arc-cosmic-border-bright);
+  padding-top: 1.5rem;
+  margin-block: 2rem 5rem;
+}
+.art {
+  width: 100%;
+  height: auto;
+  max-height: 55rem;
+  object-fit: contain;
+  background: var(--arc-cosmic-deep);
+}
+.copy {
+  max-width: 50rem;
+  padding-block: 2rem;
+}
+.copy h2,
+.footer h2 {
+  font: 400 clamp(2rem, 4vw, 3.2rem)/1.12 var(--arc-font-editorial);
+  margin-block: 1rem;
+}
+.copy p,
+.copy dd,
+.footer p {
+  line-height: 1.8;
+}
+.copy dt {
+  font: 0.75rem/1.7 var(--arc-font-mono);
+  text-transform: uppercase;
+  color: var(--arc-text-secondary);
+  margin-top: 1.25rem;
+}
+.copy dd {
+  margin: 0;
+}
+.details {
+  border-top: 1px solid var(--arc-cosmic-border-bright);
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+}
+.details summary {
+  cursor: pointer;
+  min-height: var(--arc-touch-target);
+}
+.details textarea {
+  display: block;
+  width: 100%;
+  min-height: 15rem;
+  margin-block: 1rem;
+  line-height: 1.65;
+}
+.details span {
+  margin-inline-start: 1rem;
+}
+.footer {
+  padding-block: 2rem 5rem;
+  border-top: 1px solid var(--arc-cosmic-border-bright);
+}
+.footer li {
+  margin-block: 1.5rem;
+}
+@media (max-width: 480px) {
+  .header {
+    padding-top: 3rem;
+  }
+  .controls {
+    display: grid;
+  }
+  .details span {
+    display: block;
+    margin: 0.75rem 0;
+  }
+}
