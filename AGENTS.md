@@ -316,3 +316,23 @@ At handoff distinguish policy proposed, merged, loaded in this agent session and
 <!-- PRODUCT-OUTCOME-CONTRACT:END -->
 
 Current quality implementation: https://github.com/frankxai/arcanea-ai-app/issues/427. Reconcile historical instructions against accepted current decisions before changing product scope.
+
+## Review evidence and release routing
+
+Added by Codex, 3 November 2026, revision 1; proposed until reviewed and merged.
+
+Declare one implementation owner/provider and the full head SHA. Branch names and
+shared GitHub accounts are routing hints, not authenticated model identity. Use
+Copilot for the first pass on qualifying ready PRs, then a substantive reviewer
+from a different provider for consequential work. Route OpenAI implementation to
+Claude and Anthropic implementation to Codex when those reviewers are available.
+Another session of the maker's provider or a typed receipt cannot prove independence.
+
+Request a final-head re-review when automatic new-push review is off. Bind findings,
+fixes, test evidence and coverage to that exact head; name unread files or truncated
+diffs. Review auth, money, tenant isolation, secrets, agent authority, CI and
+infrastructure as security-sensitive. Existing human release gates still apply.
+
+Preserve Build, Lint, TypeScript and CI Status. Review Supabase RLS, private source access, BYOK secrecy, MCP/tool authority and authorization at each data boundary. Include every imported workspace package in applicable workflow filters. Canon locks and existing sensitive release gates remain authoritative.
+
+Shared measured rollout: https://github.com/frankxai/agentic-ops/pull/439.
