@@ -1,0 +1,130 @@
+{
+  "schema": "arcanea.rights_manifest.v0",
+  "manifestId": "urn:arcanea:rights:fixture:community-remix-review",
+  "createdAt": "2026-11-01T10:00:00+01:00",
+  "updatedAt": "2026-11-05T10:00:00+01:00",
+  "status": "review",
+  "asset": {
+    "assetId": "fixture:community:remix-01",
+    "title": "FIXTURE — Community Remix of an Arcanea Theme",
+    "kind": "music",
+    "description": "Illustrative fixture: a community creator remixes an Arcanea theme under the derivative licence, with a revenue share back to the original creator. Shows a manifest in review with open items.",
+    "contentHash": {
+      "algorithm": "sha256",
+      "value": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
+    },
+    "sourceFiles": [
+      {
+        "uri": "blob://fixtures/remix-01/master.wav",
+        "role": "master",
+        "mimeType": "audio/wav"
+      }
+    ],
+    "versionHistory": [],
+    "parentAssetIds": ["fixture:music:arcanea-theme-01"],
+    "canonStatus": "community"
+  },
+  "creators": [
+    {
+      "id": "creator:fixture-remixer",
+      "displayName": "Fixture Remixer",
+      "role": "author",
+      "verified": false,
+      "sharePercent": 70
+    },
+    {
+      "id": "creator:fixture-original",
+      "displayName": "Fixture Original Composer",
+      "role": "co-author",
+      "verified": true,
+      "sharePercent": 30
+    }
+  ],
+  "authorship": {
+    "humanContribution": "substantial",
+    "aiInvolvement": "assistive",
+    "description": "Arrangement, performance and mix by the remixer; AI stem separation used as a production tool.",
+    "aiTools": [
+      {
+        "provider": "Fixture Stem Tool",
+        "commercialUseAllowed": true,
+        "termsUrl": "https://example.invalid/stem-terms",
+        "termsCheckedAt": "2026-11-01T10:00:00+01:00"
+      }
+    ],
+    "disclosure": {
+      "required": true,
+      "label": "Remix produced with AI-assisted stem separation.",
+      "machineReadableMark": "none"
+    }
+  },
+  "sourceMaterial": [
+    {
+      "description": "Original Arcanea theme (parent asset)",
+      "kind": "licensed",
+      "licenseRef": "lic:fixture:theme-01:derivative",
+      "rightsHolder": "Fixture Original Composer"
+    }
+  ],
+  "thirdPartyPermissions": [],
+  "ownership": {
+    "copyrightClaim": "partial",
+    "claimant": "Fixture Remixer",
+    "basis": "Claim limited to the new arrangement; underlying theme remains with the original composer.",
+    "trademarks": []
+  },
+  "licenses": [
+    {
+      "licenseId": "lic:fixture:remix:public",
+      "templateId": "arcanea.derivative-remix.v0",
+      "templateVersion": "0.1.0",
+      "licensee": "public",
+      "permissions": {
+        "personalUse": "allowed",
+        "commercialUse": "conditional",
+        "derivatives": "allowed",
+        "redistribution": "conditional",
+        "publicDisplay": "allowed",
+        "interactiveUse": "prohibited",
+        "sync": "prohibited",
+        "sublicensing": "prohibited",
+        "aiTraining": "prohibited"
+      },
+      "exclusivity": "non-exclusive",
+      "territories": ["WW"],
+      "duration": {
+        "type": "until-revoked"
+      },
+      "attribution": {
+        "required": true,
+        "text": "Remix of an Arcanea theme by Fixture Original Composer; remix by Fixture Remixer"
+      },
+      "feeModel": "revenue-share",
+      "revenueShare": [
+        {
+          "partyId": "creator:fixture-original",
+          "percent": 30,
+          "basis": "net"
+        }
+      ],
+      "revocation": {
+        "revocable": true,
+        "conditions": ["breach of attribution", "takedown of the parent asset"]
+      },
+      "status": "proposed",
+      "agreementText": {
+        "uri": "urn:arcanea:legal:license:arcanea.derivative-remix.v0:draft",
+        "language": "en",
+        "version": "0.1.0-draft"
+      },
+      "acceptance": [],
+      "conditions": []
+    }
+  ],
+  "disputes": [],
+  "review": {
+    "counselReviewed": false,
+    "notes": "Open: counsel review of the derivative template; C2PA/audio mark; verification of the remixer identity."
+  },
+  "notes": "FIXTURE. Every identifier here is synthetic."
+}

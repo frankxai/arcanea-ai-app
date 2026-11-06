@@ -1,0 +1,1052 @@
+{
+  "$id": "https://arcanea.ai/schemas/arcanea.rights_manifest.v0.schema.json",
+  "title": "Arcanea Rights Manifest v0",
+  "description": "Machine-readable rights, provenance and licensing record for a creative asset. Validation of cross-field rules (RM001+) happens in @arcanea/rights-manifest; this document covers structure only.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "arcanea.rights_manifest.v0"
+    },
+    "manifestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "review",
+        "approved",
+        "revoked",
+        "disputed"
+      ]
+    },
+    "asset": {
+      "type": "object",
+      "properties": {
+        "assetId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "image",
+            "video",
+            "audio",
+            "music",
+            "text",
+            "3d",
+            "game-asset",
+            "interactive",
+            "bundle",
+            "collection",
+            "other"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "contentHash": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "algorithm",
+            "value"
+          ]
+        },
+        "sourceFiles": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "master",
+                  "derivative",
+                  "preview",
+                  "source-material",
+                  "documentation"
+                ]
+              },
+              "mimeType": {
+                "type": "string"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "hash": {
+                "type": "object",
+                "properties": {
+                  "algorithm": {
+                    "type": "string",
+                    "const": "sha256"
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "algorithm",
+                  "value"
+                ]
+              }
+            },
+            "required": [
+              "uri",
+              "role"
+            ]
+          }
+        },
+        "versionHistory": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              },
+              "note": {
+                "type": "string"
+              },
+              "hash": {
+                "type": "object",
+                "properties": {
+                  "algorithm": {
+                    "type": "string",
+                    "const": "sha256"
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "algorithm",
+                  "value"
+                ]
+              }
+            },
+            "required": [
+              "version",
+              "at"
+            ]
+          }
+        },
+        "parentAssetIds": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "canonStatus": {
+          "default": "not-applicable",
+          "type": "string",
+          "enum": [
+            "official-canon",
+            "proposed-canon",
+            "community",
+            "experimental",
+            "not-applicable"
+          ]
+        }
+      },
+      "required": [
+        "assetId",
+        "title",
+        "kind"
+      ]
+    },
+    "creators": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "author",
+              "co-author",
+              "commissioner",
+              "performer",
+              "curator",
+              "editor",
+              "prompt-author",
+              "engineer",
+              "other"
+            ]
+          },
+          "legalEntity": {
+            "type": "string"
+          },
+          "verified": {
+            "default": false,
+            "type": "boolean"
+          },
+          "sharePercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "id",
+          "displayName",
+          "role"
+        ]
+      }
+    },
+    "authorship": {
+      "type": "object",
+      "properties": {
+        "humanContribution": {
+          "type": "string",
+          "enum": [
+            "none",
+            "minimal",
+            "substantial",
+            "full"
+          ]
+        },
+        "aiInvolvement": {
+          "type": "string",
+          "enum": [
+            "none",
+            "assistive",
+            "generative-with-human-direction",
+            "fully-generated"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aiTools": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "minLength": 1
+              },
+              "model": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "planOrLicense": {
+                "type": "string"
+              },
+              "commercialUseAllowed": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "string",
+                    "const": "unknown"
+                  }
+                ]
+              },
+              "termsUrl": {
+                "type": "string"
+              },
+              "termsCheckedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              },
+              "generation": {
+                "type": "object",
+                "properties": {
+                  "promptHash": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "seed": {
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "parameters": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {}
+                  },
+                  "jobRef": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "provider",
+              "commercialUseAllowed"
+            ]
+          }
+        },
+        "disclosure": {
+          "type": "object",
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "label": {
+              "type": "string"
+            },
+            "machineReadableMark": {
+              "default": "none",
+              "type": "string",
+              "enum": [
+                "c2pa",
+                "synthid",
+                "both",
+                "none",
+                "other"
+              ]
+            },
+            "c2paManifestRef": {
+              "type": "string"
+            },
+            "basis": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "required"
+          ]
+        }
+      },
+      "required": [
+        "humanContribution",
+        "aiInvolvement",
+        "description",
+        "disclosure"
+      ]
+    },
+    "sourceMaterial": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "own-work",
+              "public-domain",
+              "licensed",
+              "cc-licensed",
+              "fair-use-claim",
+              "unknown"
+            ]
+          },
+          "licenseRef": {
+            "type": "string"
+          },
+          "permissionEvidenceRef": {
+            "type": "string"
+          },
+          "rightsHolder": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "description",
+          "kind"
+        ]
+      }
+    },
+    "thirdPartyPermissions": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "party": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidenceRef": {
+            "type": "string",
+            "minLength": 1
+          },
+          "grantedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          }
+        },
+        "required": [
+          "party",
+          "scope",
+          "evidenceRef"
+        ]
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "properties": {
+        "copyrightClaim": {
+          "type": "string",
+          "enum": [
+            "claimed",
+            "partial",
+            "unclaimed",
+            "uncertain"
+          ]
+        },
+        "claimant": {
+          "type": "string"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "jurisdictionNotes": {
+          "type": "string"
+        },
+        "trademarks": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mark": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "unregistered",
+                  "applied",
+                  "registered",
+                  "unknown"
+                ]
+              },
+              "registrationRef": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "mark",
+              "owner",
+              "status"
+            ]
+          }
+        }
+      },
+      "required": [
+        "copyrightClaim"
+      ]
+    },
+    "licenses": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "licenseId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "templateId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "templateVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "licensee": {
+            "type": "string",
+            "enum": [
+              "public",
+              "purchaser",
+              "token-holder",
+              "named-party",
+              "platform"
+            ]
+          },
+          "licenseeRef": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "object",
+            "properties": {
+              "personalUse": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "commercialUse": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "derivatives": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "redistribution": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "publicDisplay": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "interactiveUse": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "sync": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "sublicensing": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              },
+              "aiTraining": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "conditional",
+                  "prohibited"
+                ]
+              }
+            },
+            "required": [
+              "personalUse",
+              "commercialUse",
+              "derivatives",
+              "redistribution",
+              "publicDisplay",
+              "interactiveUse",
+              "sync",
+              "sublicensing",
+              "aiTraining"
+            ]
+          },
+          "exclusivity": {
+            "type": "string",
+            "enum": [
+              "non-exclusive",
+              "sole",
+              "exclusive"
+            ]
+          },
+          "territories": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            }
+          },
+          "duration": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "perpetual"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "until-revoked"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "fixed"
+                  },
+                  "endsAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  }
+                },
+                "required": [
+                  "type",
+                  "endsAt"
+                ]
+              }
+            ]
+          },
+          "attribution": {
+            "type": "object",
+            "properties": {
+              "required": {
+                "type": "boolean"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "required"
+            ]
+          },
+          "feeModel": {
+            "type": "string",
+            "enum": [
+              "free",
+              "one-time",
+              "subscription",
+              "royalty",
+              "revenue-share",
+              "other"
+            ]
+          },
+          "revenueShare": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "partyId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "basis": {
+                  "default": "net",
+                  "type": "string",
+                  "enum": [
+                    "gross",
+                    "net"
+                  ]
+                }
+              },
+              "required": [
+                "partyId",
+                "percent"
+              ]
+            }
+          },
+          "revocation": {
+            "type": "object",
+            "properties": {
+              "revocable": {
+                "type": "boolean"
+              },
+              "conditions": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "revocable"
+            ]
+          },
+          "status": {
+            "default": "proposed",
+            "type": "string",
+            "enum": [
+              "proposed",
+              "active",
+              "expired",
+              "revoked"
+            ]
+          },
+          "agreementText": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hash": {
+                "type": "object",
+                "properties": {
+                  "algorithm": {
+                    "type": "string",
+                    "const": "sha256"
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "algorithm",
+                  "value"
+                ]
+              },
+              "language": {
+                "default": "en",
+                "type": "string"
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "uri",
+              "version"
+            ]
+          },
+          "acceptance": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "acceptedBy": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "method": {
+                  "type": "string",
+                  "enum": [
+                    "click-through",
+                    "signature",
+                    "onchain-signature",
+                    "email",
+                    "other"
+                  ]
+                },
+                "evidenceRef": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "acceptedBy",
+                "at",
+                "method",
+                "evidenceRef"
+              ]
+            }
+          },
+          "conditions": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "licenseId",
+          "templateId",
+          "templateVersion",
+          "licensee",
+          "permissions",
+          "exclusivity",
+          "territories",
+          "duration",
+          "attribution",
+          "feeModel",
+          "revocation",
+          "agreementText"
+        ]
+      }
+    },
+    "onchain": {
+      "type": "object",
+      "properties": {
+        "registrations": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "chainId": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "network": {
+                "type": "string",
+                "minLength": 1
+              },
+              "standard": {
+                "type": "string",
+                "enum": [
+                  "ERC-721",
+                  "ERC-1155",
+                  "ERC-721C",
+                  "ERC-1155C",
+                  "other"
+                ]
+              },
+              "contract": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tokenId": {
+                "type": "string"
+              },
+              "royaltyBps": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "licenseUri": {
+                "type": "string"
+              },
+              "deployment": {
+                "default": "none",
+                "type": "string",
+                "enum": [
+                  "none",
+                  "testnet",
+                  "mainnet"
+                ]
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "chainId",
+              "network",
+              "standard",
+              "contract"
+            ]
+          }
+        },
+        "disclaimer": {
+          "type": "string",
+          "const": "A token is a pointer to this manifest and to the benefits listed in it. It is not copyright, it is not proof of originality, and it does not by itself transfer or prove ownership of any underlying work."
+        }
+      },
+      "required": [
+        "disclaimer"
+      ]
+    },
+    "disputes": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "takedown",
+              "infringement-claim",
+              "ownership-dispute",
+              "licence-breach",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "under-review",
+              "resolved",
+              "rejected"
+            ]
+          },
+          "openedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "evidenceRef": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "status",
+          "openedAt",
+          "evidenceRef"
+        ]
+      }
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "counselReviewed": {
+          "type": "boolean"
+        },
+        "counselRef": {
+          "type": "string"
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+        },
+        "humanApprovalReceiptRef": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "counselReviewed"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "manifestId",
+    "createdAt",
+    "updatedAt",
+    "status",
+    "asset",
+    "creators",
+    "authorship",
+    "ownership",
+    "review"
+  ]
+}

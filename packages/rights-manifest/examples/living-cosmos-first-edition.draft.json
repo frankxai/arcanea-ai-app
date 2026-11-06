@@ -1,0 +1,121 @@
+{
+  "schema": "arcanea.rights_manifest.v0",
+  "manifestId": "urn:arcanea:rights:living-cosmos-first-edition:draft-1",
+  "createdAt": "2026-11-06T12:00:00+01:00",
+  "updatedAt": "2026-11-06T12:00:00+01:00",
+  "status": "draft",
+  "asset": {
+    "assetId": "shop:living-cosmos-first-edition",
+    "title": "Living Cosmos — First Edition",
+    "kind": "collection",
+    "description": "Proposed collector edition: six curated artworks, desktop and mobile compositions, and an illustrated companion booklet. Mirrors apps/web/lib/shop/catalog.ts (priceState proposed, rightsApproved false). No file manifest exists yet, so this record stays in draft.",
+    "sourceFiles": [],
+    "versionHistory": [
+      {
+        "version": "0.0.1",
+        "at": "2026-11-06T12:00:00+01:00",
+        "note": "Rights record opened from the proposed shop edition. Files, hashes and C2PA marks to be attached when the edition manifest is produced."
+      }
+    ],
+    "parentAssetIds": [],
+    "canonStatus": "proposed-canon"
+  },
+  "creators": [
+    {
+      "id": "creator:frank-riemer",
+      "displayName": "Frank Riemer",
+      "role": "author",
+      "verified": true,
+      "sharePercent": 100
+    }
+  ],
+  "authorship": {
+    "humanContribution": "substantial",
+    "aiInvolvement": "generative-with-human-direction",
+    "description": "Art direction, prompt authorship, selection from many candidates, sequencing of the six works, composition of the desktop and mobile layouts and the booklet text are human work. Image synthesis was performed by AI image tools under that direction.",
+    "aiTools": [
+      {
+        "provider": "Midjourney",
+        "planOrLicense": "Paid tier (starlight-estate TRUTH.md §3 records 'Midjourney … all paid tiers, commercial rights held'); the plan in force when each of the six images was generated is not yet recorded per image",
+        "commercialUseAllowed": "unknown",
+        "termsUrl": "https://docs.midjourney.com/hc/en-us/articles/27870375276557-Using-Images-Videos-Commercially"
+      }
+    ],
+    "disclosure": {
+      "required": true,
+      "label": "Artworks were generated with AI image tools and directed, selected and arranged by Frank Riemer. Booklet text is human-written.",
+      "machineReadableMark": "none",
+      "basis": "EU AI Act Art. 50 (applies from 2026-08-02); Arcanea AI-disclosure standard; shop guide /shop/guides/ai-disclosure-canon-provenance"
+    }
+  },
+  "sourceMaterial": [
+    {
+      "description": "Arcanea canon (characters, places, visual language) owned by the creator",
+      "kind": "own-work",
+      "rightsHolder": "Frank Riemer"
+    }
+  ],
+  "thirdPartyPermissions": [],
+  "ownership": {
+    "copyrightClaim": "partial",
+    "claimant": "Frank Riemer",
+    "basis": "Copyright is claimed in the booklet text, the selection and arrangement of the collection and the layout compositions. No copyright is claimed in the raw AI-generated image elements; their protectability is uncertain under current US and EU guidance.",
+    "jurisdictionNotes": "US Copyright Office, Copyright and AI Part 2 (2025-01-29); EPRS briefing on copyright and AI outputs (2026-10-21).",
+    "trademarks": [
+      {
+        "mark": "Arcanea",
+        "owner": "Frank Riemer (registered trade name, NL)",
+        "status": "unknown"
+      }
+    ]
+  },
+  "licenses": [
+    {
+      "licenseId": "lic:living-cosmos:personal",
+      "templateId": "arcanea.personal.v0",
+      "templateVersion": "0.1.0",
+      "licensee": "purchaser",
+      "permissions": {
+        "personalUse": "allowed",
+        "commercialUse": "prohibited",
+        "derivatives": "prohibited",
+        "redistribution": "prohibited",
+        "publicDisplay": "conditional",
+        "interactiveUse": "prohibited",
+        "sync": "prohibited",
+        "sublicensing": "prohibited",
+        "aiTraining": "prohibited"
+      },
+      "exclusivity": "non-exclusive",
+      "territories": ["WW"],
+      "duration": {
+        "type": "perpetual"
+      },
+      "attribution": {
+        "required": false
+      },
+      "feeModel": "one-time",
+      "revenueShare": [],
+      "revocation": {
+        "revocable": true,
+        "conditions": ["material breach of the licence terms"]
+      },
+      "status": "proposed",
+      "agreementText": {
+        "uri": "urn:arcanea:legal:license:arcanea.personal.v0:draft",
+        "language": "en",
+        "version": "0.1.0-draft"
+      },
+      "acceptance": [],
+      "conditions": [
+        "Public display limited to personal, non-commercial contexts (e.g. wallpapers, personal profiles) with the artwork unaltered."
+      ]
+    }
+  ],
+  "disputes": [],
+  "review": {
+    "counselReviewed": false,
+    "notes": "Proposed edition. Price (EUR 29) is a hypothesis per the shop catalog; no checkout is active. Needs: file manifest with SHA-256 hashes, per-image provider plan verification (Midjourney terms: creators own their images; businesses grossing over USD 1M/yr need Pro or Mega), C2PA marks, counsel review of the personal-use text, canon ruling with a human approval receipt."
+  },
+  "notes": "Example built from the live shop catalog on 2026-11-06. Nothing in this record authorises a sale."
+}
