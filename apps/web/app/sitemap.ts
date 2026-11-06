@@ -259,12 +259,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // ── Creation Tools ─────────────────────────────────────
     {
-      url: `${baseUrl}/studio`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.85,
-    },
-    {
       url: `${baseUrl}/gallery`,
       lastModified: new Date(),
       changeFrequency: "daily",
