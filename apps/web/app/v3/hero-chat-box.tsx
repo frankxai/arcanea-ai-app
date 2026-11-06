@@ -3,8 +3,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import navLogo from "@/assets/brand/arcanea-mark.jpg";
+import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 import { track } from "@vercel/analytics";
 import {
   PhPaperPlane,
@@ -116,14 +115,7 @@ export function HeroChatBox() {
         <div className="relative flex items-end">
           <div className="hidden sm:flex pl-3 pr-1 pb-3" aria-hidden="true">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.07] bg-white/[0.035]">
-              <Image
-                src={navLogo}
-                alt=""
-                width={28}
-                height={28}
-                sizes="28px"
-                className="rounded-md object-cover"
-              />
+              <ArcaneanMark size={28} />
             </div>
           </div>
           <textarea

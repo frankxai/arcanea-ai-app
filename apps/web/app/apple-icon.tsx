@@ -14,28 +14,26 @@ export default function AppleIcon() {
   const base64 = Buffer.from(mark).toString("base64");
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: 180,
-          height: 180,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: cosmic.void,
-          borderRadius: 42,
-          border: "2px solid rgba(0,188,212,0.22)",
-        }}
-      >
-        <img
-          alt="Apple Icon"
-          src={`data:image/jpeg;base64,${base64}`}
-          width={168}
-          height={168}
-          style={{ borderRadius: 34 }}
-        />
-      </div>
-    ),
+    <div
+      style={{
+        width: 180,
+        height: 180,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: cosmic.void,
+        borderRadius: 42,
+        border: "2px solid rgba(0,188,212,0.22)",
+      }}
+    >
+      <img
+        alt="Apple Icon"
+        src={`data:image/jpeg;base64,${base64}`}
+        width={168}
+        height={168}
+        style={{ borderRadius: 34, objectFit: "cover" }}
+      />
+    </div>,
     { ...size },
   );
 }

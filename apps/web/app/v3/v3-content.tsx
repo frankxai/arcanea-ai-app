@@ -4,7 +4,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import navLogo from "@/assets/brand/arcanea-mark.jpg";
+import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroShowcase } from "./hero-showcase";
 import { HeroChatBox } from "./hero-chat-box";
@@ -174,15 +174,7 @@ function HeroPortal() {
           {/* Canonical brand mark */}
           <div className="mb-5 md:mb-8">
             <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] shadow-[0_14px_60px_color-mix(in_srgb,var(--arc-cosmic-void)_70%,transparent)] backdrop-blur-xl md:h-16 md:w-16">
-              <Image
-                src={navLogo}
-                alt="Arcanea"
-                width={44}
-                height={44}
-                sizes="44px"
-                className="rounded-xl object-cover"
-                priority
-              />
+              <ArcaneanMark size={44} />
             </div>
           </div>
 
@@ -193,7 +185,7 @@ function HeroPortal() {
           </h1>
 
           {/* Value prop */}
-          <p className="max-w-2xl mx-auto text-base md:text-lg text-white/55 leading-relaxed mb-5 md:mb-9 font-body">
+          <p className="max-w-2xl mx-auto text-base md:text-lg text-[var(--arc-text-primary)] leading-relaxed mb-5 md:mb-9 font-body">
             Turn one idea into a persistent world graph: lore, characters,
             rules, media briefs, and agent tasks stay connected across sessions.
           </p>

@@ -14,28 +14,26 @@ export default function Icon() {
   const base64 = Buffer.from(mark).toString("base64");
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: 32,
-          height: 32,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: cosmic.void,
-          borderRadius: 7,
-          border: "1px solid rgba(0,188,212,0.25)",
-        }}
-      >
-        <img
-          alt="Icon"
-          src={`data:image/jpeg;base64,${base64}`}
-          width={30}
-          height={30}
-          style={{ borderRadius: 6 }}
-        />
-      </div>
-    ),
+    <div
+      style={{
+        width: 32,
+        height: 32,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: cosmic.void,
+        borderRadius: 7,
+        border: "1px solid rgba(0,188,212,0.25)",
+      }}
+    >
+      <img
+        alt="Icon"
+        src={`data:image/jpeg;base64,${base64}`}
+        width={30}
+        height={30}
+        style={{ borderRadius: 6, objectFit: "cover" }}
+      />
+    </div>,
     { ...size },
   );
 }
