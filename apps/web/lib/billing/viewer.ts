@@ -47,6 +47,7 @@ export type Viewer = {
     credits: { balance: number; reserved: number };
   };
   offers: ViewerOffer[];
+  nextOffer: ViewerOffer | null;
   generatedAt: string;
 };
 
@@ -105,6 +106,7 @@ export function buildViewer(input: {
       },
     },
     offers,
+    nextOffer: offers[0] ?? null,
     generatedAt: (input.now ?? new Date()).toISOString(),
   };
 }

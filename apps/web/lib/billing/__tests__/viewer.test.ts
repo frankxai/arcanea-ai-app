@@ -71,6 +71,7 @@ test("offers are actionable and never repeat the active plan", () => {
   const packOffers = viewer.offers.filter((offer) => offer.kind === "credit_pack");
   assert.equal(packOffers.length, CREDIT_PACKS.length);
   assert.ok(viewer.offers.every((offer) => offer.included === false));
+  assert.deepEqual(viewer.nextOffer, planOffers[0]);
 });
 
 test("status and cancellation state are reported without being inferred away", () => {
