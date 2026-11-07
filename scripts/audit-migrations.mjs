@@ -246,15 +246,18 @@ export function scanSql(source, file) {
     ),
   );
 
-  for (const match of code.matchAll(
-    /grant\b[^;]{0,300}\bto\b[^;]{0,120}\banon\b/gi,
-  )) {
-    const statement = match[0];
-    // Schema usage is required for the REST API and grants no row or column
-    // access by itself; every object privilege is still audited below.
-    if (/^grant\s+[^;]*\s+on\s+schema\b/i.test(statement)) continue;
-    // `grant select on public.a, public.b to anon` must be judged on every
-    // object, not just the first one.
+  for (const start of code.matchAll(/\bgrant\s+/gi)) {
+    const index = start.index ?? 0;
+    const statement = code.slice(
+      index,
+      index + statementEnd(code.slice(index)),
+    );
+    if (!/\bto\b[^;]*\banon\b/i.test(statement)) continue;
+    // USAGE on a schema is required for the REST API and grants no row or
+    // column access. CREATE or ALL on a schema is anonymous DDL and is
+    // reported, because it lets anon create objects in that schema.
+    if (/^grant\s+usage\s+on\s+schema\b/i.test(statement)) continue;
+    // `grant select on public.a, public.b to anon` is judged on every object.
     const objectsPart = /\bon\s+([\s\S]*?)\s+to\s+/i.exec(statement)?.[1] ?? "";
     const objects = objectsPart
       .split(",")
@@ -274,7 +277,7 @@ export function scanSql(source, file) {
     add(
       "grant-to-anon",
       "high",
-      match.index ?? 0,
+      index,
       `Anon grant: ${statement.replace(/\s+/g, " ").slice(0, 100)}`,
     );
   }
@@ -290,8 +293,17 @@ export function scanSql(source, file) {
       index + statementEnd(code.slice(index)),
     );
     const ddl = maskQuotedBodies(statement);
+    const header = statement.slice(0, 90).replace(/\s+/g, " ").trim();
+    if (/^alter\s+function/i.test(ddl) && /reset\s+search_path/i.test(ddl)) {
+      add(
+        "security-definer-no-search-path",
+        "high",
+        index,
+        `Definer search_path reset: ${header}`,
+      );
+      continue;
+    }
     if (/security\s+definer/i.test(ddl) && !/set\s+search_path/i.test(ddl)) {
-      const header = statement.slice(0, 90).replace(/\s+/g, " ").trim();
       add(
         "security-definer-no-search-path",
         "high",
@@ -312,11 +324,10 @@ export function scanSql(source, file) {
       doBlockTables.add(name[1]);
   }
 
-  // An RLS enable on another schema does not protect the table. Track the
-  // schema alongside the name, and treat an unqualified enable as applying to
-  // the unqualified table.
+  // Direct RLS evidence must be executable DDL, not a literal string. A
+  // dynamic `execute 'alter table ...'` is covered by the DO-block loop check.
   const rlsEnabled = new Map();
-  for (const match of code.matchAll(
+  for (const match of maskQuotedBodies(code).matchAll(
     /alter\s+table\s+(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?\s+enable\s+row\s+level\s+security/gi,
   )) {
     const schema = (match[1] ?? "").toLowerCase();

@@ -5,13 +5,13 @@
     "destructive-statement|supabase/migrations/20250101000004_utility_functions.sql|Destructive statement: DELETE FROM likes WHERE user_id = p_user_id AND creation_id = p_creation_id",
     "destructive-statement|supabase/migrations/20260816000003_world_forks_backfill_corrections.sql|Destructive statement: ALTER TABLE public.world_forks DROP CONSTRAINT %I', constraint_name); END IF; END $$; DROP POLICY IF EXISTS \"forks_inser",
     "destructive-statement|supabase/migrations/20261012030707_atomic_chat_snapshots.sql|Destructive statement: ",
-    "grant-to-anon|supabase/migrations/20250101000002_rls_policies.sql|Anon grant: GRANT SELECT ON luminors TO anon",
-    "grant-to-anon|supabase/migrations/20250101000002_rls_policies.sql|Anon grant: GRANT SELECT ON profiles TO anon",
-    "grant-to-anon|supabase/migrations/20260520000001_arcanea_applications.sql|Anon grant: GRANT INSERT ON public.arcanea_applications TO anon",
-    "grant-to-anon|supabase/migrations/20260912120000_world_policy_recursion.sql|Anon grant: grant execute on function arcanea_world_access.current_user_collaborates_on_world(uuid) to anon",
+    "grant-to-anon|supabase/migrations/20250101000002_rls_policies.sql|Anon grant: GRANT SELECT ON luminors TO anon, authenticated",
+    "grant-to-anon|supabase/migrations/20250101000002_rls_policies.sql|Anon grant: GRANT SELECT ON profiles TO anon, authenticated",
+    "grant-to-anon|supabase/migrations/20260520000001_arcanea_applications.sql|Anon grant: GRANT INSERT ON public.arcanea_applications TO anon, authenticated",
+    "grant-to-anon|supabase/migrations/20260912120000_world_policy_recursion.sql|Anon grant: grant execute on function arcanea_world_access.current_user_collaborates_on_world(uuid) to anon, aut",
     "grant-to-anon|supabase/migrations/20260912120000_world_policy_recursion.sql|Anon grant: grant select on public.world_collaborators to anon",
-    "grant-to-anon|supabase/migrations/20260926000001_waitlists.sql|Anon grant: GRANT INSERT ON public.subscribers TO anon",
-    "grant-to-anon|supabase/migrations/20260926000001_waitlists.sql|Anon grant: GRANT INSERT ON public.waitlists TO anon",
+    "grant-to-anon|supabase/migrations/20260926000001_waitlists.sql|Anon grant: GRANT INSERT ON public.subscribers TO anon, authenticated",
+    "grant-to-anon|supabase/migrations/20260926000001_waitlists.sql|Anon grant: GRANT INSERT ON public.waitlists TO anon, authenticated",
     "grant-to-anon|supabase/migrations/20261013000001_creation_engine_assets.sql|Anon grant: GRANT SELECT ON public.asset_links TO anon",
     "grant-to-anon|supabase/migrations/20261013000001_creation_engine_assets.sql|Anon grant: GRANT SELECT ON public.assets TO anon",
     "policy-allows-everyone|supabase/migrations/20250101000002_rls_policies.sql|Policy \"Anyone can view follow relationships\" uses true",
@@ -77,6 +77,7 @@
     "table-without-rls|supabase/migrations/20250101000001_initial_schema.sql|Table without RLS: luminors",
     "table-without-rls|supabase/migrations/20250101000001_initial_schema.sql|Table without RLS: notifications",
     "table-without-rls|supabase/migrations/20250101000001_initial_schema.sql|Table without RLS: profiles",
-    "table-without-rls|supabase/migrations/20250109000000_vector_and_tools.sql|Table without RLS: lore_fragments"
+    "table-without-rls|supabase/migrations/20250109000000_vector_and_tools.sql|Table without RLS: lore_fragments",
+    "table-without-rls|supabase/migrations/20260912120000_world_policy_recursion.sql|Table without RLS: world_collaborators"
   ]
 }

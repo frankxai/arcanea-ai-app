@@ -292,6 +292,68 @@ alter function public.member_count() security definer set search_path = public, 
   );
 });
 
+test("a string literal is not direct RLS evidence", () => {
+  const sql = `
+create table public.notes (id uuid primary key);
+select 'alter table public.notes enable row level security';
+`;
+  assert.equal(
+    scanSql(sql, "literal-rls.sql").filter(
+      (finding) => finding.rule === "table-without-rls",
+    ).length,
+    1,
+  );
+});
+
+test("a grant is scanned through its statement boundary", () => {
+  const columns = Array.from(
+    { length: 60 },
+    (_, index) => `column_${index}`,
+  ).join(", ");
+  const sql = `grant select (${columns}) on public.notes to anon;`;
+  assert.equal(
+    scanSql(sql, "wide-grant.sql").filter(
+      (finding) => finding.rule === "grant-to-anon",
+    ).length,
+    1,
+  );
+});
+
+test("only USAGE is exempt on a schema grant", () => {
+  assert.equal(
+    scanSql(`grant usage on schema public to anon;`, "usage.sql").length,
+    0,
+  );
+  for (const statement of [
+    `grant create on schema public to anon;`,
+    `grant all on schema public to anon;`,
+  ]) {
+    assert.equal(
+      scanSql(statement, "ddl-grant.sql").filter(
+        (finding) => finding.rule === "grant-to-anon",
+      ).length,
+      1,
+      statement,
+    );
+  }
+});
+
+test("RESET search_path on a definer function is a finding", () => {
+  const sql = `
+create function public.member_count() returns int
+  language sql security definer set search_path = public as $$ select 1; $$;
+alter function public.member_count() reset search_path;
+`;
+  const findings = scanSql(sql, "reset.sql");
+  assert.equal(
+    findings.filter(
+      (finding) => finding.rule === "security-definer-no-search-path",
+    ).length,
+    1,
+  );
+  assert.match(findings[0].message, /reset/);
+});
+
 test("two destructive statements in one file fingerprint separately", () => {
   const sql = `
 delete from public.a where id = 1;
