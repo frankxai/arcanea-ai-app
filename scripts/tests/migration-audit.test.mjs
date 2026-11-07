@@ -354,6 +354,34 @@ alter function public.member_count() reset search_path;
   assert.match(findings[0].message, /reset/);
 });
 
+test("view exemptions are schema-qualified", () => {
+  const sql = `
+-- audit: public-view public.notes
+create view public.notes as select 1 as id;
+grant select on private.notes to anon;
+`;
+  assert.equal(
+    scanSql(sql, "view-schema.sql").filter(
+      (finding) => finding.rule === "grant-to-anon",
+    ).length,
+    1,
+  );
+});
+
+test("disabling RLS after enabling it leaves the table unprotected", () => {
+  const sql = `
+create table public.notes (id uuid primary key);
+alter table public.notes enable row level security;
+alter table public.notes disable row level security;
+`;
+  assert.equal(
+    scanSql(sql, "disable.sql").filter(
+      (finding) => finding.rule === "table-without-rls",
+    ).length,
+    1,
+  );
+});
+
 test("two destructive statements in one file fingerprint separately", () => {
   const sql = `
 delete from public.a where id = 1;

@@ -229,20 +229,30 @@ export function scanSql(source, file) {
     );
   }
 
+  // Views are tracked with their schema so `private.notes` cannot inherit an
+  // exemption reviewed for `public.notes`.
   const viewsCreated = new Set(
     [
       ...code.matchAll(
-        /create\s+(?:or\s+replace\s+)?view\s+(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/gi,
+        /create\s+(?:or\s+replace\s+)?view\s+(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?/gi,
       ),
-    ].map((match) => match[1].toLowerCase()),
+    ].map(
+      (match) =>
+        `${(match[1] ?? "public").toLowerCase()}.${match[2].toLowerCase()}`,
+    ),
   );
 
   // Exempting a view is an explicit review decision, recorded in the migration
   // as `-- audit: public-view <name>`. Without the marker the grant is reported,
   // so a new view exposing a table cannot pass silently.
   const reviewedPublicViews = new Set(
-    [...source.matchAll(/audit:\s*public-view\s+([A-Za-z0-9_]+)/gi)].map(
-      (match) => match[1].toLowerCase(),
+    [
+      ...source.matchAll(
+        /audit:\s*public-view\s+(?:([A-Za-z0-9_]+)\.)?([A-Za-z0-9_]+)/gi,
+      ),
+    ].map(
+      (match) =>
+        `${(match[1] ?? "public").toLowerCase()}.${match[2].toLowerCase()}`,
     ),
   );
 
@@ -262,16 +272,19 @@ export function scanSql(source, file) {
     const objects = objectsPart
       .split(",")
       .map((part) =>
-        /(?:table\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?\s*$/i.exec(
+        /(?:table\s+)?(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?\s*$/i.exec(
           part.trim(),
         ),
       )
-      .map((objectMatch) => objectMatch?.[1]?.toLowerCase())
-      .filter(Boolean);
+      .filter(Boolean)
+      .map(
+        (objectMatch) =>
+          `${(objectMatch[1] ?? "public").toLowerCase()}.${objectMatch[2].toLowerCase()}`,
+      );
     const exempt =
       objects.length > 0 &&
       objects.every(
-        (view) => viewsCreated.has(view) && reviewedPublicViews.has(view),
+        (key) => viewsCreated.has(key) && reviewedPublicViews.has(key),
       );
     if (exempt) continue;
     add(
@@ -326,14 +339,17 @@ export function scanSql(source, file) {
 
   // Direct RLS evidence must be executable DDL, not a literal string. A
   // dynamic `execute 'alter table ...'` is covered by the DO-block loop check.
-  const rlsEnabled = new Map();
+  // State is applied in statement order, so a later disable wins over an
+  // earlier enable.
+  const rlsState = new Map();
   for (const match of maskQuotedBodies(code).matchAll(
-    /alter\s+table\s+(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?\s+enable\s+row\s+level\s+security/gi,
+    /alter\s+table\s+(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?\s+(enable|disable)\s+row\s+level\s+security/gi,
   )) {
     const schema = (match[1] ?? "").toLowerCase();
     const table = match[2];
-    if (!rlsEnabled.has(table)) rlsEnabled.set(table, new Set());
-    rlsEnabled.get(table).add(schema);
+    const enabled = match[3].toLowerCase() === "enable";
+    if (!rlsState.has(table)) rlsState.set(table, new Map());
+    rlsState.get(table).set(schema, enabled);
   }
 
   for (const match of code.matchAll(
@@ -342,12 +358,13 @@ export function scanSql(source, file) {
     const schema = (match[1] ?? "").toLowerCase();
     const table = match[2];
     if (doBlockTables.has(table)) continue;
-    const schemas = rlsEnabled.get(table);
+    const states = rlsState.get(table);
     const protectedByRls =
-      schemas &&
-      (schemas.has("") ||
-        schemas.has(schema) ||
-        (schema === "" && schemas.size > 0));
+      states &&
+      (states.get("") === true ||
+        states.get(schema) === true ||
+        (schema === "" &&
+          [...states.values()].some((value) => value === true)));
     if (protectedByRls) continue;
     add(
       "table-without-rls",
@@ -432,7 +449,8 @@ function main() {
   const baseline = baselinePath
     ? new Set(JSON.parse(readFileSync(baselinePath, "utf8")).fingerprints ?? [])
     : new Set();
-  const threshold = failOn === "none" ? 0 : (RANK[failOn] ?? 3);
+  const reportOnly = failOn === "none";
+  const threshold = reportOnly ? 0 : (RANK[failOn] ?? 3);
   const newFindings = findings.filter(
     (finding) =>
       RANK[finding.severity] >= threshold &&
@@ -452,7 +470,8 @@ function main() {
   }
   if (newFindings.length > 20)
     console.log(`  ... and ${newFindings.length - 20} more`);
-  if (newFindings.length) process.exit(1);
+  // `--fail-on none` is a diagnostic mode: report everything, exit zero.
+  if (!reportOnly && newFindings.length) process.exit(1);
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) main();
