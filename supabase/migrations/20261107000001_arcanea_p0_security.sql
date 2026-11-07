@@ -7,6 +7,7 @@
 -- 2. Anonymous callers lose table-level SELECT on profiles, which exposed
 --    stripe_customer_id, subscription_status and other private columns through
 --    the public-profile policy. A safe projection is granted instead.
+--    audit: public-view public_profiles
 --
 -- Intentional anonymous grants kept unchanged:
 --   * luminors SELECT: public lore catalogue, policy requires is_public.

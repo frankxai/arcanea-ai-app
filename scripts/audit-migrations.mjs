@@ -135,6 +135,55 @@ function policyName(statement) {
   return match?.[1] ?? match?.[2] ?? match?.[3] ?? "unnamed";
 }
 
+/**
+ * Blank the inside of string and dollar-quoted bodies, keeping delimiters and
+ * newlines. Used for DDL checks: a body comment that mentions `set search_path`
+ * must not make an unpinned definer function look safe.
+ */
+function maskQuotedBodies(text) {
+  let out = "";
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === "'") {
+      out += "'";
+      i += 1;
+      while (i < text.length) {
+        if (text[i] === "'" && text[i + 1] === "'") {
+          out += "  ";
+          i += 2;
+          continue;
+        }
+        if (text[i] === "'") {
+          out += "'";
+          i += 1;
+          break;
+        }
+        out += text[i] === "\n" ? "\n" : " ";
+        i += 1;
+      }
+      continue;
+    }
+    const dollar = /^\$([A-Za-z_][A-Za-z0-9_]*)?\$/.exec(text.slice(i));
+    if (dollar) {
+      const tag = dollar[0];
+      const close = text.indexOf(tag, i + tag.length);
+      if (close === -1) {
+        out += tag + " ".repeat(text.length - i - tag.length);
+        i = text.length;
+        continue;
+      }
+      out += tag;
+      out += text.slice(i + tag.length, close).replace(/[^\n]/g, " ");
+      out += tag;
+      i = close + tag.length;
+      continue;
+    }
+    out += text[i];
+    i += 1;
+  }
+  return out;
+}
+
 export function scanSql(source, file) {
   const code = maskSqlComments(source);
   const findings = [];
@@ -142,8 +191,10 @@ export function scanSql(source, file) {
     findings.push({ rule, severity, file, line: lineOf(code, index), message });
   };
 
+  // `drop`/`truncate`/`delete`, plus the column and constraint drops that hide
+  // inside ALTER TABLE.
   for (const match of code.matchAll(
-    /^\s*(drop\s+(table|schema|column)|truncate\b|delete\s+from)/gim,
+    /^\s*(drop\s+(table|schema|column)|truncate\b|delete\s+from)|alter\s+table[^;]{0,300}?\bdrop\s+(column|constraint)\b/gim,
   )) {
     const statement = code
       .slice(
@@ -161,14 +212,20 @@ export function scanSql(source, file) {
     );
   }
 
-  for (const match of code.matchAll(
-    /(?:create|alter)\s+policy[\s\S]{0,400}?(using|with\s+check)\s*\(\s*true\s*\)/gi,
-  )) {
+  // Read the whole policy statement, not a fixed window: a long column list can
+  // push `using (true)` past any character budget.
+  for (const start of code.matchAll(/(?:create|alter)\s+policy\s+/gi)) {
+    const index = start.index ?? 0;
+    const statement = code.slice(
+      index,
+      index + statementEnd(code.slice(index)),
+    );
+    if (!/(using|with\s+check)\s*\(\s*true\s*\)/i.test(statement)) continue;
     add(
       "policy-allows-everyone",
       "high",
-      match.index ?? 0,
-      `Policy "${policyName(match[0])}" uses true`,
+      index,
+      `Policy "${policyName(statement)}" uses true`,
     );
   }
 
@@ -178,6 +235,15 @@ export function scanSql(source, file) {
         /create\s+(?:or\s+replace\s+)?view\s+(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/gi,
       ),
     ].map((match) => match[1].toLowerCase()),
+  );
+
+  // Exempting a view is an explicit review decision, recorded in the migration
+  // as `-- audit: public-view <name>`. Without the marker the grant is reported,
+  // so a new view exposing a table cannot pass silently.
+  const reviewedPublicViews = new Set(
+    [...source.matchAll(/audit:\s*public-view\s+([A-Za-z0-9_]+)/gi)].map(
+      (match) => match[1].toLowerCase(),
+    ),
   );
 
   for (const match of code.matchAll(
@@ -191,8 +257,9 @@ export function scanSql(source, file) {
       /\bon\s+(?:table\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/i.exec(
         statement,
       );
-    // An allowlisted projection is the reviewed alternative to closing a table.
-    if (object && viewsCreated.has(object[1].toLowerCase())) continue;
+    const view = object?.[1].toLowerCase();
+    if (view && viewsCreated.has(view) && reviewedPublicViews.has(view))
+      continue;
     add(
       "grant-to-anon",
       "high",
@@ -205,10 +272,8 @@ export function scanSql(source, file) {
     .split(/create\s+(?:or\s+replace\s+)?function/gi)
     .slice(1)) {
     const statement = chunk.slice(0, statementEnd(chunk));
-    if (
-      /security\s+definer/i.test(statement) &&
-      !/set\s+search_path/i.test(statement)
-    ) {
+    const ddl = maskQuotedBodies(statement);
+    if (/security\s+definer/i.test(ddl) && !/set\s+search_path/i.test(ddl)) {
       const header = statement.slice(0, 90).replace(/\s+/g, " ").trim();
       add(
         "security-definer-no-search-path",
@@ -220,9 +285,12 @@ export function scanSql(source, file) {
   }
 
   const doBlockTables = new Set();
+  // The exemption is bound to the loop body: a table named in an array whose
+  // loop does not enable RLS is not protected.
   for (const match of code.matchAll(
-    /foreach\s+\w+\s+in\s+array\s+array\s*\[([\s\S]*?)\]/gi,
+    /foreach\s+\w+\s+in\s+array\s+array\s*\[([\s\S]*?)\][\s\S]{0,800}?end\s+loop/gi,
   )) {
+    if (!/enable\s+row\s+level\s+security/i.test(match[0])) continue;
     for (const name of match[1].matchAll(/'([^']+)'/g))
       doBlockTables.add(name[1]);
   }
@@ -231,11 +299,7 @@ export function scanSql(source, file) {
     /create\s+table\s+(?:if\s+not\s+exists\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/gi,
   )) {
     const table = match[1];
-    if (
-      doBlockTables.has(table) &&
-      /enable\s+row\s+level\s+security/i.test(code)
-    )
-      continue;
+    if (doBlockTables.has(table)) continue;
     const escaped = table.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const rls = new RegExp(
       `alter\\s+table\\s+(?:[A-Za-z_][A-Za-z0-9_]*\\.)?["']?${escaped}["']?\\s+enable\\s+row\\s+level\\s+security`,

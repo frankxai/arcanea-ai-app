@@ -72,6 +72,101 @@ test("ALTER POLICY with true is caught, and the policy name is reported", () => 
   assert.match(findings[0].message, /public read/);
 });
 
+test("a permissive clause is found anywhere in the policy statement", () => {
+  const longColumns = Array.from(
+    { length: 40 },
+    (_, index) => `column_${index} text`,
+  ).join(", ");
+  const sql = `
+create table public.notes (${longColumns});
+alter table public.notes enable row level security;
+create policy "wide" on public.notes for select to authenticated using (true);
+`;
+  const findings = scanSql(sql, "wide.sql");
+  assert.equal(
+    findings.filter((finding) => finding.rule === "policy-allows-everyone")
+      .length,
+    1,
+  );
+});
+
+test("a view grant is reported unless the migration carries the review marker", () => {
+  const marked = `
+-- audit: public-view public_notes
+create view public.public_notes as select id from public.notes;
+grant select on public.public_notes to anon;
+`;
+  assert.deepEqual(scanSql(marked, "marked.sql"), []);
+
+  const unmarked = `
+create view public.public_notes as select id from public.notes;
+grant select on public.public_notes to anon;
+`;
+  assert.equal(
+    scanSql(unmarked, "unmarked.sql").filter(
+      (finding) => finding.rule === "grant-to-anon",
+    ).length,
+    1,
+  );
+});
+
+test("a DO-block exemption requires the loop body to enable RLS", () => {
+  const real = `
+do $$
+declare table_name text;
+begin
+  foreach table_name in array array['first', 'second']
+  loop
+    execute format('alter table public.%I enable row level security', table_name);
+  end loop;
+end $$;
+`;
+  assert.equal(
+    scanSql(real, "loop.sql").filter(
+      (finding) => finding.rule === "table-without-rls",
+    ).length,
+    0,
+  );
+
+  const claimed = `
+do $$
+declare table_name text;
+begin
+  foreach table_name in array array['first', 'second']
+  loop
+    raise notice '%', table_name;
+  end loop;
+end $$;
+create table public.first (id uuid primary key);
+`;
+  const findings = scanSql(claimed, "claimed.sql");
+  assert.equal(
+    findings.filter((finding) => finding.rule === "table-without-rls").length,
+    1,
+  );
+});
+
+test("ALTER TABLE DROP COLUMN and DROP CONSTRAINT are destructive", () => {
+  const findings = scanSql(
+    `alter table public.notes drop column body;`,
+    "drop-column.sql",
+  );
+  assert.equal(
+    findings.filter((finding) => finding.rule === "destructive-statement")
+      .length,
+    1,
+  );
+  const constraint = scanSql(
+    `alter table public.notes drop constraint notes_body_check;`,
+    "drop-constraint.sql",
+  );
+  assert.equal(
+    constraint.filter((finding) => finding.rule === "destructive-statement")
+      .length,
+    1,
+  );
+});
+
 test("tagged dollar quotes delimit a function body", () => {
   const tagged = `
 create function public.f() returns void
@@ -92,6 +187,23 @@ create function public.g() returns void
   as $fn$ begin perform 1; end $fn$;
 `;
   assert.deepEqual(scanSql(pinned, "pinned.sql"), []);
+});
+
+test("a comment inside the body cannot pin a definer function", () => {
+  const commented = `
+create function public.f() returns void
+  language plpgsql security definer
+  as $$
+  -- TODO: SET search_path = public before enabling this.
+  begin perform 1; end;
+  $$;
+`;
+  assert.equal(
+    scanSql(commented, "body-comment.sql").filter(
+      (finding) => finding.rule === "security-definer-no-search-path",
+    ).length,
+    1,
+  );
 });
 
 test("two destructive statements in one file fingerprint separately", () => {
