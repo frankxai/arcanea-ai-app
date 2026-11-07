@@ -128,17 +128,24 @@ test("a period-end cancellation stops at currentPeriodEnd or without a date", ()
   }
 });
 
-test("revocation, pause and none resolve to Spark", () => {
+test("revocation, pause and none resolve to Spark even with a stale cancel flag", () => {
   for (const status of ["revoked", "paused", "none"] as const) {
-    const viewer = buildViewer({
-      user,
-      account: account({ plan: "studio", planStatus: status }),
-      purchasable,
-      now,
-    });
-    assert.equal(viewer.plan.id, "spark", status);
-    assert.equal(viewer.entitlements.apiKeys, false, status);
-    assert.equal(viewer.paid, false, status);
+    for (const cancelAtPeriodEnd of [false, true]) {
+      const viewer = buildViewer({
+        user,
+        account: account({
+          plan: "studio",
+          planStatus: status,
+          cancelAtPeriodEnd,
+          currentPeriodEnd: "2026-12-07T00:00:00.000Z",
+        }),
+        purchasable,
+        now,
+      });
+      assert.equal(viewer.plan.id, "spark", `${status}/${cancelAtPeriodEnd}`);
+      assert.equal(viewer.entitlements.apiKeys, false, status);
+      assert.equal(viewer.paid, false, status);
+    }
   }
 });
 

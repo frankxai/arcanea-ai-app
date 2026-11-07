@@ -98,6 +98,12 @@ export function effectivePlanId(
 
   if (status === "past_due") return "spark";
 
+  // Paused, revoked and none lose access immediately, even if a stale
+  // cancel-at-period-end flag is still on the row.
+  if (status === "revoked" || status === "paused" || status === "none") {
+    return "spark";
+  }
+
   if (options.cancelAtPeriodEnd === true) {
     return hasPeriodEnd && periodEnd > now ? plan : "spark";
   }
