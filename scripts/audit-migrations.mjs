@@ -7,7 +7,7 @@
  * every PR on legacy debt.
  */
 
-import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -105,25 +105,32 @@ export function scanSql(source, file) {
 }
 
 export function scanPaths(paths) {
-  const findings = [];
-  let files = 0;
-  const walk = (path) => {
-    const info = statSync(path);
-    if (info.isDirectory()) {
-      for (const entry of readdirSync(path)) {
-        if (["node_modules", ".git", ".next"].includes(entry)) continue;
-        walk(join(path, entry));
+  const files = [];
+  // Directory entries come from Dirent, so nothing is stat'd before it is read.
+  // CodeQL flags a stat-then-read sequence as a file system race.
+  const walk = (directory) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (["node_modules", ".git", ".next"].includes(entry.name)) continue;
+      const full = join(directory, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (entry.name.endsWith(".sql")) {
+        files.push(full);
       }
-      return;
     }
-    if (!path.endsWith(".sql")) return;
-    files += 1;
-    findings.push(
-      ...scanSql(readFileSync(path, "utf8"), relative(process.cwd(), path)),
-    );
   };
-  for (const path of paths) walk(path);
-  return { files, findings };
+  for (const path of paths) {
+    if (path.endsWith(".sql")) files.push(path);
+    else walk(path);
+  }
+
+  const findings = files.flatMap((file) =>
+    scanSql(
+      readFileSync(file, "utf8"),
+      relative(process.cwd(), file).split("\\").join("/"),
+    ),
+  );
+  return { files: files.length, findings };
 }
 
 export function fingerprint(finding) {
