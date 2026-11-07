@@ -57,34 +57,73 @@ const PAYING_STATUSES: readonly BillingStatus[] = [
   "past_due",
 ];
 
-/** The plan the viewer can actually use right now. */
-export function effectivePlanId(plan: PlanId, status: BillingStatus): PlanId {
+/** The plan the viewer can actually use right now. A period-end cancellation
+ * keeps the paid plan until the paid period expires, matching mapPolarEvent
+ * (which keeps `plan` and sets `status: "canceled"`). */
+export function effectivePlanId(
+  plan: PlanId,
+  status: BillingStatus,
+  options: {
+    cancelAtPeriodEnd?: boolean;
+    currentPeriodEnd?: string | null;
+    now?: Date;
+  } = {},
+): PlanId {
   if (!getPlan(plan)) return "spark";
-  return PAYING_STATUSES.includes(status) ? plan : "spark";
+  if (PAYING_STATUSES.includes(status)) return plan;
+
+  const periodEnd = options.currentPeriodEnd
+    ? new Date(options.currentPeriodEnd).getTime()
+    : Number.NaN;
+  const stillPaid =
+    status === "canceled" &&
+    options.cancelAtPeriodEnd === true &&
+    Number.isFinite(periodEnd) &&
+    periodEnd > (options.now ?? new Date()).getTime();
+
+  return stillPaid ? plan : "spark";
 }
 
 export function buildViewer(input: {
   user: { id: string; email: string | null };
   account: BillingAccount;
+  /** SKUs the checkout route would accept right now. Empty means no offer is
+   * actionable, which is the safe default when billing is closed. */
+  purchasable?: { plans?: PlanId[]; packs?: string[] };
   now?: Date;
 }): Viewer {
-  const planId = effectivePlanId(input.account.plan, input.account.planStatus);
+  const now = input.now ?? new Date();
+  const planId = effectivePlanId(input.account.plan, input.account.planStatus, {
+    cancelAtPeriodEnd: input.account.cancelAtPeriodEnd,
+    currentPeriodEnd: input.account.currentPeriodEnd,
+    now,
+  });
   const plan = getPlan(planId);
   const entitlements = ENTITLEMENTS[planId];
 
+  const purchasablePlans = input.purchasable?.plans ?? [];
+  const purchasablePacks = input.purchasable?.packs ?? [];
+
   const offers: ViewerOffer[] = [
-    ...PLANS.filter((candidate) => candidate.id !== planId).map((candidate) => ({
+    ...PLANS.filter(
+      (candidate) =>
+        candidate.priceCents > 0 &&
+        candidate.id !== planId &&
+        purchasablePlans.includes(candidate.id),
+    ).map((candidate) => ({
       id: candidate.id,
       kind: "plan" as const,
       label: candidate.name,
       included: false,
     })),
-    ...CREDIT_PACKS.map((pack) => ({
-      id: pack.id,
-      kind: "credit_pack" as const,
-      label: `${pack.credits.toLocaleString("en-US")} credits`,
-      included: false,
-    })),
+    ...CREDIT_PACKS.filter((pack) => purchasablePacks.includes(pack.id)).map(
+      (pack) => ({
+        id: pack.id,
+        kind: "credit_pack" as const,
+        label: `${pack.credits.toLocaleString("en-US")} credits`,
+        included: false,
+      }),
+    ),
   ];
 
   return {
@@ -107,6 +146,6 @@ export function buildViewer(input: {
     },
     offers,
     nextOffer: offers[0] ?? null,
-    generatedAt: (input.now ?? new Date()).toISOString(),
+    generatedAt: now.toISOString(),
   };
 }

@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   ACTION_COSTS,
   CREDIT_PACKS,
+  PLANS,
   billingReadiness,
   getPlan,
 } from "@/lib/billing/catalog";
@@ -55,6 +56,14 @@ export default async function BillingPage({
     ? buildViewer({
         user: { id: user.id, email: user.email ?? null },
         account,
+        purchasable: readiness.live
+          ? {
+              plans: PLANS.filter((plan) => plan.priceCents > 0).map(
+                (plan) => plan.id,
+              ),
+              packs: readiness.packsReady,
+            }
+          : { plans: [], packs: [] },
       })
     : null;
   const plan = viewer ? getPlan(viewer.plan.id) : null;

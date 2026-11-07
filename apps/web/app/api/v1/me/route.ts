@@ -10,6 +10,10 @@
 import { NextResponse } from "next/server";
 import { BillingError, getAccount } from "@/lib/billing/ledger";
 import { buildViewer } from "@/lib/billing/viewer";
+import {
+  PLANS,
+  billingReadiness,
+} from "@/lib/billing/catalog";
 import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
@@ -36,10 +40,18 @@ export async function GET() {
 
   try {
     const account = await getAccount(user.id);
+    const readiness = billingReadiness();
+    const purchasable = readiness.live
+      ? {
+          plans: PLANS.filter((plan) => plan.priceCents > 0).map((plan) => plan.id),
+          packs: readiness.packsReady,
+        }
+      : { plans: [], packs: [] };
     return privateJson(
       buildViewer({
         user: { id: user.id, email: user.email ?? null },
         account,
+        purchasable,
       }),
     );
   } catch (error) {

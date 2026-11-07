@@ -54,11 +54,14 @@ Patterns adopted from current vendor docs; no template files copied.
 | `active` | plan as recorded |
 | `trialing` | plan as recorded |
 | `past_due` | plan as recorded (dunning window) |
-| `none` | Spark |
-| `canceled` | Spark |
+| `canceled` with `cancelAtPeriodEnd` and a future `currentPeriodEnd` | plan as recorded until the paid period ends |
+| `canceled` otherwise (no period-end flag, or period already ended) | Spark |
 | `revoked` | Spark |
 | `paused` | Spark |
+| `none` | Spark |
 | unknown plan id | Spark |
+
+Offers are actionable only when `billingReadiness().live` is true: paid plans are offered only when checkout would accept them, Spark is never offered, and credit packs appear only when their Polar product is configured. When billing is closed, `offers` is empty and `nextOffer` is null rather than pointing at a checkout that returns 503.
 
 ## Acceptance criteria
 
@@ -81,5 +84,6 @@ Revert the branch. No data, grants or catalog entries were added.
 
 - **Duplicate reads.** `/api/billing/balance` and `/api/v1/me` answer overlapping questions. Consolidation waits until a client actually consumes one of them.
 - **Ledger availability.** Without the billing migration the endpoint returns 503, matching the balance route.
-- **Status semantics.** `past_due` keeps paid access by decision, consistent with the payments webhook; a product decision to suspend during dunning would change one list in `viewer.ts`.
+- **Cancellation semantics.** A period-end cancellation keeps paid access until `currentPeriodEnd`, matching `mapPolarEvent`. Revocation, pause and an expired cancellation resolve to Spark.
+- **Offer eligibility.** Offers come from the same readiness check as `/api/billing/checkout`; a closed billing configuration yields no offer instead of a dead link.
 - **Scope.** No prices or checkout links are returned; buying still goes through the gated billing routes.
