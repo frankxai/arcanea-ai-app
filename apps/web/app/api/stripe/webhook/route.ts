@@ -272,9 +272,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
 
+  let stripe: Stripe;
+  try {
+    stripe = await getStripeServer();
+  } catch {
+    return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
+  }
+
   let event: Stripe.Event;
   try {
-    const stripe = await getStripeServer();
     const body = await req.text();
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch {
@@ -282,7 +288,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const stripe = await getStripeServer();
     const seen = await db
       .from("stripe_processed_events")
       .select("id")
@@ -311,7 +316,11 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Webhook failed";
     // No marker was written, so Stripe retries and the upserts re-run safely.
+    // Details stay in our logs; the response does not echo table or driver text.
     console.error("Stripe webhook error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Webhook processing failed" },
+      { status: 500 },
+    );
   }
 }
