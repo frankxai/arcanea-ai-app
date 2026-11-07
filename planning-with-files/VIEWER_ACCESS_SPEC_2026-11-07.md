@@ -28,6 +28,13 @@ The gap that matters is fail-closed plan resolution. The existing balance route 
 - No UI consumer in this slice.
 - No change to the auth pages or middleware.
 
+## Pattern provenance
+
+- Supabase, "Creating a Supabase client for SSR" and "Choosing an auth method" (fetched 7 November 2026): cookie-scoped server client, `getUser` for a server-confirmed record, private cache headers.
+- Next.js, `route.js` reference (fetched 7 November 2026): Route Handler conventions and `runtime`/`dynamic` segment config.
+
+Patterns adopted from current vendor docs; no template files copied.
+
 ## Design
 
 | Concern | Decision | Reason |
