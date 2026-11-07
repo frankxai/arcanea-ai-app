@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { CREDIT_PACKS, ENTITLEMENTS, PLANS, type PlanId } from "../catalog";
 import type { BillingAccount } from "../ledger";
 import {
-  DUNNING_GRACE_DAYS,
+  PERIOD_END_GRACE_HOURS,
   VIEWER_SCHEMA,
   buildViewer,
   effectivePlanId,
@@ -15,7 +15,7 @@ const purchasable = {
   plans: PLANS.filter((plan) => plan.priceCents > 0).map((plan) => plan.id),
   packs: CREDIT_PACKS.map((pack) => pack.id),
 };
-const dunningGraceMs = DUNNING_GRACE_DAYS * 24 * 60 * 60 * 1000;
+const graceMs = PERIOD_END_GRACE_HOURS * 60 * 60 * 1000;
 
 function account(overrides: Partial<BillingAccount> = {}): BillingAccount {
   return {
@@ -40,68 +40,56 @@ test("active paid plans keep their catalog entitlements", () => {
   assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.creator.hostedWorlds);
   assert.equal(viewer.entitlements.credits.balance, 1200);
   assert.equal(viewer.entitlements.credits.reserved, 50);
+  assert.equal(viewer.paid, true);
 });
 
-test("trialing keeps the plan; past_due keeps it only through the dunning grace", () => {
-  assert.equal(effectivePlanId("studio", "trialing"), "studio");
-  const withinGrace = new Date(now.getTime() + dunningGraceMs - 60_000).toISOString();
+test("active and trialing are bounded by currentPeriodEnd plus the latency allowance", () => {
+  const future = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
   assert.equal(
-    effectivePlanId("creator", "past_due", {
-      currentPeriodEnd: withinGrace,
-      now,
-    }),
+    effectivePlanId("studio", "active", { currentPeriodEnd: future, now }),
+    "studio",
+  );
+  assert.equal(
+    effectivePlanId("studio", "trialing", { currentPeriodEnd: future, now }),
+    "studio",
+  );
+
+  const withinGrace = new Date(now.getTime() - graceMs + 60_000).toISOString();
+  assert.equal(
+    effectivePlanId("creator", "active", { currentPeriodEnd: withinGrace, now }),
     "creator",
   );
-  const beyondGrace = new Date(now.getTime() - dunningGraceMs - 60_000).toISOString();
+
+  const beyondGrace = new Date(now.getTime() - graceMs - 60_000).toISOString();
   assert.equal(
-    effectivePlanId("creator", "past_due", {
-      currentPeriodEnd: beyondGrace,
+    effectivePlanId("creator", "active", { currentPeriodEnd: beyondGrace, now }),
+    "spark",
+  );
+
+  assert.equal(
+    effectivePlanId("creator", "active", { currentPeriodEnd: null, now }),
+    "spark",
+  );
+});
+
+test("past_due grants nothing because the ledger has no past_due_at", () => {
+  const future = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  for (const currentPeriodEnd of [future, null]) {
+    const viewer = buildViewer({
+      user,
+      account: account({ plan: "studio", planStatus: "past_due", currentPeriodEnd }),
+      purchasable,
       now,
-    }),
-    "spark",
-  );
-  assert.equal(
-    effectivePlanId("creator", "past_due", { currentPeriodEnd: null, now }),
-    "spark",
-  );
+    });
+    assert.equal(viewer.plan.id, "spark");
+    assert.equal(viewer.entitlements.apiKeys, false);
+    assert.equal(viewer.paid, false);
+  }
 });
 
 test("a period-end cancellation keeps paid access until the paid period ends", () => {
   // Polar sends cancellation while the subscription is still status active and
   // only revokes at period end, so the date must end access, not the status.
-  const activeCancelling = buildViewer({
-    user,
-    account: account({
-      plan: "studio",
-      planStatus: "active",
-      cancelAtPeriodEnd: true,
-      currentPeriodEnd: "2026-12-07T00:00:00.000Z",
-    }),
-    purchasable,
-    now,
-  });
-  assert.equal(activeCancelling.plan.id, "studio");
-  assert.deepEqual(
-    activeCancelling.entitlements.hostedWorlds,
-    ENTITLEMENTS.studio.hostedWorlds,
-  );
-
-  const canceledFuture = buildViewer({
-    user,
-    account: account({
-      plan: "studio",
-      planStatus: "canceled",
-      cancelAtPeriodEnd: true,
-      currentPeriodEnd: "2026-12-07T00:00:00.000Z",
-    }),
-    purchasable,
-    now,
-  });
-  assert.equal(canceledFuture.plan.id, "studio");
-  assert.equal(canceledFuture.plan.status, "canceled");
-});
-
-test("a period-end cancellation stops at currentPeriodEnd even if the row says active", () => {
   for (const status of ["active", "canceled"] as const) {
     const viewer = buildViewer({
       user,
@@ -109,14 +97,34 @@ test("a period-end cancellation stops at currentPeriodEnd even if the row says a
         plan: "studio",
         planStatus: status,
         cancelAtPeriodEnd: true,
-        currentPeriodEnd: "2026-01-01T00:00:00.000Z",
+        currentPeriodEnd: "2026-12-07T00:00:00.000Z",
       }),
       purchasable,
       now,
     });
-    assert.equal(viewer.plan.id, "spark", status);
-    assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.spark.hostedWorlds);
-    assert.equal(viewer.entitlements.apiKeys, false, status);
+    assert.equal(viewer.plan.id, "studio", status);
+    assert.equal(viewer.plan.status, status);
+    assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.studio.hostedWorlds);
+  }
+});
+
+test("a period-end cancellation stops at currentPeriodEnd or without a date", () => {
+  for (const currentPeriodEnd of ["2026-01-01T00:00:00.000Z", null]) {
+    for (const status of ["active", "canceled"] as const) {
+      const viewer = buildViewer({
+        user,
+        account: account({
+          plan: "studio",
+          planStatus: status,
+          cancelAtPeriodEnd: true,
+          currentPeriodEnd,
+        }),
+        purchasable,
+        now,
+      });
+      assert.equal(viewer.plan.id, "spark", `${status}/${currentPeriodEnd}`);
+      assert.equal(viewer.entitlements.apiKeys, false);
+    }
   }
 });
 
@@ -130,6 +138,7 @@ test("revocation, pause and none resolve to Spark", () => {
     });
     assert.equal(viewer.plan.id, "spark", status);
     assert.equal(viewer.entitlements.apiKeys, false, status);
+    assert.equal(viewer.paid, false, status);
   }
 });
 
@@ -222,13 +231,23 @@ test("status and cancellation state are reported without being inferred away", (
   assert.equal(viewer.generatedAt, now.toISOString());
 });
 
-test("the contract carries a nullable email and does not invent one", () => {
-  const viewer = buildViewer({
+test("the contract carries a nullable email and distinguishes account from paid", () => {
+  const paid = buildViewer({
     user: { id: user.id, email: null },
     account: account(),
     purchasable,
     now,
   });
-  assert.deepEqual(viewer.user, { id: user.id, email: null });
-  assert.equal(viewer.member, true);
+  assert.deepEqual(paid.user, { id: user.id, email: null });
+  assert.equal(paid.member, true);
+  assert.equal(paid.paid, true);
+
+  const free = buildViewer({
+    user: { id: user.id, email: null },
+    account: account({ plan: "spark", planStatus: "none" }),
+    purchasable,
+    now,
+  });
+  assert.equal(free.member, true);
+  assert.equal(free.paid, false);
 });

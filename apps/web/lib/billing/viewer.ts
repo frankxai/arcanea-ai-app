@@ -36,6 +36,9 @@ export type Viewer = {
   schema: typeof VIEWER_SCHEMA;
   user: { id: string; email: string | null };
   member: boolean;
+  /** True only when the effective plan is a paid catalog plan. `member` means
+   * an account exists; `paid` is the access-relevant signal. */
+  paid: boolean;
   plan: {
     id: PlanId;
     name: string;
@@ -51,16 +54,13 @@ export type Viewer = {
   generatedAt: string;
 };
 
-const PAYING_STATUSES: readonly BillingStatus[] = [
-  "active",
-  "trialing",
-  "past_due",
-];
+const PAYING_STATUSES: readonly BillingStatus[] = ["active", "trialing"];
 
-/** Days after currentPeriodEnd that a past_due row may keep paid access while
- * dunning runs. Polar's `unpaid` maps to `past_due` in this repo, so without a
- * deadline a terminal dunning row would keep paid access forever. */
-export const DUNNING_GRACE_DAYS = 7;
+/** A paid period that just ended may need a moment for the renewal or
+ * revocation event to land. This is a webhook-latency allowance, not a dunning
+ * grace: past_due is not granted paid access because the ledger does not store
+ * `past_due_at`, so no defensible grace window can be computed. */
+export const PERIOD_END_GRACE_HOURS = 24;
 
 const PLAN_ORDER: readonly PlanId[] = ["spark", "creator", "studio"];
 
@@ -71,11 +71,14 @@ function timestamp(value: string | null | undefined): number {
 
 /** The plan the viewer can actually use right now.
  *
- * - active/trialing: paid.
- * - active/canceled with cancelAtPeriodEnd: paid until currentPeriodEnd, then
- *   Spark. Polar sends cancellation while status is still active and only
- *   revokes at period end, so the date, not the status, ends access.
- * - past_due: paid until currentPeriodEnd plus the dunning grace.
+ * Fail-closed rules:
+ * - active/trialing: paid until currentPeriodEnd plus a 24-hour event-latency
+ *   allowance. A missing period end grants nothing.
+ * - cancel-at-period-end: paid until currentPeriodEnd, then Spark, for both
+ *   `active` and `canceled` rows. Polar sends cancellation while status is
+ *   still active and revokes at period end, so the date ends access.
+ * - past_due: Spark. The ledger has no `past_due_at`, so a grace window would
+ *   be invented and could cover a whole unpaid cycle.
  * - revoked/paused/none/unknown: Spark.
  */
 export function effectivePlanId(
@@ -93,29 +96,19 @@ export function effectivePlanId(
   const periodEnd = timestamp(options.currentPeriodEnd);
   const hasPeriodEnd = Number.isFinite(periodEnd);
 
-  if (
-    options.cancelAtPeriodEnd === true &&
-    hasPeriodEnd &&
-    periodEnd <= now
-  ) {
-    return "spark";
+  if (status === "past_due") return "spark";
+
+  if (options.cancelAtPeriodEnd === true) {
+    return hasPeriodEnd && periodEnd > now ? plan : "spark";
   }
 
-  if (status === "past_due") {
+  if (PAYING_STATUSES.includes(status)) {
     if (!hasPeriodEnd) return "spark";
-    const graceEnd = periodEnd + DUNNING_GRACE_DAYS * 24 * 60 * 60 * 1000;
+    const graceEnd = periodEnd + PERIOD_END_GRACE_HOURS * 60 * 60 * 1000;
     return graceEnd > now ? plan : "spark";
   }
 
-  if (PAYING_STATUSES.includes(status)) return plan;
-
-  const stillPaid =
-    status === "canceled" &&
-    options.cancelAtPeriodEnd === true &&
-    hasPeriodEnd &&
-    periodEnd > now;
-
-  return stillPaid ? plan : "spark";
+  return "spark";
 }
 
 export function buildViewer(input: {
@@ -165,6 +158,7 @@ export function buildViewer(input: {
     schema: VIEWER_SCHEMA,
     user: input.user,
     member: true,
+    paid: (plan?.priceCents ?? 0) > 0,
     plan: {
       id: planId,
       name: plan?.name ?? planId,

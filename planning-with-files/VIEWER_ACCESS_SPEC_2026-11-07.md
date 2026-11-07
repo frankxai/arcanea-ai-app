@@ -51,18 +51,18 @@ Patterns adopted from current vendor docs; no template files copied.
 
 | planStatus | Result |
 | --- | --- |
-| `active` | plan as recorded, unless a period-end cancellation has already passed `currentPeriodEnd` |
-| `trialing` | plan as recorded |
-| `past_due` | plan until `currentPeriodEnd` plus a 7-day dunning grace, then Spark |
+| `active` | plan until `currentPeriodEnd` plus a 24-hour webhook-latency allowance, then Spark; no period end means Spark |
+| `trialing` | same rule as `active` |
+| `past_due` | Spark. The ledger has no `past_due_at`, so any grace window would be invented and could cover an unpaid cycle |
 | cancel-at-period-end (`active` or `canceled`) before `currentPeriodEnd` | plan as recorded until the paid period ends |
-| cancel-at-period-end after `currentPeriodEnd` | Spark, even if the row still says `active` |
-| `canceled` without period-end state, or period already ended | Spark |
+| cancel-at-period-end after `currentPeriodEnd`, or with no date | Spark |
+| `canceled` without period-end state | Spark |
 | `revoked` | Spark |
 | `paused` | Spark |
 | `none` | Spark |
 | unknown plan id | Spark |
 
-Offers are upgrades only and actionable only when `billingReadiness().live` is true and the recovery schema is present, which are the same conditions `/api/billing/checkout` enforces. The active or lower plans are never offered, Spark is never offered, and credit packs appear only when their Polar product is configured. When checkout is closed, `offers` is empty and `nextOffer` is null rather than pointing at a checkout that returns 503.
+`member` means an account exists; `paid` is the access-relevant flag and is true only for a paid catalog plan. Offers are upgrades only and actionable only when `billingReadiness().live` is true and the recovery schema is present, which are the same conditions `/api/billing/checkout` enforces. Lower plans and Spark are never offered, and credit packs appear only when their Polar product is configured. When checkout is closed, `offers` is empty and `nextOffer` is null rather than pointing at a checkout that returns 503.
 
 ## Acceptance criteria
 

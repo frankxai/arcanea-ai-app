@@ -47,13 +47,19 @@ export default async function BillingPage({
   let checkoutReady = false;
   try {
     account = await getAccount(user.id);
-    await requireRecoverySchema();
-    checkoutReady = true;
   } catch (error) {
     ledgerError =
       error instanceof BillingError
         ? "The credit ledger is not reachable right now. Your plan and balance will appear once it is."
         : "Billing could not be loaded.";
+  }
+  if (account) {
+    try {
+      await requireRecoverySchema();
+      checkoutReady = true;
+    } catch {
+      // Offers stay empty; the plan and balance are still valid to show.
+    }
   }
 
   const viewer = account
