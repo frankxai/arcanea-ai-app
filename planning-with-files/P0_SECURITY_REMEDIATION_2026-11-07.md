@@ -25,12 +25,12 @@ schema USAGE.
 
 ## What the migration does
 
-| Step | Mechanism | Why this shape |
-| --- | --- | --- |
-| Pin `search_path` | one `DO` block that reads `pg_proc` for `prosecdef`, skips functions that already have `search_path`, skips extension-owned functions, and executes `ALTER FUNCTION … SET search_path = pg_catalog, public` using `pg_get_function_identity_arguments` | Covers every overload and any function created before the migration runs, without a hand-maintained list that drifts |
-| Revoke anonymous profile read | `REVOKE SELECT ON public.profiles FROM anon` | The table stays readable for `authenticated` and for server code using the service role |
-| Provide the public projection | `CREATE OR REPLACE VIEW public.public_profiles` with an explicit column allowlist, `WHERE coalesce(is_active, true)`, granted to `anon, authenticated` | Public profile pages keep working without exposing billing or contact columns |
-| Keep intentional surfaces | no change to `luminors` or `arcanea_applications` grants, documented in the file header | A P0 slice should not change product behaviour it was not asked to change |
+| Step                          | Mechanism                                                                                                                                                                                                                                              | Why this shape                                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Pin `search_path`             | one `DO` block that reads `pg_proc` for `prosecdef`, skips functions that already have `search_path`, skips extension-owned functions, and executes `ALTER FUNCTION … SET search_path = pg_catalog, public` using `pg_get_function_identity_arguments` | Covers every overload and any function created before the migration runs, without a hand-maintained list that drifts |
+| Revoke anonymous profile read | `REVOKE SELECT ON public.profiles FROM anon`                                                                                                                                                                                                           | The table stays readable for `authenticated` and for server code using the service role                              |
+| Provide the public projection | `CREATE OR REPLACE VIEW public.public_profiles` with an explicit column allowlist, `WHERE coalesce(is_active, true)`, granted to `anon, authenticated`                                                                                                 | Public profile pages keep working without exposing billing or contact columns                                        |
+| Keep intentional surfaces     | no change to `luminors` or `arcanea_applications` grants, documented in the file header                                                                                                                                                                | A P0 slice should not change product behaviour it was not asked to change                                            |
 
 The view projects through `to_jsonb(p) ->> 'column'` so it survives the schema drift between the
 committed migrations and the live database (the generated types carry `magic_rank`, `gates_open`,
