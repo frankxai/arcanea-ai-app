@@ -194,7 +194,7 @@ export function scanSql(source, file) {
   // `drop`/`truncate`/`delete`, plus the column and constraint drops that hide
   // inside ALTER TABLE.
   for (const match of code.matchAll(
-    /^\s*(drop\s+(table|schema|column)|truncate\b|delete\s+from)|alter\s+table[^;]{0,300}?\bdrop\s+(column|constraint)\b/gim,
+    /(?:^|;)\s*(drop\s+(?:table|schema|column)|truncate\b|delete\s+from)|alter\s+table[^;]{0,300}?\bdrop\s+(?:column|constraint)\b/gim,
   )) {
     const statement = code
       .slice(
@@ -253,13 +253,24 @@ export function scanSql(source, file) {
     // Schema usage is required for the REST API and grants no row or column
     // access by itself; every object privilege is still audited below.
     if (/^grant\s+[^;]*\s+on\s+schema\b/i.test(statement)) continue;
-    const object =
-      /\bon\s+(?:table\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/i.exec(
-        statement,
+    // `grant select on public.a, public.b to anon` must be judged on every
+    // object, not just the first one.
+    const objectsPart = /\bon\s+([\s\S]*?)\s+to\s+/i.exec(statement)?.[1] ?? "";
+    const objects = objectsPart
+      .split(",")
+      .map((part) =>
+        /(?:table\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?\s*$/i.exec(
+          part.trim(),
+        ),
+      )
+      .map((objectMatch) => objectMatch?.[1]?.toLowerCase())
+      .filter(Boolean);
+    const exempt =
+      objects.length > 0 &&
+      objects.every(
+        (view) => viewsCreated.has(view) && reviewedPublicViews.has(view),
       );
-    const view = object?.[1].toLowerCase();
-    if (view && viewsCreated.has(view) && reviewedPublicViews.has(view))
-      continue;
+    if (exempt) continue;
     add(
       "grant-to-anon",
       "high",
@@ -268,17 +279,23 @@ export function scanSql(source, file) {
     );
   }
 
-  for (const chunk of code
-    .split(/create\s+(?:or\s+replace\s+)?function/gi)
-    .slice(1)) {
-    const statement = chunk.slice(0, statementEnd(chunk));
+  // Creation and elevation both matter: a function created invoker and then
+  // made SECURITY DEFINER must be audited too.
+  for (const match of code.matchAll(
+    /(?:create\s+(?:or\s+replace\s+)?|alter\s+)function\s+/gi,
+  )) {
+    const index = match.index ?? 0;
+    const statement = code.slice(
+      index,
+      index + statementEnd(code.slice(index)),
+    );
     const ddl = maskQuotedBodies(statement);
     if (/security\s+definer/i.test(ddl) && !/set\s+search_path/i.test(ddl)) {
       const header = statement.slice(0, 90).replace(/\s+/g, " ").trim();
       add(
         "security-definer-no-search-path",
         "high",
-        Math.max(0, code.indexOf(chunk)),
+        index,
         `Definer without search_path: ${header}`,
       );
     }
@@ -295,24 +312,38 @@ export function scanSql(source, file) {
       doBlockTables.add(name[1]);
   }
 
+  // An RLS enable on another schema does not protect the table. Track the
+  // schema alongside the name, and treat an unqualified enable as applying to
+  // the unqualified table.
+  const rlsEnabled = new Map();
   for (const match of code.matchAll(
-    /create\s+table\s+(?:if\s+not\s+exists\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/gi,
+    /alter\s+table\s+(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?\s+enable\s+row\s+level\s+security/gi,
   )) {
-    const table = match[1];
+    const schema = (match[1] ?? "").toLowerCase();
+    const table = match[2];
+    if (!rlsEnabled.has(table)) rlsEnabled.set(table, new Set());
+    rlsEnabled.get(table).add(schema);
+  }
+
+  for (const match of code.matchAll(
+    /create\s+table\s+(?:if\s+not\s+exists\s+)?(?:([A-Za-z_][A-Za-z0-9_]*)\.)?["']?([A-Za-z0-9_]+)["']?/gi,
+  )) {
+    const schema = (match[1] ?? "").toLowerCase();
+    const table = match[2];
     if (doBlockTables.has(table)) continue;
-    const escaped = table.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const rls = new RegExp(
-      `alter\\s+table\\s+(?:[A-Za-z_][A-Za-z0-9_]*\\.)?["']?${escaped}["']?\\s+enable\\s+row\\s+level\\s+security`,
-      "i",
+    const schemas = rlsEnabled.get(table);
+    const protectedByRls =
+      schemas &&
+      (schemas.has("") ||
+        schemas.has(schema) ||
+        (schema === "" && schemas.size > 0));
+    if (protectedByRls) continue;
+    add(
+      "table-without-rls",
+      "high",
+      match.index ?? 0,
+      `Table without RLS: ${table}`,
     );
-    if (!rls.test(code)) {
-      add(
-        "table-without-rls",
-        "high",
-        match.index ?? 0,
-        `Table without RLS: ${table}`,
-      );
-    }
   }
 
   return findings;

@@ -206,6 +206,92 @@ create function public.f() returns void
   );
 });
 
+test("a multi-object grant is exempt only when every object is a reviewed view", () => {
+  const mixed = `
+-- audit: public-view public_notes
+create view public.public_notes as select id from public.notes;
+grant select on public.public_notes, public.notes to anon;
+`;
+  assert.equal(
+    scanSql(mixed, "mixed.sql").filter(
+      (finding) => finding.rule === "grant-to-anon",
+    ).length,
+    1,
+  );
+
+  const allViews = `
+-- audit: public-view public_notes
+create view public.public_notes as select id from public.notes;
+grant select on public.public_notes to anon;
+`;
+  assert.equal(
+    scanSql(allViews, "views.sql").filter(
+      (finding) => finding.rule === "grant-to-anon",
+    ).length,
+    0,
+  );
+});
+
+test("RLS enabled on another schema does not protect a public table", () => {
+  const sql = `
+create table public.notes (id uuid primary key);
+alter table private.notes enable row level security;
+`;
+  const findings = scanSql(sql, "schema.sql");
+  assert.equal(
+    findings.filter((finding) => finding.rule === "table-without-rls").length,
+    1,
+  );
+});
+
+test("a schema-qualified table is protected by RLS in its own schema", () => {
+  const sql = `
+create table gencreator.signups (id uuid primary key);
+alter table gencreator.signups enable row level security;
+`;
+  assert.equal(
+    scanSql(sql, "own-schema.sql").filter(
+      (finding) => finding.rule === "table-without-rls",
+    ).length,
+    0,
+  );
+});
+
+test("a destructive statement after another statement on the same line is caught", () => {
+  const sql = `create table public.notes (id uuid primary key); drop table public.old_notes;`;
+  const findings = scanSql(sql, "inline.sql");
+  assert.equal(
+    findings.filter((finding) => finding.rule === "destructive-statement")
+      .length,
+    1,
+  );
+});
+
+test("a function elevated through ALTER FUNCTION is audited", () => {
+  const elevated = `
+create function public.member_count() returns int language sql as $$ select 1; $$;
+alter function public.member_count() security definer;
+`;
+  const findings = scanSql(elevated, "elevated.sql");
+  assert.equal(
+    findings.filter(
+      (finding) => finding.rule === "security-definer-no-search-path",
+    ).length,
+    1,
+  );
+
+  const pinned = `
+create function public.member_count() returns int language sql as $$ select 1; $$;
+alter function public.member_count() security definer set search_path = public, pg_temp;
+`;
+  assert.equal(
+    scanSql(pinned, "pinned-alter.sql").filter(
+      (finding) => finding.rule === "security-definer-no-search-path",
+    ).length,
+    0,
+  );
+});
+
 test("two destructive statements in one file fingerprint separately", () => {
   const sql = `
 delete from public.a where id = 1;
