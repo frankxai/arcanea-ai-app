@@ -167,6 +167,9 @@ jobs:
       - name: Verify changed-file formatting failure handling
         run: node --test scripts/tests/changed-format.test.mjs
 
+      - name: Verify migration security, definer paths and anon denial
+        run: pnpm run test:security
+
       - name: Verify visual-review trust and evidence boundaries
         run: node --test scripts/excellence-review.test.mjs scripts/tests/visual-preview.test.mjs
 

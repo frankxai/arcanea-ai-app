@@ -15,11 +15,11 @@
  * We still perform explicit validation server-side for clearer error messages.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const MAX_REVIEW_CHARS = 5000;
 
@@ -68,7 +68,11 @@ interface RatingsPayload {
 }
 
 function emptySummary(): RatingSummary {
-  return { average: 0, count: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
+  return {
+    average: 0,
+    count: 0,
+    distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  };
 }
 
 function unavailable(): NextResponse {
@@ -84,16 +88,16 @@ function unavailable(): NextResponse {
 }
 
 function validateStars(value: unknown): number | null {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return null;
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
   const n = Math.trunc(value);
   if (n < 1 || n > 5) return null;
   return n;
 }
 
-function validateReview(value: unknown): string | null | 'invalid' {
-  if (value === null || value === undefined || value === '') return null;
-  if (typeof value !== 'string') return 'invalid';
-  if (value.length > MAX_REVIEW_CHARS) return 'invalid';
+function validateReview(value: unknown): string | null | "invalid" {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value !== "string") return "invalid";
+  if (value.length > MAX_REVIEW_CHARS) return "invalid";
   return value;
 }
 
@@ -102,9 +106,9 @@ async function resolveBookId(
   slug: string,
 ): Promise<{ id: string } | null> {
   const { data, error } = await supabase
-    .from('books')
-    .select('id')
-    .eq('slug', slug)
+    .from("books")
+    .select("id")
+    .eq("slug", slug)
     .maybeSingle();
   if (error || !data) return null;
   return data as { id: string };
@@ -116,13 +120,13 @@ async function loadPayload(
   currentUserId: string | null,
 ): Promise<RatingsPayload> {
   const { data: ratingsData } = await supabase
-    .from('book_ratings')
-    .select('id, stars, review, user_id, created_at, updated_at')
-    .eq('book_id', bookId)
-    .eq('is_hidden', false)
-    .order('created_at', { ascending: false });
+    .from("book_ratings")
+    .select("id, stars, review, user_id, created_at, updated_at")
+    .eq("book_id", bookId)
+    .eq("is_hidden", false)
+    .order("created_at", { ascending: false });
 
-  const rows = ((ratingsData ?? []) as unknown) as RatingRow[];
+  const rows = (ratingsData ?? []) as unknown as RatingRow[];
 
   // Summary
   const summary = emptySummary();
@@ -140,10 +144,10 @@ async function loadPayload(
   let profileMap = new Map<string, ProfileRow>();
   if (userIds.length > 0) {
     const { data: profilesData } = await supabase
-      .from('profiles')
-      .select('id, username, display_name, avatar_url')
-      .in('id', userIds);
-    const profiles = ((profilesData ?? []) as unknown) as ProfileRow[];
+      .from("public_profiles")
+      .select("id, username, display_name, avatar_url")
+      .in("id", userIds);
+    const profiles = (profilesData ?? []) as unknown as ProfileRow[];
     profileMap = new Map(profiles.map((p) => [p.id, p]));
   }
 
@@ -152,7 +156,7 @@ async function loadPayload(
     const displayName =
       profile?.display_name?.trim() ||
       profile?.username?.trim() ||
-      'Anonymous Reader';
+      "Anonymous Reader";
     return {
       id: r.id,
       stars: r.stars,
@@ -168,7 +172,7 @@ async function loadPayload(
   });
 
   const mine = currentUserId
-    ? rows.find((r) => r.user_id === currentUserId) ?? null
+    ? (rows.find((r) => r.user_id === currentUserId) ?? null)
     : null;
   const myRating = mine ? { stars: mine.stars, review: mine.review } : null;
 
@@ -188,14 +192,16 @@ export async function GET(
     const supabase = (await createClient()) as DB;
     const book = await resolveBookId(supabase, slug);
     if (!book) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     const payload = await loadPayload(supabase, book.id, user?.id ?? null);
     return NextResponse.json(payload);
   } catch (err) {
-    console.error('[ratings GET] unavailable:', err);
+    console.error("[ratings GET] unavailable:", err);
     return unavailable();
   }
 }
@@ -213,18 +219,18 @@ export async function POST(
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   const stars = validateStars(body.stars);
   if (stars === null) {
     return NextResponse.json(
-      { error: 'stars must be an integer between 1 and 5' },
+      { error: "stars must be an integer between 1 and 5" },
       { status: 400 },
     );
   }
   const review = validateReview(body.review);
-  if (review === 'invalid') {
+  if (review === "invalid") {
     return NextResponse.json(
       { error: `review must be a string up to ${MAX_REVIEW_CHARS} characters` },
       { status: 400 },
@@ -233,48 +239,51 @@ export async function POST(
 
   try {
     const supabase = (await createClient()) as DB;
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 },
+      );
     }
 
     const book = await resolveBookId(supabase, slug);
     if (!book) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
     // Block authors from rating their own book
     const { data: authorship } = await supabase
-      .from('book_authors')
-      .select('role')
-      .eq('book_id', book.id)
-      .eq('user_id', user.id)
+      .from("book_authors")
+      .select("role")
+      .eq("book_id", book.id)
+      .eq("user_id", user.id)
       .maybeSingle();
     if (authorship) {
       return NextResponse.json(
-        { error: 'Authors cannot rate their own books' },
+        { error: "Authors cannot rate their own books" },
         { status: 403 },
       );
     }
 
     // Upsert so POST is idempotent per (book_id, user_id)
-    const { error: upsertError } = await supabase
-      .from('book_ratings')
-      .upsert(
-        {
-          book_id: book.id,
-          user_id: user.id,
-          stars,
-          review,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'book_id,user_id' },
-      );
+    const { error: upsertError } = await supabase.from("book_ratings").upsert(
+      {
+        book_id: book.id,
+        user_id: user.id,
+        stars,
+        review,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "book_id,user_id" },
+    );
 
     if (upsertError) {
-      console.error('[ratings POST] upsert failed:', upsertError);
+      console.error("[ratings POST] upsert failed:", upsertError);
       return NextResponse.json(
-        { error: 'Failed to save rating' },
+        { error: "Failed to save rating" },
         { status: 500 },
       );
     }
@@ -282,9 +291,9 @@ export async function POST(
     const payload = await loadPayload(supabase, book.id, user.id);
     return NextResponse.json(payload, { status: 201 });
   } catch (err) {
-    console.error('[ratings POST] error:', err);
+    console.error("[ratings POST] error:", err);
     return NextResponse.json(
-      { error: 'Ratings service temporarily unavailable' },
+      { error: "Ratings service temporarily unavailable" },
       { status: 503 },
     );
   }
@@ -303,10 +312,14 @@ export async function PATCH(
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const updates: { stars?: number; review?: string | null; updated_at: string } = {
+  const updates: {
+    stars?: number;
+    review?: string | null;
+    updated_at: string;
+  } = {
     updated_at: new Date().toISOString(),
   };
 
@@ -314,7 +327,7 @@ export async function PATCH(
     const stars = validateStars(body.stars);
     if (stars === null) {
       return NextResponse.json(
-        { error: 'stars must be an integer between 1 and 5' },
+        { error: "stars must be an integer between 1 and 5" },
         { status: 400 },
       );
     }
@@ -323,9 +336,11 @@ export async function PATCH(
 
   if (body.review !== undefined) {
     const review = validateReview(body.review);
-    if (review === 'invalid') {
+    if (review === "invalid") {
       return NextResponse.json(
-        { error: `review must be a string up to ${MAX_REVIEW_CHARS} characters` },
+        {
+          error: `review must be a string up to ${MAX_REVIEW_CHARS} characters`,
+        },
         { status: 400 },
       );
     }
@@ -334,47 +349,52 @@ export async function PATCH(
 
   if (updates.stars === undefined && updates.review === undefined) {
     return NextResponse.json(
-      { error: 'No updatable fields provided' },
+      { error: "No updatable fields provided" },
       { status: 400 },
     );
   }
 
   try {
     const supabase = (await createClient()) as DB;
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 },
+      );
     }
 
     const book = await resolveBookId(supabase, slug);
     if (!book) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
     const { data: existing } = await supabase
-      .from('book_ratings')
-      .select('id')
-      .eq('book_id', book.id)
-      .eq('user_id', user.id)
+      .from("book_ratings")
+      .select("id")
+      .eq("book_id", book.id)
+      .eq("user_id", user.id)
       .maybeSingle();
 
     if (!existing) {
       return NextResponse.json(
-        { error: 'No existing rating to update — use POST instead' },
+        { error: "No existing rating to update — use POST instead" },
         { status: 404 },
       );
     }
 
     const { error: updateError } = await supabase
-      .from('book_ratings')
+      .from("book_ratings")
       .update(updates)
-      .eq('book_id', book.id)
-      .eq('user_id', user.id);
+      .eq("book_id", book.id)
+      .eq("user_id", user.id);
 
     if (updateError) {
-      console.error('[ratings PATCH] update failed:', updateError);
+      console.error("[ratings PATCH] update failed:", updateError);
       return NextResponse.json(
-        { error: 'Failed to update rating' },
+        { error: "Failed to update rating" },
         { status: 500 },
       );
     }
@@ -382,9 +402,9 @@ export async function PATCH(
     const payload = await loadPayload(supabase, book.id, user.id);
     return NextResponse.json(payload);
   } catch (err) {
-    console.error('[ratings PATCH] error:', err);
+    console.error("[ratings PATCH] error:", err);
     return NextResponse.json(
-      { error: 'Ratings service temporarily unavailable' },
+      { error: "Ratings service temporarily unavailable" },
       { status: 503 },
     );
   }
@@ -401,26 +421,31 @@ export async function DELETE(
 
   try {
     const supabase = (await createClient()) as DB;
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 },
+      );
     }
 
     const book = await resolveBookId(supabase, slug);
     if (!book) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
     const { error: deleteError } = await supabase
-      .from('book_ratings')
+      .from("book_ratings")
       .delete()
-      .eq('book_id', book.id)
-      .eq('user_id', user.id);
+      .eq("book_id", book.id)
+      .eq("user_id", user.id);
 
     if (deleteError) {
-      console.error('[ratings DELETE] failed:', deleteError);
+      console.error("[ratings DELETE] failed:", deleteError);
       return NextResponse.json(
-        { error: 'Failed to delete rating' },
+        { error: "Failed to delete rating" },
         { status: 500 },
       );
     }
@@ -428,9 +453,9 @@ export async function DELETE(
     const payload = await loadPayload(supabase, book.id, user.id);
     return NextResponse.json(payload);
   } catch (err) {
-    console.error('[ratings DELETE] error:', err);
+    console.error("[ratings DELETE] error:", err);
     return NextResponse.json(
-      { error: 'Ratings service temporarily unavailable' },
+      { error: "Ratings service temporarily unavailable" },
       { status: 503 },
     );
   }

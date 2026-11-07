@@ -7,9 +7,9 @@
  * small ReviewListClient component.
  */
 
-import { createClient } from '@/lib/supabase/server';
-import { StarRating } from './StarRating';
-import { ReviewListClient, type ReviewItem } from './ReviewListClient';
+import { createClient } from "@/lib/supabase/server";
+import { StarRating } from "./StarRating";
+import { ReviewListClient, type ReviewItem } from "./ReviewListClient";
 
 // The generated Database types haven't been regenerated since the
 // 20260410000001_open_library migration. Cast the client as `any` at the
@@ -35,10 +35,19 @@ interface FetchResult {
 }
 
 function emptySummary(): Summary {
-  return { average: 0, count: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
+  return {
+    average: 0,
+    count: 0,
+    distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  };
 }
 
-async function withTimeout<T>(promise: Promise<T>, fallback: T, timeoutMs: number, label: string): Promise<T> {
+async function withTimeout<T>(
+  promise: Promise<T>,
+  fallback: T,
+  timeoutMs: number,
+  label: string,
+): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     return await Promise.race([
@@ -60,9 +69,9 @@ async function fetchRatings(bookSlug: string): Promise<FetchResult> {
     const supabase = (await createClient()) as DB;
 
     const { data: book } = await supabase
-      .from('books')
-      .select('id')
-      .eq('slug', bookSlug)
+      .from("books")
+      .select("id")
+      .eq("slug", bookSlug)
       .maybeSingle();
 
     if (!book) {
@@ -72,18 +81,18 @@ async function fetchRatings(bookSlug: string): Promise<FetchResult> {
     const bookId = (book as { id: string }).id;
 
     const { data: rows, error } = await supabase
-      .from('book_ratings')
-      .select('id, stars, review, user_id, created_at, updated_at')
-      .eq('book_id', bookId)
-      .eq('is_hidden', false)
-      .order('created_at', { ascending: false });
+      .from("book_ratings")
+      .select("id, stars, review, user_id, created_at, updated_at")
+      .eq("book_id", bookId)
+      .eq("is_hidden", false)
+      .order("created_at", { ascending: false });
 
     if (error) {
-      console.error('[ReviewList] fetch error:', error);
+      console.error("[ReviewList] fetch error:", error);
       return { summary: emptySummary(), ratings: [], unavailable: true };
     }
 
-    const ratings = ((rows ?? []) as unknown) as Array<{
+    const ratings = (rows ?? []) as unknown as Array<{
       id: string;
       stars: number;
       review: string | null;
@@ -112,11 +121,11 @@ async function fetchRatings(bookSlug: string): Promise<FetchResult> {
     let profileMap = new Map<string, ProfileRow>();
     if (userIds.length > 0) {
       const { data: profilesData } = await supabase
-        .from('profiles')
-        .select('id, username, display_name, avatar_url')
-        .in('id', userIds);
+        .from("public_profiles")
+        .select("id, username, display_name, avatar_url")
+        .in("id", userIds);
       profileMap = new Map(
-        (((profilesData ?? []) as unknown) as ProfileRow[]).map((p) => [p.id, p]),
+        ((profilesData ?? []) as unknown as ProfileRow[]).map((p) => [p.id, p]),
       );
     }
 
@@ -125,7 +134,7 @@ async function fetchRatings(bookSlug: string): Promise<FetchResult> {
       const displayName =
         profile?.display_name?.trim() ||
         profile?.username?.trim() ||
-        'Anonymous Reader';
+        "Anonymous Reader";
       return {
         id: r.id,
         stars: r.stars,
@@ -138,7 +147,7 @@ async function fetchRatings(bookSlug: string): Promise<FetchResult> {
 
     return { summary, ratings: items, unavailable: false };
   } catch (err) {
-    console.error('[ReviewList] unavailable:', err);
+    console.error("[ReviewList] unavailable:", err);
     return { summary: emptySummary(), ratings: [], unavailable: true };
   }
 }
@@ -162,7 +171,9 @@ function DistributionBar({
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="w-10 text-right text-white/30 tabular-nums">{count}</span>
+      <span className="w-10 text-right text-white/30 tabular-nums">
+        {count}
+      </span>
     </div>
   );
 }
@@ -209,8 +220,8 @@ export async function ReviewList({ bookSlug, limit = 10 }: ReviewListProps) {
               <StarRating value={summary.average} size="md" />
             </div>
             <div className="mt-1 text-xs text-white/40">
-              {summary.count.toLocaleString()}{' '}
-              {summary.count === 1 ? 'review' : 'reviews'}
+              {summary.count.toLocaleString()}{" "}
+              {summary.count === 1 ? "review" : "reviews"}
             </div>
           </div>
 
