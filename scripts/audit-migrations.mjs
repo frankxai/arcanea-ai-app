@@ -5,6 +5,9 @@
  * Fails on new high-severity findings. Existing findings are recorded in a
  * baseline by fingerprint so the repository can ratchet down without blocking
  * every PR on legacy debt.
+ *
+ * The scan is static: it reads SQL text, not a live database. A runtime denial
+ * test belongs beside the migration it proves.
  */
 
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -17,81 +20,228 @@ function lineOf(source, index) {
   return source.slice(0, index).split("\n").length;
 }
 
+/**
+ * Replace comments with spaces, preserving length and newlines.
+ *
+ * Without this a comment containing `alter table ... enable row level security`
+ * makes an unprotected table look protected, and a commented-out grant becomes a
+ * finding. Single-quoted strings and dollar-quoted bodies are preserved so a
+ * `--` inside a literal is not mistaken for a comment.
+ */
+export function maskSqlComments(source) {
+  let out = "";
+  let i = 0;
+  while (i < source.length) {
+    const ch = source[i];
+    const next = source[i + 1];
+
+    if (ch === "-" && next === "-") {
+      while (i < source.length && source[i] !== "\n") {
+        out += " ";
+        i += 1;
+      }
+      continue;
+    }
+
+    if (ch === "/" && next === "*") {
+      out += "  ";
+      i += 2;
+      while (
+        i < source.length &&
+        !(source[i] === "*" && source[i + 1] === "/")
+      ) {
+        out += source[i] === "\n" ? "\n" : " ";
+        i += 1;
+      }
+      if (i < source.length) {
+        out += "  ";
+        i += 2;
+      }
+      continue;
+    }
+
+    if (ch === "'") {
+      out += ch;
+      i += 1;
+      while (i < source.length) {
+        if (source[i] === "'" && source[i + 1] === "'") {
+          out += "''";
+          i += 2;
+          continue;
+        }
+        out += source[i];
+        if (source[i] === "'") {
+          i += 1;
+          break;
+        }
+        i += 1;
+      }
+      continue;
+    }
+
+    const dollar = /^\$([A-Za-z_][A-Za-z0-9_]*)?\$/.exec(source.slice(i));
+    if (dollar) {
+      const tag = dollar[0];
+      const close = source.indexOf(tag, i + tag.length);
+      const end = close === -1 ? source.length : close + tag.length;
+      out += source.slice(i, end);
+      i = end;
+      continue;
+    }
+
+    out += ch;
+    i += 1;
+  }
+  return out;
+}
+
+/** Index of the semicolon ending the statement, skipping quoted bodies. */
+function statementEnd(text) {
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === "'") {
+      i += 1;
+      while (i < text.length) {
+        if (text[i] === "'" && text[i + 1] === "'") {
+          i += 2;
+          continue;
+        }
+        if (text[i] === "'") {
+          i += 1;
+          break;
+        }
+        i += 1;
+      }
+      continue;
+    }
+    const dollar = /^\$([A-Za-z_][A-Za-z0-9_]*)?\$/.exec(text.slice(i));
+    if (dollar) {
+      const tag = dollar[0];
+      const close = text.indexOf(tag, i + tag.length);
+      if (close === -1) return text.length;
+      i = close + tag.length;
+      continue;
+    }
+    if (text[i] === ";") return i;
+    i += 1;
+  }
+  return text.length;
+}
+
+function policyName(statement) {
+  const match = /policy\s+(?:"([^"]+)"|'([^']+)'|([A-Za-z0-9_]+))/i.exec(
+    statement,
+  );
+  return match?.[1] ?? match?.[2] ?? match?.[3] ?? "unnamed";
+}
+
 export function scanSql(source, file) {
+  const code = maskSqlComments(source);
   const findings = [];
   const add = (rule, severity, index, message) => {
-    findings.push({
-      rule,
-      severity,
-      file,
-      line: lineOf(source, index),
-      message,
-    });
+    findings.push({ rule, severity, file, line: lineOf(code, index), message });
   };
 
-  for (const match of source.matchAll(
+  for (const match of code.matchAll(
     /^\s*(drop\s+(table|schema|column)|truncate\b|delete\s+from)/gim,
   )) {
+    const statement = code
+      .slice(
+        match.index ?? 0,
+        statementEnd(code.slice(match.index ?? 0)) + (match.index ?? 0),
+      )
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 120);
     add(
       "destructive-statement",
       "high",
       match.index ?? 0,
-      "Destructive statement",
+      `Destructive statement: ${statement}`,
     );
   }
 
-  for (const match of source.matchAll(
-    /create\s+policy[\s\S]{0,400}?(using|with\s+check)\s*\(\s*true\s*\)/gi,
+  for (const match of code.matchAll(
+    /(?:create|alter)\s+policy[\s\S]{0,400}?(using|with\s+check)\s*\(\s*true\s*\)/gi,
   )) {
-    add("policy-allows-everyone", "high", match.index ?? 0, "Policy uses true");
+    add(
+      "policy-allows-everyone",
+      "high",
+      match.index ?? 0,
+      `Policy "${policyName(match[0])}" uses true`,
+    );
   }
 
-  for (const match of source.matchAll(
+  const viewsCreated = new Set(
+    [
+      ...code.matchAll(
+        /create\s+(?:or\s+replace\s+)?view\s+(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/gi,
+      ),
+    ].map((match) => match[1].toLowerCase()),
+  );
+
+  for (const match of code.matchAll(
     /grant\b[^;]{0,300}\bto\b[^;]{0,120}\banon\b/gi,
   )) {
-    const statement = match[0].replace(/\s+/g, " ").slice(0, 100);
-    add("grant-to-anon", "high", match.index ?? 0, `Anon grant: ${statement}`);
+    const statement = match[0];
+    // Schema usage is required for the REST API and grants no row or column
+    // access by itself; every object privilege is still audited below.
+    if (/^grant\s+[^;]*\s+on\s+schema\b/i.test(statement)) continue;
+    const object =
+      /\bon\s+(?:table\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/i.exec(
+        statement,
+      );
+    // An allowlisted projection is the reviewed alternative to closing a table.
+    if (object && viewsCreated.has(object[1].toLowerCase())) continue;
+    add(
+      "grant-to-anon",
+      "high",
+      match.index ?? 0,
+      `Anon grant: ${statement.replace(/\s+/g, " ").slice(0, 100)}`,
+    );
   }
 
-  for (const chunk of source
+  for (const chunk of code
     .split(/create\s+(?:or\s+replace\s+)?function/gi)
     .slice(1)) {
-    const end = chunk.indexOf("$$;");
-    const body = end >= 0 ? chunk.slice(0, end) : chunk;
-    if (/security\s+definer/i.test(body) && !/set\s+search_path/i.test(body)) {
-      const header = chunk.slice(0, 90).replace(/\s+/g, " ").trim();
+    const statement = chunk.slice(0, statementEnd(chunk));
+    if (
+      /security\s+definer/i.test(statement) &&
+      !/set\s+search_path/i.test(statement)
+    ) {
+      const header = statement.slice(0, 90).replace(/\s+/g, " ").trim();
       add(
         "security-definer-no-search-path",
         "high",
-        Math.max(0, source.indexOf(chunk)),
+        Math.max(0, code.indexOf(chunk)),
         `Definer without search_path: ${header}`,
       );
     }
   }
 
   const doBlockTables = new Set();
-  for (const match of source.matchAll(
+  for (const match of code.matchAll(
     /foreach\s+\w+\s+in\s+array\s+array\s*\[([\s\S]*?)\]/gi,
   )) {
     for (const name of match[1].matchAll(/'([^']+)'/g))
       doBlockTables.add(name[1]);
   }
 
-  for (const match of source.matchAll(
-    /create\s+table\s+(?:if\s+not\s+exists\s+)?(?:[a-zA-Z_][a-zA-Z0-9_]*\.)?["']?([a-zA-Z0-9_]+)["']?/gi,
+  for (const match of code.matchAll(
+    /create\s+table\s+(?:if\s+not\s+exists\s+)?(?:[A-Za-z_][A-Za-z0-9_]*\.)?["']?([A-Za-z0-9_]+)["']?/gi,
   )) {
     const table = match[1];
     if (
       doBlockTables.has(table) &&
-      /enable\s+row\s+level\s+security/i.test(source)
+      /enable\s+row\s+level\s+security/i.test(code)
     )
       continue;
     const escaped = table.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const rls = new RegExp(
-      `alter\\s+table\\s+(?:[a-zA-Z_][a-zA-Z0-9_]*\\.)?["']?${escaped}["']?\\s+enable\\s+row\\s+level\\s+security`,
+      `alter\\s+table\\s+(?:[A-Za-z_][A-Za-z0-9_]*\\.)?["']?${escaped}["']?\\s+enable\\s+row\\s+level\\s+security`,
       "i",
     );
-    if (!rls.test(source)) {
+    if (!rls.test(code)) {
       add(
         "table-without-rls",
         "high",
@@ -155,7 +305,7 @@ function main() {
 
   if (!paths.length) {
     console.error(
-      "usage: audit-migrations.mjs <sql-dir>... [--baseline file] [--write-baseline file]",
+      "usage: audit-migrations.mjs <sql-dir>... [--baseline file] [--write-baseline file] [--fail-on high|medium|none]",
     );
     process.exit(2);
   }
