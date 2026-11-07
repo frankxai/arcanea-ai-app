@@ -5,15 +5,17 @@ import { createClient } from "@/lib/supabase/server";
 import {
   ACTION_COSTS,
   CREDIT_PACKS,
-  ENTITLEMENTS,
+  PLANS,
   billingReadiness,
   getPlan,
 } from "@/lib/billing/catalog";
 import {
   BillingError,
   getAccount,
+  requireRecoverySchema,
   type BillingAccount,
 } from "@/lib/billing/ledger";
+import { buildViewer } from "@/lib/billing/viewer";
 import { BillingActions } from "./billing-actions";
 
 export const metadata: Metadata = {
@@ -42,6 +44,7 @@ export default async function BillingPage({
 
   let account: BillingAccount | null = null;
   let ledgerError: string | null = null;
+  let checkoutReady = false;
   try {
     account = await getAccount(user.id);
   } catch (error) {
@@ -50,9 +53,31 @@ export default async function BillingPage({
         ? "The credit ledger is not reachable right now. Your plan and balance will appear once it is."
         : "Billing could not be loaded.";
   }
+  if (account) {
+    try {
+      await requireRecoverySchema();
+      checkoutReady = true;
+    } catch {
+      // Offers stay empty; the plan and balance are still valid to show.
+    }
+  }
 
-  const plan = account ? getPlan(account.plan) : null;
-  const entitlements = account ? ENTITLEMENTS[account.plan] : null;
+  const viewer = account
+    ? buildViewer({
+        user: { id: user.id, email: user.email ?? null },
+        account,
+        purchasable:
+          readiness.live && checkoutReady
+            ? {
+                plans: PLANS.filter((plan) => plan.priceCents > 0).map(
+                  (plan) => plan.id,
+                ),
+                packs: readiness.packsReady,
+              }
+            : { plans: [], packs: [] },
+      })
+    : null;
+  const plan = viewer ? getPlan(viewer.plan.id) : null;
 
   return (
     <main className="mx-auto max-w-3xl px-6 pt-16 pb-24 text-[var(--arc-text-primary)]">
@@ -80,23 +105,23 @@ export default async function BillingPage({
         </div>
       )}
 
-      {account && (
+      {account && viewer && (
         <section className="grid sm:grid-cols-3 gap-4 mb-10">
           <Stat
             label="Plan"
-            value={plan?.name ?? account.plan}
+            value={viewer.plan.name}
             sub={
-              account.planStatus === "none"
+              viewer.plan.status === "none"
                 ? "free"
-                : account.planStatus.replace("_", " ")
+                : viewer.plan.status.replace("_", " ")
             }
           />
           <Stat
             label="Credits"
-            value={account.balance.toLocaleString("en-US")}
+            value={viewer.entitlements.credits.balance.toLocaleString("en-US")}
             sub={
-              account.reserved > 0
-                ? `${account.reserved} in flight`
+              viewer.entitlements.credits.reserved > 0
+                ? `${viewer.entitlements.credits.reserved} in flight`
                 : "available"
             }
           />
@@ -133,22 +158,29 @@ export default async function BillingPage({
         }))}
       />
 
-      {entitlements && (
+      {viewer && (
         <section className="mt-12">
           <h2 className="text-[10px] font-mono tracking-widest text-[var(--arc-text-secondary)] mb-4">
             Planned plan capabilities
           </h2>
           <ul className="grid sm:grid-cols-2 gap-2 text-xs text-[var(--arc-text-primary)]">
-            <li>Hosted worlds: {entitlements.hostedWorlds}</li>
-            <li>Published world sites: {entitlements.publishedSites}</li>
-            <li>Seats: {entitlements.seats}</li>
-            <li>API keys: {entitlements.apiKeys ? "yes" : "no"}</li>
+            <li>Hosted worlds: {viewer.entitlements.hostedWorlds}</li>
+            <li>Published world sites: {viewer.entitlements.publishedSites}</li>
+            <li>Seats: {viewer.entitlements.seats}</li>
+            <li>API keys: {viewer.entitlements.apiKeys ? "yes" : "no"}</li>
             <li>
               Hosted MCP write tools:{" "}
-              {entitlements.hostedMcpWrite ? "yes" : "no"}
+              {viewer.entitlements.hostedMcpWrite ? "yes" : "no"}
             </li>
-            <li>Priority queue: {entitlements.priorityQueue ? "yes" : "no"}</li>
+            <li>
+              Priority queue: {viewer.entitlements.priorityQueue ? "yes" : "no"}
+            </li>
           </ul>
+          {viewer.nextOffer && (
+            <p className="text-[11px] text-[var(--arc-text-secondary)] mt-4">
+              Next: {viewer.nextOffer.label}
+            </p>
+          )}
         </section>
       )}
 
