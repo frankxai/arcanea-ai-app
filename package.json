@@ -26,6 +26,7 @@
     "test:health-media-readiness": "node --test scripts/tests/health-media-readiness-contract.test.mjs",
     "test:worlds-accessibility": "node --test scripts/tests/worlds-accessibility-contract.test.mjs",
     "test:release-manifest": "node --test scripts/tests/release-manifest-schema.test.mjs",
+    "test:security": "node scripts/audit-migrations.mjs supabase/migrations --baseline scripts/migration-audit-baseline.json --fail-on high && node --test scripts/tests/p0-security-migration-contract.test.mjs scripts/tests/p0-security-migration-runtime.test.mjs",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
     "clean": "turbo run clean",
@@ -93,6 +94,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
+    "@electric-sql/pglite": "^0.5.15",
     "@tailwindcss/typography": "^0.5.20",
     "@turbo/gen": "^2.11.4",
     "autoprefixer": "^10.6.1",

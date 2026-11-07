@@ -30,27 +30,35 @@ async function fetchLiveStats(): Promise<CommunityStats | null> {
   };
 
   try {
-    const [profilesRes, creationsRes, likesRes, collectionsRes] = await Promise.all([
-      fetch(`${SUPABASE_URL}/rest/v1/profiles?select=id&limit=0`, {
-        headers,
-        next: { revalidate: 600 },
-      }),
-      fetch(`${SUPABASE_URL}/rest/v1/creations?select=id,guardian&status=eq.published`, {
-        headers,
-        next: { revalidate: 300 },
-      }),
-      fetch(`${SUPABASE_URL}/rest/v1/likes?select=id&limit=0`, {
-        headers,
-        next: { revalidate: 300 },
-      }),
-      fetch(`${SUPABASE_URL}/rest/v1/collections?select=id&limit=0`, {
-        headers,
-        next: { revalidate: 600 },
-      }),
-    ]);
+    const [profilesRes, creationsRes, likesRes, collectionsRes] =
+      await Promise.all([
+        fetch(`${SUPABASE_URL}/rest/v1/public_profiles?select=id&limit=0`, {
+          headers,
+          next: { revalidate: 600 },
+        }),
+        fetch(
+          `${SUPABASE_URL}/rest/v1/creations?select=id,guardian&status=eq.published`,
+          {
+            headers,
+            next: { revalidate: 300 },
+          },
+        ),
+        fetch(`${SUPABASE_URL}/rest/v1/likes?select=id&limit=0`, {
+          headers,
+          next: { revalidate: 300 },
+        }),
+        fetch(`${SUPABASE_URL}/rest/v1/collections?select=id&limit=0`, {
+          headers,
+          next: { revalidate: 600 },
+        }),
+      ]);
 
-    const creators = parseInt(profilesRes.headers.get("content-range")?.split("/")[1] ?? "0");
-    const likes = parseInt(likesRes.headers.get("content-range")?.split("/")[1] ?? "0");
+    const creators = parseInt(
+      profilesRes.headers.get("content-range")?.split("/")[1] ?? "0",
+    );
+    const likes = parseInt(
+      likesRes.headers.get("content-range")?.split("/")[1] ?? "0",
+    );
     const collections = parseInt(
       collectionsRes.headers.get("content-range")?.split("/")[1] ?? "0",
     );
@@ -91,14 +99,21 @@ export async function GET() {
     if (!live || live.creators <= 0) {
       return new NextResponse(null, {
         status: 204,
-        headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" },
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
       });
     }
 
     return NextResponse.json(live, {
-      headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+      },
     });
   } catch {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
