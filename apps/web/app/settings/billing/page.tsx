@@ -12,6 +12,7 @@ import {
 import {
   BillingError,
   getAccount,
+  requireRecoverySchema,
   type BillingAccount,
 } from "@/lib/billing/ledger";
 import { buildViewer } from "@/lib/billing/viewer";
@@ -43,8 +44,11 @@ export default async function BillingPage({
 
   let account: BillingAccount | null = null;
   let ledgerError: string | null = null;
+  let checkoutReady = false;
   try {
     account = await getAccount(user.id);
+    await requireRecoverySchema();
+    checkoutReady = true;
   } catch (error) {
     ledgerError =
       error instanceof BillingError
@@ -56,7 +60,7 @@ export default async function BillingPage({
     ? buildViewer({
         user: { id: user.id, email: user.email ?? null },
         account,
-        purchasable: readiness.live
+        purchasable: readiness.live && checkoutReady
           ? {
               plans: PLANS.filter((plan) => plan.priceCents > 0).map(
                 (plan) => plan.id,

@@ -51,17 +51,18 @@ Patterns adopted from current vendor docs; no template files copied.
 
 | planStatus | Result |
 | --- | --- |
-| `active` | plan as recorded |
+| `active` | plan as recorded, unless a period-end cancellation has already passed `currentPeriodEnd` |
 | `trialing` | plan as recorded |
-| `past_due` | plan as recorded (dunning window) |
-| `canceled` with `cancelAtPeriodEnd` and a future `currentPeriodEnd` | plan as recorded until the paid period ends |
-| `canceled` otherwise (no period-end flag, or period already ended) | Spark |
+| `past_due` | plan until `currentPeriodEnd` plus a 7-day dunning grace, then Spark |
+| cancel-at-period-end (`active` or `canceled`) before `currentPeriodEnd` | plan as recorded until the paid period ends |
+| cancel-at-period-end after `currentPeriodEnd` | Spark, even if the row still says `active` |
+| `canceled` without period-end state, or period already ended | Spark |
 | `revoked` | Spark |
 | `paused` | Spark |
 | `none` | Spark |
 | unknown plan id | Spark |
 
-Offers are actionable only when `billingReadiness().live` is true: paid plans are offered only when checkout would accept them, Spark is never offered, and credit packs appear only when their Polar product is configured. When billing is closed, `offers` is empty and `nextOffer` is null rather than pointing at a checkout that returns 503.
+Offers are upgrades only and actionable only when `billingReadiness().live` is true and the recovery schema is present, which are the same conditions `/api/billing/checkout` enforces. The active or lower plans are never offered, Spark is never offered, and credit packs appear only when their Polar product is configured. When checkout is closed, `offers` is empty and `nextOffer` is null rather than pointing at a checkout that returns 503.
 
 ## Acceptance criteria
 

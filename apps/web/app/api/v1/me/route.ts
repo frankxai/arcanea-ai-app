@@ -8,7 +8,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { BillingError, getAccount } from "@/lib/billing/ledger";
+import { BillingError, getAccount, requireRecoverySchema } from "@/lib/billing/ledger";
 import { buildViewer } from "@/lib/billing/viewer";
 import {
   PLANS,
@@ -41,12 +41,20 @@ export async function GET() {
   try {
     const account = await getAccount(user.id);
     const readiness = billingReadiness();
-    const purchasable = readiness.live
-      ? {
-          plans: PLANS.filter((plan) => plan.priceCents > 0).map((plan) => plan.id),
-          packs: readiness.packsReady,
-        }
-      : { plans: [], packs: [] };
+    let checkoutReady = false;
+    try {
+      await requireRecoverySchema();
+      checkoutReady = true;
+    } catch {
+      // The viewer still answers; offers stay empty because checkout would 503.
+    }
+    const purchasable =
+      readiness.live && checkoutReady
+        ? {
+            plans: PLANS.filter((plan) => plan.priceCents > 0).map((plan) => plan.id),
+            packs: readiness.packsReady,
+          }
+        : { plans: [], packs: [] };
     return privateJson(
       buildViewer({
         user: { id: user.id, email: user.email ?? null },

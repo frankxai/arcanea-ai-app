@@ -57,9 +57,27 @@ const PAYING_STATUSES: readonly BillingStatus[] = [
   "past_due",
 ];
 
-/** The plan the viewer can actually use right now. A period-end cancellation
- * keeps the paid plan until the paid period expires, matching mapPolarEvent
- * (which keeps `plan` and sets `status: "canceled"`). */
+/** Days after currentPeriodEnd that a past_due row may keep paid access while
+ * dunning runs. Polar's `unpaid` maps to `past_due` in this repo, so without a
+ * deadline a terminal dunning row would keep paid access forever. */
+export const DUNNING_GRACE_DAYS = 7;
+
+const PLAN_ORDER: readonly PlanId[] = ["spark", "creator", "studio"];
+
+function timestamp(value: string | null | undefined): number {
+  if (!value) return Number.NaN;
+  return new Date(value).getTime();
+}
+
+/** The plan the viewer can actually use right now.
+ *
+ * - active/trialing: paid.
+ * - active/canceled with cancelAtPeriodEnd: paid until currentPeriodEnd, then
+ *   Spark. Polar sends cancellation while status is still active and only
+ *   revokes at period end, so the date, not the status, ends access.
+ * - past_due: paid until currentPeriodEnd plus the dunning grace.
+ * - revoked/paused/none/unknown: Spark.
+ */
 export function effectivePlanId(
   plan: PlanId,
   status: BillingStatus,
@@ -70,16 +88,32 @@ export function effectivePlanId(
   } = {},
 ): PlanId {
   if (!getPlan(plan)) return "spark";
+
+  const now = (options.now ?? new Date()).getTime();
+  const periodEnd = timestamp(options.currentPeriodEnd);
+  const hasPeriodEnd = Number.isFinite(periodEnd);
+
+  if (
+    options.cancelAtPeriodEnd === true &&
+    hasPeriodEnd &&
+    periodEnd <= now
+  ) {
+    return "spark";
+  }
+
+  if (status === "past_due") {
+    if (!hasPeriodEnd) return "spark";
+    const graceEnd = periodEnd + DUNNING_GRACE_DAYS * 24 * 60 * 60 * 1000;
+    return graceEnd > now ? plan : "spark";
+  }
+
   if (PAYING_STATUSES.includes(status)) return plan;
 
-  const periodEnd = options.currentPeriodEnd
-    ? new Date(options.currentPeriodEnd).getTime()
-    : Number.NaN;
   const stillPaid =
     status === "canceled" &&
     options.cancelAtPeriodEnd === true &&
-    Number.isFinite(periodEnd) &&
-    periodEnd > (options.now ?? new Date()).getTime();
+    hasPeriodEnd &&
+    periodEnd > now;
 
   return stillPaid ? plan : "spark";
 }
@@ -103,12 +137,13 @@ export function buildViewer(input: {
 
   const purchasablePlans = input.purchasable?.plans ?? [];
   const purchasablePacks = input.purchasable?.packs ?? [];
+  const currentRank = PLAN_ORDER.indexOf(planId);
 
   const offers: ViewerOffer[] = [
     ...PLANS.filter(
       (candidate) =>
         candidate.priceCents > 0 &&
-        candidate.id !== planId &&
+        PLAN_ORDER.indexOf(candidate.id) > currentRank &&
         purchasablePlans.includes(candidate.id),
     ).map((candidate) => ({
       id: candidate.id,

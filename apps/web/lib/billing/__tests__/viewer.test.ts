@@ -2,7 +2,12 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { CREDIT_PACKS, ENTITLEMENTS, PLANS, type PlanId } from "../catalog";
 import type { BillingAccount } from "../ledger";
-import { VIEWER_SCHEMA, buildViewer, effectivePlanId } from "../viewer";
+import {
+  DUNNING_GRACE_DAYS,
+  VIEWER_SCHEMA,
+  buildViewer,
+  effectivePlanId,
+} from "../viewer";
 
 const now = new Date("2026-11-07T12:00:00.000Z");
 const user = { id: "user-1", email: "creator@example.com" };
@@ -10,6 +15,7 @@ const purchasable = {
   plans: PLANS.filter((plan) => plan.priceCents > 0).map((plan) => plan.id),
   packs: CREDIT_PACKS.map((pack) => pack.id),
 };
+const dunningGraceMs = DUNNING_GRACE_DAYS * 24 * 60 * 60 * 1000;
 
 function account(overrides: Partial<BillingAccount> = {}): BillingAccount {
   return {
@@ -36,15 +42,51 @@ test("active paid plans keep their catalog entitlements", () => {
   assert.equal(viewer.entitlements.credits.reserved, 50);
 });
 
-test("trialing and past_due keep the plan during trial and dunning", () => {
+test("trialing keeps the plan; past_due keeps it only through the dunning grace", () => {
   assert.equal(effectivePlanId("studio", "trialing"), "studio");
-  assert.equal(effectivePlanId("creator", "past_due"), "creator");
+  const withinGrace = new Date(now.getTime() + dunningGraceMs - 60_000).toISOString();
+  assert.equal(
+    effectivePlanId("creator", "past_due", {
+      currentPeriodEnd: withinGrace,
+      now,
+    }),
+    "creator",
+  );
+  const beyondGrace = new Date(now.getTime() - dunningGraceMs - 60_000).toISOString();
+  assert.equal(
+    effectivePlanId("creator", "past_due", {
+      currentPeriodEnd: beyondGrace,
+      now,
+    }),
+    "spark",
+  );
+  assert.equal(
+    effectivePlanId("creator", "past_due", { currentPeriodEnd: null, now }),
+    "spark",
+  );
 });
 
 test("a period-end cancellation keeps paid access until the paid period ends", () => {
-  // mapPolarEvent keeps the plan and sets status canceled; the viewer must not
-  // revoke access mid-period.
-  const viewer = buildViewer({
+  // Polar sends cancellation while the subscription is still status active and
+  // only revokes at period end, so the date must end access, not the status.
+  const activeCancelling = buildViewer({
+    user,
+    account: account({
+      plan: "studio",
+      planStatus: "active",
+      cancelAtPeriodEnd: true,
+      currentPeriodEnd: "2026-12-07T00:00:00.000Z",
+    }),
+    purchasable,
+    now,
+  });
+  assert.equal(activeCancelling.plan.id, "studio");
+  assert.deepEqual(
+    activeCancelling.entitlements.hostedWorlds,
+    ENTITLEMENTS.studio.hostedWorlds,
+  );
+
+  const canceledFuture = buildViewer({
     user,
     account: account({
       plan: "studio",
@@ -55,33 +97,39 @@ test("a period-end cancellation keeps paid access until the paid period ends", (
     purchasable,
     now,
   });
-  assert.equal(viewer.plan.id, "studio");
-  assert.equal(viewer.plan.status, "canceled");
-  assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.studio.hostedWorlds);
+  assert.equal(canceledFuture.plan.id, "studio");
+  assert.equal(canceledFuture.plan.status, "canceled");
 });
 
-test("cancellation that is not period-end, or has expired, resolves to Spark", () => {
-  const cases: Array<Partial<BillingAccount>> = [
-    { planStatus: "canceled", cancelAtPeriodEnd: false },
-    {
-      planStatus: "canceled",
-      cancelAtPeriodEnd: true,
-      currentPeriodEnd: "2026-01-01T00:00:00.000Z",
-    },
-    { planStatus: "revoked", cancelAtPeriodEnd: false },
-    { planStatus: "paused", cancelAtPeriodEnd: false },
-    { planStatus: "none", cancelAtPeriodEnd: false },
-  ];
-  for (const overrides of cases) {
+test("a period-end cancellation stops at currentPeriodEnd even if the row says active", () => {
+  for (const status of ["active", "canceled"] as const) {
     const viewer = buildViewer({
       user,
-      account: account({ plan: "studio", ...overrides }),
+      account: account({
+        plan: "studio",
+        planStatus: status,
+        cancelAtPeriodEnd: true,
+        currentPeriodEnd: "2026-01-01T00:00:00.000Z",
+      }),
       purchasable,
       now,
     });
-    assert.equal(viewer.plan.id, "spark", JSON.stringify(overrides));
+    assert.equal(viewer.plan.id, "spark", status);
     assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.spark.hostedWorlds);
-    assert.equal(viewer.entitlements.apiKeys, false);
+    assert.equal(viewer.entitlements.apiKeys, false, status);
+  }
+});
+
+test("revocation, pause and none resolve to Spark", () => {
+  for (const status of ["revoked", "paused", "none"] as const) {
+    const viewer = buildViewer({
+      user,
+      account: account({ plan: "studio", planStatus: status }),
+      purchasable,
+      now,
+    });
+    assert.equal(viewer.plan.id, "spark", status);
+    assert.equal(viewer.entitlements.apiKeys, false, status);
   }
 });
 
@@ -96,18 +144,36 @@ test("an unknown plan never inherits paid entitlements", () => {
   assert.equal(viewer.entitlements.apiKeys, false);
 });
 
-test("offers only include purchasable paid plans and configured packs", () => {
-  const viewer = buildViewer({ user, account: account(), purchasable, now });
-  const planOffers = viewer.offers.filter((offer) => offer.kind === "plan");
+test("offers are upgrades only, and only when checkout would accept them", () => {
+  const creator = buildViewer({ user, account: account(), purchasable, now });
   assert.deepEqual(
-    planOffers.map((offer) => offer.id),
+    creator.offers.filter((offer) => offer.kind === "plan").map((offer) => offer.id),
     ["studio"],
-    "spark is not a paid SKU and creator is the active plan",
   );
-  const packOffers = viewer.offers.filter((offer) => offer.kind === "credit_pack");
-  assert.equal(packOffers.length, CREDIT_PACKS.length);
-  assert.ok(viewer.offers.every((offer) => offer.included === false));
-  assert.deepEqual(viewer.nextOffer, planOffers[0]);
+  assert.deepEqual(creator.nextOffer, creator.offers[0]);
+
+  const studio = buildViewer({
+    user,
+    account: account({ plan: "studio" }),
+    purchasable,
+    now,
+  });
+  assert.equal(
+    studio.offers.some((offer) => offer.kind === "plan"),
+    false,
+    "Studio has no higher plan to offer",
+  );
+
+  const spark = buildViewer({
+    user,
+    account: account({ plan: "spark", planStatus: "none" }),
+    purchasable,
+    now,
+  });
+  assert.deepEqual(
+    spark.offers.filter((offer) => offer.kind === "plan").map((offer) => offer.id),
+    ["creator", "studio"],
+  );
 });
 
 test("billing closed means no actionable offer, not a dead checkout target", () => {
