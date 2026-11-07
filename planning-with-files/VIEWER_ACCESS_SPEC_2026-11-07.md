@@ -37,41 +37,41 @@ Patterns adopted from current vendor docs; no template files copied.
 
 ## Design
 
-| Concern | Decision | Reason |
-| --- | --- | --- |
-| Identity | `createClient()` server client + `auth.getUser()` | current Supabase SSR guidance; cookie presence is not authentication |
-| Plan source | `getAccount(user.id)` | the billing ledger is already the source of credits and plan |
-| Effective plan | `effectivePlanId(plan, status)` | a plan that cannot pay must not grant its entitlements |
-| Entitlements | `ENTITLEMENTS[effectivePlan]` | catalog is the single source of features |
-| Offers | `PLANS` minus effective plan, plus `CREDIT_PACKS` | actionable, no repetition, no invented price |
-| Errors | 401 unauthorized, 503 `ledger_unavailable` | never a fabricated free account on ledger failure |
-| Caching | `private, no-store` and `no-referrer` | account data must not be cached |
+| Concern        | Decision                                          | Reason                                                               |
+| -------------- | ------------------------------------------------- | -------------------------------------------------------------------- |
+| Identity       | `createClient()` server client + `auth.getUser()` | current Supabase SSR guidance; cookie presence is not authentication |
+| Plan source    | `getAccount(user.id)`                             | the billing ledger is already the source of credits and plan         |
+| Effective plan | `effectivePlanId(plan, status)`                   | a plan that cannot pay must not grant its entitlements               |
+| Entitlements   | `ENTITLEMENTS[effectivePlan]`                     | catalog is the single source of features                             |
+| Offers         | `PLANS` minus effective plan, plus `CREDIT_PACKS` | actionable, no repetition, no invented price                         |
+| Errors         | 401 unauthorized, 503 `ledger_unavailable`        | never a fabricated free account on ledger failure                    |
+| Caching        | `private, no-store` and `no-referrer`             | account data must not be cached                                      |
 
 ### Fail-closed matrix
 
-| planStatus | Result |
-| --- | --- |
-| `active` | plan until `currentPeriodEnd` plus a 24-hour webhook-latency allowance, then Spark; no period end means Spark |
-| `trialing` | same rule as `active` |
-| `past_due` | Spark. The ledger has no `past_due_at`, so any grace window would be invented and could cover an unpaid cycle |
-| cancel-at-period-end (`active` or `canceled`) before `currentPeriodEnd` | plan as recorded until the paid period ends |
-| cancel-at-period-end after `currentPeriodEnd`, or with no date | Spark |
-| `canceled` without period-end state | Spark |
-| `revoked` | Spark |
-| `paused` | Spark |
-| `none` | Spark |
-| unknown plan id | Spark |
+| planStatus                                                              | Result                                                                                                        |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `active`                                                                | plan until `currentPeriodEnd` plus a 24-hour webhook-latency allowance, then Spark; no period end means Spark |
+| `trialing`                                                              | same rule as `active`                                                                                         |
+| `past_due`                                                              | Spark. The ledger has no `past_due_at`, so any grace window would be invented and could cover an unpaid cycle |
+| cancel-at-period-end (`active` or `canceled`) before `currentPeriodEnd` | plan as recorded until the paid period ends                                                                   |
+| cancel-at-period-end after `currentPeriodEnd`, or with no date          | Spark                                                                                                         |
+| `canceled` without period-end state                                     | Spark                                                                                                         |
+| `revoked`                                                               | Spark                                                                                                         |
+| `paused`                                                                | Spark                                                                                                         |
+| `none`                                                                  | Spark                                                                                                         |
+| unknown plan id                                                         | Spark                                                                                                         |
 
 `member` means an account exists; `paid` is the access-relevant flag and is true only for a paid catalog plan. Offers are upgrades only and actionable only when `billingReadiness().live` is true and the recovery schema is present, which are the same conditions `/api/billing/checkout` enforces. Lower plans and Spark are never offered, and credit packs appear only when their Polar product is configured. When checkout is closed, `offers` is empty and `nextOffer` is null rather than pointing at a checkout that returns 503.
 
 ## Acceptance criteria
 
-| # | Criterion | Evidence | Status |
-| --- | --- | --- | --- |
-| 1 | Status-to-plan matrix, unknown plan, credits, offers | 7 node:test cases in `apps/web/lib/billing/__tests__/viewer.test.ts` | pass (run 2026-11-07) |
-| 2 | Route auth and 503 behaviour | code review; route reuses the existing balance-route pattern | not runtime-tested |
-| 3 | App typecheck/lint/build | not run in this lane | **not evidenced**; CI is the gate |
-| 4 | Live probe | requires deploy + signed-in account | not claimed |
+| #   | Criterion                                            | Evidence                                                             | Status                            |
+| --- | ---------------------------------------------------- | -------------------------------------------------------------------- | --------------------------------- |
+| 1   | Status-to-plan matrix, unknown plan, credits, offers | 7 node:test cases in `apps/web/lib/billing/__tests__/viewer.test.ts` | pass (run 2026-11-07)             |
+| 2   | Route auth and 503 behaviour                         | code review; route reuses the existing balance-route pattern         | not runtime-tested                |
+| 3   | App typecheck/lint/build                             | not run in this lane                                                 | **not evidenced**; CI is the gate |
+| 4   | Live probe                                           | requires deploy + signed-in account                                  | not claimed                       |
 
 ## Rollout
 

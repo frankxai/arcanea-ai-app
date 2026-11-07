@@ -66,14 +66,15 @@ export default async function BillingPage({
     ? buildViewer({
         user: { id: user.id, email: user.email ?? null },
         account,
-        purchasable: readiness.live && checkoutReady
-          ? {
-              plans: PLANS.filter((plan) => plan.priceCents > 0).map(
-                (plan) => plan.id,
-              ),
-              packs: readiness.packsReady,
-            }
-          : { plans: [], packs: [] },
+        purchasable:
+          readiness.live && checkoutReady
+            ? {
+                plans: PLANS.filter((plan) => plan.priceCents > 0).map(
+                  (plan) => plan.id,
+                ),
+                packs: readiness.packsReady,
+              }
+            : { plans: [], packs: [] },
       })
     : null;
   const plan = viewer ? getPlan(viewer.plan.id) : null;
@@ -171,7 +172,9 @@ export default async function BillingPage({
               Hosted MCP write tools:{" "}
               {viewer.entitlements.hostedMcpWrite ? "yes" : "no"}
             </li>
-            <li>Priority queue: {viewer.entitlements.priorityQueue ? "yes" : "no"}</li>
+            <li>
+              Priority queue: {viewer.entitlements.priorityQueue ? "yes" : "no"}
+            </li>
           </ul>
           {viewer.nextOffer && (
             <p className="text-[11px] text-[var(--arc-text-secondary)] mt-4">

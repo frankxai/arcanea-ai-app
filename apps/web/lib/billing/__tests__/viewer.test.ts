@@ -37,14 +37,19 @@ test("active paid plans keep their catalog entitlements", () => {
   assert.equal(viewer.schema, VIEWER_SCHEMA);
   assert.equal(viewer.plan.id, "creator");
   assert.deepEqual(viewer.plan.name, "Creator");
-  assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.creator.hostedWorlds);
+  assert.deepEqual(
+    viewer.entitlements.hostedWorlds,
+    ENTITLEMENTS.creator.hostedWorlds,
+  );
   assert.equal(viewer.entitlements.credits.balance, 1200);
   assert.equal(viewer.entitlements.credits.reserved, 50);
   assert.equal(viewer.paid, true);
 });
 
 test("active and trialing are bounded by currentPeriodEnd plus the latency allowance", () => {
-  const future = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  const future = new Date(
+    now.getTime() + 30 * 24 * 60 * 60 * 1000,
+  ).toISOString();
   assert.equal(
     effectivePlanId("studio", "active", { currentPeriodEnd: future, now }),
     "studio",
@@ -56,13 +61,19 @@ test("active and trialing are bounded by currentPeriodEnd plus the latency allow
 
   const withinGrace = new Date(now.getTime() - graceMs + 60_000).toISOString();
   assert.equal(
-    effectivePlanId("creator", "active", { currentPeriodEnd: withinGrace, now }),
+    effectivePlanId("creator", "active", {
+      currentPeriodEnd: withinGrace,
+      now,
+    }),
     "creator",
   );
 
   const beyondGrace = new Date(now.getTime() - graceMs - 60_000).toISOString();
   assert.equal(
-    effectivePlanId("creator", "active", { currentPeriodEnd: beyondGrace, now }),
+    effectivePlanId("creator", "active", {
+      currentPeriodEnd: beyondGrace,
+      now,
+    }),
     "spark",
   );
 
@@ -73,11 +84,17 @@ test("active and trialing are bounded by currentPeriodEnd plus the latency allow
 });
 
 test("past_due grants nothing because the ledger has no past_due_at", () => {
-  const future = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  const future = new Date(
+    now.getTime() + 30 * 24 * 60 * 60 * 1000,
+  ).toISOString();
   for (const currentPeriodEnd of [future, null]) {
     const viewer = buildViewer({
       user,
-      account: account({ plan: "studio", planStatus: "past_due", currentPeriodEnd }),
+      account: account({
+        plan: "studio",
+        planStatus: "past_due",
+        currentPeriodEnd,
+      }),
       purchasable,
       now,
     });
@@ -104,7 +121,10 @@ test("a period-end cancellation keeps paid access until the paid period ends", (
     });
     assert.equal(viewer.plan.id, "studio", status);
     assert.equal(viewer.plan.status, status);
-    assert.deepEqual(viewer.entitlements.hostedWorlds, ENTITLEMENTS.studio.hostedWorlds);
+    assert.deepEqual(
+      viewer.entitlements.hostedWorlds,
+      ENTITLEMENTS.studio.hostedWorlds,
+    );
   }
 });
 
@@ -163,7 +183,9 @@ test("an unknown plan never inherits paid entitlements", () => {
 test("offers are upgrades only, and only when checkout would accept them", () => {
   const creator = buildViewer({ user, account: account(), purchasable, now });
   assert.deepEqual(
-    creator.offers.filter((offer) => offer.kind === "plan").map((offer) => offer.id),
+    creator.offers
+      .filter((offer) => offer.kind === "plan")
+      .map((offer) => offer.id),
     ["studio"],
   );
   assert.deepEqual(creator.nextOffer, creator.offers[0]);
@@ -187,7 +209,9 @@ test("offers are upgrades only, and only when checkout would accept them", () =>
     now,
   });
   assert.deepEqual(
-    spark.offers.filter((offer) => offer.kind === "plan").map((offer) => offer.id),
+    spark.offers
+      .filter((offer) => offer.kind === "plan")
+      .map((offer) => offer.id),
     ["creator", "studio"],
   );
 });
@@ -203,7 +227,10 @@ test("billing closed means no actionable offer, not a dead checkout target", () 
     purchasable: { plans: purchasable.plans, packs: [] },
     now,
   });
-  assert.equal(noPacks.offers.some((offer) => offer.kind === "credit_pack"), false);
+  assert.equal(
+    noPacks.offers.some((offer) => offer.kind === "credit_pack"),
+    false,
+  );
 });
 
 test("only plans the caller marks purchasable are offered", () => {
